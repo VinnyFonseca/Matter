@@ -1,0 +1,195 @@
+// Main Container
+
+.slider {
+	display: block;
+	position: relative;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100%;
+
+	&:hover {
+		.slider-arrow {
+			@include opacity(0.75);
+
+			&:hover {
+				@include opacity(1);
+			}
+			&:active {
+				@include opacity(0.75);
+			}
+
+			&.slider-arrow-prev {
+				margin-right: 0;
+			}
+			&.slider-arrow-next {
+				margin-right: 0;
+			}
+		}
+	}
+
+	&.arrow-show {
+		.slider-arrow {
+			@include opacity(0.74);
+
+			&:hover,
+			&:active {
+				@include opacity(1);
+			}
+
+			&.slider-arrow-prev,
+			&.slider-arrow-next {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+
+
+// The whole shebang
+
+.slider-container-wrapper {
+	display: block;
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+
+	.slider-movable {
+		display: block;
+		position: relative;
+		left: 0;
+		font-size: 0;
+		white-space: nowrap;
+
+		> * {
+			@include font-size($defaultFontSize);
+		}
+	}
+
+	.slider-container {
+		display: inline-block;
+		position: relative;
+		width: 100%;
+		white-space: normal;
+		overflow: hidden;
+		vertical-align: top;
+		visibility: hidden;
+
+		&:first-child {
+			visibility: visible;
+		}
+
+		> img {
+			display: block;
+			position: relative;
+			width: 100%;
+			height: auto;
+			top: 0;
+		}
+	}
+}
+
+
+
+// Arrow Navigation
+
+$arrowWidth: 42px;
+
+.slider-arrow {
+	display: none;
+	position: absolute;
+	margin-top: -21px;
+	padding: 15px 0;
+	width: $arrowWidth;
+	height: $arrowWidth;
+	bottom: $spacing;
+	color: $primaryColor;
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-size: 36px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 1;
+	background: rgba(255, 255, 255, 0.8);
+	cursor: pointer;
+	z-index: 50;
+	vertical-align: middle;
+	@include opacity(0);
+	@include user-select(none);
+	@include transition-property(margin, opacity);
+	@include transition-duration(0.35s);
+	@include transition-timing-function($easing);
+
+	&.slider-arrow-prev {
+		float: left;
+		right: $arrowWidth + ($spacing * 2);
+		margin-right: 5%;
+	}
+	&.slider-arrow-next {
+		float: right;
+		right: $spacing;
+		margin-right: -5%;
+	}
+
+	span {
+		display: block;
+		position: relative;
+		margin-top: -15px;
+		@include opacity(0.5);
+	}
+}
+
+
+
+
+// Bullet Navigation (if navContainer is not defined)
+
+.slider-nav {
+	display: block;
+	position: relative;
+	margin: 0;
+	margin-top: -24px;
+	padding: 0;
+	width: 100%;
+	height: 24px;
+	text-align: center;
+	font-size: 0;
+	cursor: default;
+
+	.slider-bullet {
+		display: inline-block;
+		position: relative;
+		margin: 0 2px;
+		top: -10px;
+		color: $secondaryColor;
+		font-size: 64px;
+		line-height: 10px;
+		@include opacity(0.75);
+		@include user-select(none);
+		cursor: pointer;
+
+		&:hover {
+			@include opacity(1);
+		}
+
+		&:active,
+		&.active,
+		&:focus {
+			color: $primaryColor;
+			@include opacity(1);
+		}
+	}
+}
+
+
+
+// Text Block
+
+.slider-content {
+	position: absolute;
+	padding: 25px;
+	width: 300px;
+	right: 20%;
+	bottom: 10%;
+	text-align: left;
+	background-color: rgba(255, 255, 255, 0.35);
+}

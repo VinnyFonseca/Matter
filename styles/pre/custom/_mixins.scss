@@ -1,0 +1,33 @@
+@mixin font-face($font-family, $font-url, $font-name) {
+	@font-face {
+		font-family: $font-family;
+		src: url($font-url + "/" + $font-name + ".eot");
+		src: url($font-url + "/" + $font-name + ".eot#iefix") format("embedded-opentype"), url($font-url + "/" + $font-name + ".woff") format("woff"), url($font-url + "/" + $font-name + ".ttf") format("truetype"), url($font-url + "/" + $font-name + ".svg#" + $font-name) format("svg");
+		font: {
+			style: normal;
+			weight: normal;
+		};
+	}
+}
+
+@mixin font-size($font-size) {
+	font-size: $font-size + px;
+	font-size: ($font-size / 10) + rem;
+	line-height: (($font-size / 10) * 1.7) + rem;
+}
+
+@mixin svgColor($color) {
+	fill: $color !important;
+	path: $color !important;
+	line: $color !important;
+	stroke: none !important;
+
+	path,
+	polygon,
+	rect {
+		fill: $color !important;
+		path: $color !important;
+		line: $color !important;
+		stroke: none !important;
+	}
+}

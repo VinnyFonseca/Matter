@@ -1,0 +1,100 @@
+.lt-ie8 {
+
+	* {
+		behavior: url(styles/boxsizing.htc);
+	}
+
+	.column {
+		float: left;
+	}
+
+}
+
+
+
+.lt-ie9 {
+
+	.mobile-show {
+		display: none !important;
+	}
+
+
+	table {
+		border-collapse: collapse;
+	}
+
+
+	fieldset legend {
+		margin-bottom: ($spacing / 1.5);
+	}
+
+	input[type="radio"],
+	input[type="checkbox"] {
+		display: block;
+		top: 2px;
+	}
+
+
+	a[target="_blank"] {
+		padding-left: 0;
+		background-image: none;
+	}
+
+
+	.notification {
+		display: none;
+
+		&.active {
+			display: block;
+		}
+	}
+
+
+	.controller {
+		label {
+			display: inline-block;
+			margin-top: -3px;
+
+			&:before {
+				display: none;
+			}
+		}
+
+		input[type="radio"],
+		input[type="checkbox"] {
+			display: inline-block;
+		}
+	}
+
+
+	.dropdown-arrow {
+		height: 39px;
+		overflow: hidden;
+	}
+
+
+	.map-wrapper {
+		height: 600px;
+	}
+
+}
+
+
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+	/* IE10+ specific styles go here */
+
+	.controller {
+		&.radio {
+			input[type="radio"] {
+				&:checked + label:before {
+					content: "\25cf";
+					font-size: 24px;
+					line-height: 19px !important;
+				}
+			}
+		}
+	}
+
+}

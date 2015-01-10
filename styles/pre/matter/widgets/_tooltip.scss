@@ -1,0 +1,29 @@
+// Tooltip
+
+.tooltip-container {
+	display: block;
+	position: absolute;
+	padding: 2px 8px;
+	color: $white;
+	font-family: $monospaceFont;
+	font-size: 1.1em;
+	font-weight: normal;
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	border-radius: $radius;
+	background: $primaryColor;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+	z-index: 9999;
+
+	@include opacity(0);
+	@include transition-property(opacity);
+	@include transition-duration($duration);
+	@include transition-timing-function($easing);
+
+	&.active {
+		@include opacity(1);
+	}
+}
+
+.tooltip {
+	cursor: help;
+}

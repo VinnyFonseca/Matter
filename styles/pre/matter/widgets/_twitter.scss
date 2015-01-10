@@ -1,0 +1,111 @@
+// Twitter Timeline
+
+.widget-twitter {
+	display: block;
+	position: relative;
+	margin: 5px 0;
+	padding: ($spacing / 1.25) ($spacing / 2) ($spacing / 2);
+	@include font-size($defaultFontSize * 1.1);
+	border: 1px solid $lightGray;
+	border-radius: $radius;
+	background: $clearGray;
+
+	hr {
+		display: block;
+		position: relative;
+		margin: ($spacing / 2) 0;
+		width: 100%;
+		height: 0;
+		border-bottom: 1px dotted $lightGray;
+		background: none;
+
+		&:first-child {
+			display: none;
+		}
+	}
+
+	p {
+		margin: 5px 0;
+	}
+
+	.tweet {
+		color: $defaultGray;
+	}
+	.timePosted {
+		color: #aaa;
+		@include font-size($defaultFontSize / 1.2);
+	}
+
+	.user {
+		a {
+			width: 100%;
+			color: $defaultTextColor;
+			text-align: left;
+			text-decoration: none;
+		}
+
+		img {
+			display: inline-block;
+			border: 1px solid $lightGray;
+		}
+	}
+
+	&.main {
+		.user {
+			display: none;
+			position: relative;
+			margin-top: -8px;
+			margin-bottom: ($spacing / 2);
+
+			img {
+				margin-right: 10px;
+			}
+
+			a {
+				span {
+					@include font-size($defaultFontSize * 1.5);
+				}
+			}
+		}
+
+		.twitter-user .user {
+			display: block;
+		}
+
+		.button {
+			position: absolute;
+			top: $spacing / 1.5;
+			right: $spacing / 1.5;
+			margin: 0;
+		}
+	}
+
+	&.multi {
+		.user {
+			padding: 0 0 5px;
+
+			img {
+				width: 32px;
+				height: 32px;
+			}
+
+			a {
+				span {
+					display: inline-block;
+					margin: 0 2px 0 5px;
+					@include font-size($defaultFontSize * 1.2);
+
+					&[data-scribe="element:screen_name"] {
+						color: $defaultGray;
+						@include font-size($defaultFontSize / 1.2);
+					}
+				}
+			}
+		}
+
+		.button {
+			position: relative;
+			margin: ($spacing / 1.5) auto 0;
+		}
+	}
+}

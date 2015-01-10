@@ -1,0 +1,193 @@
+// Responsive
+
+@media screen and (max-width: $screenDesktop) {
+
+	.wrapper {
+		width: 100%;
+	}
+
+
+	// Map
+
+	.map-wrapper {
+		height: 60vw;
+	}
+
+}
+
+
+
+@media screen and (min-width: ($screenTablet + 1)) {
+
+	.mobile-show {
+		display: none !important;
+	}
+
+	.table-mirror {
+		display: none;
+	}
+
+}
+
+
+
+@media screen and (max-width: $screenTablet) {
+
+	.mobile-hide {
+		display: none !important;
+	}
+
+
+	// Font sizes
+
+	.structure.clean {
+		@include font-size($defaultFontSize / 1.1);
+	}
+
+
+	// Widths
+
+	.column {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+		width: 100% !important;
+	}
+
+	.button,
+	button,
+	input[type="reset"],
+	input[type="submit"],
+	input[type="button"] {
+		margin-bottom: 4px;
+		width: 100% !important;
+	}
+
+
+	// Notification
+
+	.notification {
+		padding-right: $spacing;
+		z-index: 80;
+
+		&[data-type="float"] {
+			margin-top: $headerHeight;
+		}
+
+		.notification-close {
+			display: block;
+			position: relative;
+			margin-top: $spacing;
+			top: 0;
+			left: 0;
+			right: 0;
+		}
+	}
+
+
+	// Forms
+
+	input,
+	select,
+	textarea,
+	.input-addon,
+	.password-wrapper,
+	.file-wrapper,
+	.dropdown-wrapper {
+		width: 100%;
+	}
+
+	input[type="radio"],
+	input[type="checkbox"] {
+		width: auto;
+	}
+
+	.input-group {
+		input {
+			text-align: left;
+
+			&:first-child {
+				@include border-top-radius($radius);
+				@include border-bottom-radius(0);
+			}
+			&:last-child {
+				@include border-top-radius(0);
+				@include border-bottom-radius($radius);
+			}
+		}
+
+		.input-addon {
+			text-align: left;
+			border: 1px solid $lightGray;
+			border-top: 0;
+			border-bottom: 0;
+		}
+	}
+
+
+	// Tables
+
+	.table-original {
+		display: none;
+	}
+
+	table {
+		caption {
+			@include font-size($defaultFontSize);
+			text-align: left;
+		}
+	}
+
+
+	// Tooltips
+
+	.tooltip {
+		cursor: default;
+	}
+
+
+	// Slider
+
+	.slider {
+		&:hover {
+			.slider-arrow {
+				@include opacity(1);
+			}
+		}
+	}
+
+	.slider-arrow {
+		@include opacity(1);
+
+		&.slider-arrow-prev {
+			margin-right: 0;
+		}
+		&.slider-arrow-next {
+			margin-right: 0;
+		}
+	}
+
+	.slider-nav {
+		margin-top: -36px;
+		height: 36px;
+
+		.slider-bullet {
+			margin: 5px;
+			font-size: 96px;
+		}
+	}
+
+}
+
+
+
+@media screen and (max-width: ($screenMobileL - 1)) {
+
+
+
+}
+
+
+
+@media screen and (max-width: ($screenMobileS - 1)) {
+
+}

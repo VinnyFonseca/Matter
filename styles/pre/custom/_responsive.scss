@@ -1,0 +1,152 @@
+@media screen and (min-width: $screenWide + 1) {
+
+}
+
+
+
+@media screen and (max-width: $screenWide) {
+
+}
+
+
+
+@media screen and (min-width: $screenDesktop + 1) {
+
+}
+
+
+
+@media screen and (max-width: $screenDesktop) {
+
+	.wrapper {
+		padding: 0 $spacing;
+		width: 100%;
+	}
+
+}
+
+
+
+@media screen and (min-width: $screenTablet + 1) {
+
+}
+
+
+
+@media screen and (max-width: $screenTablet) {
+
+
+	// Nav
+
+	$navItemHeight: 55px;
+
+	header,
+	.header {
+		position: fixed;
+		margin-top: (-$navItemHeight * 8);
+		@include transition-property(transform);
+		@include transition-duration($duration);
+		@include transition-timing-function($easing);
+
+		&.active {
+			@include transform(translateY($navItemHeight * 8));
+		}
+
+		.logo {
+			height: $headerHeight + 3;
+		}
+
+		nav,
+		.nav {
+			display: block;
+			position: relative;
+			float: none;
+
+			.nav-item {
+				display: block;
+				position: relative;
+				padding: ($spacing / 1.5) $spacing;
+				border-left: 0;
+				border-bottom: 1px solid $clearGray;
+				vertical-align: baseline;
+			}
+		}
+	}
+
+	.back-to-top {
+		width: auto !important;
+	}
+
+
+	.footer,
+	footer {
+		> a {
+			display: block !important;
+		}
+	}
+
+}
+
+
+
+@media screen and (max-width: $screenMobileL) {
+
+	footer {
+		.social {
+			position: relative;
+			padding: ($spacing / 1.5) $spacing;
+		}
+	}
+
+}
+
+
+
+@media screen and (max-width: $screenMobileS) {
+
+}
+
+/**
+ * iPad with portrait orientation.
+ */
+// @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
+// 	nav {
+// 		width: 768px / 4;
+// 		height: 1024px;
+// 	}
+
+// 	.intro {
+// 		height: 1024px;
+
+// 		.column {
+// 			min-height: 1024px;
+
+// 			> img {
+// 				height: 1024px;
+// 				left: -768px / 10;
+// 			}
+// 		}
+// 	}
+// }
+
+/**
+ * iPad with landscape orientation.
+ */
+// @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape) {
+// 	nav {
+// 		height: 768px;
+// 	}
+
+// 	.intro {
+// 		height: 768px;
+
+// 		.column {
+// 			min-height: 768px;
+
+// 			> img {
+// 				height: 768px;
+// 				left: -1024px / 10;
+// 			}
+// 		}
+// 	}
+// }

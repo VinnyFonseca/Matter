@@ -1,0 +1,170 @@
+// Variables
+
+$headerHeight: 67px;
+
+
+
+
+// Base
+
+body {
+	padding-top: $headerHeight !important;
+}
+
+header,
+.header {
+	display: block;
+	position: fixed;
+	margin-top: 0;
+	padding: 0;
+	width: 100%;
+	top: 0;
+	background: $white;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	z-index: 100;
+
+	.logo {
+		display: inline-block;
+		position: relative;
+		margin-left: ($spacing / 1.5);
+		padding: ($spacing / 1.5) 0;
+		height: $headerHeight;
+		color: $defaultTextColor;
+		text-decoration: none !important;
+		white-space: nowrap;
+
+		img {
+			margin-right: 10px;
+			height: 100%;
+		}
+
+		span {
+			position: relative;
+		}
+	}
+
+	.nav-trigger {
+		position: relative;
+		float: right;
+		top: $spacing + 7;
+		right: $spacing;
+		cursor: pointer;
+
+		.icon {
+			@include svgColor($primaryColor);
+		}
+		&:hover {
+			.icon {
+				@include svgColor($secondaryColor);
+			}
+		}
+		&:active {
+			.icon {
+				@include svgColor($primaryColor);
+			}
+		}
+	}
+
+	nav,
+	.nav {
+		display: block;
+		position: relative;
+		float: right;
+		white-space: nowrap;
+		z-index: 10;
+
+		.nav-item {
+			display: inline-block;
+			padding: $spacing;
+			border-left: 1px solid $clearGray;
+
+			&.active {
+				color: $white;
+				border-color: $primaryColor;
+				background: $primaryColor;
+				cursor: default;
+			}
+			&:hover,
+			&:active {
+				color: $white;
+				border-color: $secondaryColor;
+				background: $secondaryColor;
+			}
+		}
+	}
+}
+
+
+
+.intro {
+	display: block;
+	position: relative;
+	margin: 0;
+	padding: $spacing 0;
+	color: $white;
+	background: $primaryColor;
+}
+
+.back-to-top {
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+	z-index: 80;
+}
+
+.main {
+	display: block;
+	position: relative;
+	padding: ($spacing * 2) 0;
+}
+
+
+
+footer,
+.footer {
+	display: block;
+	position: relative;
+	padding: $spacing ($spacing * 1.5);
+	width: 100%;
+	color: $white;
+	background: $primaryColor;
+	z-index: 80;
+
+	a {
+		display: inline-block;
+		color: $white;
+	}
+
+	.social {
+		position: absolute;
+		padding: 0;
+		top: $spacing;
+		right: $spacing;
+
+		.icon {
+			margin-right: $spacing / 2;
+			width: 24px;
+			height: 24px;
+			@include svgColor($white);
+		}
+
+		a {
+			text-align: center;
+
+			&:hover {
+				.icon {
+					@include svgColor($secondaryColor);
+				}
+			}
+			&:active {
+				.icon {
+					@include svgColor($white);
+				}
+			}
+		}
+	}
+}
+
+
+
+// Site Specific

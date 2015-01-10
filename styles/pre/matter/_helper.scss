@@ -1,0 +1,406 @@
+// Box Model
+
+.inline {
+	display: inline !important;
+}
+.block {
+	display: block !important;
+}
+.inline-block {
+	display: inline-block !important;
+}
+.block-reset {
+	font-size: 0;
+
+	> * {
+		@include font-size($defaultFontSize);
+	}
+}
+
+.fullwidth {
+	width: 100% !important;
+}
+.halfwidth {
+	width: 50% !important;
+}
+
+
+.nomargin {
+	margin: 0 !important;
+}
+.margin-ver {
+	margin-top: $spacing !important;
+	margin-bottom: $spacing !important;
+}
+.margin-top {
+	margin-top: $spacing !important;
+}
+.margin-bottom {
+	margin-bottom: $spacing !important;
+}
+.margin-hor {
+	margin-left: $spacing !important;
+	margin-right: $spacing !important;
+}
+.margin-left {
+	margin-left: $spacing !important;
+}
+.margin-right {
+	margin-right: $spacing !important;
+}
+.fullmargin {
+	margin: 15px !important;
+}
+
+
+.nopadding {
+	padding: 0 !important;
+}
+.padding-ver {
+	padding-top: $spacing !important;
+	padding-bottom: $spacing !important;
+}
+.padding-top {
+	padding-top: $spacing !important;
+}
+.padding-bottom {
+	padding-bottom: $spacing !important;
+}
+.padding-hor {
+	padding-left: $spacing !important;
+	padding-right: $spacing !important;
+}
+.padding-left {
+	padding-left: $spacing !important;
+}
+.padding-right {
+	padding-right: $spacing !important;
+}
+.fullpadding {
+	padding: 15px !important;
+}
+
+
+.noborder {
+	border: none !important;
+}
+.border {
+	border: 2px dotted $failureBorder !important;
+}
+.dotted {
+	border-style: dotted !important;
+}
+.dashed {
+	border-style: dashed !important;
+}
+
+
+.round {
+	border-radius: $radius !important;
+}
+.top-round {
+	border-radius: 0 !important;
+	border-top-left-radius: $radius !important;
+	border-top-right-radius: $radius !important;
+}
+.right-round {
+	border-radius: 0 !important;
+	border-top-right-radius: $radius !important;
+	border-bottom-right-radius: $radius !important;
+}
+.bottom-round {
+	border-radius: 0 !important;
+	border-bottom-left-radius: $radius !important;
+	border-bottom-right-radius: $radius !important;
+}
+.left-round {
+	border-radius: 0 !important;
+	border-top-left-radius: $radius !important;
+	border-bottom-left-radius: $radius !important;
+}
+.circle {
+	border-radius: 1000px !important;
+}
+.noradius {
+	border-radius: 0 !important;
+}
+
+
+.clean {
+	margin-left: 0;
+	margin-right: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: none;
+}
+.framed {
+	margin-left: 0;
+	margin-right: 0;
+	padding: $spacing / 2;
+	border: 1px solid $lightGray;
+	border-radius: $radius;
+	background: $clearGray;
+}
+
+
+
+// Positioning
+
+.absolute {
+	position: absolute !important;
+}
+.relative {
+	position: relative !important;
+}
+
+
+.valign-top {
+	vertical-align: top !important;
+}
+.valign-middle {
+	font-size: 0 !important;
+
+	&:before {
+		display: inline-block !important;
+		position: relative !important;
+		margin: 0 !important;
+		margin-left: -0.25em !important;
+		width: 0 !important;
+		height: 100% !important;
+		top: 0 !important;
+		left: 0 !important;
+		content: "" !important;
+		vertical-align: middle !important;
+	}
+
+	& > * {
+		display: inline-block;
+		@include font-size($defaultFontSize);
+		vertical-align: middle !important;
+	}
+}
+.valign-bottom {
+	vertical-align: bottom !important;
+}
+.valign-baseline {
+	vertical-align: baseline !important;
+}
+
+
+.left {
+	float: left !important;
+	left: 0 !important;
+}
+.center {
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+.right {
+	float: right !important;
+	right: 0 !important;
+}
+
+
+.nofloat {
+	float: none !important;
+}
+.float-left {
+	float: left !important;
+}
+.float-right {
+	float: right !important;
+}
+
+
+.clear-left {
+	clear: left !important;
+}
+.clear-right {
+	clear: right !important;
+}
+.clear-both {
+	clear: both !important;
+}
+
+
+.hidden {
+	display: none !important;
+}
+.highlight {
+	color: $primaryColor;
+	font-weight: bold;
+	text-decoration: underline;
+}
+.disappear {
+	display: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 0 !important;
+	height: 0 !important;
+	font-size: 0 !important;
+	border: 0 solid black !important;
+	visibility: hidden !important;
+	overflow: hidden !important;
+}
+
+
+.noscroll {
+	overflow: hidden !important;
+}
+.noscroll-x {
+	overflow-x: hidden !important;
+}
+.noscroll-y {
+	overflow-x: hidden !important;
+}
+
+
+.pointer {
+	cursor: pointer !important;
+}
+
+
+
+// Typography
+
+.font-custom {
+	font-family: $headingFont;
+}
+
+.font-zero {
+	font-size: 0 !important;
+}
+.font-xxsmall {
+	@include font-size($defaultFontSize / 2.2);
+}
+.font-xsmall {
+	@include font-size($defaultFontSize / 1.8);
+}
+.font-small {
+	@include font-size($defaultFontSize / 1.4);
+}
+.font-reduced {
+	@include font-size($defaultFontSize / 1.2);
+}
+.font-normal {
+	@include font-size($defaultFontSize);
+}
+.font-medium {
+	@include font-size($defaultFontSize * 1.2);
+}
+.font-expanded {
+	@include font-size($defaultFontSize * 1.4);
+}
+.font-large {
+	@include font-size($defaultFontSize * 1.6);
+}
+.font-xlarge {
+	@include font-size($defaultFontSize * 2);
+}
+.font-xxlarge {
+	@include font-size($defaultFontSize * 2.4);
+}
+.font-max {
+	@include font-size($defaultFontSize * 2.8);
+}
+.font-ultra {
+	@include font-size($defaultFontSize * 3.2);
+}
+
+
+.lowercase {
+	text-transform: lowercase !important;
+}
+.uppercase {
+	text-transform: uppercase !important;
+}
+.capitalize {
+	text-transform: capitalize !important;
+}
+
+
+.normal {
+	font-weight: normal !important;
+	font-style: normal !important;
+}
+.bold {
+	font-weight: 600 !important;
+}
+.light {
+	font-weight: 300 !important;
+}
+.ultrabold {
+	font-weight: 900 !important;
+}
+.italic {
+	font-style: italic !important;
+}
+
+
+.underline {
+	text-decoration: underline !important;
+}
+.strikethrough {
+	text-decoration: line-through !important;
+}
+
+
+.text-left {
+	text-align: left !important;
+}
+.text-right {
+	text-align: right !important;
+}
+.text-center {
+	text-align: center !important;
+}
+.text-justify {
+	text-align: justify !important;
+}
+
+
+.normalwrap {
+	white-space: normal !important;
+}
+.nowrap {
+	white-space: nowrap !important;
+}
+
+
+.arial {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+}
+.monospace {
+	font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace !important;
+}
+
+
+
+// Colours
+
+.white {
+	color: $white !important;
+}
+.black {
+	color: $black !important;
+}
+.light-gray {
+	color: $lightGray !important;
+}
+.gray {
+	color: $midGray !important;
+}
+.dark-gray {
+	color: $darkGray !important;
+}
+
+
+
+// Animation
+
+.animate {
+	@include transition-property(all);
+	@include transition-duration($duration);
+	@include transition-timing-function($easing);
+}

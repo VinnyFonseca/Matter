@@ -1,0 +1,49 @@
+// Grid System
+
+.row {
+	display: block;
+	position: relative;
+	font-size: 0;
+
+	& > * {
+		@include font-size($defaultFontSize);
+	}
+
+	& .column {
+		display: inline-block;
+		position: relative;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		vertical-align: top;
+
+		@for $i from 1 through $columns {
+			$width: percentage($i / $columns);
+
+			&[data-span="#{$i}"] {
+				width: $width;
+			}
+		}
+	}
+
+	& .cell {
+		display: block;
+		position: relative;
+		padding: $spacing / 2;
+
+		&.double {
+			padding: $spacing * 1.5;
+		}
+	}
+}
+
+.debug {
+	& .column {
+		// background: $clearGray;
+	}
+	& .cell {
+		margin: 2px;
+		border: 1px dashed $lightGray;
+		background: $clearGray;
+	}
+}

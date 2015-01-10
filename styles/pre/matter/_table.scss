@@ -1,0 +1,78 @@
+// Tables
+
+table {
+	display: table;
+	table-layout: fixed;
+	position: relative;
+	margin: $spacing auto;
+	width: auto;
+	min-width: 100%;
+	text-align: center;
+	@include border-radius($radius);
+    // border-collapse: collapse;
+
+	caption {
+		position: relative;
+		margin-bottom: $spacing / 2;
+		@include font-size($defaultFontSize * 1.2);
+		font-weight: bold;
+	}
+
+	thead,
+	tbody {
+		position: relative;
+		margin: 0 auto;
+
+		th,
+		tr,
+		td {
+			margin: 0;
+			padding: ($spacing / 2) ($spacing / 1.5);
+			border: 1px solid $lightGray;
+		}
+	}
+
+	th {
+		text-align: center;
+		background: $clearGray;
+	}
+
+	tr {
+		&:first-child {
+			th,
+			td {
+				white-space: nowrap;
+
+				&:first-child {
+					@include border-top-left-radius($radius);
+				}
+				&:last-child {
+					@include border-top-right-radius($radius);
+				}
+			}
+		}
+
+		&:last-child {
+			th,
+			td {
+				&:first-child {
+					@include border-bottom-left-radius($radius);
+				}
+				&:last-child {
+					@include border-bottom-right-radius($radius);
+				}
+			}
+		}
+
+		&.even {
+			td {
+				background: $white;
+			}
+		}
+	}
+
+	td {
+		text-align: left;
+		background: $white;
+	}
+}
