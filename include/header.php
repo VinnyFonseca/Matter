@@ -10,6 +10,8 @@
 		<div class="button notification-close">Dismiss</div>
 	</div>
 
+	<a href="#get-started" class="button primary back-to-top">Top</a>
+
 
 	<header>
 		<nav class="block-reset">
