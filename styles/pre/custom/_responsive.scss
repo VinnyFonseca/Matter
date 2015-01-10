@@ -39,10 +39,12 @@
 	// Nav
 
 	$navItemHeight: 55px;
+	$navItemCount: 8;
 
 	header,
 	.header {
 		position: fixed;
+		margin-top: (-$navItemHeight * $navItemCount);
 		margin-top: (-$navItemHeight * 8);
 		@include transition-property(transform);
 		@include transition-duration($duration);
