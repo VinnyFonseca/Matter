@@ -339,8 +339,8 @@ function initTooltips() {
 						right: container.offset().left + container.outerWidth()
 					};
 					var boundaries = {
-						left: $(".wrapper").offset().left + 20,
-						right: $(".wrapper").offset().left + $(".wrapper").outerWidth() - 20
+						left: $(".wrapper").offset().left,
+						right: $(".wrapper").offset().left + $(".wrapper").outerWidth()
 					};
 
 					if ( config.tooltip.bound ) {
@@ -449,6 +449,33 @@ function initSliders() {
 
 
 
+// Init Smooth Scrolling
+
+function initSmoothScroll() {
+	if ( config.application.smooth && navigator.appVersion.indexOf("Win") != -1 ) {
+		$(window).on("DOMMouseScroll mousewheel", function(e) {
+			var evt = window.event || e,
+				scroltop = $("html, body").scrollTop(),
+				step = config.smoothscroll.step,
+				movement = e.originalEvent.wheelDelta > 0 ? "-=" + step : "+=" + step;
+
+			evt.preventDefault();
+
+			$("html, body").animate({
+				scrollTop: movement
+			}, {
+				duration: config.smoothscroll.duration,
+				easing: "linear",
+				complete: function() {}
+			});
+		});
+
+		if ( config.application.debug ) console.log("Init :: Smooth Scrolling");
+	}
+}
+
+
+
 // Initialisation
 
 function initFramework() {
@@ -489,6 +516,7 @@ function initFramework() {
 	initNotifications();
 	initFontSizeControls();
 	initTwitter();
+	initSmoothScroll();
 	initSliders();
 
 	if (config.application.debug) console.log("Done :: Matter");
@@ -499,12 +527,10 @@ function initFramework() {
 
 var isWideScreen;
 
-$(document).ready(function() {
-	initFramework();
-});
-
 $(window).load(function() {
 	$("body").removeClass("preload"); // Fix for CSS3 animation on load.
+
+	initFramework(); // On window load because image dimensions are not available on dom ready.
 });
 
 $(window).on("resize", function() {

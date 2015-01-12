@@ -66,7 +66,7 @@
 	// Notification
 
 	.notification {
-		padding-right: $spacing;
+		padding-right: $spacing !important;
 		z-index: 80;
 
 		&[data-type="float"] {
@@ -159,20 +159,10 @@
 		@include opacity(1);
 
 		&.slider-arrow-prev {
-			margin-right: 0;
+			margin-left: 0;
 		}
 		&.slider-arrow-next {
 			margin-right: 0;
-		}
-	}
-
-	.slider-nav {
-		margin-top: -36px;
-		height: 36px;
-
-		.slider-bullet {
-			margin: 5px;
-			font-size: 96px;
 		}
 	}
 

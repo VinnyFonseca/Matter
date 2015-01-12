@@ -124,7 +124,7 @@ var twitterFetcher = function() {
 						user.getElementsByTagName("a")[0].className = "no-icon valign-middle";
 				}
 			} else {
-				document.getElementById(config.twitter.domId).className = config.twitter.domId + " framed main";
+				document.getElementById(config.twitter.domId).className = config.twitter.domId + " framed twitter-main";
 
 				var user = document.createElement('h4');
 					user.className = "user";

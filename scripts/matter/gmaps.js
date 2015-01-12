@@ -310,13 +310,67 @@ var map,
 					{ "hue": "#ffff00" }
 				]
 			}
+		],
+		PastelTones: [
+			{
+				"featureType": "landscape",
+				"stylers": [
+					{ "saturation": -100 },
+					{ "lightness": 60 }
+				]
+			},{
+				"featureType": "road.local",
+				"stylers": [
+					{ "saturation": -100 },
+					{ "lightness": 40 },
+					{ "visibility": "on" }
+				]
+			},{
+				"featureType": "transit",
+				"stylers": [
+					{ "saturation": -100 },
+					{ "visibility": "simplified" }
+				]
+			},{
+				"featureType": "administrative.province",
+				"stylers": [
+					{ "visibility": "off" }
+				]
+			},{
+				"featureType": "water",
+				"stylers": [
+					{ "visibility": "on" },
+					{ "lightness": 30 }
+				]
+			},{
+				"featureType": "road.highway",
+				"elementType": "geometry.fill",
+				"stylers": [
+					{ "color": "#ef8c25" },
+					{ "lightness": 40 }
+				]
+			},{
+				"featureType": "road.highway",
+				"elementType": "geometry.stroke",
+				"stylers": [
+					{ "visibility": "off" }
+				]
+			},{
+				"featureType": "poi.park",
+				"elementType": "geometry.fill",
+				"stylers": [
+					{ "color": "#b6c54c" },
+					{ "lightness": 40 },
+					{ "saturation": -40 }
+				]
+			}
 		]
 	};
 
 function initialize() {
 	var mapOptions = {
 		center: new google.maps.LatLng(51.507333, - 0.107806),
-		zoom: 14,
+		zoom: 15,
 		zoomControl: config.application.touch,
 		zoomControlOptions: {
 			style: google.maps.ZoomControlStyle.SMALL
@@ -336,7 +390,7 @@ function initialize() {
 			opened: false
 		},
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		styles: themes.SubtleGrayscale
+		styles: themes.PastelTones
 	};
 
 	var mapElement = document.getElementById('map-canvas');

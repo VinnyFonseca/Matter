@@ -21,6 +21,9 @@
 				<a href="#tooltips">Tooltips</a>
 			</li>
 			<li>
+				<a href="#slider">Slider</a>
+			</li>
+			<li>
 				<a href="#maps">Maps</a>
 			</li>
 			<li>
@@ -42,13 +45,6 @@
 
 		<p>Two controls to change the font and one to reset. Use class <code>.primary</code> to add the "call to action" styling.</p>
 
-		<button class="font-down">A&minus;</button>
-		<button class="font-reset primary">A</button>
-		<button class="font-up">A+</button>
-
-		<br>
-		<br>
-
 		<h4>Usage:</h4>
 
 		<p>Insert the example code below anywhere in your page.</p>
@@ -67,10 +63,18 @@
 		</p>
 
 <pre>
-	&lt;button class="font-down"&gt;A&minus;&lt;/button&gt;
+&lt;button class="font-down"&gt;A&minus;&lt;/button&gt;
 	&lt;button class="font-reset primary"&gt;A&lt;/button&gt;
-	&lt;button class="font-up"&gt;A+&lt;/button&gt;
+&lt;button class="font-up"&gt;A+&lt;/button&gt;
 </pre>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<button class="font-down">A&minus;</button>
+		<button class="font-reset primary">A</button>
+		<button class="font-up">A+</button>
 
 
 
@@ -134,6 +138,10 @@
 	&lt;/div&gt;
 </pre>
 
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
 		<div class="button primary notification-trigger" data-type="float" data-delay="5000" data-message="Sample notification.">
 			Type float, delay 5000
 		</div>
@@ -188,7 +196,88 @@
 &lt;img src="http://placehold.it/1280x400&text=Image,%20hover%20me" class="tooltip" data-tooltip="Using data-tooltip 1" /&gt;
 </pre>
 
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
 		<img src="http://placehold.it/1280x400&text=Image,%20hover%20me" class="tooltip" data-tooltip="Using data-tooltip 1" />
+
+
+
+		<hr>
+
+
+
+		<a href="#" class="anchor" id="slider"></a>
+
+		<h3>Slider</h3>
+
+		<p>
+			Hand coded image slider with horizontal slide transitions. Supports multiple instances and infinite slides.
+		</p>
+
+		<br>
+
+		<h4>Usage:</h4>
+
+		<p>
+			Insert the example code below anywhere in your page, then define the specifics for each slider on the data attributes.
+		</p>
+
+		<dl>
+			<dt>
+				<strong>Defaults:</strong>
+			</dt>
+			</dt>
+			<dd>
+				<code>duration: 1000</code>
+			</dd>
+			<dd>
+				<code>interval: 5000</code>
+			</dd>
+		</dl>
+
+		<p>
+			<strong>Example:</strong>
+		</p>
+
+<pre>
+&lt;div class="slider" data-bullets="true" data-arrows="true" data-slideshow="true"&gt;
+	&lt;div class="slider-container-wrapper"&gt;
+		&lt;div class="slider-movable"&gt;
+			&lt;div class="slider-container"&gt;
+				&lt;img src="http://placehold.it/1280x420" /&gt;
+			&lt;/div&gt;
+			&lt;div class="slider-container"&gt;
+				&lt;img src="http://placehold.it/1280x420" /&gt;
+			&lt;/div&gt;
+			&lt;div class="slider-container"&gt;
+				&lt;img src="http://placehold.it/1280x420" /&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<div class="slider" data-bullets="true" data-arrows="true" data-slideshow="false">
+			<div class="slider-container-wrapper">
+				<div class="slider-movable">
+					<div class="slider-container">
+						<img src="http://placehold.it/1280x420" />
+					</div>
+					<div class="slider-container">
+						<img src="http://placehold.it/1280x420" />
+					</div>
+					<div class="slider-container">
+						<img src="http://placehold.it/1280x420" />
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 
@@ -201,7 +290,7 @@
 		<h3>Maps</h3>
 
 		<p>
-			<strong>Credit:</strong> <a href="https://mapbuildr.com/" target="_blank">Map builder</a>.
+			<strong>Credit:</strong> <a href="https://mapbuildr.com/" target="_blank">Google Mapbuildr</a>.
 		</p>
 
 		<p>
@@ -225,14 +314,18 @@
 			</dd>
 		</dl>
 
+		<p>
+			<strong>Example:</strong>
+		</p>
+
 <pre>
-	&lt;div class="map-wrapper"&gt;
+&lt;div class="map-wrapper"&gt;
 	&lt;div id="map-canvas"&gt;&lt;/div&gt;
-	&lt;/div&gt;
+&lt;/div&gt;
 </pre>
 
 		<p>
-			<strong>Example:</strong>
+			<strong>Demo:</strong>
 		</p>
 
 		<div class="map-wrapper framed">
@@ -257,7 +350,7 @@
 
 		<ol>
 			<li>
-				Insert <code>&lt;div id="widget-twitter"&gt;&lt;/div&gt;</code> where you want the widget to display.
+				Insert the code example below wherever you wish to display the widget.
 			</li>
 			<li>
 				Generate a widget ID.
@@ -275,6 +368,12 @@
 
 		<p>
 			<strong>Example:</strong>
+		</p>
+
+		<code>&lt;div id="widget-twitter"&gt;&lt;/div&gt;</code>
+
+		<p>
+			<strong>Demo:</strong>
 		</p>
 
 		<h4>Tweet Timeline</h4>

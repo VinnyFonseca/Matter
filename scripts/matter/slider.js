@@ -6,53 +6,6 @@ var _requestAnimationFrame = function(win, t) {
 }(window, "requestAnimationFrame");
 
 
-// Custom Swipe detection
-
-// function swipedetect(el, callback){
-// 	var touchsurface = el,
-// 		swipedir,
-// 		startX,
-// 		startY,
-// 		distX,
-// 		distY,
-// 		threshold = 150, //required min distance traveled to be considered swipe
-// 		restraint = 200, // maximum distance allowed at the same time in perpendicular direction
-// 		allowedTime = 300, // maximum time allowed to travel that distance
-// 		elapsedTime,
-// 		startTime,
-// 		handleswipe = callback || function(swipedir) {}
-
-// 	touchsurface.addEvent('touchstart', function(e){
-// 		var touchobj = e.changedTouches[0];
-// 		swipedir = 'none';
-// 		dist = 0;
-// 		startX = touchobj.pageX;
-// 		startY = touchobj.pageY;
-// 		startTime = new Date().getTime(); // record time when finger first makes contact with surface
-// 		// e.preventDefault();
-// 	}, false);
-
-// 	touchsurface.addEvent('touchmove', function(e){
-// 		// e.preventDefault(); // prevent scrolling when inside DIV
-// 	}, false);
-
-// 	touchsurface.addEvent('touchend', function(e){
-// 		var touchobj = e.changedTouches[0];
-// 		distX = touchobj.pageX - startX; // get horizontal dist traveled by finger while in contact with surface
-// 		distY = touchobj.pageY - startY; // get vertical dist traveled by finger while in contact with surface
-// 		elapsedTime = new Date().getTime() - startTime; // get time elapsed
-// 		if ( elapsedTime <= allowedTime ) { // first condition for awipe met
-// 			if ( Math.abs(distX) >= threshold && Math.abs(distY) <= restraint ) { // 2nd condition for horizontal swipe met
-// 				swipedir = (distX < 0) ? 'left' : 'right'; // if dist traveled is negative, it indicates left swipe
-// 			} else if ( Math.abs(distY) >= threshold && Math.abs(distX) <= restraint ) { // 2nd condition for vertical swipe met
-// 				swipedir = (distY < 0) ? 'up' : 'down'; // if dist traveled is negative, it indicates up swipe
-// 			}
-// 		}
-// 		handleswipe(swipedir);
-// 		// e.preventDefault();
-// 	}, false);
-// }
-
 
 // Custom Animate Functions
 
@@ -85,6 +38,7 @@ function makeEaseOut(delta) {
 }
 
 
+
 // Custom Get Element Position
 
 function getOffset(el) {
@@ -97,6 +51,7 @@ function getOffset(el) {
 	}
 	return { top: _y, left: _x };
 }
+
 
 
 // Custom Scroll
@@ -133,6 +88,7 @@ function scrollTo(Y, duration, easingFunction, callback) {
 }
 
 
+
 // Custom Easing
 
 var easing = {
@@ -153,6 +109,7 @@ var easing = {
 
 
 
+
 // ----------------------------------------------------------------------- //
 
 
@@ -162,11 +119,13 @@ if (!window.console) console = { log: function() {} };
 
 
 
+
 // ----------------------------------------------------------------------- //
 
 // Slider Options
 
 var continuous = true;
+
 
 
 // Slider Init Function
@@ -240,7 +199,6 @@ function sliderInit(sliderId) {
 
 	function containerPos() {
 		sliderWidth = sliderActive.width();
-		// sliderHeight = container.outerHeight();
 
 		container.css({ 'width': sliderWidth });
 
@@ -250,9 +208,7 @@ function sliderInit(sliderId) {
 			'margin-left': sliderWidth * loopUnit,
 			'width': sliderWidth * container.size(),
 			'left': - sliderWidth * loopUnit
-		}).animate({
-			'height': container.eq(slideCurrent).height()
-		}, animDuration);
+		});
 	}
 	containerPos();
 
@@ -358,7 +314,7 @@ function sliderInit(sliderId) {
 		movePos = - (sliderWidth * loopUnit);
 
 		movable.animate({
-			'height': container.eq(slideCurrent).height(),
+			'height': container.eq(slideCurrent).outerHeight(),
 			'left': movePos
 		}, {
 			duration: animDuration,
@@ -382,19 +338,6 @@ function sliderInit(sliderId) {
 	arrowPrev.on('click', slidePrev);
 	arrowNext.on('click', slideNext);
 
-	function stopSlider() {
-		stopped = true;
-
-		setTimeout(function() {
-			movable.addClass("stopped");
-		}, 150);
-	}
-
-	function startSlider() {
-		stopped = false;
-		movable.removeClass("stopped");
-	}
-
 	navBullet.on('click', function() {
 		var index = $(this).index();
 		slideAny(index);
@@ -404,19 +347,46 @@ function sliderInit(sliderId) {
 	});
 
 
+	var dragging = false;
+	var dragStart;
+	var dragX;
+	var dragEnd;
+	var tolerance = 0;
+	var trigger = sliderActive.outerWidth() / 4;
 
-	// Touch Events
+	sliderActive
+		.on("mousedown touchstart", function(e) {
+			e.preventDefault();
 
-	// var sliderActiveJS = document.getElementById(sliderId);
+			dragging = true;
+			dragStart = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
+		})
+		.on("mousemove touchmove", function(e) {
+			e.preventDefault();
 
-	// swipedetect(sliderActiveJS, function(swipedir) {
-	// 	if ( swipedir =='left' ) {
-	// 		slideNext();
-	// 	}
-	// 	if ( swipedir =='right' ) {
-	// 		slidePrev();
-	// 	}
-	// });
+			dragX = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
+			initDrag = dragX - dragStart > tolerance || dragX - dragStart < -tolerance;
+
+			if ( dragging && initDrag ) {
+				movable.css({
+					'left': movePos - (dragStart - dragX)
+				});
+			}
+		})
+		.on("mouseup touchcancel", function(e) {
+			e.preventDefault();
+
+			dragging = false;
+			dragEnd = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
+
+			if ( dragStart - dragEnd > trigger ) {
+				slideNext();
+			} else if ( dragStart - dragEnd < - trigger ) {
+				slidePrev();
+			} else {
+				slideAction();
+			}
+		});
 
 
 	document.onkeydown = function(e) {

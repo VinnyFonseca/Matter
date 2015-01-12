@@ -1,12 +1,12 @@
 		<!-- Required Plugins -->
-		<script type="text/javascript" src="scripts/vendor/jquery.1.11.1.min.js"></script>
-		<script type="text/javascript" src="scripts/vendor/modernizr.full.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="scripts/vendor/modernizr-full.min.js"></script>
 		<script type="text/javascript" src="scripts/vendor/fastclick.js"></script>
 
 
 		<!-- Complementary Plugins -->
 		<script type="text/javascript" src="scripts/vendor/datepicker.js"></script>
-		<script type="text/javascript" src="scripts/vendor/jquery.highlight.js"></script>
+		<script type="text/javascript" src="scripts/vendor/jquery-highlight.js"></script>
 		<script type="text/javascript" src="scripts/vendor/twitter-fetcher.js"></script>
 
 

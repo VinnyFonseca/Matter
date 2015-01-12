@@ -19,24 +19,8 @@
 			}
 
 			&.slider-arrow-prev {
-				margin-right: 0;
+				margin-left: 0;
 			}
-			&.slider-arrow-next {
-				margin-right: 0;
-			}
-		}
-	}
-
-	&.arrow-show {
-		.slider-arrow {
-			@include opacity(0.74);
-
-			&:hover,
-			&:active {
-				@include opacity(1);
-			}
-
-			&.slider-arrow-prev,
 			&.slider-arrow-next {
 				margin-right: 0;
 			}
@@ -60,6 +44,7 @@
 		left: 0;
 		font-size: 0;
 		white-space: nowrap;
+		cursor: -webkit-grab;
 
 		> * {
 			@include font-size($defaultFontSize);
@@ -69,10 +54,12 @@
 	.slider-container {
 		display: inline-block;
 		position: relative;
+		padding: $spacing / 2;
 		width: 100%;
-		white-space: normal;
-		overflow: hidden;
+		background-color: $primaryColor;
 		vertical-align: top;
+		overflow: hidden;
+		white-space: normal;
 		visibility: hidden;
 
 		&:first-child {
@@ -93,19 +80,19 @@
 
 // Arrow Navigation
 
-$arrowWidth: 42px;
+$arrowDiameter: 48px;
 
 .slider-arrow {
 	display: none;
 	position: absolute;
-	margin-top: -21px;
+	margin-top: -($arrowDiameter / 2);
 	padding: 15px 0;
-	width: $arrowWidth;
-	height: $arrowWidth;
-	bottom: $spacing;
+	width: $arrowDiameter;
+	height: $arrowDiameter;
+	top: 50%;
 	color: $primaryColor;
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-	font-size: 36px;
+	font-size: $arrowDiameter - 8;
 	font-weight: bold;
 	text-align: center;
 	line-height: 1;
@@ -116,17 +103,17 @@ $arrowWidth: 42px;
 	@include opacity(0);
 	@include user-select(none);
 	@include transition-property(margin, opacity);
-	@include transition-duration(0.35s);
+	@include transition-duration($duration);
 	@include transition-timing-function($easing);
 
 	&.slider-arrow-prev {
 		float: left;
-		right: $arrowWidth + ($spacing * 2);
-		margin-right: 5%;
+		left: 0;
+		margin-left: -5%;
 	}
 	&.slider-arrow-next {
 		float: right;
-		right: $spacing;
+		right: 0;
 		margin-right: -5%;
 	}
 
@@ -143,14 +130,15 @@ $arrowWidth: 42px;
 
 // Bullet Navigation (if navContainer is not defined)
 
+$bulletDiameter: 16px;
+
 .slider-nav {
 	display: block;
 	position: relative;
-	margin: 0;
-	margin-top: -24px;
+	margin: ($spacing / 2) 0 0;
 	padding: 0;
 	width: 100%;
-	height: 24px;
+	height: $bulletDiameter;
 	text-align: center;
 	font-size: 0;
 	cursor: default;
@@ -158,11 +146,11 @@ $arrowWidth: 42px;
 	.slider-bullet {
 		display: inline-block;
 		position: relative;
-		margin: 0 2px;
-		top: -10px;
-		color: $secondaryColor;
-		font-size: 64px;
-		line-height: 10px;
+		margin: 0 4px;
+		width: $bulletDiameter;
+		height: $bulletDiameter;
+		background-color: $secondaryColor;
+		border-radius: $bulletDiameter;
 		@include opacity(0.75);
 		@include user-select(none);
 		cursor: pointer;
@@ -174,22 +162,8 @@ $arrowWidth: 42px;
 		&:active,
 		&.active,
 		&:focus {
-			color: $primaryColor;
+			background-color: $primaryColor;
 			@include opacity(1);
 		}
 	}
-}
-
-
-
-// Text Block
-
-.slider-content {
-	position: absolute;
-	padding: 25px;
-	width: 300px;
-	right: 20%;
-	bottom: 10%;
-	text-align: left;
-	background-color: rgba(255, 255, 255, 0.35);
 }

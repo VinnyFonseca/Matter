@@ -19,7 +19,7 @@
 @media screen and (max-width: $screenDesktop) {
 
 	.wrapper {
-		padding: 0 $spacing;
+		padding: $spacing;
 		width: 100%;
 	}
 
@@ -107,48 +107,3 @@
 @media screen and (max-width: $screenMobileS) {
 
 }
-
-/**
- * iPad with portrait orientation.
- */
-// @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
-// 	nav {
-// 		width: 768px / 4;
-// 		height: 1024px;
-// 	}
-
-// 	.intro {
-// 		height: 1024px;
-
-// 		.column {
-// 			min-height: 1024px;
-
-// 			> img {
-// 				height: 1024px;
-// 				left: -768px / 10;
-// 			}
-// 		}
-// 	}
-// }
-
-/**
- * iPad with landscape orientation.
- */
-// @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape) {
-// 	nav {
-// 		height: 768px;
-// 	}
-
-// 	.intro {
-// 		height: 768px;
-
-// 		.column {
-// 			min-height: 768px;
-
-// 			> img {
-// 				height: 768px;
-// 				left: -1024px / 10;
-// 			}
-// 		}
-// 	}
-// }
