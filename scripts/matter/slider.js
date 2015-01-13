@@ -461,11 +461,11 @@ function sliderInit(sliderId) {
 				sliderStart();
 			});
 		} else {
-			movable.on('click touch', function() {
+			movable.on('click touchstart', function() {
 				sliderStop();
 			});
 
-			$("html").on('click touch', function(event) {
+			$("html").on('click touchstart', function(event) {
 				if (
 					!$(event.target).closest(".slider-container-wrapper").length &&
 					!$(event.target).closest(".slider-bullet").length &&

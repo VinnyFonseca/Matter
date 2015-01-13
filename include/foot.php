@@ -2,7 +2,7 @@
 		<script type="text/javascript" src="scripts/vendor/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript" src="scripts/vendor/modernizr-full.min.js"></script>
 		<script type="text/javascript" src="scripts/vendor/fastclick.js"></script>
-		<!-- <script type="text/javascript" src="scripts/vendor/jquery.animate-enhanced.min.js"></script> -->
+		<script type="text/javascript" src="scripts/vendor/jquery.transit.js"></script>
 
 
 		<!-- Complementary Plugins -->

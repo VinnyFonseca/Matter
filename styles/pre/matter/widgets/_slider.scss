@@ -46,7 +46,7 @@
 		white-space: nowrap;
 		cursor: -webkit-grab;
 
-		@include transform(translateX(0));
+		@include transform(translateX(0) translate3d(0, 0, 0));
 
 		> * {
 			@include font-size($defaultFontSize);
