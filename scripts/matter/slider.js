@@ -257,14 +257,6 @@ function sliderInit(sliderId) {
 				slideCurrent--;
 			}
 
-			console.log(
-				"slideCurrent: " + slideCurrent,
-				"loopUnit: " + loopUnit,
-				"i: " + i,
-				"max + 1: " + (max + 1),
-				"loopCount: " + loopCount
-			);
-
 			cloneSlide();
 			slideAction();
 		}
@@ -283,14 +275,6 @@ function sliderInit(sliderId) {
 				slideCurrent++;
 			}
 
-			console.log(
-				"slideCurrent: " + slideCurrent,
-				"loopUnit: " + loopUnit,
-				"i: " + i,
-				"max + 1: " + (max + 1),
-				"loopCount: " + loopCount
-			);
-
 			cloneSlide();
 			slideAction();
 		}
@@ -304,15 +288,6 @@ function sliderInit(sliderId) {
 			}
 
 			loopUnit = (slideCurrent + ((max + 1) * loopCount));
-
-			console.log(
-				"slideCurrent: " + slideCurrent,
-				"slideBefore: " + slideBefore,
-				"loopUnit: " + loopUnit,
-				"i: " + i,
-				"max + 1: " + (max + 1),
-				"loopCount: " + loopCount
-			);
 
 			if ( slideCurrent < slideBefore ) {
 				direction = "prev";
@@ -379,8 +354,10 @@ function sliderInit(sliderId) {
 	var dragStart;
 	var dragX;
 	var dragEnd;
+	var sliderLeft = sliderActive.offset().left + 50;
+	var sliderRight = sliderActive.offset().left + sliderActive.outerWidth() - 50;
 
-	container
+	movable
 		.on("mousedown touchstart", function(e) {
 			e.preventDefault();
 
@@ -398,6 +375,27 @@ function sliderInit(sliderId) {
 				movable.css({
 					'left': movePos - (dragStart - dragX)
 				});
+
+				console.log(dragX < sliderLeft || dragX > sliderRight);
+
+				if ( dragX < sliderLeft ) {
+					if ( dragStart - dragX > config.slider.trigger ) {
+						slideNext();
+						dragging = false;
+					} else {
+						slideAction();
+						dragging = false;
+					}
+				}
+				if ( dragX > sliderRight ) {
+					if ( dragStart - dragX < - config.slider.trigger ) {
+						slidePrev();
+						dragging = false;
+					} else {
+						slideAction();
+						dragging = false;
+					}
+				}
 			}
 		})
 		.on("mouseup touchend", function(e) {
@@ -467,8 +465,7 @@ function sliderInit(sliderId) {
 
 			$("html").on('click touchstart', function(event) {
 				if (
-					!$(event.target).closest(".slider-container-wrapper").length &&
-					!$(event.target).closest(".slider-bullet").length &&
+					!$(event.target).closest(".slider").length &&
 					movable.hasClass("stopped")
 				) {
 					sliderStart();
