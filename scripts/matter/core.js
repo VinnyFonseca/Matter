@@ -1,3 +1,5 @@
+// Console fix IE8
+
 if (!window.console) console = { log: function() {} };
 
 

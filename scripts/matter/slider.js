@@ -354,7 +354,7 @@ function sliderInit(sliderId) {
 	var tolerance = 0;
 	var trigger = sliderActive.outerWidth() / 4;
 
-	sliderActive
+	container
 		.on("mousedown touchstart", function(e) {
 			e.preventDefault();
 
@@ -373,15 +373,15 @@ function sliderInit(sliderId) {
 				});
 			}
 		})
-		.on("mouseup touchcancel", function(e) {
+		.on("mouseup touchend", function(e) {
 			e.preventDefault();
 
 			dragging = false;
-			dragEnd = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
+			dragEnd = dragX;
 
-			if ( dragStart - dragEnd > trigger ) {
+			if ( dragStart - dragX > trigger ) {
 				slideNext();
-			} else if ( dragStart - dragEnd < - trigger ) {
+			} else if ( dragStart - dragX < - trigger ) {
 				slidePrev();
 			} else {
 				slideAction();
