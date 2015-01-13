@@ -3,7 +3,7 @@
 .slider {
 	display: block;
 	position: relative;
-	margin: 0 !important;
+	margin: 0 auto !important;
 	padding: 0 !important;
 	width: 100%;
 
@@ -45,6 +45,8 @@
 		font-size: 0;
 		white-space: nowrap;
 		cursor: -webkit-grab;
+
+		@include transform(translateX(0));
 
 		> * {
 			@include font-size($defaultFontSize);

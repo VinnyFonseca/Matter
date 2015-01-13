@@ -263,17 +263,17 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-bullets="true" data-arrows="true" data-slideshow="false">
+		<div class="slider" data-bullets="true" data-arrows="true" data-slideshow="true">
 			<div class="slider-container-wrapper">
 				<div class="slider-movable">
 					<div class="slider-container">
-						<img src="http://placehold.it/1280x420" />
+						<img src="http://placehold.it/1281x420" />
 					</div>
 					<div class="slider-container">
-						<img src="http://placehold.it/1280x420" />
+						<img src="http://placehold.it/1282x420" />
 					</div>
 					<div class="slider-container">
-						<img src="http://placehold.it/1280x420" />
+						<img src="http://placehold.it/1283x420" />
 					</div>
 				</div>
 			</div>
