@@ -109,7 +109,7 @@ header,
 	position: fixed;
 	right: 10px;
 	bottom: 10px;
-	@include opacity(0);
+	// @include opacity(0);
 	z-index: 80;
 
 	@include transition(opacity $duration $easing);
@@ -125,7 +125,7 @@ footer,
 .footer {
 	display: block;
 	position: relative;
-	padding: $spacing ($spacing * 1.5);
+	padding: ($spacing / 1.5) $spacing;
 	width: 100%;
 	color: $white;
 	background: $primaryColor;
@@ -136,11 +136,18 @@ footer,
 		color: $white;
 	}
 
+	.author {
+		position: relative;
+		float: right;
+		top: 8px;
+		right: 0;
+	}
+
 	.social {
-		position: absolute;
+		display: none;
+		position: relative;
+		margin-top: $spacing / 2;
 		padding: 0;
-		top: $spacing;
-		right: $spacing;
 
 		.icon {
 			margin-right: $spacing / 2;

@@ -133,9 +133,9 @@
 		</p>
 
 <pre>
-	&lt;div class="button primary notification-trigger" data-type="float" data-delay="5000" data-message="Sample notification."&gt;
+&lt;div class="button primary notification-trigger" data-type="float" data-delay="5000" data-message="Sample notification."&gt;
 	Type float, delay 5000
-	&lt;/div&gt;
+&lt;/div&gt;
 </pre>
 
 		<p>

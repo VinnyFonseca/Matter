@@ -83,15 +83,15 @@
 
 		<dl>
 			<dt>Windows:</dt>
-			<dd>Go to <code>watch/</code> and double click <code>watch.bat</code></dd>
+			<dd>Go to <code>styles/</code> and double click <code>watch.bat</code></dd>
 
 			<dt>Mac OS:</dt>
-			<dd>Open a terminal window, navigate to <code>watch/</code></dd>
+			<dd>Open a terminal window, navigate to <code>styles/</code></dd>
 			<dd><strong>First use only:</strong> <code>sudo chmod ugo+x watch.command</code></dd>
-			<dd>Run <code>sh watch</code> or go to <code>watch/</code> and double-click <code>watch.command</code></dd>
+			<dd>Run <code>sh watch</code> or go to <code>styles/</code> and double-click <code>watch.command</code></dd>
 
 			<dt>Linux:</dt>
-			<dd>Open a terminal window, navigate to <code>watch/</code></dd>
+			<dd>Open a terminal window, navigate to <code>styles/</code></dd>
 			<dd><strong>First use only:</strong> <code>sudo chmod ugo+x watch.run</code></dd>
 			<dd>Run <code>sudo sh watch.run</code></dd>
 		</dl>
