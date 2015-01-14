@@ -49,3 +49,5 @@ Thumbs.db
 .sass-cache/
 watch/.sass-cache/
 styles/sass/.sass-cache/
+
+download/
