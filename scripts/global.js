@@ -29,7 +29,7 @@ var config = {
 		duration: 750, // int: miliseconds for slide change.
 		interval: 5000, // int: miliseconds for slide interval.
 		threshold: 0, // int: px distance on X axis from touchstart to current touch position
-		trigger: $(window).width() / 8 // int: px distance on drag to activate slide change
+		trigger: $(".wrapper").width() / 6 // int: px distance on drag to activate slide change
 	},
 	smoothscroll: {
 		duration: 75, // int: miliseconds for scroll animation completion.
