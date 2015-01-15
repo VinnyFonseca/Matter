@@ -486,12 +486,10 @@ function initialize() {
 			infoWindowVisible(false);
 		});
 	}
-
-	if (config.application.debug) console.log("Load :: Map");
 }
 
 
-$(document).ready(function() {
+function initMap() {
 	if ( $('.map-wrapper').length ) {
 		google.maps.event.addDomListener(window, 'load', initialize);
 		google.maps.event.addDomListener(window, "resize", function() {
@@ -500,4 +498,6 @@ $(document).ready(function() {
 			map.setCenter(center);
 		});
 	}
-});
+
+	if (config.application.debug) console.log("Init :: Map");
+};

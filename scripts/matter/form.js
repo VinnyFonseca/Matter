@@ -1,4 +1,4 @@
-function loadDropdowns(i) {
+function buildDropdowns(i) {
 	var el = $("select").eq(i),
 		size = size !== "" ? parseInt(el.attr("size"), 10) : 1,
 		type = typeof size !== "undefined" && size !== "" && size > 1 ? "list" : "drop",
@@ -73,6 +73,31 @@ function loadDropdowns(i) {
 	});
 }
 
+// Dropdowns
+
+function initDropdowns() {
+	$("select").each(function(i) {
+		var el = $(this),
+			size = parseInt(el.attr("size"), 10),
+			type = typeof size !== "undefined" && size !== "" && size > 1 ? "list" : "drop",
+			wrapper = '<div class="dropdown-' + i + ' dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
+			selected = el.find("option:selected"),
+			arrow = '<div class="dropdown-arrow">&#9660;</div>',
+			current = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>',
+			dropdown = '<div class="dropdown"></div>';
+
+		el.wrap(wrapper);
+		$(".dropdown-" + i).prepend(dropdown).prepend(arrow).prepend(current);
+
+		buildDropdowns(i);
+	});
+
+	if (config.application.debug) console.log("Form :: Dropdowns");
+}
+
+
+
+
 function loadFileInputs(inputLimit, inputName) {
 	var el = $(".multifile-wrapper"),
 		inputCount = el.length,
@@ -119,6 +144,7 @@ function loadFileInputs(inputLimit, inputName) {
 
 	if (config.application.debug) console.log("Form :: File Inputs");
 }
+
 
 
 
@@ -246,26 +272,6 @@ $(window).load(function() {
 
 
 
-	// Dropdowns
-
-	$("select").each(function(i) {
-		var el = $(this),
-			size = parseInt(el.attr("size"), 10),
-			type = typeof size !== "undefined" && size !== "" && size > 1 ? "list" : "drop",
-			wrapper = '<div class="dropdown-' + i + ' dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
-			selected = el.find("option:selected"),
-			arrow = '<div class="dropdown-arrow">&#9660;</div>',
-			current = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>',
-			dropdown = '<div class="dropdown"></div>';
-
-		el.wrap(wrapper);
-		$(".dropdown-" + i).prepend(dropdown).prepend(arrow).prepend(current);
-
-		loadDropdowns(i);
-	});
-
-
-
 
 	// File Uploads
 
@@ -285,5 +291,4 @@ $(window).load(function() {
 		});
 	});
 
-	loadFileInputs(3, "file");
 });
