@@ -65,40 +65,53 @@ if (!Array.prototype.indexOf) {
 }
 
 
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = 0, len = this.length; i < len; i++) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+}
+
 
 
 // SVG Injection
 
-function svgInject() {
-	$('img.svg').each(function() {
-		var $img = $(this);
-		var imgID = $img.attr('id');
-		var imgClass = $img.attr('class');
-		var imgURL = $img.attr('src');
+function initSVGs() {
+	if ( !$("html").hasClass("lt-ie9") ) {
+		$('img.svg').each(function() {
+			var $img = $(this);
+			var imgID = $img.attr('id');
+			var imgClass = $img.attr('class');
+			var imgURL = $img.attr('src');
 
-		$.get(imgURL, function(data) {
-			// Get the SVG tag, ignore the rest
-			var $svg = $(data).find('svg');
+			$.get(imgURL, function(data) {
+				// Get the SVG tag, ignore the rest
+				var $svg = $(data).find('svg');
 
-			// Add replaced image's ID to the new SVG
-			if(typeof imgID !== 'undefined') {
-				$svg = $svg.attr('id', imgID);
-			}
+				// Add replaced image's ID to the new SVG
+				if(typeof imgID !== 'undefined') {
+					$svg = $svg.attr('id', imgID);
+				}
 
-			// Add replaced image's classes to the new SVG
-			if(typeof imgClass !== 'undefined') {
-				$svg = $svg.attr('class', imgClass + ' replaced-svg');
-			}
+				// Add replaced image's classes to the new SVG
+				if(typeof imgClass !== 'undefined') {
+					$svg = $svg.attr('class', imgClass + ' replaced-svg');
+				}
 
-			// Remove any invalid XML tags as per http://validator.w3.org
-			$svg = $svg.removeAttr('xmlns:a');
+				// Remove any invalid XML tags as per http://validator.w3.org
+				$svg = $svg.removeAttr('xmlns:a');
 
-			// Replace image with new SVG
-			$img.replaceWith($svg);
-		}, 'xml');
-	});
+				// Replace image with new SVG
+				$img.replaceWith($svg);
+			}, 'xml');
+		});
 
-	if (config.application.debug) console.log("Init :: SVG Injection");
+		if (config.application.debug) console.log("Init :: SVG Injection");
+	}
 }
 
 
@@ -429,7 +442,7 @@ function initTables() {
 function initTwitter() {
 	if ($("#" + config.twitter.domId).length) {
 		twitterFetcher.fetch(config.twitter);
-		if (config.application.debug) console.log("Init :: Twitter Fetcher");
+		if (config.application.debug) console.log("Init :: Twitter");
 	}
 }
 
@@ -454,11 +467,11 @@ function initSliders() {
 // Init Smooth Scrolling
 
 function initSmoothScroll() {
-	if ( config.application.smooth && navigator.appVersion.indexOf("Win") != -1 ) {
+	if ( config.application.smoothscroll.active && navigator.appVersion.indexOf("Win") != -1 ) {
 		$(window).on("DOMMouseScroll mousewheel", function(e) {
 			var evt = window.event || e,
 				scroltop = $("html, body").scrollTop(),
-				step = config.smoothscroll.step,
+				step = config.application.smoothscroll.step,
 				movement = e.originalEvent.wheelDelta > 0 ? "-=" + step : "+=" + step;
 
 			evt.preventDefault();
@@ -466,7 +479,7 @@ function initSmoothScroll() {
 			$("html, body").animate({
 				scrollTop: movement
 			}, {
-				duration: config.smoothscroll.duration,
+				duration: config.application.smoothscroll.duration,
 				easing: "linear",
 				complete: function() {}
 			});
@@ -510,22 +523,36 @@ function initFramework() {
 		$(this).append(" <small>[" + this.href + "]</small>");
 	});
 
-	if ( !$("html").hasClass("lt-ie9") ) svgInject(); // Renders SVGs for modern browsers, IE9 and above.
+
+
+
+	// System Init
 
 	initNav();
+	initSVGs(); // Renders SVGs for modern browsers, IE9 and above.
 	initTables();
+	initSmoothScroll();
+
+	// Widgets Init
+
 	initTooltips();
 	initNotifications();
 	initFontSizeControls();
-	initTwitter();
-	initSmoothScroll();
 	initSliders();
+	initMap();
+	initTwitter();
+
+	// Forms Init
+
+	initDropdowns();
+	loadFileInputs(3, "file");
+	initValidation();
 
 	if (config.application.debug) console.log("Done :: Matter");
 }
 
 
-// DOM Ready
+// Window Load
 
 var isWideScreen;
 

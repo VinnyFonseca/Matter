@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function initValidation() {
 
 	// Password Check
 
@@ -128,4 +128,6 @@ $(document).ready(function() {
 				validateBlur(el, type, value);
 			});
 	}
-});
+
+	if (config.application.debug) console.log("Form :: Validation");
+}

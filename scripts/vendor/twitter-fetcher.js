@@ -152,9 +152,6 @@ var twitterFetcher = function() {
 				popupWindow('https://twitter.com/intent/user?screen_name=' + user.getElementsByTagName('span')[0].innerHTML.substr(1), 'Twitter Follow', 640, 600);
 				return false;
 			};
-
-
-			if(config.application.debug) console.log("Feed :: Twitter");
 		},
 
 		callback: function(data) {
@@ -287,7 +284,6 @@ var twitterFetcher = function() {
 	};
 }();
 
-
 /*
 * ### HOW TO CREATE A VALID ID TO USE: ###
 * Go to www.twitter.com and sign in as normal, go to your settings page.
@@ -300,7 +296,3 @@ var twitterFetcher = function() {
 * 345735908357048478
 * Use this as your ID below instead!
 */
-
-$(document).ready(function() {
-	if ($("#widget-twitter").length) twitterFetcher.fetch(config.twitter);
-});

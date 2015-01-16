@@ -624,6 +624,7 @@ optgroup {
 
 	select {
 		display: none;
+		margin-bottom: 0;
 	}
 
 	.dropdown-current {
@@ -641,16 +642,38 @@ optgroup {
 		display: none;
 		position: absolute;
 		margin: 0;
-		padding: 12px 14px;
+		padding: 0;
+		padding-top: 4px;
+		width: 42px;
 		top: 0;
 		right: 0;
 		bottom: 0;
 		color: $white;
 		@include font-size($defaultFontSize * 0.9);
+		text-align: center;
 		border: 0 solid rgba(0, 0, 0, 0.4);
+		@include border-left-radius(0);
 		@include border-right-radius($radius);
 		background: $primaryColor;
 		z-index: 50;
+
+		&:before {
+			display: inline-block !important;
+			position: relative !important;
+			margin: 0 !important;
+			width: 0 !important;
+			height: 100% !important;
+			top: 0 !important;
+			left: 0 !important;
+			content: "" !important;
+			vertical-align: middle !important;
+		}
+
+		& > * {
+			display: inline-block;
+			@include font-size($defaultFontSize);
+			vertical-align: middle !important;
+		}
 	}
 
 
@@ -757,16 +780,38 @@ optgroup {
 		.fake-close {
 			display: block;
 			position: absolute;
+			margin: 0;
 			padding: 0;
-			width: 40px;
+			width: 42px;
 			top: 0;
 			right: 0;
 			bottom: 0;
+			color: $white;
 			@include font-size($defaultFontSize * 1.75);
 			text-align: center;
+			border: 0 solid rgba(0, 0, 0, 0.4);
 			@include border-left-radius(0);
 			@include border-right-radius($radius);
-			z-index: 1;
+			background: $primaryColor;
+			z-index: 50;
+
+			&:before {
+				display: inline-block !important;
+				position: relative !important;
+				margin: 0 !important;
+				width: 0 !important;
+				height: 100% !important;
+				top: 0 !important;
+				left: 0 !important;
+				content: "" !important;
+				vertical-align: middle !important;
+			}
+
+			& > * {
+				display: inline-block;
+				@include font-size($defaultFontSize);
+				vertical-align: middle !important;
+			}
 		}
 	}
 }

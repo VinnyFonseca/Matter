@@ -13,6 +13,7 @@
 @mixin font-size($font-size) {
 	font-size: $font-size + px;
 	font-size: ($font-size / 10) + rem;
+	line-height: ($font-size * 1.7) + px;
 	line-height: (($font-size / 10) * 1.7) + rem;
 }
 
