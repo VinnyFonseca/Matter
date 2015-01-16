@@ -1,21 +1,41 @@
 function buildDropdowns(i) {
 	var el = $("select").eq(i),
-		size = size !== "" ? parseInt(el.attr("size"), 10) : 1,
+		size = size == "undefined" || size === "" ? 1 : parseInt(el.attr("size"), 10),
 		type = typeof size !== "undefined" && size !== "" && size > 1 ? "list" : "drop",
-		options = type === "drop" ? el.find("option").not(".placeholder") : el.find("option");
+		option = type === "drop" ? el.find("option").not(".placeholder") : el.find("option"),
+		selected = el.find("option:selected"),
+		wrapper = '<div class="dropdown-' + i + ' dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
+		arrow = '<div class="dropdown-arrow">&#9660;</div>',
+		current = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>',
+		dropdown = '<div class="dropdown"></div>';
 
-	$(".dropdown-" + i).find(".dropdown").html("");
 
-	options.each(function() {
+	console.log(type);
+
+
+	// Build structure
+
+	if ( $(".dropdown-" + i).length ) el.insertAfter($(".dropdown-" + i));
+	$(".dropdown-" + i).remove();
+
+	el.wrap(wrapper);
+
+	var parentWrapper = $(".dropdown-" + i);
+
+	parentWrapper.find(".dropdown").remove();
+	parentWrapper.find(".dropdown-arrow").remove();
+	parentWrapper.find(".dropdown-current").remove();
+	$(".dropdown-" + i).prepend(dropdown).prepend(arrow).prepend(current);
+
+	option.each(function() {
 		var option = $(this),
-			parent = $(".dropdown-" + i),
 			isSelected = option.is(":selected") ? "active" : "",
 			item = '<div class="dropdown-item ' + isSelected + '" data-value="' + option.val() + '">' + option.html() + '</div>';
 
-		parent.find(".dropdown").append(item);
-
-		if ( type == "list" ) parent.find(".dropdown").height(((parent.find(".dropdown-item").outerHeight() + 1) * size) - 1);
+		parentWrapper.find(".dropdown").append(item);
 	});
+
+	if ( type == "list" ) parentWrapper.find(".dropdown").height(((parentWrapper.find(".dropdown-item").outerHeight() + 1) * size) - 1);
 
 
 	// Click Event
@@ -73,22 +93,8 @@ function buildDropdowns(i) {
 	});
 }
 
-// Dropdowns
-
 function initDropdowns() {
 	$("select").each(function(i) {
-		var el = $(this),
-			size = parseInt(el.attr("size"), 10),
-			type = typeof size !== "undefined" && size !== "" && size > 1 ? "list" : "drop",
-			wrapper = '<div class="dropdown-' + i + ' dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
-			selected = el.find("option:selected"),
-			arrow = '<div class="dropdown-arrow">&#9660;</div>',
-			current = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>',
-			dropdown = '<div class="dropdown"></div>';
-
-		el.wrap(wrapper);
-		$(".dropdown-" + i).prepend(dropdown).prepend(arrow).prepend(current);
-
 		buildDropdowns(i);
 	});
 
