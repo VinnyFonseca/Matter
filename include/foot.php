@@ -17,6 +17,7 @@
 
 
 		<!-- Core -->
+		<script type="text/javascript" src="scripts/matter/config.js"></script>
 		<script type="text/javascript" src="scripts/matter/core.js"></script>
 		<script type="text/javascript" src="scripts/matter/nav.js"></script>
 		<script type="text/javascript" src="scripts/matter/form.js"></script>
