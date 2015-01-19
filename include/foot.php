@@ -1,51 +1,15 @@
-		<!-- Required Plugins -->
-		<script type="text/javascript" src="scripts/vendor/jquery-1.11.2.min.js"></script>
-		<script type="text/javascript" src="scripts/vendor/modernizr-full.min.js"></script>
-		<script type="text/javascript" src="scripts/vendor/fastclick.js"></script>
-		<script type="text/javascript" src="scripts/vendor/jquery.transit.js"></script>
-
-
-		<!-- Complementary Plugins -->
-		<script type="text/javascript" src="scripts/vendor/datepicker.js"></script>
-		<script type="text/javascript" src="scripts/vendor/jquery.highlight.js"></script>
-
-
-		<!-- Polyfills -->
-		<script type="text/javascript" src="scripts/vendor/placeholders.min.js"></script>
-		<script type="text/javascript" src="scripts/vendor/picturefill.js"></script>
-
-
-		<!-- Core -->
-		<script type="text/javascript" src="scripts/matter/config.js"></script>
-		<script type="text/javascript" src="scripts/matter/core.js"></script>
-
-		<script type="text/javascript" src="scripts/matter/nav.js"></script>
-		<script type="text/javascript" src="scripts/matter/form.js"></script>
-		<script type="text/javascript" src="scripts/matter/validation.js"></script>
-
-		<script type="text/javascript" src="scripts/matter/cookie.js"></script>
-		<script type="text/javascript" src="scripts/matter/notifications.js"></script>
-		<script type="text/javascript" src="scripts/matter/tooltips.js"></script>
-		<script type="text/javascript" src="scripts/matter/slider.js"></script>
-		<script type="text/javascript" src="scripts/matter/twitter.js"></script>
-
-		<!-- Site Specific -->
-		<script type="text/javascript" src="scripts/global.js"></script>
-
-
-		<!-- Third Party CDN Plugins -->
-
-		<!-- AddThis -->
-		<!-- Go to www.addthis.com/dashboard to customize your tools -->
-		<!--
-		<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-547c3c891cc473c6" async="async"></script>
-		-->
-
+		<!-- Minified JS - Includes all .js from scripts folder -->
+		<script type="text/javascript" src="scripts/min/main.min.js"></script>
 
 		<!-- Google Maps -->
 		<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js"></script>
-		<script type="text/javascript" src="scripts/matter/gmaps.js"></script>
 
+		<!-- Third Party CDN Plugins -->
+		<!-- AddThis -->
+		<!-- Go to www.addthis.com/dashboard to customize your tools -->
+		<!--
+		<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-XXXXXXXXXXXXXXXX" async="async"></script>
+		-->
 
 		<!-- Google Analytics -->
 		<!--
@@ -59,6 +23,5 @@
 			_gaTracker('send', 'pageview');
 		</script>
 		-->
-
 	</body>
 </html>
