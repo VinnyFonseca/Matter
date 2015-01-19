@@ -10,9 +10,6 @@ function buildDropdowns(i) {
 		dropdown = '<div class="dropdown"></div>';
 
 
-	console.log(type);
-
-
 	// Build structure
 
 	if ( $(".dropdown-" + i).length ) el.insertAfter($(".dropdown-" + i));

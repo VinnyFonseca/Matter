@@ -376,8 +376,6 @@ function sliderInit(sliderId) {
 					'left': movePos - (dragStart - dragX)
 				});
 
-				console.log(dragX < sliderLeft || dragX > sliderRight);
-
 				if ( dragX < sliderLeft ) {
 					if ( dragStart - dragX > config.slider.trigger ) {
 						slideNext();
@@ -477,4 +475,17 @@ function sliderInit(sliderId) {
 	$(window).on("resize", function() {
 		containerPos();
 	});
+}
+
+
+function initSliders() {
+	if ( $(".slider").length ) {
+		$('.slider-container').css('visibility', 'visible');
+		$('.slider').each(function (i, slider) {
+			setTimeout(function() {
+				sliderInit(slider.id = 'slider-' + i);
+			}, 250 * i);
+		});
+		if (config.application.debug) console.log("Init :: Sliders");
+	}
 }

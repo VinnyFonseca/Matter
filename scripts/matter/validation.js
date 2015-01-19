@@ -127,7 +127,7 @@ function initValidation() {
 
 				validateBlur(el, type, value);
 			});
-	}
 
-	if (config.application.debug) console.log("Form :: Validation");
+		if (config.application.debug) console.log("Form :: Validation");
+	}
 }

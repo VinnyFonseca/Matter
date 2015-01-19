@@ -78,6 +78,7 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 
 
 
+
 // SVG Injection
 
 function initSVGs() {
@@ -117,57 +118,11 @@ function initSVGs() {
 
 
 
-// Cookie System
-
-var cookieSystem = {
-	get: function(sKey) {
-		return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
-	},
-	set: function(sKey, sValue, vEnd, sPath, sDomain, bSecure) {
-		if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
-		var sExpires = "";
-		if (vEnd) {
-			switch (vEnd.constructor) {
-				case Number:
-					var currentDate = new Date(),
-						expiryDate = new Date(currentDate.getTime() + (1000 * 60 * 60 * 24 * vEnd));
-
-					sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; expires=" + expiryDate.toGMTString();
-					break;
-				case String:
-					sExpires = "; expires=" + vEnd;
-					break;
-				case Date:
-					sExpires = "; expires=" + vEnd.toGMTString();
-					break;
-			}
-		}
-		document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
-		return true;
-	},
-	remove: function(sKey, sPath, sDomain) {
-		if (!sKey || !this.hasItem(sKey)) { return false; }
-		document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + ( sDomain ? "; domain=" + sDomain : "") + ( sPath ? "; path=" + sPath : "");
-		return true;
-	},
-	has: function(sKey) {
-		return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
-	}
-};
-
-
-
-
 // Randomisation
 
 function randomizeInteger(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 }
-
-
-
-
-// Mobile Interactions
 
 
 
@@ -178,8 +133,6 @@ var returnedData,
 	dataObject;
 
 function dataRequest(url, type, successFunction) {
-	// var finalUrl = "scripts/matter/autocomplete/sample.json";
-
 	if (config.application.debug) console.log('AJAX :: Request');
 
 	request = $.ajax({
@@ -231,153 +184,6 @@ function initFontSizeControls() {
 	if (config.application.debug) console.log("Init :: Font Size Controls");
 }
 
-
-
-
-// Notifications
-
-function Timer(callback, delay) {
-	var timerId, start, remaining = delay;
-
-	this.stop = function() {
-		window.clearTimeout(timerId);
-		remaining = delay;
-	};
-	this.pause = function() {
-		window.clearTimeout(timerId);
-		remaining -= new Date() - start;
-	};
-	this.resume = function() {
-		start = new Date();
-		window.clearTimeout(timerId);
-		timerId = window.setTimeout(callback, remaining);
-	};
-	this.resume();
-}
-
-function notify(message, tone, type, delay) {
-	tone = (typeof tone === "undefined") || tone === "" ? config.notification.tone : tone;
-	type = (typeof type === "undefined") || type === "" ? config.notification.type : type;
-	delay = (typeof delay === "undefined") || delay === "" ? config.notification.delay : delay;
-
-	var isOn = typeof timer !== "undefined";
-	if (isOn) timer.stop();
-	$(".notification").removeClass("active");
-
-	if ( delay > 0 ) {
-		timer = new Timer(function() {
-			$(".notification").removeClass("active");
-		}, delay);
-	}
-
-	$(".notification")
-		.attr("data-type", type)
-		.addClass("active")
-		.removeClass("default")
-		.removeClass("success")
-		.removeClass("warning")
-		.removeClass("failure")
-		.addClass(tone)
-		.on("mouseenter", function() {
-			if ( delay > 0 ) timer.pause();
-		})
-		.on("mouseleave", function() {
-			if ( delay > 0 ) timer.resume();
-		})
-		.children(".notification-message").html(message);
-
-	$(".notification-close").on("click", function() {
-		$(".notification").removeClass("active");
-	});
-
-	if (config.application.debug) console.log("Trigger :: Notification");
-}
-
-function initNotifications() {
-	$(".notification-trigger").on("click", function() {
-		var message = $(this).attr("data-message"),
-			tone = $(this).attr("data-tone"),
-			type = $(this).attr("data-type"),
-			delay = $(this).attr("data-delay");
-
-		notify(message, tone, type, delay);
-	});
-
-	if (config.application.debug) console.log("Init :: Notifications");
-}
-
-
-
-// Tooltips
-
-function initTooltips() {
-	$(".tooltip").each(function() {
-		var tooltipData = $(this).attr("data-tooltip"),
-			container = $(".tooltip-container");
-
-		$(this)
-			.on("mousemove", function(event) {
-				if ( !$("html").hasClass("touch") ) {
-					container.html(tooltipData).addClass("active");
-
-					switch(config.tooltip.position) {
-						case "left":
-							container.css({
-								top: event.pageY - container.outerHeight() - 10,
-								left: event.pageX - container.outerWidth()
-							});
-							break;
-
-						case "center":
-							container.css({
-								top: event.pageY - container.outerHeight() - 10,
-								left: event.pageX - (container.outerWidth() / 2) - 5
-							});
-							break;
-
-						case "right":
-							container.css({
-								top: event.pageY - container.outerHeight() - 10,
-								left: event.pageX
-							});
-							break;
-
-						default:
-							container.css({
-								top: event.pageY - container.outerHeight() - 10,
-								left: event.pageX - (container.outerWidth() / 2) - 5
-							});
-					}
-
-					var tooltip = {
-						left: container.offset().left,
-						right: container.offset().left + container.outerWidth()
-					};
-					var boundaries = {
-						left: $(".wrapper").offset().left,
-						right: $(".wrapper").offset().left + $(".wrapper").outerWidth()
-					};
-
-					if ( config.tooltip.bound ) {
-						if ( tooltip.left <= boundaries.left ) {
-							container.css({ left: boundaries.left });
-						}
-						if ( tooltip.right >= boundaries.right ) {
-							container.css({ left: boundaries.right - container.outerWidth() });
-						}
-					}
-				}
-			})
-			.on("mouseleave", function() {
-				container.removeClass("active").css({
-					left: -200,
-					top: -200
-				});
-			});
-	});
-
-	if (config.application.debug) console.log("Init :: Tooltips");
-}
 
 
 
@@ -437,32 +243,6 @@ function initTables() {
 
 
 
-// Twitter Fetcher
-
-function initTwitter() {
-	if ($("#" + config.twitter.domId).length) {
-		twitterFetcher.fetch(config.twitter);
-		if (config.application.debug) console.log("Init :: Twitter");
-	}
-}
-
-
-
-// Init Sliders
-
-function initSliders() {
-	if ( $(".slider").length ) {
-		$('.slider-container').css('visibility', 'visible');
-		$('.slider').each(function (i, slider) {
-			setTimeout(function() {
-				sliderInit(slider.id = 'slider-' + i);
-			}, 250 * i);
-		});
-		if (config.application.debug) console.log("Init :: Sliders");
-	}
-}
-
-
 
 // Init Smooth Scrolling
 
@@ -491,16 +271,10 @@ function initSmoothScroll() {
 
 
 
-// Initialisation
 
-function initFramework() {
-	isWideScreen = $(window).width() > 768;
+// Init Hyperlinks
 
-	if ( Modernizr.touch ) { // If touch device
-		FastClick.attach(document.body); // Removes 300ms delay from taps on mobile devices. Requires fastclick.js.
-		$(".map-wrapper").addClass("map-mobile"); // Fixes image distortion on Google Maps - See _base.scss.
-	}
-
+function initLinks() {
 	$("a[href*='#']").on("click", function(event) { // Smooth same page navigation for <a href="#target-anchor" class="anchor"></a> elements.
 		var link = $(this).attr("href");
 
@@ -523,18 +297,35 @@ function initFramework() {
 		$(this).append(" <small>[" + this.href + "]</small>");
 	});
 
+	if ( config.application.debug ) console.log("Init :: Links");
+}
+
+
+
+
+// Initialisation
+
+function initFramework() {
+	isWideScreen = $(window).width() > 768;
+
+	if ( Modernizr.touch ) { // If touch device
+		FastClick.attach(document.body); // Removes 300ms delay from taps on mobile devices. Requires fastclick.js.
+		$(".map-wrapper").addClass("map-mobile"); // Fixes image distortion on Google Maps - See _base.scss.
+	}
 
 
 
 	// System Init
 
-	initNav();
 	initSVGs(); // Renders SVGs for modern browsers, IE9 and above.
+	initLinks();
+	initNav();
 	initTables();
 	initSmoothScroll();
 
 	// Widgets Init
 
+	initCookies();
 	initTooltips();
 	initNotifications();
 	initFontSizeControls();
@@ -548,18 +339,20 @@ function initFramework() {
 	loadFileInputs(3, "file");
 	initValidation();
 
-	if (config.application.debug) console.log("Done :: Matter");
+	if (config.application.debug) console.log("Done •• Matter");
 }
+
+
 
 
 // Window Load
 
 var isWideScreen;
 
-$(window).load(function() {
-	$("body").removeClass("preload"); // Fix for CSS3 animation on load.
+$(document).ready(initFramework);
 
-	initFramework(); // On window load because image dimensions are not available on dom ready.
+$(window).on("load", function() {
+	$("body").removeClass("preload"); // Fix for CSS3 animation on load.
 });
 
 $(window).on("resize", function() {

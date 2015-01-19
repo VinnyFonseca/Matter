@@ -294,5 +294,12 @@ var twitterFetcher = function() {
 * see the widget you just created. Click edit.
 * Now look at the URL in your web browser, you will see a long number like this:
 * 345735908357048478
-* Use this as your ID below instead!
+* Use this as your ID on config.js instead!
 */
+
+function initTwitter() {
+	if ($("#" + config.twitter.domId).length) {
+		twitterFetcher.fetch(config.twitter);
+		if (config.application.debug) console.log("Init :: Twitter");
+	}
+}

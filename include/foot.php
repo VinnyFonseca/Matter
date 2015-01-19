@@ -8,7 +8,6 @@
 		<!-- Complementary Plugins -->
 		<script type="text/javascript" src="scripts/vendor/datepicker.js"></script>
 		<script type="text/javascript" src="scripts/vendor/jquery.highlight.js"></script>
-		<script type="text/javascript" src="scripts/vendor/twitter-fetcher.js"></script>
 
 
 		<!-- Polyfills -->
@@ -19,10 +18,16 @@
 		<!-- Core -->
 		<script type="text/javascript" src="scripts/matter/config.js"></script>
 		<script type="text/javascript" src="scripts/matter/core.js"></script>
+
 		<script type="text/javascript" src="scripts/matter/nav.js"></script>
 		<script type="text/javascript" src="scripts/matter/form.js"></script>
 		<script type="text/javascript" src="scripts/matter/validation.js"></script>
+
+		<script type="text/javascript" src="scripts/matter/cookie.js"></script>
+		<script type="text/javascript" src="scripts/matter/notifications.js"></script>
+		<script type="text/javascript" src="scripts/matter/tooltips.js"></script>
 		<script type="text/javascript" src="scripts/matter/slider.js"></script>
+		<script type="text/javascript" src="scripts/matter/twitter.js"></script>
 
 		<!-- Site Specific -->
 		<script type="text/javascript" src="scripts/global.js"></script>
