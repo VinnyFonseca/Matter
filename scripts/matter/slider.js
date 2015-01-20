@@ -324,6 +324,7 @@ function sliderInit(sliderId) {
 			duration: animDuration,
 			complete: function() {
 				animating = false;
+				animDuration = config.slider.duration;
 				containerPos();
 			}
 		});
@@ -378,20 +379,22 @@ function sliderInit(sliderId) {
 
 				if ( dragX < sliderLeft ) {
 					if ( dragStart - dragX > config.slider.trigger ) {
+						dragging = false;
 						slideNext();
-						dragging = false;
 					} else {
-						slideAction();
+						animDuration = 250;
 						dragging = false;
+						slideAction();
 					}
 				}
 				if ( dragX > sliderRight ) {
 					if ( dragStart - dragX < - config.slider.trigger ) {
+						dragging = false;
 						slidePrev();
-						dragging = false;
 					} else {
-						slideAction();
+						animDuration = 250;
 						dragging = false;
+						slideAction();
 					}
 				}
 			}
