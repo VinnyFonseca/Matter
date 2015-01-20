@@ -7,18 +7,11 @@ module.exports = function(grunt) {
 		// CONFIG ===================================/
 
 		compass: {
-			dev: {
+			dist: {
 				options: {
 					sassDir: ['styles/pre'],
 					cssDir: ['styles'],
-					environment: 'development'
-				}
-			},
-			prod: {
-				options: {
-					sassDir: ['styles/pre'],
-					cssDir: ['styles'],
-					environment: 'production'
+					outputStyle: 'compressed'
 				}
 			}
 		},
@@ -43,28 +36,29 @@ module.exports = function(grunt) {
 		},
 
 		watch: {
-			options: {
-				livereload: true,
-			},
 			html: {
 				files: ['**/*.html'],
+				options: { livereload: true	}
 			},
 			php: {
 				files: ['**/*.php'],
+				options: { livereload: true	}
 			},
 			css: {
-				files: ['styles/*.css']
+				files: ['styles/*.css'],
+				options: { livereload: true	}
 			},
 			sass: {
+				files: ['styles/**/*.{scss,sass}'],
+				tasks: ['compass:dist'],
 				options: {
 					livereload: false
-				},
-				files: ['styles/**/*.{scss,sass}'],
-				tasks: ['compass:dev']
+				}
 			},
 			js: {
 				files: ['scripts/**/*.js', '!scripts/min/*.js'],
-				tasks: ['uglify']
+				tasks: ['uglify'],
+				options: { livereload: true	}
 			}
 		}
 	});
@@ -79,5 +73,5 @@ module.exports = function(grunt) {
 
 	// TASKS =====================================/
 
-	grunt.registerTask('default', ['compass:dev', 'uglify', 'watch']);
+	grunt.registerTask('default', ['watch']);
 };

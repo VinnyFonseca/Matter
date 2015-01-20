@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 
-
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
 
-
 	<head>
-
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -39,5 +36,5 @@
 
 		<link rel="stylesheet" href="styles/build.css" type='text/css'>
 
-		<script type="text/javascript" src="scripts/vendor/html5shiv-printshiv.js"></script>
+		<script type="text/javascript" src="scripts/vendor/html5shiv-printshiv.min.js"></script>
 	</head>

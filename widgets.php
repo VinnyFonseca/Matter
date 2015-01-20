@@ -200,7 +200,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<img src="http://placehold.it/1280x400&text=Image,%20hover%20me" class="tooltip" data-tooltip="Using data-tooltip 1" />
+		<img src="http://placehold.it/960x300&text=Image,%20hover%20me" class="tooltip" data-tooltip="Using data-tooltip 1" />
 
 
 
@@ -267,13 +267,13 @@
 			<div class="slider-container-wrapper">
 				<div class="slider-movable">
 					<div class="slider-container">
-						<img src="http://placehold.it/1281x420" />
+						<img src="http://placehold.it/940x320" />
 					</div>
 					<div class="slider-container">
-						<img src="http://placehold.it/1282x420" />
+						<img src="http://placehold.it/941x320" />
 					</div>
 					<div class="slider-container">
-						<img src="http://placehold.it/1283x420" />
+						<img src="http://placehold.it/942x320" />
 					</div>
 				</div>
 			</div>
