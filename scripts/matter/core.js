@@ -275,7 +275,7 @@ function initSmoothScroll() {
 // Init Hyperlinks
 
 function initLinks() {
-	$("a[href*='#']").on("click", function(event) { // Smooth same page navigation for <a href="#target-anchor" class="anchor"></a> elements.
+	$("a[href^='#']").on("click", function(event) { // Smooth same page navigation for <a href="#target-anchor" class="anchor"></a> elements.
 		var link = $(this).attr("href");
 
 		event.preventDefault();
