@@ -155,38 +155,6 @@ function dataRequest(url, type, successFunction) {
 
 
 
-// Accessibility
-
-function initFontSizeControls() {
-	var defaultSize = 10,
-		fontSize = defaultSize,
-		range = config.accessibility.font.range;
-
-	$(".font-up").click(function() {
-		if( fontSize < defaultSize + range ) {
-			fontSize++;
-			$("html").css("font-size", fontSize);
-		}
-	});
-
-	$(".font-reset").click(function() {
-		fontSize = defaultSize;
-		$("html").css("font-size", fontSize);
-	});
-
-	$(".font-down").click(function() {
-		if( fontSize > defaultSize - range ) {
-			fontSize--;
-			$("html").css("font-size", fontSize);
-		}
-	});
-
-	if (config.application.debug) console.log("Init :: Font Size Controls");
-}
-
-
-
-
 // Tables
 
 function initTables() {
@@ -303,6 +271,16 @@ function initLinks() {
 
 
 
+// Detect Scroll Progress
+
+function scrollProgress() {
+	var scrollPercentage = ($("html body").scrollTop() * 100) / ($(document).height() - $(window).height());
+	$(".scroll-progress").width(scrollPercentage + "%");
+}
+
+
+
+
 // Initialisation
 
 function initFramework() {
@@ -317,15 +295,16 @@ function initFramework() {
 
 	// System Init
 
+	initCookies();
 	initSVGs(); // Renders SVGs for modern browsers, IE9 and above.
 	initLinks();
 	initNav();
 	initTables();
 	initSmoothScroll();
+	scrollProgress();
 
 	// Widgets Init
 
-	initCookies();
 	initTooltips();
 	initNotifications();
 	initFontSizeControls();
@@ -357,4 +336,8 @@ $(window).on("load", function() {
 
 $(window).on("resize", function() {
 	isWideScreen = $(window).width() > 768;
+});
+
+$(window).on("scroll", function() {
+	scrollProgress();
 });

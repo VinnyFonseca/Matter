@@ -22,16 +22,15 @@ module.exports = function(grunt) {
 					'scripts/min/main.min.js': [
 						'scripts/vendor/jquery-1.11.2.min.js',
 						'scripts/vendor/modernizr-full.min.js',
-						'scripts/vendor/fastclick.js',
-						'scripts/vendor/picturefill.js',
-						'scripts/vendor/jquery.highlight.js',
-						'scripts/vendor/placeholders.min.js',
-						'scripts/vendor/datepicker.js',
-						'scripts/vendor/jquery.transit.js',
+						'scripts/vendor/*.js',
 						'scripts/matter/*.js',
+						'scripts/matter/widgets/*.js',
 						'scripts/*.js'
 					]
 				}
+			},
+			options: {
+				beautify: false
 			}
 		},
 

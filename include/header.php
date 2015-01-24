@@ -33,4 +33,6 @@
 			<img src="img/logo.png" width="40" height="40" alt="">
 			<span class="font-large font-custom">Matter</span>
 		</a>
+
+		<div class="scroll-progress"></div>
 	</header>
