@@ -19,7 +19,7 @@
 				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 			})(window,document,'script','//www.google-analytics.com/analytics.js','_gaTracker');
 
-			_gaTracker('create', 'UA-XXXXXXXX-X', 'auto');
+			_gaTracker('create', 'UA-26718745-2', 'auto');
 			_gaTracker('send', 'pageview');
 		</script>
 		-->

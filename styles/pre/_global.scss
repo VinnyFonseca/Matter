@@ -144,6 +144,12 @@ footer,
 	a {
 		display: inline-block;
 		color: $white;
+
+		&:hover,
+		&:active,
+		&:visited {
+			color: $white;
+		}
 	}
 
 	.author {
