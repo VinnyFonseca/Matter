@@ -21,13 +21,13 @@ function Timer(callback, delay) {
 
 function notify(message, tone, delay) {
 	tone = (typeof tone === "undefined") || tone === "" ? config.notification.tone : tone;
-	delay = (typeof delay === "undefined") || delay === "" ? config.notification.delay : delay;
+	delay = (typeof delay === "undefined") || isNaN(delay) || delay === "" ? config.notification.delay : delay;
 
 	var isOn = typeof timer !== "undefined";
 	if (isOn) timer.stop();
 	$(".notification").removeClass("active");
 
-	if ( delay > 0 ) {
+	if ( delay !== 0 ) {
 		timer = new Timer(function() {
 			$(".notification").removeClass("active");
 		}, delay);
@@ -40,18 +40,20 @@ function notify(message, tone, delay) {
 		.removeClass("warning")
 		.removeClass("failure")
 		.addClass(tone)
+		.off("mouseenter")
 		.on("mouseenter", function() {
-			if ( delay > 0 ) timer.pause();
+			if ( delay !== 0 ) timer.pause();
 		})
+		.off("mouseleave")
 		.on("mouseleave", function() {
-			if ( delay > 0 ) timer.resume();
+			if ( delay !== 0 ) timer.resume();
 		})
 		.on("click", function() {
 			$(this).removeClass("active");
 		})
 		.children(".notification-message").html(message);
 
-	if (config.application.debug) console.log("Trigger :: Notification");
+	if (config.application.debug) console.log("Trigger :: Notification | Delay: " + delay);
 }
 
 function initNotifications() {
@@ -59,6 +61,8 @@ function initNotifications() {
 		var message = $(this).attr("data-message"),
 			tone = $(this).attr("data-tone"),
 			delay = parseInt($(this).attr("data-delay"));
+
+		console.log(delay);
 
 		notify(message, tone, delay);
 	});
