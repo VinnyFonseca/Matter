@@ -45,13 +45,12 @@
 	.header {
 		position: fixed;
 		margin-top: (-$navItemHeight * $navItemCount);
-		margin-top: (-$navItemHeight * 8);
 		@include transition-property(transform);
 		@include transition-duration($duration);
 		@include transition-timing-function($easing);
 
 		&.active {
-			@include transform(translateY($navItemHeight * 8));
+			@include transform(translateY($navItemHeight * $navItemCount));
 		}
 
 		.logo {

@@ -119,10 +119,7 @@ header,
 	position: fixed;
 	right: 10px;
 	bottom: 10px;
-	// @include opacity(0);
 	z-index: 80;
-
-	@include transition(opacity $duration $easing);
 
 	&.active {
 		@include opacity(0);
