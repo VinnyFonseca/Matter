@@ -21,9 +21,8 @@ var config = {
 		responsive: true // bool: Converts every row into a separate table on mobiles.
 	},
 	notification: {
-		type: "float", // str: "float", "bar".
+		tone: "default", // str: "default", "success", "warning", "failure".
 		delay: 5000, // int: miliseconds for disappearance.
-		tone: "default" // str: "default", "success", "warning", "failure".
 	},
 	tooltip: {
 		position: "center", // str: "left", "center", "right".

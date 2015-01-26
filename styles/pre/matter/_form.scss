@@ -361,7 +361,7 @@ input[type="submit"],
 input[type="button"] {
 	display: inline-block;
 	position: relative;
-	margin: 0 auto;
+	margin: 2px auto;
 	padding: ($spacing / 2) ($spacing / 1.5);
 	color: $defaultTextColor;
 	font-family: $bodyFont;

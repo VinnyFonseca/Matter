@@ -19,9 +19,8 @@ function Timer(callback, delay) {
 	this.resume();
 }
 
-function notify(message, tone, type, delay) {
+function notify(message, tone, delay) {
 	tone = (typeof tone === "undefined") || tone === "" ? config.notification.tone : tone;
-	type = (typeof type === "undefined") || type === "" ? config.notification.type : type;
 	delay = (typeof delay === "undefined") || delay === "" ? config.notification.delay : delay;
 
 	var isOn = typeof timer !== "undefined";
@@ -35,7 +34,6 @@ function notify(message, tone, type, delay) {
 	}
 
 	$(".notification")
-		.attr("data-type", type)
 		.addClass("active")
 		.removeClass("default")
 		.removeClass("success")
@@ -48,11 +46,10 @@ function notify(message, tone, type, delay) {
 		.on("mouseleave", function() {
 			if ( delay > 0 ) timer.resume();
 		})
+		.on("click", function() {
+			$(this).removeClass("active");
+		})
 		.children(".notification-message").html(message);
-
-	$(".notification-close").on("click", function() {
-		$(".notification").removeClass("active");
-	});
 
 	if (config.application.debug) console.log("Trigger :: Notification");
 }
@@ -61,10 +58,9 @@ function initNotifications() {
 	$(".notification-trigger").on("click", function() {
 		var message = $(this).attr("data-message"),
 			tone = $(this).attr("data-tone"),
-			type = $(this).attr("data-type"),
-			delay = $(this).attr("data-delay");
+			delay = parseInt($(this).attr("data-delay"));
 
-		notify(message, tone, type, delay);
+		notify(message, tone, delay);
 	});
 
 	if (config.application.debug) console.log("Init :: Notifications");

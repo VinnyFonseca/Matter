@@ -2,42 +2,33 @@
 
 .notification {
 	display: block;
-	position: absolute;
-	margin: 0;
-	padding: 0 $spacing;
-	padding-right: 100 + $spacing !important;
-	width: auto;
-	max-height: 0;
+	position: fixed;
+	margin: 0 2%;
+	padding: $spacing;
+	width: 310px;
+	top: $headerHeight;
 	color: $white;
 	font-weight: bold;
 	background: $primaryColor;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 	@include opacity(0);
+	cursor: pointer;
 	overflow: hidden;
 	z-index: 120;
 
-	@include transition-property(padding, max-height, opacity);
+	@include transform(translateY(-100%));
+
+	@include transition-property(transform, top, opacity);
 	@include transition-duration($duration);
 	@include transition-timing-function($easing);
 
+	&:hover {
+		background: $secondaryColor;
+	}
+
 	&.active {
-		padding: $spacing;
-		max-height: 350px;
 		@include opacity(1);
-	}
-
-	&[data-type="bar"] {
-		position: relative;
-		width: 100%;
-		box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.15);
-	}
-
-	&[data-type="float"] {
-		position: fixed;
-		top: ($spacing / 2) + $headerHeight;
-		right: $spacing / 2;
-		left: $spacing / 2;
-		@include border-radius($radius);
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+		@include transform(translateY(0));
 	}
 
 	&.success {
@@ -60,11 +51,16 @@
 		display: block;
 		position: absolute;
 		margin: 0;
-		margin-top: -24px;
-		width: 100px;
-		height: 48px;
-		top: 50%;
+		width: 16px;
+		height: 16px;
+		top: $spacing / 2;
 		right: $spacing / 2;
 		border: 0 !important;
+
+		.icon {
+			width: 100%;
+			height: 100%;
+			top: -3px;
+		}
 	}
 }
