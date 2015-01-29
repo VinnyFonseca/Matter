@@ -8,7 +8,6 @@
 	width: 310px;
 	top: $headerHeight;
 	color: $white;
-	font-weight: bold;
 	background: $primaryColor;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 	@include opacity(0);
