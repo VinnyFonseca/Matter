@@ -52,13 +52,13 @@ $defaultTextColor: $darkGray;
 
 $successText: #008800; // Success text
 $successBorder: #44bb44; // Success border
-$successBg: #44bb44; // Success background
+$successBg: #eeffee; // Success background
 
 $warningText: #dd8800; // Warning text
 $warningBorder: #ffaa22; // Warning border
 $warningBg: #aa5500; // Warning background
 
-$failureText: #cc0000; // Failure text
+$failureText: #dd0000; // Failure text
 $failureBorder: #ff7777; // Failure border
 $failureBg: #fff2f2; // Failure background
 
@@ -67,7 +67,7 @@ $focusColor: $white; // Input focus
 // Notifications
 
 $successNotifyBg: #44bb44;
-$warningNotifyBg: #DD9900;
+$warningNotifyBg: #DD8800;
 $failureNotifyBg: #DD0000;
 
 
