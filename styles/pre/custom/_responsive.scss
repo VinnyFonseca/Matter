@@ -6,6 +6,20 @@
 
 @media screen and (max-width: $screenWide) {
 
+	header,
+	.header {
+		nav,
+		.nav {
+			.nav-item {
+				padding: $spacing ($spacing / 1.5);
+
+				& > * {
+					@include font-size($defaultFontSize / 1.1);
+				}
+			}
+		}
+	}
+
 }
 
 
@@ -21,6 +35,26 @@
 	.wrapper {
 		padding: $spacing;
 		width: 100%;
+	}
+
+	header,
+	.header {
+		.logo {
+			span {
+				display: none;
+			}
+		}
+
+		nav,
+		.nav {
+			.nav-item {
+				padding: $spacing ($spacing / 2);
+
+				& > * {
+					@include font-size($defaultFontSize / 1.2);
+				}
+			}
+		}
 	}
 
 }
@@ -55,6 +89,10 @@
 
 		.logo {
 			height: $headerHeight + 3;
+
+			span {
+				display: inline-block;
+			}
 		}
 
 		nav,
@@ -67,6 +105,7 @@
 				display: block;
 				position: relative;
 				padding: ($spacing / 1.5) $spacing;
+				height: auto;
 				border-left: 0;
 				border-bottom: 1px solid $clearGray;
 				vertical-align: baseline;

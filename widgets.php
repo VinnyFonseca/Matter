@@ -41,11 +41,13 @@
 
 		<h3>Accessibility</h3>
 
-		<h4>Font size controls.</h4>
+		<h5>Font size controls.</h5>
 
 		<p>Two controls to change the font and one to reset. Use class <code>.primary</code> to add the "call to action" styling.</p>
 
-		<h4>Usage:</h4>
+		<p>
+			<strong>Usage:</strong>
+		</p>
 
 		<p>Insert the example code below anywhere in your page.</p>
 
@@ -90,21 +92,11 @@
 			There are two notification styles. They are responsive, liquid, and cross-browser compliant. They can be used for <strong>cookie messages</strong>, <strong>form validation</strong>, <strong>progress updates</strong>, <strong>user information</strong>, etc...
 		</p>
 
-		<div class="button primary notification-trigger" data-message="Test message.">
-			Undeclared type and delay
-		</div>
-		<a href="#get-started" class="button primary notification-trigger" data-type="bar" data-delay="0" data-message="Another message.">
-			Type bar, delay 0
-		</a>
-		<div class="button primary notification-trigger" data-type="float" data-delay="5000" data-message="And another.">
-			Type float, delay 5000
-		</div>
+		<p class="emphasis">Note: If delay is undeclared (undefined or empty) it will be set to default delay (5 seconds).</p>
 
-		<p class="emphasis">Note: <code>"bar"</code> has delay 0, so it stays indefinitely, while <code>"float"</code> has a 5000ms delay.</p>
-
-		<br>
-
-		<h4>Usage:</h4>
+		<p>
+			<strong>Usage:</strong>
+		</p>
 
 		<p>
 			Apply class <code>.notification-trigger</code> to element.
@@ -118,9 +110,6 @@
 				<strong>Defaults:</strong>
 			</dt>
 			<dd>
-				<code>type: "float"</code> &nbsp;<small class="gray"><strong>float | bar</strong></small>
-			</dd>
-			<dd>
 				<code>delay: 5000</code>
 			</dd>
 			<dd>
@@ -133,8 +122,8 @@
 		</p>
 
 <pre>
-&lt;div class="button primary notification-trigger" data-type="float" data-delay="5000" data-message="Sample notification."&gt;
-	Type float, delay 5000
+&lt;div class="button primary notification-trigger" data-delay="3000" data-message="Sample notification."&gt;
+	Delay 5000
 &lt;/div&gt;
 </pre>
 
@@ -142,8 +131,26 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="button primary notification-trigger" data-type="float" data-delay="5000" data-message="Sample notification.">
-			Type float, delay 5000
+		<div class="button primary notification-trigger" data-message="Test message.">
+			Undeclared delay (default)
+		</div>
+		<div class="button primary notification-trigger" data-delay="3000" data-message="And another.">
+			Delay 3 seconds (declared)
+		</div>
+		<div class="button primary notification-trigger" data-delay="0" data-message="And another.">
+			Delay 0 seconds (persistent)
+		</div>
+
+		<br>
+
+		<div class="button primary notification-trigger" data-delay="0" data-tone="success" data-message="Success message.">
+			Success tone
+		</div>
+		<div class="button primary notification-trigger" data-delay="0" data-tone="warning" data-message="Warning message.">
+			Warning tone
+		</div>
+		<div class="button primary notification-trigger" data-delay="0" data-tone="failure" data-message="Failure message.">
+			Failure tone
 		</div>
 
 
@@ -160,17 +167,13 @@
 			Mouse-following tooltips on hover using attribute <code>data-tooltip</code>.
 		</p>
 
-		<p>
-			<button class="tooltip" data-tooltip="Lorem ipsum Laborum">Hover this button</button>
-		</p>
-
 		<p class="emphasis">
 			Note: Tooltips are disabled on touch devices as it depends on <code>:hover</code> pseudo-selector.
 		</p>
 
-		<br>
-
-		<h4>Usage:</h4>
+		<p>
+			<strong>Usage:</strong>
+		</p>
 
 		<p>
 			Add a class <code>.tooltip</code> and an attribute <code>data-tooltip</code> to any HTML element.
@@ -200,6 +203,10 @@
 			<strong>Demo:</strong>
 		</p>
 
+		<p>
+			<button class="tooltip" data-tooltip="Lorem ipsum Laborum">Hover this button</button>
+		</p>
+
 		<img src="http://placehold.it/960x300&text=Image,%20hover%20me" class="tooltip" data-tooltip="Using data-tooltip 1" />
 
 
@@ -216,9 +223,9 @@
 			Hand coded image slider with horizontal slide transitions. Supports multiple instances and infinite slides.
 		</p>
 
-		<br>
-
-		<h4>Usage:</h4>
+		<p>
+			<strong>Usage:</strong>
+		</p>
 
 		<p>
 			Insert the example code below anywhere in your page, then define the specifics for each slider on the data attributes.
@@ -297,9 +304,9 @@
 			This specific map can be found at <a href="https://mapbuildr.com/buildr/kokih7" target="_blank">https://mapbuildr.com/buildr/kokih7</a>
 		</p>
 
-		<br>
-
-		<h4>Usage:</h4>
+		<p>
+			<strong>Usage:</strong>
+		</p>
 
 		<p>
 			Insert the example code below anywhere in your page.
@@ -346,7 +353,9 @@
 			<strong>Credit:</strong> <a href="http://jasonmayes.com/projects/twitterApi/" target="_blank">Jason Mayes' twitter fetcher plugin</a>.
 		</p>
 
-		<h4>Usage</h4>
+		<p>
+			<strong>Usage:</strong>
+		</p>
 
 		<ol>
 			<li>
@@ -375,8 +384,6 @@
 		<p>
 			<strong>Demo:</strong>
 		</p>
-
-		<h4>Tweet Timeline</h4>
 
 		<div id="widget-twitter"></div>
 

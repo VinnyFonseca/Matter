@@ -156,8 +156,10 @@ $(window).load(function() {
 	// Datepicker
 
 	$("input[data-calendar='true']").datepicker({
+		autoclose: true,
 		format: "dd/mm/yyyy",
-		todayBtn: "linked"
+		todayBtn: "linked",
+		todayHighlight: true
 	});
 
 

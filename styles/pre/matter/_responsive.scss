@@ -66,21 +66,7 @@
 	// Notification
 
 	.notification {
-		padding-right: $spacing !important;
-		z-index: 80;
-
-		&[data-type="float"] {
-			margin-top: $headerHeight;
-		}
-
-		.notification-close {
-			display: block;
-			position: relative;
-			margin-top: $spacing;
-			top: 0;
-			left: 0;
-			right: 0;
-		}
+		width: 96%;
 	}
 
 
