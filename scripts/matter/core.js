@@ -166,7 +166,7 @@ function dataRequest(url, type, successFunction) {
 		dataType: "JSON",
 		success: function(data) {
 			if (config.application.debug) console.log('AJAX :: Success');
-//			if (config.application.debug) console.log(data);
+			// if (config.application.debug) console.log(data);
 			if ( typeof successFunction !== 'undefined' ) successFunction(data);
 		},
 		error: function(request, status, error) {
@@ -174,6 +174,18 @@ function dataRequest(url, type, successFunction) {
 			if (config.application.debug) console.log(request, status, error, request.statusText);
 		}
 	});
+}
+
+
+// Asynchronous script loading with callback function
+
+function loadScript(src, callback) {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src = src;
+
+	if ( callback ) script.onload = callback;
+	document.body.appendChild(script);
 }
 
 
@@ -333,8 +345,8 @@ function initFramework() {
 	initNotifications();
 	initFontSizeControls();
 	initSliders();
-	initMap();
 	initTwitter();
+	initMap();
 
 	// Forms Init
 

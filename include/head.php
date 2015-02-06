@@ -8,7 +8,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
-		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
 
 		<!-- Favicons -->
 		<link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-touch-icon-57x57.png">
@@ -32,11 +32,7 @@
 
 		<title>Matter</title>
 
-		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto+Slab" type="text/css">
-		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700" type="text/css">
-		<link rel='stylesheet' href='//fonts.googleapis.com/css?family=Ubuntu+Mono' type='text/css'>
-
-		<link rel="stylesheet" href="styles/build.css" type='text/css'>
+		<link rel="stylesheet" href="styles/build.css" type="text/css" media="screen">
 
 		<script type="text/javascript" src="scripts/vendor/html5shiv-printshiv.min.js"></script>
 	</head>

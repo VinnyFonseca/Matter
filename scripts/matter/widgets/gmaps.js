@@ -488,16 +488,22 @@ function initialize() {
 	}
 }
 
-
-function initMap() {
-	if ( $('.map-wrapper').length ) {
-		google.maps.event.addDomListener(window, 'load', initialize);
+function buildMap() {
+	if ( window.google && google.maps ) {
+		initialize();
+		// google.maps.event.addDomListener(window, 'load', initialize);
 		google.maps.event.addDomListener(window, "resize", function() {
 			var center = map.getCenter();
 			google.maps.event.trigger(map, "resize");
 			map.setCenter(center);
 		});
-	}
 
-	if (config.application.debug) console.log("Init :: Map");
+		if (config.application.debug) console.log("Init ~~ Map");
+	}
+};
+
+function initMap() {
+	if ( $('.map-wrapper').length ) {
+		loadScript("//maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js&callback=buildMap");
+	}
 };

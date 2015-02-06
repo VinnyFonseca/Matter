@@ -30,7 +30,10 @@ module.exports = function(grunt) {
 				}
 			},
 			options: {
-				beautify: false
+				beautify: false,
+		        sourceMap: true,
+				sourceMapIncludeSources: true,
+		        sourceMapName: 'scripts/min/main.min.js.map'
 			}
 		},
 
@@ -65,7 +68,7 @@ module.exports = function(grunt) {
 
 	// DEPENDENT PLUGINS =========================/
 
- 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-compass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 

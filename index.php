@@ -43,15 +43,27 @@
 
 		<ol>
 			<li>
-				<a href="https://www.ruby-lang.org/en/" target="_blank" class="explicit">Ruby</a>
-				<strong>or</strong>
-				<a href="http://rubyinstaller.org/" target="_blank" class="explicit">Ruby Installer</a>
+				<a href="http://rubyinstaller.org/" target="_blank" class="explicit">Ruby</a>
 			</li>
 			<li>
 				<a href="http://sass-lang.com/" target="_blank" class="explicit">Sass</a> <code>gem install sass</code>
 			</li>
 			<li>
 				<a href="http://compass-style.org/" target="_blank" class="explicit">Compass</a> <code>gem install compass</code>
+			</li>
+		</ol>
+
+		<strong>&minus;&nbsp;&nbsp;and&nbsp;&nbsp;&minus;</strong>
+
+		<ol>
+			<li>
+				<a href="http://nodejs.org/" target="_blank" class="explicit">Node</a>
+			</li>
+			<li>
+				<a href="http://sass-lang.com/" target="_blank" class="explicit">Grunt</a> <code>npm install -g grunt</code>
+			</li>
+			<li>
+				<a href="http://compass-style.org/" target="_blank" class="explicit">Grunt Command Line Interface (CLI)</a> <code>npm install -g grunt-cli</code>
 			</li>
 		</ol>
 

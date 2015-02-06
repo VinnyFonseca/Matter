@@ -1,9 +1,6 @@
 		<!-- Minified JS - Includes all .js from scripts folder -->
 		<script async type="text/javascript" src="scripts/min/main.min.js"></script>
 
-		<!-- Google Maps -->
-		<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js"></script>
-
 		<!-- Third Party CDN Plugins -->
 		<!-- AddThis -->
 		<!-- Go to www.addthis.com/dashboard to customize your tools -->
@@ -23,5 +20,7 @@
 			_gaTracker('send', 'pageview');
 		</script>
 		-->
+
+		<script>document.write('<script async src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 	</body>
 </html>
