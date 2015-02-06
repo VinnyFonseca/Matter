@@ -49,7 +49,7 @@ function notify(message, tone, delay) {
 			if ( delay !== 0 ) timer.resume();
 		})
 		.on("click", function() {
-			$(this).removeClass("active");
+			if ( !$(e.target).closest($(".notification").find("a")).length ) $(this).removeClass("active");
 		})
 		.children(".notification-message").html(message);
 

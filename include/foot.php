@@ -1,5 +1,5 @@
 		<!-- Minified JS - Includes all .js from scripts folder -->
-		<script type="text/javascript" src="scripts/min/main.min.js"></script>
+		<script async type="text/javascript" src="scripts/min/main.min.js"></script>
 
 		<!-- Google Maps -->
 		<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js"></script>
