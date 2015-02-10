@@ -1,12 +1,6 @@
 var config = {
 	application: {
-		singlepage: false, // bool: Navigation behaviour for single page (anchor scrolling + active states based on scroll position).
 		touch: Modernizr.touch, // bool: Modernizr check returns true or false. Beware of touch laptops.
-		smoothscroll: {
-			active: false, // bool: WARNING, EXPERIMENTAL, WINDOWS ONLY. Animates window scroll on mousewheel movement. Settings below.
-			duration: 75, // int: miliseconds for scroll animation completion.
-			step: $(window).height() / 6 // int: number of pixels on each mouse wheel turn.
-		},
 		debug: true // bool: use if (debug) console.log(); instead of console.log; for permanent debugging messages.
 	},
 	accessibility: {

@@ -9,22 +9,12 @@
 	@include font-size($defaultFontSize / 1.1);
 }
 
-.input-validation-error {
-	border: 2px solid $failureBorder;
-}
-.field-validation-error {
-	display: block;
-	margin-top: 5px;
-	color: $failureText;
-	@include font-size($defaultFontSize / 1.1);
-}
-
 
 fieldset {
 	display: block;
 	position: relative;
 	margin: $spacing 0;
-	padding: ($spacing / 3) $spacing;
+	padding: ($spacing / 4) $spacing ($spacing / 1.5);
 	border: 1px solid $lightGray;
 	@include border-radius($radius);
 
@@ -261,59 +251,62 @@ input[type="checkbox"] {
 		}
 	}
 
-	label {
-		display: block;
-		position: relative;
-		padding: 4px 0;
+	> * {
+		display: inline-block;
+		vertical-align: middle;
+	}
 
-		&:before {
+	label {
+		display: inline-block;
+		position: relative;
+		margin: 4px 0;
+		padding: 0;
+		height: 32px;
+		cursor: pointer;
+
+		> * {
+			display: inline-block;
+			vertical-align: bottom;
+		}
+
+		&:before,
+		&:after {
 			display: inline-block;
 			position: relative;
 			content: "";
 			margin: 0;
-			margin-right: 8px;
+			margin-right: 10px;
 			padding: 0;
-			padding-left: 1px;
-			width: 22px;
-			height: 22px;
+			width: 32px;
+			height: 32px;
 			top: 2px;
 			text-align: center;
 			border: 1px solid $defaultGray;
 			@include border-radius(3px);
-			background-color: $clearGray;
+			background-color: $white;
 			box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, .7);
 			overflow: hidden;
-			vertical-align: top;
+			vertical-align: bottom;
 		}
 		&:after {
 			display: none;
-			position: relative;
 			float: right;
-			content: "";
-			margin: 0;
-			margin-right: 8px;
-			padding: 0;
-			padding-left: 1px;
-			width: 22px;
-			height: 22px;
-			top: 2px;
-			text-align: center;
-			border: 1px solid $defaultGray;
-			@include border-radius(3px);
-			background-color: $clearGray;
-			box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, .7);
-			overflow: hidden;
-			vertical-align: top;
+			margin-left: 10px;
+			margin-right: 0;
 		}
 	}
 
-	input[type="radio"],
-	input[type="checkbox"] {
+	input {
 		display: none;
+		position: absolute;
+		@include opacity(0);
+		z-index: -1;
+		visibility: hidden;
 
 		&:checked + label:before,
 		&:checked + label:after {
 			color: $primaryColor;
+			font-size: 24px;
 			border-color: $primaryColor;
 		}
 	}
@@ -327,9 +320,9 @@ input[type="checkbox"] {
 
 		input[type="radio"] {
 			&:checked + label:before {
+				font-size: 32px;
+				line-height: 0.75;
 				content: "\25cf";
-				font-size: 23px;
-				line-height: 16px;
 			}
 		}
 	}
@@ -345,9 +338,96 @@ input[type="checkbox"] {
 		input[type="checkbox"] {
 			&:checked + label:before,
 			&:checked + label:after {
+				line-height: 1.25;
 				content: "\2714";
-				font-size: 16px;
-				line-height: 20px;
+			}
+		}
+	}
+
+	&.toggle {
+		$tglW: 60px;
+		$tglH: 30px;
+		$swtSz: $tglH + 2;
+
+		input:not(:checked) + label {
+			.toggle-body {
+				.toggle-switch {
+					left: $tglW - $swtSz;
+				}
+
+				.toggle-background {
+					right: -($tglW - ($swtSz / 2));
+
+					&.toggle-background-negative {
+						right: auto;
+						left: -10px;
+					}
+				}
+			}
+		}
+
+		label {
+			height: $swtSz;
+
+			&:active {
+				.toggle-switch {
+					@include transform(scale(.95));
+				}
+			}
+
+			&:before,
+			&:after {
+				display: none;
+			}
+
+
+			.toggle-body {
+				display: inline-block;
+				position: relative;
+				margin-right: 5px;
+				width: $tglW;
+				height: $tglH;
+				border-radius: 1000px;
+				background: $white;
+			}
+
+			.toggle-switch {
+				display: inline-block;
+				position: absolute;
+				width: $swtSz;
+				height: $swtSz;
+				left: -1px;
+				border: 1px solid $defaultGray;
+				border-radius: 1000px;
+				background-color: $white;
+				@include box-shadow(0 2px 2px rgba(0,0,0,.13));
+				z-index: 1;
+				@include transition(left $easing $duration);
+			}
+
+			.toggle-track {
+				position: absolute;
+				top: 1px;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				border-radius: 1000px;
+				overflow: hidden;
+			}
+
+			.toggle-background {
+				position: absolute;
+				width: $tglW - ($swtSz / 2) + 10;
+				top: 0;
+				right: -10px;
+				bottom: 0;
+				background: $successNotifyBg url('../img/icons/icon-toggle-check.png') center center no-repeat;
+				@include transition(left $easing $duration, right $easing $duration);
+			}
+			.toggle-background-negative {
+				left: -($tglW - ($swtSz / 2));
+				right: auto;
+				background: $failureNotifyBg url('../img/icons/icon-toggle-close.png') center center no-repeat;
 			}
 		}
 	}
@@ -908,6 +988,16 @@ $itemQty: 10;
 
 
 // Validation
+
+.input-validation-error {
+	border: 2px solid $failureBorder;
+}
+.field-validation-error {
+	display: block;
+	margin-top: 5px;
+	color: $failureText;
+	@include font-size($defaultFontSize / 1.1);
+}
 
 form * {
 	&[required] {

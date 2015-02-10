@@ -49,7 +49,7 @@ function notify(message, tone, delay) {
 			if ( delay !== 0 ) timer.resume();
 		})
 		.on("click", function() {
-			if ( !$(e.target).closest($(".notification").find("a")).length ) $(this).removeClass("active");
+			$(".notification").removeClass("active");
 		})
 		.children(".notification-message").html(message);
 
@@ -61,8 +61,6 @@ function initNotifications() {
 		var message = $(this).attr("data-message"),
 			tone = $(this).attr("data-tone"),
 			delay = parseInt($(this).attr("data-delay"));
-
-		console.log(delay);
 
 		notify(message, tone, delay);
 	});

@@ -24,11 +24,11 @@
 		</p>
 
 		<p>
-			It was built over <strong>many iterations</strong>, <strong>cleanups</strong>, <strong>revisions</strong> and <strong>upgrades</strong>, instead of a single sprint from the ground up. This process makes Matter <strong>stable</strong>, <strong>tested</strong>, and with <strong>fewer bugs</strong>.
+			It was built over <strong>many iterations</strong>, <strong>cleanups</strong>, <strong>revisions</strong> and <strong>upgrades</strong>, instead of a single sprint from the ground up. This process makes Matter <strong>stable</strong>, <strong>tested</strong> and with <strong>fewer bugs</strong>, all while being compatible all the way down to <strong>IE8</strong>.
 		</p>
 
-		<p>
-			Core files are located at <code>styles/pre/matter/</code> and <code>scripts/matter/</code>. Modify them <strong>at your own risk</strong>.
+		<p class="emphasis">
+			Note: Core files are located at <code>styles/pre/matter/</code> and <code>scripts/matter/</code>. They should be left alone whenever possible. Modify them <strong>at your own risk</strong>.
 		</p>
 
 
@@ -91,32 +91,17 @@
 		<hr>
 
 
-		<h4>3. Start Sass Watch</h4>
+		<h4>3. Grunt</h4>
 
-		<dl>
-			<dt>Windows:</dt>
-			<dd>Go to <code>styles/</code> and double click <code>watch.bat</code></dd>
-
-			<dt>Mac OS:</dt>
-			<dd>Open a terminal window, navigate to <code>styles/</code></dd>
-			<dd><strong>First use only:</strong> <code>sudo chmod ugo+x watch.command</code></dd>
-			<dd>Run <code>sh watch</code> or go to <code>styles/</code> and double-click <code>watch.command</code></dd>
-
-			<dt>Linux:</dt>
-			<dd>Open a terminal window, navigate to <code>styles/</code></dd>
-			<dd><strong>First use only:</strong> <code>sudo chmod ugo+x watch.run</code></dd>
-			<dd>Run <code>sudo sh watch.run</code></dd>
-		</dl>
+		<p>
+			Navigate to Matter's directory and run <code>grunt</code>.
+		</p>
 
 
 		<hr>
 
 
-		<h4>Done!</h4>
-
-		<p>
-			Every <code>.scss</code> file that is not a partial and is inside <code>styles/pre/</code> will compile to new <code>.css</code> and <code>.css.map</code> files inside <code>styles/</code>. <em>Get to da code!</em>
-		</p>
+		<h4>Get to da code!</h4>
 	</div>
 </div>
 

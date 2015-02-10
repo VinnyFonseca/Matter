@@ -134,13 +134,13 @@
 
 			<a href="#" class="anchor" id="fieldset"></a>
 
-			<h3>Fieldset, Radio &amp; Checkboxes</h3>
+			<h3>Fieldsets, Radio Buttons, Checkboxes &amp; Toggles</h3>
 
 			<p>The following input pairs are inside a <code>fieldset</code> element with a <code>legend</code>.</p>
 
 			<p>They are styled with CSS3 <code>:before</code> pseudo elements. They are wrapped in a <code>.controller.<var>input type</var></code>.</p>
 
-			<p>ie. <code>.controller.radio</code> or <code>.controller.checkbox</code> as below.</p>
+			<p>ie. <code>.controller.radio</code>, <code>.controller.checkbox</code> or <code>.controller.toggle</code> as below.</p>
 
 			<br>
 
@@ -171,6 +171,42 @@
 					<label for="f4" class="control">Checkbox 2 (initially checked)</label>
 				</div>
 			</fieldset>
+
+			<fieldset>
+				<legend>Toggles Group</legend>
+
+				<div class="controller toggle">
+					<input id="f5" type="checkbox" />
+					<label for="f5">
+						<span class="toggle-body">
+							<span class="toggle-switch"></span>
+							<span class="toggle-track">
+							<span class="toggle-background"></span>
+								<span class="toggle-background toggle-background-negative"></span>
+							</span>
+						</span>
+
+						Toggle 1
+					</label>
+				</div>
+
+				<div class="controller toggle">
+					<input id="f6" type="checkbox" checked="" />
+					<label for="f6">
+						<span class="toggle-body">
+							<span class="toggle-switch"></span>
+							<span class="toggle-track">
+							<span class="toggle-background"></span>
+								<span class="toggle-background toggle-background-negative"></span>
+							</span>
+						</span>
+
+						Toggle 2 (initially checked)
+					</label>
+				</div>
+				<small>Credit: <a href="http://petelada.com/2015/01/31/css-only-toggle.html" class="explicit">Pete Lada</a></small>
+			</fieldset>
+
 
 
 			<hr>

@@ -83,33 +83,20 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 
 function initSVGs() {
 	if ( !$("html").hasClass("lt-ie9") ) {
-		$('img.svg').each(function() {
-			var $img = $(this);
-			var imgID = $img.attr('id');
-			var imgClass = $img.attr('class');
-			var imgURL = $img.attr('src');
+		for ( var i = 0; i < $('img.svg').length; i++ ) {
+			var img = $('img.svg').eq(i),
+				imgID = img.attr('id'),
+				imgClass = img.attr('class'),
+				imgURL = img.attr('src');
 
 			$.get(imgURL, function(data) {
-				// Get the SVG tag, ignore the rest
-				var $svg = $(data).find('svg');
-
-				// Add replaced image's ID to the new SVG
-				if(typeof imgID !== 'undefined') {
-					$svg = $svg.attr('id', imgID);
-				}
-
-				// Add replaced image's classes to the new SVG
-				if(typeof imgClass !== 'undefined') {
-					$svg = $svg.attr('class', imgClass + ' replaced-svg');
-				}
-
-				// Remove any invalid XML tags as per http://validator.w3.org
-				$svg = $svg.removeAttr('xmlns:a');
-
-				// Replace image with new SVG
-				$img.replaceWith($svg);
+				var svg = $(data).find('svg');
+				if(typeof imgID !== 'undefined') svg = svg.attr('id', imgID);
+				if(typeof imgClass !== 'undefined') svg = svg.attr('class', imgClass + ' replaced-svg');
+				svg = svg.removeAttr('xmlns:a');
+				img.replaceWith(svg);
 			}, 'xml');
-		});
+		}
 
 		if (config.application.debug) console.log("Init :: SVG Injection");
 	}
@@ -248,34 +235,6 @@ function initTables() {
 
 
 
-// Init Smooth Scrolling
-
-function initSmoothScroll() {
-	if ( config.application.smoothscroll.active && navigator.appVersion.indexOf("Win") != -1 ) {
-		$(window).on("DOMMouseScroll mousewheel", function(e) {
-			var evt = window.event || e,
-				scroltop = $("html, body").scrollTop(),
-				step = config.application.smoothscroll.step,
-				movement = e.originalEvent.wheelDelta > 0 ? "-=" + step : "+=" + step;
-
-			evt.preventDefault();
-
-			$("html, body").animate({
-				scrollTop: movement
-			}, {
-				duration: config.application.smoothscroll.duration,
-				easing: "linear",
-				complete: function() {}
-			});
-		});
-
-		if ( config.application.debug ) console.log("Init :: Smooth Scrolling");
-	}
-}
-
-
-
-
 // Init Hyperlinks
 
 function initLinks() {
@@ -331,12 +290,11 @@ function initFramework() {
 
 	// System Init
 
+	initSVGs();
 	initCookies();
-	initSVGs(); // Renders SVGs for modern browsers, IE9 and above.
 	initLinks();
 	initNav();
 	initTables();
-	initSmoothScroll();
 	scrollProgress();
 
 	// Widgets Init
