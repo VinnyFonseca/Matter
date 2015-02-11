@@ -368,15 +368,12 @@ var {
 
 
 sup {
-	font-size: 0.8em;
-	line-height: $defaultLineHeight;
+	@include font-size($defaultFontSize / 1.3);
 	vertical-align: top;
 }
 small {
-	font-size: 0.8em;
-	line-height: $defaultLineHeight;
+	@include font-size($defaultFontSize / 1.3);
 }
 sub {
-	font-size: 0.7em;
-	line-height: $defaultLineHeight;
+	@include font-size($defaultFontSize / 1.5);
 }

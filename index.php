@@ -77,16 +77,6 @@
 			<strong>Clone it on</strong> <a href="https://github.com/VinnyFonseca/matter.git" target="_blank">Github</a>.
 		</p>
 
-		<strong>&minus;&nbsp;&nbsp;or&nbsp;&nbsp;&minus;</strong>
-
-		<p>
-			<a href="download/matter-v0.9.7z" class="button primary">Download Matter <small>(.7z)</small></a>
-
-			<br>
-
-			<small>Requires <a href="http://www.7-zip.org/" target="_blank">7-Zip</a></small>
-		</p>
-
 
 		<hr>
 

@@ -19,22 +19,6 @@
 	}
 
 
-	table {
-		border-collapse: collapse;
-	}
-
-
-	fieldset legend {
-		margin-bottom: ($spacing / 1.5);
-	}
-
-	input[type="radio"],
-	input[type="checkbox"] {
-		display: block;
-		top: 2px;
-	}
-
-
 	a[target="_blank"] {
 		padding-left: 0;
 		background-image: none;
@@ -50,25 +34,47 @@
 	}
 
 
-	.controller {
-		label {
-			display: inline-block;
-			margin-top: -3px;
+	fieldset {
+		legend {
+			margin-bottom: ($spacing / 2);
+		}
+	}
 
+	input,
+	select,
+	textarea {
+		padding: 10px 12px 14px;
+	}
+	input[type="radio"],
+	input[type="checkbox"] {
+		display: block;
+		margin-top: -1px;
+		padding: 0;
+	}
+
+	.controller {
+		input {
+			display: inline-block;
+		}
+
+		label {
 			&:before {
 				display: none;
 			}
-		}
 
-		input[type="radio"],
-		input[type="checkbox"] {
-			display: inline-block;
+			> * {
+				display: none !important;
+			}
 		}
 	}
 
 
+	table {
+		border-collapse: collapse;
+	}
+
+
 	.dropdown-arrow {
-		height: 39px;
 		overflow: hidden;
 	}
 

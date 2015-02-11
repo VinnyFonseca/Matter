@@ -17,7 +17,7 @@
 				<a href="#input">Input Types</a>
 			</li>
 			<li>
-				<a href="#fieldset">Fieldset, Radio &amp; Checkboxes</a>
+				<a href="#fieldset">Fieldset, Radio Buttons, Checkboxes &amp; Toggles</a>
 			</li>
 			<li>
 				<a href="#select">Select</a>
@@ -154,7 +154,7 @@
 
 				<div class="controller radio">
 					<input id="f2" type="radio" name="radio" value="2" checked="">
-					<label for="f2" class="control">Radio button 2 (initially checked)</label>
+					<label for="f2" class="control">Radio button Checked</label>
 				</div>
 			</fieldset>
 
@@ -168,7 +168,7 @@
 
 				<div class="controller checkbox">
 					<input id="f4" type="checkbox" name="checkbox2" checked="">
-					<label for="f4" class="control">Checkbox 2 (initially checked)</label>
+					<label for="f4" class="control">Checkbox Checked</label>
 				</div>
 			</fieldset>
 
@@ -201,7 +201,7 @@
 							</span>
 						</span>
 
-						Toggle 2 (initially checked)
+						Toggle Checked
 					</label>
 				</div>
 				<small>Credit: <a href="http://petelada.com/2015/01/31/css-only-toggle.html" class="explicit">Pete Lada</a></small>
