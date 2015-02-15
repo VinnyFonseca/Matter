@@ -1,9 +1,49 @@
 @import "compass/css3/";
 
-@import "custom/all";
-@import "matter/all";
-@import "vendor/all";
 
-@import "global";
 
-@import "matter/cross";
+// Global
+
+@import "dev/config";
+@import "dev/mixins";
+
+
+
+// Core
+
+@import "core/helper";
+@import "core/form";
+@import "core/table";
+@import "core/grid";
+@import "core/core";
+
+
+
+// Widgets
+
+@import "core/widgets/notification";
+@import "core/widgets/tooltip";
+@import "core/widgets/map";
+@import "core/widgets/slider";
+@import "core/widgets/twitter";
+
+
+
+// Third Party
+
+@import "vendor/datepicker";
+
+
+
+// Dev
+
+@import "dev/global";
+
+
+
+// Cross browser/platform
+
+@import "core/responsive";
+@import "core/conditional";
+@import "dev/conditional";
+@import "dev/responsive";

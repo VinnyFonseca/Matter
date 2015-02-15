@@ -7,7 +7,7 @@ body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	background: $defaultBgColor;
+	background: $bodyColor;
 }
 
 html {
@@ -16,9 +16,9 @@ html {
 }
 
 body {
-	color: $defaultTextColor;
+	color: $fontColor;
 	font-family: $bodyFont;
-	@include font-size($defaultFontSize);
+	@include font-size($fontSize);
 	overflow-x: hidden;
 
 	&.preload {
@@ -60,34 +60,34 @@ h1, h2, h3, h4, h5, h6 {
 	position: relative;
 	margin: 0;
 	padding: 0;
-	color: $defaultHeadingColor;
+	color: $headingColor;
 	font-family: $headingFont;
 	font-weight: normal;
 }
 
 h1 {
 	padding-bottom: ($spacing / 1.5);
-	@include font-size($defaultFontSize * 2.8);
+	@include font-size($fontSize * 2.8);
 }
 h2 {
 	padding-bottom: ($spacing / 1.8);
-	@include font-size($defaultFontSize * 2.4);
+	@include font-size($fontSize * 2.4);
 }
 h3 {
 	padding-bottom: ($spacing / 2.1);
-	@include font-size($defaultFontSize * 1.9);
+	@include font-size($fontSize * 1.9);
 }
 h4 {
 	padding-bottom: ($spacing / 2.4);
-	@include font-size($defaultFontSize * 1.6);
+	@include font-size($fontSize * 1.6);
 }
 h5 {
 	padding-bottom: ($spacing / 2.7);
-	@include font-size($defaultFontSize * 1.3);
+	@include font-size($fontSize * 1.3);
 }
 h6 {
 	padding-bottom: ($spacing / 3);
-	@include font-size($defaultFontSize * 1.1);
+	@include font-size($fontSize * 1.1);
 }
 
 
@@ -95,13 +95,13 @@ p {
 	margin: ($spacing / 1.5) 0;
 
 	&.lead {
-		@include font-size($defaultFontSize * 1.3);
+		@include font-size($fontSize * 1.3);
 	}
 }
 
 
 .emphasis {
-	color: $primaryColor;
+	color: $brand1;
 	font-weight: bold;
 }
 
@@ -112,17 +112,17 @@ p {
 a {
 	display: inline;
 	position: relative;
-	color: $primaryColor;
+	color: $brand1;
 	text-decoration: none;
 
 	&:hover {
 		text-decoration: underline;
 	}
 	&:active {
-		color: $darkGray;
+		color: $c2;
 	}
 	&:visited {
-		color: $primaryColor;
+		color: $brand1;
 	}
 
 	& > img {
@@ -162,9 +162,9 @@ a {
 .icon {
 	display: inline-block;
 	position: relative;
-	width: $defaultIconSize;
-	height: $defaultIconSize;
-	@include svgColor($white);
+	width: $iconSize;
+	height: $iconSize;
+	@include svgColor($cf);
 	text-decoration: none !important;
 }
 
@@ -242,7 +242,7 @@ hr {
 	border: 0;
 	border-bottom: 1px;
 	border-style: dashed;
-	border-color: $defaultGray;
+	border-color: $c8;
 	background: none;
 
 	@include opacity(0.25);
@@ -270,13 +270,13 @@ verbatim {
 	display: inline-block;
 	position: relative;
 	padding: 0 4px;
-	color: $defaultTextColor;
+	color: $fontColor;
 	font-family: $monospaceFont;
 	font-size: 1.1em;
 	font-weight: normal;
-	border: 1px solid $lightGray;
+	border: 1px solid $cd;
 	border-radius: $radius;
-	background: $clearGray;
+	background: $ce;
 
 	* {
 		font-weight: normal;
@@ -288,13 +288,13 @@ pre {
 	position: relative;
 	margin: 0 0 ($spacing / 2);
 	padding: ($spacing / 2) $spacing;
-	color: $defaultTextColor;
+	color: $fontColor;
 	font-family: $monospaceFont;
 	font-size: 1.1em;
 	font-weight: normal;
-	border: 1px solid $lightGray;
+	border: 1px solid $cd;
 	border-radius: $radius;
-	background: $clearGray;
+	background: $ce;
 	overflow: auto;
 	white-space: pre-wrap;
 
@@ -320,7 +320,7 @@ blockquote {
 	margin: $spacing 0;
 	padding: ($spacing / 4) ($spacing / 1.5);
 	padding-right: 0;
-	border-left: 5px solid $primaryColor;
+	border-left: 5px solid $brand1;
 
 	p {
 		&:first-child {
@@ -354,7 +354,7 @@ acronym {
 
 
 var {
-	color: $primaryColor;
+	color: $brand1;
 	font-style: normal;
 	font-weight: bold;
 
@@ -368,12 +368,12 @@ var {
 
 
 sup {
-	@include font-size($defaultFontSize / 1.3);
+	@include font-size($fontSize / 1.3);
 	vertical-align: top;
 }
 small {
-	@include font-size($defaultFontSize / 1.3);
+	@include font-size($fontSize / 1.3);
 }
 sub {
-	@include font-size($defaultFontSize / 1.5);
+	@include font-size($fontSize / 1.5);
 }

@@ -14,7 +14,7 @@ table {
 	caption {
 		position: relative;
 		margin-bottom: $spacing / 2;
-		@include font-size($defaultFontSize * 1.2);
+		@include font-size($fontSize * 1.2);
 		font-weight: bold;
 	}
 
@@ -28,13 +28,13 @@ table {
 		td {
 			margin: 0;
 			padding: ($spacing / 2) ($spacing / 1.5);
-			border: 1px solid $lightGray;
+			border: 1px solid $cd;
 		}
 	}
 
 	th {
 		text-align: center;
-		background: $clearGray;
+		background: $ce;
 	}
 
 	tr {
@@ -66,13 +66,13 @@ table {
 
 		&.even {
 			td {
-				background: $white;
+				background: $cf;
 			}
 		}
 	}
 
 	td {
 		text-align: left;
-		background: $white;
+		background: $cf;
 	}
 }

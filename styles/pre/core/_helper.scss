@@ -13,7 +13,7 @@
 	font-size: 0;
 
 	> * {
-		@include font-size($defaultFontSize);
+		@include font-size($fontSize);
 	}
 }
 
@@ -85,7 +85,7 @@
 	border: none !important;
 }
 .border {
-	border: 2px dotted $failureBorder !important;
+	border: 2px dotted $validationFailureBorderColor !important;
 }
 .dotted {
 	border-style: dotted !important;
@@ -138,9 +138,9 @@
 	margin-left: 0;
 	margin-right: 0;
 	padding: $spacing / 2;
-	border: 1px solid $lightGray;
+	border: 1px solid $cd;
 	border-radius: $radius;
-	background: $clearGray;
+	background: $ce;
 }
 
 
@@ -176,7 +176,7 @@
 
 	& > * {
 		display: inline-block;
-		@include font-size($defaultFontSize);
+		@include font-size($fontSize);
 		vertical-align: middle !important;
 	}
 }
@@ -228,7 +228,7 @@
 	display: none !important;
 }
 .highlight {
-	color: $primaryColor;
+	color: $brand1;
 	font-weight: bold;
 	text-decoration: underline;
 }
@@ -272,40 +272,40 @@
 	font-size: 0 !important;
 }
 .font-xxsmall {
-	@include font-size($defaultFontSize / 2.2);
+	@include font-size($fontSize / 2.2);
 }
 .font-xsmall {
-	@include font-size($defaultFontSize / 1.8);
+	@include font-size($fontSize / 1.8);
 }
 .font-small {
-	@include font-size($defaultFontSize / 1.4);
+	@include font-size($fontSize / 1.4);
 }
 .font-reduced {
-	@include font-size($defaultFontSize / 1.2);
+	@include font-size($fontSize / 1.2);
 }
 .font-normal {
-	@include font-size($defaultFontSize);
+	@include font-size($fontSize);
 }
 .font-medium {
-	@include font-size($defaultFontSize * 1.2);
+	@include font-size($fontSize * 1.2);
 }
 .font-expanded {
-	@include font-size($defaultFontSize * 1.4);
+	@include font-size($fontSize * 1.4);
 }
 .font-large {
-	@include font-size($defaultFontSize * 1.6);
+	@include font-size($fontSize * 1.6);
 }
 .font-xlarge {
-	@include font-size($defaultFontSize * 2);
+	@include font-size($fontSize * 2);
 }
 .font-xxlarge {
-	@include font-size($defaultFontSize * 2.4);
+	@include font-size($fontSize * 2.4);
 }
 .font-max {
-	@include font-size($defaultFontSize * 2.8);
+	@include font-size($fontSize * 2.8);
 }
 .font-ultra {
-	@include font-size($defaultFontSize * 3.2);
+	@include font-size($fontSize * 3.2);
 }
 
 
@@ -380,19 +380,19 @@
 // Colours
 
 .white {
-	color: $white !important;
+	color: $cf !important;
 }
 .black {
-	color: $black !important;
+	color: $c0 !important;
 }
 .light-gray {
-	color: $lightGray !important;
+	color: $cd !important;
 }
 .gray {
-	color: $midGray !important;
+	color: $c4 !important;
 }
 .dark-gray {
-	color: $darkGray !important;
+	color: $c2 !important;
 }
 
 
@@ -401,6 +401,6 @@
 
 .animate {
 	@include transition-property(all);
-	@include transition-duration($duration);
-	@include transition-timing-function($easing);
+	@include transition-duration($animDuration);
+	@include transition-timing-function($animEasing);
 }

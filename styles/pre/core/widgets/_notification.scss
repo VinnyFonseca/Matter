@@ -7,8 +7,8 @@
 	padding: $spacing;
 	width: 310px;
 	top: $headerHeight;
-	color: $white;
-	background: $primaryColor;
+	color: $cf;
+	background: $brand1;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 	@include opacity(0);
 	cursor: pointer;
@@ -18,11 +18,11 @@
 	@include transform(translateY(-100%));
 
 	@include transition-property(transform, top, opacity);
-	@include transition-duration($duration);
-	@include transition-timing-function($easing);
+	@include transition-duration($animDuration);
+	@include transition-timing-function($animEasing);
 
 	&:hover {
-		background: $secondaryColor;
+		background: $brand2;
 	}
 
 	&.active {
@@ -31,18 +31,18 @@
 	}
 
 	&.success {
-		background: $successNotifyBg;
+		background: $notifySuccessBgColor;
 	}
 	&.warning {
-		background: $warningNotifyBg;
+		background: $notifyWarningBgColor;
 	}
 	&.failure {
-		background: $failureNotifyBg;
+		background: $notifyFailureBgColor;
 	}
 
 
 	a {
-		color: $white !important;
+		color: $cf !important;
 		text-decoration: underline !important;
 	}
 

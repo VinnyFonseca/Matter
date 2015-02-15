@@ -5,8 +5,8 @@
 
 .form-info {
 	margin-bottom: $spacing;
-	color: $darkGray;
-	@include font-size($defaultFontSize / 1.1);
+	color: $c2;
+	@include font-size($fontSize / 1.1);
 }
 
 
@@ -15,7 +15,7 @@ fieldset {
 	position: relative;
 	margin: $spacing 0;
 	padding: ($spacing / 4) $spacing ($spacing / 1.5);
-	border: 1px solid $lightGray;
+	border: 1px solid $cd;
 	@include border-radius($radius);
 
 	legend {
@@ -24,7 +24,7 @@ fieldset {
 		margin: 0;
 		margin-left: -7px;
 		padding: 0 7px;
-		color: $defaultTextColor;
+		color: $fontColor;
 		font-weight: bold;
 		text-transform: capitalize;
 	}
@@ -52,43 +52,43 @@ select,
 textarea {
 	display: block;
 	position: relative;
-	color: $darkGray;
+	color: $c2;
 	margin: 0;
 	margin-bottom: $spacing;
 	padding: 9px 12px;
 	width: 100%;
 	font-family: $bodyFont;
-	@include font-size($defaultFontSize);
+	@include font-size($fontSize);
 	font-weight: 300;
 	text-align: left;
-	border: 1px solid $lightGray;
+	border: 1px solid $cd;
 	@include border-radius($radius);
-	background: $white;
+	background: $cf;
 	@include background-clip(padding-box);
 	outline: 0;
 	vertical-align: top;
 
 
 	&::-webkit-input-placeholder {
-		color: $primaryColor;
+		color: $brand1;
 	}
 	&::-moz-placeholder {
-		color: $primaryColor;
+		color: $brand1;
 	}
 	&:-moz-placeholder {
-		color: $primaryColor;
+		color: $brand1;
 	}
 	&:-ms-input-placeholder {
-		color: $primaryColor;
+		color: $brand1;
 	}
 	&.placeholder-text,
 	&.placeholder_text {
-		color: $primaryColor;
+		color: $brand1;
 	}
 
 
 	&:focus {
-		@include box-shadow($focusColor 0 0 3px 0);
+		@include box-shadow($inputFocusColor 0 0 3px 0);
 	}
 	&:invalid {
 		@include box-shadow(none);
@@ -168,7 +168,7 @@ textarea {
 	font-size: 0;
 
 	> * {
-		@include font-size($defaultFontSize);
+		@include font-size($fontSize);
 	}
 
 	.password-wrapper {
@@ -205,14 +205,14 @@ textarea {
 		margin: 0;
 		padding: 9px 12px;
 		width: 10%;
-		color: $defaultGray;
+		color: $c8;
 		font-family: $bodyFont;
-		@include font-size($defaultFontSize);
+		@include font-size($fontSize);
 		text-align: center;
-		border: 1px solid $lightGray;
+		border: 1px solid $cd;
 		border-left: 0;
 		border-right: 0;
-		background: $clearGray;
+		background: $ce;
 	}
 }
 
@@ -282,9 +282,9 @@ input[type="checkbox"] {
 			height: 32px;
 			top: 2px;
 			text-align: center;
-			border: 1px solid $defaultGray;
+			border: 1px solid $c8;
 			@include border-radius(3px);
-			background-color: $white;
+			background-color: $cf;
 			box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, .7);
 			overflow: hidden;
 			vertical-align: bottom;
@@ -302,9 +302,9 @@ input[type="checkbox"] {
 
 		&:checked + label:before,
 		&:checked + label:after {
-			color: $primaryColor;
+			color: $brand1;
 			font-size: 24px;
-			border-color: $primaryColor;
+			border-color: $brand1;
 		}
 	}
 
@@ -383,7 +383,7 @@ input[type="checkbox"] {
 				width: $tglW;
 				height: $tglH;
 				border-radius: 1000px;
-				background: $white;
+				background: $cf;
 			}
 
 			.toggle-switch {
@@ -393,12 +393,12 @@ input[type="checkbox"] {
 				height: $swtSz;
 				top: -1px;
 				left: -1px;
-				border: 1px solid $defaultGray;
+				border: 1px solid $c8;
 				border-radius: 1000px;
-				background-color: $white;
+				background-color: $cf;
 				@include box-shadow(0 2px 2px rgba(0,0,0,.13));
 				z-index: 1;
-				@include transition(left $easing $duration);
+				@include transition(left $animEasing $animDuration);
 			}
 
 			.toggle-track {
@@ -417,13 +417,13 @@ input[type="checkbox"] {
 				top: 0;
 				right: -10px;
 				bottom: 0;
-				background: $successNotifyBg url('../img/icons/icon-toggle-check.png') center center no-repeat;
-				@include transition(left $easing $duration, right $easing $duration);
+				background: $notifySuccessBgColor url('../img/icons/icon-toggle-check.png') center center no-repeat;
+				@include transition(left $animEasing $animDuration, right $animEasing $animDuration);
 			}
 			.toggle-background-negative {
 				left: -($tglW - ($swtSz / 2));
 				right: auto;
-				background: $failureNotifyBg url('../img/icons/icon-toggle-close.png') center center no-repeat;
+				background: $notifyFailureBgColor url('../img/icons/icon-toggle-close.png') center center no-repeat;
 			}
 		}
 	}
@@ -439,15 +439,15 @@ input[type="button"] {
 	position: relative;
 	margin: 2px auto;
 	padding: ($spacing / 2) ($spacing / 1.5);
-	color: $defaultTextColor;
+	color: $fontColor;
 	font-family: $bodyFont;
-	@include font-size($defaultFontSize);
+	@include font-size($fontSize);
 	text-align: center;
 	text-decoration: none !important;
 	border: 0;
 	@include border-radius($radius);
 	@include box-shadow(inset 0 0 0 1px rgba(0, 0, 0, 0.15));
-	background: $clearGray;
+	background: $ce;
 	cursor: pointer;
 	@include appearance(none);
 	@include background-clip(padding-box);
@@ -457,11 +457,11 @@ input[type="button"] {
 	vertical-align: middle;
 
 	&:hover {
-		background-color: $lightGray;
+		background-color: $cd;
 	}
 	&:active,
 	&:visited {
-		background-color: $clearGray;
+		background-color: $ce;
 	}
 
 
@@ -476,28 +476,28 @@ input[type="button"] {
 
 
 	&.primary {
-		color: $white;
-		background-color: $primaryColor;
+		color: $cf;
+		background-color: $brand1;
 
 		&:hover {
-			background-color: $secondaryColor;
+			background-color: $brand2;
 		}
 		&:active,
 		&:visited {
-			background-color: $primaryColor;
+			background-color: $brand1;
 		}
 	}
 
 	&.secondary {
-		color: $white;
-		background-color: $secondaryColor;
+		color: $cf;
+		background-color: $brand2;
 
 		&:hover {
-			background-color: $primaryColor;
+			background-color: $brand1;
 		}
 		&:active,
 		&:visited {
-			background-color: $secondaryColor;
+			background-color: $brand2;
 		}
 	}
 }
@@ -515,30 +515,30 @@ select[disabled],
 select[disabled] option,
 select[disabled] optgroup,
 textarea[disabled] {
-	color: $defaultGray !important;
-	border-color: $lightGray !important;
+	color: $c8 !important;
+	border-color: $cd !important;
 	border-style: dotted !important;
-	background-color: $clearGray !important;
+	background-color: $ce !important;
 	box-shadow: none !important;
 	cursor: default !important;
 	@include box-shadow(none);
 	@include user-select(none);
 
 	&::-webkit-input-placeholder {
-		color: $lightGray;
+		color: $cd;
 	}
 	&::-moz-placeholder {
-		color: $lightGray;
+		color: $cd;
 	}
 	&:-moz-placeholder {
-		color: $lightGray;
+		color: $cd;
 	}
 	&:-ms-input-placeholder {
-		color: $lightGray;
+		color: $cd;
 	}
 	&.placeholder-text,
 	&.placeholder_text {
-		color: $lightGray;
+		color: $cd;
 	}
 }
 
@@ -583,14 +583,14 @@ optgroup {
 .dropdown-wrapper {
 	display: block;
 	position: relative;
-	color: $darkGray;
+	color: $c2;
 	margin: 0;
 	margin-top: 5px;
 	margin-bottom: $spacing;
 	padding: 0;
 	width: 100%;
 	font-family: $bodyFont;
-	@include font-size($defaultFontSize);
+	@include font-size($fontSize);
 	text-align: left;
 	vertical-align: top;
 	cursor: pointer;
@@ -603,15 +603,15 @@ optgroup {
 	&:focus {
 		.dropdown-current,
 		.dropdown {
-			@include box-shadow($focusColor 0 0 0 0);
+			@include box-shadow($inputFocusColor 0 0 0 0);
 		}
 	}
 
 	&:hover,
 	&.active {
 		.dropdown-arrow {
-			color: $white;
-			background-color: $secondaryColor;
+			color: $cf;
+			background-color: $brand2;
 		}
 	}
 	&.active {
@@ -626,12 +626,12 @@ optgroup {
 	&:active {
 		.dropdown-current,
 		.dropdown {
-			color: $white;
+			color: $cf;
 		}
 
 		.dropdown-arrow {
-			color: $white;
-			background: $primaryColor;
+			color: $cf;
+			background: $brand1;
 			box-shadow: inset 0px 1px 1px 0 rgba(0, 0, 0, .15) !important;
 		}
 	}
@@ -644,7 +644,7 @@ optgroup {
 		}
 
 		.dropdown-current {
-			color: $primaryColor;
+			color: $brand1;
 		}
 
 		.dropdown {
@@ -656,13 +656,13 @@ optgroup {
 			@include opacity(0);
 			@include transform(translateY(-10px));
 			@include transition-property(opacity, transform);
-			@include transition-duration($duration);
-			@include transition-timing-function($easing);
+			@include transition-duration($animDuration);
+			@include transition-timing-function($animEasing);
 
 			.dropdown-item {
 				margin-top: -1px;
-				border: 1px solid $lightGray;
-				background: $white;
+				border: 1px solid $cd;
+				background: $cf;
 			}
 		}
 
@@ -682,15 +682,15 @@ optgroup {
 
 		.dropdown {
 			position: relative;
-			border: 1px solid $lightGray;
+			border: 1px solid $cd;
 			@include border-radius($radius);
-			background: $white;
+			background: $cf;
 			overflow: auto;
 
 			.dropdown-item {
 				margin-top: 0;
-				border-top: 1px solid $lightGray;
-				background: $white;
+				border-top: 1px solid $cd;
+				background: $cf;
 
 				&:first-child {
 					border-top: 0;
@@ -709,9 +709,9 @@ optgroup {
 		display: block;
 		position: relative;
 		padding: 9px 12px;
-		border: 1px solid $lightGray;
+		border: 1px solid $cd;
 		@include border-radius($radius);
-		background: $white;
+		background: $cf;
 		cursor: pointer;
 		z-index: 30;
 	}
@@ -726,13 +726,13 @@ optgroup {
 		top: 0;
 		right: 0;
 		bottom: 0;
-		color: $white;
-		@include font-size($defaultFontSize * 0.9);
+		color: $cf;
+		@include font-size($fontSize * 0.9);
 		text-align: center;
 		border: 0 solid rgba(0, 0, 0, 0.4);
 		@include border-left-radius(0);
 		@include border-right-radius($radius);
-		background: $primaryColor;
+		background: $brand1;
 		z-index: 50;
 
 		&:before {
@@ -749,7 +749,7 @@ optgroup {
 
 		& > * {
 			display: inline-block;
-			@include font-size($defaultFontSize);
+			@include font-size($fontSize);
 			vertical-align: middle !important;
 		}
 	}
@@ -771,14 +771,14 @@ optgroup {
 			cursor: pointer;
 
 			&:hover {
-				color: $white;
-				background: $secondaryColor;
+				color: $cf;
+				background: $brand2;
 			}
 
 			&:active,
 			&.active {
-				color: $white;
-				background: $primaryColor;
+				color: $cf;
+				background: $brand1;
 			}
 		}
 	}
@@ -842,16 +842,16 @@ optgroup {
 			width: 100%;
 			top: 0px;
 			left: 0px;
-			color: $primaryColor;
-			border: 1px solid $lightGray;
+			color: $brand1;
+			border: 1px solid $cd;
 			@include border-radius($radius);
-			background: $white;
+			background: $cf;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			vertical-align: middle;
 
 			&.loaded {
-				color: $darkGray;
+				color: $c2;
 			}
 		}
 
@@ -864,13 +864,13 @@ optgroup {
 			top: 0;
 			right: 0;
 			bottom: 0;
-			color: $white;
-			@include font-size($defaultFontSize * 1.75);
+			color: $cf;
+			@include font-size($fontSize * 1.75);
 			text-align: center;
 			border: 0 solid rgba(0, 0, 0, 0.4);
 			@include border-left-radius(0);
 			@include border-right-radius($radius);
-			background: $primaryColor;
+			background: $brand1;
 			z-index: 50;
 
 			&:before {
@@ -887,7 +887,7 @@ optgroup {
 
 			& > * {
 				display: inline-block;
-				@include font-size($defaultFontSize);
+				@include font-size($fontSize);
 				vertical-align: middle !important;
 			}
 		}
@@ -903,14 +903,14 @@ $itemQty: 10;
 .autocomplete-wrapper {
 	display: block;
 	position: relative;
-	color: $darkGray;
+	color: $c2;
 	margin: 0;
 	margin-top: 2px;
 	margin-bottom: $spacing;
 	padding: 0;
 	width: 100%;
 	font-family: $bodyFont;
-	@include font-size($defaultFontSize);
+	@include font-size($fontSize);
 	text-align: left;
 	vertical-align: top;
 	cursor: pointer;
@@ -935,8 +935,8 @@ $itemQty: 10;
 		@include opacity(0);
 		@include transform(translateY(-10px));
 		@include transition-property(opacity, transform);
-		@include transition-duration($duration);
-		@include transition-timing-function($easing);
+		@include transition-duration($animDuration);
+		@include transition-timing-function($animEasing);
 
 		&.active {
 			@include opacity(1);
@@ -951,26 +951,26 @@ $itemQty: 10;
 			margin: 0;
 			margin-top: -1px;
 			padding: 9px 12px;
-			border: 1px solid $clearGray;
-			background: $white;
+			border: 1px solid $ce;
+			background: $cf;
 			cursor: pointer;
 
 			&:hover {
-				color: $white;
-				background: $primaryColor;
+				color: $cf;
+				background: $brand1;
 
 				* {
-					color: $white !important;
+					color: $cf !important;
 				}
 			}
 
 			&:active,
 			&.active {
-				color: $white;
-				background: $secondaryColor;
+				color: $cf;
+				background: $brand2;
 
 				* {
-					color: $white !important;
+					color: $cf !important;
 				}
 			}
 
@@ -986,59 +986,59 @@ $itemQty: 10;
 // Validation
 
 .input-validation-error {
-	border: 2px solid $failureBorder;
+	border: 2px solid $validationFailureBorderColor;
 }
 .field-validation-error {
 	display: block;
 	margin-top: 5px;
-	color: $failureText;
-	@include font-size($defaultFontSize / 1.1);
+	color: $validationFailureFontColor;
+	@include font-size($fontSize / 1.1);
 }
 
 form * {
 	&[required] {
 		&.valid {
-			color: $successText;
-			border-color: $successBorder;
-			background: $successBg;
+			color: $validationSuccessFontColor;
+			border-color: $validationSuccessBorderColor;
+			background: $validationSuccessBgColor;
 
 			&::-webkit-input-placeholder {
-				color: $successText;
+				color: $validationSuccessFontColor;
 			}
 			&::-moz-placeholder {
-				color: $successText;
+				color: $validationSuccessFontColor;
 			}
 			&:-moz-placeholder {
-				color: $successText;
+				color: $validationSuccessFontColor;
 			}
 			&:-ms-input-placeholder {
-				color: $successText;
+				color: $validationSuccessFontColor;
 			}
 			&.placeholder-text,
 			&.placeholder_text {
-				color: $successText;
+				color: $validationSuccessFontColor;
 			}
 		}
 		&.invalid {
-			color: $failureText;
-			border-color: $failureBorder;
-			background: $failureBg;
+			color: $validationFailureFontColor;
+			border-color: $validationFailureBorderColor;
+			background: $validationFailureBgColor;
 
 			&::-webkit-input-placeholder {
-				color: $failureText;
+				color: $validationFailureFontColor;
 			}
 			&::-moz-placeholder {
-				color: $failureText;
+				color: $validationFailureFontColor;
 			}
 			&:-moz-placeholder {
-				color: $failureText;
+				color: $validationFailureFontColor;
 			}
 			&:-ms-input-placeholder {
-				color: $failureText;
+				color: $validationFailureFontColor;
 			}
 			&.placeholder-text,
 			&.placeholder_text {
-				color: $failureText;
+				color: $validationFailureFontColor;
 			}
 		}
 	}

@@ -5,10 +5,10 @@
 	position: relative;
 	margin: 5px 0;
 	padding: $spacing / 1.5;
-	@include font-size($defaultFontSize * 1.1);
-	border: 1px solid $lightGray;
+	@include font-size($fontSize * 1.1);
+	border: 1px solid $cd;
 	border-radius: $radius;
-	background: $clearGray;
+	background: $ce;
 
 	hr {
 		display: block;
@@ -16,7 +16,7 @@
 		margin: ($spacing / 2) 0;
 		width: 100%;
 		height: 0;
-		border-bottom: 1px dotted $lightGray;
+		border-bottom: 1px dotted $cd;
 		background: none;
 
 		&:first-child {
@@ -29,24 +29,24 @@
 	}
 
 	.tweet {
-		color: $defaultGray;
+		color: $c8;
 	}
 	.timePosted {
 		color: #aaa;
-		@include font-size($defaultFontSize / 1.2);
+		@include font-size($fontSize / 1.2);
 	}
 
 	.user {
 		a {
 			width: 100%;
-			color: $defaultTextColor;
+			color: $fontColor;
 			text-align: left;
 			text-decoration: none;
 		}
 
 		img {
 			display: inline-block;
-			border: 1px solid $lightGray;
+			border: 1px solid $cd;
 		}
 	}
 
@@ -63,7 +63,7 @@
 
 			a {
 				span {
-					@include font-size($defaultFontSize * 1.5);
+					@include font-size($fontSize * 1.5);
 				}
 			}
 		}
@@ -93,11 +93,11 @@
 				span {
 					display: inline-block;
 					margin: 0 2px 0 5px;
-					@include font-size($defaultFontSize * 1.2);
+					@include font-size($fontSize * 1.2);
 
 					&[data-scribe="element:screen_name"] {
-						color: $defaultGray;
-						@include font-size($defaultFontSize / 1.2);
+						color: $c8;
+						@include font-size($fontSize / 1.2);
 					}
 				}
 			}

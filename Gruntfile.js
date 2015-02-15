@@ -23,9 +23,9 @@ module.exports = function(grunt) {
 						'scripts/vendor/jquery-1.11.2.min.js',
 						'scripts/vendor/modernizr-full.min.js',
 						'scripts/vendor/*.js',
-						'scripts/matter/*.js',
-						'scripts/matter/widgets/*.js',
-						'scripts/*.js'
+						'scripts/core/*.js',
+						'scripts/core/widgets/*.js',
+						'scripts/dev/*.js'
 					]
 				}
 			},

@@ -14,7 +14,7 @@
 				padding: $spacing ($spacing / 1.5);
 
 				& > * {
-					@include font-size($defaultFontSize / 1.1);
+					@include font-size($fontSize / 1.1);
 				}
 			}
 		}
@@ -51,7 +51,7 @@
 				padding: $spacing ($spacing / 2);
 
 				& > * {
-					@include font-size($defaultFontSize / 1.2);
+					@include font-size($fontSize / 1.2);
 				}
 			}
 		}
@@ -80,8 +80,8 @@
 		position: fixed;
 		margin-top: (-$navItemHeight * $navItemCount);
 		@include transition-property(transform);
-		@include transition-duration($duration);
-		@include transition-timing-function($easing);
+		@include transition-duration($animDuration);
+		@include transition-timing-function($animEasing);
 
 		&.active {
 			@include transform(translateY($navItemHeight * $navItemCount));
@@ -107,7 +107,7 @@
 				padding: ($spacing / 1.5) $spacing;
 				height: auto;
 				border-left: 0;
-				border-bottom: 1px solid $clearGray;
+				border-bottom: 1px solid $ce;
 				vertical-align: baseline;
 			}
 		}

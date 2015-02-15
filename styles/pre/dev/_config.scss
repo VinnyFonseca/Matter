@@ -1,0 +1,134 @@
+// General
+
+$headerHeight: 67px; // Change once the header is final
+
+$spacing: 20px;
+$radius: 4px;
+
+
+
+
+
+// Grid System
+
+$columns: 12;
+
+
+
+
+
+// Grays
+
+$c0: #000000;
+$c1: #111111;
+$c2: #222222;
+$c3: #333333;
+$c4: #444444;
+$c5: #555555;
+$c6: #666666;
+$c7: #777777;
+$c8: #888888;
+$c9: #999999;
+$ca: #aaaaaa;
+$cb: #bbbbbb;
+$cc: #cccccc;
+$cd: #dddddd;
+$ce: #eeeeee;
+$cf: #ffffff;
+
+
+// Branding Colours
+
+$brand1: #86669E;
+$brand2: #0299BF;
+$brand3: #E03A36;
+
+
+// Global Colours
+
+$bodyColor: $cf;
+$headingColor: $c2;
+$fontColor: $c2;
+
+
+
+
+
+// Typography
+
+@import url("//fonts.googleapis.com/css?family=Roboto+Slab");
+@import url("//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700");
+@import url("//fonts.googleapis.com/css?family=Ubuntu+Mono");
+
+$headingFont: 'Roboto Slab', serif;
+$bodyFont: 'Open Sans', sans-serif;
+$monospaceFont: 'Ubuntu Mono', monospace;
+
+$fontSize: 16;
+$lineHeight: ($fontSize / 10) + 0.1;
+
+
+
+
+
+// Iconography
+
+$iconSize: 18px;
+
+
+
+
+
+// Forms
+
+$inputFocusColor: $cf; // Input focus
+
+
+// Validation
+
+$validationSuccessFontColor: #008800; // Success text
+$validationSuccessBorderColor: #44bb44; // Success border
+$validationSuccessBgColor: #eeffee; // Success background
+
+$validationWarningFontColor: #dd8800; // Warning text
+$validationWarningBorderColor: #ffaa22; // Warning border
+$validationWarningBgColor: #aa5500; // Warning background
+
+$validationFailureFontColor: #dd0000; // Failure text
+$validationFailureBorderColor: #ff7777; // Failure border
+$validationFailureBgColor: #fff2f2; // Failure background
+
+
+
+
+
+// Notification
+
+$notifySuccessBgColor: #44bb44;
+$notifyWarningBgColor: #DD8800;
+$notifyFailureBgColor: #DD0000;
+
+
+
+
+
+// Responsive Breakpoints
+
+$screenWide: 1280px;
+$screenDesktop: 960 + ($spacing * 2);
+$screenTablet: 768px;
+$screenMobileL: 480px;
+$screenMobileS: 320px;
+
+
+
+
+
+// Animation
+
+$animDuration: 0.25s;
+$animEasing: cubic-bezier(0.45, 0, 0.5, 0.95);
+
+// @include transition-property(transform, opacity);
+// @include transition-duration($animDuration);
+// @include transition-timing-function($animEasing);

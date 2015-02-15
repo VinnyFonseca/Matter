@@ -12,7 +12,7 @@ header,
 	padding: 0;
 	width: 100%;
 	top: 0;
-	background: $white;
+	background: $cf;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 	z-index: 150;
 
@@ -22,7 +22,7 @@ header,
 		margin-left: ($spacing / 1.5);
 		padding: ($spacing / 1.5) 0;
 		height: $headerHeight;
-		color: $defaultTextColor;
+		color: $fontColor;
 		text-decoration: none !important;
 		white-space: nowrap;
 
@@ -44,16 +44,16 @@ header,
 		cursor: pointer;
 
 		.icon {
-			@include svgColor($primaryColor);
+			@include svgColor($brand1);
 		}
 		&:hover {
 			.icon {
-				@include svgColor($secondaryColor);
+				@include svgColor($brand2);
 			}
 		}
 		&:active {
 			.icon {
-				@include svgColor($primaryColor);
+				@include svgColor($brand1);
 			}
 		}
 	}
@@ -70,7 +70,7 @@ header,
 			display: inline-block;
 			padding: $spacing;
 			height: $headerHeight;
-			border-left: 1px solid $clearGray;
+			border-left: 1px solid $ce;
 			font-size: 0 !important;
 
 			&:before {
@@ -88,21 +88,21 @@ header,
 
 			& > * {
 				display: inline-block;
-				@include font-size($defaultFontSize);
+				@include font-size($fontSize);
 				vertical-align: middle !important;
 			}
 
 			&.active {
-				color: $white;
-				border-color: $primaryColor;
-				background: $primaryColor;
+				color: $cf;
+				border-color: $brand1;
+				background: $brand1;
 				cursor: default;
 			}
 			&:hover,
 			&:active {
-				color: $white;
-				border-color: $secondaryColor;
-				background: $secondaryColor;
+				color: $cf;
+				border-color: $brand2;
+				background: $brand2;
 			}
 		}
 	}
@@ -114,7 +114,7 @@ header,
 		height: 2px;
 		bottom: -2px;
 		font-size: 0;
-		background: $primaryColor;
+		background: $brand1;
 	}
 }
 
@@ -128,8 +128,8 @@ header,
 	position: relative;
 	margin: 0;
 	padding: 0;
-	color: $white;
-	background: $primaryColor;
+	color: $cf;
+	background: $brand1;
 }
 .main {
 	display: block;
@@ -155,18 +155,18 @@ footer,
 	position: relative;
 	padding: ($spacing / 1.5) $spacing;
 	width: 100%;
-	color: $white;
-	background: $primaryColor;
+	color: $cf;
+	background: $brand1;
 	z-index: 80;
 
 	a {
 		display: inline-block;
-		color: $white;
+		color: $cf;
 
 		&:hover,
 		&:active,
 		&:visited {
-			color: $white;
+			color: $cf;
 		}
 	}
 
@@ -187,7 +187,7 @@ footer,
 			margin-right: $spacing / 2;
 			width: 24px;
 			height: 24px;
-			@include svgColor($white);
+			@include svgColor($cf);
 		}
 
 		a {
@@ -195,12 +195,12 @@ footer,
 
 			&:hover {
 				.icon {
-					@include svgColor($secondaryColor);
+					@include svgColor($brand2);
 				}
 			}
 			&:active {
 				.icon {
-					@include svgColor($white);
+					@include svgColor($cf);
 				}
 			}
 		}

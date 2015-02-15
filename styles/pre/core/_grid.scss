@@ -6,7 +6,7 @@
 	font-size: 0;
 
 	& > * {
-		@include font-size($defaultFontSize);
+		@include font-size($fontSize);
 	}
 
 	& .column {
@@ -39,11 +39,11 @@
 
 .debug {
 	& .column {
-		// background: $clearGray;
+		// background: $ce;
 	}
 	& .cell {
 		margin: 2px;
-		border: 1px dashed $lightGray;
-		background: $clearGray;
+		border: 1px dashed $cd;
+		background: $ce;
 	}
 }

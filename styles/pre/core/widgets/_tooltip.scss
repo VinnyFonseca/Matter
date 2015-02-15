@@ -4,20 +4,20 @@
 	display: block;
 	position: absolute;
 	padding: 2px 8px;
-	color: $white;
+	color: $cf;
 	font-family: $monospaceFont;
 	font-size: 1.1em;
 	font-weight: normal;
 	border: 0;
 	@include border-radius($radius);
 	@include box-shadow(inset 0 0 0 1px rgba(0, 0, 0, 0.15), 1px 1px 3px rgba(0, 0, 0, 0.25));
-	background: $primaryColor;
+	background: $brand1;
 	z-index: 9999;
 
 	@include opacity(0);
 	@include transition-property(opacity);
-	@include transition-duration($duration);
-	@include transition-timing-function($easing);
+	@include transition-duration($animDuration);
+	@include transition-timing-function($animEasing);
 
 	&.active {
 		@include opacity(1);

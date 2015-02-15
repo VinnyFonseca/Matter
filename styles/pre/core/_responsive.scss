@@ -41,7 +41,7 @@
 	// Font sizes
 
 	.structure.clean {
-		@include font-size($defaultFontSize / 1.1);
+		@include font-size($fontSize / 1.1);
 	}
 
 
@@ -103,7 +103,7 @@
 
 		.input-addon {
 			text-align: left;
-			border: 1px solid $lightGray;
+			border: 1px solid $cd;
 			border-top: 0;
 			border-bottom: 0;
 		}
@@ -118,7 +118,7 @@
 
 	table {
 		caption {
-			@include font-size($defaultFontSize);
+			@include font-size($fontSize);
 			text-align: left;
 		}
 	}
