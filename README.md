@@ -37,9 +37,10 @@ HTML:
 <h6>h6 Heading</h6>
 ```
 
-<br>
-<br>
-<br>
+
+
+
+
 
 
 ## Horizontal Rules
@@ -59,9 +60,10 @@ ___
 ***
 
 
-<br>
-<br>
-<br>
+
+
+
+
 
 
 ## Body Copy
@@ -80,9 +82,10 @@ renders to this HTML:
 ```
 
 
-<br>
-<br>
-<br>
+
+
+
+
 
 
 ## Emphasis
@@ -136,9 +139,10 @@ Which renders to:
 ~~Strike through this text.~~
 
 
-<br>
-<br>
-<br>
+
+
+
+
 
 
 ## Blockquotes
@@ -183,9 +187,10 @@ odio non est accumsan facilisis. Aliquam id turpis in dolor tincidunt mollis ac 
 Nunc augue augue, aliquam non hendrerit ac, commodo vel nisi.
 
 
-<br>
-<br>
-<br>
+
+
+
+
 
 
 ## Lists
@@ -319,9 +324,10 @@ Renders to:
 8. Eget porttitor lorem
 
 
-<br>
-<br>
-<br>
+
+
+
+
 
 
 ## Code
@@ -451,9 +457,10 @@ And this complicated HTML:
 ```
 
 
-<br>
-<br>
-<br>
+
+
+
+
 
 
 
@@ -519,9 +526,10 @@ Adding a colon on the right side of the dashes below any heading will right alig
 | ext    | extension to be used for dest files. |
 
 
-<br>
-<br>
-<br>
+
+
+
+
 
 
 ## Links
@@ -584,9 +592,10 @@ Content for chapter one.
 **NOTE** that specific placement of the anchor tag seems to be arbitrary. They are placed inline here since it seems to be unobtrusive, and it works.
 
 
-<br>
-<br>
-<br>
+
+
+
+
 
 
 ## Images
