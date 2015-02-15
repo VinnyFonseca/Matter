@@ -9,9 +9,10 @@ module.exports = function(grunt) {
 		compass: {
 			dist: {
 				options: {
-					sassDir: ['styles/pre'],
+					sassDir: ['styles'],
 					cssDir: ['styles'],
-					outputStyle: 'compressed'
+					outputStyle: 'compressed',
+					sourcemap: true
 				}
 			}
 		},
@@ -23,6 +24,7 @@ module.exports = function(grunt) {
 						'scripts/vendor/jquery-1.11.2.min.js',
 						'scripts/vendor/modernizr-full.min.js',
 						'scripts/vendor/*.js',
+						'scripts/dev/config.js',
 						'scripts/core/*.js',
 						'scripts/core/widgets/*.js',
 						'scripts/dev/*.js'

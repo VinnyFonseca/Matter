@@ -32,7 +32,7 @@
 
 		<title>Matter</title>
 
-		<link rel="stylesheet" href="styles/build.css" type="text/css" media="screen">
+		<link rel="stylesheet" href="styles/min/main.css" type="text/css" media="screen">
 
 		<script type="text/javascript" src="scripts/vendor/html5shiv-printshiv.min.js"></script>
 	</head>
