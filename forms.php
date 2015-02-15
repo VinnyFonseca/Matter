@@ -100,12 +100,12 @@
 			</p>
 
 			<label>Autocomplete input 1</label>
-			<div class="autocomplete-wrapper" data-url="scripts/core/autocomplete/sample.json">
+			<div class="autocomplete-wrapper" data-url="scripts/dev/autocomplete/sample.json">
 				<input type="text" class="autocomplete-input" placeholder="Type to search...">
 			</div>
 
 			<label>Autocomplete input 2</label>
-			<div class="autocomplete-wrapper" data-url="scripts/core/autocomplete/sample.json">
+			<div class="autocomplete-wrapper" data-url="scripts/dev/autocomplete/sample.json">
 				<input type="text" class="autocomplete-input" placeholder="Type to search...">
 			</div>
 

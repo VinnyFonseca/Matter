@@ -46,7 +46,7 @@ function initValidation() {
 		}
 	}
 
-	function validateBlur(el, type, value) {
+	function validate(el, type, value) {
 		var notificationType = "failure";
 
 		if (config.application.debug) console.log("Validation :: " + type);
@@ -125,7 +125,7 @@ function initValidation() {
 					type = el.attr("data-validation"),
 					value = el.val();
 
-				validateBlur(el, type, value);
+				validate(el, type, value);
 			});
 
 		if (config.application.debug) console.log("Form :: Validation");
