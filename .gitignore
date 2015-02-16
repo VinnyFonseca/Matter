@@ -51,4 +51,4 @@ watch/.sass-cache/
 styles/sass/.sass-cache/
 
 assets/
-download/
+node_modules/
