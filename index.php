@@ -9,10 +9,10 @@
 	<div class="intro">
 		<div class="wrapper">
 			<p class="lead">
-				<strong class="font-xlarge">Matter</strong> is a <strong>SASS</strong> and <strong>Compass</strong> front-end framework designed to make HTML work <strong>for</strong> you, not <strong>against</strong> you.
+				A <strong>SASS</strong> and <strong>Compass</strong> front-end framework designed to make HTML work <strong>for</strong> you.
 			</p>
 
-			<p>No more de-styling and restyling. Use the HTML elements' default behaviour to leverage your web application and improve your workflow.</p>
+			<p>No more de-styling and restyling. Use HTML's default behaviour to leverage your web application and improve your workflow.</p>
 		</div>
 	</div>
 
