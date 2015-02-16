@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 		uglify: {
 			all: {
 				files: {
-					'scripts/min/main.min.js': [
+					'scripts/build.js': [
 						'scripts/vendor/jquery-1.11.2.min.js',
 						'scripts/vendor/modernizr-full.min.js',
 						'scripts/vendor/*.js',
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
 				beautify: false,
 		        sourceMap: true,
 				sourceMapIncludeSources: true,
-		        sourceMapName: 'scripts/min/main.min.js.map'
+		        sourceMapName: 'scripts/build.js.map'
 			}
 		},
 
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
 				}
 			},
 			js: {
-				files: ['scripts/**/*.js', '!scripts/min/*.js'],
+				files: ['scripts/**/*.js'],
 				tasks: ['uglify'],
 				options: { livereload: true	}
 			}

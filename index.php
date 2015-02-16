@@ -27,10 +27,6 @@
 			It was built over <strong>many iterations</strong>, <strong>cleanups</strong>, <strong>revisions</strong> and <strong>upgrades</strong>, instead of a single sprint from the ground up. This process makes Matter <strong>stable</strong>, <strong>tested</strong> and with <strong>fewer bugs</strong>, all while being compatible all the way down to <strong>IE8</strong>.
 		</p>
 
-		<p class="emphasis">
-			Note: Core files are located at <code>styles/pre/matter/</code> and <code>scripts/matter/</code>. They should be left alone whenever possible. Modify them <strong>at your own risk</strong>.
-		</p>
-
 
 		<hr>
 

@@ -1,5 +1,5 @@
 		<!-- Minified JS - Includes all .js from scripts folder -->
-		<script async type="text/javascript" src="scripts/min/main.min.js"></script>
+		<script async type="text/javascript" src="scripts/build.js"></script>
 
 		<!-- Third Party CDN Plugins -->
 		<!-- AddThis -->

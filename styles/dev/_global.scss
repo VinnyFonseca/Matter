@@ -129,7 +129,8 @@ header,
 	margin: 0;
 	padding: 0;
 	color: $cf;
-	background: $brand1;
+	background: $brand1 url(../img/bg.jpg) no-repeat center center;
+	background-size: cover;
 }
 .main {
 	display: block;
@@ -156,7 +157,8 @@ footer,
 	padding: ($spacing / 1.5) $spacing;
 	width: 100%;
 	color: $cf;
-	background: $brand1;
+	background: $brand1 url(../img/bg.jpg) no-repeat center center;
+	background-size: cover;
 	z-index: 80;
 
 	a {
@@ -173,7 +175,7 @@ footer,
 	.author {
 		position: relative;
 		float: right;
-		top: 8px;
+		top: 10px;
 		right: 0;
 	}
 
