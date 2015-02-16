@@ -96,7 +96,7 @@
 			<h4>Autocompletion Engine</h4>
 
 			<p class="emphasis">
-				Note: You can instantiate multiple autocomplete fields and their functionality will not clash.
+				Note: You can instantiate multiple autocomplete fields.
 			</p>
 
 			<label>Autocomplete input 1</label>
@@ -115,7 +115,7 @@
 			<h4>Date</h4>
 
 			<p class="emphasis">
-				Note: Add attribute <code>data-calendar="true"</code> to the input to enable the calendar.
+				Note: Simply add attribute <code>data-calendar="true"</code> to the input to enable the calendar.
 			</p>
 
 			<label>Calendar input</label>

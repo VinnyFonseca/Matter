@@ -25,35 +25,43 @@ function notify(message, tone, delay) {
 
 	var isOn = typeof timer !== "undefined";
 	if (isOn) timer.stop();
-	$(".notification").removeClass("active");
 
-	if ( delay !== 0 ) {
-		timer = new Timer(function() {
-			$(".notification").removeClass("active");
-		}, delay);
+	function notifyShow() {
+		if ( delay !== 0 ) {
+			timer = new Timer(function() {
+				$(".notification").removeClass("active");
+			}, delay);
+		}
+
+		$(".notification")
+			.addClass("active")
+			.removeClass("default")
+			.removeClass("success")
+			.removeClass("warning")
+			.removeClass("failure")
+			.addClass(tone)
+			.off("mouseenter")
+			.on("mouseenter", function() {
+				if ( delay !== 0 ) timer.pause();
+			})
+			.off("mouseleave")
+			.on("mouseleave", function() {
+				if ( delay !== 0 ) timer.resume();
+			})
+			.on("click", function() {
+				$(".notification").removeClass("active");
+			})
+			.children(".notification-message").html(message);
+
+		if (config.application.debug) console.log("Trigger :: Notification | Delay: " + delay);
 	}
 
-	$(".notification")
-		.addClass("active")
-		.removeClass("default")
-		.removeClass("success")
-		.removeClass("warning")
-		.removeClass("failure")
-		.addClass(tone)
-		.off("mouseenter")
-		.on("mouseenter", function() {
-			if ( delay !== 0 ) timer.pause();
-		})
-		.off("mouseleave")
-		.on("mouseleave", function() {
-			if ( delay !== 0 ) timer.resume();
-		})
-		.on("click", function() {
-			$(".notification").removeClass("active");
-		})
-		.children(".notification-message").html(message);
-
-	if (config.application.debug) console.log("Trigger :: Notification | Delay: " + delay);
+	if ( $(".notification").hasClass("active") ) {
+		$(".notification").removeClass("active");
+		setTimeout(notifyShow, 300);
+	} else {
+		notifyShow();
+	}
 }
 
 function initNotifications() {

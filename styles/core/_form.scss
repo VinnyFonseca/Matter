@@ -439,6 +439,7 @@ input[type="button"] {
 	position: relative;
 	margin: 2px auto;
 	padding: ($spacing / 2) ($spacing / 1.5);
+	min-width: 42px;
 	color: $fontColor;
 	font-family: $bodyFont;
 	@include font-size($fontSize);

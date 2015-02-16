@@ -286,7 +286,7 @@ verbatim {
 pre {
 	display: block;
 	position: relative;
-	margin: 0 0 ($spacing / 2);
+	margin: ($spacing / 2) 0;
 	padding: ($spacing / 2) $spacing;
 	color: $fontColor;
 	font-family: $monospaceFont;

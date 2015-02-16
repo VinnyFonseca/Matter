@@ -41,7 +41,7 @@
 
 		<h3>Accessibility</h3>
 
-		<h5>Font size controls.</h5>
+		<h4>Font size controls.</h4>
 
 		<p>Two controls to change the font and one to reset. Use class <code>.primary</code> to add the "call to action" styling.</p>
 
@@ -66,7 +66,7 @@
 
 <pre>
 &lt;button class="font-down"&gt;A&minus;&lt;/button&gt;
-	&lt;button class="font-reset primary"&gt;A&lt;/button&gt;
+&lt;button class="font-reset primary"&gt;A&lt;/button&gt;
 &lt;button class="font-up"&gt;A+&lt;/button&gt;
 </pre>
 
@@ -87,6 +87,8 @@
 		<a href="#" class="anchor" id="notifications"></a>
 
 		<h3>Notifications</h3>
+
+		<code>notify(tone, delay);</code>
 
 		<p>
 			There are two notification styles. They are responsive, liquid, and cross-browser compliant. They can be used for <strong>cookie messages</strong>, <strong>form validation</strong>, <strong>progress updates</strong>, <strong>user information</strong>, etc...

@@ -52,7 +52,9 @@
 		</div>
 
 		<p class="emphasis">
-			Note: In order to keep cross-browser consistency, <code>.column</code> must be inside a <code>.row</code>, and you cannot have more columns than a row can support, due to use of <code>:first-child</code> pseudo element to reset the padding of the first column. <code>.cell</code> is optional.
+			Note: In order to keep cross-browser consistency, <code>.column</code> must be inside a <code>.row</code>.
+			<br>
+			<code>.cell</code> is optional.
 		</p>
 
 
@@ -221,6 +223,8 @@
 				<div class="cell">Test</div>
 			</div>
 		</div>
+
+		<br>
 
 		<p>
 			For mobiles, all columns become 100% width.

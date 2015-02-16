@@ -20,7 +20,7 @@
 		<h2>What's <sub><small class="light-gray">the</small></sub> Matter?</h2>
 
 		<p>
-			Matter is the result of <strong>years</strong> of problem solving and bug fixing.
+			Matter is the result of <strong>years</strong> of problem solving, bug fixing, cross-browser and cross-platform testing.
 		</p>
 
 		<p>
@@ -70,7 +70,7 @@
 		<h4>2. Download</h4>
 
 		<p>
-			<strong>Clone it on</strong> <a href="https://github.com/VinnyFonseca/matter.git" target="_blank">Github</a>.
+			<strong>Clone it on</strong> <a href="https://github.com/VinnyFonseca/matter.git" class="explicit" target="_blank">Github</a>.
 		</p>
 
 
@@ -80,7 +80,11 @@
 		<h4>3. Grunt</h4>
 
 		<p>
-			Navigate to Matter's directory and run <code>grunt</code>.
+			<strong>First time usage?</strong> Navigate to Matter's directory and run <code>npm install</code>, then run <code>grunt</code>.
+		</p>
+
+		<p>
+			<strong>Coming back?</strong> Simply run <code>grunt</code>.
 		</p>
 
 
