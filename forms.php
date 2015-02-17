@@ -42,10 +42,17 @@
 
 			<a href="#" class="anchor" id="input"></a>
 
-			<h3>Input Types <small>(with validation)</small></h3>
+			<h3>Input Types</h3>
+
+			<p class="emphasis">
+				Note: Validation is active for the fields below. You can change it on <code>config.js</code> under <code>config.forms.validation</code>.
+			</p>
 
 			<label>Text</label>
 			<input type="text" name="text" placeholder="Text input" data-validation="text" required>
+
+			<label>Number</label>
+			<input type="text" name="text" placeholder="Number input" data-validation="number" required>
 
 			<label>Email</label>
 			<input type="email" name="email" placeholder="name@domain.com" data-validation="email" required>
@@ -61,7 +68,7 @@
 			<label>Password Matching</label>
 			<div class="input-group block-reset">
 				<div class="password-wrapper">
-					<input type="password" name="password-match" placeholder="No minimum, must be strong" data-validation="password" required>
+					<input type="password" name="password-match" placeholder="Minimum rating: 30%" data-validation="password" required>
 					<div class="password-meter-mask">
 						<div class="password-meter"></div>
 					</div>
@@ -113,6 +120,10 @@
 			<br>
 
 			<h4>Date</h4>
+
+			<p>
+				<strong>Credit:</strong> <a href="https://bootstrap-datepicker.readthedocs.org/en/release/" target="_blank">Bootstrap Datepicker</a>.
+			</p>
 
 			<p class="emphasis">
 				Note: Simply add attribute <code>data-calendar="true"</code> to the input to enable the calendar.
@@ -283,7 +294,7 @@
 
 			<h4>Single Upload</h4>
 
-			<p class="mobile-show">Multiple file upload is not available in the mobile version. Please access the desktop version.</p>
+			<p class="emphasis mobile-show">Multiple file upload is not available in the mobile version. Please access the desktop version.</p>
 
 			<div class="file-wrapper mobile-hide">
 				<input type="file" />
@@ -299,7 +310,7 @@
 
 			<h4>Multiple Upload</h4>
 
-			<p class="mobile-show">Multiple file upload is not available in the mobile version. Please access the desktop version.</p>
+			<p class="emphasis mobile-show">Multiple file upload is not available in the mobile version. Please access the desktop version.</p>
 
 			<div class="multifile-info form-info">You've got <strong class="emphasis font-expanded multi-limit">0</strong> remaining upload<span class="plural">s</span>.</div>
 

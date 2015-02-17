@@ -79,7 +79,7 @@
 	.password-wrapper,
 	.file-wrapper,
 	.dropdown-wrapper {
-		width: 100%;
+		width: 100% !important;
 	}
 
 	input[type="radio"],
@@ -107,6 +107,10 @@
 			border-top: 0;
 			border-bottom: 0;
 		}
+	}
+
+	.multifile-info {
+		display: none !important;
 	}
 
 

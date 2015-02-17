@@ -83,8 +83,8 @@ NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
 
 function initSVGs() {
 	if ( !$("html").hasClass("lt-ie9") ) {
-		for ( var i = 0; i < $('img.svg').length; i++ ) {
-			var img = $('img.svg').eq(i),
+		$('img.svg').each(function(i) {
+			var img = $(this),
 				imgID = img.attr('id'),
 				imgClass = img.attr('class'),
 				imgURL = img.attr('src');
@@ -96,7 +96,7 @@ function initSVGs() {
 				svg = svg.removeAttr('xmlns:a');
 				img.replaceWith(svg);
 			}, 'xml');
-		}
+		});
 
 		if (config.application.debug) console.log("Init :: SVG Injection");
 	}

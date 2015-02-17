@@ -235,82 +235,6 @@ var map,
 				]
 			}
 		],
-		SubtleGrayscale: [
-			{
-				"featureType": "landscape",
-				"stylers": [
-					{ "saturation": -100 },
-					{ "lightness": 65 },
-					{ "visibility": "on" }
-				]
-			},{
-				"featureType": "poi",
-				"stylers": [
-					{ "saturation": -100 },
-					{ "lightness": 51 },
-					{ "visibility": "simplified" }
-				]
-			},{
-				"featureType": "road.highway",
-				"stylers": [
-					{ "saturation": -100 },
-					{ "visibility": "simplified" }
-				]
-			},{
-				"featureType": "road.arterial",
-				"stylers": [
-					{ "saturation": -100 },
-					{ "lightness": 30 },
-					{ "visibility": "on" }
-				]
-			},{
-				"featureType": "road.local",
-				"stylers": [
-					{ "saturation": -100 },
-					{ "lightness": 40 },
-					{ "visibility": "on" }
-				]
-			},{
-				"featureType": "transit",
-				"stylers": [
-					{ "saturation": -100 },
-					{ "visibility": "simplified" }
-				]
-			},{
-				"featureType": "administrative.province",
-				"stylers": [
-					{ "visibility": "off" }
-				]
-		/** /
-			},{
-				"featureType": "administrative.locality",
-				"stylers": [
-					{ "visibility": "off" }
-				]
-			},{
-				"featureType": "administrative.neighborhood",
-				"stylers": [
-					{ "visibility": "on" }
-				]
-		/**/
-			},{
-				"featureType": "water",
-				"elementType": "labels",
-				"stylers": [
-					{ "saturation": -100 },
-					{ "lightness": -25 },
-					{ "visibility": "on" }
-				]
-			},{
-				"featureType": "water",
-				"elementType": "geometry",
-				"stylers": [
-					{ "saturation": -97 },
-					{ "lightness": -25 },
-					{ "hue": "#ffff00" }
-				]
-			}
-		],
 		PastelTones: [
 			{
 				"featureType": "landscape",
@@ -364,6 +288,86 @@ var map,
 					{ "saturation": -40 }
 				]
 			}
+		],
+		LightOnDarkGray: [
+			{
+				"featureType": "administrative",
+				"elementType": "labels.text.fill",
+				"stylers": [
+					{
+						"color": "#444444"
+					}
+				]
+			},
+			{
+				"featureType": "landscape",
+				"elementType": "all",
+				"stylers": [
+					{
+						"color": "#f2f2f2"
+					}
+				]
+			},
+			{
+				"featureType": "poi",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "road",
+				"elementType": "all",
+				"stylers": [
+					{
+						"saturation": -100
+					},
+					{
+						"lightness": 45
+					}
+				]
+			},
+			{
+				"featureType": "road.highway",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "simplified"
+					}
+				]
+			},
+			{
+				"featureType": "road.arterial",
+				"elementType": "labels.icon",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "transit",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "water",
+				"elementType": "all",
+				"stylers": [
+					{
+						"color": "#4f595d"
+					},
+					{
+						"visibility": "on"
+					}
+				]
+			}
 		]
 	};
 
@@ -371,26 +375,26 @@ function initialize() {
 	var mapOptions = {
 		center: new google.maps.LatLng(51.507333, - 0.107806),
 		zoom: 15,
-		zoomControl: config.application.touch,
+		zoomControl: true,
 		zoomControlOptions: {
-			style: google.maps.ZoomControlStyle.SMALL
+			style: google.maps.ZoomControlStyle.LARGE
 		},
-		disableDoubleClickZoom: true,
-		mapTypeControl: true,
+		disableDoubleClickZoom: false,
+		mapTypeControl: false,
 		mapTypeControlOptions: {
 			style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR
 		},
 		scaleControl: false,
-		scrollwheel: !config.application.touch,
-		panControl: config.application.touch,
+		scrollwheel: false,
+		panControl: false,
 		streetViewControl: false,
-		draggable: !config.application.touch,
-		overviewMapControl: true,
+		draggable: true,
+		overviewMapControl: false,
 		overviewMapControlOptions: {
 			opened: false
 		},
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		styles: themes.PastelTones
+		styles: themes.Mapbox
 	};
 
 	var mapElement = document.getElementById('map-canvas');

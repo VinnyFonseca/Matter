@@ -47,7 +47,8 @@ function initValidation() {
 	}
 
 	function validate(el, type, value) {
-		var notificationType = "failure";
+		var notificationTone = "failure",
+			notificationDelay = 3000;
 
 		if (config.application.debug) console.log("Validation :: " + type);
 
@@ -57,7 +58,17 @@ function initValidation() {
 					el.removeClass("invalid").addClass("valid");
 				} else {
 					el.removeClass("valid").addClass("invalid");
-					notify("This field cannot be left empty.", notificationType);
+					notify("This field cannot be left empty.", notificationTone, notificationDelay);
+				}
+				break;
+
+			case "number":
+				var check = /\D+/;
+				if ( value.length == value.replace(check, '').length ) {
+					el.removeClass("invalid").addClass("valid");
+				} else {
+					el.removeClass("valid").addClass("invalid");
+					notify("This field can only have numbers.", notificationTone, notificationDelay);
 				}
 				break;
 
@@ -67,7 +78,7 @@ function initValidation() {
 					el.removeClass("invalid").addClass("valid");
 				} else {
 					el.removeClass("valid").addClass("invalid");
-					notify("Your email is invalid.", notificationType);
+					notify("Your email is invalid.", notificationTone, notificationDelay);
 				}
 				break;
 
@@ -76,7 +87,7 @@ function initValidation() {
 					el.removeClass("invalid").addClass("valid");
 				} else {
 					el.removeClass("valid").addClass("invalid");
-					notify("Your password is not strong enough.", notificationType);
+					notify("Your password is not strong enough.", notificationTone, notificationDelay);
 				}
 				break;
 
@@ -84,17 +95,13 @@ function initValidation() {
 				var mirror = $("input[name='password-match']").eq(0);
 				var password = mirror.val();
 
-				if ( el.val() == mirror.val() ) {
+				if ( mirror.hasClass("valid") && value === password ) {
 					el.removeClass("invalid").addClass("valid");
 				} else {
 					el.removeClass("valid").addClass("invalid");
-					notify("Your passwords must match.", notificationType);
+					notify("Your passwords must match.", notificationTone, notificationDelay);
 				}
-
-				if ( !mirror.hasClass("valid") ) {
-					el.removeClass("valid").addClass("invalid");
-					notify("Your password is not strong enough.", notificationType);
-				}
+				break;
 
 			case "date":
 				var check = /^\d{2}\/\d{2}\/\d{4}$/;
@@ -102,7 +109,7 @@ function initValidation() {
 					el.removeClass("invalid").addClass("valid");
 				} else {
 					el.removeClass("valid").addClass("invalid");
-					notify("The date you entered is not valid.", notificationType);
+					notify("The date you entered is not valid.", notificationTone, notificationDelay);
 				}
 				break;
 		}
@@ -118,8 +125,15 @@ function initValidation() {
 		});
 
 		$("*[required]")
-			.on("focus", function() {
+			.on("keyup", function() {
 				$(this).removeClass("valid").removeClass("invalid");
+			})
+			.on("focus", function() {
+				var el = $(this),
+					type = el.attr("data-validation"),
+					value = el.val();
+
+				if ( $(this).hasClass("invalid") ) validate(el, type, value);
 			}).on("blur", function() {
 				var el = $(this),
 					type = el.attr("data-validation"),
