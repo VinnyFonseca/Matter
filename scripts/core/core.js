@@ -299,9 +299,10 @@ function initFramework() {
 
 	// Widgets Init
 
-	initTooltips();
-	initNotifications();
 	initFontSizeControls();
+	initNotifications();
+	initTagClouds();
+	initTooltips();
 	initSliders();
 	initTwitter();
 	initMap();

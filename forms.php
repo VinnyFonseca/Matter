@@ -31,6 +31,12 @@
 			<li>
 				<a href="#buttons">Buttons</a>
 			</li>
+			<li>
+				<a href="#autocomplete">Autocompletion Engine</a>
+			</li>
+			<li>
+				<a href="#tagcloud">Tag Cloud</a>
+			</li>
 		</ul>
 
 
@@ -83,6 +89,7 @@
 
 			<br>
 
+
 			<h4>States</h4>
 
 			<label>Valid</label>
@@ -100,24 +107,6 @@
 
 			<br>
 
-			<h4>Autocompletion Engine</h4>
-
-			<p class="emphasis">
-				Note: You can instantiate multiple autocomplete fields.
-			</p>
-
-			<label>Autocomplete input 1</label>
-			<div class="autocomplete-wrapper" data-url="scripts/dev/autocomplete/sample.json">
-				<input type="text" class="autocomplete-input" placeholder="Type to search...">
-			</div>
-
-			<label>Autocomplete input 2</label>
-			<div class="autocomplete-wrapper" data-url="scripts/dev/autocomplete/sample.json">
-				<input type="text" class="autocomplete-input" placeholder="Type to search...">
-			</div>
-
-
-			<br>
 
 			<h4>Date</h4>
 
@@ -217,7 +206,6 @@
 				</div>
 				<small>Credit: <a href="http://petelada.com/2015/01/31/css-only-toggle.html" class="explicit">Pete Lada</a></small>
 			</fieldset>
-
 
 
 			<hr>
@@ -335,6 +323,36 @@
 			<button class="primary" type="submit">Validate and Send</button>
 			<button disabled>Disabled</button>
 			<button type="reset">Reset</button>
+
+
+			<hr>
+
+
+			<a href="#" class="anchor" id="autocomplete"></a>
+
+			<h3>Autocompletion Engine</h3>
+
+			<p class="emphasis">
+				Note: You can instantiate multiple autocomplete fields.
+			</p>
+
+			<label>Autocomplete input 1</label>
+			<div class="autocomplete-wrapper" data-url="scripts/dev/autocomplete/sample.json">
+				<input type="text" class="autocomplete-input" placeholder="Type to search...">
+			</div>
+
+			<label>Autocomplete input 2</label>
+			<div class="autocomplete-wrapper" data-url="scripts/dev/autocomplete/sample.json">
+				<input type="text" class="autocomplete-input" placeholder="Type to search...">
+			</div>
+
+
+			<hr>
+
+
+			<a href="#" class="anchor" id="tagcloud"></a>
+
+			<h3>Tag Cloud</h3>
 		</form>
 
 	</div>
