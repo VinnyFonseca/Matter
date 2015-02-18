@@ -124,7 +124,7 @@ function initValidation() {
 			validateKeypress(el, type, value);
 		});
 
-		$("*[required]")
+		$("[required]")
 			.on("keyup", function() {
 				$(this).removeClass("valid").removeClass("invalid");
 			})

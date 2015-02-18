@@ -1,69 +1,61 @@
 // Tooltips
 
 function initTagClouds() {
-	$("*[data-tagcloud]").each(function() {
-		var tooltipData = $(this).attr("data-tooltip"),
-			container = $(".tooltip-container");
+	$("[data-tagcloud]").each(function(i) {
+		var el = $(this),
+			index = i,
+			tagArray = [],
+			tagCloud = '<ul class="tagcloud" data-tag="tagcloud-' + index + '"></ul>',
+			tagHidden = '<input type="hidden" class="tagcloud-result" data-tag="tagcloud-' + index + '">';
 
-		$(this)
-			.on("mousemove", function(event) {
-				if ( !$("html").hasClass("touch") ) {
-					container.html(tooltipData).addClass("active");
+		$(tagHidden).insertAfter(el);
+		$(tagCloud).insertAfter(el);
 
-					switch(config.tooltip.position) {
-						case "left":
-							container.css({
-								top: event.pageY - container.outerHeight() - 10,
-								left: event.pageX - container.outerWidth()
-							});
-							break;
+		var target = $(".tagcloud[data-tag='tagcloud-" + index + "']"),
+			hidden = $("input[data-tag='tagcloud-" + index + "']");
 
-						case "center":
-							container.css({
-								top: event.pageY - container.outerHeight() - 10,
-								left: event.pageX - (container.outerWidth() / 2) - 5
-							});
-							break;
+		el.on("keydown", function(event) {
+			if ( event.keyCode === 9 || event.keyCode === 13 ) { // Tab or Enter
+				var value = el.val(),
+					tag = '<li class="tag" data-tag="' + value + '">' + value + '<span>✖</span></li>';
 
-						case "right":
-							container.css({
-								top: event.pageY - container.outerHeight() - 10,
-								left: event.pageX
-							});
-							break;
+				if ( value !== "" && $.inArray(value, tagArray) < 0 ) target.addClass("active").append(tag);
+				if ( $.inArray(value, tagArray) >= 0 ) notify("This tag already exists.", "failure");
 
-						default:
-							container.css({
-								top: event.pageY - container.outerHeight() - 10,
-								left: event.pageX - (container.outerWidth() / 2) - 5
-							});
-					}
+				tagArray = [];
+				for ( var i = 0; i < target.children(".tag").length; i++ ) tagArray.push(target.children(".tag").eq(i).data("tag"));
+				hidden.val(tagArray);
 
-					var tooltip = {
-						left: container.offset().left,
-						right: container.offset().left + container.outerWidth()
-					};
-					var boundaries = {
-						left: $(".wrapper").offset().left,
-						right: $(".wrapper").offset().left + $(".wrapper").outerWidth()
-					};
+				el.val("").focus();
 
-					if ( config.tooltip.bound ) {
-						if ( tooltip.left <= boundaries.left ) {
-							container.css({ left: boundaries.left });
-						}
-						if ( tooltip.right >= boundaries.right ) {
-							container.css({ left: boundaries.right - container.outerWidth() });
-						}
-					}
-				}
-			})
-			.on("mouseleave", function() {
-				container.removeClass("active").css({
-					left: -200,
-					top: -200
+				target.on("click", ".tag", function() {
+					$(this).remove();
+					target.children(".tag").length > 0 ? target.addClass("active") : target.removeClass("active");
 				});
+
+				return false;
+			}
+		})
+		.on("change", function() {
+			var value = el.val(),
+				tag = '<li class="tag" data-tag="' + value + '">' + value + '<span>✖</span></li>';
+
+			console.log(value);
+
+			if ( value !== "" && $.inArray(value, tagArray) < 0 ) target.addClass("active").append(tag);
+			if ( $.inArray(value, tagArray) >= 0 ) notify("This tag already exists.", "failure");
+
+			tagArray = [];
+			for ( var i = 0; i < target.children(".tag").length; i++ ) tagArray.push(target.children(".tag").eq(i).data("tag"));
+			hidden.val(tagArray);
+
+			target.on("click", ".tag", function() {
+				$(this).remove();
+				target.children(".tag").length > 0 ? target.addClass("active") : target.removeClass("active");
 			});
+
+			return false;
+		});
 	});
 
 	if (config.application.debug) console.log("Init :: Tooltips");

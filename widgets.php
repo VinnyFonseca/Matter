@@ -12,7 +12,10 @@
 
 		<ul>
 			<li>
-				<a href="#accessibility">Accessibility</a>
+				<a href="#autocomplete">Autocompletion Engine</a>
+			</li>
+			<li>
+				<a href="#tagcloud">Tag Cloud</a>
 			</li>
 			<li>
 				<a href="#notifications">Notifications</a>
@@ -29,7 +32,72 @@
 			<li>
 				<a href="#twitter">Twitter</a>
 			</li>
+			<li>
+				<a href="#accessibility">Accessibility</a>
+			</li>
 		</ul>
+
+
+
+		<hr>
+
+
+		<a href="#" class="anchor" id="autocomplete"></a>
+
+		<h3>Autocompletion Engine</h3>
+
+		<p class="emphasis">
+			Note: You can instantiate multiple autocomplete fields with different target URLs.
+		</p>
+
+<pre>
+&lt;div class="autocomplete-wrapper" <span class="emphasis">data-url="scripts/dev/autocomplete/sample.json"</span>&gt;
+&lt;input type="text" placeholder="Type to search..." <span class="emphasis">data-autocomplete="true"</span>&gt;
+&lt;/div&gt;
+</pre>
+
+		<label>Autocomplete input 1</label>
+		<div class="autocomplete-wrapper" data-url="scripts/dev/autocomplete/sample.json">
+			<input type="text" placeholder="Type to search..." data-autocomplete="true">
+		</div>
+
+		<label>Autocomplete input 2</label>
+		<div class="autocomplete-wrapper" data-url="scripts/dev/autocomplete/sample.json">
+			<input type="text" placeholder="Type to search..." data-autocomplete="true">
+		</div>
+
+
+
+		<hr>
+
+
+
+		<a href="#" class="anchor" id="tagcloud"></a>
+
+		<h3>Tag Cloud</h3>
+
+<pre>
+&lt;input type="text" placeholder="Type and press Enter to add to the tag cloud" <span class="emphasis">data-tagcloud="true"</span>&gt;
+</pre>
+
+		<input type="text" placeholder="Type and press Enter to add to the tag cloud" data-tagcloud="true">
+
+<pre>
+&lt;select <span class="emphasis">data-tagcloud="true"</span>&gt;&lt;/select&gt;
+</pre>
+
+		<select data-tagcloud="true">
+			<option>one</option>
+			<option selected="">two (default)</option>
+			<option>three</option>
+			<option>four</option>
+			<option>five</option>
+			<option>six</option>
+			<option>seven</option>
+			<option>eight</option>
+			<option>nine</option>
+			<option>ten</option>
+		</select>
 
 
 
@@ -41,7 +109,7 @@
 
 		<h3>Accessibility</h3>
 
-		<h4>Font size controls.</h4>
+		<h5>Font size controls.</h5>
 
 		<p>Two controls to change the font and one to reset. Use class <code>.primary</code> to add the "call to action" styling.</p>
 
@@ -133,26 +201,24 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="button primary notification-trigger" data-message="Test message.">
-			Undeclared delay (default)
+		<div class="button primary notification-trigger" data-message="Undeclared delay (default 5000ms)">
+			Undeclared
 		</div>
-		<div class="button primary notification-trigger" data-delay="3000" data-message="And another.">
-			Delay 3 seconds (declared)
+		<div class="button primary notification-trigger" data-delay="0" data-message="Delay 0 seconds (persistent)">
+			Declared 0
 		</div>
-		<div class="button primary notification-trigger" data-delay="0" data-message="And another.">
-			Delay 0 seconds (persistent)
+		<div class="button primary notification-trigger" data-delay="3000" data-message="Delay 3 seconds (3000ms)">
+			Declared 3
 		</div>
-
-		<br>
 
 		<div class="button primary notification-trigger" data-delay="0" data-tone="success" data-message="Success message.">
-			Success tone
+			Success
 		</div>
 		<div class="button primary notification-trigger" data-delay="0" data-tone="warning" data-message="Warning message.">
-			Warning tone
+			Warning
 		</div>
 		<div class="button primary notification-trigger" data-delay="0" data-tone="failure" data-message="Failure message.">
-			Failure tone
+			Failure
 		</div>
 
 

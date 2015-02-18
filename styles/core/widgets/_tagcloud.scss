@@ -1,0 +1,43 @@
+.tagcloud {
+	display: none;
+	position: relative;
+	margin: 0;
+	margin-bottom: $spacing / 2;
+	padding: ($spacing / 4) ($spacing / 4);
+	width: 100%;
+	color: $c8;
+	border: 1px dashed $cd;
+	border-radius: $radius;
+	background: $ce;
+	list-style: none;
+	overflow: hidden;
+
+	&.active {
+		display: block;
+	}
+
+	.tag {
+		display: inline-block;
+		position: relative;
+		margin: 2px;
+		padding: 4px 8px;
+		color: $cf;
+		@include font-size($fontSize / 1.1);
+		border-radius: $radius;
+		background: $brand1;
+		cursor: pointer !important;
+
+		&:hover {
+			background-color: $brand2;
+		}
+		&:active {
+			background-color: $brand3;
+		}
+
+		span {
+			display: inline-block;
+			margin-left: 5px;
+			@include font-size($fontSize / 1.15);
+		}
+	}
+}

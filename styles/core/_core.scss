@@ -101,8 +101,7 @@ p {
 
 
 .emphasis {
-	color: #c00;
-	font-weight: bold;
+	color: #d00;
 }
 
 
@@ -272,7 +271,7 @@ verbatim {
 	padding: 0 8px;
 	color: $fontColor;
 	font-family: $monospaceFont;
-	font-size: 1.1em;
+	@include font-size($fontSize * 1.1);
 	font-weight: normal;
 	border: 1px solid $cd;
 	border-radius: $radius;
@@ -290,7 +289,7 @@ pre {
 	padding: ($spacing / 2) $spacing;
 	color: $fontColor;
 	font-family: $monospaceFont;
-	font-size: 1.1em;
+	@include font-size($fontSize);
 	font-weight: normal;
 	border: 1px solid $cd;
 	border-radius: $radius;
@@ -356,13 +355,12 @@ acronym {
 var {
 	color: $brand1;
 	font-style: normal;
-	font-weight: bold;
 
 	&:before {
-		content: "[[";
+		content: "{{";
 	}
 	&:after {
-		content: "]]";
+		content: "}}";
 	}
 }
 

@@ -64,12 +64,12 @@ function buildDropdowns(i) {
 
 			dropdownItem.removeClass("active");
 			target.text($(this).text()).attr("data-value", value);
-			select.val(value);
+			select.val(value).trigger("change");
 
 			$(this).addClass("active").parents("form.auto-send").submit();
 		});
 
-		select.off().on("change", function() {
+		select.on("change", function() {
 			var selected = $(this).children("option:selected");
 
 			dropdownItem.removeClass("active");
@@ -159,7 +159,16 @@ $(window).load(function() {
 		autoclose: true,
 		format: "dd/mm/yyyy",
 		todayBtn: "linked",
-		todayHighlight: true
+		todayHighlight: true,
+		startDate: new Date()
+	});
+
+	$(".input-daterange").datepicker({
+		autoclose: true,
+		format: "dd/mm/yyyy",
+		todayBtn: "linked",
+		todayHighlight: true,
+		startDate: new Date()
 	});
 
 
