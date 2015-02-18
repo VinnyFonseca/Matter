@@ -37,10 +37,10 @@
 			Width and height are set by CSS. Omit it to preserve ratio. Set it only as a conditional style for IE8, otherwise the image loses proportion.
 		</p>
 
-		<img src="http://placehold.it/1280x800" alt="Placeholder Image." />
+		<img src="http://placehold.it/1280x720" alt="Placeholder Image." />
 
 <pre>
-&lt;img src="http://placehold.it/1280x800" alt="Placeholder Image."&gt;
+&lt;img src="http://placehold.it/1280x720" alt="Placeholder Image."&gt;
 </pre>
 
 
@@ -69,23 +69,23 @@
 			<cite>Jason Grigsby, <a href="http://blog.cloudfour.com/dont-use-picture-most-of-the-time/">Don’t use &lt;picture&gt; (most of the time)</a>.</cite>
 		</blockquote>
 
-		<img src="http://placehold.it/1280x800"
+		<img src="http://placehold.it/1280x720"
 			 sizes="(min-width: 40em) 80vw, 100vw"
-			 srcset="http://placehold.it/800x600 480w,
-					 http://placehold.it/1024x768 480w 2x,
-					 http://placehold.it/1024x768 768w,
-					 http://placehold.it/1280x800 768w 2x,
-					 http://placehold.it/1280x800 960w"
+			 srcset="http://placehold.it/800x480 480w,
+					 http://placehold.it/1024x600 480w 2x,
+					 http://placehold.it/1024x600 768w,
+					 http://placehold.it/1280x720 768w 2x,
+					 http://placehold.it/1280x720 960w"
 			 alt="Placeholder Image." />
 
 <pre>
-&lt;img src="http://placehold.it/1280x800"
+&lt;img src="http://placehold.it/1280x720"
 	 sizes="(min-width: 40em) 80vw, 100vw"
-	 srcset="http://placehold.it/800x600 480w,
-	     http://placehold.it/1024x768 480w 2x,
-	     http://placehold.it/1024x768 768w,
-	     http://placehold.it/1280x800 768w 2x,
-	     http://placehold.it/1280x800 960w"
+	 srcset="http://placehold.it/800x480 480w,
+	     http://placehold.it/1024x600 480w 2x,
+	     http://placehold.it/1024x600 768w,
+	     http://placehold.it/1280x720 768w 2x,
+	     http://placehold.it/1280x720 960w"
 	 alt="Placeholder Image."&gt;
 </pre>
 
@@ -106,30 +106,34 @@
 		<picture>
 			<!-- IE Fix, video element wrapper -->
 			<!--[if IE 9]><video style="display: none;"><![endif]-->
-			<source srcset="http://placehold.it/1280x800" media="(min-width: 960px)">
-			<source srcset="http://placehold.it/1024x768" media="(min-width: 768px)">
-			<source srcset="http://placehold.it/800x600" media="(min-width: 480px)">
-			<source srcset="http://placehold.it/640x480" media="(min-width: 320px)">
+			<source srcset="http://placehold.it/1920x1080" media="(min-width: 1280px)">
+			<source srcset="http://placehold.it/1280x720" media="(min-width: 960px)">
+			<source srcset="http://placehold.it/1024x600" media="(min-width: 768px)">
+			<source srcset="http://placehold.it/800x480" media="(min-width: 480px)">
+			<source srcset="http://placehold.it/640x380" media="(min-width: 320px)">
 			<!--[if IE 9]></video><![endif]-->
 
 			<!-- Fallback -->
-			<img srcset="http://placehold.it/1280x800" alt="Placeholder Image.">
+			<img src="http://placehold.it/1920x1080" alt="Placeholder Image.">
 		</picture>
 
 <pre>
 &lt;picture&gt;
 	&lt;!-- IE Fix, video element wrapper --&gt;
 	&lt;!--[if IE 9]&gt;&lt;video style="display: none;"&gt;&lt;![endif]--&gt;
-	&lt;source srcset="http://placehold.it/1280x800" media="(min-width: 960px)"&gt;
-	&lt;source srcset="http://placehold.it/1024x768" media="(min-width: 768px)"&gt;
-	&lt;source srcset="http://placehold.it/800x600" media="(min-width: 480px)"&gt;
-	&lt;source srcset="http://placehold.it/640x480" media="(min-width: 320px)"&gt;
+	&lt;source srcset="http://placehold.it/1920x1080" media="(min-width: 1280px)"&gt;
+	&lt;source srcset="http://placehold.it/1280x720" media="(min-width: 960px)"&gt;
+	&lt;source srcset="http://placehold.it/1024x600" media="(min-width: 768px)"&gt;
+	&lt;source srcset="http://placehold.it/800x480" media="(min-width: 480px)"&gt;
+	&lt;source srcset="http://placehold.it/640x380" media="(min-width: 320px)"&gt;
 	&lt;!--[if IE 9]&gt;&lt;/video&gt;&lt;![endif]--&gt;
 
 	&lt;!-- Fallback --&gt;
-	&lt;img srcset="http://placehold.it/1280x800" alt="Placeholder Image."&gt;
+	&lt;img src="http://placehold.it/1920x1080" alt="Placeholder Image."&gt;
 &lt;/picture>
 </pre>
+
+		<br>
 
 		<p>
 			Reversing the order, though, causes the first source that matches the rule to load. As the browser is indeed wider than 320px, the smallest image loads.
@@ -138,28 +142,30 @@
 		<picture>
 			<!-- IE Fix, video element wrapper -->
 			<!--[if IE 9]><video style="display: none;"><![endif]-->
-			<source srcset="http://placehold.it/640x480" media="(min-width: 320px)">
-			<source srcset="http://placehold.it/800x600" media="(min-width: 480px)">
-			<source srcset="http://placehold.it/1024x768" media="(min-width: 768px)">
-			<source srcset="http://placehold.it/1280x800" media="(min-width: 960px)">
+			<source srcset="http://placehold.it/640x380" media="(min-width: 320px)">
+			<source srcset="http://placehold.it/800x480" media="(min-width: 480px)">
+			<source srcset="http://placehold.it/1024x600" media="(min-width: 768px)">
+			<source srcset="http://placehold.it/1280x720" media="(min-width: 960px)">
+			<source srcset="http://placehold.it/1920x1080" media="(min-width: 1280px)">
 			<!--[if IE 9]></video><![endif]-->
 
 			<!-- Fallback -->
-			<img srcset="http://placehold.it/1280x800" alt="Placeholder Image.">
+			<img src="http://placehold.it/1920x1080" alt="Placeholder Image.">
 		</picture>
 
 <pre>
 &lt;picture&gt;
 	&lt;!-- IE Fix, video element wrapper --&gt;
 	&lt;!--[if IE 9]&gt;&lt;video style="display: none;"&gt;&lt;![endif]--&gt;
-	&lt;source srcset="http://placehold.it/640x480" media="(min-width: 320px)"&gt;
-	&lt;source srcset="http://placehold.it/800x600" media="(min-width: 480px)"&gt;
-	&lt;source srcset="http://placehold.it/1024x768" media="(min-width: 768px)"&gt;
-	&lt;source srcset="http://placehold.it/1280x800" media="(min-width: 960px)"&gt;
+	&lt;source srcset="http://placehold.it/640x380" media="(min-width: 320px)"&gt;
+	&lt;source srcset="http://placehold.it/800x480" media="(min-width: 480px)"&gt;
+	&lt;source srcset="http://placehold.it/1024x600" media="(min-width: 768px)"&gt;
+	&lt;source srcset="http://placehold.it/1280x720" media="(min-width: 960px)"&gt;
+	&lt;source srcset="http://placehold.it/1920x1080" media="(min-width: 1280px)"&gt;
 	&lt;!--[if IE 9]&gt;&lt;/video&gt;&lt;![endif]--&gt;
 
 	&lt;!-- Fallback --&gt;
-	&lt;img srcset="http://placehold.it/1280x800" alt="Placeholder Image."&gt;
+	&lt;img src="http://placehold.it/1920x1080" alt="Placeholder Image."&gt;
 &lt;/picture>
 </pre>
 
@@ -167,37 +173,43 @@
 			So, the solution that Matter uses is to mimic the same media queries we have on the framework, which covers the vast majority of design cases.
 		</p>
 
-		<picture>
-			<!-- IE Fix, video element wrapper -->
-			<!--[if IE 9]><video style="display: none;"><![endif]-->
-			<source srcset="http://placehold.it/640x480" media="(max-width: 480px)">
-			<source srcset="http://placehold.it/800x600" media="(max-width: 768px)">
-			<source srcset="http://placehold.it/1024x768" media="(max-width: 960px)">
-			<source srcset="http://placehold.it/1280x800" media="(min-width: 961px)">
-			<!--[if IE 9]></video><![endif]-->
-
-			<!-- Fallback -->
-			<img srcset="http://placehold.it/1280x800" alt="Placeholder Image.">
-		</picture>
+		<br>
 
 		<p>
 			Change <code>min-width</code> to <code>max-width</code> queries and reverse the order of the queries to cater for a mobile-first approach.
 		</p>
 
+		<picture>
+			<!-- IE Fix, video element wrapper -->
+			<!--[if IE 9]><video style="display: none;"><![endif]-->
+			<source srcset="http://placehold.it/640x380" media="(max-width: 480px)">
+			<source srcset="http://placehold.it/800x480" media="(max-width: 768px)">
+			<source srcset="http://placehold.it/1024x600" media="(max-width: 960px)">
+			<source srcset="http://placehold.it/1280x720" media="(max-width: 1280px)">
+			<source srcset="http://placehold.it/1920x1080" media="(min-width: 1281px)">
+			<!--[if IE 9]></video><![endif]-->
+
+			<!-- Fallback -->
+			<img src="http://placehold.it/1920x1080" alt="Placeholder Image.">
+		</picture>
+
 <pre>
 &lt;picture&gt;
 	&lt;!-- IE Fix, video element wrapper --&gt;
 	&lt;!--[if IE 9]&gt;&lt;video style="display: none;"&gt;&lt;![endif]--&gt;
-	&lt;source srcset="http://placehold.it/640x480" media="(max-width: 480px)"&gt;
-	&lt;source srcset="http://placehold.it/800x600" media="(max-width: 768px)"&gt;
-	&lt;source srcset="http://placehold.it/1024x768" media="(max-width: 960px)"&gt;
-	&lt;source srcset="http://placehold.it/1280x800" media="(min-width: 961px)"&gt;
+	&lt;source srcset="http://placehold.it/640x380" media="(max-width: 480px)"&gt;
+	&lt;source srcset="http://placehold.it/800x480" media="(max-width: 768px)"&gt;
+	&lt;source srcset="http://placehold.it/1024x600" media="(max-width: 960px)"&gt;
+	&lt;source srcset="http://placehold.it/1280x720" media="(max-width: 1280px)"&gt;
+	&lt;source srcset="http://placehold.it/1920x1080" media="(min-width: 1281px)"&gt;
 	&lt;!--[if IE 9]&gt;&lt;/video&gt;&lt;![endif]--&gt;
 
 	&lt;!-- Fallback --&gt;
-	&lt;img srcset="http://placehold.it/1280x800" alt="Placeholder Image."&gt;
+	&lt;img src="http://placehold.it/1920x1080" alt="Placeholder Image."&gt;
 &lt;/picture>
 </pre>
+
+		<br>
 
 		<p>
 			A rule of thumb would be to provide 1.5x bigger images for the maximum width of the respective query:

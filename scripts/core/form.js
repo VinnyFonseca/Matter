@@ -95,7 +95,7 @@ function initDropdowns() {
 		buildDropdowns(i);
 	});
 
-	if (config.application.debug) console.log("Form :: Dropdowns");
+	if ( config.application.debug ) console.log("Form :: Dropdowns");
 }
 
 
@@ -145,7 +145,7 @@ function loadFileInputs(inputLimit, inputName) {
 
 	limitElement.html(currentCount);
 
-	if (config.application.debug) console.log("Form :: File Inputs");
+	if ( config.application.debug ) console.log("Form :: File Inputs");
 }
 
 
@@ -167,8 +167,10 @@ $(window).load(function() {
 	// Autocomplete
 
 	$("form").on('submit', function() {
-		console.log('Intentional: Form submit blocked.');
-		return false;
+		if ( config.application.debug ) {
+			console.log('Intentional: Form submit blocked.');
+			return false;
+		}
 	});
 
 	$(".autocomplete-wrapper").each(function() {
