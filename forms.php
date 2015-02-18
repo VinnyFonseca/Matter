@@ -271,6 +271,8 @@
 				</div>
 			</fieldset>
 
+			<h5>Toggles</h5>
+
 <pre>
 &lt;fieldset&gt;
 	&lt;legend&gt;Toggles Group&lt;/legend&gt;
