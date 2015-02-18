@@ -45,13 +45,17 @@ function initTagClouds() {
 			if ( value !== "" && $.inArray(value, tagArray) < 0 ) target.addClass("active").append(tag);
 			if ( $.inArray(value, tagArray) >= 0 ) notify("This tag already exists.", "failure");
 
-			tagArray = [];
-			for ( var i = 0; i < target.children(".tag").length; i++ ) tagArray.push(target.children(".tag").eq(i).data("tag"));
-			hidden.val(tagArray);
+			function rebuildArray() {
+				tagArray = [];
+				for ( var i = 0; i < target.children(".tag").length; i++ ) tagArray.push(target.children(".tag").eq(i).data("tag"));
+				hidden.val(tagArray);
+			}
+			rebuildArray();
 
 			target.on("click", ".tag", function() {
 				$(this).remove();
 				target.children(".tag").length > 0 ? target.addClass("active") : target.removeClass("active");
+				rebuildArray();
 			});
 
 			return false;
