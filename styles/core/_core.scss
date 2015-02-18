@@ -101,7 +101,7 @@ p {
 
 
 .emphasis {
-	color: #f00;
+	color: $brand2;
 }
 
 
@@ -291,9 +291,9 @@ pre {
 	font-family: $monospaceFont;
 	@include font-size($fontSize);
 	font-weight: normal;
-	border: 1px solid $c0;
+	border: 1px solid $c1;
 	border-radius: $radius;
-	background: $c2;
+	background: $c3;
 	overflow: auto;
 	white-space: pre-wrap;
 
