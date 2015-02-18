@@ -95,9 +95,6 @@
 			<label>Disabled</label>
 			<input type="text" name="text" placeholder="Disabled input" disabled>
 
-			<label>Tooltip</label>
-			<input type="text" name="text" placeholder="Tooltip input" class="tooltip" data-tooltip="Explanation here">
-
 
 			<br>
 

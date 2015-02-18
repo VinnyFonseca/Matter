@@ -237,17 +237,17 @@
 		</p>
 
 		<p>
-			<button class="tooltip" data-tooltip="Lorem ipsum Laborum">Hover this button</button>
+			<button class="tooltip" data-tooltip="true" data-text="Lorem ipsum Laborum">Hover this button</button>
 		</p>
 
-		<img src="http://placehold.it/960x300&text=Image,%20hover%20me" class="tooltip" data-tooltip="Using data-tooltip 1" />
+		<img src="http://placehold.it/960x300&text=Image,%20hover%20me" data-tooltip="true" data-text="Using data-tooltip 1" />
 
 		<p>
 			<strong>Example:</strong>
 		</p>
 
 <pre>
-&lt;img src="http://placehold.it/1280x400&text=Image,%20hover%20me" class="tooltip" data-tooltip="Using data-tooltip 1" /&gt;
+&lt;img src="http://placehold.it/1280x400&amp;text=Image,%20hover%20me" <span class="emphasis">data-tooltip="true" data-text="Tooltip Text"</span> /&gt;
 </pre>
 
 
@@ -358,7 +358,7 @@
 				<strong>Defaults:</strong>
 			</dt>
 			<dd>
-				<code>styles: theme.Bentley</code> &nbsp;<small class="gray"><strong>gmaps.js</strong></small>
+				<code>styles: theme.Mapbox</code> &nbsp;<small class="gray"><strong>gmaps.js</strong></small>
 			</dd>
 		</dl>
 

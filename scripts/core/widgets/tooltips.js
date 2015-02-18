@@ -1,13 +1,14 @@
 // Tooltips
 
 function initTooltips() {
-	$(".tooltip").each(function() {
-		var tooltipData = $(this).attr("data-tooltip"),
+	$("[data-tooltip]").each(function() {
+		var el = $(this),
+			tooltipData = el.attr("data-text"),
 			container = $(".tooltip-container");
 
-		$(this)
-			.on("mousemove", function(event) {
-				if ( !$("html").hasClass("touch") ) {
+		if ( !config.application.touch ) {
+			el
+				.on("mousemove", function(event) {
 					container.html(tooltipData).addClass("active");
 
 					switch(config.tooltip.position) {
@@ -56,14 +57,14 @@ function initTooltips() {
 							container.css({ left: boundaries.right - container.outerWidth() });
 						}
 					}
-				}
-			})
-			.on("mouseleave", function() {
-				container.removeClass("active").css({
-					left: -200,
-					top: -200
+				})
+				.on("mouseleave", function() {
+					container.removeClass("active").css({
+						left: -200,
+						top: -200
+					});
 				});
-			});
+		}
 	});
 
 	if (config.application.debug) console.log("Init :: Tooltips");
