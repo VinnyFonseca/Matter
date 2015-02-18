@@ -58,5 +58,5 @@ function initTagClouds() {
 		});
 	});
 
-	if (config.application.debug) console.log("Init :: Tooltips");
+	if (config.application.debug) console.log("Init :: Tag Clouds");
 }

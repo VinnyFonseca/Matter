@@ -2,7 +2,7 @@ function buildDropdowns(i) {
 	var el = $("select").eq(i),
 		size = size == "undefined" || size === "" ? 1 : parseInt(el.attr("size"), 10),
 		type = typeof size !== "undefined" && size !== "" && size > 1 ? "list" : "drop",
-		option = type === "drop" ? el.find("option").not(".placeholder") : el.find("option"),
+		option = el.find("option").not(".placeholder"),
 		selected = el.find("option:selected"),
 		wrapper = '<div class="dropdown-' + i + ' dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
 		arrow = '<div class="dropdown-arrow">&#9660;</div>',

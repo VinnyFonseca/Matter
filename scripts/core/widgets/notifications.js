@@ -65,7 +65,7 @@ function notify(message, tone, delay) {
 }
 
 function initNotifications() {
-	$(".notification-trigger").on("click", function() {
+	$("[data-notification]").on("click", function() {
 		var message = $(this).attr("data-message"),
 			tone = $(this).attr("data-tone"),
 			delay = parseInt($(this).attr("data-delay"));

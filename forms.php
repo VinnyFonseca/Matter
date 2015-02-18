@@ -146,8 +146,9 @@
 </pre>
 
 			<select name="select1">
+				<option class="placeholder">Please select...</option>
 				<option>one</option>
-				<option selected="">two (default)</option>
+				<option>two (default)</option>
 				<option>three</option>
 				<option>four</option>
 				<option>five</option>
@@ -163,6 +164,7 @@
 </pre>
 
 			<select name="select2" size="1">
+				<option class="placeholder">Please select...</option>
 				<option>one</option>
 				<option selected="">two (default)</option>
 				<option>three</option>
@@ -180,6 +182,7 @@
 </pre>
 
 			<select name="select3" size="5">
+				<option class="placeholder">Please select...</option>
 				<option>one</option>
 				<option selected="">two (default)</option>
 				<option>three</option>

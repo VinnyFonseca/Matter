@@ -101,7 +101,7 @@ p {
 
 
 .emphasis {
-	color: #d00;
+	color: #f00;
 }
 
 
@@ -287,13 +287,13 @@ pre {
 	position: relative;
 	margin: ($spacing / 2) 0;
 	padding: ($spacing / 2) $spacing;
-	color: $fontColor;
+	color: $ce;
 	font-family: $monospaceFont;
 	@include font-size($fontSize);
 	font-weight: normal;
-	border: 1px solid $cd;
+	border: 1px solid $c0;
 	border-radius: $radius;
-	background: $ce;
+	background: $c2;
 	overflow: auto;
 	white-space: pre-wrap;
 
