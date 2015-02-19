@@ -1,6 +1,6 @@
 // Tooltip
 
-.tooltip-container {
+.tooltip {
 	display: block;
 	position: absolute;
 	padding: 2px 8px;
@@ -24,6 +24,6 @@
 	}
 }
 
-.tooltip {
+*[data-tooltip] {
 	cursor: help;
 }

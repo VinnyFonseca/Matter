@@ -302,6 +302,7 @@ function initFramework() {
 	initFontSizeControls();
 	initNotifications();
 	initTagClouds();
+	initOverlays();
 	initTooltips();
 	initSliders();
 	initTwitter();

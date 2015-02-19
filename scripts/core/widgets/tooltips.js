@@ -3,7 +3,7 @@
 function initTooltips() {
 	$("[data-tooltip]").each(function() {
 		var el = $(this),
-			tooltipData = el.attr("data-text"),
+			tooltipData = el.data("text"),
 			container = $(".tooltip-container");
 
 		if ( !config.application.touch ) {

@@ -134,6 +134,10 @@
 	border: 0;
 	border-radius: 0;
 	background: none;
+
+	.emphasis {
+		color: $brand2;
+	}
 }
 .framed {
 	margin-left: 0;

@@ -1,0 +1,64 @@
+.overlay {
+	display: block;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	max-height: 0;
+	top: 0;
+	left: 0;
+	// background: url("../img/pixel-black.png");
+	background-color: rgba(0, 0, 0, 0.8);
+	overflow: hidden;
+	z-index: 9000;
+	@include transition(max-height 0.5s $animEasing);
+
+	&.active {
+		max-height: 100%;
+
+		.modal {
+			@include opacity(1);
+		}
+	}
+
+	.modal {
+		display: block;
+		position: absolute;
+		margin: 0;
+		padding: $spacing;
+		top: 10%;
+		right: 10%;
+		bottom: 10%;
+		left: 10%;
+		border-radius: $radius;
+		background: $cf;
+		@include opacity(0);
+		z-index: 9100;
+		@include transition(opacity 0.5s $animEasing);
+
+		.overlay-close {
+			display: block;
+			position: absolute;
+			padding: $spacing / 2;
+			width: 42px;
+			height: 42px;
+			top: -21px;
+			right: -21px;
+			border: 2px solid $cf;
+			border-radius: 1000px;
+			background-color: $brand1;
+			cursor: pointer;
+			z-index: 10;
+
+			&:hover {
+				background-color: $brand2;
+			}
+			&:active {
+				background-color: $brand3;
+			}
+
+			.icon-close {
+				@include svgColor($cf);
+			}
+		}
+	}
+}

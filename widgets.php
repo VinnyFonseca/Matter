@@ -18,6 +18,9 @@
 				<a href="#tagcloud">Tag Cloud</a>
 			</li>
 			<li>
+				<a href="#overlays">Overlays</a>
+			</li>
+			<li>
 				<a href="#notifications">Notifications</a>
 			</li>
 			<li>
@@ -59,7 +62,7 @@
 		</p>
 
 		<div class="autocomplete-wrapper" data-url="scripts/dev/autocomplete/sample.json">
-			<input type="text" placeholder="Type to search..." data-autocomplete="true">
+			<input type="text" placeholder="Type to search..." data-autocomplete="true" data-tagcloud="true">
 		</div>
 
 		<p>
@@ -117,6 +120,48 @@
 <pre>
 &lt;input type="text" placeholder="Type and press Enter to add to the tag cloud" <span class="emphasis">data-tagcloud="true"</span>&gt;
 &lt;select <span class="emphasis">data-tagcloud="true"</span>&gt;&lt;/select&gt;
+</pre>
+
+
+
+		<hr>
+
+
+
+		<a href="#" class="anchor" id="overlays"></a>
+
+		<h3>Overlays</h3>
+
+		<p>
+			Overlay elements, centered vertically and horizontally, that support any type of content.
+		</p>
+
+		<p>
+			<strong>Usage:</strong>
+		</p>
+
+		<p>
+			Create an overlay as per the example below, then simply use <code>data-overlay="<var>ID</var>"</code> on any clickable element to call that overlay.
+		</p>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<button class="primary" data-overlay="true" data-overlay-id="example">Call "Example" overlay</button>
+
+		<p>
+			<strong>Example:</strong>
+		</p>
+
+<pre>
+&lt;button class="primary" <span class="emphasis">data-overlay="true" data-overlay-id="example"</span>&gt;Call "Example" overlay&lt;/button&gt;
+
+&lt;div class="overlay" <span class="emphasis">id="example"</span>&gt;
+	&lt;div class="modal"&gt;
+		&lt;img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" /&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
 </pre>
 
 
