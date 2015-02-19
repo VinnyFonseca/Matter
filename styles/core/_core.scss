@@ -478,6 +478,7 @@ progress[value] {
 
 	span {
 		display: block;
+		height: $progressHeight;
 		text-indent: -9999px;
 		border-radius: $radius;
 		background-color: $brand1;
