@@ -1,4 +1,4 @@
-// Tooltips
+// Overlays
 
 function initOverlays() {
 	$("[data-overlay]").each(function() {

@@ -80,6 +80,13 @@
 				<input type="password" name="password-match" placeholder="Repeat password" data-validation="password-match" required>
 			</div>
 
+			<label data-progress="0">Progress Bar</label>
+			<progress max="100" value="0">
+				<div class="progress-bar">
+					<span>0%</span>
+				</div>
+			</progress>
+
 
 			<br>
 

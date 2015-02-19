@@ -39,13 +39,14 @@
 			display: block;
 			position: absolute;
 			padding: $spacing / 2;
-			width: 42px;
-			height: 42px;
-			top: -21px;
-			right: -21px;
+			width: 38px;
+			height: 38px;
+			top: -19px;
+			right: -19px;
 			border: 2px solid $cf;
 			border-radius: 1000px;
 			background-color: $brand1;
+			box-shadow: 0 0 10px (rgba(0, 0, 0, 0.5));
 			cursor: pointer;
 			z-index: 10;
 

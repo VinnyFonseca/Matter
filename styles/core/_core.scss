@@ -379,3 +379,126 @@ small {
 sub {
 	@include font-size($fontSize / 1.5);
 }
+
+
+
+// HTML 5 Elements
+
+// Progress Bar
+
+$progressHeight: 42px;
+
+progress {
+	display: block;
+	position: relative;
+	margin: ($spacing / 2) 0;
+	padding: 0;
+	width: 100%;
+	height: $progressHeight;
+	overflow: hidden;
+	@include appearance(none);
+}
+progress:not(value) {
+	/* Add your styles here. As part of this walkthrough we will focus only on determinate progress bars. */
+}
+
+@include keyframes(animate-stripes) {
+	from  {
+		background-position: 0 0;
+	}
+	to {
+		background-position: 500px 0;
+	}
+}
+
+progress[value] {
+	display: block;
+	position: relative;
+	margin: 0 0 ($spacing / 2);
+	padding: 0;
+	width: 100%;
+	height: $progressHeight;
+	color: $brand1;
+	border: none;
+	border-radius: $radius;
+	background-color: $ce;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) inset;
+	@include appearance(none);
+
+	&::-webkit-progress-bar {
+		border-radius: $radius;
+		background-color: $ce;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) inset;
+	}
+	&::-webkit-progress-value {
+		position: relative;
+		border-radius: $radius;
+		background-image:
+			-webkit-linear-gradient( 135deg, transparent, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
+			-webkit-linear-gradient( top, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
+			-webkit-linear-gradient( left, $brand1, $brand1);
+		background-size:
+			($progressHeight * 2) $progressHeight,
+			100% 100%,
+			100% 100%;
+		@include animation(animate-stripes 5s linear infinite);
+		@include transition(width $animDuration $animEasing);
+	}
+	&::-webkit-progress-value:after {
+		position: absolute;
+		margin-top: -5px;
+		width: 10px;
+		height: 10px;
+		top: 50%;
+		right: 14px;
+		border-radius: 100px;
+		background-color: $ce;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.75) inset;
+		content: '';
+	}
+	&::-moz-progress-bar {
+		border-radius: $radius;
+		background-image:
+			-moz-linear-gradient( 135deg, transparent, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
+			-moz-linear-gradient( top, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
+			-moz-linear-gradient( left, $brand1, $brand1);
+		background-size:
+			($progressHeight * 2) $progressHeight,
+			100% 100%,
+			100% 100%;
+	}
+}
+
+.progress-bar {
+	width: 100%;
+	height: $progressHeight;
+	border-radius: $radius;
+	background-color: $ce;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) inset;
+
+	span {
+		display: block;
+		text-indent: -9999px;
+		border-radius: $radius;
+		background-color: $brand1;
+	}
+}
+
+label[data-progress] {
+	white-space: nowrap;
+	@include transition(width $animDuration $animEasing);
+}
+label[data-progress]:after {
+	position: absolute;
+	padding: 2px 6px;
+	top: 5px;
+	right: 0;
+	@include font-size($fontSize / 1.15);
+	font-weight: bold;
+	color: $brand1;
+	text-align: center;
+	border: 1px solid $cd;
+	border-radius: $radius;
+	background-color: $ce;
+	content: attr(data-progress) '%';
+}
