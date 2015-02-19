@@ -333,7 +333,7 @@
 		</ul>
 
 		<p class="emphasis">
-			Note: The <code>pre</code> is the only element that preserves whitespace, space characters, tabs, and carriage returns.
+			Note: <code>pre</code> is the only element that preserves whitespace, space characters, tabs, and carriage returns.
 		</p>
 
 <pre>
