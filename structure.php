@@ -25,7 +25,7 @@
 
 		<a href="#" class="anchor" id="directory"></a>
 
-		<h3>Directory Listing</h3>
+		<h2>Directory Listing</h2>
 
 <pre class="structure clean">
 <em>+ img</em>
@@ -46,7 +46,7 @@
 		<!--
 		<br>
 
-		<h3>Root Files</h3>
+		<h2>Root Files</h2>
 
 <pre class="structure clean">
 .gitignore
@@ -60,7 +60,7 @@ index.php
 
 		<hr>
 
-		<h3>Breakdown</h3>
+		<h2>Breakdown</h2>
 
 		<p class="emphasis">
 			Note: Folders marked in red are to be left intact whenever possible. Modifying their files may cause bugs that may not be immediately detectable.

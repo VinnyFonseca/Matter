@@ -40,7 +40,7 @@
 
 		<a href="#" class="anchor" id="block"></a>
 
-		<h3>Block Level Elements</h3>
+		<h2>Block Level Elements</h2>
 
 		<dl>
 			<dt>
@@ -108,7 +108,7 @@
 
 		<a href="#" class="anchor" id="headings"></a>
 
-		<h3>Headings</h3>
+		<h2>Headings</h2>
 
 		<dl>
 			<dt>
@@ -127,7 +127,7 @@
 				<code>h3</code>
 			</dt>
 			<dd>
-				<h3>Sample Heading</h3>
+				<h2>Sample Heading</h2>
 			</dd>
 			<dt>
 				<code>h4</code>
@@ -139,7 +139,7 @@
 				<code>h5</code>
 			</dt>
 			<dd>
-				<h5>Sample Heading</h5>
+				<h4>Sample Heading</h4>
 			</dd>
 			<dt>
 				<code>h6</code>
@@ -155,7 +155,7 @@
 
 		<a href="#" class="anchor" id="text"></a>
 
-		<h3>Text Elements</h3>
+		<h2>Text Elements</h2>
 
 		<dl>
 			<dt>
@@ -349,7 +349,7 @@
 
 		<a href="#" class="anchor" id="hyphenation"></a>
 
-		<h3>Hyphenation</h3>
+		<h2>Hyphenation</h2>
 
 		<p class="emphasis">Note: Resize to see the hyphenation in action.</p>
 
@@ -377,7 +377,7 @@
 
 		<a href="#" class="anchor" id="lists"></a>
 
-		<h3>Lists</h3>
+		<h2>Lists</h2>
 
 		<p>All lists are styled as <code>list-style-position: outside;</code> as it allows a better <strong>separation of content</strong> and <strong>visual hierarchy</strong> of elements.</p>
 
@@ -488,7 +488,7 @@
 
 		<a href="#" class="anchor" id="tables"></a>
 
-		<h3>Tables (Responsive)</h3>
+		<h2>Tables (Responsive)</h2>
 
 		<p>
 			The following table has a caption. The first row and the first column contain header cells (<code>th</code>) only. Other cells are data cells (<code>td</code>).
@@ -537,7 +537,7 @@
 
 		<a href="#" class="anchor" id="character"></a>
 
-		<h3>Character Test</h3>
+		<h2>Character Test</h2>
 
 		<p>
 			The following table has no caption, and has some sample characters with annotations. If the browser's default font does notcontain all of them, they may get displayed using backup fonts. This may cause stylistic differences, but it should not prevent the characters from being displayed at all.

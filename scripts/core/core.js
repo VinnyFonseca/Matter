@@ -256,10 +256,6 @@ function initLinks() {
 		}
 	});
 
-	$("a.explicit").each(function() {
-		$(this).append(" <small>[" + this.href + "]</small>");
-	});
-
 	if ( config.application.debug ) console.log("Init :: Links");
 }
 

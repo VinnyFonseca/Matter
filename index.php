@@ -24,7 +24,7 @@
 		</p>
 
 		<p>
-			It was built over <strong>many iterations</strong>, <strong>cleanups</strong>, <strong>revisions</strong> and <strong>upgrades</strong>, instead of a single sprint from the ground up. This process makes Matter <strong>stable</strong>, <strong>tested</strong> and with <strong>fewer bugs</strong>, all while being compatible all the way down to <strong>IE8</strong>.
+			It was built over <strong>many iterations</strong>, <strong>cleanups</strong>, <strong>revisions</strong> and <strong>upgrades</strong>, instead of a single sprint from the ground up. This process makes Matter <strong>stable</strong>, <strong>tested</strong> and with <strong>fewer bugs</strong>, while maintaining compatibility all the way to <strong>IE8</strong>.
 		</p>
 
 
@@ -36,6 +36,10 @@
 		<h2>Get Started</h2>
 
 		<h4>1. Requirements</h4>
+
+		<p class="emphasis">
+			Note: Use <code>sudo</code> on *nix systems to install gems and node packages.
+		</p>
 
 		<ol>
 			<li>
@@ -56,12 +60,25 @@
 				<a href="http://nodejs.org/" target="_blank" class="explicit">Node</a>
 			</li>
 			<li>
-				<a href="http://sass-lang.com/" target="_blank" class="explicit">Grunt</a> <code>npm install -g grunt</code>
+				<a href="https://www.npmjs.com/package/grunt" target="_blank" class="explicit">Grunt</a> <code>npm install -g grunt</code>
 			</li>
 			<li>
-				<a href="http://compass-style.org/" target="_blank" class="explicit">Grunt Command Line Interface (CLI)</a> <code>npm install -g grunt-cli</code>
+				<a href="https://www.npmjs.com/package/grunt-cli" target="_blank" class="explicit">Grunt Command Line Interface (CLI)</a> <code>npm install -g grunt-cli</code>
 			</li>
 		</ol>
+
+		<br>
+
+		<p class="emphasis">
+			 Note: Node has some known installation issues with certain Linux distributions. See <a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint-elementary-os" target="_blank">here</a> or follow the code below:
+		</p>
+
+<pre>
+sudo apt-get install python-software-properties python g++ make
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs
+</pre>
 
 
 		<hr>
@@ -80,18 +97,18 @@
 		<h4>3. Grunt</h4>
 
 		<p>
-			<strong>First time usage?</strong> Navigate to Matter's directory and run <code>npm install</code>, then run <code>grunt</code>.
+			<strong>First run?</strong> Navigate to Matter's directory and run <code>npm install</code> then run <code>grunt</code>.
 		</p>
 
 		<p>
-			<strong>Coming back?</strong> Simply run <code>grunt</code>.
+			<strong>Returning?</strong> Simply run <code>grunt</code>.
 		</p>
 
 
 		<hr>
 
 
-		<h4>Get to da code!</h4>
+		<h2>Get to da code!</h2>
 	</div>
 </div>
 

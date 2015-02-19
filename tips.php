@@ -22,7 +22,7 @@
 
 		<a href="#" class="anchor" id="tips"></a>
 
-		<h3>Tips</h3>
+		<h2>Tips</h2>
 
 		<p>
 			There are plenty of hidden gems in Matter. This section is entirely optional reading, and you can choose to skip it and be pleasantly surprised mid-development, or read through and enjoy the small snippets, classes, and logic that makes Matter unique.
