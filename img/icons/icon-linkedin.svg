@@ -1,9 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 18.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="-269 333 128 128" enable-background="new -269 333 128 128" xml:space="preserve">
-<path id="LinkedIn" fill="#FFFFFF" d="M-144.3,410.1V455h-26v-41.9c0-10.5-3.8-17.7-13.2-17.7c-7.2,0-11.5,4.8-13.3,9.5
-	c-0.7,1.7-0.9,4-0.9,6.3V455h-26c0,0,0.4-70.9,0-78.3h26v11.1c-0.1,0.1-0.1,0.2-0.2,0.3h0.2v-0.3c3.5-5.3,9.6-12.9,23.5-12.9
-	C-157.1,374.9-144.3,386.1-144.3,410.1z M-251,339c-8.9,0-14.7,5.8-14.7,13.5c0,7.5,5.7,13.5,14.4,13.5h0.2c9.1,0,14.7-6,14.7-13.5
-	C-236.6,344.8-242.1,339-251,339z M-264.2,455h26v-78.3h-26V455z"/>
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<g id="linkedin">
+	<path id="LinkedIn" style="fill:#F2F2F2;" d="M62.333,38.867v22.445H49.336V40.367c0-5.249-1.9-8.848-6.599-8.848
+		c-3.599,0-5.749,2.399-6.649,4.749c-0.35,0.85-0.45,2-0.45,3.149v21.895H22.642c0,0,0.2-35.443,0-39.142h12.997v5.549
+		c-0.05,0.05-0.05,0.1-0.1,0.15h0.1v-0.15c1.75-2.649,4.799-6.449,11.748-6.449C55.935,21.271,62.333,26.87,62.333,38.867z
+		 M8.994,3.325c-4.449,0-7.348,2.899-7.348,6.749c0,3.749,2.849,6.749,7.199,6.749h0.1c4.549,0,7.348-2.999,7.348-6.749
+		C16.193,6.224,13.443,3.325,8.994,3.325z M2.396,61.313h12.997V22.171H2.396V61.313z"/>
+</g>
+<g id="Layer_1">
+</g>
 </svg>

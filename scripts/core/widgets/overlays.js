@@ -3,7 +3,7 @@
 function initOverlays() {
 	$("[data-overlay]").each(function() {
 		var el = $(this),
-			target = $("#" + el.data("overlay-id"));
+			target = $("#" + el.data("overlay"));
 
 		el.on("click", function() {
 			target.hasClass("active") ? target.removeClass("active") : target.addClass("active");

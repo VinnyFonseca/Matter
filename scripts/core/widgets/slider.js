@@ -358,50 +358,51 @@ function sliderInit(sliderId) {
 	var sliderLeft = sliderActive.offset().left + 50;
 	var sliderRight = sliderActive.offset().left + sliderActive.outerWidth() - 50;
 
-	movable
-		.on("mousedown touchstart", function(e) {
-			e.preventDefault();
+	movable.on("mousedown touchstart", function(e) {
+		var touchExceeded = false;
 
-			dragging = true;
-			dragStart = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
-			dragEnd = 0;
-		})
-		.on("mousemove touchmove", function(e) {
-			e.preventDefault();
+		dragging = true;
+		dragStart = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
+		dragEnd = 0;
 
+		$(this).on("mousemove touchmove", function(e) {
 			dragX = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
 			initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < -config.slider.threshold;
 
-			if ( dragging && initDrag && !animating) {
-				movable.css({
-					'left': movePos - (dragStart - dragX)
-				});
+			if(touchExceeded || dragStart - dragX > config.slider.threshold || dragX - dragStart > config.slider.threshold) {
+				e.preventDefault();
+				touchExceeded = true;
 
-				if ( dragX < sliderLeft ) {
-					if ( dragStart - dragX > config.slider.trigger ) {
-						dragging = false;
-						slideNext();
-					} else {
-						animDuration = 250;
-						dragging = false;
-						slideAction();
+				if ( dragging && initDrag && !animating) {
+					movable.css({
+						'left': movePos - (dragStart - dragX)
+					});
+
+					if ( dragX < sliderLeft ) {
+						if ( dragStart - dragX > config.slider.trigger ) {
+							dragging = false;
+							slideNext();
+						} else {
+							animDuration = 250;
+							dragging = false;
+							slideAction();
+						}
 					}
-				}
-				if ( dragX > sliderRight ) {
-					if ( dragStart - dragX < - config.slider.trigger ) {
-						dragging = false;
-						slidePrev();
-					} else {
-						animDuration = 250;
-						dragging = false;
-						slideAction();
+					if ( dragX > sliderRight ) {
+						if ( dragStart - dragX < - config.slider.trigger ) {
+							dragging = false;
+							slidePrev();
+						} else {
+							animDuration = 250;
+							dragging = false;
+							slideAction();
+						}
 					}
 				}
 			}
-		})
-		.on("mouseup touchend", function(e) {
-			e.preventDefault();
+		});
 
+		$(this).on("mouseup touchend", function(e) {
 			dragging = false;
 
 			if ( !animating ) {
@@ -415,7 +416,63 @@ function sliderInit(sliderId) {
 					slideAction();
 				}
 			}
+
+			$(this).off("touchmove touchend");
 		});
+	});
+
+	// movable
+	// 	.on("mousedown touchstart", function(e) {
+	// 		dragging = true;
+	// 		dragStart = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
+	// 		dragEnd = 0;
+	// 	})
+	// 	.on("mousemove touchmove", function(e) {
+	// 		dragX = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
+	// 		initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < -config.slider.threshold;
+
+	// 		if ( dragging && initDrag && !animating) {
+	// 			movable.css({
+	// 				'left': movePos - (dragStart - dragX)
+	// 			});
+
+	// 			if ( dragX < sliderLeft ) {
+	// 				if ( dragStart - dragX > config.slider.trigger ) {
+	// 					dragging = false;
+	// 					slideNext();
+	// 				} else {
+	// 					animDuration = 250;
+	// 					dragging = false;
+	// 					slideAction();
+	// 				}
+	// 			}
+	// 			if ( dragX > sliderRight ) {
+	// 				if ( dragStart - dragX < - config.slider.trigger ) {
+	// 					dragging = false;
+	// 					slidePrev();
+	// 				} else {
+	// 					animDuration = 250;
+	// 					dragging = false;
+	// 					slideAction();
+	// 				}
+	// 			}
+	// 		}
+	// 	})
+	// 	.on("mouseup touchend", function(e) {
+	// 		dragging = false;
+
+	// 		if ( !animating ) {
+	// 			dragEnd = dragX;
+
+	// 			if ( dragStart - dragEnd > config.slider.trigger ) {
+	// 				slideNext();
+	// 			} else if ( dragStart - dragEnd < - config.slider.trigger ) {
+	// 				slidePrev();
+	// 			} else {
+	// 				slideAction();
+	// 			}
+	// 		}
+	// 	});
 
 
 	document.onkeydown = function(e) {
@@ -489,6 +546,7 @@ function initSliders() {
 				sliderInit(slider.id = 'slider-' + i);
 			}, 250 * i);
 		});
+
 		if (config.application.debug) console.log("Init :: Sliders");
 	}
 }

@@ -148,14 +148,14 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<button class="primary" data-overlay="true" data-overlay-id="example">Call "Example" overlay</button>
+		<button class="primary" data-overlay="example">Call "Example" overlay</button>
 
 		<p>
 			<strong>Example:</strong>
 		</p>
 
 <pre>
-&lt;button class="primary" <span class="emphasis">data-overlay="true" data-overlay-id="example"</span>&gt;Call "Example" overlay&lt;/button&gt;
+&lt;button class="primary" <span class="emphasis">data-overlay="example"</span>&gt;Call "Example" overlay&lt;/button&gt;
 
 &lt;div class="overlay" <span class="emphasis">id="example"</span>&gt;
 	&lt;div class="modal"&gt;
@@ -282,17 +282,17 @@
 		</p>
 
 		<p>
-			<button class="tooltip" data-tooltip="true" data-text="Lorem ipsum Laborum">Hover this button</button>
+			<button data-tooltip="Lorem ipsum Laborum">Hover this button</button>
 		</p>
 
-		<img src="http://placehold.it/960x300&text=Image,%20hover%20me" data-tooltip="true" data-text="Using data-tooltip 1" />
+		<img src="http://placehold.it/960x300&text=Image,%20hover%20me" data-tooltip="Using data-tooltip 1" />
 
 		<p>
 			<strong>Example:</strong>
 		</p>
 
 <pre>
-&lt;img src="http://placehold.it/1280x400&amp;text=Image,%20hover%20me" <span class="emphasis">data-tooltip="true" data-text="Tooltip Text"</span> /&gt;
+&lt;img src="http://placehold.it/1280x400&amp;text=Image,%20hover%20me" <span class="emphasis">data-tooltip="Tooltip Text"</span> /&gt;
 </pre>
 
 

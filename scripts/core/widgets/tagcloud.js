@@ -1,4 +1,4 @@
-// Tooltips
+// Tag Cloud
 
 function initTagClouds() {
 	$("[data-tagcloud]").each(function(i) {

@@ -25,7 +25,7 @@ var config = {
 	slider: {
 		duration: 500, // int: miliseconds for slide change.
 		interval: 5000, // int: miliseconds for slide interval.
-		threshold: 0, // int: px distance on X axis from touchstart to current touch position
+		threshold: 50, // int: px distance on X axis from touchstart to current touch position
 		trigger: $(".wrapper").width() / 6 // int: px distance on drag to activate slide change
 	},
 	twitter: {
