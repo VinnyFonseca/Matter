@@ -352,6 +352,7 @@ function sliderInit(sliderId) {
 
 
 	var dragging = false;
+	var touchExceeded = false;
 	var dragStart;
 	var dragX;
 	var dragEnd;
@@ -359,66 +360,65 @@ function sliderInit(sliderId) {
 	var sliderRight = sliderActive.offset().left + sliderActive.outerWidth() - 50;
 
 	movable.on("mousedown touchstart", function(e) {
-		var touchExceeded = false;
+		touchExceeded = false;
 
 		dragging = true;
 		dragStart = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
 		dragEnd = 0;
+	}).on("mousemove touchmove", function(e) {
+		dragX = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
+		initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < -config.slider.threshold;
 
-		$(this).on("mousemove touchmove", function(e) {
-			dragX = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
-			initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < -config.slider.threshold;
+		if( touchExceeded || initDrag ) {
+			e.preventDefault();
+			touchExceeded = true;
 
-			if(touchExceeded || dragStart - dragX > config.slider.threshold || dragX - dragStart > config.slider.threshold) {
-				e.preventDefault();
-				touchExceeded = true;
+			if ( dragging && initDrag && !animating) {
+				movable.css({
+					'left': movePos - (dragStart - dragX)
+				});
 
-				if ( dragging && initDrag && !animating) {
-					movable.css({
-						'left': movePos - (dragStart - dragX)
-					});
-
-					if ( dragX < sliderLeft ) {
-						if ( dragStart - dragX > config.slider.trigger ) {
-							dragging = false;
-							slideNext();
-						} else {
-							animDuration = 250;
-							dragging = false;
-							slideAction();
-						}
+				if ( dragX < sliderLeft ) {
+					if ( dragStart - dragX > config.slider.trigger ) {
+						dragging = false;
+						slideNext();
+					} else {
+						animDuration = 250;
+						dragging = false;
+						slideAction();
 					}
-					if ( dragX > sliderRight ) {
-						if ( dragStart - dragX < - config.slider.trigger ) {
-							dragging = false;
-							slidePrev();
-						} else {
-							animDuration = 250;
-							dragging = false;
-							slideAction();
-						}
+				}
+				if ( dragX > sliderRight ) {
+					if ( dragStart - dragX < - config.slider.trigger ) {
+						dragging = false;
+						slidePrev();
+					} else {
+						animDuration = 250;
+						dragging = false;
+						slideAction();
 					}
 				}
 			}
-		});
+		}
+	}).on("mouseup touchend", function(e) {
+		dragging = false;
+		touchExceeded = false;
 
-		$(this).on("mouseup touchend", function(e) {
-			dragging = false;
+		if ( !animating ) {
+			dragEnd = dragX;
 
-			if ( !animating ) {
-				dragEnd = dragX;
-
-				if ( dragStart - dragEnd > config.slider.trigger ) {
-					slideNext();
-				} else if ( dragStart - dragEnd < - config.slider.trigger ) {
-					slidePrev();
-				} else {
-					slideAction();
-				}
+			if ( dragStart - dragEnd > config.slider.trigger ) {
+				slideNext();
+			} else if ( dragStart - dragEnd < - config.slider.trigger ) {
+				slidePrev();
+			} else {
+				slideAction();
 			}
+		}
 
-			$(this).off("touchmove touchend");
-		});
+		dragStart = 0;
+		dragX = 0;
+		dragEnd = 0;
 	});
 
 	// movable
