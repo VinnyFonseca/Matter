@@ -63,7 +63,7 @@
 
 		<a href="#" class="anchor" id="complete"></a>
 
-		<h3>Complete Grid</h3>
+		<h2>Complete Grid</h2>
 
 		<div class="row debug">
 			<div class="column" data-span="1">

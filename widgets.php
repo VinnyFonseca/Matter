@@ -47,7 +47,7 @@
 
 		<a href="#" class="anchor" id="autocomplete"></a>
 
-		<h3>Autocompletion Engine</h3>
+		<h2>Autocompletion Engine</h2>
 
 		<p>
 			<strong>Usage:</strong>
@@ -83,7 +83,7 @@
 
 		<a href="#" class="anchor" id="tagcloud"></a>
 
-		<h3>Tag Cloud</h3>
+		<h2>Tag Cloud</h2>
 
 		<p>
 			<strong>Usage:</strong>
@@ -130,7 +130,7 @@
 
 		<a href="#" class="anchor" id="overlays"></a>
 
-		<h3>Overlays</h3>
+		<h2>Overlays</h2>
 
 		<p>
 			Overlay elements, centered vertically and horizontally, that support any type of content.
@@ -172,7 +172,7 @@
 
 		<a href="#" class="anchor" id="notifications"></a>
 
-		<h3>Notifications</h3>
+		<h2>Notifications</h2>
 
 		<code>notify(tone, delay);</code>
 
@@ -247,7 +247,7 @@
 
 		<a href="#" class="anchor" id="tooltips"></a>
 
-		<h3>Tooltips</h3>
+		<h2>Tooltips</h2>
 
 		<p>
 			Mouse-following tooltips on hover using attribute <code>data-tooltip</code>.
@@ -303,7 +303,7 @@
 
 		<a href="#" class="anchor" id="slider"></a>
 
-		<h3>Slider</h3>
+		<h2>Slider</h2>
 
 		<p>
 			Hand coded image slider with horizontal slide transitions. Supports multiple instances and infinite slides.
@@ -380,7 +380,7 @@
 
 		<a href="#" class="anchor" id="maps"></a>
 
-		<h3>Maps</h3>
+		<h2>Maps</h2>
 
 		<p>
 			<strong>Credit:</strong> <a href="https://mapbuildr.com/" target="_blank">Google Mapbuildr</a>.
@@ -433,7 +433,7 @@
 
 		<a href="#" class="anchor" id="twitter"></a>
 
-		<h3>Twitter</h3>
+		<h2>Twitter</h2>
 
 		<p>
 			<strong>Credit:</strong> <a href="http://jasonmayes.com/projects/twitterApi/" target="_blank">Jason Mayes' twitter fetcher plugin</a>.
@@ -481,9 +481,9 @@
 
 		<a href="#" class="anchor" id="accessibility"></a>
 
-		<h3>Accessibility</h3>
+		<h2>Accessibility</h2>
 
-		<h5>Font size controls.</h5>
+		<h4>Font size controls.</h4>
 
 		<p>
 			Two controls to change the font and one to reset. Use class <code>.primary</code> to add the "call to action" styling.

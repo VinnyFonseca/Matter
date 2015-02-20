@@ -31,7 +31,7 @@
 
 		<a href="#" class="anchor" id="img"></a>
 
-		<h3>The <code>img</code> element</h3>
+		<h2>The <code>img</code> element</h2>
 
 		<p>
 			Width and height are set by CSS. Omit it to preserve ratio. Set it only as a conditional style for IE8, otherwise the image loses proportion.
@@ -49,7 +49,7 @@
 
 		<a href="#" class="anchor" id="srcset"></a>
 
-		<h3>The <code>srcset</code> attribute</h3>
+		<h2>The <code>srcset</code> attribute</h2>
 
 		<p>
 			Recommended over <code>picture</code> for responsive image use.
@@ -95,7 +95,7 @@
 
 		<a href="#" class="anchor" id="picture"></a>
 
-		<h3>The <code>picture</code> element</h3>
+		<h2>The <code>picture</code> element</h2>
 
 		<p>
 			Recommended over <code>srcset</code> for art direction purposes. <code>Picture</code> uses the first source that has a rule that matches.
@@ -243,7 +243,7 @@
 
 		<a href="#" class="anchor" id="thoughts"></a>
 
-		<h3>Final Thoughts</h3>
+		<h2>Final Thoughts</h2>
 
 		<p>
 			Although <code>img srcset</code> is recommended, <code>picture</code> seems to be <strong>easier to use</strong>, has a <strong>more understandable syntax</strong> and just needs changing the <strong>order of the sources</strong> if you're using a mobile-first approach. It does not take into consideration screen densities, though if you choose to create slightly bigger assets for the targeted resolutions, 320w devices will load 480w images and so on.
