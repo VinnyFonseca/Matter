@@ -368,44 +368,12 @@
 			</div>
 		</div>
 
-		<div class="slider" data-bullets="true" data-arrows="true" data-slideshow="true" data-animation="slide">
-			<div class="slider-container-wrapper">
-				<div class="slider-movable">
-					<div class="slider-container">
-						<img src="http://placehold.it/940x320" />
-					</div>
-					<div class="slider-container">
-						<img src="http://placehold.it/941x320" />
-					</div>
-					<div class="slider-container">
-						<img src="http://placehold.it/942x321" />
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="slider" data-bullets="true" data-arrows="true" data-slideshow="true" data-animation="fade">
-			<div class="slider-container-wrapper">
-				<div class="slider-movable">
-					<div class="slider-container">
-						<img src="http://placehold.it/940x320" />
-					</div>
-					<div class="slider-container">
-						<img src="http://placehold.it/941x320" />
-					</div>
-					<div class="slider-container">
-						<img src="http://placehold.it/942x321" />
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<p>
 			<strong>Example:</strong>
 		</p>
 
 <pre>
-&lt;div class="slider" data-bullets="true" data-arrows="true" data-slideshow="true"&gt;
+&lt;div class="slider" <span class="emphasis">data-bullets="true" data-arrows="true" data-slideshow="true" data-animation="slide"</span>&gt;
 	&lt;div class="slider-container-wrapper"&gt;
 		&lt;div class="slider-movable"&gt;
 			&lt;div class="slider-container"&gt;
