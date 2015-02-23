@@ -321,12 +321,30 @@
 			<dt>
 				<strong>Defaults:</strong>
 			</dt>
-			</dt>
+
 			<dd>
-				<code>duration: 1000</code>
+				<code>arrows: true</code>
+			</dd>
+			<dd>
+				<code>bullets: true</code>
+			</dd>
+			<dd>
+				<code>slideshow: true</code>
+			</dd>
+			<dd>
+				<code>duration: 500</code>
 			</dd>
 			<dd>
 				<code>interval: 5000</code>
+			</dd>
+			<dd>
+				<code>threshold: 0</code>
+			</dd>
+			<dd>
+				<code>trigger: $(".wrapper").width() / 6</code>
+			</dd>
+			<dd>
+				<code>animation: "slide"</code> &nbsp;<small class="gray"><strong>slide | fade</strong></small>
 			</dd>
 		</dl>
 
@@ -334,7 +352,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-bullets="true" data-arrows="true" data-slideshow="true">
+		<div class="slider">
 			<div class="slider-container-wrapper">
 				<div class="slider-movable">
 					<div class="slider-container">
@@ -344,7 +362,39 @@
 						<img src="http://placehold.it/941x320" />
 					</div>
 					<div class="slider-container">
-						<img src="http://placehold.it/942x320" />
+						<img src="http://placehold.it/942x321" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="slider" data-bullets="true" data-arrows="true" data-slideshow="true" data-animation="slide">
+			<div class="slider-container-wrapper">
+				<div class="slider-movable">
+					<div class="slider-container">
+						<img src="http://placehold.it/940x320" />
+					</div>
+					<div class="slider-container">
+						<img src="http://placehold.it/941x320" />
+					</div>
+					<div class="slider-container">
+						<img src="http://placehold.it/942x321" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="slider" data-bullets="true" data-arrows="true" data-slideshow="true" data-animation="fade">
+			<div class="slider-container-wrapper">
+				<div class="slider-movable">
+					<div class="slider-container">
+						<img src="http://placehold.it/940x320" />
+					</div>
+					<div class="slider-container">
+						<img src="http://placehold.it/941x320" />
+					</div>
+					<div class="slider-container">
+						<img src="http://placehold.it/942x321" />
 					</div>
 				</div>
 			</div>

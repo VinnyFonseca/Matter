@@ -23,14 +23,18 @@ var config = {
 		bound: true // bool: Sets boundaries to .wrapper (content container).
 	},
 	slider: {
+		arrows: true, // bool: Show arrows.
+		bullets: true, // bool: Show bullets.
+		slideshow: true, // bool: Automatic slide change.
 		duration: 500, // int: miliseconds for slide change.
 		interval: 5000, // int: miliseconds for slide interval.
-		threshold: 50, // int: px distance on X axis from touchstart to current touch position
-		trigger: $(".wrapper").width() / 6 // int: px distance on drag to activate slide change
+		threshold: 0, // int: px distance on X axis from touchstart to current touch position.
+		trigger: $(".wrapper").width() / 6, // int: px distance on drag to activate slide change.
+		animation: "slide" // str: "slide", "fade".
 	},
 	twitter: {
-		id: '492660537293938688', // Generated via Twitter.com. See the matterframework.net/widgets..
-		domId: 'widget-twitter', // str: Dom element's ID.
+		twitterID: '492660537293938688', // Generated via Twitter.com. See the matterframework.net/widgets..
+		domID: 'widget-twitter', // str: Dom element's ID.
 		maxTweets: 5, // int:  Maximum number of tweets shown at any time.
 		enableLinks: true, // bool: Turns URLs and hashtags into links.
 		showUser: true, // bool: Show User's avatar.
