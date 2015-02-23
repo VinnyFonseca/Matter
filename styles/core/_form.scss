@@ -625,11 +625,6 @@ optgroup {
 	}
 
 	&:active {
-		.dropdown-current,
-		.dropdown {
-			color: $cf;
-		}
-
 		.dropdown-arrow {
 			color: $cf;
 			background: $brand1;
@@ -651,26 +646,44 @@ optgroup {
 		.dropdown {
 			position: absolute;
 			width: 99%;
-			top: 100%;
 			left: 0.5%;
+			border: 1px solid $cd;
 			@include box-shadow(0 3px 4px rgba(0, 0, 0, 0.15));
 			@include opacity(0);
-			@include transform(translateY(-10px));
 			@include transition-property(opacity, transform);
 			@include transition-duration($animDuration);
 			@include transition-timing-function($animEasing);
 
-			.dropdown-item {
+			&.default {
 				margin-top: -1px;
-				border: 1px solid $cd;
-				background: $cf;
+				top: 100%;
+				@include transform(translateY(-10px));
+			}
+			&.bound {
+				margin-top: 1px;
+				bottom: 100%;
+				@include transform(translateY(10px));
+			}
+
+			.dropdown-item {
+				border-top: 1px solid $cd;
+
+				&:first-child {
+					border-top: 0;
+				}
 			}
 		}
 
 		&.active {
 			.dropdown {
 				@include opacity(1);
-				@include transform(translateY(0));
+
+				&.default {
+					@include transform(translateY(-1px));
+				}
+				&.bound {
+					@include transform(translateY(1px));
+				}
 			}
 		}
 	}
@@ -691,7 +704,6 @@ optgroup {
 			.dropdown-item {
 				margin-top: 0;
 				border-top: 1px solid $cd;
-				background: $cf;
 
 				&:first-child {
 					border-top: 0;
@@ -722,13 +734,11 @@ optgroup {
 		position: absolute;
 		margin: 0;
 		padding: 0;
-		padding: 12px 0;
 		width: 42px;
 		top: 0;
 		right: 0;
 		bottom: 0;
 		color: $cf;
-		@include font-size($fontSize * 0.9);
 		text-align: center;
 		border: 0 solid rgba(0, 0, 0, 0.4);
 		@include border-left-radius(0);
@@ -736,25 +746,17 @@ optgroup {
 		background: $brand1;
 		z-index: 50;
 
-		&:before {
-			display: inline-block !important;
-			position: relative !important;
-			margin: 0 !important;
-			width: 0 !important;
-			height: 100% !important;
-			top: 0 !important;
-			left: 0 !important;
-			content: "" !important;
-			vertical-align: middle !important;
-		}
-
-		& > * {
-			display: inline-block;
-			@include font-size($fontSize);
-			vertical-align: middle !important;
+		span {
+			position: relative;
+			@include font-size($fontSize / 1.2);
+			top: 1px;
+			left: 1px;
 		}
 	}
 
+
+	$dropdownItemHeight: 44;
+	$dropdownItemCount: 7;
 
 	.dropdown {
 		display: block;
@@ -762,12 +764,15 @@ optgroup {
 		margin-top: 0;
 		padding: 0;
 		width: 100%;
+		height: ($dropdownItemHeight * $dropdownItemCount) + px;
+		overflow: auto;
 		z-index: 15;
 
 		.dropdown-item {
 			display: block;
 			position: relative;
 			padding: 9px 12px;
+			background: $cf;
 			white-space: nowrap;
 			cursor: pointer;
 

@@ -1,6 +1,6 @@
 var config = {
 	application: {
-		touch: Modernizr.touch && !device.desktop(), // bool: Modernizr check returns true or false. Beware of touch laptops.
+		touch: Modernizr.touch, // bool: Modernizr check returns true or false. Beware of touch laptops.
 		debug: true // bool: use if (debug) console.log(); instead of console.log; for permanent debugging messages.
 	},
 	accessibility: {

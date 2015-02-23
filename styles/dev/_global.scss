@@ -250,10 +250,14 @@ $sidebarWidth: 300px;
 
 					&:hover {
 						color: $cf !important;
+						border-top: 1px solid $brand1;
+						border-bottom: 1px solid $brand1;
 						background-color: $brand1;
 					}
 					&:active {
 						color: $cf !important;
+						border-top: 1px solid $brand2;
+						border-bottom: 1px solid $brand2;
 						background-color: $brand2;
 					}
 					&.active {

@@ -1,11 +1,89 @@
-// Console fix IE8
+// IE8 Fixes
 
 if (!window.console) console = { log: function() {} };
+
+window.hasOwnProperty = window.hasOwnProperty || Object.prototype.hasOwnProperty;
+
+if ( !Array.prototype.indexOf ) {
+	Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
+		"use strict";
+		if (this == null) {
+			throw new TypeError();
+		}
+		var t = Object(this);
+		var len = t.length >>> 0;
+		if (len === 0) {
+			return -1;
+		}
+		var n = 0;
+		if (arguments.length > 1) {
+			n = Number(arguments[1]);
+			if (n != n) { // shortcut for verifying if it's NaN
+				n = 0;
+			} else if (n != 0 && n != Infinity && n != -Infinity) {
+				n = (n > 0 || -1) * Math.floor(Math.abs(n));
+			}
+		}
+		if (n >= len) {
+			return -1;
+		}
+		var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0);
+		for (; k < len; k++) {
+			if (k in t && t[k] === searchElement) {
+				return k;
+			}
+		}
+		return -1;
+	}
+}
+
+
+
+
+// ECMAScript5 Polyfills
+
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = 0, len = this.length; i < len; i++) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+}
+
+
+
+
+// Asynchronous script loading with callback function
+
+function loadScript(src, callback) {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src = src;
+
+	if ( callback ) script.onload = callback;
+	document.body.appendChild(script);
+}
+
+
+
+
+// Randomisation
+
+function randomizeInteger(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
+}
 
 
 
 
 // Easter Eggs
+
+function alertKonami() {
+	alert("TETSUOOO!!");
+}
 
 function initKonami(callback) {
 	var userCode = [],
@@ -21,8 +99,6 @@ function initKonami(callback) {
 	function konami(event) {
 		var konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
 		var konamiString = konamiCode.join(", ");
-
-		videoPlayer = $("#custom-video").find("video");
 
 		if ( event.keyCode == 38 ) konamiCoding = true;
 
@@ -52,33 +128,6 @@ function initKonami(callback) {
 
 
 
-// ECMAScript5 Fixes
-
-if (!Array.prototype.indexOf) {
-	Array.prototype.indexOf = function (obj, start) {
-		"use strict";
-		for (var i = (start || 0), j = this.length; i < j; i++) {
-			if (this[i] === obj) { return i; }
-		}
-		return -1;
-	};
-}
-
-
-Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-}
-NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = 0, len = this.length; i < len; i++) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-}
-
-
-
-
 // SVG Injection
 
 function initSVGs() {
@@ -100,15 +149,6 @@ function initSVGs() {
 
 		if (config.application.debug) console.log("Init :: SVG Injection");
 	}
-}
-
-
-
-
-// Randomisation
-
-function randomizeInteger(min, max) {
-	return Math.floor(Math.random() * (max - min)) + min;
 }
 
 
@@ -161,18 +201,6 @@ function dataRequest(url, type, successFunction) {
 			if (config.application.debug) console.log(request, status, error, request.statusText);
 		}
 	});
-}
-
-
-// Asynchronous script loading with callback function
-
-function loadScript(src, callback) {
-	var script = document.createElement("script");
-	script.type = "text/javascript";
-	script.src = src;
-
-	if ( callback ) script.onload = callback;
-	document.body.appendChild(script);
 }
 
 
@@ -291,6 +319,10 @@ function initFramework() {
 	}
 
 
+	// Easter Eggs Init
+
+	initKonami(alertKonami);
+
 	// System Init
 
 	initSVGs();
@@ -327,6 +359,7 @@ function initFramework() {
 
 var isWideScreen;
 var pageTop;
+var pageBottom;
 
 $(document).ready(initFramework);
 
@@ -340,5 +373,6 @@ $(window).on("resize", function() {
 
 $(window).on("scroll", function() {
 	pageTop = $(document).scrollTop();
+	pageBottom = pageTop + $(window).height();
 	scrollProgress();
 });

@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 				}
 			},
 			options: {
-				beautify: false,
+				beautify: true,
 		        sourceMap: true,
 				sourceMapIncludeSources: true,
 		        sourceMapName: 'scripts/build.js.map'

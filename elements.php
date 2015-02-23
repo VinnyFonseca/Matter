@@ -62,7 +62,7 @@
 				<code>a.explicit</code>
 			</dt>
 			<dd>
-				<a href="http://matterframework.net" target="_blank" class="explicit">Lorem ipsum Duis eu laboris veniam sed anim.</a>
+				<a href="http://matterframework.net" class="explicit">Lorem ipsum Duis eu laboris veniam sed anim.</a>
 			</dd>
 
 			<dt>

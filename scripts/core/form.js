@@ -5,7 +5,7 @@ function buildDropdowns(i) {
 		option = el.find("option").not(".placeholder"),
 		selected = el.find("option:selected"),
 		wrapper = '<div class="dropdown-' + i + ' dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
-		arrow = '<div class="dropdown-arrow">&#9660;</div>',
+		arrow = '<div class="dropdown-arrow valign-middle"><span>&#9660;</span></div>',
 		current = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>',
 		dropdown = '<div class="dropdown"></div>';
 
@@ -38,18 +38,25 @@ function buildDropdowns(i) {
 	// Click Event
 
 	$(".dropdown-" + i).each(function() {
-		var drop = $(this),
-			dropdownItem = drop.find(".dropdown-item"),
-			target = drop.children(".dropdown-current"),
-			select = drop.find("select");
+		var el = $(this),
+			drop = el.find(".dropdown"),
+			dropdownItem = el.find(".dropdown-item"),
+			target = el.children(".dropdown-current"),
+			select = el.find("select");
 
-		drop.addClass(select.attr("class") + "-wrapper");
+		el.addClass(select.attr("class") + "-wrapper");
 
-		drop.off().on("click", function() {
+		el.off().on("click", function() {
 			if ( type == "drop" ) {
-				if ( !drop.hasClass("active") ) {
+				if ( !el.hasClass("active") ) {
 					$(".dropdown-wrapper").removeClass("active");
-					drop.addClass("active");
+					el.addClass("active");
+
+					if ( pageBottom >= el.offset().top + drop.height() + 55 ) {
+						drop.removeClass("bound").addClass("default");
+					} else {
+						drop.removeClass("default").addClass("bound");
+					}
 
 					$(this).find("select").focus();
 				} else {
@@ -93,6 +100,18 @@ function buildDropdowns(i) {
 function initDropdowns() {
 	$("select").each(function(i) {
 		buildDropdowns(i);
+	});
+
+
+	$(window).on("scroll", function() {
+		var el = $(".dropdown-wrapper.active"),
+			drop = el.find(".dropdown");
+
+		if ( el.length && pageBottom >= el.offset().top + drop.height() + 55 ) {
+			drop.removeClass("bound").addClass("default");
+		} else {
+			drop.removeClass("default").addClass("bound");
+		}
 	});
 
 	if ( config.application.debug ) console.log("Form :: Dropdowns");
