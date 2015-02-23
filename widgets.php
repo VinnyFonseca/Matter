@@ -334,7 +334,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-bullets="true" data-arrows="true" data-slideshow="true">
+		<div class="slider" data-bullets="true" data-arrows="true" data-slideshow="false">
 			<div class="slider-container-wrapper">
 				<div class="slider-movable">
 					<div class="slider-container">
@@ -344,7 +344,7 @@
 						<img src="http://placehold.it/941x320" />
 					</div>
 					<div class="slider-container">
-						<img src="http://placehold.it/942x320" />
+						<img src="http://placehold.it/942x321" />
 					</div>
 				</div>
 			</div>

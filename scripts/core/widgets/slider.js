@@ -183,15 +183,16 @@ function sliderInit(sliderId) {
 	var arrowPrev = sliderActive.find('.slider-arrow-prev');
 	var arrowNext = sliderActive.find('.slider-arrow-next');
 
-	if ( navArrows === true && isMultiSlide ) arrows.show();
+	if ( navArrows === true && isMultiSlide )
 
 
 
 	// Create Bullets
 
 	if ( navBullets === true && isMultiSlide ) {
-		var navWrapperEl = '<div class="slider-nav"></div>';
+		arrows.show();
 
+		var navWrapperEl = '<div class="slider-nav"></div>';
 		sliderActive.append(navWrapperEl);
 
 		var navWrapper = sliderActive.find('.slider-nav');
@@ -217,8 +218,8 @@ function sliderInit(sliderId) {
 	var slideBefore = 0;
 	var loopUnit = 0;
 	var loopCount = 0;
-	var min = 0;
-	var max = container.length  - 1;
+	var minCount = 0;
+	var maxCount = container.length  - 1;
 
 
 
@@ -228,11 +229,11 @@ function sliderInit(sliderId) {
 
 	function cloneSlide() {
 		if ( direction == "prev" ) {
-			for ( var i = max; i >= slideCurrent; i-- ) {
+			for ( var i = maxCount; i >= slideCurrent; i-- ) {
 				movable.prepend(container.eq(i));
 			}
 		} else {
-			for ( var i = min; i <= slideCurrent; i++ ) {
+			for ( var i = minCount; i <= slideCurrent; i++ ) {
 				movable.append(container.eq(i - 1));
 			}
 		}
@@ -250,8 +251,8 @@ function sliderInit(sliderId) {
 			slideBefore = slideCurrent;
 			loopUnit--;
 
-			if ( slideCurrent <= min ) {
-				slideCurrent = max;
+			if ( slideCurrent <= minCount ) {
+				slideCurrent = maxCount;
 				loopCount--;
 			} else {
 				slideCurrent--;
@@ -268,8 +269,8 @@ function sliderInit(sliderId) {
 			slideBefore = slideCurrent;
 			loopUnit++;
 
-			if ( slideCurrent == max ) {
-				slideCurrent = min;
+			if ( slideCurrent == maxCount ) {
+				slideCurrent = minCount;
 				loopCount++;
 			} else {
 				slideCurrent++;
@@ -287,23 +288,19 @@ function sliderInit(sliderId) {
 				slideCurrent = i + uniqueCount;
 			}
 
-			loopUnit = (slideCurrent + ((max + 1) * loopCount));
+			loopUnit = (slideCurrent + ((maxCount + 1) * loopCount));
 
 			if ( slideCurrent < slideBefore ) {
 				direction = "prev";
-
-				cloneSlide();
-				slideAction();
-
-				slideBefore = slideCurrent;
-			} else if ( slideCurrent > slideBefore ) {
-				direction = "next";
-
-				cloneSlide();
-				slideAction();
-
-				slideBefore = slideCurrent;
 			}
+			if ( slideCurrent > slideBefore ) {
+				direction = "next";
+			}
+
+			cloneSlide();
+			slideAction();
+
+			slideBefore = slideCurrent;
 		}
 	}
 
@@ -317,17 +314,38 @@ function sliderInit(sliderId) {
 		animating = true;
 		movePos = - (sliderWidth * loopUnit);
 
-		movable.animate({
-			'height': container.eq(slideCurrent % uniqueCount).outerHeight(),
-			'left': movePos
-		}, {
-			duration: animDuration,
-			complete: function() {
-				animating = false;
-				animDuration = config.slider.duration;
-				containerPos();
-			}
-		});
+		if ( typeof config.slider.animation === "undefined" || config.slider.animation === "slide" ) {
+			movable.animate({
+				'height': container.eq(slideCurrent % uniqueCount).outerHeight(),
+				'left': movePos
+			}, {
+				duration: animDuration,
+				complete: function() {
+					animating = false;
+					animDuration = config.slider.duration;
+					containerPos();
+				}
+			});
+		}
+
+		if ( config.slider.animation === "fade" ) {
+			movable
+				.hide()
+				.css({
+					'left': movePos
+				})
+				.fadeIn(animDuration)
+				.animate({
+					'height': container.eq(slideCurrent % uniqueCount).outerHeight()
+				}, {
+					duration: animDuration,
+					complete: function() {
+						animating = false;
+						animDuration = config.slider.duration;
+						containerPos();
+					}
+				});
+		}
 
 		navBullet.removeClass('active');
 		navBullet.eq(slideCurrent % uniqueCount).addClass('active');
@@ -339,8 +357,16 @@ function sliderInit(sliderId) {
 
 	// Nav actions
 
-	arrowPrev.on('click', slidePrev);
-	arrowNext.on('click', slideNext);
+	arrowNext.on('click', function() {
+		// slideCurrent++;
+		// slideAny(slideCurrent);
+		slideNext();
+	});
+	arrowPrev.on('click', function() {
+		// slideCurrent--;
+		// slideAny(slideCurrent);
+		slidePrev();
+	});
 
 	navBullet.on('click', function() {
 		var index = $(this).index();
@@ -351,139 +377,98 @@ function sliderInit(sliderId) {
 	});
 
 
-	var dragging = false;
-	var touchExceeded = false;
-	var dragStart;
-	var dragX;
-	var dragEnd;
-	var sliderLeft = sliderActive.offset().left + 50;
-	var sliderRight = sliderActive.offset().left + sliderActive.outerWidth() - 50;
+	// Dragging if animation = "slider"
 
-	movable.on("mousedown touchstart", function(e) {
-		touchExceeded = false;
+	if ( typeof config.slider.animation === "undefined" || config.slider.animation === "slide" ) {
+		var dragging = false;
+		var dragStart;
+		var dragX;
+		var dragEnd;
+		var sliderLeft = sliderActive.offset().left + 50;
+		var sliderRight = sliderActive.offset().left + sliderActive.outerWidth() - 50;
 
-		dragging = true;
-		dragStart = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
-		dragEnd = 0;
-	}).on("mousemove touchmove", function(e) {
-		dragX = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
-		initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < -config.slider.threshold;
+		movable
+			.on("mousedown touchstart", function(e) {
+				if ( !config.application.touch ) e.preventDefault();
 
-		if( touchExceeded || initDrag ) {
-			e.preventDefault();
-			touchExceeded = true;
+				dragging = true;
+				dragStart = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
+				dragEnd = 0;
+			})
+			.on("mousemove touchmove", function(e) {
+				dragX = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
+				initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < -config.slider.threshold;
 
-			if ( dragging && initDrag && !animating) {
-				movable.css({
-					'left': movePos - (dragStart - dragX)
-				});
+				if ( dragging && initDrag && !animating) {
+					if ( !config.application.touch ) e.preventDefault();
 
-				if ( dragX < sliderLeft ) {
-					if ( dragStart - dragX > config.slider.trigger ) {
-						dragging = false;
-						slideNext();
-					} else {
-						animDuration = 250;
-						dragging = false;
-						slideAction();
+					movable.css({
+						'left': movePos - (dragStart - dragX)
+					});
+
+					if ( dragX < sliderLeft ) {
+						if ( dragStart - dragX > config.slider.trigger ) {
+							dragging = false;
+							// slideCurrent++;
+							// slideAny(slideCurrent);
+							slideNext();
+						} else {
+							animDuration = 250;
+							dragging = false;
+							slideAction();
+						}
+					}
+					if ( dragX > sliderRight ) {
+						if ( dragStart - dragX < - config.slider.trigger ) {
+							dragging = false;
+							// slideCurrent--;
+							// slideAny(slideCurrent);
+							slidePrev();
+						} else {
+							animDuration = 250;
+							dragging = false;
+							slideAction();
+						}
 					}
 				}
-				if ( dragX > sliderRight ) {
-					if ( dragStart - dragX < - config.slider.trigger ) {
-						dragging = false;
+			})
+			.on("mouseup touchend", function(e) {
+				if ( !config.application.touch ) e.preventDefault();
+
+				dragging = false;
+
+				if ( !animating ) {
+					dragEnd = dragX;
+
+					if ( dragStart - dragEnd > config.slider.trigger ) {
+						// slideCurrent++;
+						// slideAny(slideCurrent);
+						slideNext();
+					} else if ( dragStart - dragEnd < - config.slider.trigger ) {
+						// slideCurrent--;
+						// slideAny(slideCurrent);
 						slidePrev();
 					} else {
-						animDuration = 250;
-						dragging = false;
 						slideAction();
 					}
 				}
-			}
-		}
-	}).on("mouseup touchend", function(e) {
-		dragging = false;
-		touchExceeded = false;
-
-		if ( !animating ) {
-			dragEnd = dragX;
-
-			if ( dragStart - dragEnd > config.slider.trigger ) {
-				slideNext();
-			} else if ( dragStart - dragEnd < - config.slider.trigger ) {
-				slidePrev();
-			} else {
-				slideAction();
-			}
-		}
-
-		dragStart = 0;
-		dragX = 0;
-		dragEnd = 0;
-	});
-
-	// movable
-	// 	.on("mousedown touchstart", function(e) {
-	// 		dragging = true;
-	// 		dragStart = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
-	// 		dragEnd = 0;
-	// 	})
-	// 	.on("mousemove touchmove", function(e) {
-	// 		dragX = !config.application.touch ? e.pageX : e.originalEvent.touches[0].pageX;
-	// 		initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < -config.slider.threshold;
-
-	// 		if ( dragging && initDrag && !animating) {
-	// 			movable.css({
-	// 				'left': movePos - (dragStart - dragX)
-	// 			});
-
-	// 			if ( dragX < sliderLeft ) {
-	// 				if ( dragStart - dragX > config.slider.trigger ) {
-	// 					dragging = false;
-	// 					slideNext();
-	// 				} else {
-	// 					animDuration = 250;
-	// 					dragging = false;
-	// 					slideAction();
-	// 				}
-	// 			}
-	// 			if ( dragX > sliderRight ) {
-	// 				if ( dragStart - dragX < - config.slider.trigger ) {
-	// 					dragging = false;
-	// 					slidePrev();
-	// 				} else {
-	// 					animDuration = 250;
-	// 					dragging = false;
-	// 					slideAction();
-	// 				}
-	// 			}
-	// 		}
-	// 	})
-	// 	.on("mouseup touchend", function(e) {
-	// 		dragging = false;
-
-	// 		if ( !animating ) {
-	// 			dragEnd = dragX;
-
-	// 			if ( dragStart - dragEnd > config.slider.trigger ) {
-	// 				slideNext();
-	// 			} else if ( dragStart - dragEnd < - config.slider.trigger ) {
-	// 				slidePrev();
-	// 			} else {
-	// 				slideAction();
-	// 			}
-	// 		}
-	// 	});
+			});
+	}
 
 
 	document.onkeydown = function(e) {
 		e = e || window.event;
 		switch(e.which || e.keyCode) {
-			case 37: // left
-				slidePrev();
+			case 39: // right
+				// slideCurrent++;
+				// slideAny(slideCurrent);
+				slideNext();
 				break;
 
-			case 39: // right
-				slideNext();
+			case 37: // left
+				// slideCurrent--;
+				// slideAny(slideCurrent);
+				slidePrev();
 				break;
 
 			default: return; // exit this handler for other keys
@@ -497,7 +482,11 @@ function sliderInit(sliderId) {
 
 	function sliderStart() {
 		movable.removeClass("stopped");
-		slideTimer = setInterval(slideNext, interval);
+		slideTimer = setInterval(function() {
+			// slideCurrent++;
+			// slideAny(slideCurrent);
+			slideNext();
+		}, animInterval);
 	}
 	function sliderStop() {
 		movable.addClass("stopped");
@@ -505,8 +494,6 @@ function sliderInit(sliderId) {
 	}
 
 	if ( slideShow !== false && isMultiSlide ) {
-		var interval = animInterval;
-
 		sliderStart();
 
 		if ( !config.application.touch ) {
@@ -539,13 +526,16 @@ function sliderInit(sliderId) {
 
 
 function initSliders() {
-	if ( $(".slider").length ) {
-		$('.slider-container').css('visibility', 'visible');
-		$('.slider').each(function (i, slider) {
-			setTimeout(function() {
-				sliderInit(slider.id = 'slider-' + i);
-			}, 250 * i);
-		});
+	var slider = $(".slider");
+
+	if ( slider.length ) {
+		slider
+			.each(function (i, slider) {
+				setTimeout(function() {
+					sliderInit(slider.id = 'slider-' + i);
+				}, 250 * i);
+			})
+			.find('.slider-container').css({ 'visibility': 'visible' });
 
 		if (config.application.debug) console.log("Init :: Sliders");
 	}

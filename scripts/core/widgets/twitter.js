@@ -76,7 +76,7 @@ var twitterFetcher = function() {
 			} else {
 				inProgress = true;
 
-				domNode = fetchConfig.domId;
+				domNode = fetchConfig.domID;
 				maxTweets = fetchConfig.maxTweets;
 				parseLinks = fetchConfig.enableLinks;
 				printUser = fetchConfig.showUser;
@@ -89,8 +89,8 @@ var twitterFetcher = function() {
 				var script = document.createElement('script');
 				script.type = 'text/javascript';
 				script.src = '//cdn.syndication.twimg.com/widgets/timelines/' +
-						fetchConfig.id + '?&lang=en&callback=twitterFetcher.callback&' +
-						'suppress_response_codes=true&rnd=' + Math.random();
+							 fetchConfig.twitterID + '?&lang=en&callback=twitterFetcher.callback&' +
+							 'suppress_response_codes=true&rnd=' + Math.random();
 				document.getElementsByTagName('head')[0].appendChild(script);
 			}
 		},
@@ -98,25 +98,25 @@ var twitterFetcher = function() {
 		handler: function(tweets) {
 			var x = tweets.length;
 			var n = 0;
-			var element = document.getElementById(config.twitter.domId);
+			var element = document.getElementById(config.twitter.domID);
 
 			var html = '<div class="twitter-user"></div>';
-
 				html += '<div class="content feed">';
-				while(n < x) {
+
+				while( n < x ) {
 					html += '<hr>';
 					html += '<div class="tweet-item">' + tweets[n] + '</div>';
 					n++;
 				}
-				html += '</div>';
 
+				html += '</div>';
 				html += '<div class="button input-medium center twitter-follow">Follow Us</div>';
 
 			element.innerHTML = html;
 
 
 			if ( config.twitter.showRetweet ) {
-				document.getElementById(config.twitter.domId).className = config.twitter.domId + " framed multi";
+				document.getElementById(config.twitter.domID).className = config.twitter.domID + " framed multi";
 
 				for ( var i = 0; i < document.querySelectorAll(".user").length; i++ ) {
 					var user = document.querySelectorAll(".user")[i];
@@ -124,7 +124,7 @@ var twitterFetcher = function() {
 						user.getElementsByTagName("a")[0].className = "no-icon valign-middle";
 				}
 			} else {
-				document.getElementById(config.twitter.domId).className = config.twitter.domId + " framed twitter-main";
+				document.getElementById(config.twitter.domID).className = config.twitter.domID + " framed twitter-main";
 
 				var user = document.createElement('h4');
 					user.className = "user";
@@ -140,15 +140,19 @@ var twitterFetcher = function() {
 			}
 
 
-			if (config.twitter.showFollow) $("#" + config.twitter.domId).find(".twitter-follow").show(); else $("#" + config.twitter.domId).find(".twitter-follow").hide();
-
-			function popupWindow(url, title, w, h) {
-				var left = (screen.width/2)-(w/2);
-				var top = (screen.height/2)-(h/2);
-				return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+			if ( config.twitter.showFollow ) {
+				$("#" + config.twitter.domID).find(".twitter-follow").show();
+			} else {
+				$("#" + config.twitter.domID).find(".twitter-follow").hide();
 			}
 
-			document.getElementById(config.twitter.domId).querySelector(".button").onclick = function() {
+			function popupWindow(url, title, w, h) {
+				var left = ( screen.width/2 ) - ( w / 2 );
+				var top = ( screen.height/2 ) - ( h / 2 );
+				return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+			}
+
+			document.getElementById(config.twitter.domID).querySelector(".button").onclick = function() {
 				popupWindow('https://twitter.com/intent/user?screen_name=' + user.getElementsByTagName('span')[0].innerHTML.substr(1), 'Twitter Follow', 640, 600);
 				return false;
 			};
@@ -298,7 +302,7 @@ var twitterFetcher = function() {
 */
 
 function initTwitter() {
-	if ($("#" + config.twitter.domId).length) {
+	if ($("#" + config.twitter.domID).length) {
 		twitterFetcher.fetch(config.twitter);
 		if (config.application.debug) console.log("Init :: Twitter");
 	}
