@@ -2,25 +2,23 @@
 <?php include("include/header.php"); ?>
 
 
-<div class="main">
+<div class="main docs">
 	<div class="wrapper">
 
-		<a href="#" class="anchor" id="structure"></a>
+		<div class="sidebar">
+			<div class="sidebar-trigger"></div>
 
-		<h2>Structure</h2>
+			<h3>Structure</h3>
 
-
-		<ul>
-			<li>
-				<a href="#directory">Directory Listing</a>
-			</li>
-			<li>
-				<a href="#breakdown">Breakdown</a>
-			</li>
-		</ul>
-
-
-		<hr>
+			<ul>
+				<li>
+					<a class="active" href="#directory">Directory Listing</a>
+				</li>
+				<li>
+					<a href="#breakdown">Breakdown</a>
+				</li>
+			</ul>
+		</div>
 
 
 		<a href="#" class="anchor" id="directory"></a>

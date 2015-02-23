@@ -33,7 +33,7 @@
 			<a href="imagery.php" class="nav-item"><span>Imagery</span></a>
 			<a href="forms.php" class="nav-item"><span>Forms</span></a>
 			<a href="widgets.php" class="nav-item"><span>Widgets</span></a>
-			<a href="tips.php" class="nav-item"><span>Tips &amp; Tricks</span></a>
+			<!-- <a href="tips.php" class="nav-item"><span>Tips &amp; Tricks</span></a> -->
 		</nav>
 
 		<div class="nav-trigger mobile-show">

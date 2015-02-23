@@ -237,6 +237,8 @@ function initTables() {
 
 // Init Hyperlinks
 
+var anchorClicked;
+
 function initLinks() {
 	$("a[href^='#']").on("click", function(event) { // Smooth same page navigation for <a href="#target-anchor" class="anchor"></a> elements.
 		var link = $(this).attr("href");
@@ -247,9 +249,15 @@ function initLinks() {
 			if (config.application.debug) console.log("Intentional: blocked behaviour on global.js.");
 		} else {
 			if ( $($.attr(this, "href")).length ) {
+				anchorClicked = true;
+
 				$("html, body").animate({
-					scrollTop: $( $.attr(this, "href") ).offset().top - 73
-				}, 1000);
+					scrollTop: $( $.attr(this, "href") ).offset().top - 90
+				}, {
+					duration: 1000,
+					queue: false,
+					complete: function() { anchorClicked = false; }
+				});
 
 				return false;
 			}
@@ -265,7 +273,7 @@ function initLinks() {
 // Detect Scroll Progress
 
 function scrollProgress() {
-	var scrollPercentage = ($("html body").scrollTop() * 100) / ($(document).height() - $(window).height());
+	var scrollPercentage = (pageTop * 100) / ($(document).height() - $(window).height());
 	$(".scroll-progress").width(scrollPercentage + "%");
 }
 
@@ -281,7 +289,6 @@ function initFramework() {
 		FastClick.attach(document.body); // Removes 300ms delay from taps on mobile devices. Requires fastclick.js.
 		$(".map-wrapper").addClass("map-mobile"); // Fixes image distortion on Google Maps - See _base.scss.
 	}
-
 
 
 	// System Init
@@ -319,6 +326,7 @@ function initFramework() {
 // Window Load
 
 var isWideScreen;
+var pageTop;
 
 $(document).ready(initFramework);
 
@@ -331,5 +339,6 @@ $(window).on("resize", function() {
 });
 
 $(window).on("scroll", function() {
+	pageTop = $(document).scrollTop();
 	scrollProgress();
 });

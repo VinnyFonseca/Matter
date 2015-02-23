@@ -5,28 +5,31 @@
 	position: relative;
 	font-size: 0;
 
-	& > * {
+	> * {
 		@include font-size($fontSize);
 	}
 
-	& .column {
+	.column {
 		display: inline-block;
 		position: relative;
 		margin: 0;
 		padding: 0;
+		padding-left: $gutter;
 		width: 100%;
 		vertical-align: top;
 
-		@for $i from 1 through $columns {
-			$width: percentage($i / $columns);
+		&:first-child {
+			padding-left: 0;
+		}
 
+		@for $i from 1 through $columns {
 			&[data-span="#{$i}"] {
-				width: $width;
+				width: percentage($i / $columns);
 			}
 		}
 	}
 
-	& .cell {
+	.cell {
 		display: block;
 		position: relative;
 		padding: $spacing / 2;
@@ -38,10 +41,10 @@
 }
 
 .debug {
-	& .column {
+	.column {
 		// background: $ce;
 	}
-	& .cell {
+	.cell {
 		margin: 2px;
 		border: 1px dashed $cd;
 		background: $ce;

@@ -2,31 +2,29 @@
 <?php include("include/header.php"); ?>
 
 
-<div class="main">
+<div class="main docs">
 	<div class="wrapper">
 
-		<a href="#" class="anchor" id="imagery"></a>
+		<div class="sidebar">
+			<div class="sidebar-trigger"></div>
 
-		<h2>Imagery</h2>
+			<h3>Imagery</h3>
 
-
-		<ul>
-			<li>
-				<a href="#img">The <code>img</code> element</a>
-			</li>
-			<li>
-				<a href="#srcset">The <code>srcset</code> attribute</a>
-			</li>
-			<li>
-				<a href="#picture">The <code>picture</code> element</a>
-			</li>
-			<li>
-				<a href="#thoughts">Final Thoughts</a>
-			</li>
-		</ul>
-
-
-		<hr>
+			<ul>
+				<li>
+					<a class="active" href="#img">The <code>img</code> element</a>
+				</li>
+				<li>
+					<a href="#srcset">The <code>srcset</code> attribute</a>
+				</li>
+				<li>
+					<a href="#picture">The <code>picture</code> element</a>
+				</li>
+				<li>
+					<a href="#thoughts">Final Thoughts</a>
+				</li>
+			</ul>
+		</div>
 
 
 		<a href="#" class="anchor" id="img"></a>

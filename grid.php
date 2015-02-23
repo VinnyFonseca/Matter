@@ -2,25 +2,23 @@
 <?php include("include/header.php"); ?>
 
 
-<div class="main">
+<div class="main docs">
 	<div class="wrapper">
 
-		<a href="#" class="anchor" id="grid"></a>
+		<div class="sidebar">
+			<div class="sidebar-trigger"></div>
 
-		<h2>Grid</h2>
+			<h3>Grid</h3>
 
-
-		<ul>
-			<li>
-				<a href="#grid-system">Grid System</a>
-			</li>
-			<li>
-				<a href="#complete">Complete Grid</a>
-			</li>
-		</ul>
-
-
-		<hr>
+			<ul>
+				<li>
+					<a class="active" href="#grid-system">Grid System</a>
+				</li>
+				<li>
+					<a href="#complete">Complete Grid</a>
+				</li>
+			</ul>
+		</div>
 
 
 		<a href="#" class="anchor" id="grid-system"></a>

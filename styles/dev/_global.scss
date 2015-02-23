@@ -125,7 +125,8 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 
 
 .wrapper {
-	padding: $spacing 0;
+	padding-top: $spacing;
+	padding-bottom: $spacing;
 }
 .intro {
 	display: block;
@@ -136,11 +137,137 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 	background: $brand1 url($introBg) no-repeat center bottom;
 	background-size: cover;
 }
+
+
+$sidebarWidth: 300px;
+
 .main {
 	display: block;
 	position: relative;
-	padding: 0;
+
+	&.sidebar-on {
+		.sidebar {
+			@include transform(translateX(0));
+
+			.sidebar-trigger {
+				@include transform(translateX(0));
+				border-left-width: 1px;
+				border-right-width: 0;
+				border-radius: $radius 0 0 $radius;
+
+				&:before {
+					content: "\00AB" !important;
+				}
+			}
+		}
+	}
+
+	&.docs {
+		padding-left: $sidebarWidth;
+	}
+
+	.sidebar {
+		display: block;
+		position: fixed;
+		margin: 0;
+		padding: 0;
+		width: $sidebarWidth;
+		top: $headerHeight;
+		left: 0;
+		bottom: 0;
+		border-right: 1px solid $cd;
+		background-color: $ce;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+		z-index: 70;
+		@include transition(transform $animDuration $animEasing);
+
+		& > * {
+			padding: 0 $spacing;
+		}
+
+		.sidebar-trigger {
+			display: none;
+			position: absolute;
+			padding: 6px;
+			width: 42px;
+			height: 42px;
+			right: 0;
+			top: 12px;
+			color: $brand1;
+			@include font-size($fontSize * 2);
+			text-align: center;
+			line-height: 0.7 !important;
+			border: 1px solid $cd;
+			border-left-width: 0;
+			border-radius: 0 $radius $radius 0;
+			background-color: $ce;
+			cursor: pointer;
+			z-index: 10;
+			@include opacity(0.75);
+			@include transition(all $animDuration $animEasing);
+			@include transform(translateX(42px));
+
+			&:hover {
+				color: $brand2;
+			}
+			&:active {
+				color: $brand1;
+			}
+
+			&:before {
+				content: "\00BB";
+			}
+		}
+
+		h1, h2, h3, h4, h5, h6 {
+			margin-top: 7px;
+			color: $c6 !important;
+		}
+
+		ul {
+			display: block;
+			position: relative;
+			margin: 0;
+			margin-top: $spacing / 2;
+			padding: 0;
+			list-style: none;
+			border-top: 1px solid $cd;
+			background-color: $cf;
+
+			li {
+				display: block;
+				margin: 0;
+				padding: 0;
+
+				a {
+					display: block;
+					position: relative;
+					padding: 8px $spacing;
+					@include font-size($fontSize / 1.1);
+					text-decoration: none !important;
+					border-top: 1px solid $cf;
+					border-bottom: 1px solid $cd;
+
+					&:hover {
+						color: $cf !important;
+						background-color: $brand1;
+					}
+					&:active {
+						color: $cf !important;
+						background-color: $brand2;
+					}
+					&.active {
+						color: $cf !important;
+						border-top: 1px solid $brand1;
+						border-bottom: 1px solid $brand1;
+						background-color: $brand1;
+					}
+				}
+			}
+		}
+	}
 }
+
 .back-to-top {
 	position: fixed;
 	right: 10px;

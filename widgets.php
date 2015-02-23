@@ -2,47 +2,47 @@
 <?php include("include/header.php"); ?>
 
 
-<div class="main">
+<div class="main docs">
 	<div class="wrapper">
 
-		<a href="#" class="anchor" id="widgets"></a>
+		<div class="sidebar">
+			<div class="sidebar-trigger"></div>
 
-		<h2>Widgets</h2>
+			<h3>Widgets</h3>
 
-
-		<ul>
-			<li>
-				<a href="#autocomplete">Autocompletion Engine</a>
-			</li>
-			<li>
-				<a href="#tagcloud">Tag Cloud</a>
-			</li>
-			<li>
-				<a href="#overlays">Overlays</a>
-			</li>
-			<li>
-				<a href="#notifications">Notifications</a>
-			</li>
-			<li>
-				<a href="#tooltips">Tooltips</a>
-			</li>
-			<li>
-				<a href="#slider">Slider</a>
-			</li>
-			<li>
-				<a href="#maps">Maps</a>
-			</li>
-			<li>
-				<a href="#twitter">Twitter</a>
-			</li>
-			<li>
-				<a href="#accessibility">Accessibility</a>
-			</li>
-		</ul>
-
-
-
-		<hr>
+			<ul>
+				<li>
+					<a class="active" href="#autocomplete">Autocompletion Engine</a>
+				</li>
+				<li>
+					<a href="#tagcloud">Tag Cloud</a>
+				</li>
+				<li>
+					<a href="#search">Unified Search</a>
+				</li>
+				<li>
+					<a href="#overlays">Overlays</a>
+				</li>
+				<li>
+					<a href="#notifications">Notifications</a>
+				</li>
+				<li>
+					<a href="#tooltips">Tooltips</a>
+				</li>
+				<li>
+					<a href="#slider">Slider</a>
+				</li>
+				<li>
+					<a href="#maps">Maps</a>
+				</li>
+				<li>
+					<a href="#twitter">Twitter</a>
+				</li>
+				<li>
+					<a href="#accessibility">Accessibility</a>
+				</li>
+			</ul>
+		</div>
 
 
 		<a href="#" class="anchor" id="autocomplete"></a>
@@ -112,6 +112,91 @@
 			<option>nine</option>
 			<option>ten</option>
 		</select>
+
+		<p>
+			<strong>Example:</strong>
+		</p>
+
+<pre>
+&lt;input type="text" placeholder="Type and press Enter to add to the tag cloud" <span class="emphasis">data-tagcloud="true"</span>&gt;
+&lt;select <span class="emphasis">data-tagcloud="true"</span>&gt;&lt;/select&gt;
+</pre>
+
+
+
+		<hr>
+
+
+
+		<a href="#" class="anchor" id="search"></a>
+
+		<h2>Unified Search</h2>
+
+		<p>
+			<strong>Usage:</strong>
+		</p>
+
+		<p>
+			Apply <code>data-search="true"</code> to a <strong>parent</strong> of a group of <code>input</code> or <code>select</code> elements. This will create a tag cloud after it, group all elements' outputs and build an array for analysis. You can then use the array to rebuild the search results.
+		</p>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<div data-search="true">
+			<input type="text" placeholder="Search...">
+
+			<div class="row">
+				<div class="column" data-span="4">
+					<select>
+						<option class="placeholder">Choose...</option>
+						<option>one</option>
+						<option>two (default)</option>
+						<option>three</option>
+						<option>four</option>
+						<option>five</option>
+						<option>six</option>
+						<option>seven</option>
+						<option>eight</option>
+						<option>nine</option>
+						<option>ten</option>
+					</select>
+				</div>
+				<div class="column" data-span="4">
+					<select>
+						<option class="placeholder">Choose...</option>
+						<option>one</option>
+						<option>two (default)</option>
+						<option>three</option>
+						<option>four</option>
+						<option>five</option>
+						<option>six</option>
+						<option>seven</option>
+						<option>eight</option>
+						<option>nine</option>
+						<option>ten</option>
+					</select>
+
+				</div>
+				<div class="column" data-span="4">
+					<select>
+						<option class="placeholder">Choose...</option>
+						<option>one</option>
+						<option>two (default)</option>
+						<option>three</option>
+						<option>four</option>
+						<option>five</option>
+						<option>six</option>
+						<option>seven</option>
+						<option>eight</option>
+						<option>nine</option>
+						<option>ten</option>
+					</select>
+
+				</div>
+			</div>
+		</div>
 
 		<p>
 			<strong>Example:</strong>

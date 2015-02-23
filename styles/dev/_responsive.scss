@@ -20,6 +20,23 @@
 		}
 	}
 
+	.wrapper {
+		width: 100%;
+	}
+
+	.main {
+		&.docs {
+			padding-left: 0;
+		}
+	}
+	.sidebar {
+		@include transform(translateX(-$sidebarWidth));
+
+		.sidebar-trigger {
+			display: block !important;
+		}
+	}
+
 }
 
 
@@ -31,11 +48,6 @@
 
 
 @media screen and (max-width: $screenDesktop) {
-
-	.wrapper {
-		padding: $spacing;
-		width: 100%;
-	}
 
 	header,
 	.header {
@@ -51,7 +63,7 @@
 				padding: $spacing ($spacing / 2);
 
 				& > * {
-					@include font-size($fontSize / 1.2);
+					@include font-size($fontSize / 1.1);
 				}
 			}
 		}
@@ -72,13 +84,13 @@
 
 	// Nav
 
-	$navItemHeight: 48px;
-	$navItemCount: 8;
+	$navItemHeight: 52px;
+	$navItemCount: 7;
 
 	header,
 	.header {
 		position: fixed;
-		margin-top: (-$navItemHeight * $navItemCount);
+		margin-top: (-$navItemHeight * $navItemCount) + 2;
 		@include transition-property(transform);
 		@include transition-duration($animDuration);
 		@include transition-timing-function($animEasing);

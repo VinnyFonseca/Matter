@@ -2,40 +2,38 @@
 <?php include("include/header.php"); ?>
 
 
-<div class="main">
+<div class="main docs">
 	<div class="wrapper">
 
-		<a href="#" class="anchor" id="forms"></a>
+		<div class="sidebar">
+			<div class="sidebar-trigger"></div>
 
-		<h2>Forms &amp; Form Elements</h2>
+			<h3>Forms</h3>
+
+			<ul>
+				<li>
+					<a class="active" href="#input">Input Types</a>
+				</li>
+				<li>
+					<a href="#select">Select</a>
+				</li>
+				<li>
+					<a href="#textarea">Textarea</a>
+				</li>
+				<li>
+					<a href="#fieldset">Checkboxes, Radio Buttons &amp; Toggles</a>
+				</li>
+				<li>
+					<a href="#file">File Upload</a>
+				</li>
+				<li>
+					<a href="#buttons">Buttons</a>
+				</li>
+			</ul>
+		</div>
 
 
 		<p class="emphasis">Note: This section is currently under heavy development.</p>
-
-		<ul>
-			<li>
-				<a href="#input">Input Types</a>
-			</li>
-			<li>
-				<a href="#select">Select</a>
-			</li>
-			<li>
-				<a href="#textarea">Textarea</a>
-			</li>
-			<li>
-				<a href="#fieldset">Fieldset, Checkboxes, Radio Buttons &amp; Toggles</a>
-			</li>
-			<li>
-				<a href="#file">File Upload</a>
-			</li>
-			<li>
-				<a href="#buttons">Buttons</a>
-			</li>
-		</ul>
-
-
-		<hr>
-
 
 		<form novalidate action="#">
 			<input type="hidden" name="hidden field" value="42">
@@ -225,7 +223,7 @@
 
 			<a href="#" class="anchor" id="fieldset"></a>
 
-			<h2>Fieldsets, Checkboxes, Radio Buttons &amp; Toggles</h2>
+			<h2>Checkboxes, Radio Buttons &amp; Toggles</h2>
 
 			<p>They are styled with CSS3 <code>:before</code> pseudo elements. They are wrapped in a <code>.controller.<var>input type</var></code>.</p>
 

@@ -4,7 +4,7 @@
 }
 
 .form-info {
-	margin-bottom: $spacing;
+	margin-bottom: $spacing / 2;
 	color: $c2;
 	@include font-size($fontSize / 1.1);
 }
@@ -54,7 +54,7 @@ textarea {
 	position: relative;
 	color: $c2;
 	margin: 0;
-	margin-bottom: $spacing;
+	margin-bottom: $spacing / 2;
 	padding: 9px 12px;
 	width: 100%;
 	font-family: $bodyFont;
@@ -117,11 +117,6 @@ textarea {
 		-moz-appearance: none;
 		appearance: none;
 	}
-
-
-	&[data-tagcloud="true"] {
-		margin-bottom: $spacing / 2;
-	}
 }
 
 textarea {
@@ -134,7 +129,7 @@ textarea {
 .password-wrapper {
 	display: inline-block;
 	position: relative;
-	margin-bottom: $spacing;
+	margin-bottom: $spacing / 2;
 	width: 100%;
 	vertical-align: top;
 	@include border-radius($radius);
@@ -169,7 +164,7 @@ textarea {
 .input-group {
 	display: block;
 	position: relative;
-	margin-bottom: $spacing;
+	margin-bottom: $spacing / 2;
 	font-size: 0;
 
 	> * {
@@ -592,7 +587,7 @@ optgroup {
 	color: $c2;
 	margin: 0;
 	margin-top: 5px;
-	margin-bottom: $spacing;
+	margin-bottom: $spacing / 2;
 	padding: 0;
 	width: 100%;
 	font-family: $bodyFont;
@@ -796,7 +791,7 @@ optgroup {
 .file-wrapper,
 .multifile-wrapper {
 	position: relative;
-	margin-bottom: $spacing;
+	margin-bottom: $spacing / 2;
 	width: 100%;
 	border: 0;
 	white-space: nowrap;
@@ -912,7 +907,7 @@ $itemQty: 10;
 	color: $c2;
 	margin: 0;
 	margin-top: 2px;
-	margin-bottom: $spacing;
+	margin-bottom: $spacing / 2;
 	padding: 0;
 	width: 100%;
 	font-family: $bodyFont;
