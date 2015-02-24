@@ -317,10 +317,17 @@ function scrollProgress() {
 function initFramework() {
 	isWideScreen = $(window).width() > 768;
 
-	if ( Modernizr.touch ) { // If touch device
+	if ( config.application.touch ) { // If touch device
 		FastClick.attach(document.body); // Removes 300ms delay from taps on mobile devices. Requires fastclick.js.
 		$(".map-wrapper").addClass("map-mobile"); // Fixes image distortion on Google Maps - See _base.scss.
 	}
+
+
+	// Logs Legend
+
+	if (config.application.debug) console.log(":: DOM.ready");
+	if (config.application.debug) console.log("~~ Async");
+	if (config.application.debug) console.log("•• Complete");
 
 
 	// Easter Eggs Init

@@ -176,12 +176,13 @@ function scrollProgress() {
 }
 
 function initFramework() {
-    isWideScreen = $(window).width() > 768, Modernizr.touch && (FastClick.attach(document.body), 
-    $(".map-wrapper").addClass("map-mobile")), initKonami(alertKonami), initSVGs(), 
-    initCookies(), initLinks(), initNav(), initTables(), scrollProgress(), initAutocomplete(), 
-    initTagClouds(), initSearch(), initOverlays(), initNotifications(), initTooltips(), 
-    initSliders(), initMap(), initTwitter(), initFontSizeControls(), initDropdowns(), 
-    loadFileInputs(config.forms.uploadlimit), initValidation(), config.application.debug && console.log("Done •• Matter");
+    isWideScreen = $(window).width() > 768, config.application.touch && (FastClick.attach(document.body), 
+    $(".map-wrapper").addClass("map-mobile")), config.application.debug && console.log(":: DOM.ready"), 
+    config.application.debug && console.log("~~ Async"), config.application.debug && console.log("•• Complete"), 
+    initKonami(alertKonami), initSVGs(), initCookies(), initLinks(), initNav(), initTables(), 
+    scrollProgress(), initAutocomplete(), initTagClouds(), initSearch(), initOverlays(), 
+    initNotifications(), initTooltips(), initSliders(), initMap(), initTwitter(), initFontSizeControls(), 
+    initDropdowns(), loadFileInputs(config.forms.uploadlimit), initValidation(), config.application.debug && console.log("Done •• Matter");
 }
 
 function buildDropdowns(a) {
