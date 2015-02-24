@@ -175,8 +175,8 @@ $sidebarWidth: 300px;
 		top: $headerHeight;
 		left: 0;
 		bottom: 0;
-		border-right: 1px solid $cd;
-		background-color: $ce;
+		border-right: 1px solid $c5;
+		background-color: $c3;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 		z-index: 70;
 		@include transition(transform $animDuration $animEasing);
@@ -193,35 +193,33 @@ $sidebarWidth: 300px;
 			height: 42px;
 			right: 0;
 			top: 12px;
-			color: $brand1;
+			color: $cf;
 			@include font-size($fontSize * 2);
 			text-align: center;
 			line-height: 0.7 !important;
-			border: 1px solid $cd;
+			border: 1px solid $brand1;
 			border-left-width: 0;
 			border-radius: 0 $radius $radius 0;
-			background-color: $ce;
+			background-color: $brand1;
 			cursor: pointer;
 			z-index: 10;
-			@include opacity(0.75);
-			@include transition(all $animDuration $animEasing);
+			@include opacity(0.85);
+			@include transition(transform $animDuration $animEasing);
 			@include transform(translateX(42px));
 
-			&:hover {
-				color: $brand2;
-			}
+			&:hover,
 			&:active {
-				color: $brand1;
+				border-color: $brand2;
+				background-color: $brand2;
 			}
-
 			&:before {
 				content: "\00BB";
 			}
 		}
 
 		h1, h2, h3, h4, h5, h6 {
-			margin-top: 7px;
-			color: $c6 !important;
+			margin-top: 8px;
+			color: $cd !important;
 		}
 
 		ul {
@@ -231,8 +229,8 @@ $sidebarWidth: 300px;
 			margin-top: $spacing / 2;
 			padding: 0;
 			list-style: none;
-			border-top: 1px solid $cd;
-			background-color: $cf;
+			border-top: 1px solid $c3;
+			background-color: $c4;
 
 			li {
 				display: block;
@@ -243,19 +241,18 @@ $sidebarWidth: 300px;
 					display: block;
 					position: relative;
 					padding: 8px $spacing;
+					color: $cd !important;
 					@include font-size($fontSize / 1.1);
 					text-decoration: none !important;
-					border-top: 1px solid $cf;
-					border-bottom: 1px solid $cd;
+					border-top: 1px solid $c4;
+					border-bottom: 1px solid $c3;
 
 					&:hover {
-						color: $cf !important;
 						border-top: 1px solid $brand1;
 						border-bottom: 1px solid $brand1;
 						background-color: $brand1;
 					}
 					&:active {
-						color: $cf !important;
 						border-top: 1px solid $brand2;
 						border-bottom: 1px solid $brand2;
 						background-color: $brand2;
