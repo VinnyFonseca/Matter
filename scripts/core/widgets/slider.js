@@ -7,38 +7,6 @@ var _requestAnimationFrame = function(win, t) {
 
 
 
-// Custom Animate Functions
-
-function animate(opts) {
-	var start = new Date;
-
-	var id = setInterval(function() {
-		var timePassed = new Date - start;
-		var progress = timePassed / opts.duration;
-
-		if (progress > 1) progress = 1;
-
-		var delta = opts.delta(progress);
-		opts.step(delta);
-
-		if (progress == 1) {
-			clearInterval(id);
-			animEndCallback();
-		}
-	}, opts.delay);
-}
-
-function quad(progress) {
-	return Math.pow(progress, 2);
-}
-function makeEaseOut(delta) {
-	return function(progress) {
-		return 1 - delta(1 - progress);
-	};
-}
-
-
-
 // Custom Get Element Position
 
 function getOffset(el) {

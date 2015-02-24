@@ -10,7 +10,7 @@ var config = {
 	},
 	forms: {
 		validation: true, // bool: Toggles client-side validation.
-		uploadlimit: 3
+		uploadlimit: 3 // int: Multiple file upload limit.
 	},
 	tables: {
 		responsive: true // bool: Converts every row into a separate table on mobiles.

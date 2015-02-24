@@ -51,5 +51,5 @@ function initCookies() {
 		notify(cookieMessage, cookieTone, cookieDelay);
 	}
 
-	if ( config.application.debug ) console.log("Init :: Cookie System");
+	if ( config.application.debug ) console.log("System :: Cookie System");
 }

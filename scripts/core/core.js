@@ -147,7 +147,7 @@ function initSVGs() {
 			}, 'xml');
 		});
 
-		if (config.application.debug) console.log("Init :: SVG Injection");
+		if (config.application.debug) console.log("System :: SVG Injection");
 	}
 }
 
@@ -184,7 +184,7 @@ var returnedData,
 	dataObject;
 
 function dataRequest(url, type, successFunction) {
-	if (config.application.debug) console.log('AJAX :: Request');
+	if (config.application.debug) console.log('AJAX ~~ Request');
 
 	request = $.ajax({
 		url: url,
@@ -192,13 +192,13 @@ function dataRequest(url, type, successFunction) {
 		data: type == "POST" ? data : "",
 		dataType: "JSON",
 		success: function(data) {
-			if (config.application.debug) console.log('AJAX :: Success');
+			if (config.application.debug) console.log('AJAX ~~ Success');
 			// if (config.application.debug) console.log(data);
 			if ( typeof successFunction !== 'undefined' ) successFunction(data);
 		},
 		error: function(request, status, error) {
-			if (config.application.debug) console.log('AJAX :: Error');
-			if (config.application.debug) console.log(request, status, error, request.statusText);
+			if (config.application.debug) console.log('AJAX ~~ Error');
+			// if (config.application.debug) console.log(request, status, error, request.statusText);
 		}
 	});
 }
@@ -257,7 +257,7 @@ function initTables() {
 		});
 	}
 
-	if (config.application.debug) console.log("Init :: Tables");
+	if (config.application.debug) console.log("System :: Tables");
 }
 
 
@@ -292,7 +292,7 @@ function initLinks() {
 		}
 	});
 
-	if ( config.application.debug ) console.log("Init :: Links");
+	if ( config.application.debug ) console.log("System :: Links");
 }
 
 

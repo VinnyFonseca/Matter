@@ -61,7 +61,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="autocomplete-wrapper" data-autocomplete="scripts/dev/autocomplete/autocomplete.json">
+		<div class="autocomplete-wrapper" data-autocomplete="scripts/dev/data/autocomplete.json">
 			<input type="text" placeholder="Type to search...">
 		</div>
 
@@ -70,7 +70,7 @@
 		</p>
 
 <pre>
-&lt;div class="autocomplete-wrapper" <span class="emphasis">data-url="scripts/dev/autocomplete/autocomplete.json"</span>&gt;
+&lt;div class="autocomplete-wrapper" <span class="emphasis">data-autocomplete="scripts/dev/data/autocomplete.json"</span>&gt;
 	&lt;input type="text" placeholder="Type to search..."&gt;
 &lt;/div&gt;
 </pre>
@@ -144,9 +144,9 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div data-search="scripts/dev/autocomplete/search.json">
-			<!-- <div class="autocomplete-wrapper" data-autocomplete="scripts/dev/autocomplete/autocomplete.json"> -->
-				<input type="text" placeholder="Type to search...">
+		<div data-search="scripts/dev/data/search.json">
+			<!-- <div class="autocomplete-wrapper" data-autocomplete="scripts/dev/data/autocomplete.json"> -->
+				<input type="text" placeholder="Search...">
 			<!-- </div> -->
 
 			<div class="row">
@@ -578,18 +578,22 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<button class="font-down">A&minus;</button>
-		<button class="font-reset primary">A</button>
-		<button class="font-up">A+</button>
+		<div class="font-control">
+			<button class="font-down">A&minus;</button>
+			<button class="font-reset primary">A</button>
+			<button class="font-up">A+</button>
+		</div>
 
 		<p>
 			<strong>Example:</strong>
 		</p>
 
 <pre>
-&lt;button class="font-down"&gt;A&minus;&lt;/button&gt;
-&lt;button class="font-reset primary"&gt;A&lt;/button&gt;
-&lt;button class="font-up"&gt;A+&lt;/button&gt;
+&lt;div class="font-control"&gt;
+	&lt;button class="font-down"&gt;A&minus;&lt;/button&gt;
+	&lt;button class="font-reset primary"&gt;A&lt;/button&gt;
+	&lt;button class="font-up"&gt;A+&lt;/button&gt;
+&lt;/div&gt;
 </pre>
 
 	</div>

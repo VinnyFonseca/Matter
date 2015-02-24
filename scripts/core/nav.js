@@ -54,5 +54,5 @@ function initNav() {
 	});
 
 
-	if (config.application.debug) console.log("Init :: Navigation");
+	if (config.application.debug) console.log("System :: Navigation");
 }

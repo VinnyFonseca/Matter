@@ -63,7 +63,7 @@ function initCookies() {
         var b = 0, c = "warning", d = "Matter uses cookies to give you a better experience. By continuing to browse you are accepting our <a href='#' target='_blank'>Terms &amp; Conditions</a>.";
         notify(d, c, b);
     }
-    config.application.debug && console.log("Init :: Cookie System");
+    config.application.debug && console.log("System :: Cookie System");
 }
 
 function loadScript(a, b) {
@@ -101,7 +101,7 @@ function initSVGs() {
             "undefined" != typeof b && (e = e.attr("id", b)), "undefined" != typeof c && (e = e.attr("class", c + " replaced-svg")), 
             e = e.removeAttr("xmlns:a"), a.replaceWith(e);
         }, "xml");
-    }), config.application.debug && console.log("Init :: SVG Injection"));
+    }), config.application.debug && console.log("System :: SVG Injection"));
 }
 
 function URLQueryObject() {
@@ -115,16 +115,16 @@ function URLQueryObject() {
 }
 
 function dataRequest(a, b, c) {
-    config.application.debug && console.log("AJAX :: Request"), request = $.ajax({
+    config.application.debug && console.log("AJAX ~~ Request"), request = $.ajax({
         url: a,
         type: b,
         data: "POST" == b ? data : "",
         dataType: "JSON",
         success: function(a) {
-            config.application.debug && console.log("AJAX :: Success"), "undefined" != typeof c && c(a);
+            config.application.debug && console.log("AJAX ~~ Success"), "undefined" != typeof c && c(a);
         },
-        error: function(a, b, c) {
-            config.application.debug && console.log("AJAX :: Error"), config.application.debug && console.log(a, b, c, a.statusText);
+        error: function() {
+            config.application.debug && console.log("AJAX ~~ Error");
         }
     });
 }
@@ -148,7 +148,7 @@ function initTables() {
                 n.children("tbody").append(b);
             });
         }
-    }), config.application.debug && console.log("Init :: Tables");
+    }), config.application.debug && console.log("System :: Tables");
 }
 
 function initLinks() {
@@ -164,7 +164,7 @@ function initLinks() {
                 anchorClicked = !1;
             }
         }), !1;
-    }), config.application.debug && console.log("Init :: Links");
+    }), config.application.debug && console.log("System :: Links");
 }
 
 function scrollProgress() {
@@ -213,29 +213,39 @@ function buildDropdowns(a) {
 }
 
 function initDropdowns() {
-    $("select").each(function(a) {
+    $("select").length && ($("select").each(function(a) {
         buildDropdowns(a);
     }), $(window).on("scroll", function() {
         var a = $(".dropdown-wrapper.active"), b = a.find(".dropdown");
         a.length && pageBottom >= a.offset().top + b.height() + 55 ? b.removeClass("bound").addClass("default") : b.removeClass("default").addClass("bound");
-    }), config.application.debug && console.log("Form :: Dropdowns");
+    }), config.application.debug && console.log("Form :: Dropdowns"));
 }
 
-function loadFileInputs(a) {
-    var b = $(".multifile-wrapper"), c = b.length, d = $(".multi-limit"), e = a - b.find(".loaded").length, f = (1 == e ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(), 
-    '<div class="multifile-wrapper mobile-hide last">						<input type="file" id="file[' + c + ']" name="file[' + c + ']" />						<div class="fakefile">							<div class="button primary fake-upload">Choose File</div>							<div class="file-result">No file chosen</div>							<div class="button primary fake-close">&times;</div>						</div>					</div>');
-    d.html(e), b.each(function(b) {
-        var d = $(this), e = d.find(".file-result");
-        d.find("input").attr("id", "file[" + b + "]").attr("name", "file[" + b + "]"), d.off("click").on("click", ".fake-upload", function() {
-            d.find("input").trigger("click");
-        }).on("click", ".fake-close", function() {
-            c != a || $(".multifile-wrapper.last").length || $(f).insertAfter($(".multifile-wrapper").eq(c - 1)), 
-            d.remove(), loadFileInputs(a);
-        }).off("change").on("change", "input", function() {
-            var g = $(this).val().replace("C:\\fakepath\\", "");
-            e.html(g).addClass("loaded"), a > c && $(f).insertAfter(d), loadFileInputs(a), c > b && d.removeClass("last");
+function loadFileInputs() {
+    if ($(".file-wrapper").length && ($(".file-wrapper:not('.last')").each(function() {
+        var a = $(this), b = a.find("input"), c = a.find(".fake-upload"), d = a.find(".file-result");
+        c.on("click", function() {
+            b.trigger("click");
+        }), b.on("change", function() {
+            var a = $(this).val().replace("C:\\fakepath\\", "");
+            d.html(a).addClass("loaded");
         });
-    }), config.application.debug && console.log("Form :: File Inputs");
+    }), config.application.debug && console.log("Form :: File Upload")), $(".multifile-wrapper").length) {
+        var a = $(".multifile-wrapper"), b = a.length, c = config.forms.uploadlimit, d = $(".multi-limit"), e = c - a.find(".loaded").length, f = (1 == e ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(), 
+        '<div class="multifile-wrapper mobile-hide last">							<input type="file" id="file[' + b + ']" name="file[' + b + ']" />							<div class="fakefile">								<div class="button primary fake-upload">Choose File</div>								<div class="file-result">No file chosen</div>								<div class="button primary fake-close">&times;</div>							</div>						</div>');
+        d.html(e), a.each(function(a) {
+            var d = $(this), e = d.find(".file-result");
+            d.find("input").attr("id", "file[" + a + "]").attr("name", "file[" + a + "]"), d.off("click").on("click", ".fake-upload", function() {
+                d.find("input").trigger("click");
+            }).on("click", ".fake-close", function() {
+                b != c || $(".multifile-wrapper.last").length || $(f).insertAfter($(".multifile-wrapper").eq(b - 1)), 
+                d.remove(), loadFileInputs(c);
+            }).off("change").on("change", "input", function() {
+                var g = $(this).val().replace("C:\\fakepath\\", "");
+                e.html(g).addClass("loaded"), c > b && $(f).insertAfter(d), loadFileInputs(c), b > a && d.removeClass("last");
+            });
+        }), config.application.debug && console.log("Form :: Multiple File Upload");
+    }
 }
 
 function initNav() {
@@ -261,7 +271,7 @@ function initNav() {
         $("header").toggleClass("active");
     }), $("html").on("click", function(a) {
         $(a.target).closest("header").length || $("header").removeClass("active");
-    }), config.application.debug && console.log("Init :: Navigation");
+    }), config.application.debug && console.log("System :: Navigation");
 }
 
 function initValidation() {
@@ -322,7 +332,7 @@ function initValidation() {
             notify("The date you entered is not valid.", e, f));
         }
     }
-    config.forms.validation && ($("input[data-validation='password']").on("keyup", function() {
+    config.forms.validation && $("[data-validation]").length && ($("input[data-validation='password']").on("keyup", function() {
         var a = $(this), c = a.attr("data-validation"), d = a.val();
         b(a, c, d);
     }), $("[required]").on("keyup", function() {
@@ -337,7 +347,7 @@ function initValidation() {
 }
 
 function initAutocomplete() {
-    $("[data-autocomplete]").each(function() {
+    $("[data-autocomplete]").length && ($("[data-autocomplete]").each(function() {
         function a(a) {
             function d(a) {
                 var b = $(a).val();
@@ -375,21 +385,23 @@ function initAutocomplete() {
         var b = $(this), c = 0, d = b.data("autocomplete"), e = !1;
         b.append("<ul></ul>"), dataRequest(d, "GET", a);
         var f = b.children("input"), g = b.children("ul");
-    }), config.application.debug && console.log("Init :: Autocomplete");
+    }), config.application.debug && console.log("Widget :: Autocomplete"));
 }
 
 function initFontSizeControls() {
-    var a = 10, b = a, c = config.accessibility.font.range;
-    null === cookieSystem.get("fontSize") && cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), 
-    $("html").css("font-size", b + "px"), $(".font-up").click(function() {
-        a + c > b && b++, cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), 
-        $("html").css("font-size", b + "px");
-    }), $(".font-reset").click(function() {
-        b = a, cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), $("html").css("font-size", b + "px");
-    }), $(".font-down").click(function() {
-        b > a - c && b--, cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), 
-        $("html").css("font-size", b + "px");
-    }), config.application.debug && console.log("Init :: Font Size Controls");
+    if ($(".font-control").length) {
+        var a = 10, b = a, c = config.accessibility.font.range;
+        null === cookieSystem.get("fontSize") && cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), 
+        $("html").css("font-size", b + "px"), $(".font-up").click(function() {
+            a + c > b && b++, cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), 
+            $("html").css("font-size", b + "px");
+        }), $(".font-reset").click(function() {
+            b = a, cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), $("html").css("font-size", b + "px");
+        }), $(".font-down").click(function() {
+            b > a - c && b--, cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), 
+            $("html").css("font-size", b + "px");
+        }), config.application.debug && console.log("Widget :: Font Size Controls");
+    }
 }
 
 function initialize() {
@@ -457,7 +469,7 @@ function buildMap() {
     window.google && google.maps && (initialize(), google.maps.event.addDomListener(window, "resize", function() {
         var a = map.getCenter();
         google.maps.event.trigger(map, "resize"), map.setCenter(a);
-    }), config.application.debug && console.log("Init ~~ Map"));
+    }), config.application.debug && console.log("Widget ~~ Map"));
 }
 
 function initMap() {
@@ -494,14 +506,14 @@ function notify(a, b, c) {
 }
 
 function initNotifications() {
-    $("[data-notification]").on("click", function() {
+    $("[data-notification]").length && ($("[data-notification]").on("click", function() {
         var a = $(this).attr("data-message"), b = $(this).attr("data-tone"), c = parseInt($(this).attr("data-delay"));
         notify(a, b, c);
-    }), config.application.debug && console.log("Init :: Notifications");
+    }), config.application.debug && console.log("Widget :: Notifications"));
 }
 
 function initOverlays() {
-    $("[data-overlay]").each(function() {
+    $("[data-overlay]").length && ($("[data-overlay]").each(function() {
         var a = $(this), b = $("#" + a.data("overlay"));
         a.on("click", function() {
             b.hasClass("active") ? b.removeClass("active") : b.addClass("active");
@@ -512,18 +524,18 @@ function initOverlays() {
         }), b.children(".modal").on("click", function(a) {
             $(a.target).closest(".overlay-close").length || a.stopPropagation();
         });
-    }), config.application.debug && console.log("Init :: Overlays");
+    }), config.application.debug && console.log("Widget :: Overlays"));
 }
 
 function initSearch() {
-    $("[data-search]").each(function(a) {
+    $("[data-search]").length && ($("[data-search]").each(function(a) {
         function b(a) {
             function b(b) {
                 for (var c = [], d = 0; d < a.Items.length; d++) {
                     var e = a.Items[d], f = e[b];
                     if (f instanceof Array) for (var g = 0; g < f.length; g++) $.inArray(f[g], c) < 0 && c.push(f[g]); else $.inArray(f, c) < 0 && c.push(f);
                 }
-                $("select[data-search-subject='" + b + "']").append('<option class="placeholder">' + b + "...</option>"), 
+                $("select[data-search-subject='" + b + "']").append('<option class="placeholder">Select ' + b.toLowerCase() + "...</option>"), 
                 c.sort();
                 for (var h in c) $("select[data-search-subject='" + b + "']").append("<option>" + c[h] + "</option>");
             }
@@ -553,26 +565,7 @@ function initSearch() {
         c.append(f);
         var h = c.find("ul.tagcloud");
         dataRequest(d, "GET", b);
-    }), config.application.debug && console.log("Init :: Unified Search");
-}
-
-function animate(a) {
-    var b = new Date(), c = setInterval(function() {
-        var d = new Date() - b, e = d / a.duration;
-        e > 1 && (e = 1);
-        var f = a.delta(e);
-        a.step(f), 1 == e && (clearInterval(c), animEndCallback());
-    }, a.delay);
-}
-
-function quad(a) {
-    return Math.pow(a, 2);
-}
-
-function makeEaseOut(a) {
-    return function(b) {
-        return 1 - a(1 - b);
-    };
+    }), config.application.debug && console.log("Widget :: Unified Search"));
 }
 
 function getOffset(a) {
@@ -730,7 +723,7 @@ function initSliders() {
 }
 
 function initTagClouds() {
-    $("[data-tagcloud]").each(function(a) {
+    $("[data-tagcloud]").length && ($("[data-tagcloud]").each(function(a) {
         function b() {
             e = [];
             for (var a = 0; a < i.children(".tag").length; a++) e.push(i.children(".tag").eq(a).data("tag"));
@@ -753,11 +746,11 @@ function initTagClouds() {
             $(this).remove(), i.children(".tag").length > 0 ? i.addClass("active") : i.removeClass("active"), 
             b();
         });
-    }), config.application.debug && console.log("Init :: Tag Clouds");
+    }), config.application.debug && console.log("Widget :: Tag Clouds"));
 }
 
 function initTooltips() {
-    $("[data-tooltip]").each(function() {
+    $("[data-tooltip]").length && ($("[data-tooltip]").each(function() {
         var a = $(this), b = a.data("tooltip"), c = $(".tooltip");
         config.application.touch || a.on("mousemove", function(a) {
             switch (c.html(b).addClass("active"), config.tooltip.position) {
@@ -806,11 +799,11 @@ function initTooltips() {
                 top: -200
             });
         });
-    }), config.application.debug && console.log("Init :: Tooltips");
+    }), config.application.debug && console.log("Widget :: Tooltips"));
 }
 
 function initTwitter() {
-    $("#" + config.twitter.domID).length && (twitterFetcher.fetch(config.twitter), config.application.debug && console.log("Init :: Twitter"));
+    $("#" + config.twitter.domID).length && (twitterFetcher.fetch(config.twitter), config.application.debug && console.log("Widget :: Twitter"));
 }
 
 !function(a, b) {
@@ -6009,14 +6002,6 @@ $(document).ready(initFramework), $(window).on("load", function() {
     }), $("form").on("submit", function() {
         return config.application.debug ? (console.log("Intentional: Form submit blocked."), 
         !1) : void 0;
-    }), $(".file-wrapper:not('.last')").each(function() {
-        var a = $(this), b = a.find("input"), c = a.find(".fake-upload"), d = a.find(".file-result");
-        c.on("click", function() {
-            b.trigger("click");
-        }), b.on("change", function() {
-            var a = $(this).val().replace("C:\\fakepath\\", "");
-            d.html(a).addClass("loaded");
-        });
     });
 });
 

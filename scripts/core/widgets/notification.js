@@ -65,13 +65,15 @@ function notify(message, tone, delay) {
 }
 
 function initNotifications() {
-	$("[data-notification]").on("click", function() {
-		var message = $(this).attr("data-message"),
-			tone = $(this).attr("data-tone"),
-			delay = parseInt($(this).attr("data-delay"));
+	if ( $("[data-notification]").length ) {
+		$("[data-notification]").on("click", function() {
+			var message = $(this).attr("data-message"),
+				tone = $(this).attr("data-tone"),
+				delay = parseInt($(this).attr("data-delay"));
 
-		notify(message, tone, delay);
-	});
+			notify(message, tone, delay);
+		});
 
-	if (config.application.debug) console.log("Init :: Notifications");
+		if (config.application.debug) console.log("Widget :: Notifications");
+	}
 }
