@@ -175,10 +175,10 @@ function scrollProgress() {
 function initFramework() {
     isWideScreen = $(window).width() > 768, Modernizr.touch && (FastClick.attach(document.body), 
     $(".map-wrapper").addClass("map-mobile")), initKonami(alertKonami), initSVGs(), 
-    initCookies(), initLinks(), initNav(), initTables(), scrollProgress(), initFontSizeControls(), 
-    initNotifications(), initTagClouds(), initOverlays(), initTooltips(), initSliders(), 
-    initTwitter(), initMap(), initDropdowns(), loadFileInputs(3, "file"), initValidation(), 
-    config.application.debug && console.log("Done •• Matter");
+    initCookies(), initLinks(), initNav(), initTables(), scrollProgress(), initAutocomplete(), 
+    initTagClouds(), initSearch(), initOverlays(), initNotifications(), initTooltips(), 
+    initSliders(), initMap(), initTwitter(), initFontSizeControls(), initDropdowns(), 
+    loadFileInputs(config.forms.uploadlimit), initValidation(), config.application.debug && console.log("Done •• Matter");
 }
 
 function buildDropdowns(a) {
@@ -221,22 +221,21 @@ function initDropdowns() {
     }), config.application.debug && console.log("Form :: Dropdowns");
 }
 
-function loadFileInputs(a, b) {
-    var c = $(".multifile-wrapper"), d = c.length, e = $(".multi-limit"), f = a - d, g = (1 == f ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(), 
-    '<div class="multifile-wrapper mobile-hide last">						<input type="file" id="' + b + "[" + d + ']" name="' + b + "[" + d + ']" />						<div class="fakefile">							<div class="button primary fake-upload">Choose File</div>							<div class="file-result">No file chosen</div>							<div class="button primary fake-close">&times;</div>						</div>					</div>');
-    c.each(function(c) {
-        var e = $(this), f = e.find(".file-result");
-        e.find("input").attr("id", b + "[" + c + "]").attr("name", b + "[" + c + "]"), e.off("click").on("click", ".fake-upload", function() {
-            e.find("input").trigger("click");
+function loadFileInputs(a) {
+    var b = $(".multifile-wrapper"), c = b.length, d = $(".multi-limit"), e = a - b.find(".loaded").length, f = (1 == e ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(), 
+    '<div class="multifile-wrapper mobile-hide last">						<input type="file" id="file[' + c + ']" name="file[' + c + ']" />						<div class="fakefile">							<div class="button primary fake-upload">Choose File</div>							<div class="file-result">No file chosen</div>							<div class="button primary fake-close">&times;</div>						</div>					</div>');
+    d.html(e), b.each(function(b) {
+        var d = $(this), e = d.find(".file-result");
+        d.find("input").attr("id", "file[" + b + "]").attr("name", "file[" + b + "]"), d.off("click").on("click", ".fake-upload", function() {
+            d.find("input").trigger("click");
         }).on("click", ".fake-close", function() {
-            d != a || $(".multifile-wrapper.last").length || $(g).insertAfter($(".multifile-wrapper").eq(d - 1)), 
-            e.remove(), loadFileInputs(a, b);
+            c != a || $(".multifile-wrapper.last").length || $(f).insertAfter($(".multifile-wrapper").eq(c - 1)), 
+            d.remove(), loadFileInputs(a);
         }).off("change").on("change", "input", function() {
-            var h = $(this).val().replace("C:\\fakepath\\", "");
-            f.html(h).addClass("loaded"), a > d && $(g).insertAfter(e), loadFileInputs(a, b), 
-            d > c && e.removeClass("last");
+            var g = $(this).val().replace("C:\\fakepath\\", "");
+            e.html(g).addClass("loaded"), a > c && $(f).insertAfter(d), loadFileInputs(a), c > b && d.removeClass("last");
         });
-    }), e.html(f), config.application.debug && console.log("Form :: File Inputs");
+    }), config.application.debug && console.log("Form :: File Inputs");
 }
 
 function initNav() {
@@ -335,6 +334,48 @@ function initValidation() {
         var a = $(this), b = a.attr("data-validation"), d = a.val();
         c(a, b, d);
     }), config.application.debug && console.log("Form :: Validation"));
+}
+
+function initAutocomplete() {
+    $("[data-autocomplete]").each(function() {
+        function a(a) {
+            function d(a) {
+                var b = $(a).val();
+                b.length > 0 ? g.addClass("active").unhighlight().highlight(b) : g.unhighlight().removeClass("active"), 
+                i.each(function() {
+                    $(this).text().search(new RegExp(b, "i")) < 0 ? $(this).removeClass("selected") : $(this).addClass("selected");
+                }).on("click", function() {
+                    f.val($(this).text()), g.unhighlight().removeClass("active");
+                });
+            }
+            for (var h = 0; h < a.length; h++) b.children("ul").append("<li>" + a[h] + "</li>");
+            var i = g.children("li");
+            g.on("mouseenter", function() {
+                e = !0;
+            }).on("mouseleave", function() {
+                e = !1;
+            }), f.on("keydown", function(a) {
+                if (g.hasClass("active")) {
+                    var b = g.children("li.selected");
+                    38 === a.keyCode && c > 0 && (i.removeClass("active"), c--, b.eq(c).addClass("active"), 
+                    c % 10 === 9 && g.scrollTop(10 * (i.outerHeight() - 1) * ((c - 9) / 10))), 40 === a.keyCode && c < b.length - 1 && (i.removeClass("active"), 
+                    c++, b.eq(c).addClass("active"), c % 10 === 0 && g.scrollTop(10 * (i.outerHeight() - 1) * (c / 10))), 
+                    13 === a.keyCode && (f.val(g.children("li.active").text()).blur(), i.removeClass("active")), 
+                    9 === a.keyCode && (f.val(g.children("li.active").text()), i.removeClass("active")), 
+                    (8 === a.keyCode || 46 === a.keyCode) && (i.removeClass("active"), c = 0), 27 === a.keyCode && f.blur();
+                }
+            }).on("keyup", function() {
+                d(this);
+            }).on("focus", function() {
+                c = g.children("li.active").length ? c : 0, d(this);
+            }).on("blur", function() {
+                e === !1 && g.unhighlight().removeClass("active");
+            });
+        }
+        var b = $(this), c = 0, d = b.data("autocomplete"), e = !1;
+        b.append("<ul></ul>"), dataRequest(d, "GET", a);
+        var f = b.children("input"), g = b.children("ul");
+    }), config.application.debug && console.log("Init :: Autocomplete");
 }
 
 function initFontSizeControls() {
@@ -472,6 +513,47 @@ function initOverlays() {
             $(a.target).closest(".overlay-close").length || a.stopPropagation();
         });
     }), config.application.debug && console.log("Init :: Overlays");
+}
+
+function initSearch() {
+    $("[data-search]").each(function(a) {
+        function b(a) {
+            function b(b) {
+                for (var c = [], d = 0; d < a.Items.length; d++) {
+                    var e = a.Items[d], f = e[b];
+                    if (f instanceof Array) for (var g = 0; g < f.length; g++) $.inArray(f[g], c) < 0 && c.push(f[g]); else $.inArray(f, c) < 0 && c.push(f);
+                }
+                $("select[data-search-subject='" + b + "']").append('<option class="placeholder">' + b + "...</option>"), 
+                c.sort();
+                for (var h in c) $("select[data-search-subject='" + b + "']").append("<option>" + c[h] + "</option>");
+            }
+            function d(a) {
+                for (var b = [], c = 0, d = h.children(".tag[data-tag-subject='" + a + "']"); c < d.length; c++) b.push(d.eq(c).data("tag"));
+                e[a] = b, initSVGs(), console.log(e);
+            }
+            c.find("input[type='text']").on("keydown", function(a) {
+                if (9 === a.keyCode || 13 === a.keyCode) {
+                    var b = $(this).val();
+                    return "" !== b && (e.search = b), console.log(e), !1;
+                }
+            }), c.find("select[data-search-subject]").each(function(a) {
+                var c = $(this).data("search-subject");
+                b(c), $(this).on("change", function() {
+                    var b = $(this).val(), f = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-subject="' + c + '" data-tag="' + b + '"><span>' + b + "</span>" + g + "</li>";
+                    return "" !== b && ($.inArray(b, e[c]) < 0 ? h.addClass("active").append(f) : notify("This tag already exists.", "failure")), 
+                    d(c), !1;
+                });
+            }), h.on("click", ".tag", function() {
+                var a = $(this).data("tag-subject");
+                $(this).remove(), h.children(".tag").length > 0 ? h.addClass("active") : h.removeClass("active"), 
+                d(a);
+            }), initDropdowns();
+        }
+        var c = $(this), d = c.data("search"), e = [], f = '<ul class="tagcloud"></ul>', g = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">';
+        c.append(f);
+        var h = c.find("ul.tagcloud");
+        dataRequest(d, "GET", b);
+    }), config.application.debug && console.log("Init :: Unified Search");
 }
 
 function animate(a) {
@@ -649,31 +731,27 @@ function initSliders() {
 
 function initTagClouds() {
     $("[data-tagcloud]").each(function(a) {
-        var b = $(this), c = a, d = [], e = '<ul class="tagcloud" data-tag="tagcloud-' + c + '"></ul>', f = '<input type="hidden" class="tagcloud-result" data-tag="tagcloud-' + c + '">';
-        $(f).insertAfter(b), $(e).insertAfter(b);
-        var g = $(".tagcloud[data-tag='tagcloud-" + c + "']"), h = $("input[data-tag='tagcloud-" + c + "']");
-        b.on("keydown", function(a) {
+        function b() {
+            e = [];
+            for (var a = 0; a < i.children(".tag").length; a++) e.push(i.children(".tag").eq(a).data("tag"));
+            j.val(e), initSVGs();
+        }
+        var c = $(this), d = a, e = [], f = '<ul class="tagcloud" data-tag="tagcloud-' + d + '"></ul>', g = '<input type="hidden" class="tagcloud-result" data-tag="tagcloud-' + d + '">', h = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">';
+        $(g).insertAfter(c), $(f).insertAfter(c);
+        var i = $(".tagcloud[data-tag='tagcloud-" + d + "']"), j = $("input[data-tag='tagcloud-" + d + "']");
+        c.on("keydown", function(a) {
             if (9 === a.keyCode || 13 === a.keyCode) {
-                var c = b.val(), e = '<li class="tag" data-tag="' + c + '">' + c + "<span>✖</span></li>";
-                "" !== c && $.inArray(c, d) < 0 && g.addClass("active").append(e), $.inArray(c, d) >= 0 && notify("This tag already exists.", "failure"), 
-                d = [];
-                for (var f = 0; f < g.children(".tag").length; f++) d.push(g.children(".tag").eq(f).data("tag"));
-                return h.val(d), b.val("").focus(), g.on("click", ".tag", function() {
-                    $(this).remove(), g.children(".tag").length > 0 ? g.addClass("active") : g.removeClass("active");
-                }), !1;
+                var d = c.val(), f = '<li class="tag valign-middle" data-tag="' + d + '"><span>' + d + "</span>" + h + "</li>";
+                return "" !== d && $.inArray(d, e) < 0 && i.addClass("active").append(f), $.inArray(d, e) >= 0 && notify("This tag already exists.", "failure"), 
+                b(), c.val("").focus(), !1;
             }
         }).on("change", function() {
-            function a() {
-                d = [];
-                for (var a = 0; a < g.children(".tag").length; a++) d.push(g.children(".tag").eq(a).data("tag"));
-                h.val(d);
-            }
-            var c = b.val(), e = '<li class="tag" data-tag="' + c + '">' + c + "<span>✖</span></li>";
-            return console.log(c), "" !== c && $.inArray(c, d) < 0 && g.addClass("active").append(e), 
-            $.inArray(c, d) >= 0 && notify("This tag already exists.", "failure"), a(), g.on("click", ".tag", function() {
-                $(this).remove(), g.children(".tag").length > 0 ? g.addClass("active") : g.removeClass("active"), 
-                a();
-            }), !1;
+            var a = c.val(), d = '<li class="tag valign-middle" data-tag="' + a + '"><span>' + a + "</span>" + h + "</li>";
+            return "" !== a && $.inArray(a, e) < 0 && i.addClass("active").append(d), $.inArray(a, e) >= 0 && notify("This tag already exists.", "failure"), 
+            b(), !1;
+        }), i.on("click", ".tag", function() {
+            $(this).remove(), i.children(".tag").length > 0 ? i.addClass("active") : i.removeClass("active"), 
+            b();
         });
     }), config.application.debug && console.log("Init :: Tag Clouds");
 }
@@ -5851,7 +5929,8 @@ var config = {
         }
     },
     forms: {
-        validation: !0
+        validation: !0,
+        uploadlimit: 3
     },
     tables: {
         responsive: !0
@@ -5930,45 +6009,6 @@ $(document).ready(initFramework), $(window).on("load", function() {
     }), $("form").on("submit", function() {
         return config.application.debug ? (console.log("Intentional: Form submit blocked."), 
         !1) : void 0;
-    }), $(".autocomplete-wrapper").each(function() {
-        function a(a) {
-            function d(a) {
-                var b = $(a).val();
-                b.length > 0 ? g.addClass("active").unhighlight().highlight(b) : g.unhighlight().removeClass("active"), 
-                i.each(function() {
-                    $(this).text().search(new RegExp(b, "i")) < 0 ? $(this).removeClass("selected") : $(this).addClass("selected");
-                }).on("click", function() {
-                    f.val($(this).text()), g.unhighlight().removeClass("active");
-                });
-            }
-            for (var h = 0; h < a.length; h++) b.children("ul").append("<li>" + a[h] + "</li>");
-            var i = g.children("li");
-            g.on("mouseenter", function() {
-                e = !0;
-            }).on("mouseleave", function() {
-                e = !1;
-            }), f.on("keydown", function(a) {
-                if (g.hasClass("active")) {
-                    var b = g.children("li.selected");
-                    38 === a.keyCode && c > 0 && (i.removeClass("active"), c--, b.eq(c).addClass("active"), 
-                    c % 10 === 9 && g.scrollTop(10 * (i.outerHeight() - 1) * ((c - 9) / 10))), 40 === a.keyCode && c < b.length - 1 && (i.removeClass("active"), 
-                    c++, b.eq(c).addClass("active"), c % 10 === 0 && g.scrollTop(10 * (i.outerHeight() - 1) * (c / 10))), 
-                    13 === a.keyCode && (f.val(g.children("li.active").text()).blur(), i.removeClass("active"), 
-                    g.unhighlight().removeClass("active")), 9 === a.keyCode && (f.val(g.children("li.active").text()), 
-                    i.removeClass("active"), g.unhighlight().removeClass("active")), (8 === a.keyCode || 46 === a.keyCode) && (i.removeClass("active"), 
-                    c = 0), 27 === a.keyCode && (g.unhighlight().removeClass("active"), f.blur());
-                }
-            }).on("keyup", function() {
-                d(this);
-            }).on("focus", function() {
-                c = g.children("li.active").length ? c : 0, d(this);
-            }).on("blur", function() {
-                e === !1 && g.unhighlight().removeClass("active");
-            });
-        }
-        var b = $(this), c = 0, d = b.attr("data-url"), e = !1;
-        b.append("<ul></ul>"), dataRequest(d, "GET", a);
-        var f = b.children("input"), g = b.children("ul");
     }), $(".file-wrapper:not('.last')").each(function() {
         var a = $(this), b = a.find("input"), c = a.find(".fake-upload"), d = a.find(".file-result");
         c.on("click", function() {

@@ -375,7 +375,10 @@
 
 			<p class="emphasis mobile-show">Multiple file upload is not available in the mobile version. Please access the desktop version.</p>
 
-			<div class="multifile-info form-info">You've got <strong class="emphasis font-expanded multi-limit">0</strong> remaining upload<span class="plural">s</span>.</div>
+			<div class="multifile-info form-info">
+				You've got <strong class="emphasis font-expanded multi-limit">0</strong>
+				remaining upload<span class="plural">s</span>.
+			</div>
 
 			<div class="multifile-wrapper mobile-hide last">
 				<input type="file" />
@@ -386,6 +389,23 @@
 					<div class="button primary fake-close">&times;</div>
 				</div>
 			</div>
+
+<pre>
+&lt;div class="multifile-info form-info"&gt;
+	You've got &lt;strong class="emphasis font-expanded multi-limit"&gt;0&lt;/strong&gt;
+	remaining upload&lt;span class="plural"&gt;s&lt;/span&gt;.
+&lt;/div&gt;
+
+&lt;div class="multifile-wrapper mobile-hide last"&gt;
+	&lt;input type="file" /&gt;
+
+	&lt;div class="fakefile"&gt;
+		&lt;div class="button primary fake-upload"&gt;Choose File&lt;/div&gt;
+		&lt;div class="file-result"&gt;No file chosen&lt;/div&gt;
+		&lt;div class="button primary fake-close"&gt;&times;&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
 
 
 

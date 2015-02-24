@@ -54,15 +54,15 @@
 		</p>
 
 		<p>
-			Insert the example code below anywhere in your page, then define the URL for each autocomplete input on <code>data-url</code>. You can instantiate multiple autocomplete fields with different target URLs.
+			Insert the example code below anywhere in your page, then define the URL for each autocomplete input on <code>data-autocomplete</code>. You can instantiate multiple autocomplete fields with different target URLs.
 		</p>
 
 		<p>
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="autocomplete-wrapper" data-url="scripts/dev/autocomplete/sample.json">
-			<input type="text" placeholder="Type to search..." data-autocomplete="true" data-tagcloud="true">
+		<div class="autocomplete-wrapper" data-autocomplete="scripts/dev/autocomplete/autocomplete.json">
+			<input type="text" placeholder="Type to search...">
 		</div>
 
 		<p>
@@ -70,8 +70,8 @@
 		</p>
 
 <pre>
-&lt;div class="autocomplete-wrapper" <span class="emphasis">data-url="scripts/dev/autocomplete/sample.json"</span>&gt;
-	&lt;input type="text" placeholder="Type to search..." <span class="emphasis">data-autocomplete="true"</span>&gt;
+&lt;div class="autocomplete-wrapper" <span class="emphasis">data-url="scripts/dev/autocomplete/autocomplete.json"</span>&gt;
+	&lt;input type="text" placeholder="Type to search..."&gt;
 &lt;/div&gt;
 </pre>
 
@@ -137,63 +137,27 @@
 		</p>
 
 		<p>
-			Apply <code>data-search="true"</code> to a <strong>parent</strong> of a group of <code>input</code> or <code>select</code> elements. This will create a tag cloud after it, group all elements' outputs and build an array for analysis. You can then use the array to rebuild the search results.
+			Apply <code>data-search="<var>PATH-TO-JSON.json</var>"</code> to a <strong>parent</strong> of a group of <code>input</code> or <code>select</code> elements. This will create a tag cloud after it, group all elements' outputs and build an array for analysis. You can then use the array to rebuild the search results.
 		</p>
 
 		<p>
 			<strong>Demo:</strong>
 		</p>
 
-		<div data-search="true">
-			<input type="text" placeholder="Search...">
+		<div data-search="scripts/dev/autocomplete/search.json">
+			<!-- <div class="autocomplete-wrapper" data-autocomplete="scripts/dev/autocomplete/autocomplete.json"> -->
+				<input type="text" placeholder="Type to search...">
+			<!-- </div> -->
 
 			<div class="row">
 				<div class="column" data-span="4">
-					<select>
-						<option class="placeholder">Choose...</option>
-						<option>one</option>
-						<option>two</option>
-						<option>three</option>
-						<option>four</option>
-						<option>five</option>
-						<option>six</option>
-						<option>seven</option>
-						<option>eight</option>
-						<option>nine</option>
-						<option>ten</option>
-					</select>
+					<select data-search-subject="Categories"></select>
 				</div>
 				<div class="column" data-span="4">
-					<select>
-						<option class="placeholder">Choose...</option>
-						<option>one</option>
-						<option>two</option>
-						<option>three</option>
-						<option>four</option>
-						<option>five</option>
-						<option>six</option>
-						<option>seven</option>
-						<option>eight</option>
-						<option>nine</option>
-						<option>ten</option>
-					</select>
-
+					<select data-search-subject="Tags"></select>
 				</div>
 				<div class="column" data-span="4">
-					<select>
-						<option class="placeholder">Choose...</option>
-						<option>one</option>
-						<option>two</option>
-						<option>three</option>
-						<option>four</option>
-						<option>five</option>
-						<option>six</option>
-						<option>seven</option>
-						<option>eight</option>
-						<option>nine</option>
-						<option>ten</option>
-					</select>
-
+					<select data-search-subject="Type"></select>
 				</div>
 			</div>
 		</div>
@@ -203,8 +167,7 @@
 		</p>
 
 <pre>
-&lt;input type="text" placeholder="Type and press Enter to add to the tag cloud" <span class="emphasis">data-tagcloud="true"</span>&gt;
-&lt;select <span class="emphasis">data-tagcloud="true"</span>&gt;&lt;/select&gt;
+
 </pre>
 
 

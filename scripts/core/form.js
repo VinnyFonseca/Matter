@@ -102,6 +102,7 @@ function initDropdowns() {
 		buildDropdowns(i);
 	});
 
+	// Detect dropdown window fit
 
 	$(window).on("scroll", function() {
 		var el = $(".dropdown-wrapper.active"),
@@ -120,14 +121,14 @@ function initDropdowns() {
 
 
 
-function loadFileInputs(inputLimit, inputName) {
+function loadFileInputs(inputLimit) {
 	var el = $(".multifile-wrapper"),
 		inputCount = el.length,
 		limitElement = $(".multi-limit"),
-		currentCount = inputLimit - inputCount,
+		currentCount = inputLimit - el.find(".loaded").length,
 		isSingular = currentCount == 1 ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(),
 		newInput = '<div class="multifile-wrapper mobile-hide last">\
-						<input type="file" id="' + inputName + "[" + inputCount + "]" + '" name="' + inputName + "[" + inputCount + "]" + '" />\
+						<input type="file" id="file' + "[" + inputCount + "]" + '" name="file' + "[" + inputCount + "]" + '" />\
 						<div class="fakefile">\
 							<div class="button primary fake-upload">Choose File</div>\
 							<div class="file-result">No file chosen</div>\
@@ -135,11 +136,13 @@ function loadFileInputs(inputLimit, inputName) {
 						</div>\
 					</div>';
 
+	limitElement.html(currentCount);
+
 	el.each(function(i) {
 		var el = $(this);
 		var resultElement = el.find(".file-result");
 
-		el.find("input").attr("id", inputName + "[" + i + "]").attr("name", inputName + "[" + i + "]");
+		el.find("input").attr("id", "file" + "[" + i + "]").attr("name", "file" + "[" + i + "]");
 
 		el
 		.off("click")
@@ -149,7 +152,7 @@ function loadFileInputs(inputLimit, inputName) {
 		.on("click", ".fake-close", function() {
 			if ( inputCount == inputLimit && !$(".multifile-wrapper.last").length ) $(newInput).insertAfter($(".multifile-wrapper").eq(inputCount - 1));
 			el.remove();
-			loadFileInputs(inputLimit, inputName);
+			loadFileInputs(inputLimit);
 		})
 		.off("change")
 		.on("change", "input", function() {
@@ -157,12 +160,10 @@ function loadFileInputs(inputLimit, inputName) {
 			resultElement.html(text).addClass('loaded');
 
 			if ( inputCount < inputLimit ) $(newInput).insertAfter(el);
-			loadFileInputs(inputLimit, inputName);
+			loadFileInputs(inputLimit);
 			if ( i < inputCount ) el.removeClass("last");
 		});
 	});
-
-	limitElement.html(currentCount);
 
 	if ( config.application.debug ) console.log("Form :: File Inputs");
 }
@@ -192,7 +193,7 @@ $(window).load(function() {
 
 
 
-	// Autocomplete
+	// Forms
 
 	$("form").on('submit', function() {
 		if ( config.application.debug ) {
@@ -200,111 +201,6 @@ $(window).load(function() {
 			return false;
 		}
 	});
-
-	$(".autocomplete-wrapper").each(function() {
-		var el = $(this),
-			itemIndex = 0,
-			url = el.attr("data-url"),
-			selecting = false;
-
-		el.append("<ul></ul>");
-		dataRequest(url, "GET", build);
-
-		var input = el.children("input"),
-			list = el.children("ul");
-
-		function build(data) {
-			for ( var i = 0; i < data.length; i++ ) {
-				el.children("ul").append("<li>" + data[i] + "</li>");
-			}
-
-			var item = list.children("li");
-
-			function showResults(target) {
-				var filter = $(target).val();
-
-				if ( filter.length > 0 ) {
-					list.addClass("active").unhighlight().highlight(filter);
-				} else {
-					list.unhighlight().removeClass("active");
-				}
-
-
-				item.each(function() {
-					var isValid = $(this).text().search(new RegExp(filter, "i")) < 0 ? $(this).removeClass("selected") : $(this).addClass("selected");
-				}).on("click", function() {
-					input.val($(this).text());
-					list.unhighlight().removeClass("active");
-				});
-			}
-
-			list.on("mouseenter", function() {
-				selecting = true;
-			}).on("mouseleave", function() {
-				selecting = false;
-			});
-
-			input
-				.on("keydown", function(event) {
-					if ( list.hasClass("active") ) {
-						// console.log(event.keyCode);
-
-						var selectedItem = list.children("li.selected");
-
-						if ( event.keyCode === 38 && itemIndex > 0 ) { // Arrow Down
-							item.removeClass("active");
-							itemIndex--;
-							selectedItem.eq(itemIndex).addClass("active");
-
-							// Self scroll up on every 9th item
-							if ( itemIndex % 10 === 9 )	list.scrollTop((item.outerHeight() - 1) * (10 * ((itemIndex - 9) / 10)));
-						}
-
-						if ( event.keyCode === 40 && itemIndex < selectedItem.length - 1 ) { // Arrow Up
-							item.removeClass("active");
-							itemIndex++;
-							selectedItem.eq(itemIndex).addClass("active");
-
-							// Self scroll down on every 10th item
-							if ( itemIndex % 10 === 0 )	list.scrollTop((item.outerHeight() - 1) * (10 * (itemIndex / 10)));
-						}
-
-						if ( event.keyCode === 13 ) { // Enter
-							input.val(list.children("li.active").text()).blur();
-							item.removeClass("active");
-							list.unhighlight().removeClass("active");
-						}
-						if ( event.keyCode === 9 ) { // Tab
-							input.val(list.children("li.active").text());
-							item.removeClass("active");
-							list.unhighlight().removeClass("active");
-						}
-
-						if ( event.keyCode === 8 || event.keyCode === 46 ) { // Backspace and Delete
-							item.removeClass("active");
-							itemIndex = 0;
-						}
-
-						if ( event.keyCode === 27 ) { // Escape
-							list.unhighlight().removeClass("active");
-							input.blur();
-						}
-					}
-
-				})
-				.on("keyup", function(event) {
-					showResults(this);
-				})
-				.on("focus", function() {
-					itemIndex = list.children("li.active").length ? itemIndex : 0;
-					showResults(this);
-				})
-				.on("blur", function() {
-					if ( selecting === false ) list.unhighlight().removeClass("active");
-				});
-		}
-	});
-
 
 
 

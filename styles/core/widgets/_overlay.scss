@@ -6,17 +6,18 @@
 	max-height: 0;
 	top: 0;
 	left: 0;
-	// background: url("../img/pixel-black.png");
 	background-color: rgba(0, 0, 0, 0.8);
 	overflow: hidden;
 	z-index: 9000;
-	@include transition(max-height 0.5s $animEasing);
+	@include transition(all 0.5s $animEasing);
+	@include transform(translate3d(0, 0, 0));
 
 	&.active {
 		max-height: 100%;
 
 		.modal {
 			@include opacity(1);
+			@include transform(translateY(0));
 		}
 	}
 
@@ -32,8 +33,10 @@
 		border-radius: $radius;
 		background: $cf;
 		@include opacity(0);
+		@include transform(translateY(-10%));
 		z-index: 9100;
-		@include transition(opacity 0.5s $animEasing);
+		@include transition(all 0.5s $animEasing);
+		@include transform(translate3d(0, 0, 0));
 
 		.overlay-close {
 			display: block;

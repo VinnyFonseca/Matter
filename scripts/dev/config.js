@@ -9,7 +9,8 @@ var config = {
 		}
 	},
 	forms: {
-		validation: true // bool: Toggles client-side validation.
+		validation: true, // bool: Toggles client-side validation.
+		uploadlimit: 3
 	},
 	tables: {
 		responsive: true // bool: Converts every row into a separate table on mobiles.

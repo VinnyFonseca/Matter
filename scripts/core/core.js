@@ -334,19 +334,21 @@ function initFramework() {
 
 	// Widgets Init
 
-	initFontSizeControls();
-	initNotifications();
+	initAutocomplete();
 	initTagClouds();
+	initSearch();
 	initOverlays();
+	initNotifications();
 	initTooltips();
 	initSliders();
-	initTwitter();
 	initMap();
+	initTwitter();
+	initFontSizeControls();
 
 	// Forms Init
 
 	initDropdowns();
-	loadFileInputs(3, "file");
+	loadFileInputs(config.forms.uploadlimit);
 	initValidation();
 
 	if (config.application.debug) console.log("Done •• Matter");

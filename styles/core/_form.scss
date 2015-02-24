@@ -648,7 +648,7 @@ optgroup {
 			width: 99%;
 			left: 0.5%;
 			border: 1px solid $cd;
-			@include box-shadow(0 3px 4px rgba(0, 0, 0, 0.15));
+			@include box-shadow(0 0 5px rgba(0, 0, 0, 0.25));
 			@include opacity(0);
 			@include transition-property(opacity, transform);
 			@include transition-duration($animDuration);
@@ -679,10 +679,10 @@ optgroup {
 				@include opacity(1);
 
 				&.default {
-					@include transform(translateY(-1px));
+					@include transform(translateY(0));
 				}
 				&.bound {
-					@include transform(translateY(1px));
+					@include transform(translateY(0));
 				}
 			}
 		}
@@ -764,15 +764,16 @@ optgroup {
 		margin-top: 0;
 		padding: 0;
 		width: 100%;
-		height: ($dropdownItemHeight * $dropdownItemCount) + px;
+		max-height: ($dropdownItemHeight * $dropdownItemCount) + px;
 		overflow: auto;
+		overflow-x: hidden;
 		z-index: 15;
 
 		.dropdown-item {
 			display: block;
 			position: relative;
 			padding: 9px 12px;
-			background: $cf;
+			background: #f2f2f2;
 			white-space: nowrap;
 			cursor: pointer;
 

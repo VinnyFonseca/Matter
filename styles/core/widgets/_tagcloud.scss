@@ -26,6 +26,7 @@
 		border-radius: $radius;
 		background: $brand1;
 		cursor: pointer !important;
+		white-space: nowrap;
 
 		&:hover {
 			background-color: $brand2;
@@ -34,10 +35,21 @@
 			background-color: $brand3;
 		}
 
-		span {
+		.icon {
 			display: inline-block;
-			margin-left: 5px;
-			@include font-size($fontSize / 1.15);
+			position: relative;
+			margin-left: 7px;
+			width: 12px;
+			height: 12px;
+			@include svgColor($cf);
+		}
+
+		@for $i from 0 through 4 {
+			&[data-tag-group="#{$i}"] {
+				// background-color: darken($brand1, percentage($i / 10));
+				// background-color: lighten($brand1, percentage($i / 10));
+				background-color: adjust-hue($brand1, -($i * 45));
+			}
 		}
 	}
 }

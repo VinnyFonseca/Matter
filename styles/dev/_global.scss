@@ -175,7 +175,7 @@ $sidebarWidth: 300px;
 		top: $headerHeight;
 		left: 0;
 		bottom: 0;
-		border-right: 1px solid $c5;
+		border-right: 1px solid $c3;
 		background-color: $c3;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 		z-index: 70;
@@ -249,18 +249,15 @@ $sidebarWidth: 300px;
 
 					&:hover {
 						border-top: 1px solid $brand1;
-						border-bottom: 1px solid $brand1;
 						background-color: $brand1;
 					}
 					&:active {
 						border-top: 1px solid $brand2;
-						border-bottom: 1px solid $brand2;
 						background-color: $brand2;
 					}
 					&.active {
 						color: $cf !important;
 						border-top: 1px solid $brand1;
-						border-bottom: 1px solid $brand1;
 						background-color: $brand1;
 					}
 				}
@@ -274,10 +271,7 @@ $sidebarWidth: 300px;
 	right: 10px;
 	bottom: 10px;
 	z-index: 80;
-
-	&.active {
-		@include opacity(0);
-	}
+	@include opacity(0.85);
 }
 
 
