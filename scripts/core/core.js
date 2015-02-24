@@ -131,12 +131,16 @@ function initKonami(callback) {
 // SVG Injection
 
 function initSVGs() {
-	if ( !$("html").hasClass("lt-ie9") ) {
+	if ( !$("html").hasClass("lt-ie9") && $('img.svg').length ) {
+		var svgCount = 0;
+
 		$('img.svg').each(function(i) {
 			var img = $(this),
 				imgID = img.attr('id'),
 				imgClass = img.attr('class'),
 				imgURL = img.attr('src');
+
+			svgCount = i;
 
 			$.get(imgURL, function(data) {
 				var svg = $(data).find('svg');
@@ -147,7 +151,7 @@ function initSVGs() {
 			}, 'xml');
 		});
 
-		if (config.application.debug) console.log("System :: SVG Injection");
+		if (config.application.debug) console.log("System :: SVG Injection @ " + svgCount + " images");
 	}
 }
 
@@ -209,7 +213,7 @@ function dataRequest(url, type, successFunction) {
 // Tables
 
 function initTables() {
-	if ( config.tables.responsive ) {
+	if ( config.tables.responsive && $("table").length ) {
 		$("table").each(function() {
 			var el = $(this),
 				id = this.id,
@@ -255,9 +259,9 @@ function initTables() {
 				});
 			}
 		});
-	}
 
-	if (config.application.debug) console.log("System :: Tables");
+		if (config.application.debug) console.log("System :: Tables");
+	}
 }
 
 

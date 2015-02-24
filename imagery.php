@@ -70,9 +70,7 @@
 		<img src="http://placehold.it/1280x720"
 			 sizes="(min-width: 40em) 80vw, 100vw"
 			 srcset="http://placehold.it/800x480 480w,
-					 http://placehold.it/1024x600 480w 2x,
 					 http://placehold.it/1024x600 768w,
-					 http://placehold.it/1280x720 768w 2x,
 					 http://placehold.it/1280x720 960w"
 			 alt="Placeholder Image." />
 

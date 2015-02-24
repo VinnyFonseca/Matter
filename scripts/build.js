@@ -94,14 +94,17 @@ function initKonami(a) {
 }
 
 function initSVGs() {
-    $("html").hasClass("lt-ie9") || ($("img.svg").each(function() {
-        var a = $(this), b = a.attr("id"), c = a.attr("class"), d = a.attr("src");
-        $.get(d, function(d) {
-            var e = $(d).find("svg");
-            "undefined" != typeof b && (e = e.attr("id", b)), "undefined" != typeof c && (e = e.attr("class", c + " replaced-svg")), 
-            e = e.removeAttr("xmlns:a"), a.replaceWith(e);
-        }, "xml");
-    }), config.application.debug && console.log("System :: SVG Injection"));
+    if (!$("html").hasClass("lt-ie9") && $("img.svg").length) {
+        var a = 0;
+        $("img.svg").each(function(b) {
+            var c = $(this), d = c.attr("id"), e = c.attr("class"), f = c.attr("src");
+            a = b, $.get(f, function(a) {
+                var b = $(a).find("svg");
+                "undefined" != typeof d && (b = b.attr("id", d)), "undefined" != typeof e && (b = b.attr("class", e + " replaced-svg")), 
+                b = b.removeAttr("xmlns:a"), c.replaceWith(b);
+            }, "xml");
+        }), config.application.debug && console.log("System :: SVG Injection @ " + a + " images");
+    }
 }
 
 function URLQueryObject() {
@@ -130,7 +133,7 @@ function dataRequest(a, b, c) {
 }
 
 function initTables() {
-    config.tables.responsive && $("table").each(function() {
+    config.tables.responsive && $("table").length && ($("table").each(function() {
         var a = $(this), b = this.id, c = document.getElementById(b), d = [], e = [];
         a.addClass("table-original");
         for (var f = 0; f < c.rows[0].cells.length; f++) e[f] = c.rows[0].cells[f].innerHTML.toLowerCase().replace(/ /gi, "");
@@ -148,7 +151,7 @@ function initTables() {
                 n.children("tbody").append(b);
             });
         }
-    }), config.application.debug && console.log("System :: Tables");
+    }), config.application.debug && console.log("System :: Tables"));
 }
 
 function initLinks() {
