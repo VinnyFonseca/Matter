@@ -102,7 +102,7 @@
 		<select data-tagcloud="true">
 			<option class="placeholder">Please select any option to add to the tag cloud</option>
 			<option>one</option>
-			<option>two (default)</option>
+			<option>two</option>
 			<option>three</option>
 			<option>four</option>
 			<option>five</option>
@@ -152,7 +152,7 @@
 					<select>
 						<option class="placeholder">Choose...</option>
 						<option>one</option>
-						<option>two (default)</option>
+						<option>two</option>
 						<option>three</option>
 						<option>four</option>
 						<option>five</option>
@@ -167,7 +167,7 @@
 					<select>
 						<option class="placeholder">Choose...</option>
 						<option>one</option>
-						<option>two (default)</option>
+						<option>two</option>
 						<option>three</option>
 						<option>four</option>
 						<option>five</option>
@@ -183,7 +183,7 @@
 					<select>
 						<option class="placeholder">Choose...</option>
 						<option>one</option>
-						<option>two (default)</option>
+						<option>two</option>
 						<option>three</option>
 						<option>four</option>
 						<option>five</option>
