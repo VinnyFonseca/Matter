@@ -32,7 +32,9 @@ function buildDropdowns(i) {
 		parentWrapper.find(".dropdown").append(item);
 	});
 
-	if ( type == "list" ) parentWrapper.find(".dropdown").height(((parentWrapper.find(".dropdown-item").outerHeight() + 1) * size) - 1);
+	if ( type == "list" ) {
+		parentWrapper.find(".dropdown").height(((parentWrapper.find(".dropdown-item").outerHeight() + 1) * size) - 1);
+	}
 
 
 	// Click Event
@@ -43,8 +45,6 @@ function buildDropdowns(i) {
 			dropdownItem = el.find(".dropdown-item"),
 			target = el.children(".dropdown-current"),
 			select = el.find("select");
-
-		el.addClass(select.attr("class") + "-wrapper");
 
 		el.off().on("click", function() {
 			if ( type == "drop" ) {

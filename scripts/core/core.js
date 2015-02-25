@@ -272,7 +272,9 @@ function initTables() {
 var anchorClicked;
 
 function initLinks() {
-	$("a[href^='#']").on("click", function(event) { // Smooth same page navigation for <a href="#target-anchor" class="anchor"></a> elements.
+	// Smooth same page navigation for <a href="#target-anchor" class="anchor"></a> elements.
+
+	$(document).on("click", "a[href^='#']", function(event) {
 		var link = $(this).attr("href");
 
 		event.preventDefault();
@@ -325,9 +327,9 @@ function initFramework() {
 
 	// Logs Legend
 
-	if (config.application.debug) console.log(":: DOM.ready");
-	if (config.application.debug) console.log("~~ Async");
-	if (config.application.debug) console.log("•• Complete");
+	if (config.application.debug) console.log(":: means DOM.ready");
+	if (config.application.debug) console.log("~~ means Async");
+	if (config.application.debug) console.log("•• means Complete");
 
 
 	// Easter Eggs Init
@@ -345,9 +347,6 @@ function initFramework() {
 
 	// Widgets Init
 
-	initAutocomplete();
-	initTagClouds();
-	initSearch();
 	initOverlays();
 	initNotifications();
 	initTooltips();
@@ -355,6 +354,12 @@ function initFramework() {
 	initMap();
 	initTwitter();
 	initFontSizeControls();
+
+	// Search Init
+
+	initSearch();
+	initAutocomplete();
+	initTagClouds();
 
 	// Forms Init
 

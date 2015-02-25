@@ -6,7 +6,7 @@
 			"Date": "2015-01-12T11:45:00.000Z",
 			"Type": "Event",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto provident ipsum, eligendi dicta vero odio at officiis, ad. Corporis a similique adipisci ea obcaecati ad aspernatur rem! Velit, aut architecto.",
 			"Categories": ["Formula Student"],
 			"Tags": ["Cost Judging", "Learn to Win"]
@@ -16,7 +16,7 @@
 			"Date": "2015-01-12T11:41:00.000Z",
 			"Type": "Event",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit nesciunt reprehenderit eos commodi quas laudantium magnam ullam hic accusamus voluptatibus nostrum sequi quae distinctio, molestiae impedit ex praesentium voluptate. Officiis!",
 			"Categories": ["Formula Student"],
 			"Tags": ["Design Judging", "Learn to Win"]
@@ -26,7 +26,7 @@
 			"Date": "2015-01-12T11:38:00.000Z",
 			"Type": "Event",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam animi excepturi, maxime facilis quaerat nesciunt, tempora, minus laboriosam reiciendis in soluta eveniet asperiores officia nihil esse fugit perspiciatis itaque odio!",
 			"Categories": ["Formula Student"],
 			"Tags": ["Project Management", "Learn to Win"]
@@ -36,7 +36,7 @@
 			"Date": "2015-01-12T11:34:00.000Z",
 			"Type": "Video",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, temporibus, libero! Sunt quidem vero minima magni provident voluptates vel, error autem aut veniam corporis odit fuga, commodi asperiores laudantium cum!",
 			"Categories": ["Formula Student"],
 			"Tags": ["Static Events", "Learn to Win"]
@@ -46,7 +46,7 @@
 			"Date": "2015-01-12T11:32:00.000Z",
 			"Type": "Event",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque atque ad ducimus non aperiam, culpa consectetur provident aut deleniti ut repellendus nulla tempora deserunt. Voluptatum pariatur consequatur fuga non ut.",
 			"Categories": ["Formula Student"],
 			"Tags": ["Dynamic Events", "Learn to Win"]
@@ -56,7 +56,7 @@
 			"Date": "2015-01-12T09:39:00.000Z",
 			"Type": "Event",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure enim voluptates reiciendis fuga adipisci, illum ratione illo accusamus saepe nostrum sunt ea laudantium mollitia praesentium quas, consectetur officiis eius? Esse.",
 			"Categories": [],
 			"Tags": ["annual dinner"]
@@ -66,7 +66,7 @@
 			"Date": "2014-12-15T00:00:00.000Z",
 			"Type": "Site Tour and Company Visits",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex fugiat, dolor a enim qui nulla eos exercitationem laudantium quos. Provident perferendis, dolorem alias a impedit totam error numquam vel! Voluptates.",
 			"Categories": ["Manufacturing"],
 			"Tags": ["tour", "feature", "featured"]
@@ -76,47 +76,17 @@
 			"Date": "2014-12-14T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde dolores blanditiis obcaecati explicabo adipisci placeat vitae delectus in veritatis, aut. Aspernatur dolore corrupti aliquam est minus laudantium id distinctio optio!",
 			"Categories": ["Formula Student", "Combustion Engines and Fuels", "Automotive"],
 			"Tags": ["Isobel Pollock", "Bloodhound", "interview", "feature"]
-		}, {
-			"Id": null,
-			"Title": "The Institution of Mechanical Engineers\u0027 Annual Dinner 2014",
-			"Date": "2014-11-20T19:00:00.000Z",
-			"Type": "Event",
-			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
-			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam a quos omnis cupiditate dolorem rem quis perferendis velit at consequuntur, quaerat, sit officia! Labore accusantium laudantium porro reprehenderit, iste voluptatum.",
-			"Categories": [],
-			"Tags": ["dinner", "annual dinner", "Business and Management"]
-		}, {
-			"Id": null,
-			"Title": "Formula Student: Learn to Win  ",
-			"Date": "2014-10-31T09:00:00.000Z",
-			"Type": "Event",
-			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
-			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet beatae optio deleniti cum odit nemo minima a enim nulla laborum totam, sapiente sequi, tempore, maiores itaque porro sunt? Deleniti, ab!",
-			"Categories": ["Formula Student"],
-			"Tags": ["Learn to Win", "Business and Management"]
-		}, {
-			"Id": null,
-			"Title": "International Vehicle Aerodynamics Conference 2014",
-			"Date": "2014-10-14T09:00:00.000Z",
-			"Type": "Event",
-			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
-			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et tenetur quisquam, ut reiciendis perspiciatis eaque, iste veniam exercitationem ex porro praesentium optio at dolores mollitia voluptatum, hic, ad esse cupiditate!",
-			"Categories": ["Automotive"],
-			"Tags": ["Competition vehicle aerodynamics", "Computational fluid dynamics simulation", "Aerodynamics test methods and facilities", "Fundamental flow structures", "Onset flow turbulence", "Vehicle environment simulition", "Fluid structure interaction", "Aeroacoustics", "Tyre aerodynamics and modelling", "Vehicle internal environment", "Surface contamination", "Cooling flows and efficiency", "Handling and stability", "Drag reduction through design and technology", "Vehicle aerodynamic development"]
 		}, {
 			"Id": "3923457588001",
 			"Title": "Downstream Effects on F1 Vehicles",
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo magnam quaerat eligendi, assumenda, iusto recusandae nemo. Laboriosam nostrum aperiam perferendis assumenda optio quod explicabo qui doloremque non. Obcaecati magni, qui.",
 			"Categories": ["Aerospace"],
 			"Tags": ["Josh Newbon"]
@@ -126,7 +96,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut blanditiis molestias repudiandae ut quasi corporis illum alias ab aperiam consectetur dicta minus assumenda, magni, quos vitae. Eum laudantium et, impedit!",
 			"Categories": ["Automotive"],
 			"Tags": ["Steve Windsor", "Areodynamics"]
@@ -136,7 +106,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo, iure neque tenetur maxime debitis alias earum voluptate laboriosam, laudantium adipisci, fuga. Reiciendis voluptatum voluptas aut quia minus aspernatur dolorem velit!",
 			"Categories": [],
 			"Tags": ["Simon Huber", "Areodynamics"]
@@ -146,7 +116,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste nostrum deleniti repellat, quia omnis architecto alias. Architecto tenetur impedit voluptatum harum sed voluptatem perferendis dolores, delectus, ea, nesciunt quidem quos.",
 			"Categories": ["Automotive"],
 			"Tags": ["Mark Keating", "Areodynamics"]
@@ -156,7 +126,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum suscipit quas illum, possimus est dicta similique perferendis perspiciatis itaque modi error quasi ipsum, numquam nemo, ullam obcaecati! Consectetur, et, in?",
 			"Categories": [],
 			"Tags": ["Luke Roberts"]
@@ -166,7 +136,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti fugiat magni iste quidem quaerat. Labore delectus obcaecati sequi, aperiam enim soluta! Pariatur itaque, expedita error doloremque aspernatur voluptatem aut perferendis!",
 			"Categories": ["Automotive"],
 			"Tags": ["Alexey Vdovin", "Areodynamics"]
@@ -176,7 +146,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis facere animi provident molestiae modi voluptate alias, unde quam, voluptatibus maiores eveniet, eos vel autem? Repellendus alias eveniet, nam reprehenderit sint.",
 			"Categories": ["Automotive"],
 			"Tags": ["Abdessalem Bouferrouk", "Areodynamics"]
@@ -186,7 +156,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, molestiae, voluptas! Illo odio nihil similique! Harum, temporibus. Rerum enim at esse quasi! Commodi mollitia quos adipisci eius! Ratione, nihil, cupiditate!",
 			"Categories": ["Automotive"],
 			"Tags": ["Andreas Kremheller", "Areodynamics"]
@@ -196,7 +166,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda quasi suscipit at repellat ipsa ratione magnam, sequi, id voluptates hic, inventore vel. Ducimus nemo, veniam similique aliquid cum deserunt asperiores!",
 			"Categories": ["Automotive"],
 			"Tags": ["Felix Wittmeier"]
@@ -206,7 +176,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo est a dolorem quam non molestias nostrum quisquam sapiente quae, nihil, cum ullam omnis quod tempore architecto voluptatem! Iste, excepturi repudiandae!",
 			"Categories": [],
 			"Tags": ["Joao Carreia"]
@@ -216,7 +186,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum obcaecati incidunt omnis! Quos officiis magnam eum dolor, tempora dolorum a nostrum nesciunt non impedit voluptas ab dolore, delectus qui iste.",
 			"Categories": [],
 			"Tags": ["David Forbes"]
@@ -226,7 +196,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam a explicabo, eum consequatur pariatur quia fuga soluta! Libero velit, eveniet ex autem aliquid reiciendis facilis est maiores similique explicabo sequi.",
 			"Categories": [],
 			"Tags": ["Jeff Howell"]
@@ -236,7 +206,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id, cupiditate. Qui minima id excepturi animi ducimus laboriosam voluptatibus tempora, tenetur, iusto dignissimos suscipit saepe, illum quidem totam obcaecati voluptates vitae?",
 			"Categories": ["Automotive"],
 			"Tags": ["Lennert Sterken", "Areodynamics"]
@@ -246,7 +216,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non dolorum in accusamus illum natus debitis cum. Dolore itaque recusandae omnis odit deserunt debitis totam autem, accusantium, optio, rem maiores eveniet!",
 			"Categories": ["Automotive"],
 			"Tags": ["Sabine Bonitz"]
@@ -256,7 +226,7 @@
 			"Date": "2014-10-14T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor excepturi ab praesentium ratione aliquid. Corrupti doloremque voluptas iste reprehenderit autem nemo itaque omnis aperiam veritatis vel, adipisci fugiat illum, voluptate.",
 			"Categories": ["Automotive"],
 			"Tags": ["neil ashton", "Areodynamics"]
@@ -266,7 +236,7 @@
 			"Date": "2014-10-10T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis ipsa, placeat quisquam natus itaque cum exercitationem maiores veniam, dolorum quaerat velit est, animi nisi aut praesentium unde nam quidem veritatis.",
 			"Categories": ["Materials and Metals", "Manufacturing", "Engineering Heritage"],
 			"Tags": ["Isobel Pollock", "John wood", "Ironbridge Gorge Museum Trust", "Engineering Heritage Awards", "The Old Furnace", "Engineering Heritage Award", "feature"]
@@ -276,7 +246,7 @@
 			"Date": "2014-10-10T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus officia ut quos debitis tenetur recusandae. Doloribus illum quisquam laborum ipsa magni beatae, animi aperiam! Quisquam doloremque rerum optio illum ullam.",
 			"Categories": ["Engineering Heritage"],
 			"Tags": ["Engineering Heritage Awards"]
@@ -286,7 +256,7 @@
 			"Date": "2014-10-03T00:00:00.000Z",
 			"Type": "Interview",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, atque odit laboriosam vitae! A dignissimos, doloribus numquam saepe ipsa nesciunt nihil maxime, dicta reprehenderit aliquid sunt ipsum? Voluptates, dolores consequuntur!",
 			"Categories": ["Formula Student", "Automotive"],
 			"Tags": ["Business and Management", "Bechtel", "Automobile", "Aereodynamics", "Design Challenge 2014"]
@@ -296,7 +266,7 @@
 			"Date": "2014-09-24T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident atque ut neque delectus vero veniam ipsum quidem culpa esse illo inventore labore odio voluptatibus qui sunt, ducimus veritatis temporibus aperiam.",
 			"Categories": ["Automotive"],
 			"Tags": ["Awards", "feature"]
@@ -306,47 +276,27 @@
 			"Date": "2014-09-24T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. At vitae asperiores velit, dolorum facere natus odio facilis sequi error voluptatem, dicta aut unde quam maxime qui eaque laudantium voluptatibus! Omnis!",
 			"Categories": [],
 			"Tags": ["Awards", "featured", "feature"]
-		}, {
-			"Id": null,
-			"Title": "Gaseous Fuels for Road Vehicles",
-			"Date": "2014-09-11T09:00:00.000Z",
-			"Type": "Event",
-			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
-			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae error, nulla nemo iste placeat quibusdam natus quis esse ad, exercitationem sunt, aliquam? Expedita distinctio odit, consequatur voluptates, reiciendis minima et.",
-			"Categories": ["Automotive", "Combustion Engines and Fuels"],
-			"Tags": ["Liquefied petroleum gas", "Liquefied natural gas", "Shale gas/methane", "Dimethyl-ether", "Bio-methane", "Compressed natural gas", "Natural gas", "Hydrogen", "Alternative fuels"]
 		}, {
 			"Id": "3929990400001",
 			"Title": "Methane as a vehicle fuel",
 			"Date": "2014-09-11T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio sunt, alias tempora rerum veritatis, sit laudantium cumque perspiciatis, doloribus similique asperiores odio qui ipsum deserunt rem saepe quisquam quidem totam.",
 			"Categories": ["Combustion Engines and Fuels", "Automotive"],
 			"Tags": ["Matthias Maedge", "presentation", "Gaseous fuels"]
-		}, {
-			"Id": null,
-			"Title": "Building Information Modelling (BIM) for Manufacturing",
-			"Date": "2014-09-10T18:00:00.000Z",
-			"Type": "Event",
-			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
-			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet officiis expedita, ea laboriosam consectetur id iste possimus blanditiis exercitationem ipsa, alias dolorem, deserunt quasi debitis molestias temporibus minus dolorum asperiores!",
-			"Categories": ["Manufacturing", "Construction and Building Services"],
-			"Tags": ["Modelling", "Building Information Modeling", "BIM"]
 		}, {
 			"Id": "3945425881001",
 			"Title": "How Tata Steel is Implementing BIM",
 			"Date": "2014-09-10T16:52:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto itaque ullam aspernatur! Nulla est totam harum nemo esse, magni accusamus corporis, eum maiores repellat iure! Reiciendis et neque quasi non.",
 			"Categories": ["Manufacturing"],
 			"Tags": ["BIM"]
@@ -356,27 +306,17 @@
 			"Date": "2014-09-10T14:51:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis libero doloribus dicta mollitia cupiditate dolores fugiat ipsam ab natus ex, eius culpa tenetur voluptatum, at animi minima, neque accusamus corrupti.",
 			"Categories": ["Manufacturing"],
 			"Tags": ["BIM"]
-		}, {
-			"Id": null,
-			"Title": "Tidal Energy Lecture",
-			"Date": "2014-09-09T18:30:00.000Z",
-			"Type": "Event",
-			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
-			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt nobis eos itaque incidunt nisi maxime assumenda voluptas accusamus voluptatum tempora fugit hic facilis sint, natus, autem doloribus cum culpa porro!",
-			"Categories": ["Fluid Machinery"],
-			"Tags": ["UK government Policy and future support for wave and tidal energy"]
 		}, {
 			"Id": "3925419936001",
 			"Title": "Tidal Energy",
 			"Date": "2014-09-09T00:00:00.000Z",
 			"Type": "Video",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore saepe non a porro officiis voluptas expedita sit quia optio enim nisi distinctio, ea aliquam necessitatibus quis rem, magnam tenetur harum?",
 			"Categories": ["Environment", "Energy and Power"],
 			"Tags": ["lecture", "Dr George A Aggidis", "tidal energy"]
@@ -386,7 +326,7 @@
 			"Date": "2014-07-19T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae quaerat, accusamus laborum numquam rem voluptas aut adipisci, facilis! Aperiam accusantium magnam officia officiis quae ut, suscipit voluptas sunt culpa possimus?",
 			"Categories": ["Manufacturing"],
 			"Tags": ["warwick manufacturing group", "presentation", "Emma Rushforth", "smarter factories"]
@@ -396,7 +336,7 @@
 			"Date": "2014-07-11T00:00:00.000Z",
 			"Type": "Interview",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus laudantium reiciendis quibusdam commodi minus odit natus repellendus nulla facere qui veniam vero sequi doloremque, mollitia ipsa sunt aliquam, tempora esse!",
 			"Categories": ["Formula Student"],
 			"Tags": ["GL Noble Denton", "GlaxoSmithKline (GSK)", "Formula Student", "Energy, Environment and Sustainability", "External", "Education", "DG MOVE - The European Commission", "Formula Student 2014"]
@@ -406,7 +346,7 @@
 			"Date": "2014-07-11T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo eum, veritatis, quibusdam qui voluptatem corporis doloribus. Quaerat ea nemo, consequuntur aliquid adipisci itaque perferendis consectetur accusantium inventore labore asperiores dolores.",
 			"Categories": ["Formula Student", "Automotive"],
 			"Tags": ["Formula Student 2014"]
@@ -416,7 +356,7 @@
 			"Date": "2014-07-11T00:00:00.000Z",
 			"Type": "Case Study",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, ex quo culpa, quidem similique earum quia illo consectetur aperiam totam at necessitatibus blanditiis ipsam corrupti delectus iusto tempora expedita natus.",
 			"Categories": ["Automotive", "Formula Student"],
 			"Tags": ["Formula Student 2014"]
@@ -426,7 +366,7 @@
 			"Date": "2014-07-11T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, similique natus consequatur deleniti eaque ducimus vero, perspiciatis quis quisquam blanditiis eveniet libero, laboriosam incidunt nam deserunt quam a accusantium repellendus!",
 			"Categories": ["Formula Student"],
 			"Tags": ["Formula Student", "Formula Student 2014"]
@@ -436,7 +376,7 @@
 			"Date": "2014-07-11T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, architecto dicta dolorem. Voluptate voluptatem, alias natus repellat, assumenda dolor repudiandae ea distinctio, perferendis dolorem iste quod sint et praesentium atque.",
 			"Categories": ["Formula Student", "Automotive"],
 			"Tags": ["Formula Student 2014"]
@@ -446,7 +386,7 @@
 			"Date": "2014-07-11T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit laboriosam impedit delectus vero neque cupiditate tempore fugiat placeat. Tenetur doloribus dolor sapiente sequi eius consectetur enim, qui iure laborum alias.",
 			"Categories": ["Formula Student", "Automotive"],
 			"Tags": ["Formula Student 2014", "mira"]
@@ -456,7 +396,7 @@
 			"Date": "2014-07-11T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe dolor, non laborum possimus ad perspiciatis quas autem inventore sit ab sapiente optio vel necessitatibus pariatur magni aut quo facilis illo.",
 			"Categories": ["Automotive", "Formula Student"],
 			"Tags": ["Formula Student 2014"]
@@ -466,7 +406,7 @@
 			"Date": "2014-07-11T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores quidem sapiente deleniti, vel consequuntur possimus! Porro doloremque amet suscipit voluptas ducimus beatae alias, perferendis tenetur quidem libero ratione dicta ea!",
 			"Categories": ["Formula Student"],
 			"Tags": ["Formula Student 2014", "featured"]
@@ -476,27 +416,17 @@
 			"Date": "2014-07-11T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut aliquam distinctio dignissimos recusandae minus voluptate officiis hic sequi eveniet neque ullam corrupti, deserunt, voluptatibus mollitia et eius saepe doloribus animi.",
 			"Categories": ["Formula Student"],
 			"Tags": ["Formula Student 2014"]
-		}, {
-			"Id": null,
-			"Title": "Formula Student 2014",
-			"Date": "2014-07-09T08:00:00.000Z",
-			"Type": "Event",
-			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
-			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae totam ea repellat corporis amet nulla deserunt, autem quaerat in ex architecto illum tenetur repudiandae, assumenda veniam doloremque ullam iusto. Quidem.",
-			"Categories": ["Formula Student", "Automotive"],
-			"Tags": ["FS2014", "FS", "Formula Student", "Automobile"]
 		}, {
 			"Id": "3914092724001",
 			"Title": "2014 Presidential Inauguration Speech",
 			"Date": "2014-06-29T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi error nam exercitationem officiis, in odio amet molestias officia doloremque possimus sint repellendus eaque autem eveniet obcaecati, sapiente, maiores earum voluptatum.",
 			"Categories": ["Defence"],
 			"Tags": ["president", "lecture", "inauguration", "Mark Hunt"]
@@ -506,27 +436,17 @@
 			"Date": "2014-06-28T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem ratione maiores fuga, aliquid, tenetur sequi eligendi. Nesciunt culpa deserunt, facilis alias dignissimos eius aliquam ducimus omnis commodi dolor numquam. At!",
 			"Categories": ["Railway"],
 			"Tags": ["feature", "Railway Challenge"]
-		}, {
-			"Id": null,
-			"Title": "Advanced EOR 2014",
-			"Date": "2014-06-25T08:30:00.000Z",
-			"Type": "Event",
-			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
-			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam nulla iure nostrum aut similique qui temporibus harum enim asperiores sunt rem consequatur sapiente nihil repellat laudantium praesentium, voluptatibus obcaecati eaque.",
-			"Categories": ["Oil and Gas"],
-			"Tags": ["Chemical EOR", "The economics of EOR", "Low salinity EOR", "Implementing EOR", "EOR technologies", "CO2-EOR operations"]
 		}, {
 			"Id": "3921036089001",
 			"Title": "Supporting UK EOR projects",
 			"Date": "2014-06-25T00:00:00.000Z",
 			"Type": "Interview",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta saepe iusto iure libero rem placeat reiciendis explicabo veniam quaerat impedit quo dolorum iste enim accusamus excepturi quam laboriosam, cupiditate deleniti!",
 			"Categories": ["Oil and Gas"],
 			"Tags": ["Conference", "David Rutland", "presentation", "EOR"]
@@ -536,7 +456,7 @@
 			"Date": "2014-06-25T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro ducimus laboriosam libero magni inventore voluptate delectus dolore repudiandae ipsa, quaerat, adipisci minus quae ad labore corrupti a nihil unde ipsum.",
 			"Categories": ["Oil and Gas"],
 			"Tags": []
@@ -546,7 +466,7 @@
 			"Date": "2014-06-25T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, reiciendis autem aut repudiandae beatae possimus illo inventore, nostrum unde eaque quae iure neque quisquam odit consectetur officiis impedit, nihil blanditiis.",
 			"Categories": ["Oil and Gas"],
 			"Tags": []
@@ -556,7 +476,7 @@
 			"Date": "2014-06-25T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam eveniet impedit iste molestiae officiis veritatis ducimus at consequuntur. Eius quibusdam minus ad repudiandae fugit, facilis adipisci. Laudantium odio facere velit.",
 			"Categories": ["Energy and Power", "Oil and Gas", "Chemicals"],
 			"Tags": ["presentation", "Eric Delamaide", "EOR"]
@@ -566,7 +486,7 @@
 			"Date": "2014-06-25T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi sit veniam nesciunt! Optio non itaque blanditiis consectetur? Culpa fugiat dolores facilis nobis, beatae. Rerum aut cum, rem amet beatae, eveniet!",
 			"Categories": ["Oil and Gas"],
 			"Tags": ["EOR technologies", "EOR"]
@@ -576,27 +496,17 @@
 			"Date": "2014-06-25T00:00:00.000Z",
 			"Type": "Video",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, eligendi. Dolorum suscipit maiores cum atque praesentium ex, corrupti libero repellendus magni commodi nam, doloribus saepe. Veniam dolor porro voluptas natus.",
 			"Categories": ["Oil and Gas"],
 			"Tags": ["EOR technologies", "EOR"]
-		}, {
-			"Id": null,
-			"Title": "Smarter Factories",
-			"Date": "2014-06-19T00:00:00.000Z",
-			"Type": "Event",
-			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
-			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores voluptatem, maxime ratione reprehenderit consectetur adipisci minus recusandae quia asperiores, officiis eos natus voluptate corrupti quidem dolorem in animi. Quibusdam, maxime?",
-			"Categories": ["Manufacturing"],
-			"Tags": []
 		}, {
 			"Id": "3933974503001",
 			"Title": "Recent Developments in Advanced Materials",
 			"Date": "2014-06-19T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae reiciendis vel libero sequi ipsam dolor aliquam accusantium a minima recusandae dolore, ducimus blanditiis dolorem. Dolore quibusdam itaque earum laborum consequatur.",
 			"Categories": ["Materials and Metals", "Chemicals"],
 			"Tags": ["advanced materials", "Helen Meese", "presentation", "smarter factories"]
@@ -606,7 +516,7 @@
 			"Date": "2014-06-19T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti quae, delectus aperiam. Fugiat repudiandae perspiciatis corporis neque alias rem, aut provident blanditiis inventore suscipit magnam harum non saepe animi. At.",
 			"Categories": ["Manufacturing", "Materials and Metals", "Construction and Building Services"],
 			"Tags": ["Government", "Terry Scuoler", "presentation", "smarter factories"]
@@ -616,27 +526,17 @@
 			"Date": "2014-06-19T00:00:00.000Z",
 			"Type": "Presentation",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam officia omnis minima, odio aperiam vel, sed? Harum nisi, neque aspernatur illum, porro voluptate possimus numquam ullam ipsum deserunt, cum sint.",
 			"Categories": ["Manufacturing"],
 			"Tags": ["AMRC", "Ben Morgan", "presentation", "smarter factories"]
-		}, {
-			"Id": null,
-			"Title": "Formula Student MIRA Test Day 2014",
-			"Date": "2014-06-16T08:00:00.000Z",
-			"Type": "Event",
-			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
-			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore in quae, minus sapiente. Totam, corrupti quae pariatur. Suscipit totam sunt mollitia earum quam ipsum eum cum, placeat, aspernatur nemo exercitationem!",
-			"Categories": ["Formula Student", "Automotive"],
-			"Tags": ["FS2014", "FS", "Formula Student", "Automobile"]
 		}, {
 			"Id": "3891698202001",
 			"Title": "How do you start a career in automotive engineering?",
 			"Date": "2014-06-16T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus harum modi atque! Id velit dolores numquam aliquid vitae explicabo totam iure, laudantium debitis facere saepe non, neque et. Odit, similique!",
 			"Categories": ["Formula Student", "Automotive"],
 			"Tags": ["Formula Student 2014", "mira"]
@@ -646,7 +546,7 @@
 			"Date": "2014-06-16T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora eligendi nemo labore provident, ducimus, minus aliquid dolores laborum officia pariatur quibusdam distinctio natus! Distinctio explicabo veritatis culpa aut odit! Officia.",
 			"Categories": ["Formula Student"],
 			"Tags": ["Safety and Reliability", "Formula Student 2014", "mira", "teresa"]
@@ -656,7 +556,7 @@
 			"Date": "2014-06-16T00:00:00.000Z",
 			"Type": "News and Features",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur tempore quisquam excepturi cum sint impedit, maxime hic. Et modi nemo eos dolorem nisi tenetur animi impedit consectetur, veniam nam ducimus.",
 			"Categories": ["Formula Student", "Automotive"],
 			"Tags": ["Formula Student 2014", "mira"]
@@ -666,20 +566,10 @@
 			"Date": "2014-05-29T00:00:00.000Z",
 			"Type": "Interview",
 			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
+			"Image": "http://placehold.it/640x380",
 			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. At necessitatibus accusamus labore quisquam amet iure esse ullam expedita, quia voluptatum, debitis culpa eaque reprehenderit velit natus quas iusto repudiandae adipisci!",
 			"Categories": ["Fluid Machinery", "Formula Student"],
 			"Tags": ["Institution", "president", "interview"]
-		}, {
-			"Id": null,
-			"Title": "Engineering Heritage Awards",
-			"Date": "2014-02-01T00:00:00.000Z",
-			"Type": "Event",
-			"Url": "#",
-			"Image": "http://placehold.it/1280x720",
-			"Summary": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem assumenda at, excepturi, dicta voluptatem fugiat quaerat cum molestiae iure consequuntur modi. Quod numquam magnam accusamus autem hic neque voluptate. Laboriosam.",
-			"Categories": ["Engineering Heritage"],
-			"Tags": []
 		}
 	]
 }

@@ -156,15 +156,13 @@ function sliderInit(sliderId) {
 	var arrowPrev = sliderActive.find('.slider-arrow-prev');
 	var arrowNext = sliderActive.find('.slider-arrow-next');
 
-	if ( navArrows === true && isMultiSlide )
+	if ( navArrows === true && isMultiSlide ) arrows.show();
 
 
 
 	// Create Bullets
 
 	if ( navBullets === true && isMultiSlide ) {
-		arrows.show();
-
 		var navWrapperEl = '<div class="slider-nav"></div>';
 		sliderActive.append(navWrapperEl);
 
@@ -509,6 +507,6 @@ function initSliders() {
 			})
 			.find('.slider-container').css({ 'visibility': 'visible' });
 
-		if (config.application.debug) console.log("Init :: Sliders");
+		if (config.application.debug) console.log("Widget :: Sliders");
 	}
 }

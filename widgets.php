@@ -7,214 +7,8 @@
 
 		<div class="sidebar">
 			<div class="sidebar-trigger"></div>
-
 			<h3>Widgets</h3>
-
-			<ul>
-				<li>
-					<a class="active" href="#autocomplete">Autocompletion Engine</a>
-				</li>
-				<li>
-					<a href="#tagcloud">Tag Cloud</a>
-				</li>
-				<li>
-					<a href="#search">Unified Search</a>
-				</li>
-				<li>
-					<a href="#overlays">Overlays</a>
-				</li>
-				<li>
-					<a href="#notifications">Notifications</a>
-				</li>
-				<li>
-					<a href="#tooltips">Tooltips</a>
-				</li>
-				<li>
-					<a href="#slider">Slider</a>
-				</li>
-				<li>
-					<a href="#maps">Maps</a>
-				</li>
-				<li>
-					<a href="#twitter">Twitter</a>
-				</li>
-				<li>
-					<a href="#accessibility">Accessibility</a>
-				</li>
-			</ul>
 		</div>
-
-
-		<a href="#" class="anchor" id="autocomplete"></a>
-
-		<h2>Autocompletion Engine</h2>
-
-		<p>
-			<strong>Usage:</strong>
-		</p>
-
-		<p>
-			Insert the example code below anywhere in your page, then define the URL for each autocomplete input on <code>data-autocomplete</code>. You can instantiate multiple autocomplete fields with different target URLs.
-		</p>
-
-		<p>
-			<strong>Demo:</strong>
-		</p>
-
-		<div class="autocomplete-wrapper" data-autocomplete="scripts/dev/data/autocomplete.json">
-			<input type="text" placeholder="Type to search...">
-		</div>
-
-		<p>
-			<strong>Example:</strong>
-		</p>
-
-<pre>
-&lt;div class="autocomplete-wrapper" <span class="emphasis">data-autocomplete="scripts/dev/data/autocomplete.json"</span>&gt;
-	&lt;input type="text" placeholder="Type to search..."&gt;
-&lt;/div&gt;
-</pre>
-
-
-
-		<hr>
-
-
-
-		<a href="#" class="anchor" id="tagcloud"></a>
-
-		<h2>Tag Cloud</h2>
-
-		<p>
-			<strong>Usage:</strong>
-		</p>
-
-		<p>
-			Apply <code>data-tagcloud="true"</code> to an <code>input</code> or <code>select</code> element.
-		</p>
-
-		<p>
-			<strong>Demo:</strong>
-		</p>
-
-		<input type="text" placeholder="Type and press Enter to add to the tag cloud" data-tagcloud="true">
-
-		<select data-tagcloud="true">
-			<option class="placeholder">Please select any option to add to the tag cloud</option>
-			<option>one</option>
-			<option>two</option>
-			<option>three</option>
-			<option>four</option>
-			<option>five</option>
-			<option>six</option>
-			<option>seven</option>
-			<option>eight</option>
-			<option>nine</option>
-			<option>ten</option>
-		</select>
-
-		<p>
-			<strong>Example:</strong>
-		</p>
-
-<pre>
-&lt;input type="text" placeholder="Type and press Enter to add to the tag cloud" <span class="emphasis">data-tagcloud="true"</span>&gt;
-&lt;select <span class="emphasis">data-tagcloud="true"</span>&gt;&lt;/select&gt;
-</pre>
-
-
-
-		<hr>
-
-
-
-		<a href="#" class="anchor" id="search"></a>
-
-		<h2>Unified Search</h2>
-
-		<p>
-			<strong>Usage:</strong>
-		</p>
-
-		<p>
-			Apply <code>data-search="<var>PATH-TO-JSON.json</var>"</code> to a <strong>parent</strong> of a group of <code>input</code> or <code>select</code> elements. This will create a tag cloud after it, group all elements' outputs and build an array for analysis. You can then use the array to rebuild the search results.
-		</p>
-
-		<p>
-			<strong>Demo:</strong>
-		</p>
-
-		<div data-search="scripts/dev/data/search.json">
-			<!-- <div class="autocomplete-wrapper" data-autocomplete="scripts/dev/data/autocomplete.json"> -->
-				<input type="text" placeholder="Search...">
-			<!-- </div> -->
-
-			<div class="row">
-				<div class="column" data-span="4">
-					<select data-search-subject="Categories"></select>
-				</div>
-				<div class="column" data-span="4">
-					<select data-search-subject="Tags"></select>
-				</div>
-				<div class="column" data-span="4">
-					<select data-search-subject="Type"></select>
-				</div>
-			</div>
-		</div>
-
-		<p>
-			<strong>Example:</strong>
-		</p>
-
-<pre>
-
-</pre>
-
-
-
-		<hr>
-
-
-
-		<a href="#" class="anchor" id="overlays"></a>
-
-		<h2>Overlays</h2>
-
-		<p>
-			Overlay elements, centered vertically and horizontally, that support any type of content.
-		</p>
-
-		<p>
-			<strong>Usage:</strong>
-		</p>
-
-		<p>
-			Create an overlay as per the example below, then simply use <code>data-overlay="<var>ID</var>"</code> on any clickable element to call that overlay.
-		</p>
-
-		<p>
-			<strong>Demo:</strong>
-		</p>
-
-		<button class="primary" data-overlay="example">Call "Example" overlay</button>
-
-		<p>
-			<strong>Example:</strong>
-		</p>
-
-<pre>
-&lt;button class="primary" <span class="emphasis">data-overlay="example"</span>&gt;Call "Example" overlay&lt;/button&gt;
-
-&lt;div class="overlay" <span class="emphasis">id="example"</span>&gt;
-	&lt;div class="modal"&gt;
-		&lt;img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" /&gt;
-	&lt;/div&gt;
-&lt;/div&gt;
-</pre>
-
-
-
-		<hr>
 
 
 
@@ -285,62 +79,6 @@
 &lt;div class="button primary" <span class="emphasis">data-notification="true" data-message="Success!" data-tone="success" data-delay="3000"</span>&gt;
 	Delay 3000
 &lt;/div&gt;
-</pre>
-
-
-
-		<hr>
-
-
-
-		<a href="#" class="anchor" id="tooltips"></a>
-
-		<h2>Tooltips</h2>
-
-		<p>
-			Mouse-following tooltips on hover using attribute <code>data-tooltip</code>.
-		</p>
-
-		<p class="emphasis">
-			Note: Tooltips are disabled on touch devices as it depends on <code>:hover</code> pseudo-selector.
-		</p>
-
-		<p>
-			<strong>Usage:</strong>
-		</p>
-
-		<p>
-			Add a class <code>.tooltip</code> and an attribute <code>data-tooltip</code> to any HTML element.
-		</p>
-
-		<dl>
-			<dt>
-				<strong>Defaults:</strong>
-			</dt>
-			<dd>
-				<code>position: "center"</code> &nbsp;<small class="gray"><strong>left | center | right</strong></small>
-			</dd>
-			<dd>
-				<code>bound: true</code>
-			</dd>
-		</dl>
-
-		<p>
-			<strong>Demo:</strong>
-		</p>
-
-		<p>
-			<button data-tooltip="Lorem ipsum Laborum">Hover this button</button>
-		</p>
-
-		<img src="http://placehold.it/960x300&text=Image,%20hover%20me" data-tooltip="Using data-tooltip 1" />
-
-		<p>
-			<strong>Example:</strong>
-		</p>
-
-<pre>
-&lt;img src="http://placehold.it/1280x400&amp;text=Image,%20hover%20me" <span class="emphasis">data-tooltip="Tooltip Text"</span> /&gt;
 </pre>
 
 
@@ -436,6 +174,104 @@
 		&lt;/div&gt;
 	&lt;/div&gt;
 &lt;/div&gt;
+</pre>
+
+
+
+		<hr>
+
+
+
+		<a href="#" class="anchor" id="overlays"></a>
+
+		<h2>Overlays</h2>
+
+		<p>
+			Overlay elements, centered vertically and horizontally, that support any type of content.
+		</p>
+
+		<p>
+			<strong>Usage:</strong>
+		</p>
+
+		<p>
+			Create an overlay as per the example below, then simply use <code>data-overlay="<var>ID</var>"</code> on any clickable element to call that overlay.
+		</p>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<button class="primary" data-overlay="example">Call "Example" overlay</button>
+
+		<p>
+			<strong>Example:</strong>
+		</p>
+
+<pre>
+&lt;button class="primary" <span class="emphasis">data-overlay="example"</span>&gt;Call "Example" overlay&lt;/button&gt;
+
+&lt;div class="overlay" <span class="emphasis">id="example"</span>&gt;
+	&lt;div class="modal"&gt;
+		&lt;img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" /&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+
+
+		<hr>
+
+
+
+		<a href="#" class="anchor" id="tooltips"></a>
+
+		<h2>Tooltips</h2>
+
+		<p>
+			Mouse-following tooltips on hover using attribute <code>data-tooltip</code>.
+		</p>
+
+		<p class="emphasis">
+			Note: Tooltips are disabled on touch devices as it depends on <code>:hover</code> pseudo-selector.
+		</p>
+
+		<p>
+			<strong>Usage:</strong>
+		</p>
+
+		<p>
+			Add a class <code>.tooltip</code> and an attribute <code>data-tooltip</code> to any HTML element.
+		</p>
+
+		<dl>
+			<dt>
+				<strong>Defaults:</strong>
+			</dt>
+			<dd>
+				<code>position: "center"</code> &nbsp;<small class="gray"><strong>left | center | right</strong></small>
+			</dd>
+			<dd>
+				<code>bound: true</code>
+			</dd>
+		</dl>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<p>
+			<button data-tooltip="Lorem ipsum Laborum">Hover this button</button>
+		</p>
+
+		<img src="http://placehold.it/960x300&text=Image,%20hover%20me" data-tooltip="Using data-tooltip 1" />
+
+		<p>
+			<strong>Example:</strong>
+		</p>
+
+<pre>
+&lt;img src="http://placehold.it/1280x400&amp;text=Image,%20hover%20me" <span class="emphasis">data-tooltip="Tooltip Text"</span> /&gt;
 </pre>
 
 

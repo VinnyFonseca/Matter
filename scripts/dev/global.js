@@ -30,6 +30,16 @@ $(document).ready(function() {
 
 	// Sidebar
 
+	$(".sidebar").append("<ul></ul>");
+
+	$(".main a.anchor").each(function(i) {
+		var id = $(this).attr("id");
+		var name = $(this).next().html();
+
+		$(".sidebar ul").append('<li><a href="#' + id + '">' + name + '</a></li>');
+		if ( i === 0 ) $(".sidebar ul a").addClass("active");
+	});
+
 	$(".sidebar-trigger").on("click", function() {
 		!$(".main").hasClass("sidebar-on") ? $(".main").addClass("sidebar-on") : $(".main").removeClass("sidebar-on");
 	});

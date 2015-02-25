@@ -7,24 +7,9 @@
 
 		<div class="sidebar">
 			<div class="sidebar-trigger"></div>
-
 			<h3>Imagery</h3>
-
-			<ul>
-				<li>
-					<a class="active" href="#img">The <code>img</code> element</a>
-				</li>
-				<li>
-					<a href="#srcset">The <code>srcset</code> attribute</a>
-				</li>
-				<li>
-					<a href="#picture">The <code>picture</code> element</a>
-				</li>
-				<li>
-					<a href="#thoughts">Final Thoughts</a>
-				</li>
-			</ul>
 		</div>
+
 
 
 		<a href="#" class="anchor" id="img"></a>

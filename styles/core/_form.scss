@@ -640,6 +640,7 @@ optgroup {
 		}
 
 		.dropdown-current {
+			padding-right: 54px;
 			color: $brand1;
 		}
 
@@ -725,6 +726,9 @@ optgroup {
 		border: 1px solid $cd;
 		@include border-radius($radius);
 		background: $cf;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
 		cursor: pointer;
 		z-index: 30;
 	}
@@ -775,6 +779,8 @@ optgroup {
 			padding: 9px 12px;
 			background: #f2f2f2;
 			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
 			cursor: pointer;
 
 			&:hover {
@@ -904,8 +910,8 @@ optgroup {
 
 // Autocomplete
 
-$itemHeight: 46;
-$itemQty: 10;
+$itemHeight: 44;
+$itemQty: 7;
 
 .autocomplete-wrapper {
 	display: block;
@@ -925,6 +931,21 @@ $itemQty: 10;
 	@include background-clip(padding-box);
 	outline: 0;
 
+	&.active {
+		ul {
+			@include opacity(1);
+			@include transform(translateY(0));
+			visibility: visible;
+			z-index: 9999;
+		}
+		.divider {
+			@include opacity(1);
+			@include transform(translateX(0));
+			visibility: visible;
+			z-index: 9999;
+		}
+	}
+
 	ul {
 		display: block;
 		position: absolute;
@@ -937,6 +958,7 @@ $itemQty: 10;
 		list-style: none;
 		@include box-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
 		overflow: auto;
+		overflow-x: visible;
 		visibility: hidden;
 		z-index: -1;
 		@include opacity(0);
@@ -944,13 +966,6 @@ $itemQty: 10;
 		@include transition-property(opacity, transform);
 		@include transition-duration($animDuration);
 		@include transition-timing-function($animEasing);
-
-		&.active {
-			@include opacity(1);
-			@include transform(translateY(0));
-			visibility: visible;
-			z-index: 9999;
-		}
 
 		li {
 			display: none;
@@ -960,7 +975,6 @@ $itemQty: 10;
 			padding: 9px 12px;
 			border: 1px solid $ce;
 			background: $cf;
-			cursor: pointer;
 
 			&:hover {
 				color: $cf;
@@ -982,9 +996,38 @@ $itemQty: 10;
 			}
 
 			&.selected {
+				padding-left: 24px;
+				cursor: pointer;
+			}
+
+			&.selected {
 				display: block;
 			}
 		}
+	}
+
+	.divider {
+		display: block;
+		position: absolute;
+		margin: 0;
+		margin-top: -1px;
+		padding: 9px 12px;
+		top: 100%;
+		right: 99.5%;
+		color: $fontColor !important;
+		font-weight: bold;
+		background-color: $ce;
+		border: 1px solid $ce;
+		border-top-left-radius: $radius;
+		border-bottom-left-radius: $radius;
+		visibility: hidden;
+		z-index: -1;
+		cursor: default;
+		@include opacity(0);
+		@include transform(translateX(10px));
+		@include transition-property(opacity, transform);
+		@include transition-duration($animDuration);
+		@include transition-timing-function($animEasing);
 	}
 }
 

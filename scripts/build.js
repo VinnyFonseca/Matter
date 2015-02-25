@@ -155,7 +155,7 @@ function initTables() {
 }
 
 function initLinks() {
-    $("a[href^='#']").on("click", function(a) {
+    $(document).on("click", "a[href^='#']", function(a) {
         var b = $(this).attr("href");
         if (a.preventDefault(), "#" === b) config.application.debug && console.log("Intentional: blocked behaviour on global.js."); else if ($($.attr(this, "href")).length) return anchorClicked = !0, 
         $("html, body").animate({
@@ -177,12 +177,13 @@ function scrollProgress() {
 
 function initFramework() {
     isWideScreen = $(window).width() > 768, config.application.touch && (FastClick.attach(document.body), 
-    $(".map-wrapper").addClass("map-mobile")), config.application.debug && console.log(":: DOM.ready"), 
-    config.application.debug && console.log("~~ Async"), config.application.debug && console.log("•• Complete"), 
+    $(".map-wrapper").addClass("map-mobile")), config.application.debug && console.log(":: means DOM.ready"), 
+    config.application.debug && console.log("~~ means Async"), config.application.debug && console.log("•• means Complete"), 
     initKonami(alertKonami), initSVGs(), initCookies(), initLinks(), initNav(), initTables(), 
-    scrollProgress(), initAutocomplete(), initTagClouds(), initSearch(), initOverlays(), 
-    initNotifications(), initTooltips(), initSliders(), initMap(), initTwitter(), initFontSizeControls(), 
-    initDropdowns(), loadFileInputs(config.forms.uploadlimit), initValidation(), config.application.debug && console.log("Done •• Matter");
+    scrollProgress(), initOverlays(), initNotifications(), initTooltips(), initSliders(), 
+    initMap(), initTwitter(), initFontSizeControls(), initSearch(), initAutocomplete(), 
+    initTagClouds(), initDropdowns(), loadFileInputs(config.forms.uploadlimit), initValidation(), 
+    config.application.debug && console.log("Done •• Matter");
 }
 
 function buildDropdowns(a) {
@@ -197,7 +198,7 @@ function buildDropdowns(a) {
     }), "list" == d && k.find(".dropdown").height((k.find(".dropdown-item").outerHeight() + 1) * c - 1), 
     $(".dropdown-" + a).each(function() {
         var a = $(this), b = a.find(".dropdown"), c = a.find(".dropdown-item"), e = a.children(".dropdown-current"), f = a.find("select");
-        a.addClass(f.attr("class") + "-wrapper"), a.off().on("click", function() {
+        a.off().on("click", function() {
             "drop" == d && (a.hasClass("active") ? ($(".dropdown-wrapper").removeClass("active"), 
             $(this).find("select").blur()) : ($(".dropdown-wrapper").removeClass("active"), 
             a.addClass("active"), pageBottom >= a.offset().top + b.height() + 55 ? b.removeClass("bound").addClass("default") : b.removeClass("default").addClass("bound"), 
@@ -353,43 +354,55 @@ function initValidation() {
 function initAutocomplete() {
     $("[data-autocomplete]").length && ($("[data-autocomplete]").each(function() {
         function a(a) {
-            function d(a) {
-                var b = $(a).val();
-                b.length > 0 ? g.addClass("active").unhighlight().highlight(b) : g.unhighlight().removeClass("active"), 
-                i.each(function() {
-                    $(this).text().search(new RegExp(b, "i")) < 0 ? $(this).removeClass("selected") : $(this).addClass("selected");
-                }).on("click", function() {
-                    f.val($(this).text()), g.unhighlight().removeClass("active");
-                });
+            function e(b) {
+                for (var c = [], d = 0; d < a.Items.length; d++) {
+                    var e = a.Items[d], f = e[b];
+                    if (f instanceof Array) for (var g = 0; g < f.length; g++) $.inArray(f[g], c) < 0 && c.push(f[g]); else $.inArray(f, c) < 0 && c.push(f);
+                }
+                c.sort();
+                for (var i in c) h.append("<li>" + c[i] + "</li>");
             }
-            for (var h = 0; h < a.length; h++) b.children("ul").append("<li>" + a[h] + "</li>");
-            var i = g.children("li");
-            g.on("mouseenter", function() {
-                e = !0;
+            function i(a) {
+                var d = $(a).val();
+                j.each(function() {
+                    $(this).text().search(new RegExp(d, "i")) < 0 ? $(this).removeClass("selected") : $(this).addClass("selected");
+                }).on("click", function() {
+                    c.val($(this).text()).trigger({
+                        type: "keydown",
+                        which: 13
+                    }), b.removeClass("active"), h.unhighlight();
+                }), d.length > 0 && j.hasClass("selected") ? (b.addClass("active"), h.unhighlight().highlight(d)) : (b.removeClass("active"), 
+                h.unhighlight());
+            }
+            e(f);
+            var j = h.children("li").not(".divider");
+            h.on("mouseenter", function() {
+                g = !0;
             }).on("mouseleave", function() {
-                e = !1;
-            }), f.on("keydown", function(a) {
-                if (g.hasClass("active")) {
-                    var b = g.children("li.selected");
-                    38 === a.keyCode && c > 0 && (i.removeClass("active"), c--, b.eq(c).addClass("active"), 
-                    c % 10 === 9 && g.scrollTop(10 * (i.outerHeight() - 1) * ((c - 9) / 10))), 40 === a.keyCode && c < b.length - 1 && (i.removeClass("active"), 
-                    c++, b.eq(c).addClass("active"), c % 10 === 0 && g.scrollTop(10 * (i.outerHeight() - 1) * (c / 10))), 
-                    13 === a.keyCode && (f.val(g.children("li.active").text()).blur(), i.removeClass("active")), 
-                    9 === a.keyCode && (f.val(g.children("li.active").text()), i.removeClass("active")), 
-                    (8 === a.keyCode || 46 === a.keyCode) && (i.removeClass("active"), c = 0), 27 === a.keyCode && f.blur();
+                g = !1;
+            }), c.on("keydown", function(a) {
+                if (h.hasClass("active")) {
+                    var b = h.children("li.selected");
+                    38 === a.keyCode && d > -1 && (j.removeClass("active"), d--, b.eq(d).addClass("active"), 
+                    d % 7 === 6 && h.scrollTop(7 * (j.outerHeight() - 1) * ((d - 6) / 7))), 40 === a.keyCode && d < b.length - 1 && (j.removeClass("active"), 
+                    d++, b.eq(d).addClass("active"), d % 7 === 0 && h.scrollTop(7 * (j.outerHeight() - 1) * (d / 7))), 
+                    (9 === a.keyCode || 13 === a.keyCode) && (c.val(h.children("li.active").text()), 
+                    j.removeClass("active")), (8 === a.keyCode || 46 === a.keyCode) && (j.removeClass("active"), 
+                    d = -1), 27 === a.keyCode && c.blur();
                 }
             }).on("keyup", function() {
-                d(this);
+                i(this);
             }).on("focus", function() {
-                c = g.children("li.active").length ? c : 0, d(this);
+                d = h.children("li.active").length ? d : -1, i(this);
             }).on("blur", function() {
-                e === !1 && g.unhighlight().removeClass("active");
+                g === !1 && (b.removeClass("active"), h.unhighlight());
             });
         }
-        var b = $(this), c = 0, d = b.data("autocomplete"), e = !1;
-        b.append("<ul></ul>"), dataRequest(d, "GET", a);
-        var f = b.children("input"), g = b.children("ul");
-    }), config.application.debug && console.log("Widget :: Autocomplete"));
+        var b = $(this), c = b.children("input"), d = -1, e = b.data("autocomplete"), f = c.data("autocomplete-subject"), g = !1;
+        b.append("<div class='divider'>" + f + "</div>"), b.append("<ul class='autocomplete-results'></ul>");
+        var h = b.children("ul");
+        dataRequest(e, "GET", a);
+    }), config.application.debug && console.log("Search :: Autocomplete"));
 }
 
 function initFontSizeControls() {
@@ -535,41 +548,65 @@ function initSearch() {
     $("[data-search]").length && ($("[data-search]").each(function(a) {
         function b(a) {
             function b(b) {
-                for (var c = [], d = 0; d < a.Items.length; d++) {
-                    var e = a.Items[d], f = e[b];
-                    if (f instanceof Array) for (var g = 0; g < f.length; g++) $.inArray(f[g], c) < 0 && c.push(f[g]); else $.inArray(f, c) < 0 && c.push(f);
+                var d = [], e = c.find("select[data-search-subject='" + b + "']");
+                searchArray[b] = [];
+                for (var f = 0; f < a.Items.length; f++) {
+                    var g = a.Items[f], h = g[b];
+                    if (h instanceof Array) for (var i = 0; i < h.length; i++) $.inArray(h[i], d) < 0 && d.push(h[i]); else $.inArray(h, d) < 0 && d.push(h);
                 }
-                $("select[data-search-subject='" + b + "']").append('<option class="placeholder">Select ' + b.toLowerCase() + "...</option>"), 
-                c.sort();
-                for (var h in c) $("select[data-search-subject='" + b + "']").append("<option>" + c[h] + "</option>");
+                d.sort();
+                var j = '<option class="placeholder">Select ' + b + "...</option>";
+                e.append(j);
+                for (var k in d) {
+                    var l = '<option value="' + d[k] + '">' + d[k] + "</option>";
+                    e.append(l);
+                }
             }
-            function d(a) {
-                for (var b = [], c = 0, d = h.children(".tag[data-tag-subject='" + a + "']"); c < d.length; c++) b.push(d.eq(c).data("tag"));
-                e[a] = b, initSVGs(), console.log(e);
+            function h(a) {
+                for (var b = [], c = f.children(".tag[data-tag-subject='" + a + "']"), d = 0; d < c.length; d++) {
+                    var e = c.eq(d).data("tag");
+                    b.push(e);
+                }
+                searchArray[a] = b, initSVGs();
             }
-            c.find("input[type='text']").on("keydown", function(a) {
-                if (9 === a.keyCode || 13 === a.keyCode) {
+            function i() {
+                for (var b = 0; b < a.Items.length; b++) {
+                    var c = a.Items[b], e = (c.Id, c.Image), f = c.Title, h = new Date(c.Date), i = h.getHours() < 10 ? "0" + h.getHours() : h.getHours();
+                    minute = h.getMinutes() < 10 ? "0" + h.getMinutes() : h.getMinutes(), day = h.getDate() < 10 ? "0" + h.getDate() : h.getDate(), 
+                    month = h.getMonth() + 1 < 10 ? "0" + (h.getMonth() + 1) : h.getMonth() + 1, year = h.getFullYear() < 10 ? "0" + h.getFullYear() : h.getFullYear(), 
+                    fulldate = i + ":" + minute + " @ " + day + "/" + month + "/" + year, d = c.Url, 
+                    summary = c.Summary, type = c.Type, categories = c.Categories, tags = c.Tags, item = '<div class="search-item">											 <a href="' + d + '">												 <img src="' + e + '" />												 <div class="title">' + f + '</div>											 </a>											 <div class="date">' + fulldate + '</div>											 <div class="summary">' + summary + '</div>											 <div class="type">Type: ' + type + '</div>											 <div class="categories">Categories: ' + categories + '</div>											 <div class="tags">Tags: ' + tags + "</div>										</div>", 
+                    g.append(item);
+                }
+                g.children(".search-item").length ? g.show() : g.hide();
+            }
+            e.on("keydown", function(a) {
+                if (13 === a.keyCode) {
                     var b = $(this).val();
-                    return "" !== b && (e.search = b), console.log(e), !1;
+                    return subject = $(this).data("search-subject"), "" !== b && (searchArray[subject] = b), 
+                    i(), !1;
                 }
-            }), c.find("select[data-search-subject]").each(function(a) {
-                var c = $(this).data("search-subject");
-                b(c), $(this).on("change", function() {
-                    var b = $(this).val(), f = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-subject="' + c + '" data-tag="' + b + '"><span>' + b + "</span>" + g + "</li>";
-                    return "" !== b && ($.inArray(b, e[c]) < 0 ? h.addClass("active").append(f) : notify("This tag already exists.", "failure")), 
-                    d(c), !1;
+            }), select.each(function(a) {
+                var c = ($(this).val(), $(this).data("search-subject"));
+                $(this).parents(".dropdown-wrapper").attr("data-search-subject", c), b(c), $(this).on("change", function(b) {
+                    b.preventDefault();
+                    var d = $(this).val(), e = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-subject="' + c + '" data-tag="' + d + '"><span>' + d + "</span>" + tagclose + "</li>";
+                    "" !== d && ($.inArray(d, searchArray[c]) < 0 ? f.addClass("active").append(e) : notify("This tag already exists.", "failure")), 
+                    h(c), i();
                 });
-            }), h.on("click", ".tag", function() {
+            }), f.on("click", ".tag", function() {
                 var a = $(this).data("tag-subject");
-                $(this).remove(), h.children(".tag").length > 0 ? h.addClass("active") : h.removeClass("active"), 
-                d(a);
-            }), initDropdowns();
+                $(this).remove(), f.children(".tag").length > 0 ? f.addClass("active") : f.removeClass("active"), 
+                h(a), i();
+            }), initDropdowns(), i();
         }
-        var c = $(this), d = c.data("search"), e = [], f = '<ul class="tagcloud"></ul>', g = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">';
-        c.append(f);
-        var h = c.find("ul.tagcloud");
-        dataRequest(d, "GET", b);
-    }), config.application.debug && console.log("Widget :: Unified Search"));
+        var c = $(this), d = c.data("search"), e = c.find("input[data-search-subject]");
+        select = c.find("select[data-search-subject]"), searchArray = [], tagcloudElement = '<ul class="tagcloud"></ul>', 
+        tagclose = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">', 
+        resultsElement = '<div class="search-results valign-middle"></div>', c.append(tagcloudElement).append(resultsElement);
+        var f = c.find("ul.tagcloud"), g = c.find(".search-results");
+        searchArray.Search = "", dataRequest(d, "GET", b);
+    }), config.application.debug && console.log("Search :: Unified Search"));
 }
 
 function getOffset(a) {
@@ -652,8 +689,7 @@ function sliderInit(a) {
     var x = '<div class="slider-arrow slider-arrow-prev"><span>&lsaquo;</span></div>', y = '<div class="slider-arrow slider-arrow-next"><span>&rsaquo;</span></div>';
     k.prepend(x), k.prepend(y);
     var z = j.find(".slider-arrow"), A = j.find(".slider-arrow-prev"), B = j.find(".slider-arrow-next");
-    if (o === !0 && w) if (n === !0 && w) {
-        z.show();
+    if (o === !0 && w && z.show(), n === !0 && w) {
         var C = '<div class="slider-nav"></div>';
         j.append(C);
         for (var D = j.find(".slider-nav"), E = 0; v > E; E++) {
@@ -723,7 +759,7 @@ function initSliders() {
         }, 250 * a);
     }).find(".slider-container").css({
         visibility: "visible"
-    }), config.application.debug && console.log("Init :: Sliders"));
+    }), config.application.debug && console.log("Widget :: Sliders"));
 }
 
 function initTagClouds() {
@@ -750,7 +786,7 @@ function initTagClouds() {
             $(this).remove(), i.children(".tag").length > 0 ? i.addClass("active") : i.removeClass("active"), 
             b();
         });
-    }), config.application.debug && console.log("Widget :: Tag Clouds"));
+    }), config.application.debug && console.log("Search :: Tag Clouds"));
 }
 
 function initTooltips() {
@@ -6426,6 +6462,9 @@ $(document).ready(function() {
             100 > a ? a++ : a = 0, b.attr("value", a), c.width(a + "%").attr("data-progress", a), 
             d.width(a + "%").html(a + "%");
         }, 500);
+    }), $(".sidebar").append("<ul></ul>"), $(".main a.anchor").each(function(a) {
+        var b = $(this).attr("id"), c = $(this).next().html();
+        $(".sidebar ul").append('<li><a href="#' + b + '">' + c + "</a></li>"), 0 === a && $(".sidebar ul a").addClass("active");
     }), $(".sidebar-trigger").on("click", function() {
         $(".main").hasClass("sidebar-on") ? $(".main").removeClass("sidebar-on") : $(".main").addClass("sidebar-on");
     }), $("html, body").on("click", function(a) {

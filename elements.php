@@ -7,36 +7,9 @@
 
 		<div class="sidebar">
 			<div class="sidebar-trigger"></div>
-
 			<h3>Elements</h3>
-
-			<ul>
-				<li>
-					<a class="active" href="#block">Block Level Elements</a>
-				</li>
-				<li>
-					<a href="#iconography">Iconography</a>
-				</li>
-				<li>
-					<a href="#typography">Typography</a>
-				</li>
-				<li>
-					<a href="#elements">Typographic Elements</a>
-				</li>
-				<li>
-					<a href="#hyphenation">Hyphenation</a>
-				</li>
-				<li>
-					<a href="#lists">Lists</a>
-				</li>
-				<li>
-					<a href="#tables">Tables</a>
-				</li>
-				<li>
-					<a href="#character">Character Test</a>
-				</li>
-			</ul>
 		</div>
+
 
 
 		<a href="#" class="anchor" id="block"></a>

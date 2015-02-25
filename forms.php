@@ -7,30 +7,9 @@
 
 		<div class="sidebar">
 			<div class="sidebar-trigger"></div>
-
 			<h3>Forms</h3>
-
-			<ul>
-				<li>
-					<a class="active" href="#input">Input Types</a>
-				</li>
-				<li>
-					<a href="#select">Select</a>
-				</li>
-				<li>
-					<a href="#textarea">Textarea</a>
-				</li>
-				<li>
-					<a href="#fieldset">Checkboxes, Radio Buttons &amp; Toggles</a>
-				</li>
-				<li>
-					<a href="#file">File Upload</a>
-				</li>
-				<li>
-					<a href="#buttons">Buttons</a>
-				</li>
-			</ul>
 		</div>
+
 
 
 		<p class="emphasis">Note: This section is currently under heavy development.</p>

@@ -7,18 +7,9 @@
 
 		<div class="sidebar">
 			<div class="sidebar-trigger"></div>
-
 			<h3>Grid</h3>
-
-			<ul>
-				<li>
-					<a class="active" href="#grid-system">Grid System</a>
-				</li>
-				<li>
-					<a href="#complete">Complete Grid</a>
-				</li>
-			</ul>
 		</div>
+
 
 
 		<a href="#" class="anchor" id="grid-system"></a>

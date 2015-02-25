@@ -1,0 +1,61 @@
+.search-results {
+	display: block;
+	position: relative;
+	margin: ($spacing / 2) 0;
+	padding: 0.5%;
+	border-radius: $radius;
+	border: 1px solid $cd;
+	background-color: $cf;
+
+	.search-item {
+		display: inline-block;
+		margin: 0.5%;
+		padding: $spacing / 2;
+		width: 24%;
+		border-radius: $radius;
+		border: 1px solid $cd;
+		background-color: $cf;
+		vertical-align: top !important;
+
+		img {
+			display: block;
+			position: relative;
+			margin-bottom: 5px;
+		}
+		.title {
+			display: block;
+			position: relative;
+			font-family: $headingFont;
+		}
+		.date {
+			display: block;
+			position: relative;
+			color: $c8;
+			@include font-size($fontSize / 1.2);
+		}
+		.summary {
+			display: none;
+			position: relative;
+			margin: ($spacing / 2) 0;
+			@include font-size($fontSize / 1.1);
+		}
+		.type {
+			display: block;
+			position: relative;
+			color: $c8;
+			@include font-size($fontSize / 1.2);
+		}
+		.categories {
+			display: block;
+			position: relative;
+			color: $c8;
+			@include font-size($fontSize / 1.2);
+		}
+		.tags {
+			display: block;
+			position: relative;
+			color: $c8;
+			@include font-size($fontSize / 1.2);
+		}
+	}
+}
