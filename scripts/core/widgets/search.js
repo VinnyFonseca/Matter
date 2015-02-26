@@ -6,9 +6,9 @@ function initSearch() {
 			var el = $(this),
 				url = el.data("search"),
 				index = i,
-				input = el.find("input[data-search-subject]");
-				select = el.find("select[data-search-subject]");
-				searchArray = [],
+				input = el.find("input[data-search-parameter]");
+				select = el.find("select[data-search-parameter]");
+				outputArray = [],
 				tagcloudElement = '<ul class="tagcloud"></ul>',
 				tagclose = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">',
 				resultsElement = '<div class="search-results valign-middle"></div>';
@@ -20,41 +20,31 @@ function initSearch() {
 			dataRequest(url, "GET", build);
 
 			function build(data) {
-				function intersectArrays(array1, array2) {
-					var base;
-
-					if (array2.length > array1.length) { // indexOf to loop over shorter
-						base = array2, array2 = array1, array1 = base;
-					}
-
-					return array1.filter(function(e) {
-						if (array2.indexOf(e) !== -1) return true;
-					});
-				}
-
 				function updateResults() {
-					var tagArray = [],
-						tagArray = [],
-						finalArray = [];
-
 					results.html("");
 
+					$.arrayIntersect = function(a, b) {
+					    return $.grep(a, function(i) {
+					        return $.inArray(i, b) > -1;
+					    });
+					};
+
 					input.each(function() {
-						var subject = $(this).data("search-subject"),
-							criteria = subject.replace(/\s/g, "").split(",");
+						var parameter = $(this).data("search-parameter"),
+							criteria = parameter.replace(/\s/g, "").split(",");
+
+						var tempArray = [];
+						resultArray[parameter] = [];
 
 						for ( var i = 0; i < criteria.length; i++ ) {
-							var tempArray = [];
-							tagArray[criteria[i]] = [];
-
 							for ( var j = 0; j < data.Items.length; j++ ) {
 								var object = data.Items[j],
 									id = object.Id;
-									compare = searchArray[criteria[i]],
+									compare = outputArray[parameter],
 									analyse = object[criteria[i]];
 
 								if ( analyse instanceof Array ) {
-									if ( intersectArrays(analyse, compare).length && $.inArray(id, tempArray) < 0 ) {
+									if ( $.arrayIntersect(analyse, compare).length > 0 && $.inArray(id, tempArray) < 0 ) {
 										tempArray.push(id);
 									}
 								} else {
@@ -64,17 +54,17 @@ function initSearch() {
 								}
 							}
 
-							tagArray[criteria[i]] = tempArray;
+							resultArray[parameter] = tempArray;
 						}
 					});
 
-					tagcloud.children(".tag[data-tag-subject]").each(function() {
-						var subject = $(this).data("tag-subject"),
-							criteria = subject,
-							compare = searchArray[subject];
+					tagcloud.children(".tag[data-tag-parameter]").each(function() {
+						var parameter = $(this).data("tag-parameter"),
+							criteria = parameter,
+							compare = outputArray[parameter];
 
 						var tempArray = [];
-						tagArray[subject] = [];
+						resultArray[parameter] = [];
 
 						for ( var i = 0; i < data.Items.length; i++ ) {
 							var object = data.Items[i],
@@ -82,7 +72,7 @@ function initSearch() {
 								analyse = object[criteria];
 
 							if ( analyse instanceof Array ) {
-								if ( intersectArrays(analyse, compare).length && $.inArray(id, tempArray) < 0 ) {
+								if ( $.arrayIntersect(analyse, compare).length > 0 && $.inArray(id, tempArray) < 0 ) {
 									tempArray.push(id);
 								}
 							} else {
@@ -92,7 +82,7 @@ function initSearch() {
 							}
 						}
 
-						tagArray[subject] = tempArray;
+						resultArray[parameter] = tempArray;
 					});
 
 
@@ -100,17 +90,34 @@ function initSearch() {
 					// Intersect, Unique, Final values
 
 					var prevArray = [];
+					var allArray = [];
+					var finalArray = [];
 
-					for ( var i = 0; i < subjectArray.length; i++ ) {
-						// finalArray = prevArray.concat(tagArray[subjectArray[i]]);
-						// finalArray = intersectArrays(tagArray[subjectArray[i]], prevArray);
-						// console.log(prevArray, tagArray[subjectArray[i]);
+					for ( var i = 0; i < data.Items.length; i++ ) {
+						var object = data.Items[i],
+							id = object.Id;
 
-						prevArray = tagArray[subjectArray[i]];
+						allArray.push(id);
+					}
+
+					for ( var i = 0; i < parameterArray.length; i++ ) {
+						var analyse = resultArray[parameterArray[i]];
+
+						console.log(analyse.length > 0, $.arrayIntersect(analyse, allArray), $.arrayIntersect(analyse, prevArray));
+
+						if (
+							analyse.length > 0 &&
+							$.arrayIntersect(analyse, allArray).length > 0
+						) {
+							console.log($.arrayIntersect(analyse, prevArray));
+							// finalArray.push($.arrayIntersect(analyse, allArray));
+						}
+
+						prevArray = finalArray;
 					}
 
 
-					console.log(searchArray, tagArray, finalArray);
+					console.log(outputArray, resultArray, finalArray, finalArray.length);
 
 					for ( var i = 0; i < data.Items.length; i++ ) {
 						var object = data.Items[i],
@@ -149,15 +156,16 @@ function initSearch() {
 					results.children(".search-item").length ? results.show() : results.hide();
 				}
 
-				function populateSelects(subject) {
-					var target = el.find("select[data-search-subject='" + subject + "']");
+				function populateSelects(parameter) {
+					var target = el.find("select[data-search-parameter='" + parameter + "']");
 
 					var tempArray = [];
-					searchArray[subject] = [];
+					outputArray[parameter] = [];
+					resultArray[parameter] = [];
 
 					for ( var i = 0; i < data.Items.length; i++ ) {
 						var object = data.Items[i];
-						var property = object[subject];
+						var property = object[parameter];
 
 						if ( property instanceof Array ) {
 							for ( var k = 0; k < property.length; k++ )
@@ -168,7 +176,7 @@ function initSearch() {
 					}
 					tempArray.sort();
 
-					var placeholder = '<option class="placeholder">Select ' + subject + '...</option>';
+					var placeholder = '<option class="placeholder">Select ' + parameter + '...</option>';
 					target.append(placeholder);
 
 					for ( var value in tempArray ) {
@@ -177,18 +185,17 @@ function initSearch() {
 					}
 				}
 
-				function updateTags(subject) {
-					var target = tagcloud.children(".tag[data-tag-subject='" + subject + "']");
+				function updateTags(parameter) {
+					var target = tagcloud.children(".tag[data-tag-parameter='" + parameter + "']");
 
 					var tempArray = [];
-					searchArray[subject] = [];
 
 					for ( var n = 0; n < target.length; n++ ) {
 						var value = target.eq(n).data("tag");
 						tempArray.push(value);
 					}
 
-					searchArray[subject] = tempArray;
+					outputArray[parameter] = tempArray;
 
 					initSVGs();
 				}
@@ -197,65 +204,63 @@ function initSearch() {
 
 				// Interactive Behaviour
 
-				var subjectArray = [];
+				var parameterArray = [];
+				var resultArray = [];
 
 				input.each(function() {
-					var subject = $(this).data("search-subject").replace(/\s/g, "").split(",");
+					var parameter = $(this).data("search-parameter");
 
-					for ( var i = 0; i < subject.length; i++ ) {
-						if ( $.inArray(subject[i], subjectArray) < 0 ) subjectArray.push(subject[i]);
-					}
+					parameterArray.push(parameter);
+					outputArray[parameter] = [];
+					resultArray[parameter] = [];
 
-					$(this).on("keydown", function(event) {
-						if ( event.keyCode === 13 ) { // Enter
-							var value = $(this).val();
-								subject = $(this).data("search-subject");
-								criteria = subject.replace(/\s/g, "").split(",");
+					$(this).on("keyup", function(event) {
+						var value = $(this).val();
+							parameter = $(this).data("search-parameter");
 
-							for ( var i = 0; i < criteria.length; i++ ) {
-								searchArray[criteria[i]] = value;
-							}
+						outputArray[parameter] = value;
 
-							updateResults();
-							return false;
-						}
+						updateResults();
+						return false;
 					});
 				});
 
 				select.each(function(i) {
 					var placeholder = $(this).val(),
-						subject = $(this).data("search-subject");
+						parameter = $(this).data("search-parameter");
 
-					populateSelects(subject);
+					populateSelects(parameter);
 
-					if ( $.inArray(subject, subjectArray) < 0 ) subjectArray.push(subject);
+					parameterArray.push(parameter);
+					outputArray[parameter] = [];
+					resultArray[parameter] = [];
 
 					$(this).on("change", function(event) {
 						event.preventDefault();
 
 						var value = $(this).val(),
-							tag = '<li class="tag valign-middle" data-tag-group="' + i + '" data-tag-subject="' + subject + '" data-tag="' + value + '">' + '<span>' + value + '</span>' + tagclose + '</li>';
+							tag = '<li class="tag valign-middle" data-tag-group="' + i + '" data-tag-parameter="' + parameter + '" data-tag="' + value + '">' + '<span>' + value + '</span>' + tagclose + '</li>';
 
 						if ( value !== "" ) {
-							if ( $.inArray(value, searchArray[subject]) < 0 ) {
+							if ( $.inArray(value, outputArray[parameter]) < 0 ) {
 								tagcloud.addClass("active").append(tag);
 							} else {
 								notify("This tag already exists.", "failure");
 							}
 						}
 
-						updateTags(subject);
+						updateTags(parameter);
 						updateResults();
 					});
 				});
 
 				tagcloud.on("click", ".tag", function() {
-					var subject = $(this).data("tag-subject");
+					var parameter = $(this).data("tag-parameter");
 
 					$(this).remove();
 					tagcloud.children(".tag").length > 0 ? tagcloud.addClass("active") : tagcloud.removeClass("active");
 
-					updateTags(subject);
+					updateTags(parameter);
 					updateResults();
 				});
 

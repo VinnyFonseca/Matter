@@ -199,6 +199,44 @@ function loadFileInputs() {
 
 
 
+function loadProgressBar() {
+	if ( $("progress").length ) {
+		function triggerProgress(progress) {
+			var el = $("progress"),
+				label = el.prev("label"),
+				bar = el.find(".progress-bar span");
+
+			bar.width(progress + "%").html(progress + "%");
+			label.removeClass("active").width(progress + "%").attr("data-progress", progress);
+			el.removeClass("valid").attr("value", progress);
+
+			if ( progress >= 10 ) label.addClass("active");
+			if ( progress >= 100 ) el.addClass("valid");
+		}
+
+		$("[data-progress]").on("click", function(event) {
+			var progress = 0;
+			clearInterval(progressInterval);
+
+			var progressInterval = setInterval(function() {
+				if ( progress < 100 ) {
+					progress++;
+					triggerProgress(progress);
+					console.log(progress);
+				} else {
+					$(".progress").addClass("valid");
+					clearInterval(progressInterval);
+				}
+			}, 300);
+		});
+
+		if ( config.application.debug ) console.log("Form :: Progress Bar");
+	}
+}
+
+
+
+
 $(window).load(function() {
 
 	// Datepicker
@@ -217,17 +255,6 @@ $(window).load(function() {
 		todayBtn: "linked",
 		todayHighlight: true,
 		startDate: new Date()
-	});
-
-
-
-	// Forms
-
-	$("form").on('submit', function() {
-		if ( config.application.debug ) {
-			console.log('Intentional: Form submit blocked.');
-			return false;
-		}
 	});
 
 });

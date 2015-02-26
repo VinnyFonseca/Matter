@@ -77,7 +77,7 @@ var twitterFetcher = function() {
 				inProgress = true;
 
 				domNode = fetchConfig.domID;
-				maxTweets = fetchConfig.maxTweets;
+				maxTweets = fetchConfig.maxTweets + config.twitter.startAt;
 				parseLinks = fetchConfig.enableLinks;
 				printUser = fetchConfig.showUser;
 				printTime = fetchConfig.showTime;
@@ -97,7 +97,7 @@ var twitterFetcher = function() {
 
 		handler: function(tweets) {
 			var x = tweets.length;
-			var n = 0;
+			var n = config.twitter.startAt;
 			var element = document.getElementById(config.twitter.domID);
 
 			var html = '<div class="twitter-user"></div>';

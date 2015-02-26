@@ -58,17 +58,17 @@ function initValidation() {
 						el.removeClass("invalid").addClass("valid");
 					} else {
 						el.removeClass("valid").addClass("invalid");
-						notify("This field cannot be left empty.", notificationTone, notificationDelay);
+						// notify("This field cannot be left empty.", notificationTone, notificationDelay);
 					}
 					break;
 
 				case "number":
 					var check = /\D+/;
-					if ( value.length == value.replace(check, '').length ) {
+					if ( value !== "" && value.length == value.replace(check, '').length ) {
 						el.removeClass("invalid").addClass("valid");
 					} else {
 						el.removeClass("valid").addClass("invalid");
-						notify("This field can only have numbers.", notificationTone, notificationDelay);
+						// notify("This field can only have numbers.", notificationTone, notificationDelay);
 					}
 					break;
 
@@ -78,7 +78,7 @@ function initValidation() {
 						el.removeClass("invalid").addClass("valid");
 					} else {
 						el.removeClass("valid").addClass("invalid");
-						notify("Your email is invalid.", notificationTone, notificationDelay);
+						// notify("Your email is invalid.", notificationTone, notificationDelay);
 					}
 					break;
 
@@ -87,7 +87,7 @@ function initValidation() {
 						el.removeClass("invalid").addClass("valid");
 					} else {
 						el.removeClass("valid").addClass("invalid");
-						notify("Your password is not strong enough.", notificationTone, notificationDelay);
+						// notify("Your password is not strong enough.", notificationTone, notificationDelay);
 					}
 					break;
 
@@ -99,7 +99,7 @@ function initValidation() {
 						el.removeClass("invalid").addClass("valid");
 					} else {
 						el.removeClass("valid").addClass("invalid");
-						notify("Your passwords must match.", notificationTone, notificationDelay);
+						// notify("Your passwords must match.", notificationTone, notificationDelay);
 					}
 					break;
 
@@ -109,7 +109,27 @@ function initValidation() {
 						el.removeClass("invalid").addClass("valid");
 					} else {
 						el.removeClass("valid").addClass("invalid");
-						notify("The date you entered is not valid.", notificationTone, notificationDelay);
+						// notify("The date you entered is not valid.", notificationTone, notificationDelay);
+					}
+					break;
+
+				case "form":
+					var validArray = [];
+					var progress = 0;
+
+					el.find("[required]").each(function() {
+						$(this).hasClass("valid") ? validArray.push(true) : validArray.push(false);
+					});
+
+					if ( validArray.indexOf(false) < 0 ) {
+						el.addClass("valid");
+						el.find("[required]").prop("disabled", true);
+						el.find("button[type='submit']").prop("disabled", true);
+						notify("Form submitted successfully.", "success", notificationDelay);
+					} else {
+						el.removeClass("valid");
+						el.find("[required]:not('.valid')").addClass("invalid")
+						notify("Form not submitted. Please review.", notificationTone, notificationDelay);
 					}
 					break;
 			}
@@ -134,12 +154,30 @@ function initValidation() {
 
 				if ( $(this).hasClass("invalid") ) validate(el, type, value);
 			}).on("blur", function() {
-				var el = $(this),
-					type = el.attr("data-validation"),
-					value = el.val();
+				var el = $(this);
 
-				validate(el, type, value);
+				setTimeout(function() {
+					var type = el.attr("data-validation"),
+						value = el.val();
+
+					validate(el, type, value);
+				}, 200);
 			});
+
+		$("form").on("submit", function() {
+			var el = $(this),
+				type = el.attr("data-validation"),
+				value = "";
+
+			validate(el, type, value);
+		});
+
+		$("form[novalidate]").on("submit", function() {
+			if ( config.application.debug ) {
+				console.log('Intentional: Form submit blocked.');
+				return false;
+			}
+		});
 
 		if (config.application.debug) console.log("Form :: Validation");
 	}

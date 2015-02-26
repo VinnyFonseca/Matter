@@ -366,6 +366,7 @@ function initFramework() {
 	initDropdowns();
 	loadFileInputs(config.forms.uploadlimit);
 	initValidation();
+	loadProgressBar();
 
 	if (config.application.debug) console.log("Done •• Matter");
 }

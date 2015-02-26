@@ -29,19 +29,22 @@
 		</p>
 
 		<div data-search="scripts/dev/data/search.json">
-			<!-- <div class="autocomplete-wrapper" data-autocomplete="scripts/dev/data/search.json"> -->
-				<input type="text" placeholder="Search..." data-search-subject="Title, Summary" data-autocomplete-subject="Title">
-			<!-- </div> -->
-
+			<div class="row">
+				<div class="column">
+					<!-- <div class="autocomplete-wrapper" data-autocomplete="scripts/dev/data/search.json"> -->
+						<input type="text" placeholder="Search..." data-search-parameter="Title, Summary" data-autocomplete-parameter="Title">
+					<!-- </div> -->
+				</div>
+			</div>
 			<div class="row">
 				<div class="column" data-span="4">
-					<select data-search-subject="Categories"></select>
+					<select data-search-parameter="Categories"></select>
 				</div>
 				<div class="column" data-span="4">
-					<select data-search-subject="Tags"></select>
+					<select data-search-parameter="Tags"></select>
 				</div>
 				<div class="column" data-span="4">
-					<select data-search-subject="Type"></select>
+					<select data-search-parameter="Type"></select>
 				</div>
 			</div>
 		</div>
@@ -77,7 +80,7 @@
 		</p>
 
 		<div class="autocomplete-wrapper" data-autocomplete="scripts/dev/data/search.json">
-			<input type="text" placeholder="Type to search..." data-autocomplete-subject="Title">
+			<input type="text" placeholder="Type to search..." data-autocomplete-parameter="Title">
 		</div>
 
 		<p>
@@ -86,7 +89,7 @@
 
 <pre>
 &lt;div class="autocomplete-wrapper" <span class="emphasis">data-autocomplete="scripts/dev/data/autocomplete.json"</span>&gt;
-	&lt;input type="text" placeholder="Type to search..." <span class="emphasis">data-autocomplete-subject="Title"</span>&gt;
+	&lt;input type="text" placeholder="Type to search..." <span class="emphasis">data-autocomplete-parameter="Title"</span>&gt;
 &lt;/div&gt;
 </pre>
 

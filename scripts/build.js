@@ -183,7 +183,7 @@ function initFramework() {
     scrollProgress(), initOverlays(), initNotifications(), initTooltips(), initSliders(), 
     initMap(), initTwitter(), initFontSizeControls(), initSearch(), initAutocomplete(), 
     initTagClouds(), initDropdowns(), loadFileInputs(config.forms.uploadlimit), initValidation(), 
-    config.application.debug && console.log("Done •• Matter");
+    loadProgressBar(), config.application.debug && console.log("Done •• Matter");
 }
 
 function buildDropdowns(a) {
@@ -253,6 +253,21 @@ function loadFileInputs() {
     }
 }
 
+function loadProgressBar() {
+    function a(a) {
+        var b = $("progress"), c = b.prev("label"), d = b.find(".progress-bar span");
+        d.width(a + "%").html(a + "%"), c.removeClass("active").width(a + "%").attr("data-progress", a), 
+        b.removeClass("valid").attr("value", a), a >= 10 && c.addClass("active"), a >= 100 && b.addClass("valid");
+    }
+    $("progress").length && ($("[data-progress]").on("click", function() {
+        var b = 0;
+        clearInterval(c);
+        var c = setInterval(function() {
+            100 > b ? (b++, a(b), console.log(b)) : ($(".progress").addClass("valid"), clearInterval(c));
+        }, 300);
+    }), config.application.debug && console.log("Form :: Progress Bar"));
+}
+
 function initNav() {
     for (var a, b = this.location.href, c = b.split("/"), d = $("nav"), e = !1, f = 0; f < c.length; f++) a = c[c.length - 1].split(".")[0];
     d.children("a[href^='#']").each(function() {
@@ -304,37 +319,40 @@ function initValidation() {
         var e = "failure", f = 3e3;
         switch (config.application.debug && console.log("Validation :: " + c), c) {
           case "text":
-            "" !== d ? b.removeClass("invalid").addClass("valid") : (b.removeClass("valid").addClass("invalid"), 
-            notify("This field cannot be left empty.", e, f));
+            "" !== d ? b.removeClass("invalid").addClass("valid") : b.removeClass("valid").addClass("invalid");
             break;
 
           case "number":
             var g = /\D+/;
-            d.length == d.replace(g, "").length ? b.removeClass("invalid").addClass("valid") : (b.removeClass("valid").addClass("invalid"), 
-            notify("This field can only have numbers.", e, f));
+            "" !== d && d.length == d.replace(g, "").length ? b.removeClass("invalid").addClass("valid") : b.removeClass("valid").addClass("invalid");
             break;
 
           case "email":
             var g = /^\S+@\S+\.\S+$/;
-            "" !== d && g.test(d) ? b.removeClass("invalid").addClass("valid") : (b.removeClass("valid").addClass("invalid"), 
-            notify("Your email is invalid.", e, f));
+            "" !== d && g.test(d) ? b.removeClass("invalid").addClass("valid") : b.removeClass("valid").addClass("invalid");
             break;
 
           case "password":
-            a(d) >= 30 ? b.removeClass("invalid").addClass("valid") : (b.removeClass("valid").addClass("invalid"), 
-            notify("Your password is not strong enough.", e, f));
+            a(d) >= 30 ? b.removeClass("invalid").addClass("valid") : b.removeClass("valid").addClass("invalid");
             break;
 
           case "password-match":
             var h = $("input[name='password-match']").eq(0), i = h.val();
-            h.hasClass("valid") && d === i ? b.removeClass("invalid").addClass("valid") : (b.removeClass("valid").addClass("invalid"), 
-            notify("Your passwords must match.", e, f));
+            h.hasClass("valid") && d === i ? b.removeClass("invalid").addClass("valid") : b.removeClass("valid").addClass("invalid");
             break;
 
           case "date":
             var g = /^\d{2}\/\d{2}\/\d{4}$/;
-            "" !== d && g.test(d) ? b.removeClass("invalid").addClass("valid") : (b.removeClass("valid").addClass("invalid"), 
-            notify("The date you entered is not valid.", e, f));
+            "" !== d && g.test(d) ? b.removeClass("invalid").addClass("valid") : b.removeClass("valid").addClass("invalid");
+            break;
+
+          case "form":
+            var j = [];
+            b.find("[required]").each(function() {
+                j.push($(this).hasClass("valid") ? !0 : !1);
+            }), j.indexOf(!1) < 0 ? (b.addClass("valid"), b.find("[required]").prop("disabled", !0), 
+            b.find("button[type='submit']").prop("disabled", !0), notify("Form submitted successfully.", "success", f)) : (b.removeClass("valid"), 
+            b.find("[required]:not('.valid')").addClass("invalid"), notify("Form not submitted. Please review.", e, f));
         }
     }
     config.forms.validation && $("[data-validation]").length && ($("input[data-validation='password']").on("keyup", function() {
@@ -346,8 +364,17 @@ function initValidation() {
         var a = $(this), b = a.attr("data-validation"), d = a.val();
         $(this).hasClass("invalid") && c(a, b, d);
     }).on("blur", function() {
-        var a = $(this), b = a.attr("data-validation"), d = a.val();
+        var a = $(this);
+        setTimeout(function() {
+            var b = a.attr("data-validation"), d = a.val();
+            c(a, b, d);
+        }, 200);
+    }), $("form").on("submit", function() {
+        var a = $(this), b = a.attr("data-validation"), d = "";
         c(a, b, d);
+    }), $("form[novalidate]").on("submit", function() {
+        return config.application.debug ? (console.log("Intentional: Form submit blocked."), 
+        !1) : void 0;
     }), config.application.debug && console.log("Form :: Validation"));
 }
 
@@ -398,7 +425,7 @@ function initAutocomplete() {
                 g === !1 && (b.removeClass("active"), h.unhighlight());
             });
         }
-        var b = $(this), c = b.children("input"), d = -1, e = b.data("autocomplete"), f = c.data("autocomplete-subject"), g = !1;
+        var b = $(this), c = b.children("input"), d = -1, e = b.data("autocomplete"), f = c.data("autocomplete-parameter"), g = !1;
         b.append("<div class='divider'>" + f + "</div>"), b.append("<ul class='autocomplete-results'></ul>");
         var h = b.children("ul");
         dataRequest(e, "GET", a);
@@ -547,48 +574,53 @@ function initOverlays() {
 function initSearch() {
     $("[data-search]").length && ($("[data-search]").each(function(a) {
         function b(a) {
-            function b(a, b) {
-                var c;
-                return b.length > a.length && (c = b, b = a, a = c), a.filter(function(a) {
-                    return -1 !== b.indexOf(a) ? !0 : void 0;
-                });
-            }
-            function h() {
-                var c = [], c = [], h = [];
-                g.html(""), e.each(function() {
-                    for (var d = $(this).data("search-subject"), e = d.replace(/\s/g, "").split(","), f = 0; f < e.length; f++) {
-                        var g = [];
-                        c[e[f]] = [];
-                        for (var h = 0; h < a.Items.length; h++) {
-                            var i = a.Items[h], j = i.Id;
-                            compare = searchArray[e[f]], analyse = i[e[f]], analyse instanceof Array ? b(analyse, compare).length && $.inArray(j, g) < 0 && g.push(j) : analyse.indexOf(compare) > -1 && $.inArray(j, g) < 0 && g.push(j);
+            function b() {
+                g.html(""), $.arrayIntersect = function(a, b) {
+                    return $.grep(a, function(a) {
+                        return $.inArray(a, b) > -1;
+                    });
+                }, e.each(function() {
+                    var b = $(this).data("search-parameter"), c = b.replace(/\s/g, "").split(","), d = [];
+                    k[b] = [];
+                    for (var e = 0; e < c.length; e++) {
+                        for (var f = 0; f < a.Items.length; f++) {
+                            var g = a.Items[f], h = g.Id;
+                            compare = outputArray[b], n = g[c[e]], n instanceof Array ? $.arrayIntersect(n, compare).length > 0 && $.inArray(h, d) < 0 && d.push(h) : n.indexOf(compare) > -1 && $.inArray(h, d) < 0 && d.push(h);
                         }
-                        c[e[f]] = g;
+                        k[b] = d;
                     }
-                }), f.children(".tag[data-tag-subject]").each(function() {
-                    var d = $(this).data("tag-subject"), e = d, f = searchArray[d], g = [];
-                    c[d] = [];
-                    for (var h = 0; h < a.Items.length; h++) {
-                        var i = a.Items[h], j = i.Id, k = i[e];
-                        k instanceof Array ? b(k, f).length && $.inArray(j, g) < 0 && g.push(j) : $.inArray(k, f) > -1 && $.inArray(j, g) < 0 && g.push(j);
+                }), f.children(".tag[data-tag-parameter]").each(function() {
+                    var b = $(this).data("tag-parameter"), c = b, d = outputArray[b], e = [];
+                    k[b] = [];
+                    for (var f = 0; f < a.Items.length; f++) {
+                        var g = a.Items[f], h = g.Id, i = g[c];
+                        i instanceof Array ? $.arrayIntersect(i, d).length > 0 && $.inArray(h, e) < 0 && e.push(h) : $.inArray(i, d) > -1 && $.inArray(h, e) < 0 && e.push(h);
                     }
-                    c[d] = g;
+                    k[b] = e;
                 });
-                for (var i = [], j = 0; j < k.length; j++) i = c[k[j]];
-                console.log(searchArray, c, h);
-                for (var j = 0; j < a.Items.length; j++) {
-                    var l = a.Items[j], m = l.Id, n = l.Image, o = l.Title, p = new Date(l.Date), q = p.getHours() < 10 ? "0" + p.getHours() : p.getHours();
-                    minute = p.getMinutes() < 10 ? "0" + p.getMinutes() : p.getMinutes(), day = p.getDate() < 10 ? "0" + p.getDate() : p.getDate(), 
-                    month = p.getMonth() + 1 < 10 ? "0" + (p.getMonth() + 1) : p.getMonth() + 1, year = p.getFullYear() < 10 ? "0" + p.getFullYear() : p.getFullYear(), 
-                    fulldate = q + ":" + minute + " @ " + day + "/" + month + "/" + year, d = l.Url, 
-                    summary = l.Summary, type = l.Type, categories = l.Categories, tags = l.Tags, item = '<div class="search-item">										 <a href="' + d + '">											 <img src="' + n + '" />											 <div class="title">' + o + '</div>										 </a>										 <div class="date">' + fulldate + '</div>										 <div class="summary">' + summary + '</div>										 <div class="type">Type: ' + type + '</div>										 <div class="categories">Categories: ' + categories + '</div>										 <div class="tags">Tags: ' + tags + "</div>									</div>";
-                    for (var r = 0; r < h.length; r++) m == h[r] && g.append(item);
+                for (var b = [], c = [], h = [], i = 0; i < a.Items.length; i++) {
+                    var l = a.Items[i], m = l.Id;
+                    c.push(m);
+                }
+                for (var i = 0; i < j.length; i++) {
+                    var n = k[j[i]];
+                    console.log(n.length > 0, $.arrayIntersect(n, c), $.arrayIntersect(n, b)), n.length > 0 && $.arrayIntersect(n, c).length > 0 && console.log($.arrayIntersect(n, b)), 
+                    b = h;
+                }
+                console.log(outputArray, k, h, h.length);
+                for (var i = 0; i < a.Items.length; i++) {
+                    var l = a.Items[i], m = l.Id, o = l.Image, p = l.Title, q = new Date(l.Date), r = q.getHours() < 10 ? "0" + q.getHours() : q.getHours();
+                    minute = q.getMinutes() < 10 ? "0" + q.getMinutes() : q.getMinutes(), day = q.getDate() < 10 ? "0" + q.getDate() : q.getDate(), 
+                    month = q.getMonth() + 1 < 10 ? "0" + (q.getMonth() + 1) : q.getMonth() + 1, year = q.getFullYear() < 10 ? "0" + q.getFullYear() : q.getFullYear(), 
+                    fulldate = r + ":" + minute + " @ " + day + "/" + month + "/" + year, d = l.Url, 
+                    summary = l.Summary, type = l.Type, categories = l.Categories, tags = l.Tags, item = '<div class="search-item">										 <a href="' + d + '">											 <img src="' + o + '" />											 <div class="title">' + p + '</div>										 </a>										 <div class="date">' + fulldate + '</div>										 <div class="summary">' + summary + '</div>										 <div class="type">Type: ' + type + '</div>										 <div class="categories">Categories: ' + categories + '</div>										 <div class="tags">Tags: ' + tags + "</div>									</div>";
+                    for (var s = 0; s < h.length; s++) m == h[s] && g.append(item);
                 }
                 g.children(".search-item").length ? g.show() : g.hide();
             }
-            function i(b) {
-                var d = c.find("select[data-search-subject='" + b + "']"), e = [];
-                searchArray[b] = [];
+            function h(b) {
+                var d = c.find("select[data-search-parameter='" + b + "']"), e = [];
+                outputArray[b] = [], k[b] = [];
                 for (var f = 0; f < a.Items.length; f++) {
                     var g = a.Items[f], h = g[b];
                     if (h instanceof Array) for (var i = 0; i < h.length; i++) $.inArray(h[i], e) < 0 && e.push(h[i]); else $.inArray(h, e) < 0 && e.push(h);
@@ -596,47 +628,41 @@ function initSearch() {
                 e.sort();
                 var j = '<option class="placeholder">Select ' + b + "...</option>";
                 d.append(j);
-                for (var k in e) {
-                    var l = '<option value="' + e[k] + '">' + e[k] + "</option>";
-                    d.append(l);
+                for (var l in e) {
+                    var m = '<option value="' + e[l] + '">' + e[l] + "</option>";
+                    d.append(m);
                 }
             }
-            function j(a) {
-                var b = f.children(".tag[data-tag-subject='" + a + "']"), c = [];
-                searchArray[a] = [];
-                for (var d = 0; d < b.length; d++) {
+            function i(a) {
+                for (var b = f.children(".tag[data-tag-parameter='" + a + "']"), c = [], d = 0; d < b.length; d++) {
                     var e = b.eq(d).data("tag");
                     c.push(e);
                 }
-                searchArray[a] = c, initSVGs();
+                outputArray[a] = c, initSVGs();
             }
-            var k = [];
+            var j = [], k = [];
             e.each(function() {
-                for (var a = $(this).data("search-subject").replace(/\s/g, "").split(","), b = 0; b < a.length; b++) $.inArray(a[b], k) < 0 && k.push(a[b]);
-                $(this).on("keydown", function(b) {
-                    if (13 === b.keyCode) {
-                        var c = $(this).val();
-                        a = $(this).data("search-subject"), criteria = a.replace(/\s/g, "").split(",");
-                        for (var d = 0; d < criteria.length; d++) searchArray[criteria[d]] = c;
-                        return h(), !1;
-                    }
+                var a = $(this).data("search-parameter");
+                j.push(a), outputArray[a] = [], k[a] = [], $(this).on("keyup", function() {
+                    var c = $(this).val();
+                    return a = $(this).data("search-parameter"), outputArray[a] = c, b(), !1;
                 });
             }), select.each(function(a) {
-                var b = ($(this).val(), $(this).data("search-subject"));
-                i(b), $.inArray(b, k) < 0 && k.push(b), $(this).on("change", function(c) {
-                    c.preventDefault();
-                    var d = $(this).val(), e = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-subject="' + b + '" data-tag="' + d + '"><span>' + d + "</span>" + tagclose + "</li>";
-                    "" !== d && ($.inArray(d, searchArray[b]) < 0 ? f.addClass("active").append(e) : notify("This tag already exists.", "failure")), 
-                    j(b), h();
+                var c = ($(this).val(), $(this).data("search-parameter"));
+                h(c), j.push(c), outputArray[c] = [], k[c] = [], $(this).on("change", function(d) {
+                    d.preventDefault();
+                    var e = $(this).val(), g = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-parameter="' + c + '" data-tag="' + e + '"><span>' + e + "</span>" + tagclose + "</li>";
+                    "" !== e && ($.inArray(e, outputArray[c]) < 0 ? f.addClass("active").append(g) : notify("This tag already exists.", "failure")), 
+                    i(c), b();
                 });
             }), f.on("click", ".tag", function() {
-                var a = $(this).data("tag-subject");
+                var a = $(this).data("tag-parameter");
                 $(this).remove(), f.children(".tag").length > 0 ? f.addClass("active") : f.removeClass("active"), 
-                j(a), h();
-            }), initDropdowns(), h();
+                i(a), b();
+            }), initDropdowns(), b();
         }
-        var c = $(this), d = c.data("search"), e = c.find("input[data-search-subject]");
-        select = c.find("select[data-search-subject]"), searchArray = [], tagcloudElement = '<ul class="tagcloud"></ul>', 
+        var c = $(this), d = c.data("search"), e = c.find("input[data-search-parameter]");
+        select = c.find("select[data-search-parameter]"), outputArray = [], tagcloudElement = '<ul class="tagcloud"></ul>', 
         tagclose = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">', 
         resultsElement = '<div class="search-results valign-middle"></div>', c.append(tagcloudElement).append(resultsElement);
         var f = c.find("ul.tagcloud"), g = c.find(".search-results");
@@ -6024,7 +6050,8 @@ var config = {
     twitter: {
         twitterID: "492660537293938688",
         domID: "widget-twitter",
-        maxTweets: 5,
+        maxTweets: 3,
+        startAt: 0,
         enableLinks: !0,
         showUser: !0,
         showFollow: !1,
@@ -6074,9 +6101,6 @@ $(document).ready(initFramework), $(window).on("load", function() {
         todayBtn: "linked",
         todayHighlight: !0,
         startDate: new Date()
-    }), $("form").on("submit", function() {
-        return config.application.debug ? (console.log("Intentional: Form submit blocked."), 
-        !1) : void 0;
     });
 });
 
@@ -6416,8 +6440,9 @@ var twitterFetcher = function() {
             void 0 === a.showTime && (a.showTime = !0), void 0 === a.dateFunction && (a.dateFunction = "default"), 
             void 0 === a.showRetweet && (a.showRetweet = !0), void 0 === a.customCallback && (a.customCallback = null), 
             void 0 === a.showInteraction && (a.showInteraction = !0), g) f.push(a); else {
-                g = !0, c = a.domID, d = a.maxTweets, e = a.enableLinks, h = a.showUser, i = a.showTime, 
-                l = a.showRetweet, j = a.dateFunction, m = a.customCallback, n = a.showInteraction;
+                g = !0, c = a.domID, d = a.maxTweets + config.twitter.startAt, e = a.enableLinks, 
+                h = a.showUser, i = a.showTime, l = a.showRetweet, j = a.dateFunction, m = a.customCallback, 
+                n = a.showInteraction;
                 var b = document.createElement("script");
                 b.type = "text/javascript", b.src = "//cdn.syndication.twimg.com/widgets/timelines/" + a.twitterID + "?&lang=en&callback=twitterFetcher.callback&suppress_response_codes=true&rnd=" + Math.random(), 
                 document.getElementsByTagName("head")[0].appendChild(b);
@@ -6428,7 +6453,7 @@ var twitterFetcher = function() {
                 var e = screen.width / 2 - c / 2, f = screen.height / 2 - d / 2;
                 return window.open(a, b, "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=" + c + ", height=" + d + ", top=" + f + ", left=" + e);
             }
-            var c = a.length, d = 0, e = document.getElementById(config.twitter.domID), f = '<div class="twitter-user"></div>';
+            var c = a.length, d = config.twitter.startAt, e = document.getElementById(config.twitter.domID), f = '<div class="twitter-user"></div>';
             for (f += '<div class="content feed">'; c > d; ) f += "<hr>", f += '<div class="tweet-item">' + a[d] + "</div>", 
             d++;
             if (f += "</div>", f += '<div class="button input-medium center twitter-follow">Follow Us</div>', 
@@ -6489,14 +6514,6 @@ var twitterFetcher = function() {
 $(document).ready(function() {
     $(".nav-trigger").on("click", function() {
         $("header").hasClass("active") ? $("header").addClass("active") : $("header").removeClass("active");
-    });
-    var a = 0;
-    $("progress").each(function() {
-        var b = $(this), c = b.prev("label"), d = b.find(".progress-bar span");
-        setInterval(function() {
-            100 > a ? a++ : a = 0, b.attr("value", a), c.width(a + "%").attr("data-progress", a), 
-            d.width(a + "%").html(a + "%");
-        }, 500);
     }), $(".sidebar").append("<ul></ul>"), $(".main a.anchor").each(function(a) {
         var b = $(this).attr("id"), c = $(this).next().html();
         $(".sidebar ul").append('<li><a href="#' + b + '">' + c + "</a></li>"), 0 === a && $(".sidebar ul a").addClass("active");

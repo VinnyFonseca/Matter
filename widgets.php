@@ -367,7 +367,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div id="widget-twitter"></div>
+		<div id="widget-twitter" class="widget-twitter"></div>
 
 		<p>
 			<strong>Example:</strong>

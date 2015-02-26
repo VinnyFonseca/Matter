@@ -36,7 +36,8 @@ var config = {
 	twitter: {
 		twitterID: '492660537293938688', // Generated via Twitter.com. See the matterframework.net/widgets..
 		domID: 'widget-twitter', // str: Dom element's ID.
-		maxTweets: 5, // int:  Maximum number of tweets shown at any time.
+		maxTweets: 3, // int: Maximum number of tweets shown at any time.
+		startAt: 0, // int: Starting tweet index.
 		enableLinks: true, // bool: Turns URLs and hashtags into links.
 		showUser: true, // bool: Show User's avatar.
 		showFollow: false, // bool: Show User's avatar.

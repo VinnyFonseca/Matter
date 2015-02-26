@@ -7,22 +7,22 @@ function initAutocomplete() {
 				input = el.children("input"),
 				itemIndex = -1,
 				url = el.data("autocomplete"),
-				subject = input.data("autocomplete-subject"),
+				parameter = input.data("autocomplete-parameter"),
 				selecting = false;
 
-			el.append("<div class='divider'>" + subject + "</div>");
+			el.append("<div class='divider'>" + parameter + "</div>");
 			el.append("<ul class='autocomplete-results'></ul>");
 			var list = el.children("ul");
 
 			dataRequest(url, "GET", build);
 
 			function build(data) {
-				function populateList(subject) {
+				function populateList(parameter) {
 					var tempArray = [];
 
 					for ( var i = 0; i < data.Items.length; i++ ) {
 						var object = data.Items[i];
-						var property = object[subject];
+						var property = object[parameter];
 
 						if ( property instanceof Array ) {
 							for ( var k = 0; k < property.length; k++ )
@@ -35,7 +35,7 @@ function initAutocomplete() {
 					tempArray.sort();
 					for ( var value in tempArray ) list.append("<li>" + tempArray[value] + "</li>");
 				}
-				populateList(subject);
+				populateList(parameter);
 
 
 				var item = list.children("li").not(".divider");

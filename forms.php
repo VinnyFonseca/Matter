@@ -14,8 +14,8 @@
 
 		<p class="emphasis">Note: This section is currently under heavy development.</p>
 
-		<form novalidate action="#">
-			<input type="hidden" name="hidden field" value="42">
+		<form action="#" novalidate data-validation="form">
+			<input type="hidden" value="42">
 
 			<a href="#" class="anchor" id="input"></a>
 
@@ -57,53 +57,65 @@
 				<input type="password" name="password-match" placeholder="Repeat password" data-validation="password-match" required>
 			</div>
 
-			<label data-progress="0">Progress Bar</label>
-			<progress max="100" value="0">
-				<div class="progress-bar">
-					<span>0%</span>
-				</div>
-			</progress>
+			<button class="primary" type="submit">Validate and Send</button>
+			<button type="reset">Reset</button>
+		</form>
 
 
-			<br>
+		<br>
 
 
-			<h4>States</h4>
+		<h4>Progress Bar</h4>
 
-			<label>Valid</label>
-			<input type="text" name="text" placeholder="Valid input" class="valid" required>
-
-			<label>Invalid</label>
-			<input type="text" name="text" placeholder="Invalid input" class="invalid" required>
-
-			<label>Disabled</label>
-			<input type="text" name="text" placeholder="Disabled input" disabled>
-
-
-			<br>
+		<label data-progress="0">Progress Bar</label>
+		<progress max="100" value="0">
+			<div class="progress-bar">
+				<span>0%</span>
+			</div>
+		</progress>
+		<button class="primary" data-progress="100">Trigger Progress</button>
 
 
-			<h4>Date</h4>
+		<br>
+		<br>
 
-			<p>
-				<strong>Credit:</strong> <a href="https://bootstrap-datepicker.readthedocs.org/en/release/" target="_blank">Bootstrap Datepicker</a>.
-			</p>
 
-			<label>Calendar input</label>
-			<input type="text" placeholder="dd/mm/yyyy" data-calendar="true">
+		<h4>States</h4>
+
+		<label>Valid</label>
+		<input type="text" name="text" placeholder="Valid input" class="valid" required>
+
+		<label>Invalid</label>
+		<input type="text" name="text" placeholder="Invalid input" class="invalid" required>
+
+		<label>Disabled</label>
+		<input type="text" name="text" placeholder="Disabled input" disabled>
+
+
+		<br>
+
+
+		<h4>Date</h4>
+
+		<p>
+			<strong>Credit:</strong> <a href="https://bootstrap-datepicker.readthedocs.org/en/release/" target="_blank">Bootstrap Datepicker</a>.
+		</p>
+
+		<label>Calendar input</label>
+		<input type="text" placeholder="dd/mm/yyyy" data-calendar="true">
 
 <pre>
 &lt;input type="text" placeholder="dd/mm/yyyy" <span class="emphasis">data-calendar="true"</span>&gt;
 </pre>
 
-			<br>
+		<br>
 
-			<label>Date range calendar input</label>
-			<div class="input-group input-daterange">
-				<input type="text" placeholder="Start date (dd/mm/yyyy)">
-				<div class="input-addon">to</div>
-				<input type="text" placeholder="End date (dd/mm/yyyy)">
-			</div>
+		<label>Date range calendar input</label>
+		<div class="input-group input-daterange">
+			<input type="text" placeholder="Start date (dd/mm/yyyy)">
+			<div class="input-addon">to</div>
+			<input type="text" placeholder="End date (dd/mm/yyyy)">
+		</div>
 
 <pre>
 &lt;div class="input-group <span class="emphasis">input-daterange</span>"&gt;
@@ -115,67 +127,67 @@
 
 
 
-			<hr>
+		<hr>
 
 
 
-			<a href="#" class="anchor" id="select"></a>
+		<a href="#" class="anchor" id="select"></a>
 
-			<h2>Select</h2>
+		<h2>Select</h2>
 
-			<select name="select1">
-				<option class="placeholder">Please select...</option>
-				<option>one</option>
-				<option>two</option>
-				<option>three</option>
-				<option>four</option>
-				<option>five</option>
-				<option>six</option>
-				<option>seven</option>
-				<option>eight</option>
-				<option>nine</option>
-				<option>ten</option>
-			</select>
+		<select name="select1">
+			<option class="placeholder">Please select...</option>
+			<option>one</option>
+			<option>two</option>
+			<option>three</option>
+			<option>four</option>
+			<option>five</option>
+			<option>six</option>
+			<option>seven</option>
+			<option>eight</option>
+			<option>nine</option>
+			<option>ten</option>
+		</select>
 
 <pre>
 &lt;select name="select1"&gt;&lt;/select&gt;
 </pre>
 
-			<br>
+		<br>
 
-			<select name="select2" size="1">
-				<option class="placeholder">Please select...</option>
-				<option>one</option>
-				<option selected="">two</option>
-				<option>three</option>
-				<option>four</option>
-				<option>five</option>
-				<option>six</option>
-				<option>seven</option>
-				<option>eight</option>
-				<option>nine</option>
-				<option>ten</option>
-			</select>
+		<select name="select2" size="1">
+			<option class="placeholder">Please select...</option>
+			<option>one</option>
+			<option selected="">two</option>
+			<option>three</option>
+			<option>four</option>
+			<option>five</option>
+			<option>six</option>
+			<option>seven</option>
+			<option>eight</option>
+			<option>nine</option>
+			<option>ten</option>
+		</select>
 
 <pre>
 &lt;select name="select1" <span class="emphasis">size="1"</span>&gt;&lt;/select&gt;
 </pre>
 
-			<br>
+		<br>
 
-			<select name="select3" size="5">
-				<option class="placeholder">Please select...</option>
-				<option>one</option>
-				<option selected="">two</option>
-				<option>three</option>
-				<option>four</option>
-				<option>five</option>
-				<option>six</option>
-				<option>seven</option>
-				<option>eight</option>
-				<option>nine</option>
-				<option>ten</option>
-			</select>
+		<select name="select3" size="5">
+			<option class="placeholder">Please select...</option>
+			<option>one</option>
+			<option selected="">two</option>
+			<option>three</option>
+			<option>four</option>
+			<option>five</option>
+			<option>six</option>
+			<option>seven</option>
+			<option>eight</option>
+			<option>nine</option>
+			<option>ten</option>
+		</select>
 
 <pre>
 &lt;select name="select1" <span class="emphasis">size="5"</span>&gt;&lt;/select&gt;
@@ -183,44 +195,44 @@
 
 
 
-			<hr>
+		<hr>
 
 
 
-			<a href="#" class="anchor" id="textarea"></a>
+		<a href="#" class="anchor" id="textarea"></a>
 
-			<h2>Textarea</h2>
+		<h2>Textarea</h2>
 
-			<label>Multi-line text input field (textarea):</label>
-			<textarea name="textarea" rows="2" cols="20" placeholder="Default text"></textarea>
-
-
-
-			<hr>
+		<label>Multi-line text input field (textarea):</label>
+		<textarea name="textarea" rows="2" cols="20" placeholder="Default text"></textarea>
 
 
 
-			<a href="#" class="anchor" id="fieldset"></a>
+		<hr>
 
-			<h2>Checkboxes, Radio Buttons &amp; Toggles</h2>
 
-			<p>They are styled with CSS3 <code>:before</code> pseudo elements. They are wrapped in a <code>.controller.<var>input type</var></code>.</p>
 
-			<h4>Checkboxes</h4>
+		<a href="#" class="anchor" id="fieldset"></a>
 
-			<fieldset>
-				<legend>Checkboxes Group</legend>
+		<h2>Checkboxes, Radio Buttons &amp; Toggles</h2>
 
-				<div class="controller checkbox">
-					<input id="f3" type="checkbox" name="checkbox">
-					<label for="f3" class="control">Checkbox 1</label>
-				</div>
+		<p>They are styled with CSS3 <code>:before</code> pseudo elements. They are wrapped in a <code>.controller.<var>input type</var></code>.</p>
 
-				<div class="controller checkbox">
-					<input id="f4" type="checkbox" name="checkbox2" checked="">
-					<label for="f4" class="control">Checkbox Checked</label>
-				</div>
-			</fieldset>
+		<h4>Checkboxes</h4>
+
+		<fieldset>
+			<legend>Checkboxes Group</legend>
+
+			<div class="controller checkbox">
+				<input id="f3" type="checkbox" name="checkbox">
+				<label for="f3" class="control">Checkbox 1</label>
+			</div>
+
+			<div class="controller checkbox">
+				<input id="f4" type="checkbox" name="checkbox2" checked="">
+				<label for="f4" class="control">Checkbox Checked</label>
+			</div>
+		</fieldset>
 
 <pre>
 &lt;fieldset&gt;
@@ -233,23 +245,23 @@
 &lt;/fieldset&gt;
 </pre>
 
-			<br>
+		<br>
 
-			<h4>Radio Buttons</h4>
+		<h4>Radio Buttons</h4>
 
-			<fieldset>
-				<legend>Radio Buttons Group</legend>
+		<fieldset>
+			<legend>Radio Buttons Group</legend>
 
-				<div class="controller radio">
-					<input id="f1" type="radio" name="radio" value="1">
-					<label for="f1" class="control">Radio button 1</label>
-				</div>
+			<div class="controller radio">
+				<input id="f1" type="radio" name="radio" value="1">
+				<label for="f1" class="control">Radio button 1</label>
+			</div>
 
-				<div class="controller radio">
-					<input id="f2" type="radio" name="radio" value="2" checked="">
-					<label for="f2" class="control">Radio button Checked</label>
-				</div>
-			</fieldset>
+			<div class="controller radio">
+				<input id="f2" type="radio" name="radio" value="2" checked="">
+				<label for="f2" class="control">Radio button Checked</label>
+			</div>
+		</fieldset>
 
 <pre>
 &lt;fieldset&gt;
@@ -262,44 +274,44 @@
 &lt;/fieldset&gt;
 </pre>
 
-			<br>
+		<br>
 
-			<h4>Toggles</h4>
+		<h4>Toggles</h4>
 
-			<fieldset>
-				<legend>Toggles Group</legend>
+		<fieldset>
+			<legend>Toggles Group</legend>
 
-				<div class="controller toggle">
-					<input id="f5" type="checkbox" />
-					<label for="f5">
-						<span class="toggle-body">
-							<span class="toggle-switch"></span>
-							<span class="toggle-track">
-							<span class="toggle-background"></span>
-								<span class="toggle-background toggle-background-negative"></span>
-							</span>
+			<div class="controller toggle">
+				<input id="f5" type="checkbox" />
+				<label for="f5">
+					<span class="toggle-body">
+						<span class="toggle-switch"></span>
+						<span class="toggle-track">
+						<span class="toggle-background"></span>
+							<span class="toggle-background toggle-background-negative"></span>
 						</span>
+					</span>
 
-						Toggle 1
-					</label>
-				</div>
+					Toggle 1
+				</label>
+			</div>
 
-				<div class="controller toggle">
-					<input id="f6" type="checkbox" checked="" />
-					<label for="f6">
-						<span class="toggle-body">
-							<span class="toggle-switch"></span>
-							<span class="toggle-track">
-							<span class="toggle-background"></span>
-								<span class="toggle-background toggle-background-negative"></span>
-							</span>
+			<div class="controller toggle">
+				<input id="f6" type="checkbox" checked="" />
+				<label for="f6">
+					<span class="toggle-body">
+						<span class="toggle-switch"></span>
+						<span class="toggle-track">
+						<span class="toggle-background"></span>
+							<span class="toggle-background toggle-background-negative"></span>
 						</span>
+					</span>
 
-						Toggle Checked
-					</label>
-				</div>
-				<small>Credit: <a href="http://petelada.com/2015/01/31/css-only-toggle.html" class="explicit">Pete Lada</a></small>
-			</fieldset>
+					Toggle Checked
+				</label>
+			</div>
+			<small>Credit: <a href="http://petelada.com/2015/01/31/css-only-toggle.html" class="explicit">Pete Lada</a></small>
+		</fieldset>
 
 <pre>
 &lt;fieldset&gt;
@@ -324,50 +336,50 @@
 
 
 
-			<hr>
+		<hr>
 
 
 
-			<a href="#" class="anchor" id="file"></a>
+		<a href="#" class="anchor" id="file"></a>
 
-			<h2>File Upload</h2>
+		<h2>File Upload</h2>
 
-			<br>
+		<br>
 
-			<h4>Single Upload</h4>
+		<h4>Single Upload</h4>
 
-			<p class="emphasis mobile-show">Multiple file upload is not available in the mobile version. Please access the desktop version.</p>
+		<p class="emphasis mobile-show">Multiple file upload is not available in the mobile version. Please access the desktop version.</p>
 
-			<div class="file-wrapper mobile-hide">
-				<input type="file" />
+		<div class="file-wrapper mobile-hide">
+			<input type="file" />
 
-				<div class="fakefile">
-					<div class="button primary fake-upload">Choose File</div>
-					<div class="file-result">No file chosen</div>
-				</div>
+			<div class="fakefile">
+				<div class="button primary fake-upload">Choose File</div>
+				<div class="file-result">No file chosen</div>
 			</div>
+		</div>
 
 
-			<br>
+		<br>
 
-			<h4>Multiple Upload</h4>
+		<h4>Multiple Upload</h4>
 
-			<p class="emphasis mobile-show">Multiple file upload is not available in the mobile version. Please access the desktop version.</p>
+		<p class="emphasis mobile-show">Multiple file upload is not available in the mobile version. Please access the desktop version.</p>
 
-			<div class="multifile-info form-info">
-				You've got <strong class="emphasis font-expanded multi-limit">0</strong>
-				remaining upload<span class="plural">s</span>.
+		<div class="multifile-info form-info">
+			You've got <strong class="emphasis font-expanded multi-limit">0</strong>
+			remaining upload<span class="plural">s</span>.
+		</div>
+
+		<div class="multifile-wrapper mobile-hide last">
+			<input type="file" />
+
+			<div class="fakefile">
+				<div class="button primary fake-upload">Choose File</div>
+				<div class="file-result">No file chosen</div>
+				<div class="button primary fake-close">&times;</div>
 			</div>
-
-			<div class="multifile-wrapper mobile-hide last">
-				<input type="file" />
-
-				<div class="fakefile">
-					<div class="button primary fake-upload">Choose File</div>
-					<div class="file-result">No file chosen</div>
-					<div class="button primary fake-close">&times;</div>
-				</div>
-			</div>
+		</div>
 
 <pre>
 &lt;div class="multifile-info form-info"&gt;
@@ -388,18 +400,17 @@
 
 
 
-			<hr>
+		<hr>
 
 
 
-			<a href="#" class="anchor" id="buttons"></a>
+		<a href="#" class="anchor" id="buttons"></a>
 
-			<h2>Buttons</h2>
+		<h2>Buttons</h2>
 
-			<button class="primary" type="submit">Validate and Send</button>
-			<button disabled>Disabled</button>
-			<button type="reset">Reset</button>
-		</form>
+		<button class="primary" type="submit">Validate and Send</button>
+		<button disabled>Disabled</button>
+		<button type="reset">Reset</button>
 
 	</div>
 </div>
