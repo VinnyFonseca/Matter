@@ -547,65 +547,100 @@ function initOverlays() {
 function initSearch() {
     $("[data-search]").length && ($("[data-search]").each(function(a) {
         function b(a) {
-            function b(b) {
-                var d = [], e = c.find("select[data-search-subject='" + b + "']");
-                searchArray[b] = [];
-                for (var f = 0; f < a.Items.length; f++) {
-                    var g = a.Items[f], h = g[b];
-                    if (h instanceof Array) for (var i = 0; i < h.length; i++) $.inArray(h[i], d) < 0 && d.push(h[i]); else $.inArray(h, d) < 0 && d.push(h);
-                }
-                d.sort();
-                var j = '<option class="placeholder">Select ' + b + "...</option>";
-                e.append(j);
-                for (var k in d) {
-                    var l = '<option value="' + d[k] + '">' + d[k] + "</option>";
-                    e.append(l);
-                }
+            function b(a, b) {
+                var c;
+                return b.length > a.length && (c = b, b = a, a = c), a.filter(function(a) {
+                    return -1 !== b.indexOf(a) ? !0 : void 0;
+                });
             }
-            function h(a) {
-                for (var b = [], c = f.children(".tag[data-tag-subject='" + a + "']"), d = 0; d < c.length; d++) {
-                    var e = c.eq(d).data("tag");
-                    b.push(e);
-                }
-                searchArray[a] = b, initSVGs();
-            }
-            function i() {
-                for (var b = 0; b < a.Items.length; b++) {
-                    var c = a.Items[b], e = (c.Id, c.Image), f = c.Title, h = new Date(c.Date), i = h.getHours() < 10 ? "0" + h.getHours() : h.getHours();
-                    minute = h.getMinutes() < 10 ? "0" + h.getMinutes() : h.getMinutes(), day = h.getDate() < 10 ? "0" + h.getDate() : h.getDate(), 
-                    month = h.getMonth() + 1 < 10 ? "0" + (h.getMonth() + 1) : h.getMonth() + 1, year = h.getFullYear() < 10 ? "0" + h.getFullYear() : h.getFullYear(), 
-                    fulldate = i + ":" + minute + " @ " + day + "/" + month + "/" + year, d = c.Url, 
-                    summary = c.Summary, type = c.Type, categories = c.Categories, tags = c.Tags, item = '<div class="search-item">											 <a href="' + d + '">												 <img src="' + e + '" />												 <div class="title">' + f + '</div>											 </a>											 <div class="date">' + fulldate + '</div>											 <div class="summary">' + summary + '</div>											 <div class="type">Type: ' + type + '</div>											 <div class="categories">Categories: ' + categories + '</div>											 <div class="tags">Tags: ' + tags + "</div>										</div>", 
-                    g.append(item);
+            function h() {
+                var c = [], c = [], h = [];
+                g.html(""), e.each(function() {
+                    for (var d = $(this).data("search-subject"), e = d.replace(/\s/g, "").split(","), f = 0; f < e.length; f++) {
+                        var g = [];
+                        c[e[f]] = [];
+                        for (var h = 0; h < a.Items.length; h++) {
+                            var i = a.Items[h], j = i.Id;
+                            compare = searchArray[e[f]], analyse = i[e[f]], analyse instanceof Array ? b(analyse, compare).length && $.inArray(j, g) < 0 && g.push(j) : analyse.indexOf(compare) > -1 && $.inArray(j, g) < 0 && g.push(j);
+                        }
+                        c[e[f]] = g;
+                    }
+                }), f.children(".tag[data-tag-subject]").each(function() {
+                    var d = $(this).data("tag-subject"), e = d, f = searchArray[d], g = [];
+                    c[d] = [];
+                    for (var h = 0; h < a.Items.length; h++) {
+                        var i = a.Items[h], j = i.Id, k = i[e];
+                        k instanceof Array ? b(k, f).length && $.inArray(j, g) < 0 && g.push(j) : $.inArray(k, f) > -1 && $.inArray(j, g) < 0 && g.push(j);
+                    }
+                    c[d] = g;
+                });
+                for (var i = [], j = 0; j < k.length; j++) i = c[k[j]];
+                console.log(searchArray, c, h);
+                for (var j = 0; j < a.Items.length; j++) {
+                    var l = a.Items[j], m = l.Id, n = l.Image, o = l.Title, p = new Date(l.Date), q = p.getHours() < 10 ? "0" + p.getHours() : p.getHours();
+                    minute = p.getMinutes() < 10 ? "0" + p.getMinutes() : p.getMinutes(), day = p.getDate() < 10 ? "0" + p.getDate() : p.getDate(), 
+                    month = p.getMonth() + 1 < 10 ? "0" + (p.getMonth() + 1) : p.getMonth() + 1, year = p.getFullYear() < 10 ? "0" + p.getFullYear() : p.getFullYear(), 
+                    fulldate = q + ":" + minute + " @ " + day + "/" + month + "/" + year, d = l.Url, 
+                    summary = l.Summary, type = l.Type, categories = l.Categories, tags = l.Tags, item = '<div class="search-item">										 <a href="' + d + '">											 <img src="' + n + '" />											 <div class="title">' + o + '</div>										 </a>										 <div class="date">' + fulldate + '</div>										 <div class="summary">' + summary + '</div>										 <div class="type">Type: ' + type + '</div>										 <div class="categories">Categories: ' + categories + '</div>										 <div class="tags">Tags: ' + tags + "</div>									</div>";
+                    for (var r = 0; r < h.length; r++) m == h[r] && g.append(item);
                 }
                 g.children(".search-item").length ? g.show() : g.hide();
             }
-            e.on("keydown", function(a) {
-                if (13 === a.keyCode) {
-                    var b = $(this).val();
-                    return subject = $(this).data("search-subject"), "" !== b && (searchArray[subject] = b), 
-                    i(), !1;
+            function i(b) {
+                var d = c.find("select[data-search-subject='" + b + "']"), e = [];
+                searchArray[b] = [];
+                for (var f = 0; f < a.Items.length; f++) {
+                    var g = a.Items[f], h = g[b];
+                    if (h instanceof Array) for (var i = 0; i < h.length; i++) $.inArray(h[i], e) < 0 && e.push(h[i]); else $.inArray(h, e) < 0 && e.push(h);
                 }
+                e.sort();
+                var j = '<option class="placeholder">Select ' + b + "...</option>";
+                d.append(j);
+                for (var k in e) {
+                    var l = '<option value="' + e[k] + '">' + e[k] + "</option>";
+                    d.append(l);
+                }
+            }
+            function j(a) {
+                var b = f.children(".tag[data-tag-subject='" + a + "']"), c = [];
+                searchArray[a] = [];
+                for (var d = 0; d < b.length; d++) {
+                    var e = b.eq(d).data("tag");
+                    c.push(e);
+                }
+                searchArray[a] = c, initSVGs();
+            }
+            var k = [];
+            e.each(function() {
+                for (var a = $(this).data("search-subject").replace(/\s/g, "").split(","), b = 0; b < a.length; b++) $.inArray(a[b], k) < 0 && k.push(a[b]);
+                $(this).on("keydown", function(b) {
+                    if (13 === b.keyCode) {
+                        var c = $(this).val();
+                        a = $(this).data("search-subject"), criteria = a.replace(/\s/g, "").split(",");
+                        for (var d = 0; d < criteria.length; d++) searchArray[criteria[d]] = c;
+                        return h(), !1;
+                    }
+                });
             }), select.each(function(a) {
-                var c = ($(this).val(), $(this).data("search-subject"));
-                $(this).parents(".dropdown-wrapper").attr("data-search-subject", c), b(c), $(this).on("change", function(b) {
-                    b.preventDefault();
-                    var d = $(this).val(), e = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-subject="' + c + '" data-tag="' + d + '"><span>' + d + "</span>" + tagclose + "</li>";
-                    "" !== d && ($.inArray(d, searchArray[c]) < 0 ? f.addClass("active").append(e) : notify("This tag already exists.", "failure")), 
-                    h(c), i();
+                var b = ($(this).val(), $(this).data("search-subject"));
+                i(b), $.inArray(b, k) < 0 && k.push(b), $(this).on("change", function(c) {
+                    c.preventDefault();
+                    var d = $(this).val(), e = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-subject="' + b + '" data-tag="' + d + '"><span>' + d + "</span>" + tagclose + "</li>";
+                    "" !== d && ($.inArray(d, searchArray[b]) < 0 ? f.addClass("active").append(e) : notify("This tag already exists.", "failure")), 
+                    j(b), h();
                 });
             }), f.on("click", ".tag", function() {
                 var a = $(this).data("tag-subject");
                 $(this).remove(), f.children(".tag").length > 0 ? f.addClass("active") : f.removeClass("active"), 
-                h(a), i();
-            }), initDropdowns(), i();
+                j(a), h();
+            }), initDropdowns(), h();
         }
         var c = $(this), d = c.data("search"), e = c.find("input[data-search-subject]");
         select = c.find("select[data-search-subject]"), searchArray = [], tagcloudElement = '<ul class="tagcloud"></ul>', 
         tagclose = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">', 
         resultsElement = '<div class="search-results valign-middle"></div>', c.append(tagcloudElement).append(resultsElement);
         var f = c.find("ul.tagcloud"), g = c.find(".search-results");
-        searchArray.Search = "", dataRequest(d, "GET", b);
+        dataRequest(d, "GET", b);
     }), config.application.debug && console.log("Search :: Unified Search"));
 }
 

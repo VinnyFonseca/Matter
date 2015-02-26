@@ -42,19 +42,19 @@
 		.type {
 			display: block;
 			position: relative;
-			color: $c8;
+			color: $brand1;
 			@include font-size($fontSize / 1.2);
 		}
 		.categories {
 			display: block;
 			position: relative;
-			color: $c8;
+			color: $brand2;
 			@include font-size($fontSize / 1.2);
 		}
 		.tags {
 			display: block;
 			position: relative;
-			color: $c8;
+			color: $brand3;
 			@include font-size($fontSize / 1.2);
 		}
 	}
