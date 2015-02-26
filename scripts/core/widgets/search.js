@@ -11,23 +11,40 @@ function initSearch() {
 				outputArray = [],
 				tagcloudElement = '<ul class="tagcloud"></ul>',
 				tagclose = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">',
-				resultsElement = '<div class="search-results valign-middle"></div>';
+				resultsElement = '<div class="search-results block-reset loading"></div>';
 
 			el.append(tagcloudElement).append(resultsElement);
 			var tagcloud = el.find("ul.tagcloud");
 			var results = el.find(".search-results");
 
+
+
+
 			dataRequest(url, "GET", build);
 
 			function build(data) {
+
+				// Update functions
+
 				function updateResults() {
 					results.html("");
 
-					$.arrayIntersect = function(a, b) {
-					    return $.grep(a, function(i) {
-					        return $.inArray(i, b) > -1;
-					    });
-					};
+
+					// Create all arrays for analysis and populate allArray with all items for comparison.
+
+					var allArray = [];
+					var existsArray = [];
+					var finalArray = [];
+
+					for ( var i = 0; i < data.Items.length; i++ ) {
+						var object = data.Items[i],
+							id = object.Id;
+
+						allArray.push(id);
+					}
+
+
+					// Get all values from all inputs and rebuild arrays.
 
 					input.each(function() {
 						var parameter = $(this).data("search-parameter"),
@@ -41,7 +58,7 @@ function initSearch() {
 								var object = data.Items[j],
 									id = object.Id;
 									compare = outputArray[parameter],
-									analyse = object[criteria[i]];
+									analyse = object[criteria[i]].toLowerCase();
 
 								if ( analyse instanceof Array ) {
 									if ( $.arrayIntersect(analyse, compare).length > 0 && $.inArray(id, tempArray) < 0 ) {
@@ -86,38 +103,36 @@ function initSearch() {
 					});
 
 
-
-					// Intersect, Unique, Final values
-
-					var prevArray = [];
-					var allArray = [];
-					var finalArray = [];
-
-					for ( var i = 0; i < data.Items.length; i++ ) {
-						var object = data.Items[i],
-							id = object.Id;
-
-						allArray.push(id);
-					}
+					// Analyse rebuilt arrays
 
 					for ( var i = 0; i < parameterArray.length; i++ ) {
+						var dataset = outputArray[parameterArray[i]];
 						var analyse = resultArray[parameterArray[i]];
 
-						console.log(analyse.length > 0, $.arrayIntersect(analyse, allArray), $.arrayIntersect(analyse, prevArray));
+						dataset.length > 0 ? existsArray.push(true) : existsArray.push(false);
 
-						if (
-							analyse.length > 0 &&
-							$.arrayIntersect(analyse, allArray).length > 0
-						) {
-							console.log($.arrayIntersect(analyse, prevArray));
-							// finalArray.push($.arrayIntersect(analyse, allArray));
-						}
-
-						prevArray = finalArray;
+						finalArray.push($.arrayIntersect(analyse, allArray));
 					}
 
+					var hasOutput = $.inArray(true, existsArray) >= 0 ? true : false;
 
-					console.log(outputArray, resultArray, finalArray, finalArray.length);
+					if ( hasOutput ) {
+						finalArray = finalArray.toString().split(",").clean("");
+						console.log(finalArray, finalArray.length);
+
+						var outputCount = 0;
+						for ( var i = 0; i < existsArray.length; i++ ) {
+							if ( existsArray[i] === true ) outputCount++;
+						}
+						if ( outputCount > 1 ) finalArray = finalArray.sort().filter( function(v,i,o){if(i>=0 && v!==o[i-1]) return v;});
+					} else {
+						finalArray = allArray;
+					}
+
+					console.log(finalArray, finalArray.length);
+
+
+					// Rebuild results
 
 					for ( var i = 0; i < data.Items.length; i++ ) {
 						var object = data.Items[i],
@@ -136,7 +151,7 @@ function initSearch() {
 							type = object.Type,
 							categories = object.Categories
 							tags = object.Tags;
-							item =  '<div class="search-item">\
+							item =  '<div class="search-item loading">\
 										 <a href="' + url + '">\
 											 <img src="' + image + '" />\
 											 <div class="title">' + title + '</div>\
@@ -153,8 +168,45 @@ function initSearch() {
 						}
 					}
 
-					results.children(".search-item").length ? results.show() : results.hide();
+
+					// Results behaviour after built
+
+					var hasResults = results.children(".search-item").length ? true : false;
+
+					function showItem(item, i) {
+						setTimeout(function() {
+							item.eq(i).removeClass("loading");
+						}, 100 * i);
+					}
+
+					if ( hasResults ) {
+						results.removeClass("loading").removeClass("no-results");
+						var items = results.children(".search-item");
+						for ( var i = 0; i < items.length; i++ ) showItem(items, i);
+					} else {
+						hasOutput ? results.removeClass("loading").addClass("no-results") : results.removeClass("no-results").addClass("loading");
+					}
 				}
+
+				function updateTags(parameter) {
+					var target = tagcloud.children(".tag[data-tag-parameter='" + parameter + "']");
+
+					var tempArray = [];
+
+					for ( var n = 0; n < target.length; n++ ) {
+						var value = target.eq(n).data("tag");
+						tempArray.push(value);
+					}
+
+					outputArray[parameter] = tempArray;
+
+					initSVGs();
+				}
+
+
+
+
+				// Populate Dropdowns
 
 				function populateSelects(parameter) {
 					var target = el.find("select[data-search-parameter='" + parameter + "']");
@@ -185,24 +237,10 @@ function initSearch() {
 					}
 				}
 
-				function updateTags(parameter) {
-					var target = tagcloud.children(".tag[data-tag-parameter='" + parameter + "']");
-
-					var tempArray = [];
-
-					for ( var n = 0; n < target.length; n++ ) {
-						var value = target.eq(n).data("tag");
-						tempArray.push(value);
-					}
-
-					outputArray[parameter] = tempArray;
-
-					initSVGs();
-				}
 
 
 
-				// Interactive Behaviour
+				// Interactions Behaviour
 
 				var parameterArray = [];
 				var resultArray = [];
@@ -218,7 +256,7 @@ function initSearch() {
 						var value = $(this).val();
 							parameter = $(this).data("search-parameter");
 
-						outputArray[parameter] = value;
+						outputArray[parameter] = value.toLowerCase();
 
 						updateResults();
 						return false;
@@ -263,6 +301,11 @@ function initSearch() {
 					updateTags(parameter);
 					updateResults();
 				});
+
+
+
+
+				// Initialise
 
 				initDropdowns();
 				updateResults();

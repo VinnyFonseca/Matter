@@ -128,7 +128,8 @@ $screenMobileS: 320px;
 // Animation
 
 $animDuration: 0.25s;
-$animEasing: cubic-bezier(0.45, 0, 0.5, 0.95);
+$animEasing: ease;
+// $animEasing: cubic-bezier(0.45, 0, 0.5, 0.95);
 
 // @include transition-property(transform, opacity);
 // @include transition-duration($animDuration);

@@ -1,11 +1,25 @@
 .search-results {
-	display: none;
+	display: block;
 	position: relative;
 	margin: ($spacing / 2) 0;
 	padding: 0.5%;
 	border-radius: $radius;
-	border: 1px solid $cd;
+	border: 1px dashed $cd;
 	background-color: $cf;
+
+	&.no-results {
+		padding: ($spacing / 1.8);
+		@include font-size($fontSize);
+
+		&:before {
+			content: "Your search returned no results. Tweak it and try again."
+		}
+	}
+
+	&.loading {
+		height: 64px;
+		background: transparent url('../img/loader.gif') no-repeat center center;
+	}
 
 	.search-item {
 		display: inline-block;
@@ -16,6 +30,14 @@
 		border: 1px solid $cd;
 		background-color: $cf;
 		vertical-align: top !important;
+		@include opacity(1);
+		@include transform(scale(1) translateY(0));
+		@include transition(all $animDuration $animEasing);
+
+		&.loading {
+			@include opacity(0);
+			@include transform(scale(1.1) translateY(30px));
+		}
 
 		img {
 			display: block;
