@@ -581,56 +581,56 @@ function initSearch() {
                     }, 100 * b);
                 }
                 g.html("");
-                for (var c = [], h = [], i = [], l = 0; l < a.Items.length; l++) {
-                    var m = a.Items[l], n = m.Id;
-                    c.push(n);
+                for (var c = 0; c < a.Items.length; c++) {
+                    var h = a.Items[c], i = h.Id;
+                    j.push(i);
                 }
                 e.each(function() {
                     var b = $(this).data("search-parameter"), c = b.replace(/\s/g, "").split(","), d = [];
-                    k[b] = [];
+                    n[b] = [];
                     for (var e = 0; e < c.length; e++) {
                         for (var f = 0; f < a.Items.length; f++) {
                             var g = a.Items[f], h = g.Id;
                             compare = outputArray[b], p = g[c[e]].toLowerCase(), p instanceof Array ? $.arrayIntersect(p, compare).length > 0 && $.inArray(h, d) < 0 && d.push(h) : p.indexOf(compare) > -1 && $.inArray(h, d) < 0 && d.push(h);
                         }
-                        k[b] = d;
+                        n[b] = d;
                     }
                 }), f.children(".tag[data-tag-parameter]").each(function() {
                     var b = $(this).data("tag-parameter"), c = b, d = outputArray[b], e = [];
-                    k[b] = [];
+                    n[b] = [];
                     for (var f = 0; f < a.Items.length; f++) {
                         var g = a.Items[f], h = g.Id, i = g[c];
                         i instanceof Array ? $.arrayIntersect(i, d).length > 0 && $.inArray(h, e) < 0 && e.push(h) : $.inArray(i, d) > -1 && $.inArray(h, e) < 0 && e.push(h);
                     }
-                    k[b] = e;
+                    n[b] = e;
                 });
-                for (var l = 0; l < j.length; l++) {
-                    var o = outputArray[j[l]], p = k[j[l]];
-                    h.push(o.length > 0 ? !0 : !1), i.push($.arrayIntersect(p, c));
+                for (var c = 0; c < m.length; c++) {
+                    var o = outputArray[m[c]], p = n[m[c]];
+                    k.push(o.length > 0 ? !0 : !1), l.push($.arrayIntersect(p, j));
                 }
-                var q = $.inArray(!0, h) >= 0 ? !0 : !1;
+                var q = $.inArray(!0, k) >= 0 ? !0 : !1;
                 if (q) {
-                    for (var r = 0, l = 0; l < h.length; l++) h[l] === !0 && r++;
-                    i = i.toString().split(",").clean(""), r > 1 && (i = i.sort().filter(function(a, b, c) {
+                    for (var r = 0, c = 0; c < k.length; c++) k[c] === !0 && r++;
+                    l = l.toString().split(",").clean(""), r > 1 && (l = l.sort().filter(function(a, b, c) {
                         return b >= 0 && a !== c[b - 1] ? a : void 0;
                     }));
-                } else i = c;
-                console.log(i, i.length);
-                for (var l = 0; l < a.Items.length; l++) {
-                    var m = a.Items[l], n = m.Id, s = m.Image, t = m.Title, u = new Date(m.Date), v = u.getHours() < 10 ? "0" + u.getHours() : u.getHours();
+                } else l = j;
+                console.log(outputArray, n, l, l.length);
+                for (var c = 0; c < a.Items.length; c++) {
+                    var h = a.Items[c], i = h.Id, s = h.Image, t = h.Title, u = new Date(h.Date), v = u.getHours() < 10 ? "0" + u.getHours() : u.getHours();
                     minute = u.getMinutes() < 10 ? "0" + u.getMinutes() : u.getMinutes(), day = u.getDate() < 10 ? "0" + u.getDate() : u.getDate(), 
                     month = u.getMonth() + 1 < 10 ? "0" + (u.getMonth() + 1) : u.getMonth() + 1, year = u.getFullYear() < 10 ? "0" + u.getFullYear() : u.getFullYear(), 
-                    fulldate = v + ":" + minute + " @ " + day + "/" + month + "/" + year, d = m.Url, 
-                    summary = m.Summary, type = m.Type, categories = m.Categories.length > 0 ? m.Categories.toString().replace(/,/g, ", ") : "None", 
-                    tags = m.Categories.length > 0 ? m.Tags.toString().replace(/,/g, ", ") : "None", 
+                    fulldate = v + ":" + minute + " @ " + day + "/" + month + "/" + year, d = h.Url, 
+                    summary = h.Summary, type = h.Type, categories = h.Categories.length > 0 ? h.Categories.toString().replace(/,/g, ", ") : "None", 
+                    tags = h.Categories.length > 0 ? h.Tags.toString().replace(/,/g, ", ") : "None", 
                     item = '<div class="search-item loading">										 <a href="' + d + '">											 <img src="' + s + '" />											 <div class="title">' + t + '</div>										 </a>										 <div class="date">' + fulldate + '</div>										 <div class="summary">' + summary + '</div>										 <div class="type">Type: ' + type + '</div>										 <div class="categories" data-tooltip="' + categories + '">View Categories</div>										 <div class="tags" data-tooltip="' + tags + '">View Tags</div>									</div>';
-                    for (var w = 0; w < i.length; w++) n == i[w] && g.append(item);
+                    for (var w = 0; w < l.length; w++) i == l[w] && g.append(item);
                     initTooltips();
                 }
                 var x = g.children(".search-item").length ? !0 : !1;
                 if (x) {
                     g.removeClass("loading").removeClass("no-results");
-                    for (var y = g.children(".search-item"), l = 0; l < y.length; l++) b(y, l);
+                    for (var y = g.children(".search-item"), c = 0; c < y.length; c++) b(y, c);
                 } else q ? g.removeClass("loading").addClass("no-results") : g.removeClass("no-results").addClass("loading");
             }
             function h(a) {
@@ -642,7 +642,7 @@ function initSearch() {
             }
             function i(b) {
                 var d = c.find("select[data-search-parameter='" + b + "']"), e = [];
-                outputArray[b] = [], k[b] = [];
+                outputArray[b] = [], n[b] = [];
                 for (var f = 0; f < a.Items.length; f++) {
                     var g = a.Items[f], h = g[b];
                     if (h instanceof Array) for (var i = 0; i < h.length; i++) $.inArray(h[i], e) < 0 && e.push(h[i]); else $.inArray(h, e) < 0 && e.push(h);
@@ -650,22 +650,22 @@ function initSearch() {
                 e.sort();
                 var j = '<option class="placeholder">Select ' + b + "...</option>";
                 d.append(j);
-                for (var l in e) {
-                    var m = '<option value="' + e[l] + '">' + e[l] + "</option>";
-                    d.append(m);
+                for (var k in e) {
+                    var l = '<option value="' + e[k] + '">' + e[k] + "</option>";
+                    d.append(l);
                 }
             }
-            var j = [], k = [];
+            var j = [], k = [], l = [], m = [], n = [];
             e.each(function() {
                 var a = $(this).data("search-parameter");
-                j.push(a), outputArray[a] = [], k[a] = [], $(this).on("keyup", function() {
+                m.push(a), outputArray[a] = [], n[a] = [], $(this).on("keyup", function() {
                     var c = $(this).val();
                     return a = $(this).data("search-parameter"), outputArray[a] = c.toLowerCase(), b(), 
                     !1;
                 });
             }), select.each(function(a) {
                 var c = ($(this).val(), $(this).data("search-parameter"));
-                i(c), j.push(c), outputArray[c] = [], k[c] = [], $(this).on("change", function(d) {
+                i(c), m.push(c), outputArray[c] = [], n[c] = [], $(this).on("change", function(d) {
                     d.preventDefault();
                     var e = $(this).val(), g = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-parameter="' + c + '" data-tag="' + e + '"><span>' + e + "</span>" + tagclose + "</li>";
                     "" !== e && ($.inArray(e, outputArray[c]) < 0 ? f.addClass("active").append(g) : notify("This tag already exists.", "failure")), 
