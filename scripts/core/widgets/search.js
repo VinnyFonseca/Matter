@@ -117,13 +117,10 @@ function initSearch() {
 					var hasOutput = $.inArray(true, existsArray) >= 0 ? true : false;
 
 					if ( hasOutput ) {
-						finalArray = finalArray.toString().split(",").clean("");
-						console.log(finalArray, finalArray.length);
-
 						var outputCount = 0;
-						for ( var i = 0; i < existsArray.length; i++ ) {
-							if ( existsArray[i] === true ) outputCount++;
-						}
+						for ( var i = 0; i < existsArray.length; i++ ) if ( existsArray[i] === true ) outputCount++;
+
+						finalArray = finalArray.toString().split(",").clean("");
 						if ( outputCount > 1 ) finalArray = finalArray.sort().filter( function(v,i,o){if(i>=0 && v!==o[i-1]) return v;});
 					} else {
 						finalArray = allArray;
@@ -149,8 +146,8 @@ function initSearch() {
 							url = object.Url,
 							summary = object.Summary,
 							type = object.Type,
-							categories = object.Categories
-							tags = object.Tags;
+							categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g , ", ") : "None",
+							tags = object.Categories.length > 0 ? object.Tags.toString().replace(/,/g , ", ") : "None",
 							item =  '<div class="search-item loading">\
 										 <a href="' + url + '">\
 											 <img src="' + image + '" />\
@@ -159,13 +156,15 @@ function initSearch() {
 										 <div class="date">' + fulldate + '</div>\
 										 <div class="summary">' + summary + '</div>\
 										 <div class="type">Type: ' + type + '</div>\
-										 <div class="categories">Categories: ' + categories + '</div>\
-										 <div class="tags">Tags: ' + tags + '</div>\
+										 <div class="categories" data-tooltip="' + categories + '">View Categories</div>\
+										 <div class="tags" data-tooltip="' + tags + '">View Tags</div>\
 									</div>';
 
 						for ( var j = 0; j < finalArray.length; j++ ) {
 							if ( id == finalArray[j] ) results.append(item);
 						}
+
+						initTooltips();
 					}
 
 

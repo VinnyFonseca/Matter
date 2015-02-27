@@ -610,9 +610,8 @@ function initSearch() {
                 }
                 var q = $.inArray(!0, h) >= 0 ? !0 : !1;
                 if (q) {
-                    i = i.toString().split(",").clean(""), console.log(i, i.length);
                     for (var r = 0, l = 0; l < h.length; l++) h[l] === !0 && r++;
-                    r > 1 && (i = i.sort().filter(function(a, b, c) {
+                    i = i.toString().split(",").clean(""), r > 1 && (i = i.sort().filter(function(a, b, c) {
                         return b >= 0 && a !== c[b - 1] ? a : void 0;
                     }));
                 } else i = c;
@@ -622,8 +621,11 @@ function initSearch() {
                     minute = u.getMinutes() < 10 ? "0" + u.getMinutes() : u.getMinutes(), day = u.getDate() < 10 ? "0" + u.getDate() : u.getDate(), 
                     month = u.getMonth() + 1 < 10 ? "0" + (u.getMonth() + 1) : u.getMonth() + 1, year = u.getFullYear() < 10 ? "0" + u.getFullYear() : u.getFullYear(), 
                     fulldate = v + ":" + minute + " @ " + day + "/" + month + "/" + year, d = m.Url, 
-                    summary = m.Summary, type = m.Type, categories = m.Categories, tags = m.Tags, item = '<div class="search-item loading">										 <a href="' + d + '">											 <img src="' + s + '" />											 <div class="title">' + t + '</div>										 </a>										 <div class="date">' + fulldate + '</div>										 <div class="summary">' + summary + '</div>										 <div class="type">Type: ' + type + '</div>										 <div class="categories">Categories: ' + categories + '</div>										 <div class="tags">Tags: ' + tags + "</div>									</div>";
+                    summary = m.Summary, type = m.Type, categories = m.Categories.length > 0 ? m.Categories.toString().replace(/,/g, ", ") : "None", 
+                    tags = m.Categories.length > 0 ? m.Tags.toString().replace(/,/g, ", ") : "None", 
+                    item = '<div class="search-item loading">										 <a href="' + d + '">											 <img src="' + s + '" />											 <div class="title">' + t + '</div>										 </a>										 <div class="date">' + fulldate + '</div>										 <div class="summary">' + summary + '</div>										 <div class="type">Type: ' + type + '</div>										 <div class="categories" data-tooltip="' + categories + '">View Categories</div>										 <div class="tags" data-tooltip="' + tags + '">View Tags</div>									</div>';
                     for (var w = 0; w < i.length; w++) n == i[w] && g.append(item);
+                    initTooltips();
                 }
                 var x = g.children(".search-item").length ? !0 : !1;
                 if (x) {
