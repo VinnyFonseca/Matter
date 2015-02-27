@@ -23,18 +23,17 @@ function initSearch() {
 			dataRequest(url, "GET", build);
 
 			function build(data) {
+				// Create all arrays for analysis and populate allArray with all items for comparison.
+
+				var allArray = [];
+				var existsArray = [];
+				var finalArray = [];
+
 
 				// Update functions
 
 				function updateResults() {
 					results.html("");
-
-
-					// Create all arrays for analysis and populate allArray with all items for comparison.
-
-					var allArray = [];
-					var existsArray = [];
-					var finalArray = [];
 
 					for ( var i = 0; i < data.Items.length; i++ ) {
 						var object = data.Items[i],
@@ -135,6 +134,8 @@ function initSearch() {
 					} else {
 						finalArray = allArray;
 					}
+
+					console.log(outputArray, resultArray, finalArray, finalArray.length);
 
 
 					// Rebuild results
