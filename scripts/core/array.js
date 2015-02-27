@@ -26,22 +26,40 @@ Array.prototype.clean = function(deleteValue) { // Single: Delete empty values
 
 
 
-Array.prototype.uniques = function() { // Single: Gather unique values
-	var r = new Array();
-	o:for( var i = 0, n = this.length; i < n; i++ ) {
-		for( var x = 0, y = r.length; x < y; x++ ) {
-			if( r[x]==this[i] ) {
-				alert('this is a DUPE!');
-				continue o;
+Array.prototype.uniques = function() { // Single: Gather duplicate values
+	return this.reduce(function(a, b){
+		if ( a.indexOf(b) < 0 ) a.push(b);
+		return a;
+	},[]);
+}
+
+// Array.prototype.duplicates = function() { // Single: Gather duplicate values
+// 	return this.reduce(function(a, b){
+// 		if ( a.indexOf(b) < 0 ) a.push(b);
+// 		return a;
+// 	},[]);
+// }
+
+Array.prototype.contains = function(k) {
+	for ( var p in this) if (this[p] === k)	return true;
+	return false;
+};
+
+Array.prototype.duplicates = function() { // Single: Gather duplicate values
+	var arrayLength = this.length, i, j, result = [];
+	for (i = 0; i < arrayLength; i++) {
+		for (j = 0; j < arrayLength; j++) {
+			if (this[i] == this[j] && i != j && !result.contains(this[i])) {
+				result.push(this[i]);
 			}
 		}
-		r[r.length] = this[i];
 	}
-	return r;
+	return result;
 }
+
 // Array.prototype.duplicates = function duplicates() { // Single: Gather duplicate values
 // 	return this.reduce(function(accum, cur) {
-// 		if (accum.indexOf(cur) > -1) accum.push(cur);
+// 		if (accum.indexOf(cur) >= 0) accum.push(cur);
 // 		return accum;
 // 	}, []);
 // }
@@ -50,15 +68,15 @@ Array.prototype.uniques = function() { // Single: Gather unique values
 // 	return this.concat(this);
 // };
 
-Array.prototype.duplicates = function() { // Single: Gather duplicate values
-	var len = this.length;
+// Array.prototype.duplicates = function() { // Single: Gather duplicate values
+// 	var len = this.length;
 
-	for (var i = 0; i < len; i++) {
-		this[len + i] = this[i];
-	}
+// 	for (var i = 0; i < len; i++) {
+// 		this[len + i] = this[i];
+// 	}
 
-	return this;
-}
+// 	return this;
+// }
 
 // Array.prototype.duplicates = function() { // Single: Gather duplicate values
 // 	var r = new Array();

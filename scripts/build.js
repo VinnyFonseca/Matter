@@ -575,10 +575,29 @@ function initSearch() {
     $("[data-search]").length && ($("[data-search]").each(function(a) {
         function b(a) {
             function b() {
-                function b(a, b) {
-                    setTimeout(function() {
-                        a.eq(b).removeClass("loading");
-                    }, 100 * b);
+                function b() {
+                    function b(a, b) {
+                        setTimeout(function() {
+                            a.eq(b).removeClass("loading");
+                        }, 100 * b);
+                    }
+                    for (var c = 0; c < a.Items.length; c++) {
+                        var e = a.Items[c], f = e.Id, h = e.Image, j = e.Title, l = new Date(e.Date), m = l.getHours() < 10 ? "0" + l.getHours() : l.getHours();
+                        minute = l.getMinutes() < 10 ? "0" + l.getMinutes() : l.getMinutes(), day = l.getDate() < 10 ? "0" + l.getDate() : l.getDate(), 
+                        month = l.getMonth() + 1 < 10 ? "0" + (l.getMonth() + 1) : l.getMonth() + 1, year = l.getFullYear() < 10 ? "0" + l.getFullYear() : l.getFullYear(), 
+                        fulldate = m + ":" + minute + " @ " + day + "/" + month + "/" + year, d = e.Url, 
+                        summary = e.Summary, type = e.Type, categories = e.Categories.length > 0 ? e.Categories.toString().replace(/,/g, ", ") : "None", 
+                        tags = e.Categories.length > 0 ? e.Tags.toString().replace(/,/g, ", ") : "None", 
+                        item = '<div class="search-item loading">											 <a href="' + d + '">												 <img src="' + h + '" />												 <div class="title">' + j + '</div>											 </a>											 <div class="date">' + fulldate + '</div>											 <div class="summary">' + summary + '</div>											 <div class="type">Type: ' + type + '</div>											 <div class="categories" data-tooltip="' + categories + '">View Categories</div>											 <div class="tags" data-tooltip="' + tags + '">View Tags</div>										</div>';
+                        for (var n = 0; n < i.length; n++) f == i[n] && g.append(item);
+                    }
+                    initTooltips(), console.log("output: " + outputArray), console.log("result: " + k), 
+                    console.log("final: " + i);
+                    var o = g.children(".search-item").length ? !0 : !1;
+                    if (o) {
+                        g.removeClass("loading").removeClass("no-results");
+                        for (var p = g.children(".search-item"), c = 0; c < p.length; c++) b(p, c);
+                    } else q ? g.removeClass("loading").addClass("no-results") : g.removeClass("no-results").addClass("loading");
                 }
                 g.html("");
                 for (var c = [], h = [], i = [], l = 0; l < a.Items.length; l++) {
@@ -595,6 +614,7 @@ function initSearch() {
                         }
                         k[b] = d;
                     }
+                    d.sort();
                 }), f.children(".tag[data-tag-parameter]").each(function() {
                     var b = $(this).data("tag-parameter"), c = b, d = outputArray[b], e = [];
                     k[b] = [];
@@ -602,7 +622,7 @@ function initSearch() {
                         var g = a.Items[f], h = g.Id, i = g[c];
                         i instanceof Array ? $.arrayIntersect(i, d).length > 0 && $.inArray(h, e) < 0 && e.push(h) : $.inArray(i, d) > -1 && $.inArray(h, e) < 0 && e.push(h);
                     }
-                    k[b] = e;
+                    e.sort(), k[b] = e;
                 });
                 for (var l = 0; l < j.length; l++) {
                     var o = outputArray[j[l]], p = k[j[l]];
@@ -611,34 +631,18 @@ function initSearch() {
                 var q = $.inArray(!0, h) >= 0 ? !0 : !1;
                 if (q) {
                     for (var r = 0, l = 0; l < h.length; l++) h[l] === !0 && r++;
-                    i = i.toString().split(",").clean(""), r > 1 && (i = i.sort().filter(function(a, b, c) {
-                        return b >= 0 && a !== c[b - 1] ? a : void 0;
-                    }));
+                    var s = i.toString().split(",").clean("");
+                    i = r > 1 ? s.duplicates() : s;
                 } else i = c;
-                console.log(i, i.length);
-                for (var l = 0; l < a.Items.length; l++) {
-                    var m = a.Items[l], n = m.Id, s = m.Image, t = m.Title, u = new Date(m.Date), v = u.getHours() < 10 ? "0" + u.getHours() : u.getHours();
-                    minute = u.getMinutes() < 10 ? "0" + u.getMinutes() : u.getMinutes(), day = u.getDate() < 10 ? "0" + u.getDate() : u.getDate(), 
-                    month = u.getMonth() + 1 < 10 ? "0" + (u.getMonth() + 1) : u.getMonth() + 1, year = u.getFullYear() < 10 ? "0" + u.getFullYear() : u.getFullYear(), 
-                    fulldate = v + ":" + minute + " @ " + day + "/" + month + "/" + year, d = m.Url, 
-                    summary = m.Summary, type = m.Type, categories = m.Categories.length > 0 ? m.Categories.toString().replace(/,/g, ", ") : "None", 
-                    tags = m.Categories.length > 0 ? m.Tags.toString().replace(/,/g, ", ") : "None", 
-                    item = '<div class="search-item loading">										 <a href="' + d + '">											 <img src="' + s + '" />											 <div class="title">' + t + '</div>										 </a>										 <div class="date">' + fulldate + '</div>										 <div class="summary">' + summary + '</div>										 <div class="type">Type: ' + type + '</div>										 <div class="categories" data-tooltip="' + categories + '">View Categories</div>										 <div class="tags" data-tooltip="' + tags + '">View Tags</div>									</div>';
-                    for (var w = 0; w < i.length; w++) n == i[w] && g.append(item);
-                    initTooltips();
-                }
-                var x = g.children(".search-item").length ? !0 : !1;
-                if (x) {
-                    g.removeClass("loading").removeClass("no-results");
-                    for (var y = g.children(".search-item"), l = 0; l < y.length; l++) b(y, l);
-                } else q ? g.removeClass("loading").addClass("no-results") : g.removeClass("no-results").addClass("loading");
+                b();
             }
             function h(a) {
-                for (var b = f.children(".tag[data-tag-parameter='" + a + "']"), c = [], d = 0; d < b.length; d++) {
-                    var e = b.eq(d).data("tag");
-                    c.push(e);
+                initSVGs();
+                for (var c = f.children(".tag[data-tag-parameter='" + a + "']"), d = [], e = 0; e < c.length; e++) {
+                    var g = c.eq(e).data("tag");
+                    d.push(g);
                 }
-                outputArray[a] = c, initSVGs();
+                d.sort(), outputArray[a] = d, b();
             }
             function i(b) {
                 var d = c.find("select[data-search-parameter='" + b + "']"), e = [];
@@ -650,9 +654,9 @@ function initSearch() {
                 e.sort();
                 var j = '<option class="placeholder">Select ' + b + "...</option>";
                 d.append(j);
-                for (var l in e) {
-                    var m = '<option value="' + e[l] + '">' + e[l] + "</option>";
-                    d.append(m);
+                for (var f = 0; f < e.length; f++) {
+                    var l = '<option value="' + e[f] + '">' + e[f] + "</option>";
+                    d.append(l);
                 }
             }
             var j = [], k = [];
@@ -664,17 +668,17 @@ function initSearch() {
                     !1;
                 });
             }), select.each(function(a) {
-                var c = ($(this).val(), $(this).data("search-parameter"));
-                i(c), j.push(c), outputArray[c] = [], k[c] = [], $(this).on("change", function(d) {
-                    d.preventDefault();
-                    var e = $(this).val(), g = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-parameter="' + c + '" data-tag="' + e + '"><span>' + e + "</span>" + tagclose + "</li>";
-                    "" !== e && ($.inArray(e, outputArray[c]) < 0 ? f.addClass("active").append(g) : notify("This tag already exists.", "failure")), 
-                    h(c), b();
+                var b = ($(this).val(), $(this).data("search-parameter"));
+                i(b), j.push(b), outputArray[b] = [], k[b] = [], $(this).on("change", function(c) {
+                    c.preventDefault();
+                    var d = $(this).val(), e = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-parameter="' + b + '" data-tag="' + d + '"><span>' + d + "</span>" + tagclose + "</li>";
+                    "" !== d && ($.inArray(d, outputArray[b]) < 0 ? f.addClass("active").append(e) : notify("This tag already exists.", "failure")), 
+                    h(b);
                 });
             }), f.on("click", ".tag", function() {
                 var a = $(this).data("tag-parameter");
                 $(this).remove(), f.children(".tag").length > 0 ? f.addClass("active") : f.removeClass("active"), 
-                h(a), b();
+                h(a);
             }), initDropdowns(), b();
         }
         var c = $(this), d = c.data("search"), e = c.find("input[data-search-parameter]");
@@ -6085,18 +6089,16 @@ Array.prototype.indexOf || (Array.prototype.indexOf = function(a, b) {
     for (var b = 0; b < this.length; b++) this[b] == a && (this.splice(b, 1), b--);
     return this;
 }, Array.prototype.uniques = function() {
-    var a = new Array();
-    a: for (var b = 0, c = this.length; c > b; b++) {
-        for (var d = 0, e = a.length; e > d; d++) if (a[d] == this[b]) {
-            alert("this is a DUPE!");
-            continue a;
-        }
-        a[a.length] = this[b];
-    }
-    return a;
+    return this.reduce(function(a, b) {
+        return a.indexOf(b) < 0 && a.push(b), a;
+    }, []);
+}, Array.prototype.contains = function(a) {
+    for (var b in this) if (this[b] === a) return !0;
+    return !1;
 }, Array.prototype.duplicates = function() {
-    for (var a = this.length, b = 0; a > b; b++) this[a + b] = this[b];
-    return this;
+    var a, b, c = this.length, d = [];
+    for (a = 0; c > a; a++) for (b = 0; c > b; b++) this[a] != this[b] || a == b || d.contains(this[a]) || d.push(this[a]);
+    return d;
 }, $.arrayIntersect = function(a, b) {
     return $.grep(a, function(a) {
         return $.inArray(a, b) > -1;

@@ -73,6 +73,7 @@ function initSearch() {
 
 							resultArray[parameter] = tempArray;
 						}
+						tempArray.sort();
 					});
 
 					tagcloud.children(".tag[data-tag-parameter]").each(function() {
@@ -98,6 +99,7 @@ function initSearch() {
 								}
 							}
 						}
+						tempArray.sort();
 
 						resultArray[parameter] = tempArray;
 					});
@@ -118,76 +120,98 @@ function initSearch() {
 
 					if ( hasOutput ) {
 						var outputCount = 0;
-						for ( var i = 0; i < existsArray.length; i++ ) if ( existsArray[i] === true ) outputCount++;
 
-						finalArray = finalArray.toString().split(",").clean("");
-						if ( outputCount > 1 ) finalArray = finalArray.sort().filter( function(v,i,o){if(i>=0 && v!==o[i-1]) return v;});
+						for ( var i = 0; i < existsArray.length; i++ ) {
+							if ( existsArray[i] === true ) outputCount++;
+						}
+
+						var cleanArray = finalArray.toString().split(",").clean("");
+
+						if ( outputCount > 1 ) {
+						 finalArray = cleanArray.duplicates();
+						} else {
+							finalArray = cleanArray;
+						}
 					} else {
 						finalArray = allArray;
 					}
 
-					console.log(finalArray, finalArray.length);
-
 
 					// Rebuild results
 
-					for ( var i = 0; i < data.Items.length; i++ ) {
-						var object = data.Items[i],
-							id = object.Id,
-							image = object.Image,
-							title = object.Title,
-							date = new Date(object.Date),
-							hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-							minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-							day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-							month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-							year = date.getFullYear() < 10 ? "0" + date.getFullYear() : date.getFullYear();
-							fulldate = hour + ":" + minute + " @ " + day + "/" + month + "/" + year;
-							url = object.Url,
-							summary = object.Summary,
-							type = object.Type,
-							categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g , ", ") : "None",
-							tags = object.Categories.length > 0 ? object.Tags.toString().replace(/,/g , ", ") : "None",
-							item =  '<div class="search-item loading">\
-										 <a href="' + url + '">\
-											 <img src="' + image + '" />\
-											 <div class="title">' + title + '</div>\
-										 </a>\
-										 <div class="date">' + fulldate + '</div>\
-										 <div class="summary">' + summary + '</div>\
-										 <div class="type">Type: ' + type + '</div>\
-										 <div class="categories" data-tooltip="' + categories + '">View Categories</div>\
-										 <div class="tags" data-tooltip="' + tags + '">View Tags</div>\
-									</div>';
+					function rebuild() {
+						for ( var i = 0; i < data.Items.length; i++ ) {
+							var object = data.Items[i],
+								id = object.Id,
+								image = object.Image,
+								title = object.Title,
+								date = new Date(object.Date),
+								hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+								minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+								day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+								month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+								year = date.getFullYear() < 10 ? "0" + date.getFullYear() : date.getFullYear();
+								fulldate = hour + ":" + minute + " @ " + day + "/" + month + "/" + year;
+								url = object.Url,
+								summary = object.Summary,
+								type = object.Type,
+								categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g , ", ") : "None",
+								tags = object.Categories.length > 0 ? object.Tags.toString().replace(/,/g , ", ") : "None",
+								item =  '<div class="search-item loading">\
+											 <a href="' + url + '">\
+												 <img src="' + image + '" />\
+												 <div class="title">' + title + '</div>\
+											 </a>\
+											 <div class="date">' + fulldate + '</div>\
+											 <div class="summary">' + summary + '</div>\
+											 <div class="type">Type: ' + type + '</div>\
+											 <div class="categories" data-tooltip="' + categories + '">View Categories</div>\
+											 <div class="tags" data-tooltip="' + tags + '">View Tags</div>\
+										</div>';
 
-						for ( var j = 0; j < finalArray.length; j++ ) {
-							if ( id == finalArray[j] ) results.append(item);
+							for ( var j = 0; j < finalArray.length; j++ ) {
+								if ( id == finalArray[j] ) results.append(item);
+							}
 						}
 
 						initTooltips();
+
+						console.log("output: " + outputArray);
+						console.log("result: " + resultArray);
+						console.log("final: " + finalArray);
+
+
+						// Results behaviour after built
+
+						function showItem(item, i) {
+							setTimeout(function() {
+								item.eq(i).removeClass("loading");
+							}, 100 * i);
+						}
+
+						var hasResults = results.children(".search-item").length ? true : false;
+
+						if ( hasResults ) {
+							results.removeClass("loading").removeClass("no-results");
+							var items = results.children(".search-item");
+							for ( var i = 0; i < items.length; i++ ) {
+								showItem(items, i);
+							}
+						} else {
+							if ( hasOutput ) {
+								results.removeClass("loading").addClass("no-results");
+							} else {
+								results.removeClass("no-results").addClass("loading");
+							}
+						}
 					}
 
-
-					// Results behaviour after built
-
-					var hasResults = results.children(".search-item").length ? true : false;
-
-					function showItem(item, i) {
-						setTimeout(function() {
-							item.eq(i).removeClass("loading");
-						}, 100 * i);
-					}
-
-					if ( hasResults ) {
-						results.removeClass("loading").removeClass("no-results");
-						var items = results.children(".search-item");
-						for ( var i = 0; i < items.length; i++ ) showItem(items, i);
-					} else {
-						hasOutput ? results.removeClass("loading").addClass("no-results") : results.removeClass("no-results").addClass("loading");
-					}
+					rebuild();
 				}
 
 				function updateTags(parameter) {
+					initSVGs();
+
 					var target = tagcloud.children(".tag[data-tag-parameter='" + parameter + "']");
 
 					var tempArray = [];
@@ -196,10 +220,11 @@ function initSearch() {
 						var value = target.eq(n).data("tag");
 						tempArray.push(value);
 					}
+					tempArray.sort();
 
 					outputArray[parameter] = tempArray;
 
-					initSVGs();
+					updateResults();
 				}
 
 
@@ -230,8 +255,8 @@ function initSearch() {
 					var placeholder = '<option class="placeholder">Select ' + parameter + '...</option>';
 					target.append(placeholder);
 
-					for ( var value in tempArray ) {
-						var option = '<option value="' + tempArray[value] + '">' + tempArray[value] + '</option>';
+					for ( var i = 0; i < tempArray.length; i++ ) {
+						var option = '<option value="' + tempArray[i] + '">' + tempArray[i] + '</option>';
 						target.append(option);
 					}
 				}
@@ -252,13 +277,15 @@ function initSearch() {
 					resultArray[parameter] = [];
 
 					$(this).on("keyup", function(event) {
-						var value = $(this).val();
-							parameter = $(this).data("search-parameter");
+						// if ( event.keyCode === 13 ) {
+							var value = $(this).val();
+								parameter = $(this).data("search-parameter");
 
-						outputArray[parameter] = value.toLowerCase();
+							outputArray[parameter] = value.toLowerCase();
 
-						updateResults();
-						return false;
+							updateResults();
+							return false;
+						// }
 					});
 				});
 
@@ -287,7 +314,6 @@ function initSearch() {
 						}
 
 						updateTags(parameter);
-						updateResults();
 					});
 				});
 
@@ -298,7 +324,6 @@ function initSearch() {
 					tagcloud.children(".tag").length > 0 ? tagcloud.addClass("active") : tagcloud.removeClass("active");
 
 					updateTags(parameter);
-					updateResults();
 				});
 
 
