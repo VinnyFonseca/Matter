@@ -23,247 +23,6 @@ function initSearch() {
 			dataRequest(url, "GET", build);
 
 			function build(data) {
-				// Create all arrays for analysis and populate allArray with all items for comparison.
-
-				var allArray = [];
-				var existsArray = [];
-				var finalArray = [];
-
-
-				// Update functions
-
-				function updateResults() {
-					results.html("");
-
-					for ( var i = 0; i < data.Items.length; i++ ) {
-						var object = data.Items[i],
-							id = object.Id;
-
-						allArray.push(id);
-					}
-
-
-					// Get all values from all inputs and rebuild arrays.
-
-					input.each(function() {
-						var parameter = $(this).data("search-parameter"),
-							criteria = parameter.replace(/\s/g, "").split(",");
-
-						var tempArray = [];
-						resultArray[parameter] = [];
-
-						for ( var i = 0; i < criteria.length; i++ ) {
-							for ( var j = 0; j < data.Items.length; j++ ) {
-								var object = data.Items[j],
-									id = object.Id;
-									compare = outputArray[parameter],
-									analyse = object[criteria[i]].toLowerCase();
-
-								if ( analyse instanceof Array ) {
-									if ( $.arrayIntersect(analyse, compare).length > 0 && $.inArray(id, tempArray) < 0 ) {
-										tempArray.push(id);
-									}
-								} else {
-									if ( analyse.indexOf(compare) > -1 && $.inArray(id, tempArray) < 0 ) {
-										tempArray.push(id);
-									}
-								}
-							}
-
-							resultArray[parameter] = tempArray;
-						}
-						tempArray.sort();
-					});
-
-					tagcloud.children(".tag[data-tag-parameter]").each(function() {
-						var parameter = $(this).data("tag-parameter"),
-							criteria = parameter,
-							compare = outputArray[parameter];
-
-						var tempArray = [];
-						resultArray[parameter] = [];
-
-						for ( var i = 0; i < data.Items.length; i++ ) {
-							var object = data.Items[i],
-								id = object.Id,
-								analyse = object[criteria];
-
-							if ( analyse instanceof Array ) {
-								if ( $.arrayIntersect(analyse, compare).length > 0 && $.inArray(id, tempArray) < 0 ) {
-									tempArray.push(id);
-								}
-							} else {
-								if ( $.inArray(analyse, compare) > -1 && $.inArray(id, tempArray) < 0 ) {
-									tempArray.push(id);
-								}
-							}
-						}
-						tempArray.sort();
-
-						resultArray[parameter] = tempArray;
-					});
-
-
-					// Analyse rebuilt arrays
-
-					for ( var i = 0; i < parameterArray.length; i++ ) {
-						var dataset = outputArray[parameterArray[i]];
-						var analyse = resultArray[parameterArray[i]];
-
-						dataset.length > 0 ? existsArray.push(true) : existsArray.push(false);
-
-						finalArray.push($.arrayIntersect(analyse, allArray));
-					}
-
-					var hasOutput = $.inArray(true, existsArray) >= 0 ? true : false;
-
-					if ( hasOutput ) {
-						var outputCount = 0;
-
-						for ( var i = 0; i < existsArray.length; i++ ) {
-							if ( existsArray[i] === true ) outputCount++;
-						}
-
-						var cleanArray = finalArray.toString().split(",").clean("");
-
-						if ( outputCount > 1 ) {
-						 finalArray = cleanArray.duplicates();
-						} else {
-							finalArray = cleanArray;
-						}
-					} else {
-						finalArray = allArray;
-					}
-
-					console.log(outputArray, resultArray, finalArray, finalArray.length);
-
-
-					// Rebuild results
-
-					function rebuild() {
-						for ( var i = 0; i < data.Items.length; i++ ) {
-							var object = data.Items[i],
-								id = object.Id,
-								image = object.Image,
-								title = object.Title,
-								date = new Date(object.Date),
-								hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-								minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-								day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-								month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-								year = date.getFullYear() < 10 ? "0" + date.getFullYear() : date.getFullYear();
-								fulldate = hour + ":" + minute + " @ " + day + "/" + month + "/" + year;
-								url = object.Url,
-								summary = object.Summary,
-								type = object.Type,
-								categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g , ", ") : "None",
-								tags = object.Categories.length > 0 ? object.Tags.toString().replace(/,/g , ", ") : "None",
-								item =  '<div class="search-item loading">\
-											 <a href="' + url + '">\
-												 <img src="' + image + '" />\
-												 <div class="title">' + title + '</div>\
-											 </a>\
-											 <div class="date">' + fulldate + '</div>\
-											 <div class="summary">' + summary + '</div>\
-											 <div class="type">Type: ' + type + '</div>\
-											 <div class="categories" data-tooltip="' + categories + '">View Categories</div>\
-											 <div class="tags" data-tooltip="' + tags + '">View Tags</div>\
-										</div>';
-
-							for ( var j = 0; j < finalArray.length; j++ ) {
-								if ( id == finalArray[j] ) results.append(item);
-							}
-						}
-
-						initTooltips();
-
-						console.log("output: " + outputArray);
-						console.log("result: " + resultArray);
-						console.log("final: " + finalArray);
-
-
-						// Results behaviour after built
-
-						function showItem(item, i) {
-							setTimeout(function() {
-								item.eq(i).removeClass("loading");
-							}, 100 * i);
-						}
-
-						var hasResults = results.children(".search-item").length ? true : false;
-
-						if ( hasResults ) {
-							results.removeClass("loading").removeClass("no-results");
-							var items = results.children(".search-item");
-							for ( var i = 0; i < items.length; i++ ) {
-								showItem(items, i);
-							}
-						} else {
-							if ( hasOutput ) {
-								results.removeClass("loading").addClass("no-results");
-							} else {
-								results.removeClass("no-results").addClass("loading");
-							}
-						}
-					}
-
-					rebuild();
-				}
-
-				function updateTags(parameter) {
-					initSVGs();
-
-					var target = tagcloud.children(".tag[data-tag-parameter='" + parameter + "']");
-
-					var tempArray = [];
-
-					for ( var n = 0; n < target.length; n++ ) {
-						var value = target.eq(n).data("tag");
-						tempArray.push(value);
-					}
-					tempArray.sort();
-
-					outputArray[parameter] = tempArray;
-
-					updateResults();
-				}
-
-
-
-
-				// Populate Dropdowns
-
-				function populateSelects(parameter) {
-					var target = el.find("select[data-search-parameter='" + parameter + "']");
-
-					var tempArray = [];
-					outputArray[parameter] = [];
-					resultArray[parameter] = [];
-
-					for ( var i = 0; i < data.Items.length; i++ ) {
-						var object = data.Items[i];
-						var property = object[parameter];
-
-						if ( property instanceof Array ) {
-							for ( var k = 0; k < property.length; k++ )
-								if ( $.inArray(property[k], tempArray) < 0 ) tempArray.push(property[k]);
-						} else {
-							if ( $.inArray(property, tempArray) < 0 ) tempArray.push(property);
-						}
-					}
-					tempArray.sort();
-
-					var placeholder = '<option class="placeholder">Select ' + parameter + '...</option>';
-					target.append(placeholder);
-
-					for ( var i = 0; i < tempArray.length; i++ ) {
-						var option = '<option value="' + tempArray[i] + '">' + tempArray[i] + '</option>';
-						target.append(option);
-					}
-				}
-
-
-
 
 				// Interactions Behaviour
 
@@ -326,6 +85,247 @@ function initSearch() {
 
 					updateTags(parameter);
 				});
+
+
+
+
+				// Update functions
+
+				function updateResults() {
+					results.html("");
+
+
+					// Create all arrays for analysis and populate allArray with all items for comparison.
+
+					var allArray = [];
+					var existsArray = [];
+					var finalArray = [];
+
+					for ( var i = 0; i < data.Items.length; i++ ) {
+						var object = data.Items[i],
+							id = object.Id;
+
+						allArray.push(id);
+					}
+
+
+					// Get all values from all inputs/tags and rebuild arrays.
+
+					// Input
+
+					for ( var n = 0; n < input.length; n++ ) {
+						var parameter = input.eq(n).data("search-parameter"),
+							criteria = parameter.replace(/\s/g, "").split(",");
+
+						var tempArray = [];
+						resultArray[parameter] = [];
+
+						for ( var j = 0; j < data.Items.length; j++ ) {
+							var object = data.Items[j],
+								id = object.Id,
+								compare = outputArray[parameter];
+
+							for ( var i = 0; i < criteria.length; i++ ) {
+								analyse = object[criteria[i]].toLowerCase();
+
+								if ( analyse instanceof Array ) {
+									var joined = analyse.concat(compare);
+									if ( joined.duplicates().length > 0 && $.inArray(id, tempArray) < 0 ) {
+										tempArray.push(id);
+									}
+								} else {
+									if ( analyse.indexOf(compare) > -1 && $.inArray(id, tempArray) < 0 ) {
+										tempArray.push(id);
+									}
+								}
+							}
+						}
+
+						resultArray[parameter] = tempArray;
+					}
+
+					// Tags
+
+					for ( var n = 0; n < tagcloud.children(".tag").length; n++ ) {
+						var parameter = tagcloud.children(".tag").eq(n).data("tag-parameter"),
+							criteria = parameter,
+							compare = outputArray[parameter];
+
+						var tempArray = [];
+						resultArray[parameter] = [];
+
+						for ( var i = 0; i < data.Items.length; i++ ) {
+							var object = data.Items[i],
+								id = object.Id,
+								analyse = object[criteria];
+
+							if ( analyse instanceof Array ) {
+								var joined = analyse.concat(compare);
+								if ( joined.duplicates().length > 0 && $.inArray(id, tempArray) < 0 ) {
+									tempArray.push(id);
+								}
+							} else {
+								if ( $.inArray(analyse, compare) > -1 && $.inArray(id, tempArray) < 0 ) {
+									tempArray.push(id);
+								}
+							}
+						}
+
+						resultArray[parameter] = tempArray;
+					}
+
+
+					// Analyse rebuilt arrays
+
+					for ( var i = 0; i < parameterArray.length; i++ ) {
+						var dataset = outputArray[parameterArray[i]];
+						dataset.length > 0 ? existsArray.push(true) : existsArray.push(false);
+
+						console.log(parameterArray);
+
+						var analyse = i === 0 && input.val() === "" ? [] : resultArray[parameterArray[i]];
+						var joined = analyse.concat(allArray);
+						finalArray.push(joined.duplicates());
+					}
+
+					var outputCount = 0;
+
+					for ( var i = 0; i < existsArray.length; i++ ) {
+						if ( existsArray[i] === true ) outputCount++;
+					}
+
+					var cleanArray = finalArray.reduce();
+
+					if ( outputCount > 1 ) {
+						finalArray = cleanArray.duplicates();
+					} else if ( outputCount == 1 ) {
+						finalArray = cleanArray;
+					} else {
+						finalArray = allArray;
+					}
+
+					console.log(finalArray);
+
+					rebuild();
+
+
+					// Rebuild results
+
+					function rebuild() {
+						for ( var i = 0; i < data.Items.length; i++ ) {
+							var object = data.Items[i],
+								id = object.Id,
+								image = object.Image,
+								title = object.Title,
+								date = new Date(object.Date),
+								hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+								minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+								day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+								month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+								year = date.getFullYear() < 10 ? "0" + date.getFullYear() : date.getFullYear();
+								fulldate = hour + ":" + minute + " @ " + day + "/" + month + "/" + year;
+								url = object.Url,
+								summary = object.Summary,
+								type = object.Type,
+								categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g , ", ") : "None",
+								tags = object.Categories.length > 0 ? object.Tags.toString().replace(/,/g , ", ") : "None",
+								item =  '<div class="search-item loading">\
+											 <a href="' + url + '">\
+												 <img src="' + image + '" />\
+												 <div class="title">' + title + '</div>\
+											 </a>\
+											 <div class="date">' + fulldate + '</div>\
+											 <div class="summary">' + summary + '</div>\
+											 <div class="type">Type: ' + type + '</div>\
+											 <div class="categories" data-tooltip="' + categories + '">View Categories: ' + categories + '</div>\
+											 <div class="tags" data-tooltip="' + tags + '">View Tags: ' + tags + '</div>\
+										</div>';
+
+							for ( var j = 0; j < finalArray.length; j++ ) {
+								if ( id == finalArray[j] ) results.append(item);
+							}
+						}
+
+						initTooltips();
+
+
+						// Results behaviour after built
+
+						function showItem(item, i) {
+							setTimeout(function() {
+								item.eq(i).removeClass("loading");
+							}, 100 * i);
+						}
+
+						var hasResults = results.children(".search-item").length ? true : false;
+						var hasOutput = $.inArray(true, existsArray) >= 0 ? true : false;
+
+						if ( hasResults ) {
+							results.removeClass("loading").removeClass("no-results");
+							var items = results.children(".search-item");
+							for ( var i = 0; i < items.length; i++ ) {
+								showItem(items, i);
+							}
+						} else {
+							if ( hasOutput ) {
+								results.removeClass("loading").addClass("no-results");
+							} else {
+								results.removeClass("no-results").addClass("loading");
+							}
+						}
+					}
+				}
+
+				function updateTags(parameter) {
+					initSVGs();
+
+					var target = tagcloud.children(".tag[data-tag-parameter='" + parameter + "']");
+
+					var tempArray = [];
+
+					for ( var n = 0; n < target.length; n++ ) {
+						var value = target.eq(n).data("tag");
+						tempArray.push(value);
+					}
+
+					outputArray[parameter] = tempArray;
+
+					updateResults();
+				}
+
+
+
+
+				// Populate Dropdowns
+
+				function populateSelects(parameter) {
+					var target = el.find("select[data-search-parameter='" + parameter + "']");
+
+					var tempArray = [];
+					outputArray[parameter] = [];
+					resultArray[parameter] = [];
+
+					for ( var i = 0; i < data.Items.length; i++ ) {
+						var object = data.Items[i];
+						var property = object[parameter];
+
+						if ( property instanceof Array ) {
+							for ( var k = 0; k < property.length; k++ ) {
+								if ( $.inArray(property[k], tempArray) < 0 ) tempArray.push(property[k]);
+							}
+						} else {
+							if ( $.inArray(property, tempArray) < 0 ) tempArray.push(property);
+						}
+					}
+
+					var placeholder = '<option class="placeholder">Select ' + parameter + '...</option>';
+					target.append(placeholder);
+
+					for ( var i = 0; i < tempArray.length; i++ ) {
+						var option = '<option value="' + tempArray[i] + '">' + tempArray[i] + '</option>';
+						target.append(option);
+					}
+				}
 
 
 

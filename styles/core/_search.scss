@@ -56,7 +56,7 @@
 			@include font-size($fontSize / 1.2);
 		}
 		.summary {
-			display: block;
+			display: none;
 			position: relative;
 			margin: ($spacing / 2) 0;
 			@include font-size($fontSize / 1.1);

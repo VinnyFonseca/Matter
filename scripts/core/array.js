@@ -13,6 +13,10 @@ if ( !Array.prototype.indexOf ) {
 
 
 
+// Array Manipulation Functions
+
+// Single
+
 Array.prototype.clean = function(deleteValue) { // Single: Delete empty values
 	for ( var i = 0; i < this.length; i++ ) {
 		if ( this[i] == deleteValue ) {
@@ -23,25 +27,17 @@ Array.prototype.clean = function(deleteValue) { // Single: Delete empty values
 	return this;
 };
 
-
-
-
 Array.prototype.uniques = function() { // Single: Gather duplicate values
 	return this.reduce(function(a, b){
 		if ( a.indexOf(b) < 0 ) a.push(b);
 		return a;
-	},[]);
+	}, []);
 }
 
-// Array.prototype.duplicates = function() { // Single: Gather duplicate values
-// 	return this.reduce(function(a, b){
-// 		if ( a.indexOf(b) < 0 ) a.push(b);
-// 		return a;
-// 	},[]);
-// }
-
-Array.prototype.contains = function(k) {
-	for ( var p in this) if (this[p] === k)	return true;
+Array.prototype.contains = function(v) { // Single: Contains specified value
+	for ( var i = 0; i < this.length; i++ ) {
+		if (this[i] === v)	return true;
+	}
 	return false;
 };
 
@@ -57,44 +53,14 @@ Array.prototype.duplicates = function() { // Single: Gather duplicate values
 	return result;
 }
 
-// Array.prototype.duplicates = function duplicates() { // Single: Gather duplicate values
-// 	return this.reduce(function(accum, cur) {
-// 		if (accum.indexOf(cur) >= 0) accum.push(cur);
-// 		return accum;
-// 	}, []);
-// }
+// Multiple
 
-// Array.prototype.duplicates = function() { // Single: Gather duplicate values
-// 	return this.concat(this);
-// };
-
-// Array.prototype.duplicates = function() { // Single: Gather duplicate values
-// 	var len = this.length;
-
-// 	for (var i = 0; i < len; i++) {
-// 		this[len + i] = this[i];
-// 	}
-
-// 	return this;
-// }
-
-// Array.prototype.duplicates = function() { // Single: Gather duplicate values
-// 	var r = new Array();
-// 	o:for( var i = 0, n = this.length; i < n; i++ ) {
-// 		for( var x = 0, y = r.length; x < y; x++ ) {
-// 			if( r[x] == this[i] ) {
-// 				r[r.length] = this[i];
-// 			}
-// 		}
-// 	}
-// 	return r;
-// }
-
-
-
-
-$.arrayIntersect = function(a, b) { // Multiple: Compare and gather duplicates
-	return $.grep(a, function(i) {
-			return $.inArray(i, b) > -1;
-	});
+Array.prototype.reduce = function() { // Multiple: join into single
+	var a = [];
+	for (var i=0; i < this.length; i++) {
+		for (var j=0; j < this[i].length; j++) {
+			a.push(this[i][j]);
+		}
+	}
+	return a;
 };
