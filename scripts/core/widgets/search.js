@@ -9,34 +9,94 @@ function initSearch() {
 				input = el.find("input[data-search-parameter]");
 				select = el.find("select[data-search-parameter]");
 				outputArray = [],
+
 				tagcloudElement = '<ul class="tagcloud"></ul>',
 				tagclose = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">',
-				resultsElement = '<div class="search-results block-reset loading"></div>';
 
-			el.append(tagcloudElement).append(resultsElement);
-			var tagcloud = el.find("ul.tagcloud");
-			var results = el.find(".search-results");
+				resultsElement = '<div class="search-results loading" data-view="grid"></div>',
+				resultsViewsElement =  '<div class="search-views">\
+											<div class="search-view active" data-view="grid">\
+												<img class="svg icon icon-grid" src="img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-grid.png\'">\
+											</div>\
+											<div class="search-view" data-view="list">\
+												<img class="svg icon icon-list" src="img/icons/icon-list.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-list.png\'">\
+											</div>\
+										</div>',
+				resultsCountElement = '<div class="search-count"></div>';
+
+			el.append(tagcloudElement)
+			  .append(resultsViewsElement)
+			  .append(resultsCountElement)
+			  .append(resultsElement);
+
+			var tagcloud = el.find("ul.tagcloud"),
+				views = el.find(".search-views"),
+				count = el.find(".search-count"),
+				results = el.find(".search-results");
 
 
+			views.on("click", ".search-view", function() {
+				var el = $(this),
+					view = el.data("view");
+
+				el.addClass("active").siblings().removeClass("active");
+				results.attr("data-view", view);
+			});
 
 
 			dataRequest(url, "GET", build);
 
 			function build(data) {
+				var JSONobjects = data.Results,
+					parameterArray = [],
+					resultArray = [];
 
-				// Interactions Behaviour
 
-				var parameterArray = [];
-				var resultArray = [];
 
-				input.each(function() {
-					var parameter = $(this).data("search-parameter");
+				// Populate Dropdowns
 
-					parameterArray.push(parameter);
+				function populateSelects(parameter) {
+					var target = el.find("select[data-search-parameter='" + parameter + "']");
+
+					var tempArray = [];
 					outputArray[parameter] = [];
 					resultArray[parameter] = [];
 
-					$(this).on("keyup", function(event) {
+					for ( var i = 0; i < JSONobjects.length; i++ ) {
+						var object = JSONobjects[i];
+						var property = object[parameter];
+
+						if ( property instanceof Array ) {
+							for ( var k = 0; k < property.length; k++ ) {
+								if ( $.inArray(property[k], tempArray) < 0 ) tempArray.push(property[k]);
+							}
+						} else {
+							if ( $.inArray(property, tempArray) < 0 ) tempArray.push(property);
+						}
+					}
+
+					var placeholder = '<option class="placeholder">Select ' + parameter + '...</option>';
+					target.append(placeholder);
+
+					tempArray.sort();
+
+					for ( var i = 0; i < tempArray.length; i++ ) {
+						var option = '<option value="' + tempArray[i] + '">' + tempArray[i] + '</option>';
+						target.append(option);
+					}
+				}
+
+
+
+				// Interactive Elements
+
+				function inputInit() {
+					var parameter = input.data("search-parameter");
+
+					parameterArray.push(parameter);
+					outputArray[parameter] = [];
+
+					input.on("keyup", function(event) {
 						// if ( event.keyCode === 13 ) {
 							var value = $(this).val();
 								parameter = $(this).data("search-parameter");
@@ -47,233 +107,49 @@ function initSearch() {
 							return false;
 						// }
 					});
-				});
+				}
 
-				select.each(function(i) {
-					var placeholder = $(this).val(),
-						parameter = $(this).data("search-parameter");
+				function selectInit() {
+					select.each(function(i) {
+						var placeholder = $(this).val(),
+							parameter = $(this).data("search-parameter");
 
-					populateSelects(parameter);
+						populateSelects(parameter);
 
-					parameterArray.push(parameter);
-					outputArray[parameter] = [];
-					resultArray[parameter] = [];
+						parameterArray.push(parameter);
+						outputArray[parameter] = [];
 
-					$(this).on("change", function(event) {
-						event.preventDefault();
+						$(this).on("change", function(event) {
+							event.preventDefault();
 
-						var value = $(this).val(),
-							tag = '<li class="tag valign-middle" data-tag-group="' + i + '" data-tag-parameter="' + parameter + '" data-tag="' + value + '">' + '<span>' + value + '</span>' + tagclose + '</li>';
+							var value = $(this).val(),
+								tag = '<li class="tag valign-middle" data-tag-group="' + i + '" data-tag-parameter="' + parameter + '" data-tag="' + value + '">' + '<span>' + value + '</span>' + tagclose + '</li>';
 
-						if ( value !== "" ) {
-							if ( $.inArray(value, outputArray[parameter]) < 0 ) {
-								tagcloud.addClass("active").append(tag);
-							} else {
-								notify("This tag already exists.", "failure");
+							if ( value !== "" ) {
+								if ( $.inArray(value, outputArray[parameter]) < 0 ) {
+									tagcloud.addClass("active").append(tag);
+								} else {
+									notify("This tag already exists.", "failure");
+									return false;
+								}
 							}
-						}
+
+							updateTags(parameter);
+						});
+					});
+
+					initDropdowns();
+				}
+
+				function tagInit() {
+					tagcloud.on("click", ".tag", function() {
+						var parameter = $(this).data("tag-parameter");
+
+						$(this).remove();
+						tagcloud.children(".tag").length > 0 ? tagcloud.addClass("active") : tagcloud.removeClass("active");
 
 						updateTags(parameter);
 					});
-				});
-
-				tagcloud.on("click", ".tag", function() {
-					var parameter = $(this).data("tag-parameter");
-
-					$(this).remove();
-					tagcloud.children(".tag").length > 0 ? tagcloud.addClass("active") : tagcloud.removeClass("active");
-
-					updateTags(parameter);
-				});
-
-
-
-
-				// Update functions
-
-				function updateResults() {
-					results.html("");
-
-
-					// Create all arrays for analysis and populate allArray with all items for comparison.
-
-					var allArray = [];
-					var existsArray = [];
-					var finalArray = [];
-
-					for ( var i = 0; i < data.Items.length; i++ ) {
-						var object = data.Items[i],
-							id = object.Id;
-
-						allArray.push(id);
-					}
-
-
-					// Get all values from all inputs/tags and rebuild arrays.
-
-					// Input
-
-					for ( var n = 0; n < input.length; n++ ) {
-						var parameter = input.eq(n).data("search-parameter"),
-							criteria = parameter.replace(/\s/g, "").split(",");
-
-						var tempArray = [];
-						resultArray[parameter] = [];
-
-						for ( var j = 0; j < data.Items.length; j++ ) {
-							var object = data.Items[j],
-								id = object.Id,
-								compare = outputArray[parameter];
-
-							for ( var i = 0; i < criteria.length; i++ ) {
-								analyse = object[criteria[i]].toLowerCase();
-
-								if ( analyse instanceof Array ) {
-									var joined = analyse.concat(compare);
-									if ( joined.duplicates().length > 0 && $.inArray(id, tempArray) < 0 ) {
-										tempArray.push(id);
-									}
-								} else {
-									if ( analyse.indexOf(compare) > -1 && $.inArray(id, tempArray) < 0 ) {
-										tempArray.push(id);
-									}
-								}
-							}
-						}
-
-						resultArray[parameter] = tempArray;
-					}
-
-					// Tags
-
-					for ( var n = 0; n < tagcloud.children(".tag").length; n++ ) {
-						var parameter = tagcloud.children(".tag").eq(n).data("tag-parameter"),
-							criteria = parameter,
-							compare = outputArray[parameter];
-
-						var tempArray = [];
-						resultArray[parameter] = [];
-
-						for ( var i = 0; i < data.Items.length; i++ ) {
-							var object = data.Items[i],
-								id = object.Id,
-								analyse = object[criteria];
-
-							if ( analyse instanceof Array ) {
-								var joined = analyse.concat(compare);
-								if ( joined.duplicates().length > 0 && $.inArray(id, tempArray) < 0 ) {
-									tempArray.push(id);
-								}
-							} else {
-								if ( $.inArray(analyse, compare) > -1 && $.inArray(id, tempArray) < 0 ) {
-									tempArray.push(id);
-								}
-							}
-						}
-
-						resultArray[parameter] = tempArray;
-					}
-
-
-					// Analyse rebuilt arrays
-
-					for ( var i = 0; i < parameterArray.length; i++ ) {
-						var dataset = outputArray[parameterArray[i]];
-						dataset.length > 0 ? existsArray.push(true) : existsArray.push(false);
-
-						console.log(parameterArray);
-
-						var analyse = i === 0 && input.val() === "" ? [] : resultArray[parameterArray[i]];
-						var joined = analyse.concat(allArray);
-						finalArray.push(joined.duplicates());
-					}
-
-					var outputCount = 0;
-
-					for ( var i = 0; i < existsArray.length; i++ ) {
-						if ( existsArray[i] === true ) outputCount++;
-					}
-
-					var cleanArray = finalArray.reduce();
-
-					if ( outputCount > 1 ) {
-						finalArray = cleanArray.duplicates();
-					} else if ( outputCount == 1 ) {
-						finalArray = cleanArray;
-					} else {
-						finalArray = allArray;
-					}
-
-					console.log(finalArray);
-
-					rebuild();
-
-
-					// Rebuild results
-
-					function rebuild() {
-						for ( var i = 0; i < data.Items.length; i++ ) {
-							var object = data.Items[i],
-								id = object.Id,
-								image = object.Image,
-								title = object.Title,
-								date = new Date(object.Date),
-								hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-								minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-								day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-								month = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-								year = date.getFullYear() < 10 ? "0" + date.getFullYear() : date.getFullYear();
-								fulldate = hour + ":" + minute + " @ " + day + "/" + month + "/" + year;
-								url = object.Url,
-								summary = object.Summary,
-								type = object.Type,
-								categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g , ", ") : "None",
-								tags = object.Categories.length > 0 ? object.Tags.toString().replace(/,/g , ", ") : "None",
-								item =  '<div class="search-item loading">\
-											 <a href="' + url + '">\
-												 <img src="' + image + '" />\
-												 <div class="title">' + title + '</div>\
-											 </a>\
-											 <div class="date">' + fulldate + '</div>\
-											 <div class="summary">' + summary + '</div>\
-											 <div class="type">Type: ' + type + '</div>\
-											 <div class="categories" data-tooltip="' + categories + '">View Categories: ' + categories + '</div>\
-											 <div class="tags" data-tooltip="' + tags + '">View Tags: ' + tags + '</div>\
-										</div>';
-
-							for ( var j = 0; j < finalArray.length; j++ ) {
-								if ( id == finalArray[j] ) results.append(item);
-							}
-						}
-
-						initTooltips();
-
-
-						// Results behaviour after built
-
-						function showItem(item, i) {
-							setTimeout(function() {
-								item.eq(i).removeClass("loading");
-							}, 100 * i);
-						}
-
-						var hasResults = results.children(".search-item").length ? true : false;
-						var hasOutput = $.inArray(true, existsArray) >= 0 ? true : false;
-
-						if ( hasResults ) {
-							results.removeClass("loading").removeClass("no-results");
-							var items = results.children(".search-item");
-							for ( var i = 0; i < items.length; i++ ) {
-								showItem(items, i);
-							}
-						} else {
-							if ( hasOutput ) {
-								results.removeClass("loading").addClass("no-results");
-							} else {
-								results.removeClass("no-results").addClass("loading");
-							}
-						}
-					}
 				}
 
 				function updateTags(parameter) {
@@ -293,46 +169,246 @@ function initSearch() {
 					updateResults();
 				}
 
+				// Run
+
+				inputInit();
+				selectInit();
+				tagInit();
 
 
 
-				// Populate Dropdowns
+				// Results Update functions
 
-				function populateSelects(parameter) {
-					var target = el.find("select[data-search-parameter='" + parameter + "']");
+				function updateResults() {
 
-					var tempArray = [];
-					outputArray[parameter] = [];
-					resultArray[parameter] = [];
+					// Create all arrays for analysis and populate allArray with all items for comparison.
 
-					for ( var i = 0; i < data.Items.length; i++ ) {
-						var object = data.Items[i];
-						var property = object[parameter];
+					var allArray = [];
+					var resultArray = [];
+					var existsArray = [];
+					var totalArray = [];
+					var finalArray = [];
 
-						if ( property instanceof Array ) {
-							for ( var k = 0; k < property.length; k++ ) {
-								if ( $.inArray(property[k], tempArray) < 0 ) tempArray.push(property[k]);
+					for ( var i = 0; i < JSONobjects.length; i++ ) {
+						var object = JSONobjects[i],
+							id = object.Id;
+
+						allArray.push(id);
+					}
+					for ( var i = 0; i < parameterArray.length; i++ ) {
+						resultArray[parameterArray[i]] = [];
+					}
+
+
+					// Get all values from all inputs/tags and rebuild arrays.
+
+					// Input
+
+					function inputAnalysis() {
+						var parameter = input.data("search-parameter"),
+							criteria = parameter.replace(/\s/g, "").split(","),
+							tempArray = [];
+
+						for ( var i = 0; i < JSONobjects.length; i++ ) {
+							var object = JSONobjects[i],
+								id = object.Id,
+								compare = outputArray[parameter];
+
+							for ( var j = 0; j < criteria.length; j++ ) {
+								var analyse = object[criteria[j]];
+
+								if ( analyse instanceof Array ) {
+									var joined = analyse.concat(compare);
+									if ( joined.duplicates().length > 0 && $.inArray(id, tempArray) < 0 ) {
+										tempArray.push(id);
+									}
+								} else {
+									if ( analyse && analyse.toLowerCase && analyse.toLowerCase().indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
+										tempArray.push(id);
+									}
+								}
 							}
-						} else {
-							if ( $.inArray(property, tempArray) < 0 ) tempArray.push(property);
+						}
+
+						resultArray[parameter] = tempArray;
+					}
+
+					// Tags
+
+					function tagAnalysis() {
+						for ( var n = 0; n < tagcloud.children(".tag").length; n++ ) {
+							var parameter = tagcloud.children(".tag").eq(n).data("tag-parameter"),
+								criteria = parameter,
+								compare = outputArray[parameter],
+								tempArray = [];
+
+							for ( var i = 0; i < JSONobjects.length; i++ ) {
+								var object = JSONobjects[i],
+									id = object.Id,
+									analyse = object[criteria];
+
+								if ( analyse instanceof Array ) {
+									var joined = analyse.concat(compare);
+									if ( joined.duplicates().length > 0 && $.inArray(id, tempArray) < 0 ) {
+										tempArray.push(id);
+									}
+								} else {
+									if ( $.inArray(analyse, compare) > -1 && $.inArray(id, tempArray) < 0 ) {
+										tempArray.push(id);
+									}
+								}
+							}
+
+							resultArray[parameter] = tempArray;
 						}
 					}
 
-					var placeholder = '<option class="placeholder">Select ' + parameter + '...</option>';
-					target.append(placeholder);
+					// Run
 
-					for ( var i = 0; i < tempArray.length; i++ ) {
-						var option = '<option value="' + tempArray[i] + '">' + tempArray[i] + '</option>';
-						target.append(option);
+					inputAnalysis();
+					tagAnalysis();
+
+
+					// Analyse rebuilt arrays and build final array
+
+					for ( var i = 0; i < parameterArray.length; i++ ) {
+						var outputSet = outputArray[parameterArray[i]],
+							resultSet = resultArray[parameterArray[i]];
+
+						existsArray.push(outputSet.length > 0);
+
+						if ( outputSet.length > 0 ) {
+							var joined = resultSet.concat(allArray).duplicates();
+							totalArray.push(joined);
+						}
+					}
+
+					var outputCount = 0;
+					for ( var i = 0; i < existsArray.length; i++ ) {
+						if ( existsArray[i] === true ) outputCount++;
+					}
+					var hasOutput = outputCount >= 1;
+
+					var cleanArray = totalArray.reduce().sort();
+
+
+					// Empty Final array, compare id repetition against number of inputs, rebuild finalArray.
+
+					function detectRepetition(arr) {
+						var counts = {};
+						for(var i = 0; i< arr.length; i++) {
+						    var num = arr[i];
+						    counts[num] = counts[num] ? counts[num]+1 : 1;
+						}
+						return counts;
+					}
+
+					var analysis = detectRepetition(cleanArray);
+
+					if ( hasOutput ) {
+						for ( var i = 0; i < cleanArray.length; i++ ) {
+							if ( analysis[cleanArray[i]] === outputCount && $.inArray(cleanArray[i], finalArray) < 0 ) {
+								finalArray.push(cleanArray[i]);
+							}
+						}
+					} else {
+						finalArray = allArray;
+					}
+
+					if ( config.application.debug ) console.log("Search IDs => " + finalArray);
+
+					rebuild();
+
+
+					// Rebuild results
+
+					function rebuild() {
+						results.html("");
+
+						for ( var i = 0; i < JSONobjects.length; i++ ) {
+							var object = JSONobjects[i],
+								id = object.Id,
+								image = object.Image,
+								title = object.Title,
+
+								dateStr = object.Date,
+								z = dateStr.replace("Z", ""),
+								a = z.split("T"),
+								d = a[0].split("-"),
+								t = a[1].split(":"),
+								date = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
+
+								hour = date.getHours();
+								hours = hour < 10 ? "0" + hour : hour;
+								minute = date.getMinutes();
+								minutes = minute < 10 ? "0" + minute : minute;
+								day = date.getDate();
+								days = day < 10 ? "0" + day : day;
+								month = date.getMonth();
+								months = (month + 1) < 10 ? "0" + (month + 1) : (month + 1);
+								year = date.getFullYear();
+								years = year < 10 ? "0" + year : year;
+								fulldate = hours + ":" + minutes + " @ " + days + "/" + months + "/" + years;
+
+								url = object.Url,
+								summary = object.Summary,
+								type = object.Type,
+								categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g , ", ") : "None",
+								tags = object.Tags.length > 0 ? object.Tags.toString().replace(/,/g , ", ") : "None",
+								result =  '<div class="search-item loading">\
+											 <a class="img" href="' + url + '"><img src="' + image + '" /></a>\
+											 <a class="title" href="' + url + '"><div>' + title + '</div></a>\
+											 <div class="date">' + fulldate + '</div>\
+											 <div class="type">' + type + '</div>\
+											 <div class="summary">' + summary + '</div>\
+											 <div class="info">\
+												 <div class="categories" data-tooltip="' + categories + '">Categories</div>\
+												 <div class="tags" data-tooltip="' + tags + '">Tags</div>\
+											 </div>\
+										</div>';
+
+
+							if ( $.inArray(id, finalArray) > -1 ) results.append(result);
+						}
+
+						initTooltips();
+
+
+						// Results behaviour after built
+
+						function showItem(item, i) {
+							setTimeout(function() {
+								item.eq(i).removeClass("loading");
+							}, 100 * i);
+						}
+
+						var items = results.children(".search-item");
+						var hasResults = items.length;
+
+						count
+							.css({"display": "inline-block"})
+							.html((items.length === 0 ? "No" : items.length) + " result" + (items.length === 1 ? " " : "s ") + "found");
+
+						if ( hasResults ) {
+							results.removeClass("loading").removeClass("no-results");
+
+							for ( var i = 0; i < items.length; i++ ) {
+								showItem(items, i);
+							}
+						} else {
+							if ( hasOutput ) {
+								results.removeClass("loading").addClass("no-results");
+							} else {
+								results.removeClass("no-results").addClass("loading");
+							}
+						}
 					}
 				}
 
 
 
-
 				// Initialise
 
-				initDropdowns();
 				updateResults();
 			}
 		});

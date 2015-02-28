@@ -17,11 +17,13 @@ function initAutocomplete() {
 			dataRequest(url, "GET", build);
 
 			function build(data) {
+				var JSONobjects = data.Results;
+
 				function populateList(parameter) {
 					var tempArray = [];
 
-					for ( var i = 0; i < data.Items.length; i++ ) {
-						var object = data.Items[i];
+					for ( var i = 0; i < JSONobjects.length; i++ ) {
+						var object = JSONobjects[i];
 						var property = object[parameter];
 
 						if ( property instanceof Array ) {

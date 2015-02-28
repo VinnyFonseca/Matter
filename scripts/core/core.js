@@ -330,6 +330,7 @@ function initFramework() {
 	if (config.application.debug) console.log(":: means DOM.ready");
 	if (config.application.debug) console.log("~~ means Async");
 	if (config.application.debug) console.log("•• means Complete");
+	if (config.application.debug) console.log("=> means User action");
 
 
 	// Easter Eggs Init

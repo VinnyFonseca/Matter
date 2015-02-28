@@ -1,17 +1,67 @@
+.search-count {
+	display: none;
+	position: relative;
+	margin: 0 (10px);
+	margin-top: ($spacing / 2);
+	padding: 5px 12px;
+	@include font-size($fontSize / 1.2);
+	color: #888;
+	border: 1px dotted #ddd;
+	border-bottom: 0;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	background: #f2f2f2;
+}
+
+.search-views {
+	display: block;
+	position: relative;
+	float: right;
+	margin: 0 ($spacing / 2);
+	margin-top: ($spacing / 2);
+	padding: 6px;
+	font-size: 0;
+	color: #888;
+	border: 1px dotted #ddd;
+	border-bottom: 0;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	background: #f2f2f2;
+
+	.search-view {
+		display: inline-block;
+		position: relative;
+		margin: 0 6px;
+		padding: 0;
+		cursor: pointer;
+		@include opacity(0.25);
+
+		&:hover,
+		&.active {
+			@include opacity(1);
+		}
+	}
+}
+
 .search-results {
 	display: block;
 	position: relative;
-	margin: ($spacing / 2) 0;
-	padding: 0.5%;
-	border-radius: $radius;
-	border: 1px dashed $cd;
+	margin: 0 -0.5% ($spacing / 2);
+	padding: 0.5% 0;
+	font-size: 0;
+	border-top: 1px dotted $cd;
 	background-color: $cf;
+
+	> * {
+		@include font-size($fontSize);
+	}
 
 	&.no-results {
 		padding: ($spacing / 1.8);
 		@include font-size($fontSize);
 
 		&:before {
+			color: $brand1;
 			content: "Your search returned no results. Tweak it and try again."
 		}
 	}
@@ -21,11 +71,144 @@
 		background: transparent url('../img/loader.gif') no-repeat center center;
 	}
 
+
+	// Views
+
+	&.mini {
+		.search-item {
+			padding: ($spacing / 2) !important;
+
+			> * {
+				padding: 0 !important;
+			}
+
+			.img {
+				display: none;
+			}
+
+			.title {
+				margin-top: 0 !important;
+			}
+
+			.type {
+				position: relative;
+				padding: 0;
+				top: 0;
+				left: 0;
+				right: auto;
+				@include font-size($fontSize / 1.2);
+				color: $brand1;
+				background: none;
+				box-shadow: none;
+
+				&:before {
+					content: "Type: ";
+				}
+			}
+
+			.summary {
+				display: none;
+			}
+
+			.info {
+				position: relative;
+				margin-top: $spacing / 4;
+				bottom: 0;
+
+				* {
+					float: none;
+
+					&:before {
+						content: "View ";
+					}
+				}
+			}
+		}
+	}
+
+	&[data-view="grid"] {
+		.search-item {
+			display: inline-block;
+			padding-bottom: $spacing * 1.5;
+			width: 32.333%;
+
+			.img {
+				margin-bottom: 5px;
+
+				img {
+					width: 100%;
+				}
+			}
+
+			.type {
+				left: -1px;
+				border-top-left-radius: $radius;
+				border-bottom-right-radius: $radius;
+			}
+
+			.summary {
+				padding: 0 ($spacing / 2);
+				height: 125px;
+			}
+
+			.info {
+				padding: 0 ($spacing / 2);
+				width: 100%;
+			}
+		}
+	}
+
+	&[data-view="list"] {
+		.search-item {
+			display: block;
+			overflow: hidden;
+
+			.img {
+				float: left;
+				margin-right: ($spacing / 2);
+				width: 15%;
+				padding-bottom: 15%;
+
+				img {
+					position: absolute;
+					margin-left: -87%;
+					height: 100%;
+					left: 50%;
+				}
+			}
+
+			.title {
+				margin-top: ($spacing / 4);
+			}
+
+			.type {
+				right: -1px;
+				border-top-right-radius: $radius;
+				border-bottom-left-radius: $radius;
+			}
+
+			.summary {
+				padding: 0;
+				height: 50px;
+			}
+
+			.info {
+				right: $spacing / 2;
+
+				* {
+					margin-left: $spacing / 2;
+				}
+			}
+		}
+	}
+
+
+	// Elements
+
 	.search-item {
-		display: inline-block;
+		position: relative;
 		margin: 0.5%;
-		padding: $spacing / 2;
-		width: 24%;
+		padding: 0;
 		border-radius: $radius;
 		border: 1px solid $cd;
 		background-color: $cf;
@@ -39,43 +222,66 @@
 			@include transform(scale(1.1) translateY(30px));
 		}
 
-		img {
+		.img {
 			display: block;
 			position: relative;
-			margin-bottom: 5px;
+			text-align: center;
+			overflow: hidden;
+
+			img {
+				margin: 0 auto;
+				max-width: none;
+			}
 		}
 		.title {
 			display: block;
 			position: relative;
+			padding: 0 ($spacing / 2);
 			font-family: $headingFont;
 		}
 		.date {
 			display: block;
 			position: relative;
+			padding: 0 ($spacing / 2);
 			color: $c8;
 			@include font-size($fontSize / 1.2);
 		}
+		.type {
+			display: block;
+			position: absolute;
+			padding: 3px 7px;
+			top: -1px;
+			color: $cf;
+			background-color: $brand2;
+			@include font-size($fontSize / 1.3);
+			box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+			z-index: 10;
+		}
 		.summary {
-			display: none;
+			display: block;
 			position: relative;
 			margin: ($spacing / 2) 0;
 			@include font-size($fontSize / 1.1);
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
-		.type {
-			display: block;
-			position: relative;
-			color: $brand1;
-			@include font-size($fontSize / 1.2);
+
+		.info {
+			position: absolute;
+			bottom: $spacing / 2;
+			white-space: nowrap;
 		}
 		.categories {
 			display: block;
 			position: relative;
+			float: left;
 			color: $brand2;
 			@include font-size($fontSize / 1.2);
 		}
 		.tags {
 			display: block;
 			position: relative;
+			float: right;
 			color: $brand3;
 			@include font-size($fontSize / 1.2);
 		}

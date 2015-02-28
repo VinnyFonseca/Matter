@@ -25,8 +25,9 @@ module.exports = function(grunt) {
 						'scripts/vendor/modernizr-full.min.js',
 						'scripts/vendor/*.js',
 						'scripts/dev/config.js',
+						'scripts/core/**/*.js',
 						'scripts/core/*.js',
-						'scripts/core/widgets/*.js',
+						'scripts/dev/**/*.js',
 						'scripts/dev/*.js'
 					]
 				}

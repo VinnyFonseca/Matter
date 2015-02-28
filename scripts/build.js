@@ -179,11 +179,11 @@ function initFramework() {
     isWideScreen = $(window).width() > 768, config.application.touch && (FastClick.attach(document.body), 
     $(".map-wrapper").addClass("map-mobile")), config.application.debug && console.log(":: means DOM.ready"), 
     config.application.debug && console.log("~~ means Async"), config.application.debug && console.log("•• means Complete"), 
-    initKonami(alertKonami), initSVGs(), initCookies(), initLinks(), initNav(), initTables(), 
-    scrollProgress(), initOverlays(), initNotifications(), initTooltips(), initSliders(), 
-    initMap(), initTwitter(), initFontSizeControls(), initSearch(), initAutocomplete(), 
-    initTagClouds(), initDropdowns(), loadFileInputs(config.forms.uploadlimit), initValidation(), 
-    loadProgressBar(), config.application.debug && console.log("Done •• Matter");
+    config.application.debug && console.log("=> means User action"), initKonami(alertKonami), 
+    initSVGs(), initCookies(), initLinks(), initNav(), initTables(), scrollProgress(), 
+    initOverlays(), initNotifications(), initTooltips(), initSliders(), initMap(), initTwitter(), 
+    initFontSizeControls(), initSearch(), initAutocomplete(), initTagClouds(), initDropdowns(), 
+    loadFileInputs(config.forms.uploadlimit), initValidation(), loadProgressBar(), config.application.debug && console.log("Done •• Matter");
 }
 
 function buildDropdowns(a) {
@@ -381,28 +381,29 @@ function initValidation() {
 function initAutocomplete() {
     $("[data-autocomplete]").length && ($("[data-autocomplete]").each(function() {
         function a(a) {
-            function e(b) {
-                for (var c = [], d = 0; d < a.Items.length; d++) {
-                    var e = a.Items[d], f = e[b];
-                    if (f instanceof Array) for (var g = 0; g < f.length; g++) $.inArray(f[g], c) < 0 && c.push(f[g]); else $.inArray(f, c) < 0 && c.push(f);
+            function e(a) {
+                for (var b = [], c = 0; c < j.length; c++) {
+                    var d = j[c], e = d[a];
+                    if (e instanceof Array) for (var f = 0; f < e.length; f++) $.inArray(e[f], b) < 0 && b.push(e[f]); else $.inArray(e, b) < 0 && b.push(e);
                 }
-                c.sort();
-                for (var i in c) h.append("<li>" + c[i] + "</li>");
+                b.sort();
+                for (var g in b) h.append("<li>" + b[g] + "</li>");
             }
             function i(a) {
                 var d = $(a).val();
-                j.each(function() {
+                k.each(function() {
                     $(this).text().search(new RegExp(d, "i")) < 0 ? $(this).removeClass("selected") : $(this).addClass("selected");
                 }).on("click", function() {
                     c.val($(this).text()).trigger({
                         type: "keydown",
                         which: 13
                     }), b.removeClass("active"), h.unhighlight();
-                }), d.length > 0 && j.hasClass("selected") ? (b.addClass("active"), h.unhighlight().highlight(d)) : (b.removeClass("active"), 
+                }), d.length > 0 && k.hasClass("selected") ? (b.addClass("active"), h.unhighlight().highlight(d)) : (b.removeClass("active"), 
                 h.unhighlight());
             }
+            var j = a.Results;
             e(f);
-            var j = h.children("li").not(".divider");
+            var k = h.children("li").not(".divider");
             h.on("mouseenter", function() {
                 g = !0;
             }).on("mouseleave", function() {
@@ -410,11 +411,11 @@ function initAutocomplete() {
             }), c.on("keydown", function(a) {
                 if (h.hasClass("active")) {
                     var b = h.children("li.selected");
-                    38 === a.keyCode && d > -1 && (j.removeClass("active"), d--, b.eq(d).addClass("active"), 
-                    d % 7 === 6 && h.scrollTop(7 * (j.outerHeight() - 1) * ((d - 6) / 7))), 40 === a.keyCode && d < b.length - 1 && (j.removeClass("active"), 
-                    d++, b.eq(d).addClass("active"), d % 7 === 0 && h.scrollTop(7 * (j.outerHeight() - 1) * (d / 7))), 
+                    38 === a.keyCode && d > -1 && (k.removeClass("active"), d--, b.eq(d).addClass("active"), 
+                    d % 7 === 6 && h.scrollTop(7 * (k.outerHeight() - 1) * ((d - 6) / 7))), 40 === a.keyCode && d < b.length - 1 && (k.removeClass("active"), 
+                    d++, b.eq(d).addClass("active"), d % 7 === 0 && h.scrollTop(7 * (k.outerHeight() - 1) * (d / 7))), 
                     (9 === a.keyCode || 13 === a.keyCode) && (c.val(h.children("li.active").text()), 
-                    j.removeClass("active")), (8 === a.keyCode || 46 === a.keyCode) && (j.removeClass("active"), 
+                    k.removeClass("active")), (8 === a.keyCode || 46 === a.keyCode) && (k.removeClass("active"), 
                     d = -1), 27 === a.keyCode && c.blur();
                 }
             }).on("keyup", function() {
@@ -574,117 +575,147 @@ function initOverlays() {
 function initSearch() {
     $("[data-search]").length && ($("[data-search]").each(function(a) {
         function b(a) {
-            function b() {
+            function b(a) {
+                var b = c.find("select[data-search-parameter='" + a + "']"), d = [];
+                outputArray[a] = [], p[a] = [];
+                for (var e = 0; e < n.length; e++) {
+                    var f = n[e], g = f[a];
+                    if (g instanceof Array) for (var h = 0; h < g.length; h++) $.inArray(g[h], d) < 0 && d.push(g[h]); else $.inArray(g, d) < 0 && d.push(g);
+                }
+                var i = '<option class="placeholder">Select ' + a + "...</option>";
+                b.append(i), d.sort();
+                for (var e = 0; e < d.length; e++) {
+                    var j = '<option value="' + d[e] + '">' + d[e] + "</option>";
+                    b.append(j);
+                }
+            }
+            function g() {
+                var a = e.data("search-parameter");
+                o.push(a), outputArray[a] = [], e.on("keyup", function() {
+                    var b = $(this).val();
+                    return a = $(this).data("search-parameter"), outputArray[a] = b.toLowerCase(), m(), 
+                    !1;
+                });
+            }
+            function j() {
+                select.each(function(a) {
+                    var c = ($(this).val(), $(this).data("search-parameter"));
+                    b(c), o.push(c), outputArray[c] = [], $(this).on("change", function(b) {
+                        b.preventDefault();
+                        var d = $(this).val(), e = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-parameter="' + c + '" data-tag="' + d + '"><span>' + d + "</span>" + tagclose + "</li>";
+                        if ("" !== d) {
+                            if (!($.inArray(d, outputArray[c]) < 0)) return notify("This tag already exists.", "failure"), 
+                            !1;
+                            f.addClass("active").append(e);
+                        }
+                        l(c);
+                    });
+                }), initDropdowns();
+            }
+            function k() {
+                f.on("click", ".tag", function() {
+                    var a = $(this).data("tag-parameter");
+                    $(this).remove(), f.children(".tag").length > 0 ? f.addClass("active") : f.removeClass("active"), 
+                    l(a);
+                });
+            }
+            function l(a) {
+                initSVGs();
+                for (var b = f.children(".tag[data-tag-parameter='" + a + "']"), c = [], d = 0; d < b.length; d++) {
+                    var e = b.eq(d).data("tag");
+                    c.push(e);
+                }
+                outputArray[a] = c, m();
+            }
+            function m() {
+                function a() {
+                    for (var a = e.data("search-parameter"), b = a.replace(/\s/g, "").split(","), c = [], d = 0; d < n.length; d++) for (var f = n[d], g = f.Id, h = outputArray[a], i = 0; i < b.length; i++) {
+                        var j = f[b[i]];
+                        if (j instanceof Array) {
+                            var l = j.concat(h);
+                            l.duplicates().length > 0 && $.inArray(g, c) < 0 && c.push(g);
+                        } else j && j.toLowerCase && j.toLowerCase().indexOf(h) > -1 && "" !== e.val() && $.inArray(g, c) < 0 && c.push(g);
+                    }
+                    k[a] = c;
+                }
                 function b() {
-                    function b(a, b) {
+                    for (var a = 0; a < f.children(".tag").length; a++) {
+                        for (var b = f.children(".tag").eq(a).data("tag-parameter"), c = b, d = outputArray[b], e = [], g = 0; g < n.length; g++) {
+                            var h = n[g], i = h.Id, j = h[c];
+                            if (j instanceof Array) {
+                                var l = j.concat(d);
+                                l.duplicates().length > 0 && $.inArray(i, e) < 0 && e.push(i);
+                            } else $.inArray(j, d) > -1 && $.inArray(i, e) < 0 && e.push(i);
+                        }
+                        k[b] = e;
+                    }
+                }
+                function c(a) {
+                    for (var b = {}, c = 0; c < a.length; c++) {
+                        var d = a[c];
+                        b[d] = b[d] ? b[d] + 1 : 1;
+                    }
+                    return b;
+                }
+                function g() {
+                    function a(a, b) {
                         setTimeout(function() {
                             a.eq(b).removeClass("loading");
                         }, 100 * b);
                     }
-                    for (var c = 0; c < a.Items.length; c++) {
-                        var e = a.Items[c], f = e.Id, j = e.Image, k = e.Title, l = new Date(e.Date), m = l.getHours() < 10 ? "0" + l.getHours() : l.getHours();
-                        minute = l.getMinutes() < 10 ? "0" + l.getMinutes() : l.getMinutes(), day = l.getDate() < 10 ? "0" + l.getDate() : l.getDate(), 
-                        month = l.getMonth() + 1 < 10 ? "0" + (l.getMonth() + 1) : l.getMonth() + 1, year = l.getFullYear() < 10 ? "0" + l.getFullYear() : l.getFullYear(), 
-                        fulldate = m + ":" + minute + " @ " + day + "/" + month + "/" + year, d = e.Url, 
-                        summary = e.Summary, type = e.Type, categories = e.Categories.length > 0 ? e.Categories.toString().replace(/,/g, ", ") : "None", 
-                        tags = e.Categories.length > 0 ? e.Tags.toString().replace(/,/g, ", ") : "None", 
-                        item = '<div class="search-item loading">											 <a href="' + d + '">												 <img src="' + j + '" />												 <div class="title">' + k + '</div>											 </a>											 <div class="date">' + fulldate + '</div>											 <div class="summary">' + summary + '</div>											 <div class="type">Type: ' + type + '</div>											 <div class="categories" data-tooltip="' + categories + '">View Categories: ' + categories + '</div>											 <div class="tags" data-tooltip="' + tags + '">View Tags: ' + tags + "</div>										</div>";
-                        for (var n = 0; n < i.length; n++) f == i[n] && g.append(item);
+                    i.html("");
+                    for (var b = 0; b < n.length; b++) {
+                        var c = n[b], e = c.Id, f = c.Image, g = c.Title, j = c.Date, k = j.replace("Z", ""), l = k.split("T"), m = l[0].split("-"), o = l[1].split(":"), q = new Date(m[0], m[1] - 1, m[2], o[0], o[1], o[2]);
+                        hour = q.getHours(), hours = hour < 10 ? "0" + hour : hour, minute = q.getMinutes(), 
+                        minutes = minute < 10 ? "0" + minute : minute, day = q.getDate(), days = day < 10 ? "0" + day : day, 
+                        month = q.getMonth(), months = month + 1 < 10 ? "0" + (month + 1) : month + 1, year = q.getFullYear(), 
+                        years = year < 10 ? "0" + year : year, fulldate = hours + ":" + minutes + " @ " + days + "/" + months + "/" + years, 
+                        d = c.Url, summary = c.Summary, type = c.Type, categories = c.Categories.length > 0 ? c.Categories.toString().replace(/,/g, ", ") : "None", 
+                        tags = c.Tags.length > 0 ? c.Tags.toString().replace(/,/g, ", ") : "None", result = '<div class="search-item loading">											 <a class="img" href="' + d + '"><img src="' + f + '" /></a>											 <a class="title" href="' + d + '"><div>' + g + '</div></a>											 <div class="date">' + fulldate + '</div>											 <div class="type">' + type + '</div>											 <div class="summary">' + summary + '</div>											 <div class="info">												 <div class="categories" data-tooltip="' + categories + '">Categories</div>												 <div class="tags" data-tooltip="' + tags + '">Tags</div>											 </div>										</div>', 
+                        $.inArray(e, p) > -1 && i.append(result);
                     }
                     initTooltips();
-                    var o = g.children(".search-item").length ? !0 : !1, p = $.inArray(!0, h) >= 0 ? !0 : !1;
-                    if (o) {
-                        g.removeClass("loading").removeClass("no-results");
-                        for (var q = g.children(".search-item"), c = 0; c < q.length; c++) b(q, c);
-                    } else p ? g.removeClass("loading").addClass("no-results") : g.removeClass("no-results").addClass("loading");
+                    var r = i.children(".search-item"), s = r.length;
+                    if (h.css({
+                        display: "inline-block"
+                    }).html((0 === r.length ? "No" : r.length) + " result" + (1 === r.length ? " " : "s ") + "found"), 
+                    s) {
+                        i.removeClass("loading").removeClass("no-results");
+                        for (var b = 0; b < r.length; b++) a(r, b);
+                    } else x ? i.removeClass("loading").addClass("no-results") : i.removeClass("no-results").addClass("loading");
                 }
-                g.html("");
-                for (var c = [], h = [], i = [], l = 0; l < a.Items.length; l++) {
-                    var m = a.Items[l], n = m.Id;
-                    c.push(n);
+                for (var j = [], k = [], l = [], m = [], p = [], q = 0; q < n.length; q++) {
+                    var r = n[q], s = r.Id;
+                    j.push(s);
                 }
-                for (var o = 0; o < e.length; o++) {
-                    var p = e.eq(o).data("search-parameter"), q = p.replace(/\s/g, "").split(","), r = [];
-                    k[p] = [];
-                    for (var s = 0; s < a.Items.length; s++) for (var m = a.Items[s], n = m.Id, t = outputArray[p], l = 0; l < q.length; l++) if (v = m[q[l]].toLowerCase(), 
-                    v instanceof Array) {
-                        var u = v.concat(t);
-                        u.duplicates().length > 0 && $.inArray(n, r) < 0 && r.push(n);
-                    } else v.indexOf(t) > -1 && $.inArray(n, r) < 0 && r.push(n);
-                    k[p] = r;
-                }
-                for (var o = 0; o < f.children(".tag").length; o++) {
-                    var p = f.children(".tag").eq(o).data("tag-parameter"), q = p, t = outputArray[p], r = [];
-                    k[p] = [];
-                    for (var l = 0; l < a.Items.length; l++) {
-                        var m = a.Items[l], n = m.Id, v = m[q];
-                        if (v instanceof Array) {
-                            var u = v.concat(t);
-                            u.duplicates().length > 0 && $.inArray(n, r) < 0 && r.push(n);
-                        } else $.inArray(v, t) > -1 && $.inArray(n, r) < 0 && r.push(n);
+                for (var q = 0; q < o.length; q++) k[o[q]] = [];
+                a(), b();
+                for (var q = 0; q < o.length; q++) {
+                    var t = outputArray[o[q]], u = k[o[q]];
+                    if (l.push(t.length > 0), t.length > 0) {
+                        var v = u.concat(j).duplicates();
+                        m.push(v);
                     }
-                    k[p] = r;
                 }
-                for (var l = 0; l < j.length; l++) {
-                    var w = outputArray[j[l]];
-                    h.push(w.length > 0 ? !0 : !1), console.log(j);
-                    var v = 0 === l && "" === e.val() ? [] : k[j[l]], u = v.concat(c);
-                    i.push(u.duplicates());
-                }
-                for (var x = 0, l = 0; l < h.length; l++) h[l] === !0 && x++;
-                var y = i.reduce();
-                i = x > 1 ? y.duplicates() : 1 == x ? y : c, console.log(i), b();
+                for (var w = 0, q = 0; q < l.length; q++) l[q] === !0 && w++;
+                var x = w >= 1, y = m.reduce().sort(), z = c(y);
+                if (x) for (var q = 0; q < y.length; q++) z[y[q]] === w && $.inArray(y[q], p) < 0 && p.push(y[q]); else p = j;
+                config.application.debug && console.log("Search IDs => " + p), g();
             }
-            function h(a) {
-                initSVGs();
-                for (var c = f.children(".tag[data-tag-parameter='" + a + "']"), d = [], e = 0; e < c.length; e++) {
-                    var g = c.eq(e).data("tag");
-                    d.push(g);
-                }
-                outputArray[a] = d, b();
-            }
-            function i(b) {
-                var d = c.find("select[data-search-parameter='" + b + "']"), e = [];
-                outputArray[b] = [], k[b] = [];
-                for (var f = 0; f < a.Items.length; f++) {
-                    var g = a.Items[f], h = g[b];
-                    if (h instanceof Array) for (var i = 0; i < h.length; i++) $.inArray(h[i], e) < 0 && e.push(h[i]); else $.inArray(h, e) < 0 && e.push(h);
-                }
-                var j = '<option class="placeholder">Select ' + b + "...</option>";
-                d.append(j);
-                for (var f = 0; f < e.length; f++) {
-                    var l = '<option value="' + e[f] + '">' + e[f] + "</option>";
-                    d.append(l);
-                }
-            }
-            var j = [], k = [];
-            e.each(function() {
-                var a = $(this).data("search-parameter");
-                j.push(a), outputArray[a] = [], k[a] = [], $(this).on("keyup", function() {
-                    var c = $(this).val();
-                    return a = $(this).data("search-parameter"), outputArray[a] = c.toLowerCase(), b(), 
-                    !1;
-                });
-            }), select.each(function(a) {
-                var b = ($(this).val(), $(this).data("search-parameter"));
-                i(b), j.push(b), outputArray[b] = [], k[b] = [], $(this).on("change", function(c) {
-                    c.preventDefault();
-                    var d = $(this).val(), e = '<li class="tag valign-middle" data-tag-group="' + a + '" data-tag-parameter="' + b + '" data-tag="' + d + '"><span>' + d + "</span>" + tagclose + "</li>";
-                    "" !== d && ($.inArray(d, outputArray[b]) < 0 ? f.addClass("active").append(e) : notify("This tag already exists.", "failure")), 
-                    h(b);
-                });
-            }), f.on("click", ".tag", function() {
-                var a = $(this).data("tag-parameter");
-                $(this).remove(), f.children(".tag").length > 0 ? f.addClass("active") : f.removeClass("active"), 
-                h(a);
-            }), initDropdowns(), b();
+            var n = a.Results, o = [], p = [];
+            g(), j(), k(), m();
         }
         var c = $(this), d = c.data("search"), e = c.find("input[data-search-parameter]");
         select = c.find("select[data-search-parameter]"), outputArray = [], tagcloudElement = '<ul class="tagcloud"></ul>', 
         tagclose = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">', 
-        resultsElement = '<div class="search-results block-reset loading"></div>', c.append(tagcloudElement).append(resultsElement);
-        var f = c.find("ul.tagcloud"), g = c.find(".search-results");
-        dataRequest(d, "GET", b);
+        resultsElement = '<div class="search-results loading" data-view="grid"></div>', 
+        resultsViewsElement = '<div class="search-views">											<div class="search-view active" data-view="grid">												<img class="svg icon icon-grid" src="img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-grid.png\'">											</div>											<div class="search-view" data-view="list">												<img class="svg icon icon-list" src="img/icons/icon-list.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-list.png\'">											</div>										</div>', 
+        resultsCountElement = '<div class="search-count"></div>', c.append(tagcloudElement).append(resultsViewsElement).append(resultsCountElement).append(resultsElement);
+        var f = c.find("ul.tagcloud"), g = c.find(".search-views"), h = c.find(".search-count"), i = c.find(".search-results");
+        g.on("click", ".search-view", function() {
+            var a = $(this), b = a.data("view");
+            a.addClass("active").siblings().removeClass("active"), i.attr("data-view", b);
+        }), dataRequest(d, "GET", b);
     }), config.application.debug && console.log("Search :: Unified Search"));
 }
 
@@ -6079,9 +6110,15 @@ var config = {
     }
 };
 
-Array.prototype.indexOf || (Array.prototype.indexOf = function(a, b) {
+Array.prototype.indexOf || (Array.prototype.indexOf = function(a) {
     "use strict";
-    for (var c = b || 0, d = this.length; d > c; c++) if (this[c] === a) return c;
+    if (null == this) throw new TypeError();
+    var b = Object(this), c = b.length >>> 0;
+    if (0 === c) return -1;
+    var d = 0;
+    if (arguments.length > 1 && (d = Number(arguments[1]), d != d ? d = 0 : 0 != d && 1/0 != d && d != -1/0 && (d = (d > 0 || -1) * Math.floor(Math.abs(d)))), 
+    d >= c) return -1;
+    for (var e = d >= 0 ? d : Math.max(c - Math.abs(d), 0); c > e; e++) if (e in b && b[e] === a) return e;
     return -1;
 }), Array.prototype.clean = function(a) {
     for (var b = 0; b < this.length; b++) this[b] == a && (this.splice(b, 1), b--);
@@ -6146,6 +6183,71 @@ $(document).ready(initFramework), $(window).on("load", function() {
         startDate: new Date()
     });
 });
+
+var dateFormat = function() {
+    var a = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g, b = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g, c = /[^-+\dA-Z]/g, d = function(a, b) {
+        for (a = String(a), b = b || 2; a.length < b; ) a = "0" + a;
+        return a;
+    };
+    return function(e, f, g) {
+        var h = dateFormat;
+        1 != arguments.length || "[object String]" != Object.prototype.toString.call(e) || /\d/.test(e) || (f = e, 
+        e = void 0), e = e ? new Date(e) : new Date(), f = String(h.masks[f] || f || h.masks["default"]), 
+        "UTC:" == f.slice(0, 4) && (f = f.slice(4), g = !0);
+        var i = g ? "getUTC" : "get", j = e[i + "Date"](), k = e[i + "Day"](), l = e[i + "Month"](), m = e[i + "FullYear"](), n = e[i + "Hours"](), o = e[i + "Minutes"](), p = e[i + "Seconds"](), q = e[i + "Milliseconds"](), r = g ? 0 : e.getTimezoneOffset(), s = {
+            d: j,
+            dd: d(j),
+            ddd: h.i18n.dayNames[k],
+            dddd: h.i18n.dayNames[k + 7],
+            m: l + 1,
+            mm: d(l + 1),
+            mmm: h.i18n.monthNames[l],
+            mmmm: h.i18n.monthNames[l + 12],
+            yy: String(m).slice(2),
+            yyyy: m,
+            h: n % 12 || 12,
+            hh: d(n % 12 || 12),
+            H: n,
+            HH: d(n),
+            M: o,
+            MM: d(o),
+            s: p,
+            ss: d(p),
+            l: d(q, 3),
+            L: d(q > 99 ? Math.round(q / 10) : q),
+            t: 12 > n ? "a" : "p",
+            tt: 12 > n ? "am" : "pm",
+            T: 12 > n ? "A" : "P",
+            TT: 12 > n ? "AM" : "PM",
+            Z: g ? "UTC" : (String(e).match(b) || [ "" ]).pop().replace(c, ""),
+            o: (r > 0 ? "-" : "+") + d(100 * Math.floor(Math.abs(r) / 60) + Math.abs(r) % 60, 4),
+            S: [ "th", "st", "nd", "rd" ][j % 10 > 3 ? 0 : (j % 100 - j % 10 != 10) * j % 10]
+        };
+        return f.replace(a, function(a) {
+            return a in s ? s[a] : a.slice(1, a.length - 1);
+        });
+    };
+}();
+
+dateFormat.masks = {
+    "default": "ddd mmm dd yyyy HH:MM:ss",
+    shortDate: "m/d/yy",
+    mediumDate: "mmm d, yyyy",
+    longDate: "mmmm d, yyyy",
+    fullDate: "dddd, mmmm d, yyyy",
+    shortTime: "h:MM TT",
+    mediumTime: "h:MM:ss TT",
+    longTime: "h:MM:ss TT Z",
+    isoDate: "yyyy-mm-dd",
+    isoTime: "HH:MM:ss",
+    isoDateTime: "yyyy-mm-dd'T'HH:MM:ss",
+    isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
+}, dateFormat.i18n = {
+    dayNames: [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ],
+    monthNames: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
+}, Date.prototype.format = function(a, b) {
+    return dateFormat(this, a, b);
+};
 
 var map, themes = {
     Bentley: [ {

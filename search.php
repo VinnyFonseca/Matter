@@ -31,9 +31,12 @@
 		<div data-search="scripts/dev/data/search.json">
 			<div class="row">
 				<div class="column">
-					<!-- <div class="autocomplete-wrapper" data-autocomplete="scripts/dev/data/search.json"> -->
-						<input type="text" placeholder="Search..." data-search-parameter="Title, Summary" data-autocomplete-parameter="Title">
-					<!-- </div> -->
+					<!--
+					<div class="autocomplete-wrapper" data-autocomplete="scripts/dev/data/search.json">
+						<input type="text" placeholder="Search..." data-search-parameter="Title, Description" data-autocomplete-parameter="Title">
+					</div>
+					-->
+					<input type="text" placeholder="Search..." data-search-parameter="Title, Description">
 				</div>
 			</div>
 			<div class="row">
