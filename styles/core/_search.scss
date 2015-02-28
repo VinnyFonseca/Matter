@@ -1,7 +1,7 @@
 .search-count {
 	display: none;
 	position: relative;
-	margin: 0 (10px);
+	margin: 0;
 	margin-top: ($spacing / 2);
 	padding: 5px 12px;
 	@include font-size($fontSize / 1.2);
@@ -17,7 +17,7 @@
 	display: block;
 	position: relative;
 	float: right;
-	margin: 0 ($spacing / 2);
+	margin: 0;
 	margin-top: ($spacing / 2);
 	padding: 6px;
 	font-size: 0;
@@ -46,8 +46,8 @@
 .search-results {
 	display: block;
 	position: relative;
-	margin: 0 -0.5% ($spacing / 2);
-	padding: 0.5% 0;
+	margin: 0 -1% ($spacing / 2);
+	padding: 1% 0;
 	font-size: 0;
 	border-top: 1px dotted $cd;
 	background-color: $cf;
@@ -130,7 +130,7 @@
 		.search-item {
 			display: inline-block;
 			padding-bottom: $spacing * 1.5;
-			width: 32.333%;
+			width: 23%;
 
 			.img {
 				margin-bottom: 5px;
@@ -207,7 +207,7 @@
 
 	.search-item {
 		position: relative;
-		margin: 0.5%;
+		margin: 1%;
 		padding: 0;
 		border-radius: $radius;
 		border: 1px solid $cd;
