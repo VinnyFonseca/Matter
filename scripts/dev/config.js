@@ -13,8 +13,9 @@ var config = {
 		uploadlimit: 3 // int: Multiple file upload limit.
 	},
 	search: {
-		view: "grid", // str: "grid", "list"
-		display: "full" // str: "full", "mini"
+		view: "grid", // str: "grid", "list".
+		display: "full", // str: "full", "mini".
+		page: 10 // int: Number of items to show per page.
 	},
 	tables: {
 		responsive: true // bool: Converts every row into a separate table on mobiles.

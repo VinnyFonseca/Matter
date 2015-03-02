@@ -40,13 +40,10 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="column" data-span="4">
+				<div class="column" data-span="6">
 					<select class="keep" data-search-parameter="Categories"></select>
 				</div>
-				<div class="column" data-span="4">
-					<select class="keep" data-search-parameter="Tags"></select>
-				</div>
-				<div class="column" data-span="4">
+				<div class="column" data-span="6">
 					<select class="keep" data-search-parameter="Type"></select>
 				</div>
 			</div>

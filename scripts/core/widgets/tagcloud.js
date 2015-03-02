@@ -56,6 +56,6 @@ function initTagClouds() {
 			});
 		});
 
-		if ( config.application.debug ) console.log("Search :: Tag Clouds");
+		if ( config.application.debug ) console.log("Search :: Tag Cloud");
 	}
 }

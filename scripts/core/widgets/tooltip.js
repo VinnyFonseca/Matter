@@ -47,8 +47,8 @@ function initTooltips() {
 								right: container.offset().left + container.outerWidth()
 							};
 							var boundaries = {
-								left: $(".wrapper").offset().left,
-								right: $(".wrapper").offset().left + $(".wrapper").outerWidth()
+								left: $(".wrapper").offset().left + 20,
+								right: $(".wrapper").offset().left + $(".wrapper").outerWidth() - 20
 							};
 
 							if ( config.tooltip.bound ) {

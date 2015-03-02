@@ -23,18 +23,24 @@ function initSearch() {
 											</div>\
 										</div>',
 				resultsCountElement = '<div class="search-count"></div>';
+				pageElement = '<button class="primary center search-page">Load More</button>';
 
 			el.append(tagcloudElement)
 			  .append(resultsViewsElement)
 			  .append(resultsCountElement)
-			  .append(resultsElement);
+			  .append(resultsElement)
+			  .append(pageElement);
 
 			initSVGs();
 
 			var tagcloud = el.find("ul.tagcloud"),
 				views = el.find(".search-views"),
 				count = el.find(".search-count"),
-				results = el.find(".search-results");
+				results = el.find(".search-results")
+				page = el.find(".search-page");
+
+
+			// View change
 
 			views.children(".search-view[data-view='" + config.search.view + "']").addClass("active");
 			views.on("click", ".search-view", function() {
@@ -45,6 +51,8 @@ function initSearch() {
 				results.attr("data-view", view);
 			});
 
+
+			// Init
 
 			dataRequest(url, "GET", build);
 
@@ -321,16 +329,12 @@ function initSearch() {
 						finalArray = allArray;
 					}
 
-					if ( config.application.debug ) console.log("Search == " + finalArray);
-
-					rebuild();
+					if ( config.application.debug ) console.log("Search == " + finalArray.length + " items");
 
 
 					// Rebuild results
 
 					function rebuild() {
-						results.html("");
-
 						for ( var i = 0; i < JSONobjects.length; i++ ) {
 							var object = JSONobjects[i],
 								id = object.Id,
@@ -377,28 +381,31 @@ function initSearch() {
 							if ( $.inArray(id, finalArray) > -1 ) results.append(result);
 						}
 
+
 						initTooltips();
 
 
 						// Results behaviour after built
 
+
 						function showItem(item, i) {
-							setTimeout(function() {
-								item.eq(i).removeClass("loading");
-							}, 100 * i);
+							if ( i < (config.search.page * currentPage) ) {
+								setTimeout(function() {
+									item.eq(i).removeClass("loading");
+								}, 100 * (i % config.search.page));
+							}
 						}
 
 						var items = results.children(".search-item");
 						var hasResults = items.length;
 
-						count
-							.css({"display": "inline-block"})
+						count.css({"display": "inline-block"})
 							.html((items.length === 0 ? "No" : items.length) + " result" + (items.length === 1 ? " " : "s ") + "found");
 
 						if ( hasResults ) {
 							results.removeClass("loading").removeClass("no-results");
 
-							for ( var i = 0; i < items.length; i++ ) {
+							for ( var i = (config.search.page * (currentPage - 1)); i < items.length; i++ ) {
 								showItem(items, i);
 							}
 						} else {
@@ -408,7 +415,26 @@ function initSearch() {
 								results.removeClass("no-results").addClass("loading");
 							}
 						}
+
+
+						// Page request
+
+						page.off().on("click", function() {
+							currentPage++;
+
+							for ( var i = (config.search.page * (currentPage - 1)); i < items.length; i++ ) {
+								console.log(i, i % config.search.page)
+								showItem(items, i);
+							}
+						});
 					}
+
+
+					var currentPage = 1;
+
+					results.html("");
+
+					rebuild();
 				}
 
 

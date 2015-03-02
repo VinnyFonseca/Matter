@@ -85,6 +85,7 @@
 	&.mini {
 		.search-item {
 			padding: ($spacing / 2) !important;
+			font-size: 0;
 
 			> * {
 				padding: 0 !important;
@@ -99,8 +100,10 @@
 			}
 
 			.type {
+				display: block;
 				position: relative;
 				padding: 0;
+				max-width: none;
 				top: 0;
 				left: 0;
 				right: auto;
@@ -119,15 +122,39 @@
 			}
 
 			.info {
+				display: inline-block;
 				position: relative;
-				margin-top: $spacing / 4;
 				bottom: 0;
 
 				* {
-					float: none;
+					float: none !important;
+				}
+			}
+		}
 
-					&:before {
-						content: "View ";
+		&[data-view="grid"] {
+			.search-item {
+				.info {
+					margin-top: 5px;
+
+					* {
+						&:before {
+							content: "View ";
+						}
+					}
+				}
+			}
+		}
+		&[data-view="list"] {
+			.search-item {
+				.date,
+				.type,
+				.info {
+					display: inline-block;
+					margin-right: ($spacing / 2);
+
+					* {
+						display: inline-block !important;
 					}
 				}
 			}
@@ -182,10 +209,15 @@
 			}
 
 			.info {
-				right: $spacing / 2;
+				padding: 0 ($spacing / 2);
+				right: 0;
 
 				* {
-					margin-left: $spacing / 2;
+					float: none;
+				}
+
+				.tags {
+					margin-left: ($spacing / 2);
 				}
 			}
 		}
@@ -210,8 +242,15 @@
 		@include transition-timing-function($animEasing);
 
 		&.loading {
+			position: absolute;
+			visibility: hidden;
+			z-index: -1;
 			@include opacity(0);
 			@include transform(scale(1.1) translateY(50px));
+		}
+
+		> * {
+			vertical-align: top;
 		}
 
 		.img {
@@ -224,8 +263,10 @@
 		.title {
 			display: block;
 			position: relative;
+			margin-bottom: 5px;
 			padding: 0 ($spacing / 2);
 			font-family: $headingFont;
+			@include font-size($fontSize * 1.2);
 		}
 		.date {
 			display: block;
@@ -264,21 +305,24 @@
 		.info {
 			position: absolute;
 			bottom: $spacing / 2;
+			font-size: 0;
 			white-space: nowrap;
-		}
-		.categories {
-			display: block;
-			position: relative;
-			float: left;
-			color: $brand2;
-			@include font-size($fontSize / 1.2);
-		}
-		.tags {
-			display: block;
-			position: relative;
-			float: right;
-			color: $brand3;
-			@include font-size($fontSize / 1.2);
+
+			.categories {
+				display: block;
+				position: relative;
+				float: left;
+				color: $brand2;
+				@include font-size($fontSize / 1.2);
+			}
+
+			.tags {
+				display: block;
+				position: relative;
+				float: right;
+				color: $brand3;
+				@include font-size($fontSize / 1.2);
+			}
 		}
 	}
 }

@@ -27,15 +27,17 @@ function initAutocomplete() {
 						var property = object[parameter];
 
 						if ( property instanceof Array ) {
-							for ( var k = 0; k < property.length; k++ )
+							for ( var k = 0; k < property.length; k++ ) {
 								if ( $.inArray(property[k], tempArray) < 0 ) tempArray.push(property[k]);
+							}
 						} else {
 							if ( $.inArray(property, tempArray) < 0 ) tempArray.push(property);
 						}
 					}
 
 					tempArray.sort();
-					for ( var value in tempArray ) list.append("<li>" + tempArray[value] + "</li>");
+
+					for ( var i = 0; i < tempArray.length; i++ ) list.append("<li>" + tempArray[i] + "</li>");
 				}
 				populateList(parameter);
 
