@@ -21,6 +21,6 @@ function initOverlays() {
 			});
 		});
 
-		if (config.application.debug) console.log("Widget :: Overlays");
+		if ( config.application.debug ) console.log("Widget :: Overlays");
 	}
 }

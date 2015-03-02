@@ -68,6 +68,6 @@ function initTooltips() {
 			}
 		});
 
-		if (config.application.debug) console.log("Widget :: Tooltips");
+		if ( config.application.debug ) console.log("Widget :: Tooltips");
 	}
 }

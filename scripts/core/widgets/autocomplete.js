@@ -124,6 +124,6 @@ function initAutocomplete() {
 			}
 		});
 
-		if (config.application.debug) console.log("Search :: Autocomplete");
+		if ( config.application.debug ) console.log("Search :: Autocomplete");
 	}
 }

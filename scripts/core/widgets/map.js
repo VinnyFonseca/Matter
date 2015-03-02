@@ -502,7 +502,7 @@ function buildMap() {
 			map.setCenter(center);
 		});
 
-		if (config.application.debug) console.log("Widget ~~ Map");
+		if ( config.application.debug ) console.log("Widget ~~ Map");
 	}
 };
 

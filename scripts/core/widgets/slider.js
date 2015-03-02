@@ -507,6 +507,6 @@ function initSliders() {
 			})
 			.find('.slider-container').css({ 'visibility': 'visible' });
 
-		if (config.application.debug) console.log("Widget :: Sliders");
+		if ( config.application.debug ) console.log("Widget :: Sliders");
 	}
 }

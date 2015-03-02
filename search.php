@@ -33,21 +33,21 @@
 				<div class="column">
 					<!--
 					<div class="autocomplete-wrapper" data-autocomplete="scripts/dev/data/search.json">
-						<input type="text" placeholder="Search..." data-search-parameter="Title, Description" data-autocomplete-parameter="Title">
+						<input type="text" placeholder="Search..." data-search-parameter="Title, Summary" data-autocomplete-parameter="Title">
 					</div>
 					-->
-					<input type="text" placeholder="Search..." data-search-parameter="Title, Description">
+					<input type="text" placeholder="Search..." data-search-parameter="Title, Summary, Tags">
 				</div>
 			</div>
 			<div class="row">
 				<div class="column" data-span="4">
-					<select data-search-parameter="Categories"></select>
+					<select class="keep" data-search-parameter="Categories"></select>
 				</div>
 				<div class="column" data-span="4">
-					<select data-search-parameter="Tags"></select>
+					<select class="keep" data-search-parameter="Tags"></select>
 				</div>
 				<div class="column" data-span="4">
-					<select data-search-parameter="Type"></select>
+					<select class="keep" data-search-parameter="Type"></select>
 				</div>
 			</div>
 		</div>

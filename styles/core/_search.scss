@@ -34,11 +34,16 @@
 		margin: 0 6px;
 		padding: 0;
 		cursor: pointer;
-		@include opacity(0.25);
 
 		&:hover,
 		&.active {
-			@include opacity(1);
+			.icon {
+				@include svgColor($brand1);
+			}
+		}
+
+		.icon {
+			@include svgColor($ca);
 		}
 	}
 }

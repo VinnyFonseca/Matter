@@ -53,7 +53,7 @@ function notify(message, tone, delay) {
 			})
 			.children(".notification-message").html(message);
 
-		if (config.application.debug) console.log("Trigger :: Notification | Delay: " + delay);
+		if ( config.application.debug ) console.log("Trigger :: Notification | Delay: " + delay);
 	}
 
 	if ( $(".notification").hasClass("active") ) {
@@ -74,6 +74,6 @@ function initNotifications() {
 			notify(message, tone, delay);
 		});
 
-		if (config.application.debug) console.log("Widget :: Notifications");
+		if ( config.application.debug ) console.log("Widget :: Notifications");
 	}
 }

@@ -151,7 +151,7 @@ function initSVGs() {
 			}, 'xml');
 		});
 
-		if (config.application.debug) console.log("System :: SVG Injection @ " + svgCount + " images");
+		if ( config.application.debug ) console.log("System :: SVG Injection @ " + svgCount + " images");
 	}
 }
 
@@ -188,7 +188,7 @@ var returnedData,
 	dataObject;
 
 function dataRequest(url, type, successFunction) {
-	if (config.application.debug) console.log('AJAX ~~ Request');
+	if ( config.application.debug ) console.log('AJAX ~~ Request');
 
 	request = $.ajax({
 		url: url,
@@ -196,13 +196,13 @@ function dataRequest(url, type, successFunction) {
 		data: type == "POST" ? data : "",
 		dataType: "JSON",
 		success: function(data) {
-			if (config.application.debug) console.log('AJAX ~~ Success');
-			// if (config.application.debug) console.log(data);
+			if ( config.application.debug ) console.log('AJAX ~~ Success');
+			// if ( config.application.debug ) console.log(data);
 			if ( typeof successFunction !== 'undefined' ) successFunction(data);
 		},
 		error: function(request, status, error) {
-			if (config.application.debug) console.log('AJAX ~~ Error');
-			// if (config.application.debug) console.log(request, status, error, request.statusText);
+			if ( config.application.debug ) console.log('AJAX ~~ Error');
+			// if ( config.application.debug ) console.log(request, status, error, request.statusText);
 		}
 	});
 }
@@ -260,7 +260,7 @@ function initTables() {
 			}
 		});
 
-		if (config.application.debug) console.log("System :: Tables");
+		if ( config.application.debug ) console.log("System :: Tables");
 	}
 }
 
@@ -280,7 +280,7 @@ function initLinks() {
 		event.preventDefault();
 
 		if ( link === "#") {  // Blocks click event on empty (#) links and logs a message.
-			if (config.application.debug) console.log("Intentional: blocked behaviour on global.js.");
+			if ( config.application.debug ) console.log("Intentional: blocked behaviour on global.js.");
 		} else {
 			if ( $($.attr(this, "href")).length ) {
 				anchorClicked = true;
@@ -327,10 +327,13 @@ function initFramework() {
 
 	// Logs Legend
 
-	if (config.application.debug) console.log(":: means DOM.ready");
-	if (config.application.debug) console.log("~~ means Async");
-	if (config.application.debug) console.log("•• means Complete");
-	if (config.application.debug) console.log("=> means User action");
+	if ( config.application.debug ) {
+		console.log(":: means DOM.ready");
+		console.log("~~ means Async");
+		console.log("•• means Complete");
+		console.log("== means User Action");
+		console.log(" ");
+	}
 
 
 	// Easter Eggs Init
@@ -369,7 +372,7 @@ function initFramework() {
 	initValidation();
 	loadProgressBar();
 
-	if (config.application.debug) console.log("Done •• Matter");
+	if ( config.application.debug ) console.log("Done •• Matter");
 }
 
 

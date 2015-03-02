@@ -5,9 +5,9 @@ function buildDropdowns(i) {
 		option = el.find("option").not(".placeholder"),
 		selected = el.find("option:selected"),
 		wrapper = '<div class="dropdown-' + i + ' dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
-		arrow = '<div class="dropdown-arrow valign-middle"><span>&#9660;</span></div>',
-		current = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>',
-		dropdown = '<div class="dropdown"></div>';
+		arrowEl = '<div class="dropdown-arrow valign-middle"><span>&#9660;</span></div>',
+		currentEl = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>',
+		dropdownEl = '<div class="dropdown"></div>';
 
 
 	// Build structure
@@ -17,74 +17,68 @@ function buildDropdowns(i) {
 
 	el.wrap(wrapper);
 
-	var parentWrapper = $(".dropdown-" + i);
+	var dropdown = $(".dropdown-" + i);
 
-	parentWrapper.find(".dropdown").remove();
-	parentWrapper.find(".dropdown-arrow").remove();
-	parentWrapper.find(".dropdown-current").remove();
-	$(".dropdown-" + i).prepend(dropdown).prepend(arrow).prepend(current);
+	dropdown.find(".dropdown").remove();
+	dropdown.find(".dropdown-arrow").remove();
+	dropdown.find(".dropdown-current").remove();
+	$(".dropdown-" + i).prepend(dropdownEl).prepend(arrowEl).prepend(currentEl);
 
 	option.each(function() {
 		var option = $(this),
 			isSelected = option.is(":selected") ? "active" : "",
 			item = '<div class="dropdown-item ' + isSelected + '" data-value="' + option.val() + '">' + option.html() + '</div>';
 
-		parentWrapper.find(".dropdown").append(item);
+		dropdown.find(".dropdown").append(item);
 	});
 
 	if ( type == "list" ) {
-		parentWrapper.find(".dropdown").height(((parentWrapper.find(".dropdown-item").outerHeight() + 1) * size) - 1);
+		dropdown.find(".dropdown").height(((dropdown.find(".dropdown-item").outerHeight() + 1) * size) - 1);
 	}
 
 
 	// Click Event
 
-	$(".dropdown-" + i).each(function() {
-		var el = $(this),
-			drop = el.find(".dropdown"),
-			dropdownItem = el.find(".dropdown-item"),
-			target = el.children(".dropdown-current"),
-			select = el.find("select");
+	dropdown.each(function() {
+		var drop = $(this),
+			dropFake = drop.find(".dropdown"),
+			dropItem = drop.find(".dropdown-item"),
+			target = drop.children(".dropdown-current");
 
-		el.off().on("click", function() {
+		drop.off().on("click", function() {
 			if ( type == "drop" ) {
-				if ( !el.hasClass("active") ) {
+				if ( !drop.hasClass("active") ) {
 					$(".dropdown-wrapper").removeClass("active");
-					el.addClass("active");
+					drop.addClass("active");
 
-					if ( pageBottom >= el.offset().top + drop.height() + 55 ) {
-						drop.removeClass("bound").addClass("default");
+					if ( pageBottom >= drop.offset().top + dropFake.height() + 55 ) {
+						dropFake.removeClass("bound").addClass("default");
 					} else {
-						drop.removeClass("default").addClass("bound");
+						dropFake.removeClass("default").addClass("bound");
 					}
 
-					$(this).find("select").focus();
+					el.focus();
 				} else {
 					$(".dropdown-wrapper").removeClass("active");
-					$(this).find("select").blur();
+					el.blur();
 				}
 			}
 		});
 
-		dropdownItem.off().on("click", function() {
+		dropItem.off().on("click", function() {
 			var value = $(this).attr("data-value");
-
-			dropdownItem.removeClass("active");
-			target.text($(this).text()).attr("data-value", value);
-			select.val(value).trigger("change");
-
-			$(this).addClass("active").parents("form.auto-send").submit();
+			el.val(value).trigger("change");
 		});
 
-		select.on("change", function() {
+		el.on("change", function() {
 			var selected = $(this).children("option:selected");
 
-			dropdownItem.removeClass("active");
-			target.text(selected.text()).attr("data-value", selected.val());
+			dropItem.removeClass("active");
+			if ( !el.hasClass("keep") ) target.text(selected.text()).attr("data-value", selected.val());
 
-			for ( var i = 0; i < dropdownItem.length; i++ ) {
-				if ( dropdownItem.eq(i).text() === selected.text() ) {
-					dropdownItem.eq(i).addClass("active").parents("form.auto-send").submit();
+			for ( var i = 0; i < dropItem.length; i++ ) {
+				if ( dropItem.eq(i).text() === selected.text() ) {
+					dropItem.eq(i).addClass("active").parents("form.auto-send").submit();
 				}
 			}
 		});
@@ -222,7 +216,6 @@ function loadProgressBar() {
 				if ( progress < 100 ) {
 					progress++;
 					triggerProgress(progress);
-					console.log(progress);
 				} else {
 					$(".progress").addClass("valid");
 					clearInterval(progressInterval);

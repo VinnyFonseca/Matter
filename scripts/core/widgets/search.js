@@ -29,6 +29,8 @@ function initSearch() {
 			  .append(resultsCountElement)
 			  .append(resultsElement);
 
+			initSVGs();
+
 			var tagcloud = el.find("ul.tagcloud"),
 				views = el.find(".search-views"),
 				count = el.find(".search-count"),
@@ -135,6 +137,7 @@ function initSearch() {
 							}
 
 							updateTags(parameter);
+							initSVGs();
 						});
 					});
 
@@ -153,8 +156,6 @@ function initSearch() {
 				}
 
 				function updateTags(parameter) {
-					initSVGs();
-
 					var target = tagcloud.children(".tag[data-tag-parameter='" + parameter + "']");
 
 					var tempArray = [];
@@ -215,15 +216,20 @@ function initSearch() {
 								compare = outputArray[parameter];
 
 							for ( var j = 0; j < criteria.length; j++ ) {
-								var analyse = object[criteria[j]];
+								var retrieved = object[criteria[j]];
 
-								if ( analyse instanceof Array ) {
-									var joined = analyse.concat(compare);
-									if ( joined.duplicates().length > 0 && $.inArray(id, tempArray) < 0 ) {
-										tempArray.push(id);
+								if ( retrieved instanceof Array ) {
+									for ( var k = 0; k < retrieved.length; k++ ) {
+										var analyse = retrieved[k].toLowerCase();
+
+										if ( analyse.indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
+											tempArray.push(id);
+										}
 									}
 								} else {
-									if ( analyse && analyse.toLowerCase && analyse.toLowerCase().indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
+									var analyse = retrieved.toLowerCase();
+
+									if ( analyse.indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
 										tempArray.push(id);
 									}
 								}
@@ -294,16 +300,16 @@ function initSearch() {
 
 					// Empty Final array, compare id repetition against number of inputs, rebuild finalArray.
 
-					function detectRepetition(arr) {
+					function countRepeated(arr) {
 						var counts = {};
-						for(var i = 0; i< arr.length; i++) {
+						for ( var i = 0; i < arr.length; i++ ) {
 						    var num = arr[i];
-						    counts[num] = counts[num] ? counts[num]+1 : 1;
+						    counts[num] = counts[num] ? counts[num] + 1 : 1;
 						}
 						return counts;
 					}
 
-					var analysis = detectRepetition(cleanArray);
+					var analysis = countRepeated(cleanArray);
 
 					if ( hasOutput ) {
 						for ( var i = 0; i < cleanArray.length; i++ ) {
@@ -315,7 +321,7 @@ function initSearch() {
 						finalArray = allArray;
 					}
 
-					if ( config.application.debug ) console.log("Search IDs => " + finalArray);
+					if ( config.application.debug ) console.log("Search == " + finalArray);
 
 					rebuild();
 
@@ -413,6 +419,6 @@ function initSearch() {
 			}
 		});
 
-		if (config.application.debug) console.log("Search :: Unified Search");
+		if ( config.application.debug ) console.log("Search :: Unified Search");
 	}
 }

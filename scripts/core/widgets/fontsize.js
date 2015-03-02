@@ -32,6 +32,6 @@ function initFontSizeControls() {
 			$("html").css("font-size", fontSize + "px");
 		});
 
-		if (config.application.debug) console.log("Widget :: Font Size Controls");
+		if ( config.application.debug ) console.log("Widget :: Font Size Controls");
 	}
 }

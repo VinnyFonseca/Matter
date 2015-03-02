@@ -304,6 +304,6 @@ var twitterFetcher = function() {
 function initTwitter() {
 	if ($("#" + config.twitter.domID).length) {
 		twitterFetcher.fetch(config.twitter);
-		if (config.application.debug) console.log("Widget :: Twitter");
+		if ( config.application.debug ) console.log("Widget :: Twitter");
 	}
 }

@@ -50,7 +50,7 @@ function initValidation() {
 			var notificationTone = "failure",
 				notificationDelay = 3000;
 
-			if (config.application.debug) console.log("Validation :: " + type);
+			if ( config.application.debug ) console.log("Validation :: " + type);
 
 			switch(type) {
 				case "text":
@@ -179,6 +179,6 @@ function initValidation() {
 			}
 		});
 
-		if (config.application.debug) console.log("Form :: Validation");
+		if ( config.application.debug ) console.log("Form :: Validation");
 	}
 }
