@@ -21,6 +21,7 @@
 		position: relative;
 		margin: 2px;
 		padding: 4px 8px;
+		padding-right: 28px;
 		color: $cf;
 		@include font-size($fontSize / 1.1);
 		border-radius: $radius;
@@ -36,11 +37,12 @@
 		}
 
 		.icon {
-			display: inline-block;
-			position: relative;
-			margin-left: 7px;
+			display: block;
+			position: absolute;
 			width: 12px;
 			height: 12px;
+			top: 11px;
+			right: 8px;
 			@include svgColor($cf);
 		}
 

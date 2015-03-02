@@ -4,12 +4,12 @@
 	display: block;
 	position: absolute;
 	padding: 3px 7px;
+	max-width: 200px;
 	color: $cf;
 	@include font-size($fontSize / 1.2);
 	font-weight: normal;
 	border: 0;
 	@include border-radius($radius);
-	@include box-shadow(0 0 5px rgba(0, 0, 0, 0.5));
 	background: $brand1;
 	z-index: 9999;
 

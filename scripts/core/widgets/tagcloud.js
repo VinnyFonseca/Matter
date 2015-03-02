@@ -26,7 +26,7 @@ function initTagClouds() {
 			el.on("keydown", function(event) {
 				if ( event.keyCode === 9 || event.keyCode === 13 ) { // Tab or Enter
 					var value = el.val(),
-						tag = '<li class="tag valign-middle" data-tag="' + value + '">' + '<span>' + value + '</span>' + tagClose + '</li>';
+						tag = '<li class="tag" data-tag="' + value + '">' + value + tagClose + '</li>';
 
 					if ( value !== "" && $.inArray(value, tagArray) < 0 ) target.addClass("active").append(tag);
 					if ( $.inArray(value, tagArray) >= 0 ) notify("This tag already exists.", "failure");
@@ -39,7 +39,7 @@ function initTagClouds() {
 			})
 			.on("change", function() {
 				var value = el.val(),
-					tag = '<li class="tag valign-middle" data-tag="' + value + '">' + '<span>' + value + '</span>' + tagClose + '</li>';
+					tag = '<li class="tag" data-tag="' + value + '">' + value + tagClose + '</li>';
 
 				if ( value !== "" && $.inArray(value, tagArray) < 0 ) target.addClass("active").append(tag);
 				if ( $.inArray(value, tagArray) >= 0 ) notify("This tag already exists.", "failure");

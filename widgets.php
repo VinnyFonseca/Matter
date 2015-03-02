@@ -22,8 +22,6 @@
 			They are responsive and cross-browser compliant. They can be used for <strong>cookie messages</strong>, <strong>form validation</strong>, <strong>progress updates</strong>, <strong>user information</strong>, etc...
 		</p>
 
-		<p class="emphasis">Note: If delay is undeclared (undefined or empty) it will be set to default delay (5 seconds).</p>
-
 		<p>
 			<strong>Usage:</strong>
 		</p>
@@ -32,7 +30,10 @@
 			Apply <code>data-notification="true"</code> to any element. Click trigger.
 		</p>
 		<p>
-			Functionality is set by <code>data-message</code>, <code>data-tone</code>and <code>data-delay</code> attributes on the trigger element. If ommitted, they fallback to default parameters.
+			Functionality is set by <code>data-message</code>, <code>data-tone</code>and <code>data-delay</code> attributes on the trigger element.
+		</p>
+		<p class="emphasis">
+			Note: If the parameters above are ommitted, they will fallback to default parameters. <code>data-notification</code> and <code>data-message</code> are obligatory.
 		</p>
 
 		<dl>

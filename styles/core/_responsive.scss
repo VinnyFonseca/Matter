@@ -1,5 +1,31 @@
 // Responsive
 
+@media screen and (min-width: $screenWide + 1) {
+
+}
+
+
+
+@media screen and (max-width: $screenWide) {
+
+	.search-results {
+		&[data-view="grid"] {
+			.search-item {
+				width: percentage(3 / 12) - 2;
+			}
+		}
+	}
+
+}
+
+
+
+@media screen and (min-width: $screenDesktop + 1) {
+
+}
+
+
+
 @media screen and (max-width: $screenDesktop) {
 
 	.wrapper {
@@ -11,6 +37,17 @@
 
 	.map-wrapper {
 		height: 60vw;
+	}
+
+
+	// Search
+
+	.search-results {
+		&[data-view="grid"] {
+			.search-item {
+				width: percentage(4 / 12) - 2;
+			}
+		}
 	}
 
 }
@@ -63,13 +100,6 @@
 	}
 
 
-	// Notification
-
-	.notification {
-		width: 96%;
-	}
-
-
 	// Forms
 
 	input,
@@ -114,6 +144,26 @@
 	}
 
 
+	// Search
+
+	.search-results {
+		&[data-view="grid"] {
+			.search-item {
+				width: percentage(6 / 12) - 2;
+			}
+		}
+		&[data-view="list"] {
+			.search-item {
+				padding-left: 25%;
+
+				.img {
+					width: 25%;
+				}
+			}
+		}
+	}
+
+
 	// Tables
 
 	.table-original {
@@ -125,6 +175,13 @@
 			@include font-size($fontSize);
 			text-align: left;
 		}
+	}
+
+
+	// Notification
+
+	.notification {
+		width: 96%;
 	}
 
 
@@ -162,6 +219,16 @@
 
 @media screen and (max-width: ($screenMobileL - 1)) {
 
+
+	// Search
+
+	.search-results {
+		&[data-view="grid"] {
+			.search-item {
+				width: auto;
+			}
+		}
+	}
 
 
 }

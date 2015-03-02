@@ -13,9 +13,9 @@ function initSearch() {
 				tagcloudElement = '<ul class="tagcloud"></ul>',
 				tagclose = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">',
 
-				resultsElement = '<div class="search-results loading" data-view="grid"></div>',
+				resultsElement = '<div class="search-results loading ' + config.search.display + '" data-view="' + config.search.view + '"></div>',
 				resultsViewsElement =  '<div class="search-views">\
-											<div class="search-view active" data-view="grid">\
+											<div class="search-view" data-view="grid">\
 												<img class="svg icon icon-grid" src="img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-grid.png\'">\
 											</div>\
 											<div class="search-view" data-view="list">\
@@ -36,7 +36,7 @@ function initSearch() {
 				count = el.find(".search-count"),
 				results = el.find(".search-results");
 
-
+			views.children(".search-view[data-view='" + config.search.view + "']").addClass("active");
 			views.on("click", ".search-view", function() {
 				var el = $(this),
 					view = el.data("view");
@@ -125,7 +125,7 @@ function initSearch() {
 							event.preventDefault();
 
 							var value = $(this).val(),
-								tag = '<li class="tag valign-middle" data-tag-group="' + i + '" data-tag-parameter="' + parameter + '" data-tag="' + value + '">' + '<span>' + value + '</span>' + tagclose + '</li>';
+								tag = '<li class="tag" data-tag-group="' + i + '" data-tag-parameter="' + parameter + '" data-tag="' + value + '">' + value + tagclose + '</li>';
 
 							if ( value !== "" ) {
 								if ( $.inArray(value, outputArray[parameter]) < 0 ) {
@@ -361,17 +361,17 @@ function initSearch() {
 								type = object.Type,
 								categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g , ", ") : "None",
 								tags = object.Tags.length > 0 ? object.Tags.toString().replace(/,/g , ", ") : "None",
-								result =  '<div class="search-item loading">\
-											 <a class="img" href="' + url + '"><img src="' + image + '" /></a>\
-											 <a class="title" href="' + url + '"><div>' + title + '</div></a>\
-											 <div class="date">' + fulldate + '</div>\
-											 <div class="type">' + type + '</div>\
-											 <div class="summary">' + summary + '</div>\
-											 <div class="info">\
-												 <div class="categories" data-tooltip="' + categories + '">Categories</div>\
-												 <div class="tags" data-tooltip="' + tags + '">Tags</div>\
-											 </div>\
-										</div>';
+								result = '<div class="search-item loading">\
+											  <a class="img" href="' + url + '" style="background: url(' + image + ') no-repeat center center;"></a>\
+											  <a class="title" href="' + url + '">' + title + '</a>\
+											  <div class="date">' + fulldate + '</div>\
+											  <div class="type">' + type + '</div>\
+											  <div class="summary">' + summary + '</div>\
+											  <div class="info">\
+												  <div class="categories" data-tooltip="' + categories + '">Categories</div>\
+												  <div class="tags" data-tooltip="' + tags + '">Tags</div>\
+											  </div>\
+										  </div>';
 
 
 							if ( $.inArray(id, finalArray) > -1 ) results.append(result);

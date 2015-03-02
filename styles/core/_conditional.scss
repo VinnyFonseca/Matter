@@ -25,18 +25,7 @@
 	}
 
 
-	.notification {
-		display: none;
-
-		&.active {
-			display: block;
-		}
-	}
-
-	.overlay {
-		background: url("../img/pixel-black.png");
-	}
-
+	// Forms
 
 	fieldset {
 		legend {
@@ -72,16 +61,56 @@
 		}
 	}
 
+	.dropdown-arrow {
+		overflow: hidden;
+	}
+
+
+	// Search
+
+	.search-item {
+		.img {
+			-ms-behavior: url("scripts/vendor/backgroundsize.htc");
+		}
+	}
+
+
+	// Tables
 
 	table {
 		border-collapse: collapse;
 	}
 
 
-	.dropdown-arrow {
-		overflow: hidden;
+	// Search
+
+	.search
+
+	.search-results {
+		.search-item {
+			.img {
+				background-size: 100% 100%;
+			}
+		}
 	}
 
+
+	// Widgets
+
+	.notification {
+		display: none;
+
+		&.active {
+			display: block;
+		}
+	}
+
+	.overlay {
+		background: url("../img/pixel-black.png");
+	}
+
+
+	// Maps
 
 	.map-wrapper {
 		height: 600px;

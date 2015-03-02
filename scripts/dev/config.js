@@ -12,6 +12,10 @@ var config = {
 		validation: true, // bool: Toggles client-side validation.
 		uploadlimit: 3 // int: Multiple file upload limit.
 	},
+	search: {
+		view: "grid", // str: "grid", "list"
+		display: "full" // str: "full", "mini"
+	},
 	tables: {
 		responsive: true // bool: Converts every row into a separate table on mobiles.
 	},
