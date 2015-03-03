@@ -13,8 +13,8 @@ var config = {
 		uploadlimit: 3 // int: Multiple file upload limit.
 	},
 	search: {
-		view: "list", // str: "grid", "list".
-		display: "mini", // str: "full", "mini".
+		view: "grid", // str: "grid", "list".
+		display: "full", // str: "full", "mini".
 		count: 10, // int: Number of items to show per page.
 		pagination: true // bool: Toggle pagination controls and loading of page elements only.
 	},

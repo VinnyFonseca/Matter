@@ -359,6 +359,7 @@ function initSearch() {
 					// Rebuild results
 
 					var firstLoad = true;
+					var pagination;
 
 					function rebuild() {
 						function loadItems() {
@@ -459,7 +460,7 @@ function initSearch() {
 
 						// Pagination and Selective loading
 
-						var pagination = $(".search-pagination");
+						pagination = $(".search-pagination");
 
 						if ( config.search.pagination ) {
 							if ( resultsCount > config.search.count ) {
@@ -486,7 +487,6 @@ function initSearch() {
 					var resultsCount = items.length;
 
 					if ( config.search.pagination ) {
-						var pagination = $(".search-pagination");
 						var pages = 0;
 
 						for ( var i = 0; i < resultsCount; i++ ) {
@@ -503,10 +503,16 @@ function initSearch() {
 						$("[data-page]").off().on("click", function() {
 							currentPage = $(this).data("page");
 
-							console.log(currentPage);
-
 							$("[data-page]").removeClass("primary");
 							$("[data-page='" + currentPage + "']").addClass("primary");
+
+							$("html, body").animate({
+								scrollTop: $(".search-wrapper").offset().top - 90
+							}, {
+								duration: 1000,
+								queue: false,
+								complete: function() { anchorClicked = false; }
+							});
 
 							rebuild();
 						});
