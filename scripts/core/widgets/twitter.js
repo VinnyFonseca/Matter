@@ -77,7 +77,7 @@ var twitterFetcher = function() {
 				inProgress = true;
 
 				domNode = fetchConfig.domID;
-				maxTweets = fetchConfig.maxTweets + config.twitter.startAt;
+				maxTweets = fetchConfig.maxTweets + fetchConfig.startAt;
 				parseLinks = fetchConfig.enableLinks;
 				printUser = fetchConfig.showUser;
 				printTime = fetchConfig.showTime;
@@ -97,8 +97,8 @@ var twitterFetcher = function() {
 
 		handler: function(tweets) {
 			var x = tweets.length;
-			var n = config.twitter.startAt;
-			var element = document.getElementById(config.twitter.domID);
+			var n = twitterConfig.startAt;
+			var element = document.getElementById(twitterConfig.domID);
 
 			var html = '<div class="twitter-user"></div>';
 				html += '<div class="content feed">';
@@ -115,8 +115,8 @@ var twitterFetcher = function() {
 			element.innerHTML = html;
 
 
-			if ( config.twitter.showRetweet ) {
-				document.getElementById(config.twitter.domID).className = config.twitter.domID + " framed multi";
+			if ( twitterConfig.showRetweet ) {
+				$("#" + twitterConfig.domID).addClass("framed").addClass("multi");
 
 				for ( var i = 0; i < document.querySelectorAll(".user").length; i++ ) {
 					var user = document.querySelectorAll(".user")[i];
@@ -124,7 +124,7 @@ var twitterFetcher = function() {
 						user.getElementsByTagName("a")[0].className = "no-icon valign-middle";
 				}
 			} else {
-				document.getElementById(config.twitter.domID).className = config.twitter.domID + " framed twitter-main";
+				$("#" + twitterConfig.domID).addClass("framed").addClass("twitter-main");
 
 				var user = document.createElement('h4');
 					user.className = "user";
@@ -140,10 +140,10 @@ var twitterFetcher = function() {
 			}
 
 
-			if ( config.twitter.showFollow ) {
-				$("#" + config.twitter.domID).find(".twitter-follow").show();
+			if ( twitterConfig.showFollow ) {
+				$("#" + twitterConfig.domID).find(".twitter-follow").show();
 			} else {
-				$("#" + config.twitter.domID).find(".twitter-follow").hide();
+				$("#" + twitterConfig.domID).find(".twitter-follow").hide();
 			}
 
 			function popupWindow(url, title, w, h) {
@@ -152,7 +152,7 @@ var twitterFetcher = function() {
 				return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
 			}
 
-			document.getElementById(config.twitter.domID).querySelector(".button").onclick = function() {
+			document.getElementById(twitterConfig.domID).querySelector(".button").onclick = function() {
 				popupWindow('https://twitter.com/intent/user?screen_name=' + user.getElementsByTagName('span')[0].innerHTML.substr(1), 'Twitter Follow', 640, 600);
 				return false;
 			};
@@ -301,13 +301,16 @@ var twitterFetcher = function() {
 * Use this as your ID on config.js instead!
 */
 
-function initTwitter() {
-	if ($(".widget-twitter").length) {
-		$(".widget-twitter").each(function(i) {
-			$(this).attr("id", "widget-twitter-" + i);
+var twitterConfig;
 
-			var twitterConfig = {
-				twitterID: config.twitter.twitterID,
+function initTwitter() {
+	if ($("[data-twitter]").length) {
+		$("[data-twitter]").each(function(i) {
+			if ( $(this).attr('id') !== "undefined" ) $(this).attr("id", "widget-twitter-" + i);
+
+
+			twitterConfig = {
+				widgetID: $(this).data('widget-id') !== "undefined" ? $(this).data('widget-id') : config.twitter.widgetID,
 				domID: $(this).attr("id"),
 				maxTweets: config.twitter.maxTweets,
 				startAt: config.twitter.startAt,
@@ -318,6 +321,8 @@ function initTwitter() {
 				showRetweet: config.twitter.showRetweet,
 				showInteraction: config.twitter.showInteractione
 			};
+
+			console.log($(this).attr("id"), $(this).data("widget-id"), twitterConfig.widgetID)
 
 			twitterFetcher.fetch(twitterConfig);
 		});

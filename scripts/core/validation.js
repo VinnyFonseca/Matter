@@ -1,5 +1,8 @@
 function initValidation() {
 	if ( config.forms.validation && $("[data-validation]").length ) {
+		var submitted = false;
+
+
 		// Password Check
 
 		function scorePassword(pwd) {
@@ -45,6 +48,15 @@ function initValidation() {
 					break;
 			}
 		}
+
+		$("input[data-validation='password']").on("keyup", function() {
+			var el = $(this),
+				type = el.attr("data-validation"),
+				value = el.val();
+
+			validateKeypress(el, type, value);
+		});
+
 
 		function validate(el, type, value) {
 			var notificationTone = "failure",
@@ -126,6 +138,9 @@ function initValidation() {
 						el.find("[required]").prop("disabled", true);
 						el.find("button[type='submit']").prop("disabled", true);
 						notify("Form submitted successfully.", "success", notificationDelay);
+
+						submitted = true;
+						$("form[data-validation='form']").submit();
 					} else {
 						el.removeClass("valid");
 						el.find("[required]:not('.valid')").addClass("invalid")
@@ -134,14 +149,6 @@ function initValidation() {
 					break;
 			}
 		}
-
-		$("input[data-validation='password']").on("keyup", function() {
-			var el = $(this),
-				type = el.attr("data-validation"),
-				value = el.val();
-
-			validateKeypress(el, type, value);
-		});
 
 		$("[required]")
 			.on("keyup", function() {
@@ -164,17 +171,16 @@ function initValidation() {
 				}, 200);
 			});
 
-		$("form").on("submit", function() {
+
+
+
+		$("form[data-validation='form']").on("submit", function() {
 			var el = $(this),
 				type = el.attr("data-validation"),
 				value = "";
 
-			validate(el, type, value);
-		});
-
-		$("form[novalidate]").on("submit", function() {
-			if ( config.application.debug ) {
-				console.log('Intentional: Form submit blocked.');
+			if ( !submitted ) {
+				validate(el, type, value);
 				return false;
 			}
 		});

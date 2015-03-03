@@ -13,7 +13,7 @@ var config = {
 		uploadlimit: 3 // int: Multiple file upload limit.
 	},
 	search: {
-		view: "grid", // str: "grid", "list".
+		view: "list", // str: "grid", "list".
 		display: "full", // str: "full", "mini".
 		count: 10, // int: Number of items to show per page.
 		pagination: false // bool: Toggle pagination controls and loading of page elements only.
@@ -40,8 +40,7 @@ var config = {
 		animation: "slide" // str: "slide", "fade".
 	},
 	twitter: {
-		twitterID: '492660537293938688', // Generated via Twitter.com. See the matterframework.net/widgets..
-		domID: 'widget-twitter', // str: Dom element's ID.
+		widgetID: '492660537293938688', // Generated via Twitter.com. See the matterframework.net/widgets..
 		maxTweets: 3, // int: Maximum number of tweets shown at any time.
 		startAt: 0, // int: Starting tweet index.
 		enableLinks: true, // bool: Turns URLs and hashtags into links.
