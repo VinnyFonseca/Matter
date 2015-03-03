@@ -89,7 +89,7 @@ var twitterFetcher = function() {
 				var script = document.createElement('script');
 				script.type = 'text/javascript';
 				script.src = '//cdn.syndication.twimg.com/widgets/timelines/' +
-							 fetchConfig.twitterID + '?&lang=en&callback=twitterFetcher.callback&' +
+							 fetchConfig.widgetID + '?&lang=en&callback=twitterFetcher.callback&' +
 							 'suppress_response_codes=true&rnd=' + Math.random();
 				document.getElementsByTagName('head')[0].appendChild(script);
 			}
@@ -97,26 +97,26 @@ var twitterFetcher = function() {
 
 		handler: function(tweets) {
 			var x = tweets.length;
-			var n = twitterConfig.startAt;
+			var n = 0;
 			var element = document.getElementById(twitterConfig.domID);
 
 			var html = '<div class="twitter-user"></div>';
-				html += '<div class="content feed">';
 
-				while( n < x ) {
+				html += '<div class="content feed">';
+				while(n < x) {
 					html += '<hr>';
 					html += '<div class="tweet-item">' + tweets[n] + '</div>';
 					n++;
 				}
-
 				html += '</div>';
+
 				html += '<div class="button input-medium center twitter-follow">Follow Us</div>';
 
 			element.innerHTML = html;
 
 
 			if ( twitterConfig.showRetweet ) {
-				$("#" + twitterConfig.domID).addClass("framed").addClass("multi");
+				document.getElementById(twitterConfig.domID).className = twitterConfig.domID + " framed multi";
 
 				for ( var i = 0; i < document.querySelectorAll(".user").length; i++ ) {
 					var user = document.querySelectorAll(".user")[i];
@@ -124,7 +124,7 @@ var twitterFetcher = function() {
 						user.getElementsByTagName("a")[0].className = "no-icon valign-middle";
 				}
 			} else {
-				$("#" + twitterConfig.domID).addClass("framed").addClass("twitter-main");
+				document.getElementById(twitterConfig.domID).className = twitterConfig.domID + " framed twitter-main";
 
 				var user = document.createElement('h4');
 					user.className = "user";
@@ -140,16 +140,12 @@ var twitterFetcher = function() {
 			}
 
 
-			if ( twitterConfig.showFollow ) {
-				$("#" + twitterConfig.domID).find(".twitter-follow").show();
-			} else {
-				$("#" + twitterConfig.domID).find(".twitter-follow").hide();
-			}
+			if (twitterConfig.showFollow) $("#" + twitterConfig.domID).find(".twitter-follow").show(); else $("#" + twitterConfig.domID).find(".twitter-follow").hide();
 
 			function popupWindow(url, title, w, h) {
-				var left = ( screen.width/2 ) - ( w / 2 );
-				var top = ( screen.height/2 ) - ( h / 2 );
-				return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+				var left = (screen.width/2)-(w/2);
+				var top = (screen.height/2)-(h/2);
+				return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 			}
 
 			document.getElementById(twitterConfig.domID).querySelector(".button").onclick = function() {
@@ -159,6 +155,7 @@ var twitterFetcher = function() {
 		},
 
 		callback: function(data) {
+			console.log(data)
 			var div = document.createElement('div');
 			div.innerHTML = data.body;
 			if (typeof(div.getElementsByClassName) === 'undefined') supportsClassName = false;
@@ -306,14 +303,19 @@ var twitterConfig;
 function initTwitter() {
 	if ($("[data-twitter]").length) {
 		$("[data-twitter]").each(function(i) {
-			if ( $(this).attr('id') !== "undefined" ) $(this).attr("id", "widget-twitter-" + i);
+			var el = $(this),
+				domID = el.attr("id"),
+				widgetID = el.data("widget-id"),
+				maxTweets = el.data("max-tweets"),
+				startAt = el.data("start-at");
 
+			if ( typeof domID === "undefined" ) el.attr("id", "twitter-" + i);
 
 			twitterConfig = {
-				widgetID: $(this).data('widget-id') !== "undefined" ? $(this).data('widget-id') : config.twitter.widgetID,
-				domID: $(this).attr("id"),
-				maxTweets: config.twitter.maxTweets,
-				startAt: config.twitter.startAt,
+				domID: el.attr("id"),
+				widgetID: typeof widgetID !== "undefined" ? widgetID : config.twitter.widgetID,
+				maxTweets:  typeof maxTweets !== "undefined" ? maxTweets : config.twitter.maxTweets,
+				startAt:  typeof startAt !== "undefined" ? startAt : config.twitter.startAt,
 				enableLinks: config.twitter.enableLinks,
 				showUser: config.twitter.showUser,
 				showFollow: config.twitter.showFollow,
@@ -321,8 +323,6 @@ function initTwitter() {
 				showRetweet: config.twitter.showRetweet,
 				showInteraction: config.twitter.showInteractione
 			};
-
-			console.log($(this).attr("id"), $(this).data("widget-id"), twitterConfig.widgetID)
 
 			twitterFetcher.fetch(twitterConfig);
 		});

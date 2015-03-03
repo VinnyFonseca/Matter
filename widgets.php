@@ -368,7 +368,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div data-twitter="true" data-widget-id="572802782449909760"></div>
+		<div data-twitter="true"></div>
 
 		<p>
 			<strong>Example:</strong>
