@@ -6,14 +6,16 @@ function initSearch() {
 			var el = $(this),
 				url = el.data("search"),
 				index = i,
-				input = el.find("input[data-search-parameter]");
-				select = el.find("select[data-search-parameter]");
+				icon = el.find(".search-icon"),
+				input = el.find("input[data-search-parameter]"),
+				select = el.find("select[data-search-parameter]"),
 				outputArray = [],
 
 				tagcloudElement = '<ul class="tagcloud"></ul>',
 				tagclose = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">',
 
-				resultsElement = '<div class="search-results loading ' + config.search.display + '" data-view="' + config.search.view + '"></div>',
+				resultsControlsElement = '<div class="search-controls"></div>',
+				resultsCountElement = '<div class="search-count"></div>',
 				resultsViewsElement =  '<div class="search-views">\
 											<div class="search-view" data-view="grid">\
 												<img class="svg icon icon-grid" src="img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-grid.png\'">\
@@ -22,22 +24,29 @@ function initSearch() {
 												<img class="svg icon icon-list" src="img/icons/icon-list.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-list.png\'">\
 											</div>\
 										</div>',
-				resultsCountElement = '<div class="search-count"></div>';
-				pageElement = '<button class="primary center search-page">Load More</button>';
+
+				resultsPaginationElement = '<div class="search-pagination"></div>',
+				resultsElement = '<div class="search-results loading ' + config.search.display + '" data-view="' + config.search.view + '"></div>',
+				loadElement = '<button class="primary center search-load">Load More</button>';
 
 			el.append(tagcloudElement)
-			  .append(resultsViewsElement)
-			  .append(resultsCountElement)
+			  .append(resultsControlsElement)
 			  .append(resultsElement)
-			  .append(pageElement);
+			  .append(loadElement);
+
+			var tagcloud = el.find(".tagcloud"),
+				controls = el.find(".search-controls"),
+				results = el.find(".search-results")
+				load = el.find(".search-load");
+
+			controls
+				.append(resultsViewsElement)
+				.append(resultsCountElement);
+
+			var views = controls.find(".search-views"),
+				count = controls.find(".search-count");
 
 			initSVGs();
-
-			var tagcloud = el.find("ul.tagcloud"),
-				views = el.find(".search-views"),
-				count = el.find(".search-count"),
-				results = el.find(".search-results")
-				page = el.find(".search-page");
 
 
 			// View change
@@ -107,19 +116,30 @@ function initSearch() {
 					outputArray[parameter] = [];
 
 					input.on("keyup", function(event) {
-						// if ( event.keyCode === 13 ) {
-							var value = $(this).val();
-								parameter = $(this).data("search-parameter");
+						var value = $(this).val();
+							parameter = $(this).data("search-parameter"),
+							keycode = event.keyCode;
 
+							var validKeys =
+							keycode == 32 || keycode === 13		||  // spacebar & return key(s)
+							keycode == 8						||  // backspace
+							(keycode > 47 && keycode < 58)		||  // number keys
+							(keycode > 64 && keycode < 91)		||  // letter keys
+							(keycode > 95 && keycode < 112)		||  // numpad keys
+							(keycode > 185 && keycode < 193)	||  // ;=,-./` (in order)
+							(keycode > 218 && keycode < 223);		// [\]' (in order)
+
+						if ( value !== "" && validKeys ) {
 							outputArray[parameter] = value.toLowerCase();
 
 							updateResults();
 							return false;
-						// }
+						}
 					});
-				}
 
-				function selectInit() {
+
+					// Selects
+
 					select.each(function(i) {
 						var placeholder = $(this).val(),
 							parameter = $(this).data("search-parameter");
@@ -150,9 +170,10 @@ function initSearch() {
 					});
 
 					initDropdowns();
-				}
 
-				function tagInit() {
+
+					// Tags
+
 					tagcloud.on("click", ".tag", function() {
 						var parameter = $(this).data("tag-parameter");
 
@@ -181,8 +202,6 @@ function initSearch() {
 				// Run
 
 				inputInit();
-				selectInit();
-				tagInit();
 
 
 
@@ -207,6 +226,11 @@ function initSearch() {
 					for ( var i = 0; i < parameterArray.length; i++ ) {
 						resultArray[parameterArray[i]] = [];
 					}
+
+
+					// Pagination and Selective loading
+
+					var currentPage = 1;
 
 
 					// Get all values from all inputs/tags and rebuild arrays.
@@ -334,78 +358,94 @@ function initSearch() {
 
 					// Rebuild results
 
+					var firstLoad = true;
+
 					function rebuild() {
-						for ( var i = 0; i < JSONobjects.length; i++ ) {
-							var object = JSONobjects[i],
-								id = object.Id,
-								image = object.Image,
-								title = object.Title,
+						function loadItems() {
+							results.append(resultsPaginationElement);
 
-								dateStr = object.Date,
-								z = dateStr.replace("Z", ""),
-								a = z.split("T"),
-								d = a[0].split("-"),
-								t = a[1].split(":"),
-								date = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
+							for ( var i = 0; i < JSONobjects.length; i++ ) {
+								var object = JSONobjects[i],
+									id = object.Id,
+									image = object.Image,
+									title = object.Title,
 
-								hour = date.getHours();
-								hours = hour < 10 ? "0" + hour : hour;
-								minute = date.getMinutes();
-								minutes = minute < 10 ? "0" + minute : minute;
-								day = date.getDate();
-								days = day < 10 ? "0" + day : day;
-								month = date.getMonth();
-								months = (month + 1) < 10 ? "0" + (month + 1) : (month + 1);
-								year = date.getFullYear();
-								years = year < 10 ? "0" + year : year;
-								fulldate = hours + ":" + minutes + " @ " + days + "/" + months + "/" + years;
+									dateStr = object.Date,
+									z = dateStr.replace("Z", ""),
+									a = z.split("T"),
+									d = a[0].split("-"),
+									t = a[1].split(":"),
+									date = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
 
-								url = object.Url,
-								summary = object.Summary,
-								type = object.Type,
-								categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g , ", ") : "None",
-								tags = object.Tags.length > 0 ? object.Tags.toString().replace(/,/g , ", ") : "None",
-								result = '<div class="search-item loading">\
-											  <a class="img" href="' + url + '" style="background: url(' + image + ') no-repeat center center;"></a>\
-											  <a class="title" href="' + url + '">' + title + '</a>\
-											  <div class="date">' + fulldate + '</div>\
-											  <div class="type">' + type + '</div>\
-											  <div class="summary">' + summary + '</div>\
-											  <div class="info">\
-												  <div class="categories" data-tooltip="' + categories + '">Categories</div>\
-												  <div class="tags" data-tooltip="' + tags + '">Tags</div>\
-											  </div>\
-										  </div>';
+									hour = date.getHours();
+									hours = hour < 10 ? "0" + hour : hour;
+									minute = date.getMinutes();
+									minutes = minute < 10 ? "0" + minute : minute;
+									day = date.getDate();
+									days = day < 10 ? "0" + day : day;
+									month = date.getMonth();
+									months = (month + 1) < 10 ? "0" + (month + 1) : (month + 1);
+									year = date.getFullYear();
+									years = year < 10 ? "0" + year : year;
+									fulldate = hours + ":" + minutes + " @ " + days + "/" + months + "/" + years;
+
+									url = object.Url,
+									summary = object.Summary,
+									type = object.Type,
+									categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g , ", ") : "None",
+									tags = object.Tags.length > 0 ? object.Tags.toString().replace(/,/g , ", ") : "None",
+									result = '<div class="search-item loading">\
+												  <a class="img" href="' + url + '" style="background: url(' + image + ') no-repeat center center;"></a>\
+												  <a class="title" href="' + url + '">' + title + '</a>\
+												  <div class="date">' + fulldate + '</div>\
+												  <div class="type">' + type + '</div>\
+												  <div class="summary">' + summary + '</div>\
+												  <div class="info">\
+													  <div class="categories" data-tooltip="' + categories + '">Categories</div>\
+													  <div class="tags" data-tooltip="' + tags + '">Tags</div>\
+												  </div>\
+											  </div>';
 
 
-							if ( $.inArray(id, finalArray) > -1 ) results.append(result);
+								if ( $.inArray(id, finalArray) > -1 ) results.append(result);
+							}
+
+							initTooltips();
+
+							results.append(resultsPaginationElement);
+
+							firstLoad = false;
 						}
 
-
-						initTooltips();
-
-
-						// Results behaviour after built
+						if ( firstLoad ) loadItems();
 
 
-						function showItem(item, i) {
-							if ( i < (config.search.page * currentPage) ) {
-								setTimeout(function() {
-									item.eq(i).removeClass("loading");
-								}, 100 * (i % config.search.page));
+						// Post build
+
+						function showItem(el, i) {
+							if ( i < (config.search.count * currentPage) ) {
+								if ( config.search.pagination ) {
+									el.eq(i).removeClass("loading");
+								} else {
+									setTimeout(function() {
+										el.eq(i).removeClass("loading");
+									}, 100 * (i % config.search.count));
+								}
 							}
 						}
 
 						var items = results.children(".search-item");
-						var hasResults = items.length;
+						var resultsCount = items.length;
 
-						count.css({"display": "inline-block"})
-							.html((items.length === 0 ? "No" : items.length) + " result" + (items.length === 1 ? " " : "s ") + "found");
+						count
+							.css({"display": "inline-block"})
+							.html((resultsCount === 0 ? "No" : resultsCount) + " result" + (resultsCount === 1 ? " " : "s ") + "found");
 
-						if ( hasResults ) {
+						if ( resultsCount ) {
 							results.removeClass("loading").removeClass("no-results");
 
-							for ( var i = (config.search.page * (currentPage - 1)); i < items.length; i++ ) {
+							if ( config.search.pagination ) items.addClass("loading");
+							for ( var i = (config.search.count * (currentPage - 1)); i < resultsCount; i++ ) {
 								showItem(items, i);
 							}
 						} else {
@@ -417,24 +457,65 @@ function initSearch() {
 						}
 
 
-						// Page request
+						// Pagination and Selective loading
 
-						page.off().on("click", function() {
-							currentPage++;
+						var pagination = $(".search-pagination");
 
-							for ( var i = (config.search.page * (currentPage - 1)); i < items.length; i++ ) {
-								console.log(i, i % config.search.page)
-								showItem(items, i);
+						if ( config.search.pagination ) {
+							if ( resultsCount > config.search.count ) {
+								pagination.show();
+							} else {
+								pagination.hide();
 							}
-						});
+						} else {
+							if ( resultsCount > config.search.count * currentPage ) {
+								load.show();
+							} else {
+								load.hide();
+							}
+						}
 					}
 
-
-					var currentPage = 1;
-
 					results.html("");
-
 					rebuild();
+
+
+					// Pagination and Selective loading
+
+					var items = results.children(".search-item");
+					var resultsCount = items.length;
+
+					if ( config.search.pagination ) {
+						var pagination = $(".search-pagination");
+						var pages = 0;
+
+						for ( var i = 0; i < resultsCount; i++ ) {
+							if ( i % config.search.count == 0 ) {
+								pages++;
+
+								var page = "<button data-page='" + pages + "'>" + pages + "</button>";
+								pagination.append(page);
+							}
+						}
+
+						$("[data-page='" + currentPage + "']").addClass("primary");
+
+						$("[data-page]").off().on("click", function() {
+							currentPage = $(this).data("page");
+
+							console.log(currentPage);
+
+							$("[data-page]").removeClass("primary");
+							$("[data-page='" + currentPage + "']").addClass("primary");
+
+							rebuild();
+						});
+					} else {
+						load.on("click", function() {
+							currentPage++;
+							rebuild();
+						});
+					}
 				}
 
 

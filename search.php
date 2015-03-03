@@ -28,7 +28,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div data-search="scripts/dev/data/search.json">
+		<div class="search-wrapper" data-search="scripts/dev/data/search.json">
 			<div class="row">
 				<div class="column">
 					<!--
