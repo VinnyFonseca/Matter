@@ -36,15 +36,18 @@
 						<input type="text" placeholder="Search..." data-search-parameter="Title, Summary" data-autocomplete-parameter="Title">
 					</div>
 					-->
-					<input type="text" placeholder="Search..." data-search-parameter="Title, Summary, Tags">
+					<input type="text" placeholder="Search..." data-search-parameter="Title, Summary">
 				</div>
 			</div>
 			<div class="row">
-				<div class="column" data-span="6">
+				<div class="column" data-span="4">
+					<select class="keep" data-search-parameter="Type"></select>
+				</div>
+				<div class="column" data-span="4">
 					<select class="keep" data-search-parameter="Categories"></select>
 				</div>
-				<div class="column" data-span="6">
-					<select class="keep" data-search-parameter="Type"></select>
+				<div class="column" data-span="4">
+					<select class="keep" data-search-parameter="Tags"></select>
 				</div>
 			</div>
 		</div>

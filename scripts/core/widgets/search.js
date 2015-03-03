@@ -1,5 +1,24 @@
 // Unified Search
 
+function highlight(el, val) {
+	var match = RegExp(val, 'gi');
+
+	el.each(function() {
+		$(this).filter(function() {
+			return match.test($(this).text());
+		}).html(function() {
+			if ( !val ) return $(this).text();
+			return $(this).text().replace(match, '<span class="highlight">$&</span>');
+		});
+	});
+}
+
+function unhighlight(el) {
+	el.find("span.highlight").replaceWith(function() {
+		return $(this).text();
+	});
+}
+
 function initSearch() {
 	if ( $("[data-search]").length ) {
 		$("[data-search]").each(function(i) {
@@ -115,26 +134,29 @@ function initSearch() {
 					parameterArray.push(parameter);
 					outputArray[parameter] = [];
 
-					input.on("keyup", function(event) {
-						var value = $(this).val();
-							parameter = $(this).data("search-parameter"),
-							keycode = event.keyCode;
+					input.each(function() {
+						$(this).on("keyup", function(event) {
+							var value = $(this).val().toLowerCase();
+								parameter = $(this).data("search-parameter"),
+								criteria = parameter.replace(/\s/g, "").split(","),
+								keycode = event.keyCode;
 
 							var validKeys =
-							keycode == 32 || keycode === 13		||  // spacebar & return key(s)
-							keycode == 8						||  // backspace
-							(keycode > 47 && keycode < 58)		||  // number keys
-							(keycode > 64 && keycode < 91)		||  // letter keys
-							(keycode > 95 && keycode < 112)		||  // numpad keys
-							(keycode > 185 && keycode < 193)	||  // ;=,-./` (in order)
-							(keycode > 218 && keycode < 223);		// [\]' (in order)
+								keycode == 32 || keycode === 13		||  // spacebar & return key(s)
+								keycode == 8						||  // backspace
+								(keycode > 47 && keycode < 58)		||  // number keys
+								(keycode > 64 && keycode < 91)		||  // letter keys
+								(keycode > 95 && keycode < 112)		||  // numpad keys
+								(keycode > 185 && keycode < 193)	||  // ;=,-./` (in order)
+								(keycode > 218 && keycode < 223);		// [\]' (in order)
 
-						if ( value !== "" && validKeys ) {
-							outputArray[parameter] = value.toLowerCase();
-
-							updateResults();
-							return false;
-						}
+							if ( validKeys ) {
+								if ( value.length <= 1 ) unhighlight(results);
+								outputArray[parameter] = value;
+								updateResults();
+								return false;
+							}
+						});
 					});
 
 
@@ -411,10 +433,30 @@ function initSearch() {
 								if ( $.inArray(id, finalArray) > -1 ) results.append(result);
 							}
 
+							// Tooltips
+
 							initTooltips();
 
-							results.append(resultsPaginationElement);
 
+							// Highlight
+
+							input.each(function() {
+								var value = $(this).val().toLowerCase();
+									parameter = $(this).data("search-parameter"),
+									criteria = parameter.replace(/\s/g, "").split(",");
+
+								if ( value.length > 1 ) {
+									for ( var i = 0; i < criteria.length; i++ ) {
+										var target = results.find("[class='" + criteria[i].toLowerCase() + "']");
+										highlight(target, value);
+									}
+								}
+							});
+
+
+							// Pagination
+
+							results.append(resultsPaginationElement);
 							firstLoad = false;
 						}
 

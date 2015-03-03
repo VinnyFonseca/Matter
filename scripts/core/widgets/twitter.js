@@ -302,8 +302,26 @@ var twitterFetcher = function() {
 */
 
 function initTwitter() {
-	if ($("#" + config.twitter.domID).length) {
-		twitterFetcher.fetch(config.twitter);
+	if ($(".widget-twitter").length) {
+		$(".widget-twitter").each(function(i) {
+			$(this).attr("id", "widget-twitter-" + i);
+
+			var twitterConfig = {
+				twitterID: config.twitter.twitterID,
+				domID: $(this).attr("id"),
+				maxTweets: config.twitter.maxTweets,
+				startAt: config.twitter.startAt,
+				enableLinks: config.twitter.enableLinks,
+				showUser: config.twitter.showUser,
+				showFollow: config.twitter.showFollow,
+				showTime: config.twitter.showTime,
+				showRetweet: config.twitter.showRetweet,
+				showInteraction: config.twitter.showInteractione
+			};
+
+			twitterFetcher.fetch(twitterConfig);
+		});
+
 		if ( config.application.debug ) console.log("Widget :: Twitter");
 	}
 }

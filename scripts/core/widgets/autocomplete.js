@@ -1,5 +1,24 @@
 // Autocomplete
 
+function highlight(el, val) {
+	var match = RegExp(val, 'gi');
+
+	el.each(function() {
+		$(this).filter(function() {
+			return match.test($(this).text());
+		}).html(function() {
+			if ( !val ) return $(this).text();
+			return $(this).text().replace(match, '<span class="highlight">$&</span>');
+		});
+	});
+}
+
+function unhighlight(el) {
+	el.find("span.highlight").replaceWith(function() {
+		return $(this).text();
+	});
+}
+
 function initAutocomplete() {
 	if ( $("[data-autocomplete]").length ) {
 		$("[data-autocomplete]").each(function() {
@@ -99,7 +118,7 @@ function initAutocomplete() {
 					.on("blur", function() {
 						if ( selecting === false ) {
 							el.removeClass("active");
-							list.unhighlight();
+							unhighlight(list.find("li"));
 						}
 					});
 
@@ -112,15 +131,15 @@ function initAutocomplete() {
 					}).on("click", function() {
 						input.val($(this).text()).trigger({type: "keydown", which: 13});
 						el.removeClass("active");
-						list.unhighlight();
+						unhighlight(list.find("li"));
 					});
 
 					if ( filter.length > 0 && item.hasClass("selected") ) {
 						el.addClass("active");
-						list.unhighlight().highlight(filter);
+						highlight(list.find("li"), filter);
 					} else {
 						el.removeClass("active");
-						list.unhighlight();
+						unhighlight(list.find("li"));
 					}
 				}
 			}

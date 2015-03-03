@@ -16,7 +16,7 @@ var config = {
 		view: "grid", // str: "grid", "list".
 		display: "full", // str: "full", "mini".
 		count: 10, // int: Number of items to show per page.
-		pagination: true // bool: Toggle pagination controls and loading of page elements only.
+		pagination: false // bool: Toggle pagination controls and loading of page elements only.
 	},
 	tables: {
 		responsive: true // bool: Converts every row into a separate table on mobiles.

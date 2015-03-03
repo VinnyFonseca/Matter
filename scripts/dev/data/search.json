@@ -129,7 +129,7 @@
 			"Image": "http://placehold.it/480x320",
 			"Summary": "Steve Windsor, from Jaguar Land Rover, asks if real world drag coefficient is wind averaged drag.",
 			"Categories": ["Automotive"],
-			"Tags": ["Steve Windsor", "Areodynamics"]
+			"Tags": ["Steve Windsor", "Aerodynamics"]
 		}, {
 			"Id": "13",
 			"Title": "Coupled thermal and aerodynamic design",
@@ -139,7 +139,7 @@
 			"Image": "http://placehold.it/480x320",
 			"Summary": "Simon Huber from the Institute of Aerodynamics and Fluid Mechanics and Technical University Munich, explains the coupled thermal and aerodynamic design process within car production.",
 			"Categories": [],
-			"Tags": ["Simon Huber", "Areodynamics"]
+			"Tags": ["Simon Huber", "Aerodynamics"]
 		}, {
 			"Id": "14",
 			"Title": "Shape Optimisation Using Adjoint Methods",
@@ -149,7 +149,7 @@
 			"Image": "http://placehold.it/480x320",
 			"Summary": "Mark Keating, Lead Engineer at ANSYS UK Ltd, talks about shape optimisation for aerodynamic performance using adjoint methods.",
 			"Categories": ["Automotive"],
-			"Tags": ["Mark Keating", "Areodynamics"]
+			"Tags": ["Mark Keating", "Aerodynamics"]
 		}, {
 			"Id": "15",
 			"Title": "Forcing Boundary Layer Transition",
@@ -169,7 +169,7 @@
 			"Image": "http://placehold.it/480x320",
 			"Summary": "Alexey Vdovin, from the department of Applied Mechanics at Chalmers University of Technology, explains how vehicle ride height and wheel position influence the aerodynamic forces of ground vehicles.",
 			"Categories": ["Automotive"],
-			"Tags": ["Alexey Vdovin", "Areodynamics"]
+			"Tags": ["Alexey Vdovin", "Aerodynamics"]
 		}, {
 			"Id": "17",
 			"Title": "Trapped Vortices and Ground Vehicles",
@@ -179,7 +179,7 @@
 			"Image": "http://placehold.it/480x320",
 			"Summary": "Abdessalem Bouferrouk, from the Department of Engineering Design and Mathematics at the University of West England, discusses the applicability of trapped vortices to ground vehicles.",
 			"Categories": ["Automotive"],
-			"Tags": ["Abdessalem Bouferrouk", "Areodynamics"]
+			"Tags": ["Abdessalem Bouferrouk", "Aerodynamics"]
 		}, {
 			"Id": "18",
 			"Title": "Aerodynamic Effects During Manoeuvres",
@@ -189,7 +189,7 @@
 			"Image": "http://placehold.it/480x320",
 			"Summary": "Andreas Kremheller, Aerodynamics Engineer at Nissan Technical Centre, discusses the aerodynamic effects during overtaking and passing manoeuvres.",
 			"Categories": ["Automotive"],
-			"Tags": ["Andreas Kremheller", "Areodynamics"]
+			"Tags": ["Andreas Kremheller", "Aerodynamics"]
 		}, {
 			"Id": "19",
 			"Title": "Classification of Aerodynamic Tyre Characteristics",
@@ -239,7 +239,7 @@
 			"Image": "http://placehold.it/480x320",
 			"Summary": "Lennert Sterken, from the Department of Applied Mechanics at Chalmers University of Technology, explains the effect of a traversing unit on the flow structure behind a passenger vehicle.",
 			"Categories": ["Automotive"],
-			"Tags": ["Lennert Sterken", "Areodynamics"]
+			"Tags": ["Lennert Sterken", "Aerodynamics"]
 		}, {
 			"Id": "24",
 			"Title": "Three-Dimensional Flow Separation Patterns and Surface Pressure Gradients on a Vehicle",
@@ -259,7 +259,7 @@
 			"Image": "http://placehold.it/480x320",
 			"Summary": "Neil Ashton from the School of Mechanical Aerospace and Civil Engineering at Manchester University, presents an investigation into the predictive capability of advance RANS models for the Driver Automotive Model.\u0026nbsp;",
 			"Categories": ["Automotive"],
-			"Tags": ["neil ashton", "Areodynamics"]
+			"Tags": ["neil ashton", "Aerodynamics"]
 		}, {
 			"Id": "26",
 			"Title": "The 100th Engineering Heritage Award",
@@ -289,7 +289,7 @@
 			"Image": "http://placehold.it/480x320",
 			"Summary": "Students compete in the Design Challenge 2014.",
 			"Categories": ["Formula Student", "Automotive"],
-			"Tags": ["Business and Management", "Bechtel", "Automobile", "Aereodynamics", "Design Challenge 2014"]
+			"Tags": ["Business and Management", "Bechtel", "Automobile", "Aerodynamics", "Design Challenge 2014"]
 		}, {
 			"Id": "29",
 			"Title": "2014 Vision Award Winners",
