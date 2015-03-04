@@ -46,6 +46,10 @@
 		}
 	}
 
+	.twitter-follow {
+		display: none;
+	}
+
 	&.twitter-main {
 		.user {
 			display: none;
@@ -57,21 +61,10 @@
 
 		.twitter-follow {
 			position: absolute;
+			margin: 0;
 			top: $spacing / 1.5;
 			right: $spacing / 1.5;
-			margin: 0;
 		}
-	}
-	&.multi {
-		.twitter-follow {
-			position: relative;
-			margin: ($spacing / 1.5) auto 0;
-		}
-	}
-
-
-	.twitter-follow {
-		display: none;
 	}
 
 

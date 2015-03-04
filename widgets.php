@@ -369,19 +369,12 @@
 		</p>
 
 		<div data-twitter="true"></div>
-		<div data-twitter="true"></div>
-		<div data-twitter="true"></div>
-		<div data-twitter="true"></div>
-
-		<div id="twitter-1" data-twitter="true"></div>
-		<div id="twitter-2" data-twitter="true"></div>
-		<div id="twitter-3" data-twitter="true"></div>
 
 		<p>
 			<strong>Example:</strong>
 		</p>
 
-		<pre>&lt;div id="widget-twitter"&gt;&lt;/div&gt;</pre>
+		<pre>&lt;div data-twitter="true"&gt;&lt;/div&gt;</pre>
 
 
 

@@ -43,7 +43,8 @@
 	var lang = 'en';
 
 	function handleTweets(tweets) {
-		console.log(tweets)
+		// console.log(tweets);
+
 		if (customCallbackFunction === null) {
 			var x = tweets.length;
 			var n = 0;
@@ -142,7 +143,7 @@
 		// Custom Tweet handler function
 
 		handler: function(tweets) {
-			console.log(handlerConfig, tweets);
+			// console.log(handlerConfig, tweets);
 
 			var x = tweets.length;
 			var n = 0;
@@ -156,12 +157,12 @@
 					n++;
 				}
 				html += '</div>';
-				html += '<a href="#" class="button primary input-medium center twitter-follow">Follow Us</a>';
+				html += '<div class="button primary input-medium twitter-follow">Follow</div>';
 
 			element.html(html);
 
 			if ( showRts ) {
-				element.addClass("framed").addClass("multi");
+				element.addClass("framed");
 
 				var user = element.find(".user");
 
@@ -182,17 +183,11 @@
 				user.find("span").eq(1).attr("class", "handle");
 				user.find("a").attr('target', '_blank').addClass("no-icon");
 
-				if ( showFlw ) element.find(".twitter-follow").attr("href", user.find("a").attr("href")).attr('target', '_blank').show();
-			}
-
-			function popupWindow(url, title, w, h) {
-				var left = (screen.width/2)-(w/2);
-				var top = (screen.height/2)-(h/2);
-				return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+				if ( showFlw ) element.find(".twitter-follow").show();
 			}
 
 			element.find(".button").on("click", function() {
-				popupWindow('https://twitter.com/intent/user?screen_name=' + user.getElementsByTagName('span')[0].innerHTML.substr(1), 'Twitter Follow', 640, 600);
+				popupWindow('https://twitter.com/intent/user?screen_name=' + user.find('span').eq(1).html().substr(1), 'Twitter Follow', 640, 600);
 				return false;
 			});
 		},
@@ -413,48 +408,20 @@ function initTwitter() {
 		if ( config.application.debug ) console.log("Widget :: Twitter");
 	}
 
-	var twitterConfig1 = {
-		domId: "twitter-1",
-		widgetId: "572802782449909760",
-		startAt: config.twitter.startAt,
-		maxTweets: 6,
-		enableLinks: config.twitter.enableLinks,
-		showUser: config.twitter.showUser,
-		showTime: config.twitter.showTime,
-		showRetweet: true,
-		showFollow: config.twitter.showFollow,
-		showInteraction: config.twitter.showInteraction
-	};
+	// Example config and call
 
-	twitterFetcher.fetch(twitterConfig1);
+	// var twitterConfig1 = {
+	// 	domId: "twitter-1",
+	// 	widgetId: "572802782449909760",
+	// 	startAt: 2,
+	// 	maxTweets: 2,
+	// 	enableLinks: config.twitter.enableLinks,
+	// 	showUser: config.twitter.showUser,
+	// 	showTime: config.twitter.showTime,
+	// 	showRetweet: true,
+	// 	showFollow: config.twitter.showFollow,
+	// 	showInteraction: config.twitter.showInteraction
+	// };
 
-	var twitterConfig2 = {
-		domId: "twitter-2",
-		widgetId: '492660537293938688',
-		startAt: config.twitter.startAt,
-		maxTweets: 9,
-		enableLinks: config.twitter.enableLinks,
-		showUser: config.twitter.showUser,
-		showTime: config.twitter.showTime,
-		showRetweet: config.twitter.showRetweet,
-		showFollow: config.twitter.showFollow,
-		showInteraction: config.twitter.showInteraction
-	};
-
-	twitterFetcher.fetch(twitterConfig2);
-
-	var twitterConfig3 = {
-		domId: "twitter-3",
-		widgetId: "572802782449909760",
-		startAt: 2,
-		maxTweets: 2,
-		enableLinks: config.twitter.enableLinks,
-		showUser: config.twitter.showUser,
-		showTime: config.twitter.showTime,
-		showRetweet: true,
-		showFollow: config.twitter.showFollow,
-		showInteraction: config.twitter.showInteraction
-	};
-
-	twitterFetcher.fetch(twitterConfig3);
+	// twitterFetcher.fetch(twitterConfig1);
 }

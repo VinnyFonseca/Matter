@@ -42,7 +42,7 @@ var config = {
 	twitter: {
 		widgetId: '492660537293938688', // Generated via Twitter.com. See the matterframework.net/widgets..
 		startAt: 0, // int: Starting tweet index.
-		maxTweets: 1, // int: Maximum number of tweets shown at any time.
+		maxTweets: 3, // int: Maximum number of tweets shown at any time.
 		enableLinks: true, // bool: Turns URLs and hashtags into links.
 		showUser: true, // bool: Show User's avatar.
 		showTime: true, // bool: Show posted time.

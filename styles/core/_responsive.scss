@@ -213,6 +213,20 @@
 		}
 	}
 
+
+	// Twitter
+
+	[data-twitter] {
+		&.twitter-main {
+			.twitter-follow {
+				position: relative !important;
+				margin: ($spacing / 1.5) auto 0 !important;
+				top: 0;
+				right: 0;
+			}
+		}
+	}
+
 }
 
 
