@@ -1,7 +1,7 @@
 .lt-ie8 {
 
 	* {
-		behavior: url(styles/vendor/boxsizing.htc);
+		behavior: url(styles/core/vendor/boxsizing.htc);
 	}
 
 	.column {
@@ -70,7 +70,7 @@
 
 	.search-item {
 		.img {
-			-ms-behavior: url("scripts/vendor/backgroundsize.htc");
+			-ms-behavior: url("scripts/core/vendor/backgroundsize.htc");
 		}
 	}
 
