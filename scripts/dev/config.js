@@ -19,7 +19,7 @@ var config = {
 		pagination: false // bool: Toggle pagination controls and loading of page elements only.
 	},
 	tables: {
-		responsive: false // bool: Converts every row into a separate table on mobiles.
+		responsive: true // bool: Converts every row into a separate table on mobiles.
 	},
 	notification: {
 		tone: "default", // str: "default", "success", "warning", "failure".

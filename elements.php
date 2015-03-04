@@ -105,23 +105,35 @@
 				<img class="svg icon icon-arrow-left" src="img/icons/icon-arrow-left.svg" onerror="this.onerror=null;this.src='img/icons/icon-arrow-left.png'">
 			</div>
 
-			<div class="icon-container" data-icon="caret-left" data-tooltip="caret-left">
-				<img class="svg icon icon-caret-left" src="img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src='img/icons/icon-caret-left.png'">
+			<div class="icon-container" data-icon="caret-up" data-tooltip="caret-up">
+				<img class="svg icon icon-caret-up" src="img/icons/icon-caret-up.svg" onerror="this.onerror=null;this.src='img/icons/icon-caret-up.png'">
 			</div>
 
 			<div class="icon-container" data-icon="caret-right" data-tooltip="caret-right">
 				<img class="svg icon icon-caret-right" src="img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src='img/icons/icon-caret-right.png'">
 			</div>
 
-			<div class="icon-container" data-icon="plus" data-tooltip="plus">
+			<div class="icon-container" data-icon="caret-down" data-tooltip="caret-down">
+				<img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src='img/icons/icon-caret-down.png'">
+			</div>
+
+			<div class="icon-container" data-icon="caret-left" data-tooltip="caret-left">
+				<img class="svg icon icon-caret-left" src="img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src='img/icons/icon-caret-left.png'">
+			</div>
+
+			<div class="icon-container" data-icon="plus" data-tooltip="add, plus">
 				<img class="svg icon icon-plus" src="img/icons/icon-plus.svg" onerror="this.onerror=null;this.src='img/icons/icon-plus.png'">
 			</div>
 
-			<div class="icon-container" data-icon="close" data-tooltip="close">
+			<div class="icon-container" data-icon="remove" data-tooltip="remove, minus">
+				<img class="svg icon icon-remove" src="img/icons/icon-remove.svg" onerror="this.onerror=null;this.src='img/icons/icon-remove.png'">
+			</div>
+
+			<div class="icon-container" data-icon="close" data-tooltip="close, delete">
 				<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
 			</div>
 
-			<div class="icon-container" data-icon="tick" data-tooltip="tick">
+			<div class="icon-container" data-icon="tick" data-tooltip="tick, check">
 				<img class="svg icon icon-tick" src="img/icons/icon-tick.svg" onerror="this.onerror=null;this.src='img/icons/icon-tick.png'">
 			</div>
 
@@ -135,6 +147,14 @@
 
 			<div class="icon-container" data-icon="search" data-tooltip="search">
 				<img class="svg icon icon-search" src="img/icons/icon-search.svg" onerror="this.onerror=null;this.src='img/icons/icon-search.png'">
+			</div>
+
+			<div class="icon-container" data-icon="grid" data-tooltip="grid">
+				<img class="svg icon icon-grid" src="img/icons/icon-grid.svg" onerror="this.onerror=null;this.src='img/icons/icon-grid.png'">
+			</div>
+
+			<div class="icon-container" data-icon="list" data-tooltip="list">
+				<img class="svg icon icon-list" src="img/icons/icon-list.svg" onerror="this.onerror=null;this.src='img/icons/icon-list.png'">
 			</div>
 
 			<div class="icon-container" data-icon="settings" data-tooltip="settings">
@@ -516,6 +536,7 @@
 		</dl>
 
 		<h4>Definition List</h4>
+
 		<p>
 			Such a list should consist of <strong>terms</strong> and associated <strong>definitions</strong>.
 		</p>
@@ -615,13 +636,7 @@
 			</tbody>
 		</table>
 
-
-		<hr>
-
-
-		<a href="#" class="anchor" id="character"></a>
-
-		<h2>Character Test</h2>
+		<h4>Character Test</h4>
 
 		<p>
 			The following table has no caption, and has some sample characters with annotations. If the browser's default font does notcontain all of them, they may get displayed using backup fonts. This may cause stylistic differences, but it should not prevent the characters from being displayed at all.
