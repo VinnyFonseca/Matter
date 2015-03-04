@@ -35,5 +35,5 @@
 		<!-- Minified CSS - Includes all .scss from style folder -->
 		<link rel="stylesheet" href="styles/build.css" type="text/css" media="screen">
 
-		<script type="text/javascript" src="scripts/vendor/html5shiv-printshiv.min.js"></script>
+		<script type="text/javascript" src="scripts/core/vendor/html5shiv-printshiv.min.js"></script>
 	</head>

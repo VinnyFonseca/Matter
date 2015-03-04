@@ -21,13 +21,13 @@ module.exports = function(grunt) {
 			all: {
 				files: {
 					'scripts/build.js': [
-						'scripts/vendor/jquery-1.11.2.min.js',
-						'scripts/vendor/modernizr-full.min.js',
-						'scripts/vendor/*.js',
+						'scripts/core/vendor/jquery-1.11.2.min.js',
+						'scripts/core/vendor/modernizr-full.min.js',
+						'scripts/core/vendor/*.js',
 						'scripts/dev/config.js',
-						'scripts/core/**/*.js',
+						'scripts/core/polyfills/*.js',
+						'scripts/core/widgets/*.js',
 						'scripts/core/*.js',
-						'scripts/dev/**/*.js',
 						'scripts/dev/*.js'
 					]
 				}

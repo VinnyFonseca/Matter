@@ -139,6 +139,30 @@ function popupWindow(url, title, w, h) {
 
 
 
+// Highlight
+
+function highlight(el, val) {
+	var match = RegExp(val, 'gi');
+
+	el.each(function() {
+		$(this).filter(function() {
+			return match.test($(this).text());
+		}).html(function() {
+			if ( !val ) return $(this).text();
+			return $(this).text().replace(match, '<span class="highlight">$&</span>');
+		});
+	});
+}
+
+function unhighlight(el) {
+	el.find("span.highlight").replaceWith(function() {
+		return $(this).text();
+	});
+}
+
+
+
+
 // SVG Injection
 
 function initSVGs() {
