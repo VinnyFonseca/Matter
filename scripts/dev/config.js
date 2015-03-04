@@ -45,7 +45,7 @@ var config = {
 		startAt: 0, // int: Starting tweet index.
 		enableLinks: true, // bool: Turns URLs and hashtags into links.
 		showUser: true, // bool: Show User's avatar.
-		showFollow: false, // bool: Show User's avatar.
+		showFollow: true, // bool: Show Follow button.
 		showTime: true, // bool: Show posted time.
 		showRetweet: false, // bool: Show retweets that you posted.
 		showInteraction: false // bool: Show Reply, Retweet and Favorite.

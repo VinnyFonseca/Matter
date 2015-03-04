@@ -43,37 +43,10 @@ var twitterFetcher = function() {
 
 	return {
 		fetch: function(fetchConfig) {
-			if (fetchConfig.maxTweets === undefined) {
-				fetchConfig.maxTweets = 20;
-			}
-			if (fetchConfig.enableLinks === undefined) {
-				fetchConfig.enableLinks = true;
-			}
-			if (fetchConfig.showUser === undefined) {
-				fetchConfig.showUser = true;
-			}
-			if (fetchConfig.showFollow === undefined) {
-				fetchConfig.showFollow = true;
-			}
-			if (fetchConfig.showTime === undefined) {
-				fetchConfig.showTime = true;
-			}
-			if (fetchConfig.dateFunction === undefined) {
-				fetchConfig.dateFunction = 'default';
-			}
-			if (fetchConfig.showRetweet === undefined) {
-				fetchConfig.showRetweet = true;
-			}
-			if (fetchConfig.customCallback === undefined) {
-				fetchConfig.customCallback = null;
-			}
-			if (fetchConfig.showInteraction === undefined) {
-				fetchConfig.showInteraction = true;
-			}
+			if (fetchConfig.dateFunction === undefined) fetchConfig.dateFunction = 'default';
+			if (fetchConfig.customCallback === undefined) fetchConfig.customCallback = null;
 
-			if (inProgress) {
-				queue.push(fetchConfig);
-			} else {
+			function setup() {
 				inProgress = true;
 
 				domNode = fetchConfig.domID;
@@ -93,12 +66,14 @@ var twitterFetcher = function() {
 							 'suppress_response_codes=true&rnd=' + Math.random();
 				document.getElementsByTagName('head')[0].appendChild(script);
 			}
+
+			inProgress ? queue.push(fetchConfig) : setup();
 		},
 
 		handler: function(tweets) {
 			var x = tweets.length;
 			var n = 0;
-			var element = document.getElementById(twitterConfig.domID);
+			var element = $("#" + twitterConfig.domID);
 
 			var html = '<div class="twitter-user"></div>';
 
@@ -110,37 +85,35 @@ var twitterFetcher = function() {
 				}
 				html += '</div>';
 
-				html += '<div class="button input-medium center twitter-follow">Follow Us</div>';
+				html += '<button class="primary input-medium center twitter-follow">Follow Us</button>';
 
-			element.innerHTML = html;
+			element.html(html);
 
 
 			if ( twitterConfig.showRetweet ) {
-				document.getElementById(twitterConfig.domID).className = twitterConfig.domID + " framed multi";
+				element.addClass("framed").addClass("multi");
 
-				for ( var i = 0; i < document.querySelectorAll(".user").length; i++ ) {
-					var user = document.querySelectorAll(".user")[i];
-						user.getElementsByTagName("a")[0].setAttribute('target', '_blank');
-						user.getElementsByTagName("a")[0].className = "no-icon valign-middle";
-				}
+				var user = element.find(".user");
+
+				user.each(function() {
+					$(this).find("img").attr("class", "box-logo");
+					$(this).find("span").eq(0).replaceWith(function() { return $(this).html(); });
+					$(this).find("span").eq(1).attr("class", "handle");
+					$(this).find("a").attr('target', '_blank').addClass("no-icon").addClass("valign-middle");
+				});
 			} else {
-				document.getElementById(twitterConfig.domID).className = twitterConfig.domID + " framed twitter-main";
+				element.addClass("framed").addClass("twitter-main");
 
-				var user = document.createElement('h4');
-					user.className = "user";
-					user.innerHTML = document.querySelectorAll(".user")[0].innerHTML;
+				element.find(".twitter-user").append("<h4 class='user'>" + element.find(".user:first-child").html() + "</h4>");
+				var user = element.find(".twitter-user .user");
 
-					user.getElementsByTagName("img")[0].className = "box-logo";
-					user.getElementsByTagName("span")[0].remove();
-					user.getElementsByTagName("span")[0].className = "handle";
-					user.getElementsByTagName("a")[0].setAttribute('target', '_blank');
-					user.getElementsByTagName("a")[0].className = "no-icon valign-middle";
-
-				document.querySelector(".twitter-user").appendChild(user);
+				user.find("img").attr("class", "box-logo");
+				user.find("span").eq(0).replaceWith(function() { return $(this).html(); });
+				user.find("span").eq(1).attr("class", "handle");
+				user.find("a").attr('target', '_blank').addClass("no-icon");
 			}
 
-
-			if (twitterConfig.showFollow) $("#" + twitterConfig.domID).find(".twitter-follow").show(); else $("#" + twitterConfig.domID).find(".twitter-follow").hide();
+			twitterConfig.showFollow && !twitterConfig.showRetweet ? element.find(".twitter-follow").show() : element.find(".twitter-follow").hide();
 
 			function popupWindow(url, title, w, h) {
 				var left = (screen.width/2)-(w/2);
@@ -148,10 +121,10 @@ var twitterFetcher = function() {
 				return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 			}
 
-			document.getElementById(twitterConfig.domID).querySelector(".button").onclick = function() {
+			element.find(".button").on("click", function() {
 				popupWindow('https://twitter.com/intent/user?screen_name=' + user.getElementsByTagName('span')[0].innerHTML.substr(1), 'Twitter Follow', 640, 600);
 				return false;
-			};
+			});
 		},
 
 		callback: function(data) {
