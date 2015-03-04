@@ -16,6 +16,12 @@
 		font-size: 0;
 
 		img {
+			display: block;
+			margin-right: 10px;
+			float: left;
+			width: 52px;
+			height: 52px;
+			border: 1px solid $cd;
 		}
 
 		a {
@@ -25,26 +31,18 @@
 			text-decoration: none;
 
 			span {
-				display: block;
-				margin: 0;
-				margin-right: 10px;
-				@include font-size($fontSize * 1.25);
-
+				&[data-scribe="element:name"] {
+					display: block;
+					margin: 0;
+					margin-right: 10px;
+					@include font-size($fontSize * 1.25);
+				}
 				&[data-scribe="element:screen_name"] {
 					margin-top: -4px;
 					color: $c8;
 					@include font-size($fontSize / 1.2);
 				}
 			}
-		}
-
-		img {
-			display: inline-block;
-			margin-right: 10px;
-			float: left;
-			width: 52px;
-			height: 52px;
-			border: 1px solid $cd;
 		}
 	}
 
@@ -57,7 +55,7 @@
 			display: block;
 		}
 
-		button {
+		.twitter-follow {
 			position: absolute;
 			top: $spacing / 1.5;
 			right: $spacing / 1.5;
@@ -65,10 +63,15 @@
 		}
 	}
 	&.multi {
-		button {
+		.twitter-follow {
 			position: relative;
 			margin: ($spacing / 1.5) auto 0;
 		}
+	}
+
+
+	.twitter-follow {
+		display: none;
 	}
 
 

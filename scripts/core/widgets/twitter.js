@@ -1,6 +1,6 @@
 /*********************************************************************
-*  #### Twitter Post Fetcher v11.0 ####
-*  Coded by Jason Mayes 2013. A present to all the developers out there.
+*  #### Twitter Post Fetcher v13.0 ####
+*  Coded by Jason Mayes 2015. A present to all the developers out there.
 *  www.jasonmayes.com
 *  Please keep this disclaimer with my code if you use it. Thanks. :-)
 *  Got feedback or questions, ask here:
@@ -9,24 +9,69 @@
 *  Updates will be posted to this site.
 *********************************************************************/
 
-var twitterFetcher = function() {
+(function(root, factory) {
+	if (typeof define === 'function' && define.amd) {
+		// AMD. Register as an anonymous module.
+		define([], factory);
+	} else if (typeof exports === 'object') {
+		// Node. Does not work with strict CommonJS, but
+		// only CommonJS-like environments that support module.exports,
+		// like Node.
+		module.exports = factory();
+	} else {
+		// Browser globals.
+		factory();
+	}
+}(this, function() {
+	var handlerConfig;
 	var domNode = '';
+	var startAt = 0;
 	var maxTweets = 20;
 	var parseLinks = true;
 	var queue = [];
 	var inProgress = false;
-	var printUser = true;
 	var printTime = true;
-	var formatterFunction = null;
-	var supportsClassName = true;
+	var printUser = true;
 	var showRts = true;
-	var customCallbackFunction = null;
+	var showFlw = true;
 	var showInteractionLinks = true;
+	var showImages = false;
+	var targetBlank = true;
+	var formatterFunction = null;
+	var customCallbackFunction = null;
+	var supportsClassName = true;
+	var lang = 'en';
+
+	function handleTweets(tweets) {
+		console.log(tweets)
+		if (customCallbackFunction === null) {
+			var x = tweets.length;
+			var n = 0;
+			var element = document.getElementById(domNode);
+			var html = '<ul>';
+			while(n < x) {
+				html += '<li>' + tweets[n] + '</li>';
+				n++;
+			}
+			html += '</ul>';
+			element.innerHTML = html;
+		} else {
+			customCallbackFunction(tweets);
+		}
+	}
+
 
 	function strip(data) {
 		return data.replace(/<b[^>]*>(.*?)<\/b>/gi, function(a,s){return s;})
 				.replace(/class=".*?"|data-query-source=".*?"|dir=".*?"|rel=".*?"/gi,
 				'');
+	}
+
+	function targetLinksToNewWindow(el) {
+		var links = el.getElementsByTagName('a');
+		for (var i = links.length - 1; i >= 0; i--) {
+			links[i].setAttribute('target', '_blank');
+		}
 	}
 
 	function getElementsByClassName (node, classname) {
@@ -41,42 +86,69 @@ var twitterFetcher = function() {
 		return a;
 	}
 
-	return {
+	function extractImageUrl(image_data) {
+		if (image_data !== undefined) {
+			var data_src = image_data.innerHTML.match(/data-srcset="([A-z0-9%_\.-]+)/i)[0];
+			return decodeURIComponent(data_src).split('"')[1];
+		}
+	}
+
+	var twitterFetcher = {
 		fetch: function(fetchConfig) {
-			if (fetchConfig.dateFunction === undefined) fetchConfig.dateFunction = 'default';
-			if (fetchConfig.customCallback === undefined) fetchConfig.customCallback = null;
+			handlerConfig = fetchConfig;
+
+			if (handlerConfig.startAt === undefined) handlerConfig.startAt = 0;
+			if (handlerConfig.maxTweets === undefined) handlerConfig.maxTweets = 5;
+			if (handlerConfig.enableLinks === undefined) handlerConfig.enableLinks = true;
+			if (handlerConfig.showUser === undefined) handlerConfig.showUser = true;
+			if (handlerConfig.showTime === undefined) handlerConfig.showTime = true;
+			if (handlerConfig.dateFunction === undefined) handlerConfig.dateFunction = 'default';
+			if (handlerConfig.showRetweet === undefined) handlerConfig.showRetweet = true;
+			if (handlerConfig.showFollow === undefined) handlerConfig.showFollow = true;
+			if (handlerConfig.customCallback === undefined) handlerConfig.customCallback = null;
+			if (handlerConfig.showInteraction === undefined) handlerConfig.showInteraction = true;
+			if (handlerConfig.showImages === undefined) handlerConfig.showImages = false;
+			if (handlerConfig.linksInNewWindow === undefined) handlerConfig.linksInNewWindow = true;
 
 			function setup() {
 				inProgress = true;
 
-				domNode = fetchConfig.domID;
-				maxTweets = fetchConfig.maxTweets + fetchConfig.startAt;
-				parseLinks = fetchConfig.enableLinks;
-				printUser = fetchConfig.showUser;
-				printTime = fetchConfig.showTime;
-				showRts = fetchConfig.showRetweet;
-				formatterFunction = fetchConfig.dateFunction;
-				customCallbackFunction = fetchConfig.customCallback;
-				showInteractionLinks = fetchConfig.showInteraction;
+				domNode = handlerConfig.domId;
+				startAt = handlerConfig.startAt;
+				maxTweets = handlerConfig.maxTweets + handlerConfig.startAt;
+				parseLinks = handlerConfig.enableLinks;
+				printUser = handlerConfig.showUser;
+				printTime = handlerConfig.showTime;
+				showRts = handlerConfig.showRetweet;
+				showFlw = handlerConfig.showFollow;
+				formatterFunction = handlerConfig.dateFunction;
+				customCallbackFunction = handlerConfig.customCallback;
+				showInteractionLinks = handlerConfig.showInteraction;
+				showImages = handlerConfig.showImages;
+				targetBlank = handlerConfig.linksInNewWindow;
 
 				var script = document.createElement('script');
 				script.type = 'text/javascript';
 				script.src = '//cdn.syndication.twimg.com/widgets/timelines/' +
-							 fetchConfig.widgetID + '?&lang=en&callback=twitterFetcher.callback&' +
-							 'suppress_response_codes=true&rnd=' + Math.random();
+						handlerConfig.widgetId + '?&lang=' + (handlerConfig.lang || lang) + '&callback=twitterFetcher.callback&' +
+						'suppress_response_codes=true&rnd=' + Math.random();
 				document.getElementsByTagName('head')[0].appendChild(script);
 			}
 
-			inProgress ? queue.push(fetchConfig) : setup();
+			inProgress ? queue.push(handlerConfig) : setup();
 		},
 
+
+		// Custom Tweet handler function
+
 		handler: function(tweets) {
+			console.log(handlerConfig, tweets);
+
 			var x = tweets.length;
 			var n = 0;
-			var element = $("#" + twitterConfig.domID);
+			var element = $("#" + domNode);
 
 			var html = '<div class="twitter-user"></div>';
-
 				html += '<div class="content feed">';
 				while(n < x) {
 					html += '<hr>';
@@ -84,13 +156,11 @@ var twitterFetcher = function() {
 					n++;
 				}
 				html += '</div>';
-
-				html += '<button class="primary input-medium center twitter-follow">Follow Us</button>';
+				html += '<a href="#" class="button primary input-medium center twitter-follow">Follow Us</a>';
 
 			element.html(html);
 
-
-			if ( twitterConfig.showRetweet ) {
+			if ( showRts ) {
 				element.addClass("framed").addClass("multi");
 
 				var user = element.find(".user");
@@ -111,9 +181,9 @@ var twitterFetcher = function() {
 				user.find("span").eq(0).replaceWith(function() { return $(this).html(); });
 				user.find("span").eq(1).attr("class", "handle");
 				user.find("a").attr('target', '_blank').addClass("no-icon");
-			}
 
-			twitterConfig.showFollow && !twitterConfig.showRetweet ? element.find(".twitter-follow").show() : element.find(".twitter-follow").hide();
+				if ( showFlw ) element.find(".twitter-follow").attr("href", user.find("a").attr("href")).attr('target', '_blank').show();
+			}
 
 			function popupWindow(url, title, w, h) {
 				var left = (screen.width/2)-(w/2);
@@ -127,15 +197,20 @@ var twitterFetcher = function() {
 			});
 		},
 
+		// Custom function End
+
+
 		callback: function(data) {
-			console.log(data)
 			var div = document.createElement('div');
 			div.innerHTML = data.body;
-			if (typeof(div.getElementsByClassName) === 'undefined') supportsClassName = false;
+			if (typeof(div.getElementsByClassName) === 'undefined') {
+				 supportsClassName = false;
+			}
 
 			var tweets = [];
 			var authors = [];
 			var times = [];
+			var images = [];
 			var rts = [];
 			var tids = [];
 			var x = 0;
@@ -153,6 +228,11 @@ var twitterFetcher = function() {
 						tids.push(tmp[x].getAttribute('data-tweet-id'));
 						authors.push(tmp[x].getElementsByClassName('p-author')[0]);
 						times.push(tmp[x].getElementsByClassName('dt-updated')[0]);
+						if (tmp[x].getElementsByClassName('inline-media')[0] !== undefined) {
+							images.push(tmp[x].getElementsByClassName('inline-media')[0]);
+						} else {
+							images.push(undefined);
+						}
 					}
 					x++;
 				}
@@ -163,6 +243,12 @@ var twitterFetcher = function() {
 					tids.push(tmp[x].getAttribute('data-tweet-id'));
 					authors.push(getElementsByClassName(tmp[x], 'p-author')[0]);
 					times.push(getElementsByClassName(tmp[x], 'dt-updated')[0]);
+					if (getElementsByClassName(tmp[x], 'inline-media')[0] !== undefined) {
+						images.push(getElementsByClassName(tmp[x], 'inline-media')[0]);
+					} else {
+						images.push(undefined);
+					}
+
 					if (getElementsByClassName(tmp[x], 'retweet-credit').length > 0) {
 						rts.push(true);
 					} else {
@@ -177,17 +263,18 @@ var twitterFetcher = function() {
 				authors.splice(maxTweets, (authors.length - maxTweets));
 				times.splice(maxTweets, (times.length - maxTweets));
 				rts.splice(maxTweets, (rts.length - maxTweets));
+				images.splice(maxTweets, (images.length - maxTweets));
 			}
 
 			var arrayTweets = [];
 			var x = tweets.length;
-			var n = 0;
-
+			var n = startAt;
 			while(n < x) {
 				if (typeof(formatterFunction) !== 'string') {
+					var datetimeText = times[n].getAttribute('datetime');
 					var newDate = new Date(times[n].getAttribute('datetime')
 							.replace(/-/g,'/').replace('T', ' ').split('+')[0]);
-					var dateString = formatterFunction(newDate);
+					var dateString = formatterFunction(newDate, datetimeText);
 					times[n].setAttribute('aria-label', dateString);
 
 					if (tweets[n].innerText) {
@@ -207,6 +294,12 @@ var twitterFetcher = function() {
 				}
 				var op = '';
 				if (parseLinks) {
+					if (targetBlank) {
+						targetLinksToNewWindow(tweets[n]);
+						if (printUser) {
+							targetLinksToNewWindow(authors[n]);
+						}
+					}
 					if (printUser) {
 						op += '<div class="user">' + strip(authors[n].innerHTML) +
 								'</div>';
@@ -238,15 +331,24 @@ var twitterFetcher = function() {
 				}
 				if (showInteractionLinks) {
 					op += '<p class="interact"><a href="https://twitter.com/intent/' +
-							'tweet?in_reply_to=' + tids[n] + '" class="twitter_reply_icon">' +
+							'tweet?in_reply_to=' + tids[n] + '" class="twitter_reply_icon"' + (targetBlank ? ' target="_blank">' : '>') +
 							'Reply</a><a href="https://twitter.com/intent/retweet?tweet_id=' +
-							tids[n] + '" class="twitter_retweet_icon">Retweet</a>' +
+							tids[n] + '" class="twitter_retweet_icon"' + (targetBlank ? ' target="_blank">' : '>') + 'Retweet</a>' +
 							'<a href="https://twitter.com/intent/favorite?tweet_id=' +
-							tids[n] + '" class="twitter_fav_icon">Favorite</a></p>';
+							tids[n] + '" class="twitter_fav_icon"' + (targetBlank ? ' target="_blank">' : '>') + 'Favorite</a></p>';
 				}
+
+				if (showImages && images[n] !== undefined) {
+					op += '<div class="media">' +
+							'<img src="' + extractImageUrl(images[n]) + '" alt="Image from tweet" />' +
+							'</div>';
+				}
+
 				arrayTweets.push(op);
 				n++;
 			}
+
+			// handleTweets(arrayTweets);
 			twitterFetcher.handler(arrayTweets);
 			inProgress = false;
 
@@ -256,7 +358,13 @@ var twitterFetcher = function() {
 			}
 		}
 	};
-}();
+
+	// It must be a global variable because it will be called by JSONP.
+	window.twitterFetcher = twitterFetcher;
+
+	return twitterFetcher;
+}));
+
 
 /*
 * ### HOW TO CREATE A VALID ID TO USE: ###
@@ -274,32 +382,79 @@ var twitterFetcher = function() {
 var twitterConfig;
 
 function initTwitter() {
-	if ($("[data-twitter]").length) {
+	if ( $("[data-twitter]").length ) {
 		$("[data-twitter]").each(function(i) {
 			var el = $(this),
-				domID = el.attr("id"),
-				widgetID = el.data("widget-id"),
-				maxTweets = el.data("max-tweets"),
-				startAt = el.data("start-at");
+				domId = el.attr("id"),
+				widgetId = el.data("widget-id"),
+				startAt = el.data("start-at")
+				maxTweets = el.data("max-tweets");
 
-			if ( typeof domID === "undefined" ) el.attr("id", "twitter-" + i);
+			if ( typeof domId === "undefined" ) {
+				el.attr("id", "widget-twitter-" + i);
 
-			twitterConfig = {
-				domID: el.attr("id"),
-				widgetID: typeof widgetID !== "undefined" ? widgetID : config.twitter.widgetID,
-				maxTweets:  typeof maxTweets !== "undefined" ? maxTweets : config.twitter.maxTweets,
-				startAt:  typeof startAt !== "undefined" ? startAt : config.twitter.startAt,
-				enableLinks: config.twitter.enableLinks,
-				showUser: config.twitter.showUser,
-				showFollow: config.twitter.showFollow,
-				showTime: config.twitter.showTime,
-				showRetweet: config.twitter.showRetweet,
-				showInteraction: config.twitter.showInteractione
-			};
+				twitterConfig = {
+					domId: el.attr("id"),
+					widgetId: typeof widgetId !== "undefined" ? widgetId : config.twitter.widgetId,
+					startAt: typeof startAt !== "undefined" ? startAt : (config.twitter.startAt + config.twitter.maxTweets) * i,
+					maxTweets: typeof maxTweets !== "undefined" ? maxTweets : config.twitter.maxTweets,
+					enableLinks: config.twitter.enableLinks,
+					showUser: config.twitter.showUser,
+					showTime: config.twitter.showTime,
+					showRetweet: config.twitter.showRetweet,
+					showFollow: config.twitter.showFollow,
+					showInteraction: config.twitter.showInteraction
+				};
 
-			twitterFetcher.fetch(twitterConfig);
+				twitterFetcher.fetch(twitterConfig);
+			}
 		});
 
 		if ( config.application.debug ) console.log("Widget :: Twitter");
 	}
+
+	var twitterConfig1 = {
+		domId: "twitter-1",
+		widgetId: "572802782449909760",
+		startAt: config.twitter.startAt,
+		maxTweets: 6,
+		enableLinks: config.twitter.enableLinks,
+		showUser: config.twitter.showUser,
+		showTime: config.twitter.showTime,
+		showRetweet: true,
+		showFollow: config.twitter.showFollow,
+		showInteraction: config.twitter.showInteraction
+	};
+
+	twitterFetcher.fetch(twitterConfig1);
+
+	var twitterConfig2 = {
+		domId: "twitter-2",
+		widgetId: '492660537293938688',
+		startAt: config.twitter.startAt,
+		maxTweets: 9,
+		enableLinks: config.twitter.enableLinks,
+		showUser: config.twitter.showUser,
+		showTime: config.twitter.showTime,
+		showRetweet: config.twitter.showRetweet,
+		showFollow: config.twitter.showFollow,
+		showInteraction: config.twitter.showInteraction
+	};
+
+	twitterFetcher.fetch(twitterConfig2);
+
+	var twitterConfig3 = {
+		domId: "twitter-3",
+		widgetId: "572802782449909760",
+		startAt: 2,
+		maxTweets: 2,
+		enableLinks: config.twitter.enableLinks,
+		showUser: config.twitter.showUser,
+		showTime: config.twitter.showTime,
+		showRetweet: true,
+		showFollow: config.twitter.showFollow,
+		showInteraction: config.twitter.showInteraction
+	};
+
+	twitterFetcher.fetch(twitterConfig3);
 }

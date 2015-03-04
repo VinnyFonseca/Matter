@@ -135,12 +135,13 @@ function initValidation() {
 
 					if ( validArray.indexOf(false) < 0 ) {
 						el.addClass("valid");
-						el.find("[required]").prop("disabled", true);
-						el.find("button[type='submit']").prop("disabled", true);
 						notify("Form submitted successfully.", "success", notificationDelay);
 
 						submitted = true;
 						$("form[data-validation='form']").submit();
+
+						el.find("[required]").prop("disabled", true);
+						el.find("button[type='submit']").prop("disabled", true);
 					} else {
 						el.removeClass("valid");
 						el.find("[required]:not('.valid')").addClass("invalid")

@@ -19,7 +19,7 @@ var config = {
 		pagination: false // bool: Toggle pagination controls and loading of page elements only.
 	},
 	tables: {
-		responsive: true // bool: Converts every row into a separate table on mobiles.
+		responsive: false // bool: Converts every row into a separate table on mobiles.
 	},
 	notification: {
 		tone: "default", // str: "default", "success", "warning", "failure".
@@ -40,14 +40,14 @@ var config = {
 		animation: "slide" // str: "slide", "fade".
 	},
 	twitter: {
-		widgetID: '492660537293938688', // Generated via Twitter.com. See the matterframework.net/widgets..
-		maxTweets: 3, // int: Maximum number of tweets shown at any time.
+		widgetId: '492660537293938688', // Generated via Twitter.com. See the matterframework.net/widgets..
 		startAt: 0, // int: Starting tweet index.
+		maxTweets: 1, // int: Maximum number of tweets shown at any time.
 		enableLinks: true, // bool: Turns URLs and hashtags into links.
 		showUser: true, // bool: Show User's avatar.
-		showFollow: true, // bool: Show Follow button.
 		showTime: true, // bool: Show posted time.
 		showRetweet: false, // bool: Show retweets that you posted.
+		showFollow: true, // bool: Show Follow button.
 		showInteraction: false // bool: Show Reply, Retweet and Favorite.
 	}
 };
