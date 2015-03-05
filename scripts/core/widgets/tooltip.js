@@ -7,67 +7,68 @@ function initTooltips() {
 				tooltipData = el.data("tooltip"),
 				container = $(".tooltip");
 
-			if ( !config.application.touch ) {
-				el
-					.on("mouseover", function(event) {
-						$(this).on("mousemove", function(event) {
-							container.html(tooltipData).addClass("active");
+			el
+				.on("mouseover touchstart", function() {
+					$(this).on("mousemove touchmove", function(event) {
+						var cursorX = event.pageX || e.originalEvent.touches[0].pageX,
+							cursorY = event.pageY || e.originalEvent.touches[0].pageY;
 
-							switch(config.tooltip.position) {
-								case "left":
-									container.css({
-										top: event.pageY - container.outerHeight() - 10,
-										left: event.pageX - container.outerWidth()
-									});
-									break;
+						container.html(tooltipData).addClass("active");
 
-								case "center":
-									container.css({
-										top: event.pageY - container.outerHeight() - 10,
-										left: event.pageX - (container.outerWidth() / 2) - 5
-									});
-									break;
+						switch(config.tooltip.position) {
+							case "left":
+								container.css({
+									top: cursorY - container.outerHeight() - 10,
+									left: cursorX - container.outerWidth()
+								});
+								break;
 
-								case "right":
-									container.css({
-										top: event.pageY - container.outerHeight() - 10,
-										left: event.pageX
-									});
-									break;
+							case "center":
+								container.css({
+									top: cursorY - container.outerHeight() - 10,
+									left: cursorX - (container.outerWidth() / 2) - 5
+								});
+								break;
 
-								default:
-									container.css({
-										top: event.pageY - container.outerHeight() - 10,
-										left: event.pageX - (container.outerWidth() / 2) - 5
-									});
+							case "right":
+								container.css({
+									top: cursorY - container.outerHeight() - 10,
+									left: cursorX
+								});
+								break;
+
+							default:
+								container.css({
+									top: cursorY - container.outerHeight() - 10,
+									left: cursorX - (container.outerWidth() / 2) - 5
+								});
+						}
+
+						var tooltip = {
+							left: container.offset().left,
+							right: container.offset().left + container.outerWidth()
+						};
+						var boundaries = {
+							left: $(".wrapper").offset().left + 20,
+							right: $(".wrapper").offset().left + $(".wrapper").outerWidth() - 20
+						};
+
+						if ( config.tooltip.bound ) {
+							if ( tooltip.left <= boundaries.left ) {
+								container.css({ left: boundaries.left });
 							}
-
-							var tooltip = {
-								left: container.offset().left,
-								right: container.offset().left + container.outerWidth()
-							};
-							var boundaries = {
-								left: $(".wrapper").offset().left + 20,
-								right: $(".wrapper").offset().left + $(".wrapper").outerWidth() - 20
-							};
-
-							if ( config.tooltip.bound ) {
-								if ( tooltip.left <= boundaries.left ) {
-									container.css({ left: boundaries.left });
-								}
-								if ( tooltip.right >= boundaries.right ) {
-									container.css({ left: boundaries.right - container.outerWidth() });
-								}
+							if ( tooltip.right >= boundaries.right ) {
+								container.css({ left: boundaries.right - container.outerWidth() });
 							}
-						});
-					})
-					.on("mouseout", function() {
-						container.removeClass("active").css({
-							left: -200,
-							top: -200
-						});
+						}
 					});
-			}
+				})
+				.on("mouseout touchend", function() {
+					container.removeClass("active").css({
+						left: -200,
+						top: -200
+					});
+				});
 		});
 
 		if ( config.application.debug ) console.log("Widget :: Tooltips");

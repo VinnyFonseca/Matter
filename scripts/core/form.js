@@ -5,7 +5,9 @@ function buildDropdowns(i) {
 		option = el.find("option").not(".placeholder"),
 		selected = el.find("option:selected"),
 		wrapper = '<div class="dropdown-' + i + ' dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
-		arrowEl = '<div class="dropdown-arrow valign-middle"><span>&#9660;</span></div>',
+		arrowEl =  '<div class="dropdown-arrow valign-middle">\
+						<img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-down.png\'">\
+					</div>',
 		currentEl = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>',
 		dropdownEl = '<div class="dropdown"></div>';
 
@@ -23,6 +25,8 @@ function buildDropdowns(i) {
 	dropdown.find(".dropdown-arrow").remove();
 	dropdown.find(".dropdown-current").remove();
 	$(".dropdown-" + i).prepend(dropdownEl).prepend(arrowEl).prepend(currentEl);
+
+	initSVGs();
 
 	option.each(function() {
 		var option = $(this),

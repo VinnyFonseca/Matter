@@ -1,6 +1,6 @@
 var config = {
 	application: {
-		touch: Modernizr.touch, // bool: Modernizr check returns true or false. Beware of touch laptops.
+		touch: Modernizr.touch && !device.desktop(), // bool: Modernizr check returns true or false.
 		debug: true // bool: use if (debug) console.log(); instead of console.log; for permanent debugging messages.
 	},
 	accessibility: {
@@ -35,7 +35,7 @@ var config = {
 		slideshow: true, // bool: Automatic slide change.
 		duration: 500, // int: miliseconds for slide change.
 		interval: 5000, // int: miliseconds for slide interval.
-		threshold: 0, // int: px distance on X axis from touchstart to current touch position.
+		threshold: 10, // int: px distance on X axis from touchstart to current touch position.
 		trigger: $(".wrapper").width() / 6, // int: px distance on drag to activate slide change.
 		animation: "slide" // str: "slide", "fade".
 	},

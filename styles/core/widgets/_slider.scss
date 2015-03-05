@@ -9,13 +9,13 @@
 
 	&:hover {
 		.slider-arrow {
-			@include opacity(0.75);
+			@include opacity(1);
 
 			&:hover {
-				@include opacity(1);
+				background: rgba(255, 255, 255, 0.8);
 			}
 			&:active {
-				@include opacity(0.75);
+				background: rgba(255, 255, 255, 1);
 			}
 
 			&.slider-arrow-prev {
@@ -88,42 +88,41 @@ $arrowDiameter: 48px;
 	display: none;
 	position: absolute;
 	margin-top: -($arrowDiameter / 2);
-	padding: 15px 0;
+	padding: 0;
 	width: $arrowDiameter;
 	height: $arrowDiameter;
 	top: 50%;
-	color: $brand1;
-	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-	font-size: $arrowDiameter - 8;
-	font-weight: bold;
 	text-align: center;
-	line-height: 1;
-	background: rgba(255, 255, 255, 0.8);
+	background: rgba(255, 255, 255, 0.5);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
 	z-index: 50;
 	vertical-align: middle;
 	@include opacity(0);
 	@include user-select(none);
-	@include transition-property(margin, opacity);
+	@include transition-property(margin, background, opacity);
 	@include transition-duration($animDuration);
 	@include transition-timing-function($animEasing);
 
 	&.slider-arrow-prev {
 		float: left;
-		left: 0;
 		margin-left: -5%;
+		left: 0;
+		border-top-right-radius: $radius;
+		border-bottom-right-radius: $radius;
 	}
 	&.slider-arrow-next {
 		float: right;
-		right: 0;
 		margin-right: -5%;
+		right: 0;
+		border-top-left-radius: $radius;
+		border-bottom-left-radius: $radius;
 	}
 
-	span {
-		display: block;
-		position: relative;
-		margin-top: -15px;
-		@include opacity(0.5);
+	.icon {
+		width: 22px;
+		height: 22px;
+		@include svgColor($brand1);
 	}
 }
 

@@ -756,11 +756,9 @@ optgroup {
 		background: $brand1;
 		z-index: 50;
 
-		span {
-			position: relative;
-			@include font-size($fontSize / 1.2);
-			top: 1px;
-			left: 1px;
+		.icon {
+			width: 14px;
+			height: 14px;
 		}
 	}
 
