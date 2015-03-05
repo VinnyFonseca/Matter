@@ -38,27 +38,18 @@
 			<input type="text" name="date" placeholder="dd/mm/yyyy" data-calendar="true" data-validation="date" required>
 
 			<label>Password</label>
-			<div class="password-wrapper">
-				<input type="password" name="password" placeholder="No minimum, must be strong" data-validation="password" required>
-				<div class="password-meter-mask">
-					<div class="password-meter"></div>
-				</div>
-			</div>
+			<input type="password" name="password" placeholder="No minimum, must be strong" data-validation="password" required>
 
 			<label>Password Matching</label>
 			<div class="input-group block-reset">
-				<div class="password-wrapper">
-					<input type="password" name="password-match" placeholder="Minimum rating: 30%" data-validation="password" required>
-					<div class="password-meter-mask">
-						<div class="password-meter"></div>
-					</div>
-				</div>
+				<input type="password" name="password-match" placeholder="Minimum rating: 30%" data-validation="password" required>
 				<div class="input-addon">repeat</div>
 				<input type="password" name="password-match" placeholder="Repeat password" data-validation="password-match" required>
 			</div>
 
 			<button class="primary" type="submit">Validate and Send</button>
 			<button type="reset">Reset</button>
+
 			<img class="form-loader" src="img/loader.gif" height="32" width="32" alt="">
 			<img class="svg icon icon-tick form-done" src="img/icons/icon-tick.svg" onerror="this.onerror=null;this.src='img/icons/icon-tick.png'">
 		</form>

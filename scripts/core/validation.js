@@ -104,6 +104,7 @@ function initValidation() {
 						submitted = true;
 						el.addClass("valid");
 
+						el.find("[data-validation='date']").datepicker("remove");
 						el.find("[required]").prop("readonly", true);
 						el.find("button").prop("readonly", true);
 
@@ -131,26 +132,28 @@ function initValidation() {
 		$("form[data-validation]").each(function() {
 			var form = $(this);
 
-			form.find("[required]")
-				.on("keyup", function() {
-					$(this).removeClass("valid").removeClass("invalid");
-				})
-				.on("focus", function() {
-					var el = $(this),
-						type = el.attr("data-validation"),
-						value = el.val();
-
-					if ( $(this).hasClass("invalid") ) validate(el, type, value);
-				}).on("blur", function() {
-					var el = $(this);
-
-					setTimeout(function() {
-						var type = el.attr("data-validation"),
+			form.find("[required]").each(function() {
+				$(this).prev("label").append(" *");
+				$(this).on("keyup", function() {
+						$(this).removeClass("valid").removeClass("invalid");
+					})
+					.on("focus", function() {
+						var el = $(this),
+							type = el.attr("data-validation"),
 							value = el.val();
 
-						validate(el, type, value);
-					}, 200);
-				});
+						if ( $(this).hasClass("invalid") ) validate(el, type, value);
+					}).on("blur", function() {
+						var el = $(this);
+
+						setTimeout(function() {
+							var type = el.attr("data-validation"),
+								value = el.val();
+
+							validate(el, type, value);
+						}, 200);
+					});
+			});
 
 			form.on("submit", function(event) {
 				form.find("[required]").each(function() {

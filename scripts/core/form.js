@@ -117,7 +117,7 @@ function initDropdowns() {
 
 
 
-function loadFileInputs() {
+function InitFileInputs() {
 	if ( $(".file-wrapper").length ) {
 		$(".file-wrapper:not('.last')").each(function() {
 			var el = $(this),
@@ -193,7 +193,24 @@ function loadFileInputs() {
 
 
 
-function loadProgressBar() {
+function initPasswords() {
+	if ( $("input[type='password']").length ) {
+		var wrapper = '<div class="password-wrapper"></div>',
+			meter = '<div class="password-meter-mask"><div class="password-meter"></div></div>';
+
+		$("input[type='password']").each(function() {
+			var el = $(this);
+
+			el.wrap(wrapper);
+			if ( el.data("validation") !== "password-match" ) $(meter).insertAfter(el);
+		});
+	}
+}
+
+
+
+
+function initProgressBar() {
 	if ( $("progress").length ) {
 		function triggerProgress(progress) {
 			var el = $("progress"),

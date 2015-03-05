@@ -403,10 +403,11 @@ function initFramework() {
 
 	// Forms Init
 
+	initPasswords();
 	initDropdowns();
-	loadFileInputs(config.forms.uploadlimit);
+	InitFileInputs(config.forms.uploadlimit);
 	initValidation();
-	loadProgressBar();
+	initProgressBar();
 
 	if ( config.application.debug ) console.log("Done •• Matter");
 }
