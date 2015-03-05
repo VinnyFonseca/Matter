@@ -14,7 +14,7 @@
 
 		<p class="emphasis">Note: This section is currently under heavy development.</p>
 
-		<form action="#" novalidate data-validation="form">
+		<form action="#" novalidate data-validation="true">
 			<input type="hidden" value="42">
 
 			<a href="#" class="anchor" id="input"></a>
@@ -29,13 +29,13 @@
 			<input type="text" name="text" placeholder="First and Last Name" data-validation="text" required>
 
 			<label>Number</label>
-			<input type="text" name="text" placeholder="Numbers only" data-validation="number" required>
+			<input type="text" name="number" placeholder="Numbers only" data-validation="number" required>
 
 			<label>Email</label>
 			<input type="email" name="email" placeholder="name@domain.com" data-validation="email" required>
 
 			<label>Date</label>
-			<input type="text" placeholder="dd/mm/yyyy" data-calendar="true" data-validation="date" required>
+			<input type="text" name="date" placeholder="dd/mm/yyyy" data-calendar="true" data-validation="date" required>
 
 			<label>Password</label>
 			<div class="password-wrapper">
@@ -59,6 +59,8 @@
 
 			<button class="primary" type="submit">Validate and Send</button>
 			<button type="reset">Reset</button>
+			<img class="form-loader" src="img/loader.gif" height="32" width="32" alt="">
+			<img class="svg icon icon-tick form-done" src="img/icons/icon-tick.svg" onerror="this.onerror=null;this.src='img/icons/icon-tick.png'">
 		</form>
 
 
@@ -87,6 +89,9 @@
 
 		<label>Invalid</label>
 		<input type="text" name="text" placeholder="Invalid input" class="invalid" required>
+
+		<label>Readonly</label>
+		<input type="text" name="text" placeholder="Readonly input" readonly>
 
 		<label>Disabled</label>
 		<input type="text" name="text" placeholder="Disabled input" disabled>

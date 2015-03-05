@@ -17,17 +17,17 @@
 }
 
 @mixin svgColor($color) {
-	fill: $color !important;
-	path: $color !important;
-	line: $color !important;
+	fill: $color;
+	path: $color;
+	line: $color;
 	stroke: none !important;
 
 	path,
 	polygon,
 	rect {
-		fill: $color !important;
-		path: $color !important;
-		line: $color !important;
+		fill: $color;
+		path: $color;
+		line: $color;
 		stroke: none !important;
 	}
 }

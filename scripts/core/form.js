@@ -204,7 +204,7 @@ function loadProgressBar() {
 			label.removeClass("active").width(progress + "%").attr("data-progress", progress);
 			el.removeClass("valid").attr("value", progress);
 
-			if ( progress >= 10 ) label.addClass("active");
+			if ( progress >= 8 ) label.addClass("active");
 			if ( progress >= 100 ) el.addClass("valid");
 		}
 

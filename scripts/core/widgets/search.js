@@ -16,7 +16,7 @@ function initSearch() {
 
 				resultsControlsElement = '<div class="search-controls"></div>',
 				resultsCountElement = '<div class="search-count"></div>',
-				resultsViewsElement =  '<div class="search-views">\
+				resultsViewsElement = '<div class="search-views">\
 											<div class="search-view" data-view="grid">\
 												<img class="svg icon icon-grid" src="img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-grid.png\'">\
 											</div>\
@@ -29,15 +29,16 @@ function initSearch() {
 				resultsElement = '<div class="search-results loading ' + config.search.display + '" data-view="' + config.search.view + '"></div>',
 				loadElement = '<button class="primary center search-load">Load More</button>';
 
-			el.append(tagcloudElement)
-			  .append(resultsControlsElement)
-			  .append(resultsElement)
-			  .append(loadElement);
+			$(".search-container").append(resultsElement);
+			var results = $(".search-container .search-results");
 
-			var tagcloud = el.find(".tagcloud"),
-				controls = el.find(".search-controls"),
-				results = el.find(".search-results")
-				load = el.find(".search-load");
+			$(tagcloudElement).insertBefore(results);
+			$(resultsControlsElement).insertBefore(results);
+			$(loadElement).insertAfter(results);
+
+			var tagcloud = $(".tagcloud"),
+				controls = $(".search-controls"),
+				load = $(".search-load");
 
 			controls
 				.append(resultsViewsElement)
@@ -379,19 +380,19 @@ function initSearch() {
 									a = z.split("T"),
 									d = a[0].split("-"),
 									t = a[1].split(":"),
-									date = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
+									date = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]),
 
-									hour = date.getHours();
-									hours = hour < 10 ? "0" + hour : hour;
-									minute = date.getMinutes();
-									minutes = minute < 10 ? "0" + minute : minute;
-									day = date.getDate();
-									days = day < 10 ? "0" + day : day;
-									month = date.getMonth();
-									months = (month + 1) < 10 ? "0" + (month + 1) : (month + 1);
-									year = date.getFullYear();
-									years = year < 10 ? "0" + year : year;
-									fulldate = hours + ":" + minutes + " @ " + days + "/" + months + "/" + years;
+									hour = date.getHours(),
+									hours = hour < 10 ? "0" + hour : hour,
+									minute = date.getMinutes(),
+									minutes = minute < 10 ? "0" + minute : minute,
+									day = date.getDate(),
+									days = day < 10 ? "0" + day : day,
+									month = date.getMonth(),
+									months = (month + 1) < 10 ? "0" + (month + 1) : (month + 1),
+									year = date.getFullYear(),
+									years = year < 10 ? "0" + year : year,
+									fulldate = hours + ":" + minutes + " @ " + days + "/" + months + "/" + years,
 
 									url = object.Url,
 									summary = object.Summary,

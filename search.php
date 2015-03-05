@@ -50,6 +50,8 @@
 					<select class="keep" data-search-parameter="Tags"></select>
 				</div>
 			</div>
+
+			<div class="search-container"></div>
 		</div>
 
 		<p>

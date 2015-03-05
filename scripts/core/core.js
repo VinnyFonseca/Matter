@@ -181,6 +181,7 @@ function initSVGs() {
 				var svg = $(data).find('svg');
 				if(typeof imgID !== 'undefined') svg = svg.attr('id', imgID);
 				if(typeof imgClass !== 'undefined') svg = svg.attr('class', imgClass + ' replaced-svg');
+				svg.find("*").removeAttr("style");
 				svg = svg.removeAttr('xmlns:a');
 				img.replaceWith(svg);
 			}, 'xml');

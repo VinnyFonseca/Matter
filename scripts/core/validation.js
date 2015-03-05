@@ -1,7 +1,5 @@
 function initValidation() {
 	if ( config.forms.validation && $("[data-validation]").length ) {
-		var submitted = false;
-
 
 		// Password Check
 
@@ -59,73 +57,42 @@ function initValidation() {
 
 
 		function validate(el, type, value) {
-			var notificationTone = "failure",
-				notificationDelay = 3000;
-
 			if ( config.application.debug ) console.log("Validation :: " + type);
+
+			el.removeClass("invalid").removeClass("valid");
 
 			switch(type) {
 				case "text":
-					if ( value !== "" ) {
-						el.removeClass("invalid").addClass("valid");
-					} else {
-						el.removeClass("valid").addClass("invalid");
-						// notify("This field cannot be left empty.", notificationTone, notificationDelay);
-					}
+					value !== "" ? el.addClass("valid") : el.addClass("invalid");
 					break;
 
 				case "number":
 					var check = /\D+/;
-					if ( value !== "" && value.length == value.replace(check, '').length ) {
-						el.removeClass("invalid").addClass("valid");
-					} else {
-						el.removeClass("valid").addClass("invalid");
-						// notify("This field can only have numbers.", notificationTone, notificationDelay);
-					}
+					value !== "" && value.length == value.replace(check, '').length ? el.addClass("valid") : el.addClass("invalid");
 					break;
 
 				case "email":
 					var check = /^\S+@\S+\.\S+$/;
-					if ( value !== "" && check.test(value) ) {
-						el.removeClass("invalid").addClass("valid");
-					} else {
-						el.removeClass("valid").addClass("invalid");
-						// notify("Your email is invalid.", notificationTone, notificationDelay);
-					}
+					value !== "" && check.test(value) ? el.addClass("valid") : el.addClass("invalid");
 					break;
 
 				case "password":
-					if ( scorePassword(value) >= 30 ) {
-						el.removeClass("invalid").addClass("valid");
-					} else {
-						el.removeClass("valid").addClass("invalid");
-						// notify("Your password is not strong enough.", notificationTone, notificationDelay);
-					}
+					scorePassword(value) >= 30 ? el.addClass("valid") : el.addClass("invalid");
 					break;
 
 				case "password-match":
 					var mirror = $("input[name='password-match']").eq(0);
 					var password = mirror.val();
 
-					if ( mirror.hasClass("valid") && value === password ) {
-						el.removeClass("invalid").addClass("valid");
-					} else {
-						el.removeClass("valid").addClass("invalid");
-						// notify("Your passwords must match.", notificationTone, notificationDelay);
-					}
+					mirror.hasClass("valid") && value === password ? el.addClass("valid") : el.addClass("invalid");
 					break;
 
 				case "date":
 					var check = /^\d{2}\/\d{2}\/\d{4}$/;
-					if ( value !== "" && check.test(value) ) {
-						el.removeClass("invalid").addClass("valid");
-					} else {
-						el.removeClass("valid").addClass("invalid");
-						// notify("The date you entered is not valid.", notificationTone, notificationDelay);
-					}
+					value !== "" && check.test(value) ? el.addClass("valid") : el.addClass("invalid");
 					break;
 
-				case "form":
+				default:
 					var validArray = [];
 					var progress = 0;
 
@@ -134,56 +101,77 @@ function initValidation() {
 					});
 
 					if ( validArray.indexOf(false) < 0 ) {
-						el.addClass("valid");
-						notify("Form submitted successfully.", "success", notificationDelay);
-
 						submitted = true;
-						$("form[data-validation='form']").submit();
+						el.addClass("valid");
 
-						el.find("[required]").prop("disabled", true);
-						el.find("button[type='submit']").prop("disabled", true);
+						el.find("[required]").prop("readonly", true);
+						el.find("button").prop("readonly", true);
+
+						el.find(".form-loader").hide();
+						el.find(".form-done").show();
+
+						// $("form[data-validation]").submit();
+						notify("Form submitted successfully.", "success", 3000);
 					} else {
 						el.removeClass("valid");
-						el.find("[required]:not('.valid')").addClass("invalid")
-						notify("Form not submitted. Please review.", notificationTone, notificationDelay);
+
+						el.find("[required]:not('.valid')").addClass("invalid");
+
+						el.find(".form-loader").hide();
+						el.find("button").show();
+
+						notify("Form not submitted. Please review.", "failure", 3000);
 					}
-					break;
 			}
 		}
 
-		$("[required]")
-			.on("keyup", function() {
-				$(this).removeClass("valid").removeClass("invalid");
-			})
-			.on("focus", function() {
-				var el = $(this),
-					type = el.attr("data-validation"),
-					value = el.val();
 
-				if ( $(this).hasClass("invalid") ) validate(el, type, value);
-			}).on("blur", function() {
-				var el = $(this);
+		var submitted = false;
 
-				setTimeout(function() {
-					var type = el.attr("data-validation"),
+		$("form[data-validation]").each(function() {
+			var form = $(this);
+
+			form.find("[required]")
+				.on("keyup", function() {
+					$(this).removeClass("valid").removeClass("invalid");
+				})
+				.on("focus", function() {
+					var el = $(this),
+						type = el.attr("data-validation"),
+						value = el.val();
+
+					if ( $(this).hasClass("invalid") ) validate(el, type, value);
+				}).on("blur", function() {
+					var el = $(this);
+
+					setTimeout(function() {
+						var type = el.attr("data-validation"),
+							value = el.val();
+
+						validate(el, type, value);
+					}, 200);
+				});
+
+			form.on("submit", function(event) {
+				form.find("[required]").each(function() {
+					var el = $(this),
+						type = el.attr("data-validation"),
 						value = el.val();
 
 					validate(el, type, value);
-				}, 200);
+				});
+
+				if ( !submitted ) {
+					var type = form.attr("data-validation"),
+						value = "";
+
+					form.find("button").hide();
+					form.find(".form-loader").show();
+
+					event.preventDefault();
+					validate(form, type, value);
+				}
 			});
-
-
-
-
-		$("form[data-validation='form']").on("submit", function() {
-			var el = $(this),
-				type = el.attr("data-validation"),
-				value = "";
-
-			if ( !submitted ) {
-				validate(el, type, value);
-				return false;
-			}
 		});
 
 		if ( config.application.debug ) console.log("Form :: Validation");

@@ -1,0 +1,122 @@
+// Autocomplete
+
+$itemHeight: 44;
+$itemQty: 7;
+
+.autocomplete-wrapper {
+	display: block;
+	position: relative;
+	color: $c2;
+	margin: 0;
+	margin-top: 2px;
+	margin-bottom: $spacing / 2;
+	padding: 0;
+	width: 100%;
+	font-family: $bodyFont;
+	@include font-size($fontSize);
+	text-align: left;
+	vertical-align: top;
+	cursor: pointer;
+	@include user-select(none);
+	@include background-clip(padding-box);
+	outline: 0;
+
+	&.active {
+		ul {
+			@include opacity(1);
+			@include transform(translateY(0));
+			visibility: visible;
+			z-index: 9999;
+		}
+		.divider {
+			@include opacity(1);
+			@include transform(translateX(0));
+			visibility: visible;
+			z-index: 9999;
+		}
+	}
+
+	ul {
+		display: block;
+		position: absolute;
+		margin: 0;
+		padding: 0;
+		width: 99%;
+		max-height: ($itemHeight * $itemQty) + px;
+		top: 100%;
+		left: 0.5%;
+		list-style: none;
+		@include box-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+		overflow: auto;
+		overflow-x: visible;
+		visibility: hidden;
+		z-index: -1;
+		@include opacity(0);
+		@include transform(translateY(-10px));
+		@include transition-property(opacity, transform);
+		@include transition-duration($animDuration);
+		@include transition-timing-function($animEasing);
+
+		li {
+			display: none;
+			position: relative;
+			margin: 0;
+			margin-top: -1px;
+			padding: 9px 12px;
+			border: 1px solid $ce;
+			background: $cf;
+
+			&:hover {
+				color: $cf;
+				background: $brand1;
+
+				* {
+					color: $cf !important;
+				}
+			}
+
+			&:active,
+			&.active {
+				color: $cf;
+				background: $brand2;
+
+				* {
+					color: $cf !important;
+				}
+			}
+
+			&.selected {
+				padding-left: 24px;
+				cursor: pointer;
+			}
+
+			&.selected {
+				display: block;
+			}
+		}
+	}
+
+	.divider {
+		display: block;
+		position: absolute;
+		margin: 0;
+		margin-top: -1px;
+		padding: 9px 12px;
+		top: 100%;
+		right: 99.5%;
+		color: $fontColor !important;
+		font-weight: bold;
+		background-color: $ce;
+		border: 1px solid $ce;
+		border-top-left-radius: $radius;
+		border-bottom-left-radius: $radius;
+		visibility: hidden;
+		z-index: -1;
+		cursor: default;
+		@include opacity(0);
+		@include transform(translateX(10px));
+		@include transition-property(opacity, transform);
+		@include transition-duration($animDuration);
+		@include transition-timing-function($animEasing);
+	}
+}

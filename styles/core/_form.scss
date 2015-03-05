@@ -9,6 +9,18 @@
 	@include font-size($fontSize / 1.1);
 }
 
+.form-loader,
+.icon.form-done {
+	display: none;
+	position: relative;
+	margin: 2px 0;
+	padding: 5px;
+	width: 42px;
+	height: 42px;
+	@include svgColor($brand1);
+	vertical-align: middle;
+}
+
 
 fieldset {
 	display: block;
@@ -509,15 +521,10 @@ button {
 }
 
 
-.button[disabled],
-button[disabled],
-input[disabled],
-select[disabled],
-select[disabled] option,
-select[disabled] optgroup,
-textarea[disabled] {
+[readonly],
+[disabled] {
 	color: $c8 !important;
-	border-color: $cd !important;
+	border-color: $ca !important;
 	border-style: dotted !important;
 	background-color: $ce !important;
 	box-shadow: none !important;
@@ -526,20 +533,20 @@ textarea[disabled] {
 	@include user-select(none);
 
 	&::-webkit-input-placeholder {
-		color: $cd;
+		color: $ca;
 	}
 	&::-moz-placeholder {
-		color: $cd;
+		color: $ca;
 	}
 	&:-moz-placeholder {
-		color: $cd;
+		color: $ca;
 	}
 	&:-ms-input-placeholder {
-		color: $cd;
+		color: $ca;
 	}
 	&.placeholder-text,
 	&.placeholder_text {
-		color: $cd;
+		color: $ca;
 	}
 }
 
@@ -907,131 +914,6 @@ optgroup {
 }
 
 
-// Autocomplete
-
-$itemHeight: 44;
-$itemQty: 7;
-
-.autocomplete-wrapper {
-	display: block;
-	position: relative;
-	color: $c2;
-	margin: 0;
-	margin-top: 2px;
-	margin-bottom: $spacing / 2;
-	padding: 0;
-	width: 100%;
-	font-family: $bodyFont;
-	@include font-size($fontSize);
-	text-align: left;
-	vertical-align: top;
-	cursor: pointer;
-	@include user-select(none);
-	@include background-clip(padding-box);
-	outline: 0;
-
-	&.active {
-		ul {
-			@include opacity(1);
-			@include transform(translateY(0));
-			visibility: visible;
-			z-index: 9999;
-		}
-		.divider {
-			@include opacity(1);
-			@include transform(translateX(0));
-			visibility: visible;
-			z-index: 9999;
-		}
-	}
-
-	ul {
-		display: block;
-		position: absolute;
-		margin: 0;
-		padding: 0;
-		width: 99%;
-		max-height: ($itemHeight * $itemQty) + px;
-		top: 100%;
-		left: 0.5%;
-		list-style: none;
-		@include box-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
-		overflow: auto;
-		overflow-x: visible;
-		visibility: hidden;
-		z-index: -1;
-		@include opacity(0);
-		@include transform(translateY(-10px));
-		@include transition-property(opacity, transform);
-		@include transition-duration($animDuration);
-		@include transition-timing-function($animEasing);
-
-		li {
-			display: none;
-			position: relative;
-			margin: 0;
-			margin-top: -1px;
-			padding: 9px 12px;
-			border: 1px solid $ce;
-			background: $cf;
-
-			&:hover {
-				color: $cf;
-				background: $brand1;
-
-				* {
-					color: $cf !important;
-				}
-			}
-
-			&:active,
-			&.active {
-				color: $cf;
-				background: $brand2;
-
-				* {
-					color: $cf !important;
-				}
-			}
-
-			&.selected {
-				padding-left: 24px;
-				cursor: pointer;
-			}
-
-			&.selected {
-				display: block;
-			}
-		}
-	}
-
-	.divider {
-		display: block;
-		position: absolute;
-		margin: 0;
-		margin-top: -1px;
-		padding: 9px 12px;
-		top: 100%;
-		right: 99.5%;
-		color: $fontColor !important;
-		font-weight: bold;
-		background-color: $ce;
-		border: 1px solid $ce;
-		border-top-left-radius: $radius;
-		border-bottom-left-radius: $radius;
-		visibility: hidden;
-		z-index: -1;
-		cursor: default;
-		@include opacity(0);
-		@include transform(translateX(10px));
-		@include transition-property(opacity, transform);
-		@include transition-duration($animDuration);
-		@include transition-timing-function($animEasing);
-	}
-}
-
-
-
 // Validation
 
 .input-validation-error {
@@ -1044,51 +926,49 @@ $itemQty: 7;
 	@include font-size($fontSize / 1.1);
 }
 
-form * {
-	&[required] {
-		&.valid {
+[required] {
+	&.valid {
+		color: $validationSuccessFontColor;
+		border-color: $validationSuccessBorderColor;
+		background: $validationSuccessBgColor;
+
+		&::-webkit-input-placeholder {
 			color: $validationSuccessFontColor;
-			border-color: $validationSuccessBorderColor;
-			background: $validationSuccessBgColor;
-
-			&::-webkit-input-placeholder {
-				color: $validationSuccessFontColor;
-			}
-			&::-moz-placeholder {
-				color: $validationSuccessFontColor;
-			}
-			&:-moz-placeholder {
-				color: $validationSuccessFontColor;
-			}
-			&:-ms-input-placeholder {
-				color: $validationSuccessFontColor;
-			}
-			&.placeholder-text,
-			&.placeholder_text {
-				color: $validationSuccessFontColor;
-			}
 		}
-		&.invalid {
-			color: $validationFailureFontColor;
-			border-color: $validationFailureBorderColor;
-			background: $validationFailureBgColor;
+		&::-moz-placeholder {
+			color: $validationSuccessFontColor;
+		}
+		&:-moz-placeholder {
+			color: $validationSuccessFontColor;
+		}
+		&:-ms-input-placeholder {
+			color: $validationSuccessFontColor;
+		}
+		&.placeholder-text,
+		&.placeholder_text {
+			color: $validationSuccessFontColor;
+		}
+	}
+	&.invalid {
+		color: $validationFailureFontColor;
+		border-color: $validationFailureBorderColor;
+		background: $validationFailureBgColor;
 
-			&::-webkit-input-placeholder {
-				color: $validationFailureFontColor;
-			}
-			&::-moz-placeholder {
-				color: $validationFailureFontColor;
-			}
-			&:-moz-placeholder {
-				color: $validationFailureFontColor;
-			}
-			&:-ms-input-placeholder {
-				color: $validationFailureFontColor;
-			}
-			&.placeholder-text,
-			&.placeholder_text {
-				color: $validationFailureFontColor;
-			}
+		&::-webkit-input-placeholder {
+			color: $validationFailureFontColor;
+		}
+		&::-moz-placeholder {
+			color: $validationFailureFontColor;
+		}
+		&:-moz-placeholder {
+			color: $validationFailureFontColor;
+		}
+		&:-ms-input-placeholder {
+			color: $validationFailureFontColor;
+		}
+		&.placeholder-text,
+		&.placeholder_text {
+			color: $validationFailureFontColor;
 		}
 	}
 }
@@ -1230,7 +1110,7 @@ label[data-progress] {
 		position: absolute;
 		padding: 2px 6px;
 		top: 46px;
-		right: 40px;
+		right: 36px;
 		@include font-size($fontSize / 1.15);
 		font-weight: bold;
 		color: $brand1;
