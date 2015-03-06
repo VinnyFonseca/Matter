@@ -31,18 +31,19 @@
 			<label>Number</label>
 			<input type="text" name="number" placeholder="Numbers only" data-validation="number" required>
 
-			<label>Email</label>
-			<input type="email" name="email" placeholder="name@domain.com" data-validation="email" required>
+			<label>Email w/ Confirmation</label>
+			<div class="input-group block-reset">
+				<input type="email" name="email" placeholder="Email" data-validation="email" required>
+				<div class="input-addon">repeat</div>
+				<input type="email" name="email-match" placeholder="Repeat email" data-validation="email-match" required>
+			</div>
 
 			<label>Date</label>
 			<input type="text" name="date" placeholder="dd/mm/yyyy" data-calendar="true" data-validation="date" required>
 
-			<label>Password</label>
-			<input type="password" name="password" placeholder="No minimum, must be strong" data-validation="password" required>
-
-			<label>Password Matching</label>
+			<label>Password w/ Confirmation</label>
 			<div class="input-group block-reset">
-				<input type="password" name="password-match" placeholder="Minimum rating: 30%" data-validation="password" required>
+				<input type="password" name="password" placeholder="Minimum rating: 30%" data-validation="password" required>
 				<div class="input-addon">repeat</div>
 				<input type="password" name="password-match" placeholder="Repeat password" data-validation="password-match" required>
 			</div>

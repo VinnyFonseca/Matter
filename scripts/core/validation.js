@@ -1,5 +1,15 @@
 function initValidation() {
 	if ( config.forms.validation && $("[data-validation]").length ) {
+		$.fn.extend({
+			prevFind: function (selector) {
+				var prev = this.prev(selector);
+				if (prev.length) return prev;
+				prev = this.prev();
+				if (prev.length) return prev.prevFind(selector);
+				return prev;
+			}
+		});
+
 
 		// Password Check
 
@@ -77,10 +87,13 @@ function initValidation() {
 					break;
 
 				case "email-match":
-					var mirror = $("input[name='email-match']").eq(0);
-					var password = mirror.val();
+					var type = el.attr("type");
+					var mirror = el.prevFind("input[type='" + type + "']");
+					var email = mirror.val();
 
-					mirror.hasClass("valid") && value === password ? el.addClass("valid") : el.addClass("invalid");
+					console.log(mirror, email)
+
+					mirror.hasClass("valid") && value === email ? el.addClass("valid") : el.addClass("invalid");
 					break;
 
 				case "password":
@@ -88,7 +101,8 @@ function initValidation() {
 					break;
 
 				case "password-match":
-					var mirror = $("input[name='password-match']").eq(0);
+					var type = el.attr("type");
+					var mirror = el.prevFind("input[type='" + type + "']");
 					var password = mirror.val();
 
 					mirror.hasClass("valid") && value === password ? el.addClass("valid") : el.addClass("invalid");
