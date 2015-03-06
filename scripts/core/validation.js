@@ -76,6 +76,13 @@ function initValidation() {
 					value !== "" && check.test(value) ? el.addClass("valid") : el.addClass("invalid");
 					break;
 
+				case "email-match":
+					var mirror = $("input[name='email-match']").eq(0);
+					var password = mirror.val();
+
+					mirror.hasClass("valid") && value === password ? el.addClass("valid") : el.addClass("invalid");
+					break;
+
 				case "password":
 					scorePassword(value) >= 30 ? el.addClass("valid") : el.addClass("invalid");
 					break;

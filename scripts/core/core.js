@@ -405,7 +405,7 @@ function initFramework() {
 
 	initPasswords();
 	initDropdowns();
-	InitFileInputs(config.forms.uploadlimit);
+	initFileInputs(config.forms.uploadlimit);
 	initValidation();
 	initProgressBar();
 

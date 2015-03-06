@@ -121,7 +121,7 @@ function initDropdowns() {
 
 
 
-function InitFileInputs() {
+function initFileInputs() {
 	if ( $(".file-wrapper").length ) {
 		$(".file-wrapper:not('.last')").each(function() {
 			var el = $(this),
