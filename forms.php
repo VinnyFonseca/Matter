@@ -35,7 +35,7 @@
 			<div class="input-group block-reset">
 				<input type="email" name="email" placeholder="Email" data-validation="email" required>
 				<div class="input-addon">repeat</div>
-				<input type="email" name="email-match" placeholder="Repeat email" data-validation="email-match" required>
+				<input type="email" name="email-match" placeholder="Repeat email" data-validation="match" required>
 			</div>
 
 			<label>Date</label>
@@ -45,7 +45,7 @@
 			<div class="input-group block-reset">
 				<input type="password" name="password" placeholder="Minimum rating: 30%" data-validation="password" required>
 				<div class="input-addon">repeat</div>
-				<input type="password" name="password-match" placeholder="Repeat password" data-validation="password-match" required>
+				<input type="password" name="password-match" placeholder="Repeat password" data-validation="match" required>
 			</div>
 
 			<button class="primary" type="submit">Validate and Send</button>

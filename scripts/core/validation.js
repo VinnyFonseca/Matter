@@ -1,15 +1,5 @@
 function initValidation() {
 	if ( config.forms.validation && $("[data-validation]").length ) {
-		$.fn.extend({
-			prevFind: function (selector) {
-				var prev = this.prev(selector);
-				if (prev.length) return prev;
-				prev = this.prev();
-				if (prev.length) return prev.prevFind(selector);
-				return prev;
-			}
-		});
-
 
 		// Password Check
 
@@ -81,37 +71,30 @@ function initValidation() {
 					value !== "" && value.length == value.replace(check, '').length ? el.addClass("valid") : el.addClass("invalid");
 					break;
 
+
 				case "email":
 					var check = /^\S+@\S+\.\S+$/;
 					value !== "" && check.test(value) ? el.addClass("valid") : el.addClass("invalid");
-					break;
-
-				case "email-match":
-					var type = el.attr("type");
-					var mirror = el.prevFind("input[type='" + type + "']");
-					var email = mirror.val();
-
-					console.log(mirror, email)
-
-					mirror.hasClass("valid") && value === email ? el.addClass("valid") : el.addClass("invalid");
 					break;
 
 				case "password":
 					scorePassword(value) >= 30 ? el.addClass("valid") : el.addClass("invalid");
 					break;
 
-				case "password-match":
+				case "match":
 					var type = el.attr("type");
-					var mirror = el.prevFind("input[type='" + type + "']");
-					var password = mirror.val();
+					var mirror = el.parents().find("input[type='" + type + "']");
+					var check = mirror.val();
 
-					mirror.hasClass("valid") && value === password ? el.addClass("valid") : el.addClass("invalid");
+					mirror.hasClass("valid") && value === check ? el.addClass("valid") : el.addClass("invalid");
 					break;
+
 
 				case "date":
 					var check = /^\d{2}\/\d{2}\/\d{4}$/;
 					value !== "" && check.test(value) ? el.addClass("valid") : el.addClass("invalid");
 					break;
+
 
 				default:
 					var validArray = [];
