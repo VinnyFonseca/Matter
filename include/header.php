@@ -13,9 +13,6 @@
 			<h3>Example Overlay</h3>
 		</div>
 	</div>
-
-	<div class="tooltip"></div>
-
 	<div class="notification" data-type="">
 		<span class="notification-message"></span>
 		<div class="notification-close">

@@ -111,7 +111,7 @@ function initValidation() {
 						el.find(".form-loader").hide();
 						el.find(".form-done").show();
 
-						// $("form[data-validation]").submit();
+						// el.submit();
 						notify("Form submitted successfully.", "success", 3000);
 					} else {
 						el.removeClass("valid");

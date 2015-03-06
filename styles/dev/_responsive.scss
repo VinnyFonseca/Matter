@@ -130,6 +130,13 @@
 	}
 
 
+	.icon-wrapper {
+		.icon-container {
+			width: 6.666%;
+		}
+	}
+
+
 	.footer,
 	footer {
 		> a {
@@ -142,6 +149,13 @@
 
 
 @media screen and (max-width: $screenMobileL) {
+
+	.icon-wrapper {
+		.icon-container {
+			width: 13.266%;
+		}
+	}
+
 
 	footer {
 		.social {
