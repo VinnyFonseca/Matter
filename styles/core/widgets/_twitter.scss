@@ -15,29 +15,36 @@
 		margin-bottom: ($spacing / 2);
 		font-size: 0;
 
-		img {
-			display: block;
-			margin-right: 10px;
-			float: left;
-			width: 52px;
-			height: 52px;
-			border: 1px solid $cd;
-		}
-
 		a {
+			display: block;
+			position: relative;
 			width: 100%;
 			color: $fontColor;
 			text-align: left;
 			text-decoration: none;
+			overflow: hidden;
+			white-space: nowrap;
+
+			img {
+				display: block;
+				margin-right: 10px;
+				float: left;
+				width: 52px;
+				height: 52px;
+				border: 1px solid $cd;
+			}
 
 			span {
 				&[data-scribe="element:name"] {
 					display: block;
+					position: relative;
 					margin: 0;
 					margin-right: 10px;
 					@include font-size($fontSize * 1.25);
 				}
 				&[data-scribe="element:screen_name"] {
+					display: block;
+					position: relative;
 					margin-top: -4px;
 					color: $c8;
 					@include font-size($fontSize / 1.2);

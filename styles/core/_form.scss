@@ -1,34 +1,24 @@
-.input-wrapper {
+form {
+	display: block;
 	position: relative;
-	margin: 5px 0;
+
+	.column {
+		vertical-align: bottom !important;
+	}
 }
 
-.form-info {
-	margin-bottom: $spacing / 2;
-	color: $c2;
-	@include font-size($fontSize / 1.1);
-}
 
-.form-loader,
-.icon.form-done {
-	display: none;
-	position: relative;
-	margin: 2px 5px;
-	padding: 5px;
-	width: 42px;
-	height: 42px;
-	@include svgColor($brand1);
-	vertical-align: middle;
-}
 
+// Form Elements
 
 fieldset {
 	display: block;
 	position: relative;
 	margin: $spacing 0;
-	padding: ($spacing / 4) $spacing ($spacing / 1.5);
+	padding: ($spacing / 1.5) $spacing;
 	border: 1px solid $cd;
 	@include border-radius($radius);
+	box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.05);
 
 	legend {
 		display: block;
@@ -36,9 +26,9 @@ fieldset {
 		margin: 0;
 		margin-left: -7px;
 		padding: 0 7px;
-		color: $fontColor;
+		color: $c8;
 		font-weight: bold;
-		text-transform: capitalize;
+		background: $cf;
 	}
 }
 
@@ -46,15 +36,30 @@ fieldset {
 label {
 	display: block;
 	position: relative;
-	margin: 0;
-	margin-right: 5px;
-	padding: 7px 0;
+	margin: 0 3px;
+	padding: 10px 0 3px;
+	color: $c8;
 	font-family: $bodyFont;
+	@include font-size($fontSize / 1.1);
 
 	&.control {
 		display: inline-block;
 		margin-top: 0;
 		padding: 0;
+	}
+
+	.indicator-required {
+		display: inline-block;
+		position: relative;
+		margin: 0;
+		margin-left: 5px;
+		padding: 0;
+		width: 5px;
+		height: 5px;
+		top: -2px;
+		border-radius: 100px;
+		background: #e44;
+		vertical-align: middle;
 	}
 }
 
@@ -78,7 +83,7 @@ textarea {
 	background: $cf;
 	@include background-clip(padding-box);
 	outline: 0;
-	vertical-align: top;
+	vertical-align: bottom;
 
 
 	&::-webkit-input-placeholder {
@@ -138,94 +143,82 @@ textarea {
 }
 
 
-.password-wrapper {
+.button,
+button,
+input[type="reset"],
+input[type="submit"],
+input[type="button"] {
 	display: inline-block;
 	position: relative;
-	margin-bottom: $spacing / 2;
-	width: 100%;
-	vertical-align: top;
+	margin: 2px auto;
+	padding: ($spacing / 2) ($spacing / 1.5);
+	min-width: 42px;
+	color: $fontColor;
+	font-family: $bodyFont;
+	@include font-size($fontSize);
+	text-align: center;
+	text-decoration: none !important;
+	border: 0;
 	@include border-radius($radius);
-	overflow: hidden;
+	@include box-shadow(inset 0 0 0 1px rgba(0, 0, 0, 0.15));
+	background: $ce;
+	cursor: pointer !important;
+	@include appearance(none);
+	@include background-clip(padding-box);
+	@include user-select(none);
+	white-space: nowrap;
+	outline: 0;
+	vertical-align: middle;
 
-	input {
-		display: block;
-		margin: 0;
-		width: 100%;
+	&:hover {
+		background-color: $cd;
+	}
+	&:active,
+	&:visited {
+		background-color: $ce;
 	}
 
-	.password-meter-mask {
-		display: block;
-		position: absolute;
-		margin: 0 auto;
-		width: 0;
-		height: 2px;
-		bottom: 0;
-		overflow: hidden;
-		z-index: 10;
+
+	&::-moz-focus-inner {
+		border: 0;
+		padding: 0;
 	}
 
-	.password-meter {
-		display: block;
-		position: relative;
-		width: 0;
-		height: 5px;
-		@include background-image(linear-gradient(to right, #ee4444, #ffaa22, #66cc22));
+	&:invalid {
+		@include box-shadow(none);
+	}
+
+
+	&.primary {
+		color: $cf;
+		background-color: $brand1;
+
+		&:hover {
+			background-color: $brand2;
+		}
+		&:active,
+		&:visited {
+			background-color: $brand1;
+		}
+	}
+
+	&.secondary {
+		color: $cf;
+		background-color: $brand2;
+
+		&:hover {
+			background-color: $brand1;
+		}
+		&:active,
+		&:visited {
+			background-color: $brand2;
+		}
 	}
 }
 
-.input-group {
-	display: block;
-	position: relative;
-	margin-bottom: $spacing / 2;
-	font-size: 0;
-
-	> * {
-		@include font-size($fontSize);
-	}
-
-	.password-wrapper {
-		display: inline-block;
-		margin: 0;
-		width: 45%;
-		@include border-left-radius($radius);
-		@include border-right-radius(0);
-
-		input {
-			width: 100%;
-		}
-	}
-
-	input {
-		display: inline-block;
-		margin: 0;
-		width: 45%;
-		text-align: center;
-		border-radius: 0;
-
-		&:first-child {
-			@include border-left-radius($radius);
-			@include border-right-radius(0);
-		}
-		&:last-child {
-			@include border-left-radius(0);
-			@include border-right-radius($radius);
-		}
-	}
-
-	.input-addon {
-		display: inline-block;
-		margin: 0;
-		padding: 9px 12px;
-		width: 10%;
-		color: $c8;
-		font-family: $bodyFont;
-		@include font-size($fontSize);
-		text-align: center;
-		border: 1px solid $cd;
-		border-left: 0;
-		border-right: 0;
-		background: $ce;
-	}
+button {
+	*padding-top: 1px; // IE7
+	*padding-bottom: 1px;
 }
 
 
@@ -251,10 +244,12 @@ input[type="checkbox"] {
 	}
 }
 
+
 .controller {
 	display: block;
 	position: relative;
 	margin: 0;
+	margin-top: 2px;
 
 	&:active {
 		label {
@@ -277,11 +272,6 @@ input[type="checkbox"] {
 		cursor: pointer;
 		@include user-select(none);
 
-		> * {
-			display: inline-block;
-			vertical-align: bottom;
-		}
-
 		&:before,
 		&:after {
 			display: inline-block;
@@ -292,14 +282,14 @@ input[type="checkbox"] {
 			padding: 0;
 			width: 32px;
 			height: 32px;
-			top: 2px;
+			top: -2px;
 			text-align: center;
 			border: 1px solid $c8;
 			@include border-radius(3px);
 			background-color: $cf;
 			box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, .7);
 			overflow: hidden;
-			vertical-align: bottom;
+			vertical-align: middle;
 		}
 		&:after {
 			display: none;
@@ -391,11 +381,13 @@ input[type="checkbox"] {
 			.toggle-body {
 				display: inline-block;
 				position: relative;
-				margin-right: 5px;
+				margin-right: 8px;
 				width: $tglW;
 				height: $tglH;
+				top: -2px;
 				border-radius: 1000px;
 				background: $cf;
+				vertical-align: middle;
 			}
 
 			.toggle-switch {
@@ -442,114 +434,6 @@ input[type="checkbox"] {
 }
 
 
-.button,
-button,
-input[type="reset"],
-input[type="submit"],
-input[type="button"] {
-	display: inline-block;
-	position: relative;
-	margin: 2px auto;
-	padding: ($spacing / 2) ($spacing / 1.5);
-	min-width: 42px;
-	color: $fontColor;
-	font-family: $bodyFont;
-	@include font-size($fontSize);
-	text-align: center;
-	text-decoration: none !important;
-	border: 0;
-	@include border-radius($radius);
-	@include box-shadow(inset 0 0 0 1px rgba(0, 0, 0, 0.15));
-	background: $ce;
-	cursor: pointer;
-	@include appearance(none);
-	@include background-clip(padding-box);
-	@include user-select(none);
-	white-space: nowrap;
-	outline: 0;
-	vertical-align: middle;
-
-	&:hover {
-		background-color: $cd;
-	}
-	&:active,
-	&:visited {
-		background-color: $ce;
-	}
-
-
-	&::-moz-focus-inner {
-		border: 0;
-		padding: 0;
-	}
-
-	&:invalid {
-		@include box-shadow(none);
-	}
-
-
-	&.primary {
-		color: $cf;
-		background-color: $brand1;
-
-		&:hover {
-			background-color: $brand2;
-		}
-		&:active,
-		&:visited {
-			background-color: $brand1;
-		}
-	}
-
-	&.secondary {
-		color: $cf;
-		background-color: $brand2;
-
-		&:hover {
-			background-color: $brand1;
-		}
-		&:active,
-		&:visited {
-			background-color: $brand2;
-		}
-	}
-}
-
-button {
-	*padding-top: 1px; // IE7
-	*padding-bottom: 1px;
-}
-
-
-[readonly],
-[disabled] {
-	color: $c8 !important;
-	border-color: $ca !important;
-	border-style: dotted !important;
-	background-color: $ce !important;
-	box-shadow: none !important;
-	cursor: default !important;
-	@include box-shadow(none);
-	@include user-select(none);
-
-	&::-webkit-input-placeholder {
-		color: $ca;
-	}
-	&::-moz-placeholder {
-		color: $ca;
-	}
-	&:-moz-placeholder {
-		color: $ca;
-	}
-	&:-ms-input-placeholder {
-		color: $ca;
-	}
-	&.placeholder-text,
-	&.placeholder_text {
-		color: $ca;
-	}
-}
-
 select[size],
 select[multiple] {
 	padding: 0;
@@ -584,7 +468,234 @@ optgroup {
 
 
 
+// Validation
+
+.input-validation-error {
+	border: 2px solid $validationFailureBorderColor;
+}
+.field-validation-error {
+	display: block;
+	margin-top: 5px;
+	color: $validationFailureFontColor;
+	@include font-size($fontSize / 1.1);
+}
+
+.dropdown-current,
+[required] {
+	&.valid {
+		color: $validationSuccessFontColor !important;
+		border-color: $validationSuccessBorderColor !important;
+		background: $validationSuccessBgColor !important;
+
+		&::-webkit-input-placeholder {
+			color: $validationSuccessFontColor !important;
+		}
+		&::-moz-placeholder {
+			color: $validationSuccessFontColor !important;
+		}
+		&:-moz-placeholder {
+			color: $validationSuccessFontColor !important;
+		}
+		&:-ms-input-placeholder {
+			color: $validationSuccessFontColor !important;
+		}
+		&.placeholder-text,
+		&.placeholder_text {
+			color: $validationSuccessFontColor !important;
+		}
+	}
+	&.invalid {
+		color: $validationFailureFontColor !important;
+		border-color: $validationFailureBorderColor !important;
+		background: $validationFailureBgColor !important;
+
+		&::-webkit-input-placeholder {
+			color: $validationFailureFontColor !important;
+		}
+		&::-moz-placeholder {
+			color: $validationFailureFontColor !important;
+		}
+		&:-moz-placeholder {
+			color: $validationFailureFontColor !important;
+		}
+		&:-ms-input-placeholder {
+			color: $validationFailureFontColor !important;
+		}
+		&.placeholder-text,
+		&.placeholder_text {
+			color: $validationFailureFontColor !important;
+		}
+	}
+}
+
+[readonly],
+[disabled] {
+	color: $c8 !important;
+	border-color: $ca !important;
+	border-style: dotted !important;
+	background-color: $ce !important;
+	box-shadow: none !important;
+	cursor: default !important;
+	@include box-shadow(none);
+	@include user-select(none);
+	cursor: no-drop !important;
+
+	&::-webkit-input-placeholder {
+		color: $ca;
+	}
+	&::-moz-placeholder {
+		color: $ca;
+	}
+	&:-moz-placeholder {
+		color: $ca;
+	}
+	&:-ms-input-placeholder {
+		color: $ca;
+	}
+	&.placeholder-text,
+	&.placeholder_text {
+		color: $ca;
+	}
+}
+
+
+
 // Custom Elements
+
+.input-group {
+	display: block;
+	position: relative;
+	margin-bottom: $spacing / 2;
+	font-size: 0;
+
+	> * {
+		@include font-size($fontSize);
+	}
+
+	.password-wrapper {
+		display: inline-block;
+		margin: 0;
+		width: 45%;
+		@include border-left-radius($radius);
+		@include border-right-radius(0);
+
+		input {
+			width: 100%;
+		}
+	}
+
+	label {
+		@include font-size($fontSize / 1.1);
+	}
+
+	input {
+		display: inline-block;
+		margin: 0;
+		width: 45%;
+		text-align: center;
+		@include border-left-radius($radius);
+		@include border-right-radius(0);
+
+		&[data-validation="match"] {
+			@include border-left-radius(0);
+			@include border-right-radius($radius);
+		}
+	}
+
+	.input-addon {
+		display: inline-block;
+		margin: 0;
+		padding: 9px 12px;
+		width: 10%;
+		color: $c8;
+		font-family: $bodyFont;
+		@include font-size($fontSize);
+		text-align: center;
+		border: 1px solid $cd;
+		border-left: 0;
+		border-right: 0;
+		background: $ce;
+	}
+}
+
+
+// Info
+
+.form-info {
+	margin-bottom: $spacing / 2;
+	color: $c2;
+	@include font-size($fontSize / 1.1);
+}
+
+
+// Loader
+
+.form-loader,
+.icon.form-done {
+	display: none;
+	position: relative;
+	margin: 2px 5px;
+	padding: 5px;
+	width: 42px;
+	height: 42px;
+	@include svgColor($brand1);
+	vertical-align: middle;
+}
+
+
+// Credit Cards
+
+.card-wrapper {
+	margin: $spacing 0;
+
+	.card-type {
+		margin-bottom: $spacing / 2;
+	}
+
+	img {
+		margin-right: $spacing / 2;
+		height: 45px;
+	}
+}
+
+
+// Password Meter
+
+.password-wrapper {
+	display: inline-block;
+	position: relative;
+	margin-bottom: $spacing / 2;
+	width: 100%;
+	vertical-align: top;
+	@include border-radius($radius);
+	overflow: hidden;
+
+	input {
+		display: block;
+		margin: 0;
+		width: 100%;
+	}
+
+	.password-meter-mask {
+		display: block;
+		position: absolute;
+		margin: 0 auto;
+		width: 0;
+		height: 2px;
+		bottom: 0;
+		overflow: hidden;
+		z-index: 10;
+	}
+
+	.password-meter {
+		display: block;
+		position: relative;
+		width: 0;
+		height: 5px;
+		@include background-image(linear-gradient(to right, #ee4444, #ffaa22, #66cc22));
+	}
+}
+
 
 // Dropdown
 
@@ -762,6 +873,14 @@ optgroup {
 		}
 	}
 
+	&.disabled,
+	&.readonly {
+		.dropdown-arrow {
+			background: $c8 !important;
+			cursor: no-drop !important;
+		}
+	}
+
 
 	$dropdownItemHeight: 44;
 	$dropdownItemCount: 7;
@@ -912,66 +1031,6 @@ optgroup {
 }
 
 
-// Validation
-
-.input-validation-error {
-	border: 2px solid $validationFailureBorderColor;
-}
-.field-validation-error {
-	display: block;
-	margin-top: 5px;
-	color: $validationFailureFontColor;
-	@include font-size($fontSize / 1.1);
-}
-
-[required] {
-	&.valid {
-		color: $validationSuccessFontColor;
-		border-color: $validationSuccessBorderColor;
-		background: $validationSuccessBgColor;
-
-		&::-webkit-input-placeholder {
-			color: $validationSuccessFontColor;
-		}
-		&::-moz-placeholder {
-			color: $validationSuccessFontColor;
-		}
-		&:-moz-placeholder {
-			color: $validationSuccessFontColor;
-		}
-		&:-ms-input-placeholder {
-			color: $validationSuccessFontColor;
-		}
-		&.placeholder-text,
-		&.placeholder_text {
-			color: $validationSuccessFontColor;
-		}
-	}
-	&.invalid {
-		color: $validationFailureFontColor;
-		border-color: $validationFailureBorderColor;
-		background: $validationFailureBgColor;
-
-		&::-webkit-input-placeholder {
-			color: $validationFailureFontColor;
-		}
-		&::-moz-placeholder {
-			color: $validationFailureFontColor;
-		}
-		&:-moz-placeholder {
-			color: $validationFailureFontColor;
-		}
-		&:-ms-input-placeholder {
-			color: $validationFailureFontColor;
-		}
-		&.placeholder-text,
-		&.placeholder_text {
-			color: $validationFailureFontColor;
-		}
-	}
-}
-
-
 
 // Progress Bar
 
@@ -986,9 +1045,6 @@ progress {
 	height: $progressHeight;
 	overflow: hidden;
 	@include appearance(none);
-}
-progress:not(value) {
-	/* Add your styles here. As part of this walkthrough we will focus only on determinate progress bars. */
 }
 
 @include keyframes(animate-stripes) {
@@ -1106,14 +1162,12 @@ label[data-progress] {
 
 	&:after {
 		position: absolute;
-		padding: 2px 6px;
+		padding: 2px 5px;
 		top: 46px;
 		right: 36px;
 		@include font-size($fontSize / 1.15);
-		font-weight: bold;
 		color: $brand1;
 		text-align: center;
-		border: 1px solid $cd;
 		border-radius: $radius;
 		background-color: $ce;
 		content: attr(data-progress) '%';
@@ -1125,7 +1179,7 @@ label[data-progress] {
 
 
 
-@media (#{-webkit-min-device-pixel-ratio}: #{0}) { // Tweaks for Safari + Chrome.
+@media (#{-webkit-min-device-pixel-ratio}: #{0}) {
 
 	select[size],
 	select[multiple],
@@ -1136,9 +1190,8 @@ label[data-progress] {
 
 	select,
 	select[size="0"],
-	select[size="1"] { // Base64 encoded "../images/select_arrow.gif"
+	select[size="1"] {
 		padding-right: 20px;
-		// background-image: url(data:image/png;base64,R0lGODlhDQAEAIAAAAAAAP8A/yH5BAEHAAEALAAAAAANAAQAAAILhA+hG5jMDpxvhgIAOw==);
 		background-repeat: no-repeat;
 		background-position: right center;
 	}

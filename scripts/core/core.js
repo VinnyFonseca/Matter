@@ -81,8 +81,9 @@ function randomizeInteger(min, max) {
 
 // Easter Eggs
 
-function alertKonami() {
-	alert("TETSUOOO!!");
+function buildKonami() {
+	var img = '<img class="konami" style="width: 100%;" src="scripts/core/konami/contra.gif">';
+	$(".main").prepend(img);
 }
 
 function initKonami(callback) {
@@ -94,6 +95,8 @@ function initKonami(callback) {
 		userCode = [];
 		userString = "";
 		konamiCoding = false;
+
+		$(".konami").remove();
 	}
 
 	function konami(event) {
@@ -374,7 +377,8 @@ function initFramework() {
 
 	// Easter Eggs Init
 
-	initKonami(alertKonami);
+	initKonami(buildKonami);
+
 
 	// System Init
 
@@ -384,6 +388,7 @@ function initFramework() {
 	initNav();
 	initTables();
 	scrollProgress();
+
 
 	// Widgets Init
 
@@ -395,19 +400,24 @@ function initFramework() {
 	initTwitter();
 	initFontSizeControls();
 
+
 	// Search Init
 
 	initSearch();
 	initAutocomplete();
 	initTagClouds();
 
+
 	// Forms Init
 
-	initPasswords();
-	initDropdowns();
-	initFileInputs(config.forms.uploadlimit);
 	initValidation();
+	initDropdowns();
+	initCountries();
+	initToggles();
+	initFileInputs(config.forms.uploadlimit);
+	initPasswords();
 	initProgressBar();
+
 
 	if ( config.application.debug ) console.log("Done •• Matter");
 }

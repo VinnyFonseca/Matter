@@ -35,28 +35,55 @@ function initValidation() {
 		}
 
 
-		// Validation function called on keyup
+		// Credit Card checks
 
-		function validateKeypress(el, type, value) {
-			console.log("Validating keypress for " + type);
+		function validateCard(number) {
+			var regex = {
+				amex: /^3[47][0-9]{13}$/,
+				dankort: /^(5019)\d+$/,
+				diners: /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/,
+				discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
+				electron: /^(4026|417500|4405|4508|4844|4913|4917)\d+$/,
+				interpayment: /^(636)\d+$/,
+				jcb: /^(?:2131|1800|35\d{3})\d{11}$/,
+				maestro: /^(5018|5020|5038|5612|5893|6304|6759|6761|6762|6763|0604|6390)\d+$/,
+				mastercard: /^5[1-5][0-9]{14}$/,
+				unionpay: /^(62|88)\d+$/,
+				visa: /^4[0-9]{12}(?:[0-9]{3})?$/
+			};
 
-			switch(type) {
-				case "password":
-					el.next(".password-meter-mask").width(scorePassword(value) + "%").find(".password-meter").width(el.outerWidth());
-					break;
+			if ( regex.amex.test(number) ) {
+				return 'american-express';
+			} else if ( regex.dankort.test(number) ) {
+				return 'dankort';
+			} else if ( regex.diners.test(number) ) {
+				return 'diners';
+			} else if ( regex.discover.test(number) ) {
+				return 'discover';
+			} else if ( regex.electron.test(number) ) {
+				return 'visa-electron';
+			} else if ( regex.interpayment.test(number) ) {
+				return 'interpayment';
+			} else if ( regex.jcb.test(number) ) {
+				return 'jcb';
+			} else if ( regex.maestro.test(number) ) {
+				return 'maestro';
+			} else if ( regex.mastercard.test(number) ) {
+				return 'mastercard';
+			} else if ( regex.unionpay.test(number) ) {
+				return 'unionpay';
+			} else if ( regex.visa.test(number) ) {
+				return 'visa';
+			} else {
+				return 'generic';
 			}
 		}
 
-		$("input[data-validation='password']").on("keyup", function() {
-			var el = $(this),
-				type = el.attr("data-validation"),
-				value = el.val();
-
-			validateKeypress(el, type, value);
-		});
 
 
-		function validate(el, type, value) {
+		// Validation function called on keyup
+
+		function validateField(el, type, value) {
 			if ( config.application.debug ) console.log("Validation :: " + type);
 
 			el.removeClass("invalid").removeClass("valid");
@@ -82,17 +109,29 @@ function initValidation() {
 					break;
 
 				case "match":
-					var type = el.attr("type");
-					var mirror = el.parents().find("input[type='" + type + "']");
-					var check = mirror.val();
+					var type = el.attr("type"),
+						mirror = el.parents().find("input[type='" + type + "']"),
+						check = mirror.val();
 
 					mirror.hasClass("valid") && value === check ? el.addClass("valid") : el.addClass("invalid");
+					break;
+
+
+				case "card":
+					value !== "" ? el.addClass("valid") : el.addClass("invalid");
+					$(".card-wrapper img").attr("src", "img/icons/cards/" + validateCard(value) + ".png");
 					break;
 
 
 				case "date":
 					var check = /^\d{2}\/\d{2}\/\d{4}$/;
 					value !== "" && check.test(value) ? el.addClass("valid") : el.addClass("invalid");
+					break;
+
+
+				case "select":
+					value !== "" ? el.addClass("valid") : el.addClass("invalid");
+					el.parents(".dropdown-wrapper").children(".dropdown-current").attr("class", "dropdown-current " + el.attr("class"));
 					break;
 
 
@@ -130,6 +169,30 @@ function initValidation() {
 			}
 		}
 
+		function validateRealtime(el, type, value) {
+			console.log("Validating keypress for " + type);
+
+			switch(type) {
+				case "password":
+					el.next(".password-meter-mask").width(scorePassword(value) + "%").find(".password-meter").width(el.outerWidth());
+					break;
+
+				case "card":
+					$(".card-wrapper img").attr("src", "img/icons/cards/" + validateCard(value) + ".png");
+					break;
+			}
+		}
+
+
+		// Validation Input Behaviour
+
+		$("input[data-validate-key]").on("keyup", function() {
+			var el = $(this),
+				type = el.attr("data-validation"),
+				value = el.val();
+
+			validateRealtime(el, type, value);
+		});
 
 		var submitted = false;
 
@@ -137,26 +200,28 @@ function initValidation() {
 			var form = $(this);
 
 			form.find("[required]").each(function() {
-				$(this).prev("label").append(" *");
-				$(this).on("keyup", function() {
-						$(this).removeClass("valid").removeClass("invalid");
-					})
-					.on("focus", function() {
-						var el = $(this),
-							type = el.attr("data-validation"),
+				var el = $(this);
+
+				el.on("keyup", function() {
+					el.removeClass("valid").removeClass("invalid");
+				})
+				.on("focus", function() {
+					var el = $(this),
+						type = el.attr("data-validation"),
+						value = el.val();
+
+					if ( $(this).hasClass("invalid") ) validateField(el, type, value);
+				}).on("blur", function() {
+					var el = $(this);
+
+					setTimeout(function() {
+						var type = el.attr("data-validation"),
 							value = el.val();
 
-						if ( $(this).hasClass("invalid") ) validate(el, type, value);
-					}).on("blur", function() {
-						var el = $(this);
-
-						setTimeout(function() {
-							var type = el.attr("data-validation"),
-								value = el.val();
-
-							validate(el, type, value);
-						}, 200);
-					});
+						validateField(el, type, value);
+					}, 200);
+				})
+				.prev("label").append("<span class='indicator-required'></span>");
 			});
 
 			form.on("submit", function(event) {
@@ -165,7 +230,7 @@ function initValidation() {
 						type = el.attr("data-validation"),
 						value = el.val();
 
-					validate(el, type, value);
+					validateField(el, type, value);
 				});
 
 				if ( !submitted ) {
@@ -176,7 +241,7 @@ function initValidation() {
 					form.find(".form-loader").show();
 
 					event.preventDefault();
-					validate(form, type, value);
+					validateField(form, type, value);
 				}
 			});
 		});

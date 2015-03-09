@@ -47,7 +47,7 @@ var config = {
 		showUser: true, // bool: Show User's avatar.
 		showTime: true, // bool: Show posted time.
 		showRetweet: false, // bool: Show retweets that you posted.
-		showFollow: true, // bool: Show Follow button.
+		showFollow: false, // bool: Show Follow button.
 		showInteraction: false // bool: Show Reply, Retweet and Favorite.
 	}
 };
