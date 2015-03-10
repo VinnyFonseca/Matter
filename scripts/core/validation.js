@@ -37,7 +37,7 @@ function initValidation() {
 
 		// Credit Card checks
 
-		function validateCard(number) {
+		function detectCard(number) {
 			var regex = {
 				amex: /^3[47][0-9]{13}$/,
 				dankort: /^(5019)\d+$/,
@@ -119,7 +119,7 @@ function initValidation() {
 
 				case "card":
 					value !== "" ? el.addClass("valid") : el.addClass("invalid");
-					$(".card-wrapper img").attr("src", "img/icons/cards/" + validateCard(value) + ".png");
+					$(".card-wrapper img").attr("src", "img/icons/cards/" + detectCard(value) + ".png");
 					break;
 
 
@@ -178,7 +178,7 @@ function initValidation() {
 					break;
 
 				case "card":
-					$(".card-wrapper img").attr("src", "img/icons/cards/" + validateCard(value) + ".png");
+					$(".card-wrapper img").attr("src", "img/icons/cards/" + detectCard(value) + ".png");
 					break;
 			}
 		}
@@ -206,19 +206,19 @@ function initValidation() {
 					el.removeClass("valid").removeClass("invalid");
 				})
 				.on("focus", function() {
-					var el = $(this),
-						type = el.attr("data-validation"),
-						value = el.val();
+					var elem = $(this),
+						type = elem.attr("data-validation"),
+						value = elem.val();
 
-					if ( $(this).hasClass("invalid") ) validateField(el, type, value);
+					if ( $(this).hasClass("invalid") ) validateField(elem, type, value);
 				}).on("blur", function() {
-					var el = $(this);
+					var elem = $(this);
 
 					setTimeout(function() {
-						var type = el.attr("data-validation"),
-							value = el.val();
+						var type = elem.attr("data-validation"),
+							value = elem.val();
 
-						validateField(el, type, value);
+						validateField(elem, type, value);
 					}, 200);
 				})
 				.prev("label").append("<span class='indicator-required'></span>");
@@ -226,11 +226,11 @@ function initValidation() {
 
 			form.on("submit", function(event) {
 				form.find("[required]").each(function() {
-					var el = $(this),
-						type = el.attr("data-validation"),
-						value = el.val();
+					var elem = $(this),
+						type = elem.attr("data-validation"),
+						value = elem.val();
 
-					validateField(el, type, value);
+					validateField(elem, type, value);
 				});
 
 				if ( !submitted ) {

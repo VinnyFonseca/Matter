@@ -411,12 +411,7 @@ function initFramework() {
 	// Forms Init
 
 	initValidation();
-	initDropdowns();
-	initCountries();
-	initToggles();
-	initFileInputs(config.forms.uploadlimit);
-	initPasswords();
-	initProgressBar();
+	initForm();
 
 
 	if ( config.application.debug ) console.log("Done •• Matter");
