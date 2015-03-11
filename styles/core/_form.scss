@@ -224,7 +224,7 @@ button {
 
 input[type="radio"],
 input[type="checkbox"] {
-	display: inline-block;
+	display: none;
 	position: relative;
 	margin: 0;
 	margin-right: 4px;
@@ -254,7 +254,7 @@ input[type="checkbox"] {
 	&:active {
 		label {
 			&:before {
-				box-shadow: inset 0px 1px 1px 0 rgba(0, 0, 0, .15) !important;
+				box-shadow: inset 0px -3px 3px 0 rgba(255, 255, 255, 0.5), inset 0px 1px 1px 0 rgba(0, 0, 0, 0.3) !important;
 			}
 		}
 	}
@@ -280,14 +280,15 @@ input[type="checkbox"] {
 			margin: 0;
 			margin-right: 10px;
 			padding: 0;
-			width: 32px;
-			height: 32px;
+			width: 28px;
+			height: 28px;
 			top: -2px;
 			text-align: center;
+			line-height: 1.9 !important;
 			border: 1px solid $c8;
 			@include border-radius(3px);
-			background-color: $cf;
-			box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, .7);
+			background-color: $ce;
+			box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, 0.7), inset 0px -1px 1px 0 rgba(0, 0, 0, 0.15);
 			overflow: hidden;
 			vertical-align: middle;
 		}
@@ -300,13 +301,69 @@ input[type="checkbox"] {
 	}
 
 	input {
-		display: none;
+		&.valid {
+			+ label {
+				color: $validationSuccessFontColor !important;
 
-		&:checked + label:before,
-		&:checked + label:after {
-			color: $brand1;
-			font-size: 24px;
-			border-color: $brand1;
+				.toggle-switch,
+				&:before,
+				&:after {
+					color: $validationSuccessFontColor !important;
+					border-color: $validationSuccessBorderColor !important;
+					background-color: $validationSuccessBgColor !important;
+				}
+			}
+		}
+		&.invalid {
+			+ label {
+				color: $validationFailureFontColor !important;
+
+				.toggle-switch,
+				&:before,
+				&:after {
+					color: $validationFailureFontColor !important;
+					border-color: $validationFailureBorderColor !important;
+					background-color: $validationFailureBgColor !important;
+				}
+			}
+		}
+		&[readonly],
+		&[disabled] {
+			+ label {
+				color: $ca !important;
+				cursor: no-drop !important;
+
+				.toggle-switch,
+				&:before,
+				&:after {
+					color: $c8 !important;
+					border-color: $cb !important;
+					border-style: dotted !important;
+					background-color: $ce !important;
+					box-shadow: none !important;
+					@include user-select(none);
+					cursor: no-drop !important;
+				}
+			}
+		}
+	}
+
+	&.checkbox {
+		label {
+			&:before,
+			&:after {
+				@include border-radius($radius);
+			}
+		}
+
+		input[type="checkbox"] {
+			&:checked {
+				+ label:before,
+				+ label:after {
+					@include font-size($fontSize);
+					content: url('../img/icons/icon-control-checkbox.png');
+				}
+			}
 		}
 	}
 
@@ -318,27 +375,12 @@ input[type="checkbox"] {
 		}
 
 		input[type="radio"] {
-			&:checked + label:before {
-				font-size: 32px;
-				line-height: 0.75;
-				content: "\25cf";
-			}
-		}
-	}
-
-	&.checkbox {
-		label {
-			&:before,
-			&:after {
-				@include border-radius(3px);
-			}
-		}
-
-		input[type="checkbox"] {
-			&:checked + label:before,
-			&:checked + label:after {
-				line-height: 1.25;
-				content: "\2714";
+			&:checked {
+				+ label:before,
+				+ label:after {
+					@include font-size($fontSize);
+					content: url('../img/icons/icon-control-radio.png');
+				}
 			}
 		}
 	}
@@ -368,7 +410,8 @@ input[type="checkbox"] {
 		label {
 			&:active {
 				.toggle-switch {
-					@include transform(scale(.95));
+					box-shadow: inset 0px -3px 3px 0 rgba(255, 255, 255, 0.5), inset 0px 1px 1px 0 rgba(0, 0, 0, 0.3) !important;
+					// @include transform(scale(.95));
 				}
 			}
 
@@ -393,16 +436,19 @@ input[type="checkbox"] {
 			.toggle-switch {
 				display: inline-block;
 				position: absolute;
+				margin: 0;
+				padding: 0;
 				width: $swtSz;
 				height: $swtSz;
 				top: -1px;
 				left: -1px;
 				border: 1px solid $c8;
 				border-radius: 1000px;
-				background-color: $cf;
-				@include box-shadow(0 2px 2px rgba(0,0,0,.13));
+				background-color: $ce;
+				box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, 0.7), inset 0px -1px 1px 0 rgba(0, 0, 0, 0.15);
 				z-index: 1;
-				@include transition(left $animEasing $animDuration);
+				overflow: hidden;
+				vertical-align: middle;
 			}
 
 			.toggle-track {
@@ -412,6 +458,7 @@ input[type="checkbox"] {
 				bottom: 0;
 				left: 0;
 				border-radius: 1000px;
+				box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.25) !important;
 				overflow: hidden;
 			}
 
@@ -485,7 +532,7 @@ optgroup {
 	&.valid {
 		color: $validationSuccessFontColor !important;
 		border-color: $validationSuccessBorderColor !important;
-		background: $validationSuccessBgColor !important;
+		background-color: $validationSuccessBgColor !important;
 
 		&::-webkit-input-placeholder {
 			color: $validationSuccessFontColor !important;
@@ -507,7 +554,7 @@ optgroup {
 	&.invalid {
 		color: $validationFailureFontColor !important;
 		border-color: $validationFailureBorderColor !important;
-		background: $validationFailureBgColor !important;
+		background-color: $validationFailureBgColor !important;
 
 		&::-webkit-input-placeholder {
 			color: $validationFailureFontColor !important;
@@ -530,13 +577,11 @@ optgroup {
 
 [readonly],
 [disabled] {
-	color: $c8 !important;
+	color: $ca !important;
 	border-color: $ca !important;
 	border-style: dotted !important;
 	background-color: $ce !important;
 	box-shadow: none !important;
-	cursor: default !important;
-	@include box-shadow(none);
 	@include user-select(none);
 	cursor: no-drop !important;
 
@@ -870,14 +915,6 @@ optgroup {
 		.icon {
 			width: 14px;
 			height: 14px;
-		}
-	}
-
-	&.disabled,
-	&.readonly {
-		.dropdown-arrow {
-			background: $c8 !important;
-			cursor: no-drop !important;
 		}
 	}
 

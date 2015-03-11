@@ -1,3 +1,214 @@
+function initForm() {
+	// Country Dropdowns
+
+	if ( $("select[data-countries]").length ) {
+		$("select[data-countries]").each(function() {
+			var el = $(this),
+				url = el.data("countries");
+
+			function buildCountries(data) {
+				for (var i = 0; i < data.length; i++ ) {
+					var name = data[i].Name,
+						code = data[i].Code,
+						option = "<option value='" + code + "'>" + name + "</option>";
+
+					el.append(option);
+				}
+
+				initDropdowns();
+			}
+
+			dataRequest(url, "GET", buildCountries);
+		});
+
+		if ( config.application.debug ) console.log("Form :: Country Dropdowns");
+	}
+
+
+
+	// File Inputs
+
+	if ( $(".file-wrapper").length ) {
+		$(".file-wrapper:not('.last')").each(function() {
+			var el = $(this),
+				input = el.find("input"),
+				button = el.find(".fake-upload"),
+				result = el.find(".file-result");
+
+			button.on("click", function() {
+				input.trigger("click");
+			});
+
+			input.on("change", function() {
+				var text = $(this).val().replace("C:\\fakepath\\", "");
+				result.html(text).addClass('loaded');
+			});
+		});
+
+		if ( config.application.debug ) console.log("Form :: File Upload");
+	}
+
+	// Multiple Upload
+
+	if ( $(".multifile-wrapper").length ) {
+		var el = $(".multifile-wrapper"),
+			inputCount = el.length,
+			inputLimit = config.forms.uploadlimit,
+			limitElement = $(".multi-limit"),
+			currentCount = inputLimit - el.find(".loaded").length,
+			isSingular = currentCount == 1 ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(),
+			newInput = '<div class="multifile-wrapper mobile-hide last">\
+							<input type="file" id="file' + "[" + inputCount + "]" + '" name="file' + "[" + inputCount + "]" + '" />\
+							<div class="fakefile">\
+								<div class="button primary fake-upload">Choose File</div>\
+								<div class="file-result">No file chosen</div>\
+								<div class="button primary fake-close">&times;</div>\
+							</div>\
+						</div>';
+
+		limitElement.html(currentCount);
+
+		el.each(function(i) {
+			var el = $(this);
+			var resultElement = el.find(".file-result");
+
+			el.find("input").attr("id", "file" + "[" + i + "]").attr("name", "file" + "[" + i + "]");
+
+			el
+			.off("click")
+			.on("click", ".fake-upload", function() {
+				el.find("input").trigger("click");
+			})
+			.on("click", ".fake-close", function() {
+				if ( inputCount == inputLimit && !$(".multifile-wrapper.last").length ) $(newInput).insertAfter($(".multifile-wrapper").eq(inputCount - 1));
+				el.remove();
+				loadFileInputs(inputLimit);
+			})
+			.off("change")
+			.on("change", "input", function() {
+				var text = $(this).val().replace("C:\\fakepath\\", "");
+				resultElement.html(text).addClass('loaded');
+
+				if ( inputCount < inputLimit ) $(newInput).insertAfter(el);
+				loadFileInputs(inputLimit);
+				if ( i < inputCount ) el.removeClass("last");
+			});
+		});
+
+		if ( config.application.debug ) console.log("Form :: Multiple File Upload");
+	}
+
+
+
+	// Checkboxes, Radio buttons & Toggles
+
+	if ( $("input[type='checkbox']").length ) {
+		$("input[type='checkbox']").each(function() {
+			var el = $(this);
+			el.wrap("<div class='controller checkbox'></div>");
+			var parent = el.parents(".controller");
+			parent.next("label").prepend(toggle).appendTo(parent);
+		});
+
+		if ( config.application.debug ) console.log("Form :: Checkboxes");
+	}
+
+	if ( $("input[type='radio']").length ) {
+		$("input[type='radio']").each(function() {
+			var el = $(this);
+			el.wrap("<div class='controller radio'></div>");
+			var parent = el.parents(".controller");
+			parent.next("label").prepend(toggle).appendTo(parent);
+		});
+
+		if ( config.application.debug ) console.log("Form :: Radio buttons");
+	}
+
+	if ( $("input[type='toggle']").length ) {
+		var toggle = '<span class="toggle-body">
+							<span class="toggle-switch"></span>
+							<span class="toggle-track">
+							<span class="toggle-background"></span>
+								<span class="toggle-background toggle-background-negative"></span>
+							</span>
+						</span>';
+
+		$("input[type='toggle']").each(function() {
+			var el = $(this);
+			el.attr("type", "checkbox").wrap("<div class='controller toggle'></div>");
+			var parent = el.parents(".controller");
+			parent.next("label").prepend(toggle).appendTo(parent);
+		});
+
+		if ( config.application.debug ) console.log("Form :: Toggles");
+	}
+
+	$("input[type='checkbox'][readonly], input[type='radio'][readonly]").each(function() {
+		var el = $(this),
+			state = el.prop("checked");
+
+		el.on("click", function(event) {
+			event.preventDefault();
+		});
+	});
+
+
+
+	// Password Meters
+
+	if ( $("input[type='password']").length ) {
+		var wrapper = '<div class="password-wrapper"></div>',
+			meter = '<div class="password-meter-mask"><div class="password-meter"></div></div>';
+
+		$("input[type='password']").each(function() {
+			var el = $(this);
+
+			if ( el.data("validation") !== "match" ) {
+				el.wrap(wrapper);
+				$(meter).insertAfter(el);
+			}
+		});
+
+		if ( config.application.debug ) console.log("Form :: Password Meters");
+	}
+
+
+
+	// Progress Bars
+
+	if ( $("progress").length ) {
+		function triggerProgress(progress) {
+			var el = $("progress"),
+				label = el.prev("label"),
+				bar = el.find(".progress-bar span");
+
+			bar.width(progress + "%").html(progress + "%");
+			label.removeClass("active").width(progress + "%").attr("data-progress", progress);
+			el.removeClass("valid").attr("value", progress);
+
+			if ( progress >= 8 ) label.addClass("active");
+			if ( progress >= 100 ) el.addClass("valid");
+		}
+
+		$("[data-progress]").on("click", function(event) {
+			var progress = 0;
+			clearInterval(progressInterval);
+
+			var progressInterval = setInterval(function() {
+				if ( progress < 100 ) {
+					progress++;
+					triggerProgress(progress);
+				} else {
+					$(".progress").addClass("valid");
+					clearInterval(progressInterval);
+				}
+			}, 300);
+		});
+
+		if ( config.application.debug ) console.log("Form :: Progress Bar");
+	}
+}
+
 function initDropdowns() {
 	if ( $("select").length ) {
 		function buildDropdowns(i) {
@@ -49,12 +260,14 @@ function initDropdowns() {
 					dropItem = drop.find(".dropdown-item"),
 					target = drop.children(".dropdown-current");
 
-				if ( el.prop("readonly") ) {
+				target.attr("class", "dropdown-current " + el.attr("class"));
+
+				if ( el.is('[readonly]') ) {
 					drop.addClass("readonly");
-					target.attr("readonly", "true");
-				} else if ( el.prop("disabled") ) {
+					target.attr("readonly", true);
+				} else if ( el.is('[disabled]') ) {
 					drop.addClass("disabled");
-					target.attr("disabled", "true");
+					target.attr("disabled", true);
 				} else {
 					drop.off().on("click", function() {
 						if ( type == "drop" ) {
@@ -107,6 +320,7 @@ function initDropdowns() {
 			buildDropdowns(i);
 		});
 
+
 		// Detect dropdown window fit
 
 		$(window).on("scroll", function() {
@@ -121,189 +335,8 @@ function initDropdowns() {
 		});
 
 		if ( config.application.debug ) console.log("Form :: Dropdowns");
-	}
-}
 
-
-
-
-
-function initToggles() {
-	if ( $(".controller.toggle").length ) {
-		var toggle = '<span class="toggle-body">
-							<span class="toggle-switch"></span>
-							<span class="toggle-track">
-							<span class="toggle-background"></span>
-								<span class="toggle-background toggle-background-negative"></span>
-							</span>
-						</span>';
-
-		$(".controller.toggle").each(function() {
-			$(this).children("label").prepend(toggle);
-		});
-
-		if ( config.application.debug ) console.log("Form :: Toggles");
-	}
-}
-
-
-
-function initFileInputs() {
-	if ( $(".file-wrapper").length ) {
-		$(".file-wrapper:not('.last')").each(function() {
-			var el = $(this),
-				input = el.find("input"),
-				button = el.find(".fake-upload"),
-				result = el.find(".file-result");
-
-			button.on("click", function() {
-				input.trigger("click");
-			});
-
-			input.on("change", function() {
-				var text = $(this).val().replace("C:\\fakepath\\", "");
-				result.html(text).addClass('loaded');
-			});
-		});
-
-		if ( config.application.debug ) console.log("Form :: File Upload");
-	}
-
-
-	// Multiple Upload
-
-	if ( $(".multifile-wrapper").length ) {
-		var el = $(".multifile-wrapper"),
-			inputCount = el.length,
-			inputLimit = config.forms.uploadlimit,
-			limitElement = $(".multi-limit"),
-			currentCount = inputLimit - el.find(".loaded").length,
-			isSingular = currentCount == 1 ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(),
-			newInput = '<div class="multifile-wrapper mobile-hide last">\
-							<input type="file" id="file' + "[" + inputCount + "]" + '" name="file' + "[" + inputCount + "]" + '" />\
-							<div class="fakefile">\
-								<div class="button primary fake-upload">Choose File</div>\
-								<div class="file-result">No file chosen</div>\
-								<div class="button primary fake-close">&times;</div>\
-							</div>\
-						</div>';
-
-		limitElement.html(currentCount);
-
-		el.each(function(i) {
-			var el = $(this);
-			var resultElement = el.find(".file-result");
-
-			el.find("input").attr("id", "file" + "[" + i + "]").attr("name", "file" + "[" + i + "]");
-
-			el
-			.off("click")
-			.on("click", ".fake-upload", function() {
-				el.find("input").trigger("click");
-			})
-			.on("click", ".fake-close", function() {
-				if ( inputCount == inputLimit && !$(".multifile-wrapper.last").length ) $(newInput).insertAfter($(".multifile-wrapper").eq(inputCount - 1));
-				el.remove();
-				loadFileInputs(inputLimit);
-			})
-			.off("change")
-			.on("change", "input", function() {
-				var text = $(this).val().replace("C:\\fakepath\\", "");
-				resultElement.html(text).addClass('loaded');
-
-				if ( inputCount < inputLimit ) $(newInput).insertAfter(el);
-				loadFileInputs(inputLimit);
-				if ( i < inputCount ) el.removeClass("last");
-			});
-		});
-
-		if ( config.application.debug ) console.log("Form :: Multiple File Upload");
-	}
-}
-
-
-
-
-function initPasswords() {
-	if ( $("input[type='password']").length ) {
-		var wrapper = '<div class="password-wrapper"></div>',
-			meter = '<div class="password-meter-mask"><div class="password-meter"></div></div>';
-
-		$("input[type='password']").each(function() {
-			var el = $(this);
-
-			if ( el.data("validation") !== "match" ) {
-				el.wrap(wrapper);
-				$(meter).insertAfter(el);
-			}
-		});
-
-		if ( config.application.debug ) console.log("Form :: Password Meters");
-	}
-}
-
-
-
-
-function initCountries() {
-	if ( $("select[name='country']").length ) {
-		function buildCountries(data) {
-			$("select[name='country']").each(function() {
-				var el = $(this);
-
-				for (var i = 0; i < data.length; i++ ) {
-					var name = data[i].Name,
-						code = data[i].Code,
-						option = "<option value='" + code + "'>" + name + "</option>";
-
-					el.append(option);
-				}
-
-				initDropdowns();
-				initSVGs();
-			});
-		}
-
-		dataRequest("scripts/dev/data/countries.json", "GET", buildCountries);
-
-		if ( config.application.debug ) console.log("Form :: Country Dropdowns");
-	}
-}
-
-
-
-
-function initProgressBar() {
-	if ( $("progress").length ) {
-		function triggerProgress(progress) {
-			var el = $("progress"),
-				label = el.prev("label"),
-				bar = el.find(".progress-bar span");
-
-			bar.width(progress + "%").html(progress + "%");
-			label.removeClass("active").width(progress + "%").attr("data-progress", progress);
-			el.removeClass("valid").attr("value", progress);
-
-			if ( progress >= 8 ) label.addClass("active");
-			if ( progress >= 100 ) el.addClass("valid");
-		}
-
-		$("[data-progress]").on("click", function(event) {
-			var progress = 0;
-			clearInterval(progressInterval);
-
-			var progressInterval = setInterval(function() {
-				if ( progress < 100 ) {
-					progress++;
-					triggerProgress(progress);
-				} else {
-					$(".progress").addClass("valid");
-					clearInterval(progressInterval);
-				}
-			}, 300);
-		});
-
-		if ( config.application.debug ) console.log("Form :: Progress Bar");
+		initSVGs();
 	}
 }
 
