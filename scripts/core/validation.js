@@ -84,7 +84,6 @@ function initValidation() {
 		// Validation function called on keyup
 
 		function validateField(el, type, value) {
-
 			if ( config.application.debug ) console.log("Validation :: " + type);
 
 			el.removeClass("invalid").removeClass("valid");
@@ -141,16 +140,18 @@ function initValidation() {
 					break;
 
 				case "radio":
-					var group = el.attr("name");
-					var radios = el.siblings("input[type='radio'][name='" + group + "']");
+					var group = el.attr("name"),
+						radios = $("input[type='radio'][name='" + group + "']"),
+						radioGroup = {};
 
-					if ( el.prop("checked") || radios.prop("checked") ) {
-						el.addClass("valid");
-						radios.addClass("valid");
-					} else {
-						el.addClass("invalid");
-						radios.addClass("invalid");
-					}
+					radioGroup[group] = [];
+
+					radios.removeClass("invalid").each(function() {
+						var checked = $(this).prop("checked");
+						radioGroup[group].push(checked);
+					});
+
+					radioGroup[group].indexOf(true) != -1 ? radios.addClass("valid") : radios.addClass("invalid");
 					break;
 
 
@@ -223,30 +224,26 @@ function initValidation() {
 
 				if ( el.attr("type") === "checkbox" || el.attr("type") === "radio" ) {
 					el.on("change", function() {
-						var elem = $(this),
-							type = elem.attr("data-validation"),
-							value = elem.val();
+						var type = el.attr("data-validation"),
+							value = el.val();
 
-						validateField(elem, type, value);
+						validateField(el, type, value);
 					}).next("label").append("<span class='indicator-required'></span>");
 				} else {
 					el.on("keyup", function() {
 						el.removeClass("valid").removeClass("invalid");
 					})
 					.on("focus", function() {
-						var elem = $(this),
-							type = elem.attr("data-validation"),
-							value = elem.val();
+						var type = el.attr("data-validation"),
+							value = el.val();
 
-						if ( $(this).hasClass("invalid") ) validateField(elem, type, value);
+						if ( $(this).hasClass("invalid") ) validateField(el, type, value);
 					}).on("blur", function() {
-						var elem = $(this);
-
 						setTimeout(function() {
-							var type = elem.attr("data-validation"),
-								value = elem.val();
+							var type = el.attr("data-validation"),
+								value = el.val();
 
-							validateField(elem, type, value);
+							validateField(el, type, value);
 						}, 200);
 					}).prev("label").append("<span class='indicator-required'></span>");
 				}

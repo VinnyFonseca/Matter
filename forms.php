@@ -107,17 +107,17 @@
 				<label for="f3">Select this to choose lipsum</label>
 			</fieldset>
 
-			<!-- <fieldset>
+			<fieldset>
 				<legend>Toggle Radio Buttons</legend>
-				<input id="f11" type="toggleradio" name="toggle-group-1" data-validation="checkbox" required>
+				<input id="f11" type="toggleradio" name="toggle-group-1" data-validation="radio" required>
 				<label for="f11">Select this to choose the following lipsum</label>
 
-				<input id="f12" type="toggleradio" name="toggle-group-1" data-validation="checkbox" required>
+				<input id="f12" type="toggleradio" name="toggle-group-1" data-validation="radio" required>
 				<label for="f12">Select this to choose the Terms &amp; lipsum</label>
 
-				<input id="f13" type="toggleradio" name="toggle-group-1" data-validation="checkbox" required>
+				<input id="f13" type="toggleradio" name="toggle-group-1" data-validation="radio" required>
 				<label for="f13">Select this to choose lipsum</label>
-			</fieldset> -->
+			</fieldset>
 
 			<button class="primary" type="submit">Validate and Send</button>
 			<img class="form-loader" src="img/loader.gif" height="32" width="32" alt="">

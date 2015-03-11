@@ -563,7 +563,11 @@ optgroup {
 }
 
 [readonly],
-[disabled] {
+[disabled],
+.valid[readonly],
+.valid[disabled],
+.invalid[readonly],
+.invalid[disabled] {
 	color: $ca !important;
 	border-color: $ca !important;
 	border-style: dotted !important;
