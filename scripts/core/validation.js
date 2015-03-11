@@ -164,12 +164,13 @@ function initValidation() {
 					});
 
 					if ( validArray.indexOf(false) < 0 ) {
-						submitted = true;
-						el.addClass("valid");
+						el.addClass("submitted").addClass("valid");
 
 						el.find("[data-validation='date']").datepicker("remove");
-						el.find("[required]").prop("readonly", true);
-						el.find("button").prop("readonly", true);
+						el.find("[required]").attr("readonly", "readonly");
+						el.find("button").attr("readonly", "readonly");
+
+						initDropdowns();
 
 						el.find(".form-loader").hide();
 						el.find(".form-done").show();
@@ -214,8 +215,6 @@ function initValidation() {
 			validateRealtime(el, type, value);
 		});
 
-		var submitted = false;
-
 		$("form[data-validation]").each(function() {
 			var form = $(this);
 
@@ -258,7 +257,7 @@ function initValidation() {
 					validateField(elem, type, value);
 				});
 
-				if ( !submitted ) {
+				if ( !form.hasClass("submitted") ) {
 					var type = form.attr("data-validation"),
 						value = "";
 

@@ -162,13 +162,8 @@ function initForm() {
 		if ( config.application.debug ) console.log("Form :: Toggles");
 	}
 
-	$("input[type='checkbox'][readonly], input[type='radio'][readonly]").each(function() {
-		var el = $(this),
-			state = el.prop("checked");
-
-		el.on("click", function(event) {
-			event.preventDefault();
-		});
+	$(document).on("click", "input[type='checkbox'][readonly], input[type='radio'][readonly]", function(event) {
+		event.preventDefault();
 	});
 
 
@@ -231,93 +226,91 @@ function initForm() {
 function initDropdowns() {
 	if ( $("select").length ) {
 		function buildDropdowns(i) {
-			var el = $("select").eq(i),
-				size = size == "undefined" || size === "" ? 1 : parseInt(el.attr("size"), 10),
+			var select = $("select").eq(i),
+				size = size == "undefined" || size === "" ? 1 : parseInt(select.attr("size"), 10),
 				type = typeof size !== "undefined" && size !== "" && size > 1 ? "list" : "drop",
-				option = el.find("option").not(".placeholder"),
-				selected = el.find("option:selected"),
+				option = select.children("option").not(".placeholder"),
+				selected = select.children("option:selected"),
 				wrapper = '<div class="dropdown-' + i + ' dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
-				arrowEl =  '<div class="dropdown-arrow valign-middle">\
-								<img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-down.png\'">\
-							</div>',
-				currentEl = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>',
-				dropdownEl = '<div class="dropdown"></div>';
+				widget = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>\
+						  <div class="dropdown-arrow valign-middle">\
+							  <img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-down.png\'">\
+						  </div>\
+						  <div class="dropdown"></div>';
 
 
 			// Build structure
 
-			if ( $(".dropdown-" + i).length ) el.insertAfter($(".dropdown-" + i));
+			if ( $(".dropdown-" + i).length ) select.insertAfter($(".dropdown-" + i));
 			$(".dropdown-" + i).remove();
-
-			el.wrap(wrapper);
+			select.wrap(wrapper);
 
 			var dropdown = $(".dropdown-" + i);
-
-			dropdown.find(".dropdown").remove();
-			dropdown.find(".dropdown-arrow").remove();
-			dropdown.find(".dropdown-current").remove();
-			$(".dropdown-" + i).prepend(dropdownEl).prepend(arrowEl).prepend(currentEl);
+			dropdown.children(".dropdown-current").remove();
+			dropdown.children(".dropdown-arrow").remove();
+			dropdown.children(".dropdown").remove();
+			dropdown.prepend(widget);
 
 			option.each(function() {
 				var option = $(this),
 					isSelected = option.is(":selected") ? "active" : "",
 					item = '<div class="dropdown-item ' + isSelected + '" data-value="' + option.val() + '">' + option.html() + '</div>';
 
-				dropdown.find(".dropdown").append(item);
+				dropdown.children(".dropdown").append(item);
 			});
 
 			if ( type == "list" ) {
-				dropdown.find(".dropdown").height(((dropdown.find(".dropdown-item").outerHeight() + 1) * size) - 1);
+				dropdown.children(".dropdown").height(((dropdown.find(".dropdown-item").outerHeight() + 1) * size) - 1);
 			}
 
 
 			// Click Event
 
 			dropdown.each(function() {
-				var drop = $(this),
-					dropFake = drop.find(".dropdown"),
-					dropItem = drop.find(".dropdown-item"),
-					target = drop.children(".dropdown-current");
+				var el = $(this),
+					dropFake = el.children(".dropdown"),
+					dropItem = dropFake.children(".dropdown-item"),
+					target = el.children(".dropdown-current");
 
-				target.attr("class", "dropdown-current " + el.attr("class"));
+				target.attr("class", "dropdown-current " + select.attr("class"));
 
-				if ( el.is('[readonly]') ) {
-					drop.addClass("readonly");
+				if ( select.is('[readonly]') ) {
+					el.addClass("readonly");
 					target.attr("readonly", true);
-				} else if ( el.is('[disabled]') ) {
-					drop.addClass("disabled");
+				} else if ( select.is('[disabled]') ) {
+					el.addClass("disabled");
 					target.attr("disabled", true);
 				} else {
-					drop.off().on("click", function() {
+					el.off().on("click", function() {
 						if ( type == "drop" ) {
-							if ( !drop.hasClass("active") ) {
+							if ( !el.hasClass("active") ) {
 								$(".dropdown-wrapper").removeClass("active");
-								drop.addClass("active");
+								el.addClass("active");
 
-								if ( pageBottom >= drop.offset().top + dropFake.height() + 55 ) {
+								if ( pageBottom >= el.offset().top + dropFake.height() + 55 ) {
 									dropFake.removeClass("bound").addClass("default");
 								} else {
 									dropFake.removeClass("default").addClass("bound");
 								}
 
-								el.focus();
+								select.focus();
 							} else {
 								$(".dropdown-wrapper").removeClass("active");
-								el.blur();
+								select.blur();
 							}
 						}
 					});
 
 					dropItem.off().on("click", function() {
 						var value = $(this).attr("data-value");
-						el.val(value).trigger("change");
+						select.val(value).trigger("change");
 					});
 
-					el.on("change", function() {
+					select.on("change", function() {
 						var selected = $(this).children("option:selected");
 
 						dropItem.removeClass("active");
-						if ( !el.hasClass("keep") ) target.text(selected.text()).attr("data-value", selected.val());
+						if ( !select.hasClass("keep") ) target.text(selected.text()).attr("data-value", selected.val());
 
 						for ( var i = 0; i < dropItem.length; i++ ) {
 							if ( dropItem.eq(i).text() === selected.text() ) {
@@ -344,7 +337,7 @@ function initDropdowns() {
 
 		$(window).on("scroll", function() {
 			var el = $(".dropdown-wrapper.active"),
-				drop = el.find(".dropdown");
+				drop = el.children(".dropdown");
 
 			if ( el.length && pageBottom >= el.offset().top + drop.height() + 55 ) {
 				drop.removeClass("bound").addClass("default");
