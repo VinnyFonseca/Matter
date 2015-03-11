@@ -29,6 +29,10 @@ table {
 			margin: 0;
 			padding: ($spacing / 2) ($spacing / 1.5);
 			border: 1px solid $cd;
+
+			> * {
+				margin: 0;
+			}
 		}
 	}
 

@@ -602,12 +602,14 @@
 		<table id="table-1" summary="Each row names a Nordic country and specifies its total area and land area, in square kilometers">
 			<caption>Sample table: Areas of the Nordic countries, in sq km</caption>
 
-			<tbody>
+			<thead>
 				<tr>
 					<th scope="col">Country</th>
 					<th scope="col">Total area</th>
 					<th scope="col">Land area</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
 					<th scope="row">Denmark</th>
 					<td> 43,070 </td>
@@ -643,14 +645,16 @@
 		</p>
 
 		<table id="table-2">
-			<tbody>
+			<thead>
 				<tr>
-					<th>Char.</th>
-					<th>Explanation</th>
-					<th>HTML Entity</th>
-					<th>Unicode</th>
-					<th>Notes</th>
+					<th scope="col">Char.</th>
+					<th scope="col">Explanation</th>
+					<th scope="col">HTML Entity</th>
+					<th scope="col">Unicode</th>
+					<th scope="col">Notes</th>
 				</tr>
+			</thead>
+			<tbody>
 				<tr>
 					<th scope="row">ê</td>
 					<td>e with circumflex</td>

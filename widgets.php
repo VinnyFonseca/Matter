@@ -382,6 +382,40 @@
 
 
 
+		<a href="#" class="anchor" id="tables"></a>
+
+		<h2>Video Embeds</h2>
+
+		<p>
+			Supports youtube only.
+		</p>
+
+		<p>
+			<strong>Usage:</strong>
+		</p>
+
+		<p>Insert the example code below anywhere in your page.</p>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<div class="video-frame" data-youtube-id="KaqC5FnvAEc"></div>
+
+		<p>
+			<strong>Example:</strong>
+		</p>
+
+<pre>
+&lt;div class="video-frame" <span class="emphasis">data-youtube-id="KaqC5FnvAEc"</span>&gt;&lt;/div&gt;
+</pre>
+
+
+
+		<hr>
+
+
+
 		<a href="#" class="anchor" id="accessibility"></a>
 
 		<h2>Accessibility</h2>

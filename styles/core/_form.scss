@@ -47,20 +47,6 @@ label {
 		margin-top: 0;
 		padding: 0;
 	}
-
-	.indicator-required {
-		display: inline-block;
-		position: relative;
-		margin: 0;
-		margin-left: 5px;
-		padding: 0;
-		width: 5px;
-		height: 5px;
-		top: -2px;
-		border-radius: 100px;
-		background: #e44;
-		vertical-align: middle;
-	}
 }
 
 
@@ -449,6 +435,7 @@ input[type="checkbox"] {
 				z-index: 1;
 				overflow: hidden;
 				vertical-align: middle;
+				@include transition(left $animEasing $animDuration);
 			}
 
 			.toggle-track {
@@ -670,6 +657,19 @@ optgroup {
 	margin-bottom: $spacing / 2;
 	color: $c2;
 	@include font-size($fontSize / 1.1);
+}
+
+.indicator-required {
+	display: inline-block;
+	position: relative;
+	margin: 0 6px;
+	padding: 0;
+	width: 4px;
+	height: 4px;
+	top: -2px;
+	border-radius: 100px;
+	background: #e44;
+	vertical-align: middle;
 }
 
 
@@ -1202,7 +1202,7 @@ label[data-progress] {
 		padding: 2px 5px;
 		top: 46px;
 		right: 36px;
-		@include font-size($fontSize / 1.15);
+		@include font-size($fontSize / 1.2);
 		color: $brand1;
 		text-align: center;
 		border-radius: $radius;

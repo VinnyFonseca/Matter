@@ -1,0 +1,76 @@
+.video-frame {
+	display: block;
+	position: relative;
+	margin: 0;
+	padding-bottom: 56%;
+	width: 100%;
+	border: 1px solid $cd;
+	border-left: 7px solid $brand1;
+	border-radius: $radius;
+	overflow: hidden;
+
+	img,
+	iframe,
+	.video-overlay,
+	#ytplayer {
+		position: absolute;
+		margin: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+
+	img {
+		display: block;
+		position: absolute;
+		margin-top: -38%;
+		width: auto;
+		max-width: none;
+		height: 136%;
+		top: 50%;
+		@include opacity(0.5);
+		z-index: 15;
+	}
+
+	.video-overlay {
+		display: block;
+		background: $cf;
+		z-index: 10;
+	}
+
+	.button-play {
+		display: none;
+		position: absolute;
+		padding: $spacing * 1.2;
+		width: 84px;
+		height: 84px;
+		bottom: $spacing * 1.5;
+		right: $spacing * 1.5;
+		@include opacity(0.8);
+		border-radius: 1000px;
+		background: $cf;
+		z-index: 20;
+		cursor: pointer;
+		@include transition(all 0.15s $animEasing);
+
+		&:hover {
+			@include opacity(1);
+
+			.icon {
+				@include svgColor($brand2);
+			}
+		}
+
+		.icon {
+			left: 4px;
+			width: 100%;
+			height: 100%;
+			@include svgColor($brand1);
+			@include transition(all 0.15s $animEasing);
+
+			* {
+				@include transition(all 0.15s $animEasing);
+			}
+		}
+	}
+}

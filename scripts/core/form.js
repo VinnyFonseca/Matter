@@ -124,7 +124,7 @@ function initForm() {
 		if ( config.application.debug ) console.log("Form :: Radio buttons");
 	}
 
-	if ( $("input[type='toggle']").length ) {
+	if ( $("input[type='togglecheckbox']").length ) {
 		var toggle = '<span class="toggle-body">
 							<span class="toggle-switch"></span>
 							<span class="toggle-track">
@@ -133,9 +133,28 @@ function initForm() {
 							</span>
 						</span>';
 
-		$("input[type='toggle']").each(function() {
+		$("input[type='togglecheckbox']").each(function() {
 			var el = $(this);
 			el.attr("type", "checkbox").wrap("<div class='controller toggle'></div>");
+			var parent = el.parents(".controller");
+			parent.next("label").prepend(toggle).appendTo(parent);
+		});
+
+		if ( config.application.debug ) console.log("Form :: Toggles");
+	}
+
+	if ( $("input[type='toggleradio']").length ) {
+		var toggle = '<span class="toggle-body">
+							<span class="toggle-switch"></span>
+							<span class="toggle-track">
+							<span class="toggle-background"></span>
+								<span class="toggle-background toggle-background-negative"></span>
+							</span>
+						</span>';
+
+		$("input[type='toggleradio']").each(function() {
+			var el = $(this);
+			el.attr("type", "radio").wrap("<div class='controller toggle'></div>");
 			var parent = el.parents(".controller");
 			parent.next("label").prepend(toggle).appendTo(parent);
 		});

@@ -16,14 +16,18 @@
 
 		<a href="#" class="anchor" id="input"></a>
 
-		<h2>Input Types</h2>
+		<h2>Form w/ Validation</h2>
 
 		<form action="#" novalidate data-validation="true">
 			<input type="hidden" value="42">
 
 			<p class="emphasis">
-				Note: Validation is active for the fields below. You can change it on <code>config.js</code> under <code>config.forms.validation</code>.
+				Note: You can turn validation on or off at <code>config.js</code>.
 			</p>
+
+			<div class="form-info">
+				Fields marked with <span class='indicator-required'></span> are required.
+			</div>
 
 			<label>Text</label>
 			<input type="text" name="text" placeholder="First and Last Name" data-validation="text" required>
@@ -54,50 +58,68 @@
 			</select>
 
 			<label>Textarea</label>
-			<textarea name="textarea" rows="2" cols="20" placeholder="Default text"></textarea>
+			<textarea name="textarea" rows="5" cols="50" placeholder="Default text" data-validation="text" required></textarea>
 
-			<fieldset>
-				<legend>Radio Buttons</legend>
-
-				<input id="f1" type="radio" name="option-group" value="1">
-				<label for="f1">Select this to choose the following lipsum</label>
-
-				<input id="f2" type="radio" name="option-group" value="2">
-				<label for="f2">Select this to choose the Terms &amp; lipsum</label>
-
-				<input id="f3" type="radio" name="option-group" value="2">
-				<label for="f3">Select this to choose lipsum</label>
-			</fieldset>
+			<p class="form-info emphasis">
+				Note: Checkboxes need all required options to be selected.
+			</p>
 
 			<fieldset>
 				<legend>Checkboxes</legend>
 
-				<input id="f5" type="checkbox" name="check-accept" value="1">
+				<input id="f5" type="checkbox" name="check-accept" value="1" data-validation="checkbox" required>
 				<label for="f5">I accept the following lipsum</label>
 
-				<input id="f6" type="checkbox" name="check-terms" value="2">
+				<input id="f6" type="checkbox" name="check-terms" value="2" data-validation="checkbox" required>
 				<label for="f6">Terms &amp; lipsum</label>
 
-				<input id="f7" type="checkbox" name="check-subscribe" value="2" checked>
+				<input id="f7" type="checkbox" name="check-subscribe" value="3" data-validation="checkbox" required>
 				<label for="f7">Uncheck if you don't want to lipsum</label>
 			</fieldset>
 
 			<fieldset>
-				<legend>Toggles</legend>
+				<legend>Toggle Checkboxes</legend>
 
-				<input id="f105" type="toggle" />
-				<label for="f105">I accept the following lipsum</label>
+				<input id="f8" type="togglecheckbox" data-validation="checkbox" required>
+				<label for="f8">I accept the following lipsum</label>
 
-				<input id="f106" type="toggle" />
-				<label for="f106">Terms &amp; lipsum</label>
+				<input id="f9" type="togglecheckbox" data-validation="checkbox" required>
+				<label for="f9">Terms &amp; lipsum</label>
 
-				<input id="f107" type="toggle" checked />
-				<label for="f107">Uncheck if you don't want to lipsum</label>
+				<input id="f10" type="togglecheckbox" data-validation="checkbox" required>
+				<label for="f10">Check if you don't want to lipsum</label>
 			</fieldset>
 
-			<button class="primary" type="submit">Validate and Send</button>
-			<button type="reset">Reset</button>
+			<!-- <p class="form-info emphasis">
+				Note: Radio buttons need one required option to be selected.
+			</p>
 
+			<fieldset>
+				<legend>Radio Buttons</legend>
+
+				<input id="f1" type="radio" name="option-group" value="1" data-validation="radio" required>
+				<label for="f1">Select this to choose the following lipsum</label>
+
+				<input id="f2" type="radio" name="option-group" value="2" data-validation="radio" required>
+				<label for="f2">Select this to choose the Terms &amp; lipsum</label>
+
+				<input id="f3" type="radio" name="option-group" value="3" data-validation="radio" required>
+				<label for="f3">Select this to choose lipsum</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>Toggle Radio Buttons</legend>
+				<input id="f11" type="toggleradio" name="toggle-group-1" data-validation="checkbox" required>
+				<label for="f11">Select this to choose the following lipsum</label>
+
+				<input id="f12" type="toggleradio" name="toggle-group-1" data-validation="checkbox" required>
+				<label for="f12">Select this to choose the Terms &amp; lipsum</label>
+
+				<input id="f13" type="toggleradio" name="toggle-group-1" data-validation="checkbox" required>
+				<label for="f13">Select this to choose lipsum</label>
+			</fieldset> -->
+
+			<button class="primary" type="submit">Validate and Send</button>
 			<img class="form-loader" src="img/loader.gif" height="32" width="32" alt="">
 			<img class="svg icon icon-tick form-done" src="img/icons/icon-tick.svg" onerror="this.onerror=null;this.src='img/icons/icon-tick.png'">
 		</form>
@@ -112,155 +134,142 @@
 
 		<h2>Validation States</h2>
 
-		<div class="row">
-			<div class="column" data-span="3">
-				<input type="text" name="text" placeholder="Valid input" class="valid" required>
-			</div>
-			<div class="column" data-span="3">
-				<input type="text" name="text" placeholder="Invalid input" class="invalid" required>
-			</div>
-			<div class="column" data-span="3">
-				<input type="text" name="text" placeholder="Readonly input" readonly>
-			</div>
-			<div class="column" data-span="3">
-				<input type="text" name="text" placeholder="Disabled input" disabled>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="column" data-span="3">
-				<select class="valid" name="test" data-validation="select" required>
-					<option class="placeholder" value="">Valid select</option>
-					<option value="one">one</option>
-					<option value="two">two</option>
-					<option value="three">three</option>
-					<option value="four">four</option>
-					<option value="five">five</option>
-					<option value="six">six</option>
-					<option value="seven">seven</option>
-					<option value="eight">eight</option>
-					<option value="nine">nine</option>
-					<option value="ten">ten</option>
-				</select>
-			</div>
-			<div class="column" data-span="3">
-				<select class="invalid" name="test" data-validation="select" required>
-					<option class="placeholder" value="">Invalid select</option>
-					<option value="one">one</option>
-					<option value="two">two</option>
-					<option value="three">three</option>
-					<option value="four">four</option>
-					<option value="five">five</option>
-					<option value="six">six</option>
-					<option value="seven">seven</option>
-					<option value="eight">eight</option>
-					<option value="nine">nine</option>
-					<option value="ten">ten</option>
-				</select>
-			</div>
-			<div class="column" data-span="3">
-				<select name="test" data-validation="select" readonly>
-					<option class="placeholder" value="">Readonly select</option>
-					<option value="one">one</option>
-					<option value="two">two</option>
-					<option value="three">three</option>
-					<option value="four">four</option>
-					<option value="five">five</option>
-					<option value="six">six</option>
-					<option value="seven">seven</option>
-					<option value="eight">eight</option>
-					<option value="nine">nine</option>
-					<option value="ten">ten</option>
-				</select>
-			</div>
-			<div class="column" data-span="3">
-				<select name="test" data-validation="select" disabled>
-					<option class="placeholder" value="">Disabled select</option>
-					<option value="one">one</option>
-					<option value="two">two</option>
-					<option value="three">three</option>
-					<option value="four">four</option>
-					<option value="five">five</option>
-					<option value="six">six</option>
-					<option value="seven">seven</option>
-					<option value="eight">eight</option>
-					<option value="nine">nine</option>
-					<option value="ten">ten</option>
-				</select>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="column" data-span="3">
-				<textarea class="valid" name="textarea" cols="30" rows="5" required>Valid textarea</textarea>
-			</div>
-			<div class="column" data-span="3">
-				<textarea class="invalid" name="textarea" cols="30" rows="5" required>Invalid textarea</textarea>
-			</div>
-			<div class="column" data-span="3">
-				<textarea name="textarea" cols="30" rows="5" readonly>Readonly textarea</textarea>
-			</div>
-			<div class="column" data-span="3">
-				<textarea name="textarea" cols="30" rows="5" disabled>Disabled textarea</textarea>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="column" data-span="3">
-				<input class="valid" id="f200" type="checkbox" name="checkbox" required checked>
-				<label for="f200">Valid checkbox</label>
-			</div>
-			<div class="column" data-span="3">
-				<input class="invalid" id="f201" type="checkbox" name="checkbox" required>
-				<label for="f201">Invalid checkbox</label>
-			</div>
-			<div class="column" data-span="3">
-				<input id="f202" type="checkbox" name="checkbox" readonly>
-				<label for="f202">Readonly checkbox</label>
-			</div>
-			<div class="column" data-span="3">
-				<input id="f203" type="checkbox" name="checkbox" disabled>
-				<label for="f203">Disabled checkbox</label>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="column" data-span="3">
-				<input class="valid" id="f208" type="radio" name="radio-demo" required checked>
-				<label for="f208">Valid radio</label>
-			</div>
-			<div class="column" data-span="3">
-				<input class="invalid" id="f209" type="radio" name="radio-demo" required>
-				<label for="f209">Invalid radio</label>
-			</div>
-			<div class="column" data-span="3">
-				<input id="f210" type="radio" name="radio-demo" readonly>
-				<label for="f210">Readonly radio</label>
-			</div>
-			<div class="column" data-span="3">
-				<input id="f211" type="radio" name="radio-demo" disabled>
-				<label for="f211">Disabled radio</label>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="column" data-span="3">
-				<input class="valid" id="f212" type="toggle" name="toggle-demo" required checked>
-				<label for="f212">Valid toggle</label>
-			</div>
-			<div class="column" data-span="3">
-				<input class="invalid" id="f213" type="toggle" name="toggle-demo" required>
-				<label for="f213">Invalid toggle</label>
-			</div>
-			<div class="column" data-span="3">
-				<input id="f214" type="toggle" name="toggle-demo" readonly>
-				<label for="f214">Readonly toggle</label>
-			</div>
-			<div class="column" data-span="3">
-				<input id="f215" type="toggle" name="toggle-demo" disabled>
-				<label for="f215">Disabled toggle</label>
-			</div>
-		</div>
+		<table id="validation-table">
+			<thead>
+				<tr valign="middle">
+					<th valign="middle" scope="col">Valid</th>
+					<th valign="middle" scope="col">Invalid</th>
+					<th valign="middle" scope="col">Readonly/Disabled</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr valign="middle">
+					<td valign="middle">
+						<input type="text" name="text" placeholder="Input" class="valid" required>
+					</td>
+					<td valign="middle">
+						<input type="text" name="text" placeholder="Input" class="invalid" required>
+					</td>
+					<td valign="middle">
+						<input type="text" name="text" placeholder="Input" readonly>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<select class="valid" name="test" data-validation="select" required>
+							<option class="placeholder" value="">Select</option>
+							<option value="one">one</option>
+							<option value="two">two</option>
+							<option value="three">three</option>
+							<option value="four">four</option>
+							<option value="five">five</option>
+							<option value="six">six</option>
+							<option value="seven">seven</option>
+							<option value="eight">eight</option>
+							<option value="nine">nine</option>
+							<option value="ten">ten</option>
+						</select>
+					</td>
+					<td valign="middle">
+						<select class="invalid" name="test" data-validation="select" required>
+							<option class="placeholder" value="">Select</option>
+							<option value="one">one</option>
+							<option value="two">two</option>
+							<option value="three">three</option>
+							<option value="four">four</option>
+							<option value="five">five</option>
+							<option value="six">six</option>
+							<option value="seven">seven</option>
+							<option value="eight">eight</option>
+							<option value="nine">nine</option>
+							<option value="ten">ten</option>
+						</select>
+					</td>
+					<td valign="middle">
+						<select name="test" data-validation="select" readonly>
+							<option class="placeholder" value="">Select</option>
+							<option value="one">one</option>
+							<option value="two">two</option>
+							<option value="three">three</option>
+							<option value="four">four</option>
+							<option value="five">five</option>
+							<option value="six">six</option>
+							<option value="seven">seven</option>
+							<option value="eight">eight</option>
+							<option value="nine">nine</option>
+							<option value="ten">ten</option>
+						</select>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<textarea class="valid" name="textarea" cols="30" rows="5" required>Textarea</textarea>
+					</td>
+					<td valign="middle">
+						<textarea class="invalid" name="textarea" cols="30" rows="5" required>Textarea</textarea>
+					</td>
+					<td valign="middle">
+						<textarea name="textarea" cols="30" rows="5" readonly>Textarea</textarea>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<input class="valid" id="f200" type="checkbox" name="checkbox" required checked>
+						<label for="f200">Checkbox</label>
+					</td>
+					<td valign="middle">
+						<input class="invalid" id="f201" type="checkbox" name="checkbox" required>
+						<label for="f201">Checkbox</label>
+					</td>
+					<td valign="middle">
+						<input id="f202" type="checkbox" name="checkbox" readonly>
+						<label for="f202">Checkbox</label>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<input class="valid" id="f203" type="togglecheckbox" name="toggle-demo" required checked>
+						<label for="f203">Checkbox</label>
+					</td>
+					<td valign="middle">
+						<input class="invalid" id="f204" type="togglecheckbox" name="toggle-demo" required>
+						<label for="f204">Checkbox</label>
+					</td>
+					<td valign="middle">
+						<input id="f205" type="togglecheckbox" name="toggle-demo" readonly>
+						<label for="f205">Checkbox</label>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<input class="valid" id="f206" type="radio" name="radio-demo" required checked>
+						<label for="f206">Radio</label>
+					</td>
+					<td valign="middle">
+						<input class="invalid" id="f207" type="radio" name="radio-demo" required>
+						<label for="f207">Radio</label>
+					</td>
+					<td valign="middle">
+						<input id="f208" type="radio" name="radio-demo" readonly>
+						<label for="f208">Radio</label>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<input class="valid" id="f209" type="toggleradio" name="toggle-demo" required checked>
+						<label for="f209">Radio</label>
+					</td>
+					<td valign="middle">
+						<input class="invalid" id="f210" type="toggleradio" name="toggle-demo" required>
+						<label for="f210">Radio</label>
+					</td>
+					<td valign="middle">
+						<input id="f211" type="toggleradio" name="toggle-demo" readonly>
+						<label for="f211">Radio</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 
 
 
@@ -357,19 +366,19 @@
 		<fieldset>
 			<legend>Checkboxes Group</legend>
 
-			<input id="f101" type="checkbox" name="checkbox">
-			<label for="f101">Checkbox</label>
+			<input id="f301" type="checkbox" name="checkbox">
+			<label for="f301">Checkbox</label>
 
-			<input id="f102" type="checkbox" name="checkbox2" checked>
-			<label for="f102">Checkbox Checked</label>
+			<input id="f302" type="checkbox" name="checkbox2" checked>
+			<label for="f302">Checkbox Checked</label>
 		</fieldset>
 
 <pre>
 &lt;fieldset&gt;
 	&lt;legend&gt;Checkboxes Group&lt;/legend&gt;
 
-	&lt;input id="f101" type="checkbox" name="checkbox"&gt;
-	&lt;label for="f101"&gt;Checkbox&lt;/label&gt;
+	&lt;input <span class="emphasis">id="f101"</span> type="checkbox" name="checkbox"&gt;
+	&lt;label <span class="emphasis">for="f101"</span>&gt;Checkbox&lt;/label&gt;
 &lt;/fieldset&gt;
 </pre>
 
@@ -380,18 +389,18 @@
 		<fieldset>
 			<legend>Radio Buttons Group</legend>
 
-			<input id="f103" type="radio" name="radio" value="1">
-			<label for="f103">Radio</label>
+			<input id="f303" type="radio" name="radio" value="1">
+			<label for="f303">Radio</label>
 
-			<input id="f104" type="radio" name="radio" value="2" checked>
-			<label for="f104">Radio Checked</label>
+			<input id="f304" type="radio" name="radio" value="2" checked>
+			<label for="f304">Radio Checked</label>
 		</fieldset>
 
 <pre>
 &lt;fieldset&gt;
 	&lt;legend&gt;Radio Buttons Group&lt;/legend&gt;
 
-	&lt;input id="f102" type="radio" name="radio" value="1"&gt;
+	&lt;input <span class="emphasis">id="f102"</span> type="radio" name="radio" value="1"&gt;
 	&lt;label <span class="emphasis">for="f102"</span>&gt;Radio&lt;/label&gt;
 &lt;/fieldset&gt;
 </pre>
@@ -407,19 +416,19 @@
 		<fieldset>
 			<legend>Toggles Group</legend>
 
-			<input id="f105" type="toggle" />
-			<label for="f105">Toggle</label>
+			<input id="f305" type="toggle" />
+			<label for="f305">Toggle</label>
 
-			<input id="f106" type="toggle" checked />
-			<label for="f106">Toggle Checked</label>
+			<input id="f306" type="toggle" checked />
+			<label for="f306">Toggle Checked</label>
 		</fieldset>
 
 <pre>
 &lt;fieldset&gt;
 	&lt;legend&gt;Toggles Group&lt;/legend&gt;
 
-	&lt;input id="f103" type="toggle" /&gt;
-	&lt;label for="f103"&gt;Toggle&lt;/label&gt;
+	&lt;input <span class="emphasis">id="f103"</span> type="toggle" /&gt;
+	&lt;label <span class="emphasis">for="f103"</span>&gt;Toggle&lt;/label&gt;
 &lt;/fieldset&gt;
 </pre>
 
@@ -542,20 +551,6 @@
 			</div>
 		</progress>
 		<button class="primary" data-progress="100">Trigger Progress</button>
-
-
-
-		<hr>
-
-
-
-		<a href="#" class="anchor" id="buttons"></a>
-
-		<h2>Buttons</h2>
-
-		<button class="primary" type="submit">Validate and Send</button>
-		<button disabled>Disabled</button>
-		<button type="reset">Reset</button>
 
 
 
