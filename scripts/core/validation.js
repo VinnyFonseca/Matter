@@ -83,9 +83,8 @@ function initValidation() {
 
 		// Validation function called on keyup
 
-		var radioGroup = {};
-
 		function validateField(el, type, value) {
+
 			if ( config.application.debug ) console.log("Validation :: " + type);
 
 			el.removeClass("invalid").removeClass("valid");
@@ -143,15 +142,15 @@ function initValidation() {
 
 				case "radio":
 					var group = el.attr("name");
-					var radios = $("input[type='radio'][name='" + group + "']");
+					var radios = el.siblings("input[type='radio'][name='" + group + "']");
 
-					radios.each(function() {
-						radioGroup[group] = el.prop("checked");
-					});
-
-					console.log(radioGroup[group]);
-
-					// radioGroup[group].indexOf(true) != -1 ? radios.addClass("valid") : radios.addClass("invalid");
+					if ( el.prop("checked") || radios.prop("checked") ) {
+						el.addClass("valid");
+						radios.addClass("valid");
+					} else {
+						el.addClass("invalid");
+						radios.addClass("invalid");
+					}
 					break;
 
 

@@ -16,7 +16,7 @@
 
 		<a href="#" class="anchor" id="input"></a>
 
-		<h2>Form w/ Validation</h2>
+		<h2>Complete Form w/ Validation</h2>
 
 		<form action="#" novalidate data-validation="true">
 			<input type="hidden" value="42">
@@ -90,7 +90,7 @@
 				<label for="f10">Check if you don't want to lipsum</label>
 			</fieldset>
 
-			<!-- <p class="form-info emphasis">
+			<p class="form-info emphasis">
 				Note: Radio buttons need one required option to be selected.
 			</p>
 
@@ -107,7 +107,7 @@
 				<label for="f3">Select this to choose lipsum</label>
 			</fieldset>
 
-			<fieldset>
+			<!-- <fieldset>
 				<legend>Toggle Radio Buttons</legend>
 				<input id="f11" type="toggleradio" name="toggle-group-1" data-validation="checkbox" required>
 				<label for="f11">Select this to choose the following lipsum</label>
