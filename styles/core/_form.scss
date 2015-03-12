@@ -64,9 +64,9 @@ textarea {
 	@include font-size($fontSize);
 	font-weight: 300;
 	text-align: left;
-	border: 1px solid $cd;
+	border: 1px solid $cc;
 	@include border-radius($radius);
-	background: $cf;
+	background: #fafafa;
 	@include background-clip(padding-box);
 	outline: 0;
 	vertical-align: bottom;
@@ -91,10 +91,11 @@ textarea {
 
 
 	&:focus {
-		@include box-shadow($inputFocusColor 0 0 3px 0);
+		border: 1px solid $inputFocusColor !important;
+		box-shadow: 0 0 5px $inputFocusColor !important;
 	}
 	&:invalid {
-		@include box-shadow(none);
+		box-shadow: none;
 	}
 
 
@@ -146,7 +147,7 @@ input[type="button"] {
 	text-decoration: none !important;
 	border: 0;
 	@include border-radius($radius);
-	@include box-shadow(inset 0 0 0 1px rgba(0, 0, 0, 0.15));
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
 	background: $ce;
 	cursor: pointer !important;
 	@include appearance(none);
@@ -171,7 +172,7 @@ input[type="button"] {
 	}
 
 	&:invalid {
-		@include box-shadow(none);
+		box-shadow: none;
 	}
 
 
@@ -210,24 +211,18 @@ button {
 
 input[type="radio"],
 input[type="checkbox"] {
-	display: none;
+	display: inline-block;
 	position: relative;
 	margin: 0;
 	margin-right: 4px;
 	padding: 0;
-	width: 16px;
-	height: 16px;
-	top: 2px;
+	width: 15px;
+	height: 15px;
+	top: 0;
 	left: 0;
-	width: auto;
 	border: 0;
-	background: none;
+	background: transparent;
 	vertical-align: middle;
-
-	&:focus,
-	&:active {
-		@include box-shadow(none);
-	}
 }
 
 
@@ -271,7 +266,7 @@ input[type="checkbox"] {
 			top: -2px;
 			text-align: center;
 			line-height: 1.9 !important;
-			border: 1px solid $c8;
+			border: 1px solid $ca;
 			@include border-radius(3px);
 			background-color: $ce;
 			box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, 0.7), inset 0px -1px 1px 0 rgba(0, 0, 0, 0.15);
@@ -283,54 +278,6 @@ input[type="checkbox"] {
 			float: right;
 			margin-left: 10px;
 			margin-right: 0;
-		}
-	}
-
-	input {
-		&.valid {
-			+ label {
-				color: $validationSuccessFontColor !important;
-
-				.toggle-switch,
-				&:before,
-				&:after {
-					color: $validationSuccessFontColor !important;
-					border-color: $validationSuccessBorderColor !important;
-					background-color: $validationSuccessBgColor !important;
-				}
-			}
-		}
-		&.invalid {
-			+ label {
-				color: $validationFailureFontColor !important;
-
-				.toggle-switch,
-				&:before,
-				&:after {
-					color: $validationFailureFontColor !important;
-					border-color: $validationFailureBorderColor !important;
-					background-color: $validationFailureBgColor !important;
-				}
-			}
-		}
-		&[readonly],
-		&[disabled] {
-			+ label {
-				color: $ca !important;
-				cursor: no-drop !important;
-
-				.toggle-switch,
-				&:before,
-				&:after {
-					color: $c8 !important;
-					border-color: $cb !important;
-					border-style: dotted !important;
-					background-color: $ce !important;
-					box-shadow: none !important;
-					@include user-select(none);
-					cursor: no-drop !important;
-				}
-			}
 		}
 	}
 
@@ -428,7 +375,7 @@ input[type="checkbox"] {
 				height: $swtSz;
 				top: -1px;
 				left: -1px;
-				border: 1px solid $c8;
+				border: 1px solid $ca;
 				border-radius: 1000px;
 				background-color: $ce;
 				box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, 0.7), inset 0px -1px 1px 0 rgba(0, 0, 0, 0.15);
@@ -502,100 +449,6 @@ optgroup {
 
 
 
-// Validation
-
-.input-validation-error {
-	border: 2px solid $validationFailureBorderColor;
-}
-.field-validation-error {
-	display: block;
-	margin-top: 5px;
-	color: $validationFailureFontColor;
-	@include font-size($fontSize / 1.1);
-}
-
-.dropdown-current,
-[required] {
-	&.valid {
-		color: $validationSuccessFontColor !important;
-		border-color: $validationSuccessBorderColor !important;
-		background-color: $validationSuccessBgColor !important;
-
-		&::-webkit-input-placeholder {
-			color: $validationSuccessFontColor !important;
-		}
-		&::-moz-placeholder {
-			color: $validationSuccessFontColor !important;
-		}
-		&:-moz-placeholder {
-			color: $validationSuccessFontColor !important;
-		}
-		&:-ms-input-placeholder {
-			color: $validationSuccessFontColor !important;
-		}
-		&.placeholder-text,
-		&.placeholder_text {
-			color: $validationSuccessFontColor !important;
-		}
-	}
-	&.invalid {
-		color: $validationFailureFontColor !important;
-		border-color: $validationFailureBorderColor !important;
-		background-color: $validationFailureBgColor !important;
-
-		&::-webkit-input-placeholder {
-			color: $validationFailureFontColor !important;
-		}
-		&::-moz-placeholder {
-			color: $validationFailureFontColor !important;
-		}
-		&:-moz-placeholder {
-			color: $validationFailureFontColor !important;
-		}
-		&:-ms-input-placeholder {
-			color: $validationFailureFontColor !important;
-		}
-		&.placeholder-text,
-		&.placeholder_text {
-			color: $validationFailureFontColor !important;
-		}
-	}
-}
-
-[readonly],
-[disabled],
-.valid[readonly],
-.valid[disabled],
-.invalid[readonly],
-.invalid[disabled] {
-	color: $ca !important;
-	border-color: $ca !important;
-	border-style: dotted !important;
-	background-color: $ce !important;
-	box-shadow: none !important;
-	@include user-select(none);
-	cursor: no-drop !important;
-
-	&::-webkit-input-placeholder {
-		color: $ca;
-	}
-	&::-moz-placeholder {
-		color: $ca;
-	}
-	&:-moz-placeholder {
-		color: $ca;
-	}
-	&:-ms-input-placeholder {
-		color: $ca;
-	}
-	&.placeholder-text,
-	&.placeholder_text {
-		color: $ca;
-	}
-}
-
-
-
 // Custom Elements
 
 .input-group {
@@ -628,7 +481,6 @@ optgroup {
 		display: inline-block;
 		margin: 0;
 		width: 45%;
-		text-align: center;
 		@include border-left-radius($radius);
 		@include border-right-radius(0);
 
@@ -647,7 +499,7 @@ optgroup {
 		font-family: $bodyFont;
 		@include font-size($fontSize);
 		text-align: center;
-		border: 1px solid $cd;
+		border: 1px solid $cc;
 		border-left: 0;
 		border-right: 0;
 		background: $ce;
@@ -717,7 +569,6 @@ optgroup {
 	width: 100%;
 	vertical-align: top;
 	@include border-radius($radius);
-	overflow: hidden;
 
 	input {
 		display: block;
@@ -731,7 +582,7 @@ optgroup {
 		margin: 0 auto;
 		width: 0;
 		height: 2px;
-		bottom: 0;
+		bottom: $radius;
 		overflow: hidden;
 		z-index: 10;
 	}
@@ -759,20 +610,12 @@ optgroup {
 	font-family: $bodyFont;
 	@include font-size($fontSize);
 	text-align: left;
+	overflow: hidden;
 	vertical-align: top;
 	cursor: pointer;
 	@include user-select(none);
 	@include background-clip(padding-box);
-	overflow: hidden;
-	outline: 0;
 	z-index: 20;
-
-	&:focus {
-		.dropdown-current,
-		.dropdown {
-			@include box-shadow($inputFocusColor 0 0 0 0);
-		}
-	}
 
 	&:hover,
 	&.active {
@@ -785,8 +628,19 @@ optgroup {
 		overflow: visible;
 		z-index: 90;
 
-		.dropdown-current {
-			@include box-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+		select {
+			+ .dropdown-current {
+				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+			}
+
+			&:focus {
+				box-shadow: none !important;
+
+				+ .dropdown-current {
+					border: 1px solid $inputFocusColor !important;
+					box-shadow: 0 0 5px $inputFocusColor !important;
+				}
+			}
 		}
 	}
 
@@ -799,8 +653,91 @@ optgroup {
 	}
 
 
+	select {
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		margin-bottom: 0;
+	}
+
+	.dropdown-current {
+		display: block;
+		position: relative;
+		padding: 9px 12px;
+		border: 1px solid $cc;
+		@include border-radius($radius);
+		background: #fafafa;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		cursor: pointer;
+		z-index: 30;
+	}
+
+	.dropdown-arrow {
+		display: none;
+		position: absolute;
+		margin: 0;
+		padding: 0;
+		width: 42px;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		color: $cf;
+		text-align: center;
+		border: 0 solid rgba(0, 0, 0, 0.4);
+		@include border-left-radius(0);
+		@include border-right-radius($radius);
+		background: $brand1;
+		z-index: 50;
+
+		.icon {
+			width: 14px;
+			height: 14px;
+		}
+	}
+
+
+	$dropdownItemHeight: 44;
+	$dropdownItemCount: 7;
+
+	.dropdown {
+		display: block;
+		margin: 0;
+		margin-top: 0;
+		padding: 0;
+		width: 100%;
+		max-height: ($dropdownItemHeight * $dropdownItemCount) + px;
+		overflow: auto;
+		overflow-x: hidden;
+		z-index: 15;
+
+		.dropdown-item {
+			display: block;
+			position: relative;
+			padding: 9px 12px;
+			background: $ce;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			cursor: pointer;
+
+			&:hover {
+				color: $cf;
+				background: $brand2 !important;
+			}
+
+			&:active,
+			&.active {
+				color: $cf;
+				background: $brand1 !important;
+			}
+		}
+	}
+
+
 	&.drop {
-		.dropdown-current,
 		.dropdown-arrow {
 			display: block;
 		}
@@ -815,7 +752,7 @@ optgroup {
 			width: 99%;
 			left: 0.5%;
 			border: 1px solid $cd;
-			@include box-shadow(0 0 5px rgba(0, 0, 0, 0.25));
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
 			@include opacity(0);
 			@include transition-property(opacity, transform);
 			@include transition-duration($animDuration);
@@ -871,91 +808,11 @@ optgroup {
 			.dropdown-item {
 				margin-top: 0;
 				border-top: 1px solid $cd;
+				background: #fafafa;
 
 				&:first-child {
 					border-top: 0;
 				}
-			}
-		}
-	}
-
-
-	select {
-		display: none;
-		margin-bottom: 0;
-	}
-
-	.dropdown-current {
-		display: block;
-		position: relative;
-		padding: 9px 12px;
-		border: 1px solid $cd;
-		@include border-radius($radius);
-		background: $cf;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		cursor: pointer;
-		z-index: 30;
-	}
-
-	.dropdown-arrow {
-		display: none;
-		position: absolute;
-		margin: 0;
-		padding: 0;
-		width: 42px;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		color: $cf;
-		text-align: center;
-		border: 0 solid rgba(0, 0, 0, 0.4);
-		@include border-left-radius(0);
-		@include border-right-radius($radius);
-		background: $brand1;
-		z-index: 50;
-
-		.icon {
-			width: 14px;
-			height: 14px;
-		}
-	}
-
-
-	$dropdownItemHeight: 44;
-	$dropdownItemCount: 7;
-
-	.dropdown {
-		display: block;
-		margin: 0;
-		margin-top: 0;
-		padding: 0;
-		width: 100%;
-		max-height: ($dropdownItemHeight * $dropdownItemCount) + px;
-		overflow: auto;
-		overflow-x: hidden;
-		z-index: 15;
-
-		.dropdown-item {
-			display: block;
-			position: relative;
-			padding: 9px 12px;
-			background: #f2f2f2;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			overflow: hidden;
-			cursor: pointer;
-
-			&:hover {
-				color: $cf;
-				background: $brand2;
-			}
-
-			&:active,
-			&.active {
-				color: $cf;
-				background: $brand1;
 			}
 		}
 	}
@@ -1066,6 +923,162 @@ optgroup {
 				display: inline-block;
 				@include font-size($fontSize);
 				vertical-align: middle !important;
+			}
+		}
+	}
+}
+
+
+
+// Validation
+
+.input-validation-error {
+	border: 2px solid $validationFailureBorderColor;
+}
+.field-validation-error {
+	display: block;
+	margin-top: 5px;
+	color: $validationFailureFontColor;
+	@include font-size($fontSize / 1.1);
+}
+
+.dropdown-current,
+[required] {
+	&.valid {
+		color: $validationSuccessFontColor !important;
+		border-color: $validationSuccessBorderColor;
+		background-color: $validationSuccessBgColor !important;
+
+		&::-webkit-input-placeholder {
+			color: $validationSuccessFontColor !important;
+		}
+		&::-moz-placeholder {
+			color: $validationSuccessFontColor !important;
+		}
+		&:-moz-placeholder {
+			color: $validationSuccessFontColor !important;
+		}
+		&:-ms-input-placeholder {
+			color: $validationSuccessFontColor !important;
+		}
+		&.placeholder-text,
+		&.placeholder_text {
+			color: $validationSuccessFontColor !important;
+		}
+	}
+	&.invalid {
+		color: $validationFailureFontColor !important;
+		border-color: $validationFailureBorderColor;
+		background-color: $validationFailureBgColor !important;
+
+		&::-webkit-input-placeholder {
+			color: $validationFailureFontColor !important;
+		}
+		&::-moz-placeholder {
+			color: $validationFailureFontColor !important;
+		}
+		&:-moz-placeholder {
+			color: $validationFailureFontColor !important;
+		}
+		&:-ms-input-placeholder {
+			color: $validationFailureFontColor !important;
+		}
+		&.placeholder-text,
+		&.placeholder_text {
+			color: $validationFailureFontColor !important;
+		}
+	}
+}
+
+[readonly],
+[disabled],
+[readonly]:focus,
+[disabled]:focus,
+.valid[readonly],
+.valid[disabled],
+.invalid[readonly],
+.invalid[disabled] {
+	color: $ca !important;
+	border-color: $ca !important;
+	border-style: dotted !important;
+	background-color: $ce !important;
+	box-shadow: none !important;
+	@include user-select(none);
+	cursor: no-drop !important;
+
+	&::-webkit-input-placeholder {
+		color: $ca !important;
+	}
+	&::-moz-placeholder {
+		color: $ca !important;
+	}
+	&:-moz-placeholder {
+		color: $ca !important;
+	}
+	&:-ms-input-placeholder {
+		color: $ca !important;
+	}
+	&.placeholder-text,
+	&.placeholder_text {
+		color: $ca !important;
+	}
+}
+
+.controller {
+	input {
+		&:focus {
+			+ label {
+				.toggle-switch,
+				&:before,
+				&:after {
+					border: 1px solid $inputFocusColor !important;
+					box-shadow: 0 0 5px $inputFocusColor !important;
+				}
+			}
+		}
+		&.valid {
+			+ label {
+				color: $validationSuccessFontColor !important;
+
+				.toggle-switch,
+				&:before,
+				&:after {
+					color: $validationSuccessFontColor !important;
+					border-color: $validationSuccessBorderColor;
+					background-color: $validationSuccessBgColor !important;
+				}
+			}
+		}
+		&.invalid {
+			+ label {
+				color: $validationFailureFontColor !important;
+
+				.toggle-switch,
+				&:before,
+				&:after {
+					color: $validationFailureFontColor !important;
+					border-color: $validationFailureBorderColor;
+					background-color: $validationFailureBgColor !important;
+				}
+			}
+		}
+		&[readonly],
+		&[disabled] {
+			+ label {
+				color: $ca !important;
+				cursor: no-drop !important;
+
+				.toggle-switch,
+				&:before,
+				&:after {
+					color: $c8 !important;
+					border-color: $cb !important;
+					border-style: dotted !important;
+					background-color: $ce !important;
+					box-shadow: none !important;
+					@include user-select(none);
+					cursor: no-drop !important;
+				}
 			}
 		}
 	}

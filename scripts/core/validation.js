@@ -236,6 +236,7 @@ function initValidation() {
 						var type = el.attr("data-validation"),
 							value = el.val();
 
+						if ( type == "select" ) el.next(".dropdown-current").removeClass("valid").removeClass("invalid");
 						if ( $(this).hasClass("invalid") ) validateField(el, type, value);
 					}).on("blur", function() {
 						setTimeout(function() {
