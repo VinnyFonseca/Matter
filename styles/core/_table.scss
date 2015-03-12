@@ -31,7 +31,7 @@ table {
 			border: 1px solid $cd;
 
 			> * {
-				margin: 0;
+				margin: 0 !important;
 			}
 		}
 	}
