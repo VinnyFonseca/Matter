@@ -39,7 +39,7 @@
 				<label>Email w/ Confirmation</label>
 				<input type="email" name="email" placeholder="Email" data-validation="email" required>
 				<div class="input-addon">repeat</div>
-				<input type="email" name="email-match" placeholder="Repeat email" data-validation="match" required>
+				<input type="email" name="email-match" placeholder="Confirm Email" data-validation="match" required>
 			</div>
 
 			<label>Date</label>
@@ -49,13 +49,18 @@
 				<label>Password w/ Confirmation</label>
 				<input type="password" name="password" placeholder="Minimum rating: 30%" data-validation="password" data-validate-key="true" required>
 				<div class="input-addon">repeat</div>
-				<input type="password" name="password-match" placeholder="Repeat password" data-validation="match" required>
+				<input type="password" name="password-match" placeholder="Confirm Password" data-validation="match" required>
 			</div>
 
 			<label>Select</label>
 			<select name="country" data-validation="select" data-countries="scripts/dev/data/countries.json" required>
-				<option class="placeholder" value="">Country</option>
+				<option value="" default selected>Select country...</option>
 			</select>
+
+			<!-- <label>Select List</label>
+			<select name="country" data-validation="select" data-countries="scripts/dev/data/countries.json" size="5" required>
+				<option value="" default selected>Select country...</option>
+			</select> -->
 
 			<label>Textarea</label>
 			<textarea name="textarea" rows="5" cols="50" placeholder="Default text" data-validation="text" required></textarea>
@@ -157,7 +162,7 @@
 				<tr valign="middle">
 					<td valign="middle">
 						<select class="valid" name="test" data-validation="select" required>
-							<option class="placeholder" value="">Select</option>
+							<option value="" default selected>Select</option>
 							<option value="one">one</option>
 							<option value="two">two</option>
 							<option value="three">three</option>
@@ -172,7 +177,7 @@
 					</td>
 					<td valign="middle">
 						<select class="invalid" name="test" data-validation="select" required>
-							<option class="placeholder" value="">Select</option>
+							<option value="" default selected>Select</option>
 							<option value="one">one</option>
 							<option value="two">two</option>
 							<option value="three">three</option>
@@ -187,7 +192,7 @@
 					</td>
 					<td valign="middle">
 						<select name="test" data-validation="select" readonly>
-							<option class="placeholder" value="">Select</option>
+							<option value="" default selected>Select</option>
 							<option value="one">one</option>
 							<option value="two">two</option>
 							<option value="three">three</option>
@@ -282,7 +287,7 @@
 		<h2>Select</h2>
 
 		<select>
-			<option class="placeholder" value="">Please select...</option>
+			<option value="" default selected>Please select...</option>
 			<option value="one">one</option>
 			<option value="two">two</option>
 			<option value="three">three</option>
@@ -297,7 +302,7 @@
 
 <pre>
 &lt;select>
-	&lt;option <span class="emphasis">class="placeholder" value=""</span>&gt;Please select...&lt;/option&gt;
+	&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
 	&lt;option value="one"&gt;one&lt;/option&gt;
 	&lt;option value="two"&gt;two&lt;/option&gt;
 	&lt;option value="three"&gt;three&lt;/option&gt;
@@ -314,7 +319,7 @@
 		<br>
 
 		<select size="5">
-			<option class="placeholder" value="">Please select...</option>
+			<option value="" default selected>Please select...</option>
 			<option value="one">one</option>
 			<option value="two">two</option>
 			<option value="three" selected>three</option>
@@ -329,7 +334,7 @@
 
 <pre>
 &lt;select <span class="emphasis">size="5"</span>&gt;
-	&lt;option <span class="emphasis">class="placeholder" value=""</span>&gt;Please select...&lt;/option&gt;
+	&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
 	&lt;option value="one"&gt;one&lt;/option&gt;
 	&lt;option value="two"&gt;two&lt;/option&gt;
 	&lt;option value="three"&gt;three&lt;/option&gt;
@@ -576,7 +581,7 @@
 					</div>
 					<div class="column" data-span="4">
 						<select name="payment-method" data-validation="select" required>
-							<option class="placeholder" value="">Payment Method</option>
+							<option value="" default selected>Payment Method</option>
 							<option value="Credit/Debit Card">Credit/Debit Card</option>
 							<option value="PayPal">PayPal</option>
 							<option value="Google Checkout">Google Checkout</option>
@@ -598,7 +603,7 @@
 					<div class="column" data-span="3">
 						<label>Expiry Date</label>
 						<select name="card-expiry-month" data-validation="select" required>
-							<option class="placeholder" value="">Month</option>
+							<option value="" default selected>Month</option>
 							<option value="01">01</option>
 							<option value="02">02</option>
 							<option value="03">03</option>
@@ -615,7 +620,7 @@
 					</div>
 					<div class="column" data-span="3">
 						<select name="card-expiry-year" data-validation="select" required>
-							<option class="placeholder" value="">Year</option>
+							<option value="" default selected>Year</option>
 							<option value="2015">2015</option>
 							<option value="2016">2016</option>
 							<option value="2017">2017</option>
