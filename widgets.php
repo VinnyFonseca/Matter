@@ -400,14 +400,14 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="video-frame" data-youtube-id="KaqC5FnvAEc"></div>
+		<div class="video-frame" data-youtube-id="lS5HyAFwLAU"></div>
 
 		<p>
 			<strong>Example:</strong>
 		</p>
 
 <pre>
-&lt;div class="video-frame" <span class="emphasis">data-youtube-id="KaqC5FnvAEc"</span>&gt;&lt;/div&gt;
+&lt;div class="video-frame" <span class="emphasis">data-youtube-id="lS5HyAFwLAU"</span>&gt;&lt;/div&gt;
 </pre>
 
 
