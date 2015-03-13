@@ -33,7 +33,7 @@
 			<input type="text" name="text" placeholder="First and Last Name" data-validation="text" required>
 
 			<label>Number</label>
-			<input type="text" name="number" placeholder="Numbers only" data-validation="number" required>
+			<input type="number" name="number" placeholder="Numbers only" data-validation="number" required>
 
 			<div class="input-group block-reset">
 				<label>Email w/ Confirmation</label>

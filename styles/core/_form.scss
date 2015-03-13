@@ -164,6 +164,10 @@ input[type="button"] {
 	&:visited {
 		background-color: $ce;
 	}
+	&:focus {
+		border: 1px solid $inputFocusColor !important;
+		box-shadow: 0 0 5px $inputFocusColor !important;
+	}
 
 
 	&::-moz-focus-inner {
