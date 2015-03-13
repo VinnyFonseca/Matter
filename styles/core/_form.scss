@@ -655,7 +655,7 @@ optgroup {
 
 	select {
 		display: block;
-		position: absolute;
+		position: relative;
 		left: 0;
 		top: 0;
 		margin-bottom: 0;
@@ -781,13 +781,7 @@ optgroup {
 		&.active {
 			.dropdown {
 				@include opacity(1);
-
-				&.default {
-					@include transform(translateY(0));
-				}
-				&.bound {
-					@include transform(translateY(0));
-				}
+				@include transform(translateY(0));
 			}
 		}
 	}

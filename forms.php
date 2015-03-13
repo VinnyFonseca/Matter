@@ -135,6 +135,93 @@
 
 
 
+		<a href="#" class="anchor" id="buttons"></a>
+
+		<h2>Payment Form</h2>
+
+		<form action="#" novalidate data-validation="true">
+			<div class="card-wrapper framed">
+				<div class="row">
+					<div class="column" data-span="6">
+						<div class="card-type valign-middle">
+							<img src="img/icons/cards/generic.png">
+							<span class="font-medium">Payment Details</span>
+						</div>
+					</div>
+					<div class="column mobile-hide" data-span="2">
+						&nbsp;
+					</div>
+					<div class="column" data-span="4">
+						<select name="payment-method" data-validation="select" required>
+							<option value="" default selected>Payment Method</option>
+							<option value="Credit/Debit Card">Credit/Debit Card</option>
+							<option value="PayPal">PayPal</option>
+							<option value="Google Checkout">Google Checkout</option>
+							<option value="Amazon Payments">Amazon Payments</option>
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column" data-span="6">
+						<label>Name</label>
+						<input type="text" name="card-name" placeholder="As shown on card" data-validation="text" required>
+					</div>
+					<div class="column" data-span="6">
+						<label>Card number</label>
+						<input type="number" name="card" placeholder="16 digits long number" data-validation="card" data-validate-key="true" required>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column" data-span="3">
+						<label>Expiry Date</label>
+						<select name="card-expiry-month" data-validation="select" required>
+							<option value="" default selected>Month</option>
+							<option value="01">01</option>
+							<option value="02">02</option>
+							<option value="03">03</option>
+							<option value="04">04</option>
+							<option value="05">05</option>
+							<option value="06">06</option>
+							<option value="07">07</option>
+							<option value="08">08</option>
+							<option value="09">09</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+						</select>
+					</div>
+					<div class="column" data-span="3">
+						<select name="card-expiry-year" data-validation="select" required>
+							<option value="" default selected>Year</option>
+							<option value="2015">2015</option>
+							<option value="2016">2016</option>
+							<option value="2017">2017</option>
+							<option value="2018">2018</option>
+							<option value="2019">2019</option>
+							<option value="2020">2020</option>
+							<option value="2021">2021</option>
+							<option value="2022">2022</option>
+							<option value="2023">2023</option>
+							<option value="2024">2024</option>
+							<option value="2025">2025</option>
+						</select>
+					</div>
+					<div class="column" data-span="6">
+						<label>CCV</label>
+						<input type="number" name="ccv" placeholder="3 digit security code" data-tooltip="<img src='img/icons/cards/ccv.png'>" data-validation="number" required>
+					</div>
+				</div>
+			</div>
+
+			<button class="primary" type="submit">Validate and Send</button>
+		</form>
+
+
+
+		<hr>
+
+
+
 		<a href="#" class="anchor" id="states"></a>
 
 		<h2>Validation States</h2>
@@ -556,93 +643,6 @@
 			</div>
 		</progress>
 		<button class="primary" data-progress="100">Trigger Progress</button>
-
-
-
-		<hr>
-
-
-
-		<a href="#" class="anchor" id="buttons"></a>
-
-		<h2>Example Form (Payment)</h2>
-
-		<form action="#" novalidate data-validation="true">
-			<div class="card-wrapper framed">
-				<div class="row">
-					<div class="column" data-span="6">
-						<div class="card-type valign-middle">
-							<img src="img/icons/cards/generic.png">
-							<span class="font-medium">Payment Details</span>
-						</div>
-					</div>
-					<div class="column mobile-hide" data-span="2">
-						&nbsp;
-					</div>
-					<div class="column" data-span="4">
-						<select name="payment-method" data-validation="select" required>
-							<option value="" default selected>Payment Method</option>
-							<option value="Credit/Debit Card">Credit/Debit Card</option>
-							<option value="PayPal">PayPal</option>
-							<option value="Google Checkout">Google Checkout</option>
-							<option value="Amazon Payments">Amazon Payments</option>
-						</select>
-					</div>
-				</div>
-				<div class="row">
-					<div class="column" data-span="6">
-						<label>Name</label>
-						<input type="text" name="card-name" placeholder="As shown on card" data-validation="text" required>
-					</div>
-					<div class="column" data-span="6">
-						<label>Card number</label>
-						<input type="number" name="card" placeholder="16 digits long number" data-validation="card" data-validate-key="true" required>
-					</div>
-				</div>
-				<div class="row">
-					<div class="column" data-span="3">
-						<label>Expiry Date</label>
-						<select name="card-expiry-month" data-validation="select" required>
-							<option value="" default selected>Month</option>
-							<option value="01">01</option>
-							<option value="02">02</option>
-							<option value="03">03</option>
-							<option value="04">04</option>
-							<option value="05">05</option>
-							<option value="06">06</option>
-							<option value="07">07</option>
-							<option value="08">08</option>
-							<option value="09">09</option>
-							<option value="10">10</option>
-							<option value="11">11</option>
-							<option value="12">12</option>
-						</select>
-					</div>
-					<div class="column" data-span="3">
-						<select name="card-expiry-year" data-validation="select" required>
-							<option value="" default selected>Year</option>
-							<option value="2015">2015</option>
-							<option value="2016">2016</option>
-							<option value="2017">2017</option>
-							<option value="2018">2018</option>
-							<option value="2019">2019</option>
-							<option value="2020">2020</option>
-							<option value="2021">2021</option>
-							<option value="2022">2022</option>
-							<option value="2023">2023</option>
-							<option value="2024">2024</option>
-							<option value="2025">2025</option>
-						</select>
-					</div>
-					<div class="column" data-span="6">
-						<label>CCV</label>
-						<input type="number" name="ccv" placeholder="3 digit security code" data-tooltip="<img src='img/icons/cards/ccv.png'>" data-validation="number" required>
-					</div>
-				</div>
-			</div>
-
-			<button class="primary" type="submit">Validate and Send</button>
-		</form>
 	</div>
 </div>
 

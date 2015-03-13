@@ -121,7 +121,7 @@ function initForm() {
 			parent.next("label").prepend(toggle).appendTo(parent);
 		});
 
-		if ( config.application.debug ) console.log("Form :: Radio buttons");
+		if ( config.application.debug ) console.log("Form :: Radios");
 	}
 
 	if ( $("input[type='togglecheckbox']").length ) {
@@ -140,7 +140,7 @@ function initForm() {
 			parent.next("label").prepend(toggle).appendTo(parent);
 		});
 
-		if ( config.application.debug ) console.log("Form :: Toggles");
+		if ( config.application.debug ) console.log("Form :: Toggle Checkboxes");
 	}
 
 	if ( $("input[type='toggleradio']").length ) {
@@ -159,7 +159,7 @@ function initForm() {
 			parent.next("label").prepend(toggle).appendTo(parent);
 		});
 
-		if ( config.application.debug ) console.log("Form :: Toggles");
+		if ( config.application.debug ) console.log("Form :: Toggle Radios");
 	}
 
 	$(document).on("click", "input[type='checkbox'][readonly], input[type='radio'][readonly]", function(event) {
@@ -282,11 +282,10 @@ function initDropdowns() {
 					el.addClass("disabled");
 					target.attr("disabled", true);
 				} else {
-					function reveal() {
+					function dropToggle() {
 						if ( type == "drop" ) {
-							$(".dropdown-wrapper").removeClass("active");
-
 							if ( !el.hasClass("active") ) {
+								$(".dropdown-wrapper").removeClass("active");
 								el.addClass("active");
 
 								if ( pageBottom >= el.offset().top + dropdown.height() + 55 ) {
@@ -294,12 +293,14 @@ function initDropdowns() {
 								} else {
 									dropdown.removeClass("default").addClass("bound");
 								}
+							} else {
+								$(".dropdown-wrapper").removeClass("active");
 							}
 						}
 					}
 
-					el.off().on("click", function() {
-						select.trigger("focus");
+					target.off().on("click", function() {
+						select.focus();
 					});
 
 					dropItem.off().on("click", function() {
@@ -308,10 +309,11 @@ function initDropdowns() {
 					});
 
 					select.on("focus", function() {
-						reveal();
+						dropToggle();
 					}).on("change", function() {
 						var selected = $(this).children("option:selected");
 
+						dropToggle();
 						dropItem.removeClass("active");
 						if ( !select.hasClass("keep") ) target.text(selected.text()).attr("data-value", selected.val());
 
@@ -324,8 +326,15 @@ function initDropdowns() {
 				}
 			});
 
+			$(document).on("focus", "*", function() {
+				$(".dropdown-wrapper").removeClass("active");
+			});
+
 			$("html, body").off().on("click", function(event) {
-				if ( !$(event.target).closest(".dropdown").length &&!$(event.target).closest(".dropdown-wrapper").length && $(".dropdown-wrapper").hasClass("active") ) {
+				if ( !$(event.target).closest(".dropdown").length &&
+					!$(event.target).closest(".dropdown-wrapper").length &&
+					$(".dropdown-wrapper").hasClass("active")
+				) {
 					$(".dropdown-wrapper").removeClass("active");
 				}
 			});
