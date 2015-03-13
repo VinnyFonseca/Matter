@@ -91,7 +91,7 @@ textarea {
 
 
 	&:focus {
-		border: 1px solid $inputFocusColor !important;
+		border-color: $inputFocusColor !important;
 		box-shadow: 0 0 5px $inputFocusColor !important;
 	}
 	&:invalid {
@@ -165,7 +165,7 @@ input[type="button"] {
 		background-color: $ce;
 	}
 	&:focus {
-		border: 1px solid $inputFocusColor !important;
+		border-color: $inputFocusColor !important;
 		box-shadow: 0 0 5px $inputFocusColor !important;
 	}
 
@@ -216,14 +216,14 @@ button {
 input[type="radio"],
 input[type="checkbox"] {
 	display: inline-block;
-	position: relative;
+	position: absolute;
 	margin: 0;
 	margin-right: 4px;
 	padding: 0;
 	width: 15px;
 	height: 15px;
-	top: 0;
-	left: 0;
+	top: 9px;
+	left: 7px;
 	border: 0;
 	background: transparent;
 	vertical-align: middle;
@@ -641,7 +641,7 @@ optgroup {
 				box-shadow: none !important;
 
 				+ .dropdown-current {
-					border: 1px solid $inputFocusColor !important;
+					border-color: $inputFocusColor !important;
 					box-shadow: 0 0 5px $inputFocusColor !important;
 				}
 			}
@@ -1029,7 +1029,7 @@ optgroup {
 				.toggle-switch,
 				&:before,
 				&:after {
-					border: 1px solid $inputFocusColor !important;
+					border-color: $inputFocusColor !important;
 					box-shadow: 0 0 5px $inputFocusColor !important;
 				}
 			}

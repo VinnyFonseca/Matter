@@ -3,6 +3,7 @@
 .row {
 	display: block;
 	position: relative;
+	margin: (-$gutter / 2);
 	font-size: 0;
 
 	> * {
@@ -13,14 +14,9 @@
 		display: inline-block;
 		position: relative;
 		margin: 0;
-		padding: 0;
-		padding-left: $gutter;
+		padding: $gutter / 2;
 		width: 100%;
 		vertical-align: top;
-
-		&:first-child {
-			padding-left: 0;
-		}
 
 		@for $i from 1 through $columns {
 			&[data-span="#{$i}"] {
@@ -45,7 +41,6 @@
 		// background: $ce;
 	}
 	.cell {
-		margin: 2px;
 		border: 1px dashed $cd;
 		background: $ce;
 	}
