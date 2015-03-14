@@ -29,7 +29,18 @@
 		height: 136%;
 		top: 50%;
 		@include opacity(0.5);
+		cursor: pointer;
 		z-index: 15;
+
+		&:hover {
+			+ .button-play {
+				@include opacity(1);
+
+				.icon {
+					@include svgColor($brand2);
+				}
+			}
+		}
 	}
 
 	.video-overlay {

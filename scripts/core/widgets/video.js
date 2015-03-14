@@ -5,11 +5,11 @@ function initVideo() {
 		$(".video-frame").each(function() {
 			var el = $(this),
 				videoID = el.data("youtube-id"),
-				widget =   '<div class="button-play">\
+				widget =   '<div class="video-overlay"></div>\
+							<img src="http://img.youtube.com/vi/' + videoID + '/hqdefault.jpg" alt="">\
+							<div class="button-play">\
 								<img class="svg icon icon-play" src="img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-play.png\'">\
 							</div>\
-							<div class="video-overlay"></div>\
-							<img src="http://img.youtube.com/vi/' + videoID + '/hqdefault.jpg" alt="">\
 							<div id="ytplayer"></div>';
 
 				el.append(widget);
@@ -51,11 +51,11 @@ function initVideo() {
 				$.getScript('https://www.youtube.com/player_api');
 			}
 			function onPlayerReady(event) {
+				preview.on("click", function() {
+					playOnClick(event);
+				});
 				button.fadeIn(350).on("click", function() {
-					button.fadeOut(350);
-					layer.fadeOut(350);
-					preview.fadeOut(350);
-					if ( !config.application.touch ) event.target.setVolume(100).playVideo();
+					playOnClick(event);
 				});
 			}
 			function onPlayerStateChange(event) {
@@ -66,7 +66,6 @@ function initVideo() {
 				}
 
 				if (event.data == YT.PlayerState.PLAYING && !done) {
-					// setTimeout(stopVideo, 6000);
 					done = true;
 				}
 			}
@@ -75,6 +74,12 @@ function initVideo() {
 			}
 			function playVideo() {
 				player.playVideo();
+			}
+			function playOnClick(event) {
+				button.fadeOut(350);
+				layer.fadeOut(350);
+				preview.fadeOut(350);
+				if ( !config.application.touch ) event.target.setVolume(100).playVideo();
 			}
 		});
 	}
