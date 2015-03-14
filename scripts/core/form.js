@@ -269,6 +269,7 @@ function initDropdowns() {
 
 			dropWrapper.each(function() {
 				var el = $(this),
+					arrow = el.children(".dropdown-arrow"),
 					dropdown = el.children(".dropdown"),
 					dropItem = dropdown.children(".dropdown-item"),
 					target = el.children(".dropdown-current");
@@ -298,6 +299,10 @@ function initDropdowns() {
 							}
 						}
 					}
+
+					arrow.off().on("click", function() {
+						select.focus();
+					});
 
 					target.off().on("click", function() {
 						select.focus();

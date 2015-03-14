@@ -85,9 +85,13 @@
 	// Widths
 
 	.column {
-		padding-left: 0 !important;
-		padding-right: 0 !important;
 		width: 100% !important;
+
+		@for $i from 1 through ($columns / 4) {
+			&[data-span="#{$i}"] {
+				width: 50% !important;
+			}
+		}
 	}
 
 	.button,
@@ -232,6 +236,19 @@
 
 
 @media screen and (max-width: ($screenMobileL - 1)) {
+
+
+	// Columns
+
+	.column {
+		width: 100% !important;
+
+		@for $i from 1 through ($columns / 4) {
+			&[data-span="#{$i}"] {
+				width: 100% !important;
+			}
+		}
+	}
 
 
 	// Search

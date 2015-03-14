@@ -552,14 +552,30 @@ optgroup {
 
 .card-wrapper {
 	margin: $spacing 0;
+	padding: $spacing / 1.5;
+
+	.column > * {
+		margin-bottom: 0 !important;
+	}
 
 	.card-type {
 		margin-bottom: $spacing / 2;
+
+		.card {
+			margin-right: $spacing / 2;
+			height: 45px;
+		}
 	}
 
-	img {
-		margin-right: $spacing / 2;
-		height: 45px;
+	.payment {
+		.column {
+			text-align: center;
+
+			img {
+				margin: 0 auto;
+				width: 100%;
+			}
+		}
 	}
 }
 
