@@ -631,7 +631,6 @@ optgroup {
 	font-family: $bodyFont;
 	@include font-size($fontSize);
 	text-align: left;
-	overflow: hidden;
 	vertical-align: top;
 	cursor: pointer;
 	@include user-select(none);
@@ -771,6 +770,7 @@ optgroup {
 		.dropdown {
 			position: absolute;
 			width: 99%;
+			height: 0;
 			left: 0.5%;
 			border: 1px solid $cd;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
@@ -801,6 +801,7 @@ optgroup {
 
 		&.active {
 			.dropdown {
+				height: auto;
 				@include opacity(1);
 				@include transform(translateY(0));
 			}

@@ -52,6 +52,9 @@
 				<input type="password" name="password-match" placeholder="Confirm Password" data-validation="match" required>
 			</div>
 
+			<label>Textarea</label>
+			<textarea name="textarea" rows="5" cols="50" placeholder="Default text" data-validation="text" required></textarea>
+
 			<label>Select</label>
 			<select name="country" data-validation="select" data-countries="scripts/dev/data/countries.json" required>
 				<option value="" default selected>Select country...</option>
@@ -113,9 +116,6 @@
 			<select name="country" data-validation="select" data-countries="scripts/dev/data/countries.json" size="5" required>
 				<option value="" default selected>Select country...</option>
 			</select> -->
-
-			<label>Textarea</label>
-			<textarea name="textarea" rows="5" cols="50" placeholder="Default text" data-validation="text" required></textarea>
 
 			<p class="form-info emphasis">
 				Note: Checkboxes need all required options to be selected.
