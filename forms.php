@@ -57,6 +57,55 @@
 				<option value="" default selected>Select country...</option>
 			</select>
 
+			<label>Select Group</label>
+			<div class="row">
+				<div class="column" data-span="4">
+					<select data-validation="selectgroup" data-validation-group="select-group" required>
+						<option value="" default selected>Select</option>
+						<option value="one">one</option>
+						<option value="two">two</option>
+						<option value="three">three</option>
+						<option value="four">four</option>
+						<option value="five">five</option>
+						<option value="six">six</option>
+						<option value="seven">seven</option>
+						<option value="eight">eight</option>
+						<option value="nine">nine</option>
+						<option value="ten">ten</option>
+					</select>
+				</div>
+				<div class="column" data-span="4">
+					<select data-validation="selectgroup" data-validation-group="select-group" required>
+						<option value="" default selected>Select</option>
+						<option value="one">one</option>
+						<option value="two">two</option>
+						<option value="three">three</option>
+						<option value="four">four</option>
+						<option value="five">five</option>
+						<option value="six">six</option>
+						<option value="seven">seven</option>
+						<option value="eight">eight</option>
+						<option value="nine">nine</option>
+						<option value="ten">ten</option>
+					</select>
+				</div>
+				<div class="column" data-span="4">
+					<select data-validation="selectgroup" data-validation-group="select-group" required>
+						<option value="" default selected>Select</option>
+						<option value="one">one</option>
+						<option value="two">two</option>
+						<option value="three">three</option>
+						<option value="four">four</option>
+						<option value="five">five</option>
+						<option value="six">six</option>
+						<option value="seven">seven</option>
+						<option value="eight">eight</option>
+						<option value="nine">nine</option>
+						<option value="ten">ten</option>
+					</select>
+				</div>
+			</div>
+
 			<!-- <label>Select List</label>
 			<select name="country" data-validation="select" data-countries="scripts/dev/data/countries.json" size="5" required>
 				<option value="" default selected>Select country...</option>

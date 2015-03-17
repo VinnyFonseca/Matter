@@ -134,6 +134,23 @@ function initValidation() {
 					el.parents(".dropdown-wrapper").children(".dropdown-current").attr("class", "dropdown-current " + el.attr("class"));
 					break;
 
+				case "selectgroup":
+					var group = el.data("validation-group"),
+						selects = $("select[data-validation-group='" + group + "']"),
+						selectGroup = {};
+
+					selectGroup[group] = [];
+
+					selects.removeClass("invalid").each(function() {
+						var checked = value !== "";
+						selectGroup[group].push(checked);
+					});
+
+					selectGroup[group].indexOf(true) != -1 ? selects.addClass("valid") : selects.addClass("invalid");
+					selects.parents(".dropdown-wrapper").children(".dropdown-current").attr("class", "dropdown-current " + el.attr("class"));
+
+					break;
+
 
 				case "checkbox":
 					el.prop("checked") ? el.addClass("valid") : el.addClass("invalid");
