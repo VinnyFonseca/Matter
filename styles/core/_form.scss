@@ -27,7 +27,7 @@ fieldset {
 		margin-left: -7px;
 		padding: 0 7px;
 		color: $c8;
-		font-weight: bold;
+		@include font-size($fontSize / 1.1);
 		background: $cf;
 	}
 }
