@@ -167,7 +167,7 @@ function initValidation() {
 						el.addClass("submitted").addClass("valid");
 
 						el.find("[data-validation='date']").datepicker("remove");
-						el.find("[required]").attr("readonly", "readonly");
+						el.find("input, select, textarea").attr("readonly", "readonly");
 						el.find("button").attr("readonly", "readonly");
 
 						initDropdowns();

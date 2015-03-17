@@ -383,20 +383,24 @@ function sliderInit(sliderId) {
 
 					if ( dragX < sliderLeft ) {
 						if ( dragStart - dragX > config.slider.trigger ) {
+							down = false;
 							dragging = false;
 							slideNext();
 						} else {
 							animDuration = 250;
+							down = false;
 							dragging = false;
 							slideAction();
 						}
 					}
 					if ( dragX > sliderRight ) {
 						if ( dragStart - dragX < - config.slider.trigger ) {
+							down = false;
 							dragging = false;
 							slidePrev();
 						} else {
 							animDuration = 250;
+							down = false;
 							dragging = false;
 							slideAction();
 						}

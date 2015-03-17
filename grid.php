@@ -17,19 +17,16 @@
 		<h2>Grid System</h2>
 
 		<p>
+			<strong>Usage:</strong>
+		</p>
+
+		<p>
 			Set the number of columns on <code>_config.scss</code>, then use <code>data-span</code> attribute to set the width of a column. Example:
 		</p>
 
-<pre>
-&lt;div class="row"&gt;
-	&lt;div class="column" data-span="4"&gt;
-		&lt;div class="cell"&gt;Test&lt;/div&gt;
-	&lt;/div&gt;
-	&lt;div class="column" data-span="8"&gt;
-		&lt;div class="cell"&gt;Test&lt;/div&gt;
-	&lt;/div&gt;
-&lt;/div&gt;
-</pre>
+		<p>
+			<strong>Demo:</strong>
+		</p>
 
 		<div class="row debug">
 			<div class="column" data-span="4">
@@ -40,10 +37,25 @@
 			</div>
 		</div>
 
+		<p>
+			<strong>Example:</strong>
+		</p>
+
+<pre>
+&lt;div class="row"&gt;
+	&lt;div class="column" <span class="emphasis">data-span="4"</span>&gt;
+		&lt;div class="cell"&gt;Test&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="column" <span class="emphasis">data-span="8"</span>&gt;
+		&lt;div class="cell"&gt;Test&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
 		<p class="emphasis">
-			Note: In order to keep cross-browser consistency, <code>.column</code> must be inside a <code>.row</code>.
+			Note: In order to keep cross-browser consistency, <code>.column</code> must be inside a <code>.row</code>. <code>.cell</code> is optional.
 			<br>
-			<code>.cell</code> is optional.
+			If a column has no <code>data-span</code> declared, it will automatically set to maximum width.
 		</p>
 
 
@@ -212,31 +224,6 @@
 				<div class="cell">Test</div>
 			</div>
 		</div>
-
-		<br>
-
-		<p>
-			For mobiles, all columns become 100% width.
-		</p>
-
-		<p>
-			If a column has no <code>data-span</code> declared, it will automatically set to maximum width.
-		</p>
-
-<pre>
-&lt;div class="row"&gt;
-	&lt;div class="column"&gt;
-		&lt;div class="cell"&gt;Test&lt;/div&gt;
-	&lt;/div&gt;
-&lt;/div&gt;
-</pre>
-
-		<div class="row debug">
-			<div class="column">
-				<div class="cell">Test</div>
-			</div>
-		</div>
-
 	</div>
 </div>
 
