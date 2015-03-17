@@ -24,8 +24,9 @@ fieldset {
 		display: block;
 		position: relative;
 		margin: 0;
-		margin-left: -7px;
+		margin-left: -3px;
 		padding: 0 7px;
+		top: -1px;
 		color: $c8;
 		@include font-size($fontSize / 1.1);
 		background: $cf;
