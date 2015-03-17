@@ -676,9 +676,10 @@ optgroup {
 	select {
 		display: block;
 		position: absolute;
+		margin: 0;
+		padding: 0;
 		left: 0;
 		top: 0;
-		margin-bottom: 0;
 	}
 
 	.dropdown-current {
