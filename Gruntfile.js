@@ -6,16 +6,49 @@ module.exports = function(grunt) {
 
 		// CONFIG ===================================/
 
-		compass: {
+		// Config for grunt-sass (Lacks compass, 3s compiling time)
+
+		sass: {
+			options: {
+				sourceMap: true,
+				sourceComments: false,
+				outputStyle: 'compressed'
+			},
 			dist: {
-				options: {
-					sassDir: ['styles'],
-					cssDir: ['styles'],
-					outputStyle: 'compressed',
-					sourcemap: true
+				files: {
+					'styles/build.css': 'styles/build.scss'
 				}
 			}
 		},
+
+
+		// Config for grunt-compass (10s compiling time)
+
+		// compass: {
+		// 	dist: {
+		// 		src: 'styles',
+		// 		dest: 'styles',
+		// 		outputstyle: 'expanded',
+		// 		linecomments: false
+		// 	}
+		// },
+
+
+		// Config for grunt-contrib-compass (20s compiling time)
+
+		// compass: {
+		// 	dist: {
+		// 		options: {
+		// 			sassDir: ['styles'],
+		// 			cssDir: ['styles'],
+		// 			outputStyle: 'compressed',
+		// 			sourcemap: true
+		// 		}
+		// 	}
+		// },
+
+
+		// Config for grunt-contrib-uglify (javascript concatenation)
 
 		uglify: {
 			all: {
@@ -34,11 +67,32 @@ module.exports = function(grunt) {
 			},
 			options: {
 				beautify: false,
-		        sourceMap: true,
+				sourceMap: true,
 				sourceMapIncludeSources: true,
-		        sourceMapName: 'scripts/build.js.map'
+				sourceMapName: 'scripts/build.js.map'
 			}
 		},
+
+
+		// Config for grunt-autoprefixer (avoid unnecessary mixin usage)
+
+		autoprefixer: {
+			options: {
+				browsers: ['> 1%', 'Explorer >= 7'],
+				map: true
+			},
+			dist: {
+				files: [{
+					expand: true,
+					cwd: 'styles/',
+					src: '{,*/}*.css',
+					dest: 'styles/'
+				}]
+			}
+		},
+
+
+		// Config for grunt-contrib-watch (javascript concatenation)
 
 		watch: {
 			html: {
@@ -55,7 +109,8 @@ module.exports = function(grunt) {
 			},
 			sass: {
 				files: ['styles/*.{scss,sass}', 'styles/**/*.{scss,sass}'],
-				tasks: ['compass:dist'],
+				tasks: ['sass:dist', 'autoprefixer'],
+				// tasks: ['compass:dist', 'autoprefixer'],
 				options: {
 					livereload: false
 				}
@@ -71,8 +126,10 @@ module.exports = function(grunt) {
 
 	// DEPENDENT PLUGINS =========================/
 
+	grunt.loadNpmTasks('grunt-sass');
+	grunt.loadNpmTasks('grunt-compass');
+	// grunt.loadNpmTasks('grunt-contrib-compass');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-compass');
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 

@@ -23,7 +23,7 @@ body {
 
 	&.preload {
 		* {
-			@include transition-property(none !important);
+			transition-property: none !important;
 		}
 	}
 }
@@ -31,14 +31,13 @@ body {
 
 * {
 	vertical-align: baseline;
-	@include box-sizing(border-box);
+	box-sizing: border-box;
 
-	-webkit-text-size-adjust: none;
-	-ms-text-size-adjust: none;
-	-webkit-font-smoothing: antialiased;
+	text-size-adjust: none;
+	font-smoothing: antialiased;
 
 	&:before, &:after {
-		@include box-sizing(inherit);
+		box-sizing: inherit;
 	}
 }
 
@@ -48,7 +47,7 @@ body {
 	position: relative;
 	margin: 0 auto;
 	padding: 0 $spacing;
-	width: $screenDesktop - ($spacing * 2);
+	width: $screenDesktop;
 }
 
 
@@ -252,8 +251,7 @@ hr {
 	border-style: dashed;
 	border-color: $c8;
 	background: none;
-
-	@include opacity(0.25);
+	opacity: 0.25;
 
 	&.small {
 		width: 90px;

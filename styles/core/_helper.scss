@@ -404,7 +404,7 @@
 // Animation
 
 .animate {
-	@include transition-property(all);
-	@include transition-duration($animDuration);
-	@include transition-timing-function($animEasing);
+	transition-property: all;
+	transition-duration: $animDuration;
+	transition-timing-function: $animEasing;
 }

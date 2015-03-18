@@ -17,20 +17,20 @@ $itemQty: 7;
 	text-align: left;
 	vertical-align: top;
 	cursor: pointer;
-	@include user-select(none);
-	@include background-clip(padding-box);
+	user-select: none;
+	background-clip: padding-box;
 	outline: 0;
 
 	&.active {
 		ul {
-			@include opacity(1);
-			@include transform(translateY(0));
+			opacity: 1;
+			transform: translateY(0);
 			visibility: visible;
 			z-index: 9999;
 		}
 		.divider {
-			@include opacity(1);
-			@include transform(translateX(0));
+			opacity: 1;
+			transform: translateX(0);
 			visibility: visible;
 			z-index: 9999;
 		}
@@ -46,16 +46,16 @@ $itemQty: 7;
 		top: 100%;
 		left: 0.5%;
 		list-style: none;
-		@include box-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 		overflow: auto;
 		overflow-x: visible;
 		visibility: hidden;
 		z-index: -1;
-		@include opacity(0);
-		@include transform(translateY(-10px));
-		@include transition-property(opacity, transform);
-		@include transition-duration($animDuration);
-		@include transition-timing-function($animEasing);
+		opacity: 0;
+		transform: translateY(-10px);
+		transition-property: opacity, transform;
+		transition-duration: $animDuration;
+		transition-timing-function: $animEasing;
 
 		li {
 			display: none;
@@ -113,10 +113,10 @@ $itemQty: 7;
 		visibility: hidden;
 		z-index: -1;
 		cursor: default;
-		@include opacity(0);
-		@include transform(translateX(10px));
-		@include transition-property(opacity, transform);
-		@include transition-duration($animDuration);
-		@include transition-timing-function($animEasing);
+		opacity: 0;
+		transform: translateX(10px);
+		transition-property: opacity, transform;
+		transition-duration: $animDuration;
+		transition-timing-function: $animEasing;
 	}
 }

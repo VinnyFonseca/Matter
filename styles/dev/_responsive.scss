@@ -30,7 +30,7 @@
 		}
 	}
 	.sidebar {
-		@include transform(translateX(-$sidebarWidth));
+		transform: translateX(-$sidebarWidth);
 
 		.sidebar-trigger {
 			display: block !important;
@@ -91,12 +91,12 @@
 	.header {
 		position: fixed;
 		margin-top: (-$navItemHeight * $navItemCount) + 2;
-		@include transition-property(transform);
-		@include transition-duration($animDuration);
-		@include transition-timing-function($animEasing);
+		transition-property: transform;
+		transition-duration: $animDuration;
+		transition-timing-function: $animEasing;
 
 		&.active {
-			@include transform(translateY($navItemHeight * $navItemCount));
+			transform: translateY($navItemHeight * $navItemCount);
 		}
 
 		.logo {

@@ -28,13 +28,13 @@
 		max-width: none;
 		height: 136%;
 		top: 50%;
-		@include opacity(0.5);
+		opacity: 0.5;
 		cursor: pointer;
 		z-index: 15;
 
 		&:hover {
 			+ .button-play {
-				@include opacity(1);
+				opacity: 1;
 
 				.icon {
 					@include svgColor($brand2);
@@ -57,15 +57,15 @@
 		height: 84px;
 		bottom: $spacing * 1.5;
 		right: $spacing * 1.5;
-		@include opacity(0.8);
+		opacity: 0.8;
 		border-radius: 1000px;
 		background: $cf;
 		z-index: 20;
 		cursor: pointer;
-		@include transition(all 0.15s $animEasing);
+		transition: all 0.15s $animEasing;
 
 		&:hover {
-			@include opacity(1);
+			opacity: 1;
 
 			.icon {
 				@include svgColor($brand2);
@@ -77,10 +77,10 @@
 			width: 100%;
 			height: 100%;
 			@include svgColor($brand1);
-			@include transition(all 0.15s $animEasing);
+			transition: all 0.15s $animEasing;
 
 			* {
-				@include transition(all 0.15s $animEasing);
+				transition: all 0.15s $animEasing;
 			}
 		}
 	}

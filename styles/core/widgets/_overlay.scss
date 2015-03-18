@@ -9,15 +9,15 @@
 	background-color: rgba(0, 0, 0, 0.8);
 	overflow: hidden;
 	z-index: 9000;
-	@include transition(all 0.5s $animEasing);
-	@include transform(translate3d(0, 0, 0));
+	transition: all 0.5s $animEasing;
+	transform: translate3d(0, 0, 0);
 
 	&.active {
 		max-height: 100%;
 
 		.modal {
-			@include opacity(1);
-			@include transform(translateY(0));
+			opacity: 1;
+			transform: translateY(0);
 		}
 	}
 
@@ -32,11 +32,11 @@
 		left: 10%;
 		border-radius: $radius;
 		background: $cf;
-		@include opacity(0);
-		@include transform(translateY(-10%));
+		opacity: 0;
+		transform: translateY(-10%);
 		z-index: 9100;
-		@include transition(all 0.5s $animEasing);
-		@include transform(translate3d(0, 0, 0));
+		transition: all 0.5s $animEasing;
+		transform: translate3d(0, 0, 0);
 
 		.overlay-close {
 			display: block;

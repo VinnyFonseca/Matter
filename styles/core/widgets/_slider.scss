@@ -9,7 +9,7 @@
 
 	&:hover {
 		.slider-arrow {
-			@include opacity(1);
+			opacity: 1;
 
 			&:hover {
 				background: rgba(255, 255, 255, 0.8);
@@ -46,7 +46,7 @@
 		white-space: nowrap;
 		cursor: -webkit-grab;
 
-		@include transform(translateX(0) translate3d(0, 0, 0));
+		transform: translateX(0) translate3d(0, 0, 0);
 
 		> * {
 			@include font-size($fontSize);
@@ -98,11 +98,11 @@ $arrowDiameter: 48px;
 	cursor: pointer;
 	z-index: 50;
 	vertical-align: middle;
-	@include opacity(0);
-	@include user-select(none);
-	@include transition-property(margin, background, opacity);
-	@include transition-duration($animDuration);
-	@include transition-timing-function($animEasing);
+	opacity: 0;
+	user-select: none;
+	transition-property: margin, background, opacity;
+	transition-duration: $animDuration;
+	transition-timing-function: $animEasing;
 
 	&.slider-arrow-prev {
 		float: left;
@@ -152,19 +152,19 @@ $bulletDiameter: 16px;
 		height: $bulletDiameter;
 		background-color: $brand2;
 		border-radius: $bulletDiameter;
-		@include opacity(0.75);
-		@include user-select(none);
+		opacity: 0.75;
+		user-select: none;
 		cursor: pointer;
 
 		&:hover {
-			@include opacity(1);
+			opacity: 1;
 		}
 
 		&:active,
 		&.active,
 		&:focus {
 			background-color: $brand1;
-			@include opacity(1);
+			opacity: 1;
 		}
 	}
 }

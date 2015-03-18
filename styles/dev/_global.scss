@@ -147,10 +147,10 @@ $sidebarWidth: 300px;
 
 	&.sidebar-on {
 		.sidebar {
-			@include transform(translateX(0));
+			transform: translateX(0);
 
 			.sidebar-trigger {
-				@include transform(translateX(0));
+				transform: translateX(0);
 				border-left-width: 1px;
 				border-right-width: 0;
 				border-radius: $radius 0 0 $radius;
@@ -179,7 +179,7 @@ $sidebarWidth: 300px;
 		background-color: $c3;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 		z-index: 70;
-		@include transition(transform $animDuration $animEasing);
+		transition: transform $animDuration $animEasing;
 
 		& > * {
 			padding: 0 $spacing;
@@ -203,9 +203,9 @@ $sidebarWidth: 300px;
 			background-color: $brand1;
 			cursor: pointer;
 			z-index: 10;
-			@include opacity(0.85);
-			@include transition(transform $animDuration $animEasing);
-			@include transform(translateX(42px));
+			opacity: 0.85;
+			transition: transform $animDuration $animEasing;
+			transform: translateX(42px);
 
 			&:hover,
 			&:active {
@@ -271,7 +271,7 @@ $sidebarWidth: 300px;
 	right: 10px;
 	bottom: 10px;
 	z-index: 80;
-	@include opacity(0.85);
+	opacity: 0.85;
 }
 
 

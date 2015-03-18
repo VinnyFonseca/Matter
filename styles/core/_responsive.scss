@@ -126,12 +126,12 @@
 			text-align: left;
 
 			&:first-child {
-				@include border-top-radius($radius);
-				@include border-bottom-radius(0);
+				border-top-radius: $radius;
+				border-bottom-radius: 0;
 			}
 			&:last-child {
-				@include border-top-radius(0);
-				@include border-bottom-radius($radius);
+				border-top-radius: 0;
+				border-bottom-radius: $radius;
 			}
 		}
 
@@ -201,13 +201,13 @@
 	.slider {
 		&:hover {
 			.slider-arrow {
-				@include opacity(1);
+				opacity: 1;
 			}
 		}
 	}
 
 	.slider-arrow {
-		@include opacity(1);
+		opacity: 1;
 
 		&.slider-arrow-prev {
 			margin-left: 0;

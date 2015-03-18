@@ -17,7 +17,7 @@ fieldset {
 	margin: $spacing 0;
 	padding: ($spacing / 1.5) $spacing;
 	border: 1px solid $cd;
-	@include border-radius($radius);
+	border-radius: $radius;
 	box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.05);
 
 	legend {
@@ -56,7 +56,7 @@ select,
 textarea {
 	display: block;
 	position: relative;
-	color: $c2;
+	color: $c3;
 	margin: 0;
 	margin-bottom: $spacing / 2;
 	padding: 9px 12px;
@@ -66,28 +66,28 @@ textarea {
 	font-weight: 300;
 	text-align: left;
 	border: 1px solid $cc;
-	@include border-radius($radius);
+	border-radius: $radius;
 	background: #fafafa;
-	@include background-clip(padding-box);
+	background-clip: padding-box;
 	outline: 0;
 	vertical-align: bottom;
 
 
 	&::-webkit-input-placeholder {
-		color: $brand1;
+		color: $c3;
 	}
 	&::-moz-placeholder {
-		color: $brand1;
+		color: $c3;
 	}
 	&:-moz-placeholder {
-		color: $brand1;
+		color: $c3;
 	}
 	&:-ms-input-placeholder {
-		color: $brand1;
+		color: $c3;
 	}
 	&.placeholder-text,
 	&.placeholder_text {
-		color: $brand1;
+		color: $c3;
 	}
 
 
@@ -147,13 +147,13 @@ input[type="button"] {
 	text-align: center;
 	text-decoration: none !important;
 	border: 0;
-	@include border-radius($radius);
+	border-radius: $radius;
 	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
 	background: $ce;
 	cursor: pointer !important;
-	@include appearance(none);
-	@include background-clip(padding-box);
-	@include user-select(none);
+	appearance: none;
+	background-clip: padding-box;
+	user-select: none;
 	white-space: nowrap;
 	outline: 0;
 	vertical-align: middle;
@@ -256,7 +256,7 @@ input[type="checkbox"] {
 		margin: 4px 0;
 		padding: 0;
 		cursor: pointer;
-		@include user-select(none);
+		user-select: none;
 
 		&:before,
 		&:after {
@@ -272,7 +272,7 @@ input[type="checkbox"] {
 			text-align: center;
 			line-height: 1.9 !important;
 			border: 1px solid $ca;
-			@include border-radius(3px);
+			border-radius: 3px;
 			background-color: $ce;
 			box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, 0.7), inset 0px -1px 1px 0 rgba(0, 0, 0, 0.15);
 			overflow: hidden;
@@ -290,7 +290,7 @@ input[type="checkbox"] {
 		label {
 			&:before,
 			&:after {
-				@include border-radius($radius);
+				border-radius: $radius;
 			}
 		}
 
@@ -308,7 +308,7 @@ input[type="checkbox"] {
 	&.radio {
 		label {
 			&:before {
-				@include border-radius(1000px);
+				border-radius: 1000px;
 			}
 		}
 
@@ -349,7 +349,7 @@ input[type="checkbox"] {
 			&:active {
 				.toggle-switch {
 					box-shadow: inset 0px -3px 3px 0 rgba(255, 255, 255, 0.5), inset 0px 1px 1px 0 rgba(0, 0, 0, 0.3) !important;
-					// @include transform(scale(.95));
+					// transform: scale(.95);
 				}
 			}
 
@@ -387,7 +387,7 @@ input[type="checkbox"] {
 				z-index: 1;
 				overflow: hidden;
 				vertical-align: middle;
-				@include transition(left $animEasing $animDuration);
+				transition: left $animEasing $animDuration;
 			}
 
 			.toggle-track {
@@ -408,7 +408,7 @@ input[type="checkbox"] {
 				right: -10px;
 				bottom: 0;
 				background: $notifySuccessBgColor url('../img/icons/icon-toggle-tick.png') center center no-repeat;
-				@include transition(left $animEasing $animDuration, right $animEasing $animDuration);
+				transition: left $animEasing $animDuration, right $animEasing $animDuration;
 			}
 			.toggle-background-negative {
 				left: -($tglW - ($swtSz / 2));
@@ -470,8 +470,8 @@ optgroup {
 		display: inline-block;
 		margin: 0;
 		width: 45%;
-		@include border-left-radius($radius);
-		@include border-right-radius(0);
+		border-left-radius: $radius;
+		border-right-radius: 0;
 
 		input {
 			width: 100%;
@@ -486,12 +486,12 @@ optgroup {
 		display: inline-block;
 		margin: 0;
 		width: 45%;
-		@include border-left-radius($radius);
-		@include border-right-radius(0);
+		border-left-radius: $radius;
+		border-right-radius: 0;
 
 		&[data-validation="match"] {
-			@include border-left-radius(0);
-			@include border-right-radius($radius);
+			border-left-radius: 0;
+			border-right-radius: $radius;
 		}
 	}
 
@@ -589,7 +589,7 @@ optgroup {
 	margin-bottom: $spacing / 2;
 	width: 100%;
 	vertical-align: top;
-	@include border-radius($radius);
+	border-radius: $radius;
 
 	input {
 		display: block;
@@ -633,8 +633,8 @@ optgroup {
 	text-align: left;
 	vertical-align: top;
 	cursor: pointer;
-	@include user-select(none);
-	@include background-clip(padding-box);
+	user-select: none;
+	background-clip: padding-box;
 	z-index: 20;
 
 	&:hover,
@@ -687,7 +687,7 @@ optgroup {
 		position: relative;
 		padding: 9px 12px;
 		border: 1px solid $cc;
-		@include border-radius($radius);
+		border-radius: $radius;
 		background: #fafafa;
 		white-space: nowrap;
 		text-overflow: ellipsis;
@@ -708,8 +708,8 @@ optgroup {
 		color: $cf;
 		text-align: center;
 		border: 0 solid rgba(0, 0, 0, 0.4);
-		@include border-left-radius(0);
-		@include border-right-radius($radius);
+		border-left-radius: 0;
+		border-right-radius: $radius;
 		background: $brand1;
 		z-index: 50;
 
@@ -775,20 +775,20 @@ optgroup {
 			left: 0.5%;
 			border: 1px solid $cd;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-			@include opacity(0);
-			@include transition-property(opacity, transform);
-			@include transition-duration($animDuration);
-			@include transition-timing-function($animEasing);
+			opacity: 0;
+			transition-property: opacity, transform;
+			transition-duration: $animDuration;
+			transition-timing-function: $animEasing;
 
 			&.default {
 				margin-top: -1px;
 				top: 100%;
-				@include transform(translateY(-10px));
+				transform: translateY(-10px);
 			}
 			&.bound {
 				margin-top: 1px;
 				bottom: 100%;
-				@include transform(translateY(10px));
+				transform: translateY(10px);
 			}
 
 			.dropdown-item {
@@ -803,8 +803,8 @@ optgroup {
 		&.active {
 			.dropdown {
 				height: auto;
-				@include opacity(1);
-				@include transform(translateY(0));
+				opacity: 1;
+				transform: translateY(0);
 			}
 		}
 	}
@@ -818,7 +818,7 @@ optgroup {
 		.dropdown {
 			position: relative;
 			border: 1px solid $cd;
-			@include border-radius($radius);
+			border-radius: $radius;
 			background: $cf;
 			overflow: auto;
 
@@ -858,7 +858,7 @@ optgroup {
 		padding: 9px 12px;
 		text-align: right;
 		z-index: 5;
-		@include opacity(0);
+		opacity: 0;
 	}
 
 	.fakefile {
@@ -879,8 +879,8 @@ optgroup {
 			margin-top: 0;
 			width: 125px;
 			text-align: center;
-			@include border-left-radius($radius);
-			@include border-right-radius(0);
+			border-left-radius: $radius;
+			border-right-radius: 0;
 			z-index: 1;
 		}
 
@@ -895,7 +895,7 @@ optgroup {
 			left: 0px;
 			color: $brand1;
 			border: 1px solid $cd;
-			@include border-radius($radius);
+			border-radius: $radius;
 			background: $cf;
 			overflow: hidden;
 			text-overflow: ellipsis;
@@ -919,8 +919,8 @@ optgroup {
 			@include font-size($fontSize * 1.75);
 			text-align: center;
 			border: 0 solid rgba(0, 0, 0, 0.4);
-			@include border-left-radius(0);
-			@include border-right-radius($radius);
+			border-left-radius: 0;
+			border-right-radius: $radius;
 			background: $brand1;
 			z-index: 50;
 
@@ -1020,7 +1020,7 @@ optgroup {
 	border-style: dotted !important;
 	background-color: $ce !important;
 	box-shadow: none !important;
-	@include user-select(none);
+	user-select: none;
 	cursor: no-drop !important;
 
 	&::-webkit-input-placeholder {
@@ -1093,7 +1093,7 @@ optgroup {
 					border-style: dotted !important;
 					background-color: $ce !important;
 					box-shadow: none !important;
-					@include user-select(none);
+					user-select: none;
 					cursor: no-drop !important;
 				}
 			}
@@ -1115,7 +1115,7 @@ progress {
 	width: 100%;
 	height: $progressHeight;
 	overflow: hidden;
-	@include appearance(none);
+	appearance: none;
 }
 
 @include keyframes(animate-stripes) {
@@ -1139,7 +1139,7 @@ progress[value] {
 	border-radius: $radius;
 	background-color: $ce;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) inset;
-	@include appearance(none);
+	appearance: none;
 
 	&::-webkit-progress-bar {
 		border-radius: $radius;
@@ -1157,8 +1157,8 @@ progress[value] {
 			($progressHeight * 2) $progressHeight,
 			100% 100%,
 			100% 100%;
-		@include animation(animate-stripes 5s linear infinite);
-		@include transition(width $animDuration $animEasing);
+		animation: animate-stripes 5s linear infinite;
+		transition: width $animDuration $animEasing;
 	}
 	&::-webkit-progress-value:after {
 		position: absolute;
@@ -1223,11 +1223,11 @@ progress[value] {
 
 label[data-progress] {
 	white-space: nowrap;
-	@include transition(width $animDuration $animEasing);
+	transition: width $animDuration $animEasing;
 
 	&.active {
 		&:after {
-			@include opacity(1);
+			opacity: 1;
 		}
 	}
 
@@ -1243,8 +1243,8 @@ label[data-progress] {
 		background-color: $ce;
 		content: attr(data-progress) '%';
 		z-index: 20;
-		@include opacity(0);
-		@include transition(opacity $animDuration $animEasing);
+		opacity: 0;
+		transition: opacity $animDuration $animEasing;
 	}
 }
 

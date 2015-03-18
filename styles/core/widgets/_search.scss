@@ -272,18 +272,18 @@
 		border: 1px solid $cd;
 		background-color: $cf;
 		vertical-align: top !important;
-		@include opacity(1);
-		@include transform(scale(1) translateY(0));
-		@include transition-property(transform, opacity);
-		@include transition-duration($animDuration);
-		@include transition-timing-function($animEasing);
+		opacity: 1;
+		transform: scale(1) translateY(0);
+		transition-property: transform, opacity;
+		transition-duration: $animDuration;
+		transition-timing-function: $animEasing;
 
 		&.loading {
 			position: absolute;
 			visibility: hidden;
 			z-index: -1;
-			@include opacity(0);
-			@include transform(scale(1.1) translateY(50px));
+			opacity: 0;
+			transform: scale(1.1) translateY(50px);
 		}
 
 		> * {
