@@ -23,13 +23,13 @@ $itemQty: 7;
 
 	&.active {
 		ul {
-			opacity: 1;
+			@include opacity(1);
 			transform: translateY(0);
 			visibility: visible;
 			z-index: 9999;
 		}
 		.divider {
-			opacity: 1;
+			@include opacity(1);
 			transform: translateX(0);
 			visibility: visible;
 			z-index: 9999;
@@ -48,10 +48,10 @@ $itemQty: 7;
 		list-style: none;
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 		overflow: auto;
-		overflow-x: visible;
+		overflow-x: hidden;
 		visibility: hidden;
 		z-index: -1;
-		opacity: 0;
+		@include opacity(0);
 		transform: translateY(-10px);
 		transition-property: opacity, transform;
 		transition-duration: $animDuration;
@@ -63,6 +63,10 @@ $itemQty: 7;
 			margin: 0;
 			margin-top: -1px;
 			padding: 9px 12px;
+			@include font-size($fontSize / 1.1);
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
 			border: 1px solid $ce;
 			background: $cf;
 
@@ -113,7 +117,7 @@ $itemQty: 7;
 		visibility: hidden;
 		z-index: -1;
 		cursor: default;
-		opacity: 0;
+		@include opacity(0);
 		transform: translateX(10px);
 		transition-property: opacity, transform;
 		transition-duration: $animDuration;

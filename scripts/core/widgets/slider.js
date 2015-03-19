@@ -410,8 +410,9 @@ function sliderInit(sliderId) {
 			.on("mouseup touchend", function(e) {
 				if ( !config.application.touch ) e.preventDefault();
 
+				down = false;
+
 				if ( dragging && !animating ) {
-					down = false;
 					dragging = false;
 					dragEnd = dragX;
 
@@ -497,7 +498,7 @@ function sliderInit(sliderId) {
 
 
 function initSliders() {
-	var slider = $(".slider");
+	var slider = $("[data-slider]");
 
 	if ( slider.length ) {
 		slider

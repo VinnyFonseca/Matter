@@ -640,8 +640,11 @@ optgroup {
 	&:hover,
 	&.active {
 		.dropdown-arrow {
-			color: $cf;
-			background-color: $brand2;
+			background-color: $brand1;
+
+			.icon {
+				@include svgColor($cf);
+			}
 		}
 	}
 	&.active {
@@ -666,9 +669,12 @@ optgroup {
 
 	&:active {
 		.dropdown-arrow {
-			color: $cf;
 			background: $brand1;
 			box-shadow: inset 0px 1px 1px 0 rgba(0, 0, 0, .15) !important;
+
+			.icon {
+				@include svgColor($brand2);
+			}
 		}
 	}
 
@@ -705,17 +711,16 @@ optgroup {
 		top: 0;
 		right: 0;
 		bottom: 0;
-		color: $cf;
 		text-align: center;
 		border: 0 solid rgba(0, 0, 0, 0.4);
-		border-left-radius: 0;
-		border-right-radius: $radius;
-		background: $brand1;
+		border-radius: 0 $radius $radius 0 !important;
+		background: $brand2;
 		z-index: 50;
 
 		.icon {
 			width: 14px;
 			height: 14px;
+			@include svgColor($brand1);
 		}
 	}
 
@@ -775,7 +780,7 @@ optgroup {
 			left: 0.5%;
 			border: 1px solid $cd;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-			opacity: 0;
+			@include opacity(0);
 			transition-property: opacity, transform;
 			transition-duration: $animDuration;
 			transition-timing-function: $animEasing;
@@ -803,7 +808,7 @@ optgroup {
 		&.active {
 			.dropdown {
 				height: auto;
-				opacity: 1;
+				@include opacity(1);
 				transform: translateY(0);
 			}
 		}
@@ -858,7 +863,7 @@ optgroup {
 		padding: 9px 12px;
 		text-align: right;
 		z-index: 5;
-		opacity: 0;
+		@include opacity(0);
 	}
 
 	.fakefile {

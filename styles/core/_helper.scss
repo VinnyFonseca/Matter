@@ -234,7 +234,9 @@
 	display: none !important;
 }
 .highlight {
-	background: #ff0;
+	color: $fontColor !important;
+	border-radius: $radius !important;
+	background: #ff0 !important;
 }
 .disappear {
 	display: none !important;
@@ -256,7 +258,7 @@
 	overflow-x: hidden !important;
 }
 .noscroll-y {
-	overflow-x: hidden !important;
+	overflow-y: hidden !important;
 }
 
 

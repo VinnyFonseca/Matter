@@ -328,7 +328,6 @@ function initFramework() {
 	initSVGs();
 	initCookies();
 	initLinks();
-	initNav();
 	initTables();
 	scrollProgress();
 
@@ -355,6 +354,7 @@ function initFramework() {
 	// Forms Init
 
 	initForm();
+	initDropdowns();
 	initValidation();
 
 

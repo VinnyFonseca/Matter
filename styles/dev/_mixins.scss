@@ -48,9 +48,17 @@
 }
 
 @mixin background-image($imgpath,$position:0 0,$repeat: no-repeat) {
-    background: {
-        image: url($imgpath);
-        position: $position;
-        repeat: $repeat;
-    }
+	background: {
+		image: url($imgpath);
+		position: $position;
+		repeat: $repeat;
+	}
+}
+
+@mixin opacity($value) {
+	opacity: $value;
+	-khtml-opacity: $value;
+	-moz-opacity: $value;
+	filter: alpha(opacity=#{$value * 100});
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$value * 100})";
 }

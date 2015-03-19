@@ -15,14 +15,14 @@ $animBounce: cubic-bezier(.15,.7,.6,1.7);
 	background: $brand1;
 	z-index: 9999;
 
-	opacity: 0;
+	@include opacity(0);
 	transform: scale(0.6);
 	transition-property: opacity, transform;
 	transition-duration: $animDuration / 2;
 	transition-timing-function: $animBounce;
 
 	&.active {
-		opacity: 1;
+		@include opacity(1);
 		transform: scale(1);
 	}
 

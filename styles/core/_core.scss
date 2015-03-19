@@ -34,7 +34,7 @@ body {
 	box-sizing: border-box;
 
 	text-size-adjust: none;
-	font-smoothing: antialiased;
+	font-smoothing: subpixel-antialiased;
 
 	&:before, &:after {
 		box-sizing: inherit;
@@ -251,7 +251,7 @@ hr {
 	border-style: dashed;
 	border-color: $c8;
 	background: none;
-	opacity: 0.25;
+	@include opacity(0.25);
 
 	&.small {
 		width: 90px;

@@ -28,13 +28,13 @@
 		max-width: none;
 		height: 136%;
 		top: 50%;
-		opacity: 0.5;
+		@include opacity(0.5);
 		cursor: pointer;
 		z-index: 15;
 
 		&:hover {
 			+ .button-play {
-				opacity: 1;
+				@include opacity(1);
 
 				.icon {
 					@include svgColor($brand2);
@@ -57,7 +57,7 @@
 		height: 84px;
 		bottom: $spacing * 1.5;
 		right: $spacing * 1.5;
-		opacity: 0.8;
+		@include opacity(0.8);
 		border-radius: 1000px;
 		background: $cf;
 		z-index: 20;
@@ -65,7 +65,7 @@
 		transition: all 0.15s $animEasing;
 
 		&:hover {
-			opacity: 1;
+			@include opacity(1);
 
 			.icon {
 				@include svgColor($brand2);
