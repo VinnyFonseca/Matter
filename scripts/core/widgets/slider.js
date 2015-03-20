@@ -106,6 +106,9 @@ function sliderInit(sliderId) {
 	var navArrows = !!sliderActive.attr("data-arrows") ? sliderActive.attr("data-arrows").bool() : config.slider.arrows;
 	var slideShow = !!sliderActive.attr("data-slideshow") ? sliderActive.attr("data-slideshow").bool() : config.slider.slideshow;
 	var slideAnimation = !!sliderActive.attr("data-animation") ? sliderActive.attr("data-animation") : config.slider.animation;
+	var slideTrigger = sliderActive.width() / 6;
+	var slideTolerance = 50;
+
 
 	var animDuration = config.slider.duration;
 	var animInterval = config.slider.interval;
@@ -136,7 +139,7 @@ function sliderInit(sliderId) {
 		movable.css({
 			'margin-left': sliderWidth * (loopUnit - uniqueCount),
 			'width': sliderWidth * container.size(),
-			'height': container.eq(slideCurrent % uniqueCount).outerHeight(),
+			'height': container.eq(slideCurrent % uniqueCount).height(),
 			'left': - sliderWidth * loopUnit
 		});
 	}
@@ -146,15 +149,16 @@ function sliderInit(sliderId) {
 
 	// Create Arrows
 
-	var arrowPrevEl =  '<div class="slider-arrow slider-arrow-prev valign-middle">\
+	var arrowEl =  '<div class="slider-arrow-wrapper">\
+						<div class="slider-arrow slider-arrow-prev valign-middle">\
 							<img class="svg icon icon-caret-left" src="img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-left.png\'">\
-						</div>';
-	var arrowNextEl =  '<div class="slider-arrow slider-arrow-next valign-middle">\
+						</div>\
+						<div class="slider-arrow slider-arrow-next valign-middle">\
 							<img class="svg icon icon-caret-right" src="img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-right.png\'">\
-						</div>';
+						</div>\
+					</div>';
 
-	containerWrapper.prepend(arrowPrevEl);
-	containerWrapper.prepend(arrowNextEl);
+	containerWrapper.prepend(arrowEl);
 
 	initSVGs();
 
@@ -293,7 +297,7 @@ function sliderInit(sliderId) {
 
 		if ( slideAnimation === "slide" ) {
 			movable.animate({
-				'height': container.eq(slideCurrent % uniqueCount).outerHeight(),
+				'height': container.eq(slideCurrent % uniqueCount).height(),
 				'left': movePos
 			}, {
 				duration: animDuration,
@@ -312,7 +316,7 @@ function sliderInit(sliderId) {
 				})
 				.fadeIn(animDuration + 250)
 				.animate({
-					'height': container.eq(slideCurrent % uniqueCount).outerHeight()
+					'height': container.eq(slideCurrent % uniqueCount).height()
 				}, {
 					duration: animDuration,
 					complete: function() {
@@ -357,8 +361,10 @@ function sliderInit(sliderId) {
 			dragStart,
 			dragX,
 			dragEnd,
-			sliderLeft = sliderActive.offset().left + 50,
-			sliderRight = sliderActive.offset().left + sliderActive.outerWidth() - 50;
+			sliderTop = sliderActive.offset().top + (slideTolerance / 2),
+			sliderBottom = sliderActive.offset().top + sliderActive.height() - (slideTolerance / 2),
+			sliderLeft = sliderActive.offset().left + slideTolerance,
+			sliderRight = sliderActive.offset().left + sliderActive.width() - slideTolerance;
 
 		movable
 			.on("mousedown touchstart", function(e) {
@@ -370,6 +376,7 @@ function sliderInit(sliderId) {
 			})
 			.on("mousemove touchmove", function(e) {
 				dragX = e.pageX || e.originalEvent.touches[0].pageX;
+				dragY = e.pageY || e.originalEvent.touches[0].pageY;
 				initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < -config.slider.threshold;
 
 				if ( down && initDrag && !animating) {
@@ -381,20 +388,14 @@ function sliderInit(sliderId) {
 						'left': movePos - (dragStart - dragX)
 					});
 
-					if ( dragX < sliderLeft ) {
-						if ( dragStart - dragX > config.slider.trigger ) {
+					var inBounds = dragX <= sliderLeft || dragX >= sliderRight || dragY <= sliderTop || dragY >= sliderBottom;
+
+					if ( inBounds ) {
+						if ( dragStart - dragX > slideTrigger ) {
 							down = false;
 							dragging = false;
 							slideNext();
-						} else {
-							animDuration = 250;
-							down = false;
-							dragging = false;
-							slideAction();
-						}
-					}
-					if ( dragX > sliderRight ) {
-						if ( dragStart - dragX < - config.slider.trigger ) {
+						} else if ( dragStart - dragX < - slideTrigger ) {
 							down = false;
 							dragging = false;
 							slidePrev();
@@ -407,7 +408,7 @@ function sliderInit(sliderId) {
 					}
 				}
 			})
-			.on("mouseup touchend", function(e) {
+			.on("mouseleave mouseup touchend", function(e) {
 				if ( !config.application.touch ) e.preventDefault();
 
 				down = false;
@@ -416,9 +417,9 @@ function sliderInit(sliderId) {
 					dragging = false;
 					dragEnd = dragX;
 
-					if ( dragStart - dragEnd > config.slider.trigger ) {
+					if ( dragStart - dragEnd > slideTrigger ) {
 						slideNext();
-					} else if ( dragStart - dragEnd < - config.slider.trigger ) {
+					} else if ( dragStart - dragEnd < - slideTrigger ) {
 						slidePrev();
 					} else {
 						slideAction();
@@ -432,14 +433,10 @@ function sliderInit(sliderId) {
 		e = e || window.event;
 		switch(e.which || e.keyCode) {
 			case 39: // right
-				// slideCurrent++;
-				// slideAny(slideCurrent);
 				slideNext();
 				break;
 
 			case 37: // left
-				// slideCurrent--;
-				// slideAny(slideCurrent);
 				slidePrev();
 				break;
 
@@ -455,8 +452,6 @@ function sliderInit(sliderId) {
 	function sliderStart() {
 		movable.removeClass("stopped");
 		slideTimer = setInterval(function() {
-			// slideCurrent++;
-			// slideAny(slideCurrent);
 			slideNext();
 		}, animInterval);
 	}

@@ -28,18 +28,11 @@
 	.cell {
 		display: block;
 		position: relative;
-		padding: $spacing / 2;
-
-		&.double {
-			padding: $spacing * 1.5;
-		}
+		padding: $spacing;
 	}
 }
 
 .debug {
-	.column {
-		// background: $ce;
-	}
 	.cell {
 		border: 1px dashed $cd;
 		background: $ce;

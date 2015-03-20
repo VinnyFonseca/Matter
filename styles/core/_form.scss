@@ -640,7 +640,7 @@ optgroup {
 	&:hover,
 	&.active {
 		.dropdown-arrow {
-			background-color: $brand1;
+			background-color: $brand2;
 
 			.icon {
 				@include svgColor($cf);
@@ -669,11 +669,11 @@ optgroup {
 
 	&:active {
 		.dropdown-arrow {
-			background: $brand1;
+			background: $c3;
 			box-shadow: inset 0px 1px 1px 0 rgba(0, 0, 0, .15) !important;
 
 			.icon {
-				@include svgColor($brand2);
+				@include svgColor($cf);
 			}
 		}
 	}
@@ -682,8 +682,8 @@ optgroup {
 	select {
 		display: block;
 		position: absolute;
-		margin: 0;
-		padding: 0;
+		margin: 0 !important;
+		padding: 0 !important;
 		left: 0;
 		top: 0;
 	}
@@ -714,13 +714,13 @@ optgroup {
 		text-align: center;
 		border: 0 solid rgba(0, 0, 0, 0.4);
 		border-radius: 0 $radius $radius 0 !important;
-		background: $brand2;
+		background: $brand1;
 		z-index: 50;
 
 		.icon {
 			width: 14px;
 			height: 14px;
-			@include svgColor($brand1);
+			@include svgColor($cf);
 		}
 	}
 
@@ -775,15 +775,18 @@ optgroup {
 
 		.dropdown {
 			position: absolute;
-			width: 99%;
+			width: auto;
 			height: 0;
-			left: 0.5%;
-			border: 1px solid $cd;
+			left: 5px;
+			right: 5px;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
 			@include opacity(0);
-			transition-property: opacity, transform;
-			transition-duration: $animDuration;
-			transition-timing-function: $animEasing;
+			transition: {
+				property: opacity transform;
+				duration: $animDuration;
+				timing-function: $animEasing;
+			}
+			transform: translateY(0px);
 
 			&.default {
 				margin-top: -1px;
@@ -1232,7 +1235,7 @@ label[data-progress] {
 
 	&.active {
 		&:after {
-			opacity: 1;
+			@include opacity(1);
 		}
 	}
 
@@ -1248,7 +1251,7 @@ label[data-progress] {
 		background-color: $ce;
 		content: attr(data-progress) '%';
 		z-index: 20;
-		opacity: 0;
+		@include opacity(0);
 		transition: opacity $animDuration $animEasing;
 	}
 }

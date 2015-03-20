@@ -229,15 +229,15 @@ function initDropdowns() {
 			var select = $("select").eq(i),
 				size = size == "undefined" || size === "" ? 1 : parseInt(select.attr("size"), 10),
 				type = typeof size !== "undefined" && size !== "" && size > 1 ? "list" : "drop",
-				placeholder = select.attr("placeholder"),
+				placeholder = select.children("option[default]"),
 				option = select.children("option").not("[default]"),
 				selected = select.children("option:selected"),
 				wrapper = '<div class="dropdown-' + i + ' dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
-				widget = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>\
-						  <div class="dropdown-arrow valign-middle">\
-							  <img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-down.png\'">\
-						  </div>\
-						  <div class="dropdown"></div>';
+				current = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>';
+				arrow = '<div class="dropdown-arrow valign-middle">\
+							 <img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-down.png\'">\
+						 </div>';
+				drop = '<div class="dropdown"></div>';
 
 
 			// Build structure
@@ -247,10 +247,10 @@ function initDropdowns() {
 			select.wrap(wrapper);
 
 			var dropWrapper = $(".dropdown-" + i);
-			dropWrapper.children(".dropdown-current").remove();
-			dropWrapper.children(".dropdown-arrow").remove();
+			dropWrapper.append(current);
+			dropWrapper.append(arrow);
 			dropWrapper.children(".dropdown").remove();
-			dropWrapper.append(widget);
+			dropWrapper.append(drop);
 
 			option.each(function() {
 				var option = $(this),
@@ -284,27 +284,20 @@ function initDropdowns() {
 					target.attr("disabled", true);
 				} else {
 					function dropToggle() {
-						if ( type == "drop" ) {
-							if ( !el.hasClass("active") ) {
-								$(".dropdown-wrapper").removeClass("active");
-								el.addClass("active");
+						$(".dropdown-wrapper").removeClass("active");
+						el.addClass("active");
 
-								if ( pageBottom >= el.offset().top + dropdown.height() + 55 ) {
-									dropdown.removeClass("bound").addClass("default");
-								} else {
-									dropdown.removeClass("default").addClass("bound");
-								}
-							} else {
-								$(".dropdown-wrapper").removeClass("active");
-							}
+						if ( pageBottom >= el.offset().top + dropdown.height() + 55 ) {
+							dropdown.removeClass("bound").addClass("default");
+						} else {
+							dropdown.removeClass("default").addClass("bound");
 						}
 					}
 
-					arrow.off().on("click", function() {
+					target.off().on("click", function() {
 						select.focus();
 					});
-
-					target.off().on("click", function() {
+					arrow.off().on("click", function() {
 						select.focus();
 					});
 
@@ -318,13 +311,16 @@ function initDropdowns() {
 					}).on("change", function() {
 						var selected = $(this).children("option:selected");
 
-						dropToggle();
+						select.blur();
 						dropItem.removeClass("active");
+						$(".dropdown-wrapper").removeClass("active");
+
 						if ( !select.hasClass("keep") ) target.text(selected.text()).attr("data-value", selected.val());
 
 						for ( var i = 0; i < dropItem.length; i++ ) {
 							if ( dropItem.eq(i).text() === selected.text() ) {
-								dropItem.eq(i).addClass("active").parents("form.auto-send").submit();
+								dropItem.eq(i).addClass("active");
+								if ( select.parents("form").hasClass("auto-send") ) select.parents("form").submit();
 							}
 						}
 					});
@@ -336,9 +332,9 @@ function initDropdowns() {
 			});
 
 			$("html, body").off().on("click", function(event) {
-				if ( !$(event.target).closest(".dropdown").length &&
-					!$(event.target).closest(".dropdown-wrapper").length &&
-					$(".dropdown-wrapper").hasClass("active")
+				if (
+					!$(event.target).closest(".dropdown").length &&
+					!$(event.target).closest(".dropdown-wrapper.active").length
 				) {
 					$(".dropdown-wrapper").removeClass("active");
 				}

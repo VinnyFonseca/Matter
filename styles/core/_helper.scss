@@ -125,6 +125,15 @@
 	border-radius: 0 !important;
 }
 
+.square {
+	&:after {
+		display: inline-block;
+		padding-top: 100%; 	/* initial ratio of 1:1 */
+		content: "";
+		vertical-align: top;
+	}
+}
+
 
 .clean {
 	margin-left: 0;
@@ -299,7 +308,7 @@
 	@include font-size($fontSize * 1.4);
 }
 .font-large {
-	@include font-size($fontSize * 1.6);
+	@include font-size($fontSize * 1.7);
 }
 .font-xlarge {
 	@include font-size($fontSize * 2);

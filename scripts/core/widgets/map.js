@@ -368,13 +368,78 @@ var map,
 					}
 				]
 			}
+		],
+		Grayscale: [
+			{
+				"featureType": "administrative",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "water",
+				"elementType": "all",
+				"stylers": [
+					{
+						"color": "#EAEAEA"
+					}
+				]
+			},
+			{
+				"featureType": "landscape",
+				"elementType": "all",
+				"stylers": [
+					{
+						"color": "#838383"
+					}
+				]
+			},
+			{
+				"featureType": "poi",
+				"elementType": "all",
+				"stylers": [
+					{
+						"color": "#838383"
+					}
+				]
+			},
+			{
+				"featureType": "road",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "transit",
+				"elementType": "all",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			},
+			{
+				"featureType": "all",
+				"elementType": "labels",
+				"stylers": [
+					{
+						"visibility": "off"
+					}
+				]
+			}
 		]
 	};
 
 function initialize() {
 	var mapOptions = {
 		center: new google.maps.LatLng(51.507333, - 0.107806),
-		zoom: 15,
+		zoom: 2,
 		zoomControl: true,
 		zoomControlOptions: {
 			style: google.maps.ZoomControlStyle.LARGE
@@ -394,7 +459,7 @@ function initialize() {
 			opened: false
 		},
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		styles: themes.Mapbox
+		styles: themes.Grayscale
 	};
 
 	var mapElement = document.getElementById('map-canvas');
