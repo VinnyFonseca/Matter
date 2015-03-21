@@ -439,7 +439,7 @@ var map,
 function initialize() {
 	var mapOptions = {
 		center: new google.maps.LatLng(51.507333, - 0.107806),
-		zoom: 2,
+		zoom: 15,
 		zoomControl: true,
 		zoomControlOptions: {
 			style: google.maps.ZoomControlStyle.LARGE
@@ -459,7 +459,7 @@ function initialize() {
 			opened: false
 		},
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		styles: themes.Grayscale
+		styles: themes.MapBox
 	};
 
 	var mapElement = document.getElementById('map-canvas');
