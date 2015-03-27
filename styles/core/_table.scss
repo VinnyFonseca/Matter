@@ -13,7 +13,7 @@ table {
 
 	caption {
 		position: relative;
-		margin-bottom: $spacing / 2;
+		margin-bottom: floor($spacing / 2);
 		@include font-size($fontSize * 1.2);
 		font-weight: bold;
 	}
@@ -27,7 +27,7 @@ table {
 		tr,
 		td {
 			margin: 0;
-			padding: ($spacing / 2) ($spacing / 1.5);
+			padding: floor($spacing / 2) floor($spacing / 1.5);
 			border: 1px solid $cd;
 
 			> * {

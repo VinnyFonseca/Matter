@@ -15,7 +15,7 @@ fieldset {
 	display: block;
 	position: relative;
 	margin: $spacing 0;
-	padding: ($spacing / 1.5) $spacing;
+	padding: floor($spacing / 1.5) $spacing;
 	border: 1px solid $cd;
 	border-radius: $radius;
 	box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.05);
@@ -58,8 +58,8 @@ textarea {
 	position: relative;
 	color: $c3;
 	margin: 0;
-	margin-bottom: $spacing / 2;
-	padding: 9px 12px;
+	margin-bottom: floor($spacing / 2);
+	padding: floor($spacing / 2) floor($spacing / 1.5);
 	width: 100%;
 	font-family: $bodyFont;
 	@include font-size($fontSize);
@@ -139,7 +139,7 @@ input[type="button"] {
 	display: inline-block;
 	position: relative;
 	margin: 2px auto;
-	padding: ($spacing / 2) ($spacing / 1.5);
+	padding: floor($spacing / 2) floor($spacing / 1.5);
 	min-width: 42px;
 	color: $fontColor;
 	font-family: $bodyFont;
@@ -426,13 +426,13 @@ select[multiple] {
 	height: auto;
 
 	option {
-		padding: 9px 12px;
+		padding: floor($spacing / 2) floor($spacing / 1.5);
 	}
 }
 
 select[size="0"],
 select[size="1"] {
-	padding: 9px 12px;
+	padding: floor($spacing / 2) floor($spacing / 1.5);
 	height: auto;
 
 	option {
@@ -459,7 +459,7 @@ optgroup {
 .input-group {
 	display: block;
 	position: relative;
-	margin-bottom: $spacing / 2;
+	margin-bottom: floor($spacing / 2);
 	font-size: 0;
 
 	> * {
@@ -504,7 +504,7 @@ optgroup {
 	.input-addon {
 		display: inline-block;
 		margin: 0;
-		padding: 9px 12px;
+		padding: floor($spacing / 2) floor($spacing / 1.5);
 		width: 10%;
 		color: $c8;
 		font-family: $bodyFont;
@@ -521,7 +521,7 @@ optgroup {
 // Info
 
 .form-info {
-	margin-bottom: $spacing / 2;
+	margin-bottom: floor($spacing / 2);
 	color: $c2;
 	@include font-size($fontSize / 1.1);
 }
@@ -559,17 +559,17 @@ optgroup {
 
 .card-wrapper {
 	margin: $spacing 0;
-	padding: $spacing / 1.5;
+	padding: floor($spacing / 1.5);
 
 	.column > * {
 		margin-bottom: 0 !important;
 	}
 
 	.card-type {
-		margin-bottom: $spacing / 2;
+		margin-bottom: floor($spacing / 2);
 
 		.card {
-			margin-right: $spacing / 2;
+			margin-right: floor($spacing / 2);
 			height: 45px;
 		}
 	}
@@ -697,8 +697,8 @@ optgroup {
 	.dropdown-current {
 		display: block;
 		position: relative;
-		padding: 9px 12px;
-		border: 1px solid $cc;
+		padding: floor($spacing / 2) floor($spacing / 1.5);
+		border: 1px solid $cd;
 		border-radius: $radius;
 		background: #fafafa;
 		white-space: nowrap;
@@ -731,8 +731,8 @@ optgroup {
 	}
 
 
-	$dropdownItemHeight: 44;
-	$dropdownItemCount: 7;
+	$dropdownItemHeight: 53;
+	$dropdownItemCount: 5;
 
 	.dropdown {
 		display: block;
@@ -748,7 +748,7 @@ optgroup {
 		.dropdown-item {
 			display: block;
 			position: relative;
-			padding: 9px 12px;
+			padding: floor($spacing / 1.5) !important;
 			background: $ce;
 			white-space: nowrap;
 			text-overflow: ellipsis;
@@ -792,17 +792,22 @@ optgroup {
 				duration: $animDuration;
 				timing-function: $animEasing;
 			}
-			transform: translateY(0px);
+			transform: translateY(0px) translateZ(0px);
 
 			&.default {
 				margin-top: -1px;
 				top: 100%;
-				transform: translateY(-10px);
+				transform: translateY(-10px) translateZ(0px);
 			}
 			&.bound {
 				margin-top: 1px;
 				bottom: 100%;
-				transform: translateY(10px);
+				transform: translateY(10px) translateZ(0px);
+			}
+			&.up {
+				margin-top: 1px !important;
+				bottom: 100% !important;
+				transform: translateY(10px) translateZ(0px) !important;
 			}
 
 			.dropdown-item {
@@ -818,7 +823,7 @@ optgroup {
 			.dropdown {
 				height: auto;
 				@include opacity(1);
-				transform: translateY(0);
+				transform: translateY(0) translateZ(0px) !important;
 			}
 		}
 	}
@@ -869,7 +874,7 @@ optgroup {
 	input[type="file"] {
 		position: relative;
 		margin: 0;
-		padding: 9px 12px;
+		padding: floor($spacing / 2) floor($spacing / 1.5);
 		text-align: right;
 		z-index: 5;
 		@include opacity(0);
@@ -885,24 +890,26 @@ optgroup {
 		border: 0;
 		z-index: 10;
 
-		.button,
-		button,
-		input[type="reset"],
-		input[type="submit"],
-		input[type="button"] {
-			margin-top: 0;
-			width: 125px;
+		$buttonWidth: 120px;
+
+		.fake-upload {
+			position: absolute;
+			margin: 3px;
+			width: $buttonWidth;
+			height: auto;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			line-height: 1.2;
 			text-align: center;
-			border-left-radius: $radius;
-			border-right-radius: 0;
 			z-index: 1;
 		}
 
 		.file-result {
 			display: block;
 			position: absolute;
-			padding: 9px;
-			padding-left: 140px;
+			padding: floor($spacing / 2) floor($spacing / 1.5);
+			padding-left: $buttonWidth + 15;
 			padding-right: 44px;
 			width: 100%;
 			top: 0px;
@@ -923,37 +930,26 @@ optgroup {
 		.fake-close {
 			display: block;
 			position: absolute;
-			margin: 0;
+			margin: 3px;
 			padding: 0;
 			width: 42px;
 			top: 0;
 			right: 0;
 			bottom: 0;
-			color: $cf;
-			@include font-size($fontSize * 1.75);
-			text-align: center;
 			border: 0 solid rgba(0, 0, 0, 0.4);
-			border-left-radius: 0;
-			border-right-radius: $radius;
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			border-top-right-radius: $radius;
+			border-bottom-right-radius: $radius;
 			background: $brand1;
 			z-index: 50;
 
-			&:before {
-				display: inline-block !important;
-				position: relative !important;
-				margin: 0 !important;
-				width: 0 !important;
-				height: 100% !important;
-				top: 0 !important;
-				left: 0 !important;
-				content: "" !important;
-				vertical-align: middle !important;
-			}
+			@extend .valign-middle;
 
-			& > * {
-				display: inline-block;
-				@include font-size($fontSize);
-				vertical-align: middle !important;
+			.icon {
+				width: 16px;
+				height: 16px;
+				top: 1px;
 			}
 		}
 	}
@@ -1124,7 +1120,7 @@ $progressHeight: 42px;
 progress {
 	display: block;
 	position: relative;
-	margin: ($spacing / 2) 0;
+	margin: floor($spacing / 2) 0;
 	padding: 0;
 	width: 100%;
 	height: $progressHeight;
@@ -1144,7 +1140,7 @@ progress {
 progress[value] {
 	display: block;
 	position: relative;
-	margin: 0 0 ($spacing / 2);
+	margin: 0 0 floor($spacing / 2);
 	padding: 0;
 	width: 100%;
 	height: $progressHeight;

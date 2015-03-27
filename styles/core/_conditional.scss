@@ -29,7 +29,7 @@
 
 	fieldset {
 		legend {
-			margin-bottom: ($spacing / 2);
+			margin-bottom: floor($spacing / 2);
 		}
 	}
 

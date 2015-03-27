@@ -1,16 +1,72 @@
+iframe[src*="youtube"] {
+	display: none;
+}
+
 .video-frame {
 	display: block;
 	position: relative;
-	margin: 0;
-	padding-bottom: 56%;
+	margin: $spacing 0;
+	padding-bottom: 55.5%;
 	width: 100%;
 	border-left: 7px solid $brand1;
 	border-radius: $radius;
 	overflow: hidden;
 
+	&.loaded {
+		.video-loader {
+			@include opacity(0);
+			visibility: hidden;
+		}
+
+		.video-button {
+			@include opacity(1);
+		}
+	}
+
+	&.playing {
+		.video-overlay,
+		.video-thumb {
+			@include opacity(0);
+			visibility: hidden;
+		}
+
+		.video-button {
+			margin: 0;
+			width: 0;
+			height: 0;
+			@include opacity(0);
+
+			.icon {
+				transform: rotate(180deg);
+			}
+
+
+			// Show Pause
+
+			// margin: 3px;
+			// width: 80px;
+			// height: 48px;
+			// left: 0 !important;
+			// bottom: 0 !important;
+			// border-radius: $radius;
+
+			// .icon {
+			// 	left: 0;
+
+			// 	&.icon-play {
+			// 		display: none !important;
+			// 	}
+			// 	&.icon-pause {
+			// 		display: inline-block !important;
+			// 	}
+			// }
+		}
+	}
+
 	iframe,
 	.video-overlay,
 	#ytplayer {
+		display: block;
 		position: absolute;
 		margin: 0;
 		width: 100%;
@@ -18,19 +74,27 @@
 	}
 
 
-	img {
+	.video-overlay {
+		display: block;
+		background: $cf;
+		z-index: 10;
+		transition: opacity $animDuration $animEasing;
+	}
+
+	.video-thumb {
 		display: block;
 		position: absolute;
-		margin-top: -38%;
 		width: 100%;
-		height: auto;
-		top: 50%;
+		height: 100%;
 		@include opacity(0.75);
+		background-position: center center !important;
+		background-size: cover !important;
 		cursor: pointer;
 		z-index: 15;
+		transition: opacity $animDuration $animEasing;
 
 		&:hover {
-			+ .button-play {
+			+ .video-button {
 				@include opacity(1);
 
 				.icon {
@@ -40,73 +104,63 @@
 		}
 	}
 
-	.video-overlay {
+	.video-loader {
 		display: block;
+		position: absolute;
+		padding: $spacing;
+		margin-bottom: -42px;
+		margin-right: -42px;
+		width: 84px;
+		height: 84px;
+		right: 50%;
+		bottom: 50%;
+		border-radius: 1000px;
 		background: $cf;
-		z-index: 10;
+		z-index: 20;
+		@include opacity(1);
+		transition: opacity $animDuration $animEasing;
 	}
 
-	.button-play {
-		display: none;
+	.video-button {
+		display: block;
 		position: absolute;
-		margin-bottom: -42px;
 		margin-left: -42px;
+		margin-bottom: -42px;
 		width: 84px;
 		height: 84px;
 		left: 50%;
 		bottom: 50%;
-		@include opacity(0.8);
+		text-align: center;
 		border-radius: 1000px;
-		background: $cf;
-		z-index: 20;
+		background: $c3;
+		z-index: 25;
 		cursor: pointer;
-		transition: all 0.15s $animEasing;
+		@include opacity(0);
+		transition: all ($animDuration) $animEasing;
+
+		@extend .valign-middle;
 
 		&:hover {
-			@include opacity(1);
-
 			.icon {
 				@include svgColor($brand2);
 			}
 		}
 
-		&.pause {
-			margin-bottom: 0;
-			margin-left: 0;
-			width: 50px;
-			height: 50px;
-			left: $spacing;
-			bottom: $spacing;
-
-			.icon {
-				left: 50%;
-
-				&.icon-play {
-					display: none;
-				}
-				&.icon-pause {
-					display: block;
-				}
-			}
-		}
-
 		.icon {
-			position: absolute;
-			margin-top: -25%;
-			margin-left: -25%;
+			position: relative;
+			margin: 0 auto;
 			width: 50%;
 			height: 50%;
-			top: 50%;
-			left: 54%;
+			left: 4px;
 			@include svgColor($brand1);
-			transition: all 0.15s $animEasing;
+			transition: all ($animDuration) $animEasing;
 
 			* {
-				transition: all 0.15s $animEasing;
+				transition: all ($animDuration) $animEasing;
 			}
 
 			&.icon-pause {
-				display: none;
+				display: none !important;
 			}
 		}
 	}

@@ -51,49 +51,57 @@ function initForm() {
 	// Multiple Upload
 
 	if ( $(".multifile-wrapper").length ) {
-		var el = $(".multifile-wrapper"),
-			inputCount = el.length,
-			inputLimit = config.forms.uploadlimit,
-			limitElement = $(".multi-limit"),
-			currentCount = inputLimit - el.find(".loaded").length,
-			isSingular = currentCount == 1 ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(),
-			newInput = '<div class="multifile-wrapper mobile-hide last">\
-							<input type="file" id="file' + "[" + inputCount + "]" + '" name="file' + "[" + inputCount + "]" + '" />\
-							<div class="fakefile">\
-								<div class="button primary fake-upload">Choose File</div>\
-								<div class="file-result">No file chosen</div>\
-								<div class="button primary fake-close">&times;</div>\
-							</div>\
-						</div>';
+		function initFileInputs() {
+			var el = $(".multifile-wrapper"),
+				inputCount = el.length,
+				inputLimit = config.forms.uploadlimit,
+				limitElement = $(".multi-limit"),
+				currentCount = inputLimit - el.find(".loaded").length,
+				isSingular = currentCount == 1 ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(),
+				newInput = '<div class="multifile-wrapper mobile-hide last">\
+								<input type="file" id="file' + "[" + inputCount + "]" + '" name="file' + "[" + inputCount + "]" + '" />\
+								<div class="fakefile">\
+									<div class="button primary fake-upload">Choose File</div>\
+									<div class="file-result">No file chosen</div>\
+									<div class="button primary fake-close">\
+										<img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'" alt="File upload delete icon">\
+									</div>\
+								</div>\
+							</div>';
 
-		limitElement.html(currentCount);
+			limitElement.html(currentCount);
 
-		el.each(function(i) {
-			var el = $(this);
-			var resultElement = el.find(".file-result");
+			el.each(function(i) {
+				var el = $(this);
+				var resultElement = el.find(".file-result");
 
-			el.find("input").attr("id", "file" + "[" + i + "]").attr("name", "file" + "[" + i + "]");
+				el.find("input").attr("id", "file" + "[" + i + "]").attr("name", "file" + "[" + i + "]");
 
-			el
-			.off("click")
-			.on("click", ".fake-upload", function() {
-				el.find("input").trigger("click");
-			})
-			.on("click", ".fake-close", function() {
-				if ( inputCount == inputLimit && !$(".multifile-wrapper.last").length ) $(newInput).insertAfter($(".multifile-wrapper").eq(inputCount - 1));
-				el.remove();
-				loadFileInputs(inputLimit);
-			})
-			.off("change")
-			.on("change", "input", function() {
-				var text = $(this).val().replace("C:\\fakepath\\", "");
-				resultElement.html(text).addClass('loaded');
+				el
+				.off("click")
+				.on("click", ".fake-upload", function() {
+					el.find("input").trigger("click");
+				})
+				.on("click", ".fake-close", function() {
+					if ( inputCount == inputLimit && !$(".multifile-wrapper.last").length ) {
+						$(newInput).insertAfter($(".multifile-wrapper").eq(inputCount - 1));
+					}
+					el.remove();
+				})
+				.off("change")
+				.on("change", "input", function() {
+					var text = $(this).val().replace("C:\\fakepath\\", "");
+					resultElement.html(text).addClass('loaded');
 
-				if ( inputCount < inputLimit ) $(newInput).insertAfter(el);
-				loadFileInputs(inputLimit);
-				if ( i < inputCount ) el.removeClass("last");
+					if ( inputCount < inputLimit ) $(newInput).insertAfter(el);
+					initFileInputs();
+					if ( i < inputCount ) el.removeClass("last");
+				});
 			});
-		});
+
+			initSVGs();
+		}
+		initFileInputs();
 
 		if ( config.application.debug ) console.log("Form :: Multiple File Upload");
 	}
@@ -300,7 +308,7 @@ function initDropdowns() {
 					select.on("focus", function() {
 						dropWrapper.addClass("active");
 
-						if ( pageBottom >= dropWrapper.offset().top + dropdown.height() + 55 ) {
+						if ( pageBottom >= dropWrapper.offset().top + dropdown.height() + 55 && !dropdown.hasClass("up") ) {
 							dropdown.removeClass("bound").addClass("default");
 						} else {
 							dropdown.removeClass("default").addClass("bound");
@@ -342,7 +350,7 @@ function initDropdowns() {
 			var el = $(".dropdown-wrapper.active"),
 				drop = el.children(".dropdown");
 
-			if ( el.length && pageBottom >= el.offset().top + drop.height() + 55 ) {
+			if ( el.length && pageBottom >= el.offset().top + drop.height() + 55 && !drop.hasClass("up") ) {
 				drop.removeClass("bound").addClass("default");
 			} else {
 				drop.removeClass("default").addClass("bound");

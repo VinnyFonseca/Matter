@@ -151,7 +151,7 @@
 .framed {
 	margin-left: 0;
 	margin-right: 0;
-	padding: $spacing / 2;
+	padding: floor($spacing / 2);
 	color: $fontColor;
 	border: 1px solid $cd;
 	border-radius: $radius;

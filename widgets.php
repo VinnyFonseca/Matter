@@ -387,7 +387,7 @@
 		<h2>Video Embeds</h2>
 
 		<p>
-			Supports youtube only.
+			Supports youtube and vimeo.
 		</p>
 
 		<p>
@@ -400,14 +400,26 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="video-frame" data-youtube-id="lS5HyAFwLAU"></div>
+		<div class="video-frame" data-video-id="lS5HyAFwLAU" data-video-service="youtube"></div>
+
+		<iframe width="1280" height="600" src="//www.youtube.com/embed/uxfuuvjT1OY" frameborder="0" allowfullscreen></iframe>
+
+		<iframe src="//player.vimeo.com/video/47911018" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 		<p>
 			<strong>Example:</strong>
 		</p>
 
 <pre>
-&lt;div class="video-frame" <span class="emphasis">data-youtube-id="lS5HyAFwLAU"</span>&gt;&lt;/div&gt;
+&lt;div class="video-frame" <span class="emphasis">data-video-id="lS5HyAFwLAU" data-video-service="youtube"</span>&gt;&lt;/div&gt;
+</pre>
+
+<pre>
+&lt;iframe width="1280" height="600" src="https://www.youtube.com/embed/uxfuuvjT1OY" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+</pre>
+
+<pre>
+&lt;iframe src="//player.vimeo.com/video/47911018" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
 </pre>
 
 

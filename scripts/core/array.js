@@ -86,3 +86,18 @@ Array.prototype.reduce = function() { // Join all internal arrays
 	}
 	return a;
 };
+
+
+
+
+// Objects
+
+function serialise(obj) {
+	var str = [];
+	for ( var p in obj ) {
+		if ( obj.hasOwnProperty(p) ) {
+			str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		}
+	}
+	return str.join("&");
+}
