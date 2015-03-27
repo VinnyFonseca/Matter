@@ -225,76 +225,67 @@ function initForm() {
 
 function initDropdowns() {
 	if ( $("select").length ) {
-		function buildDropdowns(i) {
-			var select = $("select").eq(i),
-				size = size == "undefined" || size === "" ? 1 : parseInt(select.attr("size"), 10),
-				type = typeof size !== "undefined" && size !== "" && size > 1 ? "list" : "drop",
-				placeholder = select.children("option[default]"),
-				option = select.children("option").not("[default]"),
-				selected = select.children("option:selected"),
-				wrapper = '<div class="dropdown-' + i + ' dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
-				current = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>';
-				arrow = '<div class="dropdown-arrow valign-middle">\
-							 <img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-down.png\'">\
-						 </div>';
-				drop = '<div class="dropdown"></div>';
+		function buildDropdowns() {
+			$("select").each(function() {
+				var select = $(this),
+					size = size == "undefined" || size === "" ? 1 : parseInt(select.attr("size"), 10),
+					type = typeof size !== "undefined" && size !== "" && size > 1 ? "list" : "drop",
+					placeholder = select.children("option[default]"),
+					options = select.children("option").not("[default]"),
+					selected = select.children("option:selected"),
+					wrapperEl = '<div class="dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
+					currentEl = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>',
+					arrowEl = ' <div class="dropdown-arrow valign-middle">\
+									<img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-down.png\'">\
+								</div>',
+					dropEl = '<div class="dropdown"></div>';
 
 
-			// Build structure
+				// Build structure
 
-			if ( $(".dropdown-" + i).length ) select.insertAfter($(".dropdown-" + i));
-			$(".dropdown-" + i).remove();
-			select.wrap(wrapper);
+				if ( !select.parents(".dropdown-wrapper").length ) {
+					select.wrap(wrapperEl);
+					$(dropEl).insertAfter(select);
+					$(arrowEl).insertAfter(select);
+					$(currentEl).insertAfter(select);
+				}
 
-			var dropWrapper = $(".dropdown-" + i);
-			dropWrapper.append(current);
-			dropWrapper.append(arrow);
-			dropWrapper.children(".dropdown").remove();
-			dropWrapper.append(drop);
+				var dropWrapper = select.parents(".dropdown-wrapper"),
+					arrow = dropWrapper.children(".dropdown-arrow"),
+					current = dropWrapper.children(".dropdown-current"),
+					dropdown = dropWrapper.children(".dropdown");
 
-			option.each(function() {
-				var option = $(this),
-					isSelected = option.is(":selected") ? "active" : "",
-					item = '<div class="dropdown-item ' + isSelected + '" data-value="' + option.val() + '">' + option.html() + '</div>';
+				dropdown.html("");
 
-				dropWrapper.children(".dropdown").append(item);
-			});
+				for ( var i = 0; i < options.length; i++ ) {
+					var option = options.eq(i),
+						isSelected = option.is(":selected") ? "active" : "",
+						item = '<div class="dropdown-item ' + isSelected + '" data-value="' + option.val() + '">' + option.html() + '</div>';
 
-			if ( type == "list" ) {
-				dropWrapper.children(".dropdown").height(((dropWrapper.find(".dropdown-item").outerHeight() + 1) * size) - 1);
-			}
+					dropdown.append(item);
+				}
+
+				var dropItem = dropdown.children(".dropdown-item");
+
+				if ( type == "list" ) {
+					dropdown.height(((dropWrapper.find(".dropdown-item").outerHeight() + 1) * size) - 1);
+				}
 
 
-			// Click Event
+				// Click Event
 
-			dropWrapper.each(function() {
-				var el = $(this),
-					arrow = el.children(".dropdown-arrow"),
-					dropdown = el.children(".dropdown"),
-					dropItem = dropdown.children(".dropdown-item"),
-					target = el.children(".dropdown-current");
+				var el = $(this);
 
-				target.attr("class", "dropdown-current " + select.attr("class"));
+				current.attr("class", "dropdown-current " + select.attr("class"));
 
 				if ( select.is('[readonly]') ) {
-					el.addClass("readonly");
-					target.attr("readonly", true);
+					dropWrapper.addClass("readonly");
+					current.attr("readonly", true);
 				} else if ( select.is('[disabled]') ) {
-					el.addClass("disabled");
-					target.attr("disabled", true);
+					dropWrapper.addClass("disabled");
+					current.attr("disabled", true);
 				} else {
-					function dropToggle() {
-						$(".dropdown-wrapper").removeClass("active");
-						el.addClass("active");
-
-						if ( pageBottom >= el.offset().top + dropdown.height() + 55 ) {
-							dropdown.removeClass("bound").addClass("default");
-						} else {
-							dropdown.removeClass("default").addClass("bound");
-						}
-					}
-
-					target.off().on("click", function() {
+					current.off().on("click", function() {
 						select.focus();
 					});
 					arrow.off().on("click", function() {
@@ -302,20 +293,25 @@ function initDropdowns() {
 					});
 
 					dropItem.off().on("click", function() {
-						var value = $(this).attr("data-value");
+						var value = $(this).attr("data-value").trim();
 						select.val(value).trigger("change");
 					});
 
 					select.on("focus", function() {
-						dropToggle();
+						dropWrapper.addClass("active");
+
+						if ( pageBottom >= dropWrapper.offset().top + dropdown.height() + 55 ) {
+							dropdown.removeClass("bound").addClass("default");
+						} else {
+							dropdown.removeClass("default").addClass("bound");
+						}
 					}).on("change", function() {
 						var selected = $(this).children("option:selected");
 
 						select.blur();
+						dropWrapper.removeClass("active");
+						if ( !select.hasClass("keep") ) current.text(selected.text()).attr("data-value", selected.val());
 						dropItem.removeClass("active");
-						$(".dropdown-wrapper").removeClass("active");
-
-						if ( !select.hasClass("keep") ) target.text(selected.text()).attr("data-value", selected.val());
 
 						for ( var i = 0; i < dropItem.length; i++ ) {
 							if ( dropItem.eq(i).text() === selected.text() ) {
@@ -325,25 +321,19 @@ function initDropdowns() {
 						}
 					});
 				}
-			});
 
-			$(document).on("focus", "*", function() {
-				$(".dropdown-wrapper").removeClass("active");
-			});
-
-			$("html, body").off().on("click", function(event) {
-				if (
-					!$(event.target).closest(".dropdown").length &&
-					!$(event.target).closest(".dropdown-wrapper.active").length
-				) {
-					$(".dropdown-wrapper").removeClass("active");
-				}
+				$("html, body").off().on("click", function(event) {
+					if (
+						!$(event.target).closest(".dropdown").length &&
+						!$(event.target).closest(".dropdown-wrapper.active").length
+					) {
+						$(".dropdown-wrapper").removeClass("active");
+					}
+				});
 			});
 		}
 
-		$("select").each(function(i) {
-			buildDropdowns(i);
-		});
+		buildDropdowns();
 
 
 		// Detect dropdown window fit

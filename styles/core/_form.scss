@@ -470,8 +470,10 @@ optgroup {
 		display: inline-block;
 		margin: 0;
 		width: 45%;
-		border-left-radius: $radius;
-		border-right-radius: 0;
+		border-top-left-radius: $radius;
+		border-bottom-left-radius: $radius;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
 
 		input {
 			width: 100%;
@@ -486,12 +488,16 @@ optgroup {
 		display: inline-block;
 		margin: 0;
 		width: 45%;
-		border-left-radius: $radius;
-		border-right-radius: 0;
+		border-top-left-radius: $radius;
+		border-bottom-left-radius: $radius;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
 
 		&[data-validation="match"] {
-			border-left-radius: 0;
-			border-right-radius: $radius;
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			border-top-right-radius: $radius;
+			border-bottom-right-radius: $radius;
 		}
 	}
 

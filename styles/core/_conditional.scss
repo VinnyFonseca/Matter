@@ -114,6 +114,13 @@
 
 	/* IE10+ specific styles go here */
 
+	input,
+	select,
+	textarea {
+		padding: 11px 12px;
+		line-height: 1 !important;
+	}
+
 	.controller {
 		&.radio {
 			input[type="radio"] {

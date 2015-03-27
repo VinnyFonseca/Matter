@@ -299,6 +299,8 @@ function scrollProgress() {
 // Initialisation
 
 function initFramework() {
+	 var ms = new Date().getTime();
+
 	isWideScreen = $(window).width() > 768;
 
 	if ( config.application.touch ) { // If touch device
@@ -357,8 +359,7 @@ function initFramework() {
 	initDropdowns();
 	initValidation();
 
-
-	if ( config.application.debug ) console.log("Done •• Matter");
+	if ( config.application.debug ) console.log("Done •• Matter in " + (new Date().getTime() - ms) + " milliseconds");
 }
 
 
