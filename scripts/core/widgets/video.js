@@ -278,8 +278,6 @@ function initVideo() {
 					preview = el.children(".video-thumb"),
 					button = el.children(".video-button");
 
-				currentPlayer.on("load", onPlayerReady);
-
 				function onPlayerReady() {
 					el.addClass("loaded");
 
@@ -302,7 +300,9 @@ function initVideo() {
 					el.removeClass("playing");
 				}
 
-				currentPlayer.on("pause finish", onPlayerPause);
+				currentPlayer
+					.on("load", onPlayerReady)
+					.on("pause finish", onPlayerPause);
 
 
 				function playVideo() {
