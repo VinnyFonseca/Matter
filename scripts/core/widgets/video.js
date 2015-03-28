@@ -26,7 +26,7 @@ function initVideo() {
 							</div>\
 							<div id="ytVideoPlayer-' + i + '"></div>';
 
-			el.html("").append(widget);
+			el.html("").addClass("ytVideoPlayer-" + i).append(widget);
 			initSVGs();
 
 			ytVideoInfoList[i] = {
@@ -54,7 +54,7 @@ function initVideo() {
 						enablejsapi: 1,
 						html5: 1,
 						showinfo: 0,
-						controls: 0,
+						controls: 1,
 						autohide: 1
 					},
 					events: {
@@ -64,7 +64,7 @@ function initVideo() {
 				});
 
 
-				var el = $("#" + ytVideoInfoList[i].elID).parents(".video-frame"),
+				var el = $("." + ytVideoInfoList[i].elID),
 					preview = el.children(".video-thumb"),
 					button = el.children(".video-button");
 
@@ -122,10 +122,10 @@ function initVideo() {
 					enablejsapi: 1,
 					html5: 1,
 					showinfo: 0,
-					controls: 0,
+					controls: 1,
 					autohide: 1
 				},
-				widget =   '<div class="video-frame">\
+				widget =   '<div class="video-frame ytFramePlayer-' + i + '">\
 								<div class="video-overlay"></div>\
 								<img class="video-loader" src="img/loader.gif" alt="Video loader">\
 								<div class="video-thumb" style="background: url(' + videoThumb + ');">&nbsp;</div>\
@@ -161,7 +161,7 @@ function initVideo() {
 				});
 
 
-				var el = $("#" + ytFrameInfoList[i].elID).parents(".video-frame"),
+				var el = $("." + ytFrameInfoList[i].elID),
 					preview = el.children(".video-thumb"),
 					button = el.children(".video-button");
 
@@ -238,9 +238,9 @@ function initVideo() {
 				var videoThumb = data[0].thumbnail_large;
 					playerVars = {
 						api: 1,
-						player_id: el.attr("id")
+						player_id: "vimFramePlayer-" + i
 					},
-					widget =   '<div class="video-frame">\
+					widget =   '<div class="video-frame vimFramePlayer-' + i + '">\
 									<div class="video-overlay"></div>\
 									<img class="video-loader" src="img/loader.gif" alt="Video loader">\
 									<div class="video-thumb" style="background: url(' + videoThumb + ');">&nbsp;</div>\
@@ -271,13 +271,14 @@ function initVideo() {
 			if (typeof vimFrameInfoList === 'undefined') return;
 
 			for (var i = 0; i < vimFrameInfoList.length; i++) {
-				var frame = document.getElementById(vimFrameInfoList[i].elID);
-				var currentPlayer = $f(frame);
+				var currentPlayer = $("#" + vimFrameInfoList[i].elID);
 
-				var el = $("#" + vimFrameInfoList[i].elID).parents(".video-frame"),
+
+				var el = $("." + vimFrameInfoList[i].elID),
 					preview = el.children(".video-thumb"),
 					button = el.children(".video-button");
 
+				currentPlayer.on("load", onPlayerReady);
 
 				function onPlayerReady() {
 					el.addClass("loaded");
@@ -301,19 +302,17 @@ function initVideo() {
 					el.removeClass("playing");
 				}
 
-				currentPlayer
-					.addEvent('ready', onPlayerReady)
-					.addEvent('pause', onPlayerPause);
+				currentPlayer.on("pause finish", onPlayerPause);
 
 
 				function playVideo() {
-					if ( !config.application.touch ) currentPlayer.api("play");
+					if ( !config.application.touch ) currentPlayer.vimeo("play");
 				}
 				function pauseVideo() {
-					currentPlayer.api("pause");
+					currentPlayer.vimeo("pause");
 				}
 				function stopVideo() {
-					currentPlayer.api("stop");
+					currentPlayer.vimeo("stop");
 				}
 			}
 		}

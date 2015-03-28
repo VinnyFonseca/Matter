@@ -56,7 +56,6 @@ module.exports = function(grunt) {
 					'scripts/build.js': [
 						'scripts/core/vendor/jquery-1.11.2.min.js',
 						'scripts/core/vendor/modernizr-full.min.js',
-						'scripts/core/vendor/frogaloop.js',
 						'scripts/core/vendor/*.js',
 						'scripts/dev/config.js',
 						'scripts/core/polyfills/*.js',
