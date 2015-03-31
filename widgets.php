@@ -401,19 +401,25 @@
 		</p>
 
 		<p class="emphasis">
-			Youtube Video API
+			Youtube Video
 		</p>
 
 		<div class="video-frame" data-video-id="lS5HyAFwLAU" data-video-service="youtube"></div>
 
 		<p class="emphasis">
-			Youtube iFrame API
+			Youtube iFrame
 		</p>
 
 		<iframe width="1280" height="600" src="//www.youtube.com/embed/uxfuuvjT1OY" frameborder="0" allowfullscreen></iframe>
 
 		<p class="emphasis">
-			Vimeo iFrame API
+			Vimeo Video
+		</p>
+
+		<div class="video-frame" data-video-id="122325664" data-video-service="vimeo"></div>
+
+		<p class="emphasis">
+			Vimeo iFrame
 		</p>
 
 		<iframe src="//player.vimeo.com/video/47911018" frameborder="0" allowfullscreen></iframe>
@@ -423,7 +429,7 @@
 		</p>
 
 		<p class="emphasis">
-			Youtube Video API
+			Youtube Video
 		</p>
 
 <pre>
@@ -431,7 +437,7 @@
 </pre>
 
 		<p class="emphasis">
-			Youtube iFrame API
+			Youtube iFrame
 		</p>
 
 <pre>
@@ -439,11 +445,19 @@
 </pre>
 
 		<p class="emphasis">
-			Vimeo iFrame API
+			Vimeo Video
 		</p>
 
 <pre>
-&lt;iframe src="//player.vimeo.com/video/47911018" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
+&lt;div class="video-frame" <span class="emphasis">data-video-id="122325664" data-video-service="vimeo"</span>&gt;&lt;/div&gt;
+</pre>
+
+		<p class="emphasis">
+			Vimeo iFrame
+		</p>
+
+<pre>
+&lt;iframe src="//player.vimeo.com/video/47911018" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
 </pre>
 
 

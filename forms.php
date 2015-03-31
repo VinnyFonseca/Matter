@@ -711,7 +711,9 @@
 			<div class="fakefile">
 				<div class="button primary fake-upload">Choose File</div>
 				<div class="file-result">No file chosen</div>
-				<div class="button primary fake-close">&times;</div>
+				<div class="button primary fake-close">
+					<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
+				</div>
 			</div>
 		</div>
 

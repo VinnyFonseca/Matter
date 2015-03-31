@@ -87,6 +87,7 @@ function initForm() {
 						$(newInput).insertAfter($(".multifile-wrapper").eq(inputCount - 1));
 					}
 					el.remove();
+					initFileInputs();
 				})
 				.off("change")
 				.on("change", "input", function() {
@@ -306,9 +307,10 @@ function initDropdowns() {
 					});
 
 					select.on("focus", function() {
+						$(".dropdown-wrapper").removeClass("active");
 						dropWrapper.addClass("active");
 
-						if ( pageBottom >= dropWrapper.offset().top + dropdown.height() + 55 && !dropdown.hasClass("up") ) {
+						if ( pageBottom >= dropWrapper.offset().top + dropdown.height() + 35 && !dropdown.hasClass("up") ) {
 							dropdown.removeClass("bound").addClass("default");
 						} else {
 							dropdown.removeClass("default").addClass("bound");

@@ -95,7 +95,7 @@ function initSearch() {
 						}
 					}
 
-					var placeholder = '<option class="placeholder">Select ' + parameter + '...</option>';
+					var placeholder = '<option value="" default selected>Select ' + parameter + '...</option>';
 					target.append(placeholder);
 
 					tempArray.sort();
