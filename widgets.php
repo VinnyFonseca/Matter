@@ -400,29 +400,40 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<p class="emphasis">
-			Youtube Video
-		</p>
+		<div class="row">
+			<div class="column" data-span="6">
+				<p class="emphasis">
+					Youtube iFrame
+				</p>
 
-		<!-- <div class="video-frame" data-video-id="lS5HyAFwLAU" data-video-service="youtube"></div> -->
+				<iframe width="1280" height="600" src="//www.youtube.com/embed/uxfuuvjT1OY" frameborder="0" allowfullscreen></iframe>
+			</div>
+			<div class="column" data-span="6">
+				<p class="emphasis">
+					Youtube Video
+				</p>
 
-		<p class="emphasis">
-			Youtube iFrame
-		</p>
+				<div class="video-frame" data-video-id="lS5HyAFwLAU" data-video-service="youtube"></div>
+			</div>
+			<div class="column" data-span="6">
+				<p class="emphasis">
+					Vimeo iFrame
+				</p>
 
-		<iframe width="1280" height="600" src="//www.youtube.com/embed/uxfuuvjT1OY" frameborder="0" allowfullscreen></iframe>
+				<iframe src="//player.vimeo.com/video/47911018" frameborder="0" allowfullscreen></iframe>
+			</div>
+			<div class="column" data-span="6">
+				<p class="emphasis">
+					Vimeo Video
+				</p>
 
-		<p class="emphasis">
-			Vimeo Video
-		</p>
+				<div class="video-frame" data-video-id="122325664" data-video-service="vimeo"></div>
+			</div>
+		</div>
 
-		<!-- <div class="video-frame" data-video-id="122325664" data-video-service="vimeo"></div> -->
 
-		<p class="emphasis">
-			Vimeo iFrame
-		</p>
 
-		<!-- <iframe src="//player.vimeo.com/video/47911018" frameborder="0" allowfullscreen></iframe> -->
+
 
 		<p>
 			<strong>Example:</strong>

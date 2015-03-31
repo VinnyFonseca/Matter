@@ -1,4 +1,5 @@
-iframe[src*="youtube"] {
+iframe[src*="youtube"],
+iframe[src*="vimeo"] {
 	display: none;
 }
 
@@ -47,22 +48,13 @@ iframe[src*="youtube"] {
 		}
 	}
 
-	iframe,
-	.video-overlay,
-	#ytplayer {
+
+	iframe {
 		display: block;
 		position: absolute;
 		margin: 0;
 		width: 100%;
 		height: 100%;
-	}
-
-
-	.video-overlay {
-		display: block;
-		background: $cf;
-		z-index: 10;
-		transition: opacity $animDuration $animEasing;
 	}
 
 	.video-thumb {
@@ -84,6 +76,18 @@ iframe[src*="youtube"] {
 			}
 		}
 	}
+
+	.video-overlay {
+		display: block;
+		position: absolute;
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		background: $cf;
+		z-index: 10;
+		transition: opacity $animDuration $animEasing;
+	}
+
 
 	.video-loader {
 		display: block;
