@@ -243,9 +243,9 @@
 	display: none !important;
 }
 .highlight {
-	color: $fontColor !important;
+	display: inline !important;
 	border-radius: $radius !important;
-	background: #ff0 !important;
+	background: rgba(0, 0, 0, 0.1) !important;
 }
 .disappear {
 	display: none !important;
@@ -335,15 +335,18 @@
 }
 
 
-.normal {
-	font-weight: normal !important;
-	font-style: normal !important;
-}
-.bold {
-	font-weight: 600 !important;
-}
 .light {
 	font-weight: 300 !important;
+}
+.normal {
+	font-weight: 400 !important;
+	font-style: normal !important;
+}
+.semibold {
+	font-weight: 600 !important;
+}
+.bold {
+	font-weight: 700 !important;
 }
 .ultrabold {
 	font-weight: 900 !important;
