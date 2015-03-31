@@ -9,9 +9,7 @@
   "devDependencies": {
     "grunt": "*",
     "grunt-autoprefixer": "*",
-    "grunt-sass": "*",
-    "grunt-compass": "*",
-    "grunt-contrib-compass": "*",
+    "grunt-contrib-sass": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*"
   }
