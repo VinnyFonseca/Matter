@@ -404,7 +404,7 @@
 			Youtube Video
 		</p>
 
-		<div class="video-frame" data-video-id="lS5HyAFwLAU" data-video-service="youtube"></div>
+		<!-- <div class="video-frame" data-video-id="lS5HyAFwLAU" data-video-service="youtube"></div> -->
 
 		<p class="emphasis">
 			Youtube iFrame
@@ -416,13 +416,13 @@
 			Vimeo Video
 		</p>
 
-		<div class="video-frame" data-video-id="122325664" data-video-service="vimeo"></div>
+		<!-- <div class="video-frame" data-video-id="122325664" data-video-service="vimeo"></div> -->
 
 		<p class="emphasis">
 			Vimeo iFrame
 		</p>
 
-		<iframe src="//player.vimeo.com/video/47911018" frameborder="0" allowfullscreen></iframe>
+		<!-- <iframe src="//player.vimeo.com/video/47911018" frameborder="0" allowfullscreen></iframe> -->
 
 		<p>
 			<strong>Example:</strong>
@@ -441,7 +441,7 @@
 		</p>
 
 <pre>
-&lt;iframe width="1280" height="600" src="https://www.youtube.com/embed/uxfuuvjT1OY" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe width="1280" height="600" src="https://www.youtube.com/embed/<span class="emphasis">uxfuuvjT1OY</span>" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
 </pre>
 
 		<p class="emphasis">
@@ -457,7 +457,7 @@
 		</p>
 
 <pre>
-&lt;iframe src="//player.vimeo.com/video/47911018" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe src="//player.vimeo.com/video/<span class="emphasis">47911018</span>" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
 </pre>
 
 

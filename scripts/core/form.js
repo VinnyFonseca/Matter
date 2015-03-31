@@ -239,7 +239,6 @@ function initDropdowns() {
 				var select = $(this),
 					size = size == "undefined" || size === "" ? 1 : parseInt(select.attr("size"), 10),
 					type = typeof size !== "undefined" && size !== "" && size > 1 ? "list" : "drop",
-					placeholder = select.children("option[default]"),
 					options = select.children("option").not("[default]"),
 					selected = select.children("option:selected"),
 					wrapperEl = '<div class="dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
@@ -247,7 +246,7 @@ function initDropdowns() {
 					arrowEl = ' <div class="dropdown-arrow valign-middle">\
 									<img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-down.png\'">\
 								</div>',
-					dropEl = '<div class="dropdown"></div>';
+					dropEl = '<div class="dropdown default"></div>';
 
 
 				// Build structure
@@ -265,6 +264,7 @@ function initDropdowns() {
 					dropdown = dropWrapper.children(".dropdown");
 
 				dropdown.html("");
+				current.val(selected.val()).html(selected.html());
 
 				for ( var i = 0; i < options.length; i++ ) {
 					var option = options.eq(i),

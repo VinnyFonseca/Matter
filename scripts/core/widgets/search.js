@@ -116,64 +116,66 @@ function initSearch() {
 					parameterArray.push(parameter);
 					outputArray[parameter] = [];
 
-					input.each(function() {
-						$(this).on("keyup", function(event) {
-							var value = $(this).val().toLowerCase();
-								parameter = $(this).data("search-parameter"),
-								criteria = parameter.replace(/\s/g, "").split(","),
-								keycode = event.keyCode;
+					if ( input.length ) {
+						input.each(function() {
+							$(this).on("keyup", function(event) {
+								var value = $(this).val().toLowerCase();
+									parameter = $(this).data("search-parameter"),
+									criteria = parameter.replace(/\s/g, "").split(","),
+									keycode = event.keyCode;
 
-							var validKeys =
-								keycode == 32 || keycode === 13		||  // spacebar & return key(s)
-								keycode == 8						||  // backspace
-								(keycode > 47 && keycode < 58)		||  // number keys
-								(keycode > 64 && keycode < 91)		||  // letter keys
-								(keycode > 95 && keycode < 112)		||  // numpad keys
-								(keycode > 185 && keycode < 193)	||  // ;=,-./` (in order)
-								(keycode > 218 && keycode < 223);		// [\]' (in order)
+								var validKeys =
+									keycode == 32 || keycode === 13		||  // spacebar & return key(s)
+									keycode == 8						||  // backspace
+									(keycode > 47 && keycode < 58)		||  // number keys
+									(keycode > 64 && keycode < 91)		||  // letter keys
+									(keycode > 95 && keycode < 112)		||  // numpad keys
+									(keycode > 185 && keycode < 193)	||  // ;=,-./` (in order)
+									(keycode > 218 && keycode < 223);		// [\]' (in order)
 
-							if ( validKeys ) {
-								if ( value.length <= 1 ) unhighlight(results);
-								outputArray[parameter] = value;
-								updateResults();
-								return false;
-							}
+								if ( validKeys ) {
+									if ( value.length <= 1 ) unhighlight(results);
+									outputArray[parameter] = value;
+									updateResults();
+									return false;
+								}
+							});
 						});
-					});
+					}
 
 
 					// Selects
 
-					select.each(function(i) {
-						var placeholder = $(this).val(),
-							parameter = $(this).data("search-parameter");
+					if ( select.length ) {
+						select.each(function(i) {
+							var placeholder = $(this).val(),
+								parameter = $(this).data("search-parameter");
 
-						populateSelects(parameter);
+							populateSelects(parameter);
 
-						parameterArray.push(parameter);
-						outputArray[parameter] = [];
+							parameterArray.push(parameter);
+							outputArray[parameter] = [];
 
-						$(this).on("change", function(event) {
-							event.preventDefault();
+							$(this).on("change", function(event) {
+								event.preventDefault();
 
-							var value = $(this).val(),
-								tag = '<li class="tag" data-tag-group="' + i + '" data-tag-parameter="' + parameter + '" data-tag="' + value + '">' + value + tagclose + '</li>';
+								var value = $(this).val(),
+									tag = '<li class="tag" data-tag-group="' + i + '" data-tag-parameter="' + parameter + '" data-tag="' + value + '">' + value + tagclose + '</li>';
 
-							if ( value !== "" ) {
-								if ( $.inArray(value, outputArray[parameter]) < 0 ) {
-									tagcloud.addClass("active").append(tag);
-								} else {
-									notify("This tag already exists.", "failure");
-									return false;
+								if ( value !== "" ) {
+									if ( $.inArray(value, outputArray[parameter]) < 0 ) {
+										tagcloud.addClass("active").append(tag);
+									} else {
+										notify("This tag already exists.", "failure");
+										return false;
+									}
 								}
-							}
 
-							updateTags(parameter);
-							initSVGs();
+								updateTags(parameter);
+								initSVGs();
+							});
 						});
-					});
-
-					initDropdowns();
+					}
 
 
 					// Tags
@@ -242,37 +244,39 @@ function initSearch() {
 					// Input
 
 					function inputAnalysis() {
-						var parameter = input.data("search-parameter"),
-							criteria = parameter.replace(/\s/g, "").split(","),
-							tempArray = [];
+						if ( input.length ) {
+							var parameter = input.data("search-parameter"),
+								criteria = parameter.replace(/\s/g, "").split(","),
+								tempArray = [];
 
-						for ( var i = 0; i < JSONobjects.length; i++ ) {
-							var object = JSONobjects[i],
-								id = object.Id,
-								compare = outputArray[parameter];
+							for ( var i = 0; i < JSONobjects.length; i++ ) {
+								var object = JSONobjects[i],
+									id = object.Id,
+									compare = outputArray[parameter];
 
-							for ( var j = 0; j < criteria.length; j++ ) {
-								var retrieved = object[criteria[j]];
+								for ( var j = 0; j < criteria.length; j++ ) {
+									var retrieved = object[criteria[j]];
 
-								if ( retrieved instanceof Array ) {
-									for ( var k = 0; k < retrieved.length; k++ ) {
-										var analyse = retrieved[k].toLowerCase();
+									if ( retrieved instanceof Array ) {
+										for ( var k = 0; k < retrieved.length; k++ ) {
+											var analyse = retrieved[k].toLowerCase();
+
+											if ( analyse.indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
+												tempArray.push(id);
+											}
+										}
+									} else {
+										var analyse = retrieved.toLowerCase();
 
 										if ( analyse.indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
 											tempArray.push(id);
 										}
 									}
-								} else {
-									var analyse = retrieved.toLowerCase();
-
-									if ( analyse.indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
-										tempArray.push(id);
-									}
 								}
 							}
-						}
 
-						resultArray[parameter] = tempArray;
+							resultArray[parameter] = tempArray;
+						}
 					}
 
 					// Tags
@@ -552,6 +556,7 @@ function initSearch() {
 
 				// Initialise
 
+				initDropdowns();
 				updateResults();
 			}
 		});
