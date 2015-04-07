@@ -451,9 +451,7 @@ function sliderInit(sliderId) {
 
 	function sliderStart() {
 		movable.removeClass("stopped");
-		slideTimer = setInterval(function() {
-			slideNext();
-		}, animInterval);
+		slideTimer = setInterval(slideNext, animInterval);
 	}
 	function sliderStop() {
 		movable.addClass("stopped");
