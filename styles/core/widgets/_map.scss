@@ -4,7 +4,7 @@
 	display: block;
 	position: relative;
 	width: 100%;
-	padding-bottom: 75%;
+	padding-bottom: 62.5%;
 
 	a {
 		margin-left: 0;
@@ -29,15 +29,14 @@
 			max-height: 100% !important;
 		}
 	}
-}
 
-
-#map-canvas {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
+	.map-canvas {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+	}
 }
 
 

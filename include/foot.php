@@ -1,13 +1,6 @@
 		<!-- Minified JS - Includes all .js from scripts folder -->
 		<script async type="text/javascript" src="scripts/build.js"></script>
 
-		<!-- Third Party CDN Plugins -->
-		<!-- AddThis -->
-		<!-- Go to www.addthis.com/dashboard to customize your tools -->
-		<!--
-		<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-XXXXXXXXXXXXXXXX" async="async"></script>
-		-->
-
 		<!-- Google Analytics -->
 		<!--
 		<script type="text/javascript">
@@ -21,8 +14,8 @@
 		</script>
 		-->
 
-		<!--[if !IE 8]><!-->
+		<!--[if !IE 8]>
 		<script>document.write('<script async src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
-		<!--<![endif]-->
+		<![endif]-->
 	</body>
 </html>

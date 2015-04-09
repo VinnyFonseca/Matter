@@ -28,7 +28,7 @@
 	.cell {
 		display: block;
 		position: relative;
-		padding: $spacing;
+		padding: floor($spacing / 2);
 	}
 }
 

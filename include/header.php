@@ -1,4 +1,7 @@
 <body class="preload">
+	<!--[if lt IE 8]>
+	<p class="emphasis">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<![endif]-->
 
 	<a href="#" class="anchor" id="get-started"></a>
 	<a href="#get-started" class="button primary back-to-top">Top</a>

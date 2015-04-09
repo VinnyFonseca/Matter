@@ -150,7 +150,7 @@
 			var element = $("#" + domNode);
 
 			var html = '<div class="twitter-user"></div>';
-				html += '<div class="content feed">';
+				html += '<div class="content">';
 				while(n < x) {
 					html += '<hr>';
 					html += '<div class="tweet-item">' + tweets[n] + '</div>';
@@ -162,8 +162,6 @@
 			element.html(html);
 
 			if ( showRts ) {
-				element.addClass("framed");
-
 				var user = element.find(".user");
 
 				user.each(function() {
@@ -173,7 +171,7 @@
 					$(this).find("a").attr('target', '_blank').addClass("no-icon").addClass("valign-middle");
 				});
 			} else {
-				element.addClass("framed").addClass("twitter-main");
+				element.addClass("twitter-main");
 
 				element.find(".twitter-user").append("<h4 class='user'>" + element.find(".user:first-child").html() + "</h4>");
 				var user = element.find(".twitter-user .user");

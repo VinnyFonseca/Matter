@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 
-<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if lt IE 7]> <html class="lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
+<!--[if IE 9]>    <html class="lt-ie10"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class=""> <!--<![endif]-->
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -35,5 +36,7 @@
 		<!-- Minified CSS - Includes all .scss from style folder -->
 		<link rel="stylesheet" href="styles/build.css" type="text/css" media="screen">
 
+		<!--[if lt IE 9]>
 		<script type="text/javascript" src="scripts/core/vendor/html5shiv-printshiv.min.js"></script>
+		<![endif]-->
 	</head>

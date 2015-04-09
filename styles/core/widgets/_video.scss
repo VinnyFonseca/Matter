@@ -133,9 +133,9 @@ iframe[src*="vimeo"] {
 		.icon {
 			position: relative;
 			margin: 0 auto;
-			width: 50%;
-			height: 50%;
-			left: 4px;
+			width: 45%;
+			height: 45%;
+			left: 3px;
 			@include svgColor($brand1);
 			transition: all ($animDuration) $animEasing;
 

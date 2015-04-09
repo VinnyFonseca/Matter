@@ -3,12 +3,9 @@
 [data-twitter] {
 	display: block;
 	position: relative;
-	margin: 5px 0;
-	padding: floor($spacing / 1.5);
-	border: 1px solid $cd;
-	border-radius: $radius;
-	background: $ce;
-	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	@extend .framed;
 
 	.user {
 		position: relative;
@@ -94,7 +91,7 @@
 	}
 
 	.tweet {
-		color: $c8;
+		color: $fontColor;
 	}
 	.timePosted {
 		color: #aaa;

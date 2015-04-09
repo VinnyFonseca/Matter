@@ -19,7 +19,6 @@ body {
 	color: $fontColor;
 	font-family: $bodyFont;
 	@include font-size($fontSize);
-	overflow-x: hidden;
 
 	&.preload {
 		* {
@@ -94,7 +93,8 @@ p {
 	margin: floor($spacing / 1.5) 0;
 
 	&.lead {
-		@include font-size($fontSize * 1.3);
+		color: $brand1;
+		@include font-size($fontSize * 1.1);
 	}
 }
 

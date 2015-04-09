@@ -279,7 +279,9 @@
 		transition-timing-function: $animEasing;
 
 		&.loading {
-			position: absolute;
+			position: absolute !important;
+			top: 0;
+			left: 0;
 			visibility: hidden;
 			z-index: -1;
 			@include opacity(0);
