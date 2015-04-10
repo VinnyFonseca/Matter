@@ -93,8 +93,7 @@ p {
 	margin: floor($spacing / 1.5) 0;
 
 	&.lead {
-		color: $brand1;
-		@include font-size($fontSize * 1.1);
+		@include font-size($fontSize * 1.3);
 	}
 }
 

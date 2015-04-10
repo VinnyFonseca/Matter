@@ -1,6 +1,6 @@
 // Custom Get Element Position
 
-function getOffset(el) {
+var getOffset = function(el) {
 	var _x = 0;
 	var _y = 0;
 	while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
@@ -15,7 +15,7 @@ function getOffset(el) {
 
 // Custom Scroll
 
-function scrollTo(Y, duration, easingFunction, callback) {
+var scrollTo = function(Y, duration, easingFunction, callback) {
 	var elem = document.documentElement.scrollTop ? document.documentElement : document.body;
 	var from = elem.scrollTop;
 
@@ -26,11 +26,11 @@ function scrollTo(Y, duration, easingFunction, callback) {
 		return; /* Prevent scrolling to the Y point if already there */
 	}
 
-	function min(a, b) {
+	var min = function(a, b) {
 		return a < b ? a : b;
 	}
 
-	function scroll(timestamp) {
+	var scroll = function(timestamp) {
 		var currentTime = Date.now(),
 			easedT = easingFunction(time);
 
@@ -45,19 +45,19 @@ function scrollTo(Y, duration, easingFunction, callback) {
 // Custom Easing
 
 var easing = {
-	linear: function (t) { return t },
-	easeInQuad: function (t) { return t * t },
-	easeOutQuad: function (t) { return t * (2 - t) },
-	easeInOutQuad: function (t) { return t < 0.5 ? 2 * t * t :  - 1 + (4 - 2 * t) * t },
-	easeInCubic: function (t) { return t * t * t },
-	easeOutCubic: function (t) { return (--t) * t * t + 1 },
-	easeInOutCubic: function (t) { return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1 },
-	easeInQuart: function (t) { return t * t * t * t },
-	easeOutQuart: function (t) { return 1 - (--t) * t * t * t },
-	easeInOutQuart: function (t) { return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t },
-	easeInQuint: function (t) { return t * t * t * t * t },
-	easeOutQuint: function (t) { return 1 + (--t) * t * t * t * t },
-	easeInOutQuint: function (t) { return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t }
+	linear: function(t) { return t },
+	easeInQuad: function(t) { return t * t },
+	easeOutQuad: function(t) { return t * (2 - t) },
+	easeInOutQuad: function(t) { return t < 0.5 ? 2 * t * t :  - 1 + (4 - 2 * t) * t },
+	easeInCubic: function(t) { return t * t * t },
+	easeOutCubic: function(t) { return (--t) * t * t + 1 },
+	easeInOutCubic: function(t) { return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1 },
+	easeInQuart: function(t) { return t * t * t * t },
+	easeOutQuart: function(t) { return 1 - (--t) * t * t * t },
+	easeInOutQuart: function(t) { return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t },
+	easeInQuint: function(t) { return t * t * t * t * t },
+	easeOutQuint: function(t) { return 1 + (--t) * t * t * t * t },
+	easeInOutQuint: function(t) { return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t }
 }
 
 
@@ -81,7 +81,7 @@ String.prototype.bool = function() {
     return (/^true$/i).test(this);
 };
 
-function sliderInit(sliderId) {
+var sliderInit = function(sliderId) {
 	var sliderActive = $('#' + sliderId);
 	var containerWrapper = sliderActive.find('.slider-container-wrapper');
 	var container = sliderActive.find('.slider-container');
@@ -115,7 +115,7 @@ function sliderInit(sliderId) {
 	var isMultiSlide = uniqueCount > 1;
 
 
-	function containerPos() {
+	var containerPos = function() {
 		sliderWidth = sliderActive.width();
 		container.css({
 			'width': sliderWidth
@@ -195,7 +195,7 @@ function sliderInit(sliderId) {
 
 	var direction;
 
-	function cloneSlide() {
+	var cloneSlide = function() {
 		if ( direction == "prev" ) {
 			for ( var i = maxCount; i >= slideCurrent; i-- ) {
 				movable.prepend(container.eq(i));
@@ -212,7 +212,7 @@ function sliderInit(sliderId) {
 
 	// Controls Interaction Functions
 
-	function slidePrev() {
+	var slidePrev = function() {
 		if ( animating === false ) {
 			direction = "prev";
 
@@ -230,7 +230,7 @@ function sliderInit(sliderId) {
 			slideAction();
 		}
 	}
-	function slideNext() {
+	var slideNext = function() {
 		if ( animating === false ) {
 			direction = "next";
 
@@ -248,7 +248,7 @@ function sliderInit(sliderId) {
 			slideAction();
 		}
 	}
-	function slideAny(i) {
+	var slideAny = function(i) {
 		if ( animating === false ) {
 			if ( slideCurrent < uniqueCount ) {
 				slideCurrent = i;
@@ -278,7 +278,7 @@ function sliderInit(sliderId) {
 
 	var slideTimer;
 
-	function slideAction() {
+	var slideAction = function() {
 		animating = true;
 		movePos = - (sliderWidth * loopUnit);
 
@@ -436,11 +436,11 @@ function sliderInit(sliderId) {
 
 	// Slide Show
 
-	function sliderStart() {
+	var sliderStart = function() {
 		movable.removeClass("stopped");
 		slideTimer = setInterval(slideNext, animInterval);
 	}
-	function sliderStop() {
+	var sliderStop = function() {
 		movable.addClass("stopped");
 		clearInterval(slideTimer);
 	}
@@ -477,12 +477,12 @@ function sliderInit(sliderId) {
 }
 
 
-function initSliders() {
+var initSliders = function() {
 	var slider = $("[data-slider]");
 
 	if ( slider.length ) {
 		slider
-			.each(function (i, slider) {
+			.each(function(i, slider) {
 				setTimeout(function() {
 					sliderInit(slider.id = 'slider-' + i);
 				}, 250 * i);

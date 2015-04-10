@@ -120,7 +120,8 @@ function URLQueryObject() { // Creates an object from a query string
 
 // AJAX
 
-var dataObject;
+var returnedData,
+	dataObject = "";
 
 function dataRequest(url, type, successFunction) {
 	if ( config.application.debug ) console.log('AJAX ~~ Request');
@@ -193,8 +194,6 @@ function scrollProgress() {
 // Initialisation
 
 function initFramework() {
-	 var ms = new Date().getTime();
-
 	isWideScreen = $(window).width() > 768;
 
 	if ( config.application.touch ) { // If touch device
@@ -253,6 +252,8 @@ function initFramework() {
 	initDropdowns();
 	initValidation();
 
+
+	var ms = new Date().getTime();
 	if ( config.application.debug ) console.log("Done •• Matter in " + (new Date().getTime() - ms) + " milliseconds");
 }
 
