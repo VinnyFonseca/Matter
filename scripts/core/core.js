@@ -7,7 +7,7 @@ if (!window.console) console = { log: function() {} };
 
 // Asynchronous script loading with callback function
 
-function loadScript(src, callback) {
+var loadScript = function(src, callback) {
 	var script = document.createElement("script");
 	script.type = "text/javascript";
 	script.src = src;
@@ -21,7 +21,7 @@ function loadScript(src, callback) {
 
 // SVG Injection
 
-function initSVGs() {
+var initSVGs = function() {
 	if ( !$("html").hasClass("lt-ie9") && $('img.svg').length ) {
 		var svgCount = 0;
 
@@ -52,7 +52,7 @@ function initSVGs() {
 
 // Randomisation
 
-function randomizeInteger(min, max) {
+var randomizeInteger = function(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 }
 
@@ -61,7 +61,7 @@ function randomizeInteger(min, max) {
 
 // Popup
 
-function popupWindow(url, title, w, h) {
+var popupWindow = function(url, title, w, h) {
 	var left = (screen.width / 2) - (w / 2);
 	var top = (screen.height / 2) - (h / 2);
 	return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
@@ -72,7 +72,7 @@ function popupWindow(url, title, w, h) {
 
 // Highlight
 
-function highlight(el, val) {
+var highlight = function(el, val) {
 	var match = RegExp(val, 'gi');
 
 	el.each(function() {
@@ -85,7 +85,7 @@ function highlight(el, val) {
 	});
 }
 
-function unhighlight(el) {
+var unhighlight = function(el) {
 	el.find("span.highlight").replaceWith(function() {
 		return $(this).text();
 	});
@@ -96,21 +96,21 @@ function unhighlight(el) {
 
 // URLs
 
-function URLQueryObject() { // Creates an object from a query string
+var URLQueryObject = function() { // Creates an object from a query string
 	var urlParams = "";
 
 	window.onpopstate = function() {
 		var match,
 			pl     = /\+/g,  // Regex for replacing addition symbol with a space
 			search = /([^&=]+)=?([^&]*)/g,
-			decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+			decode = function(s) { return decodeURIComponent(s.replace(pl, " ")); },
 			query  = window.location.search.substring(1);
 
 		urlParams = {};
 		while (match == search.exec(query)) {
 		   urlParams[decode(match[1])] = decode(match[2]);
 		}
-	}
+	};
 
 	return urlParams;
 }
@@ -123,7 +123,7 @@ function URLQueryObject() { // Creates an object from a query string
 var returnedData,
 	dataObject = "";
 
-function dataRequest(url, type, successFunction) {
+var dataRequest = function(url, type, successFunction) {
 	if ( config.application.debug ) console.log('AJAX ~~ Request');
 
 	request = $.ajax({
@@ -150,7 +150,7 @@ function dataRequest(url, type, successFunction) {
 
 var anchorClicked;
 
-function initLinks() {
+var initLinks = function() {
 	$(document).on("click", "a[href^='#']", function(event) {
 		var link = $(this).attr("href");
 
@@ -183,7 +183,7 @@ function initLinks() {
 
 // Scroll Progress
 
-function scrollProgress() {
+var scrollProgress = function() {
 	var scrollPercentage = (pageTop * 100) / ($(document).height() - $(window).height());
 	$(".scroll-progress").width(scrollPercentage + "%");
 }
@@ -193,7 +193,7 @@ function scrollProgress() {
 
 // Initialisation
 
-function initFramework() {
+var initFramework = function() {
 	isWideScreen = $(window).width() > 768;
 
 	if ( config.application.touch ) { // If touch device
