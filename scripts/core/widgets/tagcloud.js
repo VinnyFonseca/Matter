@@ -51,7 +51,13 @@ function initTagClouds() {
 
 			target.on("click", ".tag", function() {
 				$(this).remove();
-				target.children(".tag").length > 0 ? target.addClass("active") : target.removeClass("active");
+
+				if ( target.children(".tag").length > 0 ) {
+					target.addClass("active");
+				} else {
+					target.removeClass("active");
+				}
+
 				updateArray();
 			});
 		});

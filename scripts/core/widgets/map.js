@@ -569,10 +569,10 @@ function buildMap() {
 
 		if ( config.application.debug ) console.log("Widget ~~ Map");
 	}
-};
+}
 
 function initMap() {
 	if ( $('.map-wrapper').length ) {
 		loadScript("//maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js&callback=buildMap");
 	}
-};
+}

@@ -7,7 +7,11 @@ function initOverlays() {
 				target = $("#" + el.data("overlay"));
 
 			el.on("click", function() {
-				target.hasClass("active") ? target.removeClass("active") : target.addClass("active");
+				if ( target.hasClass("active") ) {
+					target.removeClass("active");
+				} else {
+					target.addClass("active");
+				}
 			});
 
 			target.on('click', function() {

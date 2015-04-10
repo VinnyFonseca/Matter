@@ -136,7 +136,7 @@
 				document.getElementsByTagName('head')[0].appendChild(script);
 			}
 
-			inProgress ? queue.push(handlerConfig) : setup();
+			if ( inProgress ) { queue.push(handlerConfig); } else { setup(); }
 		},
 
 
@@ -162,9 +162,9 @@
 			element.html(html);
 
 			if ( showRts ) {
-				var user = element.find(".user");
+				var userMulti = element.find(".user");
 
-				user.each(function() {
+				userMulti.each(function() {
 					$(this).find("img").attr("class", "box-logo");
 					$(this).find("span").eq(0).replaceWith(function() { return $(this).html(); });
 					$(this).find("span").eq(1).attr("class", "handle");
@@ -174,12 +174,12 @@
 				element.addClass("twitter-main");
 
 				element.find(".twitter-user").append("<h4 class='user'>" + element.find(".user:first-child").html() + "</h4>");
-				var user = element.find(".twitter-user .user");
+				var userSingle = element.find(".twitter-user .user");
 
-				user.find("img").attr("class", "box-logo");
-				user.find("span").eq(0).replaceWith(function() { return $(this).html(); });
-				user.find("span").eq(1).attr("class", "handle");
-				user.find("a").attr('target', '_blank').addClass("no-icon");
+				userSingle.find("img").attr("class", "box-logo");
+				userSingle.find("span").eq(0).replaceWith(function() { return $(this).html(); });
+				userSingle.find("span").eq(1).attr("class", "handle");
+				userSingle.find("a").attr('target', '_blank').addClass("no-icon");
 
 				if ( showFlw ) element.find(".twitter-follow").show();
 			}
@@ -206,48 +206,48 @@
 			var images = [];
 			var rts = [];
 			var tids = [];
-			var x = 0;
+			var z = 0;
 
 			if (supportsClassName) {
-				var tmp = div.getElementsByClassName('tweet');
-				while (x < tmp.length) {
-					if (tmp[x].getElementsByClassName('retweet-credit').length > 0) {
+				var tmpClass = div.getElementsByClassName('tweet');
+				while (z < tmpClass.length) {
+					if (tmpClass[z].getElementsByClassName('retweet-credit').length > 0) {
 						rts.push(true);
 					} else {
 						rts.push(false);
 					}
-					if (!rts[x] || rts[x] && showRts) {
-						tweets.push(tmp[x].getElementsByClassName('e-entry-title')[0]);
-						tids.push(tmp[x].getAttribute('data-tweet-id'));
-						authors.push(tmp[x].getElementsByClassName('p-author')[0]);
-						times.push(tmp[x].getElementsByClassName('dt-updated')[0]);
-						if (tmp[x].getElementsByClassName('inline-media')[0] !== undefined) {
-							images.push(tmp[x].getElementsByClassName('inline-media')[0]);
+					if (!rts[z] || rts[z] && showRts) {
+						tweets.push(tmpClass[z].getElementsByClassName('e-entry-title')[0]);
+						tids.push(tmpClass[z].getAttribute('data-tweet-id'));
+						authors.push(tmpClass[z].getElementsByClassName('p-author')[0]);
+						times.push(tmpClass[z].getElementsByClassName('dt-updated')[0]);
+						if (tmpClass[z].getElementsByClassName('inline-media')[0] !== undefined) {
+							images.push(tmpClass[z].getElementsByClassName('inline-media')[0]);
 						} else {
 							images.push(undefined);
 						}
 					}
-					x++;
+					z++;
 				}
 			} else {
-				var tmp = getElementsByClassName(div, 'tweet');
-				while (x < tmp.length) {
-					tweets.push(getElementsByClassName(tmp[x], 'e-entry-title')[0]);
-					tids.push(tmp[x].getAttribute('data-tweet-id'));
-					authors.push(getElementsByClassName(tmp[x], 'p-author')[0]);
-					times.push(getElementsByClassName(tmp[x], 'dt-updated')[0]);
-					if (getElementsByClassName(tmp[x], 'inline-media')[0] !== undefined) {
-						images.push(getElementsByClassName(tmp[x], 'inline-media')[0]);
+				var tmpNoClass = getElementsByClassName(div, 'tweet');
+				while (z < tmpNoClass.length) {
+					tweets.push(getElementsByClassName(tmpNoClass[z], 'e-entry-title')[0]);
+					tids.push(tmpNoClass[z].getAttribute('data-tweet-id'));
+					authors.push(getElementsByClassName(tmpNoClass[z], 'p-author')[0]);
+					times.push(getElementsByClassName(tmpNoClass[z], 'dt-updated')[0]);
+					if (getElementsByClassName(tmpNoClass[z], 'inline-media')[0] !== undefined) {
+						images.push(getElementsByClassName(tmpNoClass[z], 'inline-media')[0]);
 					} else {
 						images.push(undefined);
 					}
 
-					if (getElementsByClassName(tmp[x], 'retweet-credit').length > 0) {
+					if (getElementsByClassName(tmpNoClass[z], 'retweet-credit').length > 0) {
 						rts.push(true);
 					} else {
 						rts.push(false);
 					}
-					x++;
+					z++;
 				}
 			}
 

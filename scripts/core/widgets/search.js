@@ -100,8 +100,8 @@ function initSearch() {
 
 					tempArray.sort();
 
-					for ( var i = 0; i < tempArray.length; i++ ) {
-						var option = '<option value="' + tempArray[i] + '">' + tempArray[i] + '</option>';
+					for ( var j = 0; j < tempArray.length; j++ ) {
+						var option = '<option value="' + tempArray[j] + '">' + tempArray[j] + '</option>';
 						target.append(option);
 					}
 				}
@@ -119,7 +119,7 @@ function initSearch() {
 					if ( input.length ) {
 						input.each(function() {
 							$(this).on("keyup", function(event) {
-								var value = $(this).val().toLowerCase();
+								var value = $(this).val().toLowerCase(),
 									parameter = $(this).data("search-parameter"),
 									criteria = parameter.replace(/\s/g, "").split(","),
 									keycode = event.keyCode;
@@ -184,7 +184,12 @@ function initSearch() {
 						var parameter = $(this).data("tag-parameter");
 
 						$(this).remove();
-						tagcloud.children(".tag").length > 0 ? tagcloud.addClass("active") : tagcloud.removeClass("active");
+
+						if ( tagcloud.children(".tag").length > 0 ) {
+							tagcloud.addClass("active");
+						} else {
+							tagcloud.removeClass("active");
+						}
 
 						updateTags(parameter);
 					});
@@ -229,8 +234,8 @@ function initSearch() {
 
 						allArray.push(id);
 					}
-					for ( var i = 0; i < parameterArray.length; i++ ) {
-						resultArray[parameterArray[i]] = [];
+					for ( var j = 0; j < parameterArray.length; j++ ) {
+						resultArray[parameterArray[j]] = [];
 					}
 
 
@@ -259,16 +264,16 @@ function initSearch() {
 
 									if ( retrieved instanceof Array ) {
 										for ( var k = 0; k < retrieved.length; k++ ) {
-											var analyse = retrieved[k].toLowerCase();
+											var analyseArray = retrieved[k].toLowerCase();
 
-											if ( analyse.indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
+											if ( analyseArray.indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
 												tempArray.push(id);
 											}
 										}
 									} else {
-										var analyse = retrieved.toLowerCase();
+										var analyseString = retrieved.toLowerCase();
 
-										if ( analyse.indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
+										if ( analyseString.indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
 											tempArray.push(id);
 										}
 									}
@@ -317,9 +322,9 @@ function initSearch() {
 
 					// Analyse rebuilt arrays and build final array
 
-					for ( var i = 0; i < parameterArray.length; i++ ) {
-						var outputSet = outputArray[parameterArray[i]],
-							resultSet = resultArray[parameterArray[i]];
+					for ( var k = 0; k < parameterArray.length; k++ ) {
+						var outputSet = outputArray[parameterArray[k]],
+							resultSet = resultArray[parameterArray[k]];
 
 						existsArray.push(outputSet.length > 0);
 
@@ -330,8 +335,8 @@ function initSearch() {
 					}
 
 					var outputCount = 0;
-					for ( var i = 0; i < existsArray.length; i++ ) {
-						if ( existsArray[i] === true ) outputCount++;
+					for ( var l = 0; l < existsArray.length; l++ ) {
+						if ( existsArray[l] === true ) outputCount++;
 					}
 					var hasOutput = outputCount >= 1;
 
@@ -352,9 +357,9 @@ function initSearch() {
 					var analysis = countRepeated(cleanArray);
 
 					if ( hasOutput ) {
-						for ( var i = 0; i < cleanArray.length; i++ ) {
-							if ( analysis[cleanArray[i]] === outputCount && $.inArray(cleanArray[i], finalArray) < 0 ) {
-								finalArray.push(cleanArray[i]);
+						for ( var m = 0; m < cleanArray.length; m++ ) {
+							if ( analysis[cleanArray[m]] === outputCount && $.inArray(cleanArray[m], finalArray) < 0 ) {
+								finalArray.push(cleanArray[m]);
 							}
 						}
 					} else {
@@ -427,7 +432,7 @@ function initSearch() {
 							// Highlight
 
 							input.each(function() {
-								var value = $(this).val().toLowerCase();
+								var value = $(this).val().toLowerCase(),
 									parameter = $(this).data("search-parameter"),
 									criteria = parameter.replace(/\s/g, "").split(",");
 
@@ -517,8 +522,8 @@ function initSearch() {
 					if ( config.search.pagination ) {
 						var pages = 0;
 
-						for ( var i = 0; i < resultsCount; i++ ) {
-							if ( i % config.search.count == 0 ) {
+						for ( var n = 0; n < resultsCount; n++ ) {
+							if ( n % config.search.count === 0 ) {
 								pages++;
 
 								var page = "<button data-page='" + pages + "'>" + pages + "</button>";

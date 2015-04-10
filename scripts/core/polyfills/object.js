@@ -1,4 +1,22 @@
-// ECMAScript5 Fixes
+// IE8 Fixes
+
+window.hasOwnProperty = window.hasOwnProperty || Object.prototype.hasOwnProperty;
+
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = 0, len = this.length; i < len; i++) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+}
+
+
+
+
+// ECMAScript5
 
 if (!Array.prototype.indexOf) {
 	Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
@@ -17,7 +35,7 @@ if (!Array.prototype.indexOf) {
 			n = Number(arguments[1]);
 			if (n != n) { // shortcut for verifying if it's NaN
 				n = 0;
-			} else if (n != 0 && n != Infinity && n != -Infinity) {
+			} else if (n !== 0 && n != Infinity && n != -Infinity) {
 				n = (n > 0 || -1) * Math.floor(Math.abs(n));
 			}
 		}
@@ -37,7 +55,7 @@ if (!Array.prototype.indexOf) {
 
 
 
-// Array Manipulation Functions
+// Arrays
 
 // Single
 
@@ -92,11 +110,11 @@ Array.prototype.reduce = function() { // Join all internal arrays
 
 // Objects
 
-function serialise(obj) {
+Object.prototype.serialise = function() { // Join all internal arrays
 	var str = [];
-	for ( var p in obj ) {
-		if ( obj.hasOwnProperty(p) ) {
-			str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+	for ( var p in this ) {
+		if ( this.hasOwnProperty(p) ) {
+			str.push(encodeURIComponent(p) + "=" + encodeURIComponent(this[p]));
 		}
 	}
 	return str.join("&");

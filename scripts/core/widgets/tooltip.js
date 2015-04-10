@@ -1,8 +1,8 @@
 // Tooltips
 
-function initTooltips() {
+var initTooltips = function() {
 	if ( $("[data-tooltip]").length ) {
-		function tooltipPosition(evt, content) {
+		var tooltipPosition = function(evt, content) {
 			var container = $(".tooltip"),
 				cursorX = evt.pageX || evt.originalEvent.touches[0].pageX,
 				cursorY = evt.pageY || evt.originalEvent.touches[0].pageY;

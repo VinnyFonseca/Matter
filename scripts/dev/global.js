@@ -34,7 +34,11 @@ $(document).ready(function() {
 	});
 
 	$(".sidebar-trigger").on("click", function() {
-		!$(".main").hasClass("sidebar-on") ? $(".main").addClass("sidebar-on") : $(".main").removeClass("sidebar-on");
+		if ( !$(".main").hasClass("sidebar-on") ) {
+			$(".main").addClass("sidebar-on");
+		} else {
+			$(".main").removeClass("sidebar-on");
+		}
 	});
 	$("html, body").on("click", function(event) {
 		if ( !$(event.target).closest(".sidebar") && $(".main").hasClass("sidebar-on") ) {

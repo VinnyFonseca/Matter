@@ -51,7 +51,7 @@ function initForm() {
 	// Multiple Upload
 
 	if ( $(".multifile-wrapper").length ) {
-		function initFileInputs() {
+		var initFileInputs = function() {
 			var el = $(".multifile-wrapper"),
 				inputCount = el.length,
 				inputLimit = config.forms.uploadlimit,
@@ -134,38 +134,38 @@ function initForm() {
 	}
 
 	if ( $("input[type='togglecheckbox']").length ) {
-		var toggle = '<span class="toggle-body">
-							<span class="toggle-switch"></span>
-							<span class="toggle-track">
-							<span class="toggle-background"></span>
-								<span class="toggle-background toggle-background-negative"></span>
-							</span>
+		var toggleCheck = '<span class="toggle-body">\
+							<span class="toggle-switch"></span>\
+							<span class="toggle-track">\
+							<span class="toggle-background"></span>\
+								<span class="toggle-background toggle-background-negative"></span>\
+							</span>\
 						</span>';
 
 		$("input[type='togglecheckbox']").each(function() {
 			var el = $(this);
 			el.attr("type", "checkbox").wrap("<div class='controller toggle'></div>");
 			var parent = el.parents(".controller");
-			parent.next("label").prepend(toggle).appendTo(parent);
+			parent.next("label").prepend(toggleCheck).appendTo(parent);
 		});
 
 		if ( config.application.debug ) console.log("Form :: Toggle Checkboxes");
 	}
 
 	if ( $("input[type='toggleradio']").length ) {
-		var toggle = '<span class="toggle-body">
-							<span class="toggle-switch"></span>
-							<span class="toggle-track">
-							<span class="toggle-background"></span>
-								<span class="toggle-background toggle-background-negative"></span>
-							</span>
+		var toggleRadio = '<span class="toggle-body">\
+							<span class="toggle-switch"></span>\
+							<span class="toggle-track">\
+							<span class="toggle-background"></span>\
+								<span class="toggle-background toggle-background-negative"></span>\
+							</span>\
 						</span>';
 
 		$("input[type='toggleradio']").each(function() {
 			var el = $(this);
 			el.attr("type", "radio").wrap("<div class='controller toggle'></div>");
 			var parent = el.parents(".controller");
-			parent.next("label").prepend(toggle).appendTo(parent);
+			parent.next("label").prepend(toggleRadio).appendTo(parent);
 		});
 
 		if ( config.application.debug ) console.log("Form :: Toggle Radios");
@@ -200,7 +200,7 @@ function initForm() {
 	// Progress Bars
 
 	if ( $("progress").length ) {
-		function triggerProgress(progress) {
+		var triggerProgress = function(progress) {
 			var el = $("progress"),
 				label = el.prev("label"),
 				bar = el.find(".progress-bar span");
@@ -234,7 +234,7 @@ function initForm() {
 
 function initDropdowns() {
 	if ( $("select").length ) {
-		function buildDropdowns() {
+		var buildDropdowns = function() {
 			$("select").each(function() {
 				var select = $(this),
 					size = size == "undefined" || size === "" ? 1 : parseInt(select.attr("size"), 10),

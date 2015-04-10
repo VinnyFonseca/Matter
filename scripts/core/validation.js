@@ -1,9 +1,9 @@
-function initValidation() {
+var initValidation = function() {
 	if ( config.forms.validation && $("[data-validation]").length ) {
 
 		// Password Check
 
-		function scorePassword(pwd) {
+		var scorePassword = function(pwd) {
 			var score = 0;
 			if (!pwd)
 				return score;
@@ -37,7 +37,7 @@ function initValidation() {
 
 		// Credit Card checks
 
-		function detectCard(number) {
+		var detectCard = function(number) {
 			var regex = {
 				amex: /^3[47][0-9]{13}$/,
 				dankort: /^(5019)\d+$/,
@@ -83,60 +83,105 @@ function initValidation() {
 
 		// Validation function called on keyup
 
-		function validateField(el, type, value) {
+		var validateField = function(el, type, value) {
 			if ( config.application.debug ) console.log("Validation :: " + type);
 
 			el.removeClass("invalid").removeClass("valid");
 
 			switch(type) {
 				case "text":
-					value !== "" ? el.addClass("valid") : el.addClass("invalid");
-					break;
+					if ( value !== "" ) {
+						el.addClass("valid");
+					} else {
+						el.addClass("invalid");
+					}
+
+				break;
 
 				case "number":
-					var check = /\D+/;
-					value !== "" && value.length == value.replace(check, '').length ? el.addClass("valid") : el.addClass("invalid");
-					break;
+					check = /\D+/;
+
+					if ( value !== "" && value.length == value.replace(check, '').length ) {
+						el.addClass("valid");
+					} else {
+						el.addClass("invalid");
+					}
+
+				break;
 
 
 				case "email":
-					var check = /^\S+@\S+\.\S+$/;
-					value !== "" && check.test(value) ? el.addClass("valid") : el.addClass("invalid");
-					break;
+					check = /^\S+@\S+\.\S+$/;
+
+					if ( value !== "" && check.test(value) ) {
+						el.addClass("valid");
+					} else {
+						el.addClass("invalid");
+					}
+
+				break;
 
 				case "password":
-					scorePassword(value) >= 30 ? el.addClass("valid") : el.addClass("invalid");
-					break;
+					if ( scorePassword(value) >= 30 ) {
+						el.addClass("valid");
+					} else {
+						el.addClass("invalid");
+					}
+
+				break;
 
 				case "match":
-					var type = el.attr("type"),
-						mirror = el.parents().find("input[type='" + type + "']"),
-						check = mirror.val();
+					type = el.attr("type");
+					var mirror = el.parents().find("input[type='" + type + "']");
+					check = mirror.val();
 
-					mirror.hasClass("valid") && value === check ? el.addClass("valid") : el.addClass("invalid");
-					break;
+					if ( mirror.hasClass("valid") && value === check ) {
+						el.addClass("valid");
+					} else {
+						el.addClass("invalid");
+					}
+
+				break;
 
 
 				case "card":
-					value !== "" ? el.addClass("valid") : el.addClass("invalid");
+					if ( value !== "" ) {
+						el.addClass("valid");
+					} else {
+						el.addClass("invalid");
+					}
+
 					$(".card-wrapper .card").attr("src", "img/icons/payment/cards/" + detectCard(value) + ".png");
-					break;
+
+				break;
 
 
 				case "date":
-					var check = /^\d{2}\/\d{2}\/\d{4}$/;
-					value !== "" && check.test(value) ? el.addClass("valid") : el.addClass("invalid");
-					break;
+					check = /^\d{2}\/\d{2}\/\d{4}$/;
+
+					if (value !== "" && check.test(value) ) {
+						el.addClass("valid");
+					} else {
+						el.addClass("invalid");
+					}
+
+				break;
 
 
 				case "select":
-					value !== "" ? el.addClass("valid") : el.addClass("invalid");
+					if (value !== "" ) {
+						el.addClass("valid");
+					} else {
+						el.addClass("invalid");
+					}
+
 					el.parents(".dropdown-wrapper").children(".dropdown-current").attr("class", "dropdown-current " + el.attr("class"));
-					break;
+
+				break;
 
 				case "selectgroup":
-					var group = el.data("validation-group"),
-						selects = $("select[data-validation-group='" + group + "']"),
+					group = el.data("validation-group");
+					var selects = $("select[data-validation-group='" + group + "']"),
 						selectGroup = {};
 
 					selectGroup[group] = [];
@@ -146,19 +191,30 @@ function initValidation() {
 						selectGroup[group].push(checked);
 					});
 
-					selectGroup[group].indexOf(true) != -1 ? selects.addClass("valid") : selects.addClass("invalid");
+					if (selectGroup[group].indexOf(true) != -1 ) {
+						selects.addClass("valid");
+					} else {
+						selects.addClass("invalid");
+					}
+
 					selects.parents(".dropdown-wrapper").children(".dropdown-current").attr("class", "dropdown-current " + el.attr("class"));
 
-					break;
+				break;
+
 
 
 				case "checkbox":
-					el.prop("checked") ? el.addClass("valid") : el.addClass("invalid");
-					break;
+					if (el.prop("checked") ) {
+						el.addClass("valid");
+					} else {
+						el.addClass("invalid");
+					}
+
+				break;
 
 				case "radio":
-					var group = el.attr("name"),
-						radios = $("input[type='radio'][name='" + group + "']"),
+					group = el.attr("name");
+					var radios = $("input[type='radio'][name='" + group + "']"),
 						radioGroup = {};
 
 					radioGroup[group] = [];
@@ -168,8 +224,13 @@ function initValidation() {
 						radioGroup[group].push(checked);
 					});
 
-					radioGroup[group].indexOf(true) != -1 ? radios.addClass("valid") : radios.addClass("invalid");
-					break;
+					if (radioGroup[group].indexOf(true) != -1 ) {
+						radios.addClass("valid");
+					} else {
+						radios.addClass("invalid");
+					}
+
+				break;
 
 
 				default:
@@ -177,7 +238,11 @@ function initValidation() {
 					var progress = 0;
 
 					el.find("[required]").each(function() {
-						$(this).hasClass("valid") ? validArray.push(true) : validArray.push(false);
+						if ($(this).hasClass("valid") ) {
+							validArray.push(true);
+						} else {
+							validArray.push(false);
+						}
 					});
 
 					if ( validArray.indexOf(false) < 0 ) {
@@ -207,17 +272,17 @@ function initValidation() {
 			}
 		}
 
-		function validateRealtime(el, type, value) {
+		var validateRealtime = function(el, type, value) {
 			console.log("Validating keypress for " + type);
 
 			switch(type) {
 				case "password":
 					el.next(".password-meter-mask").width(scorePassword(value) + "%").find(".password-meter").width(el.outerWidth());
-					break;
+				break;
 
 				case "card":
 					$(".card-wrapper .card").attr("src", "img/icons/payment/cards/" + detectCard(value) + ".png");
-					break;
+				break;
 			}
 		}
 

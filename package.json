@@ -5,13 +5,15 @@
   "author": "Vinny Fonseca",
   "copyright": "2015",
   "license": "MIT",
-  "version": "1",
+  "version": "1.0.0",
   "devDependencies": {
     "grunt": "*",
     "grunt-autoprefixer": "*",
+    "grunt-contrib-imagemin": "*",
+    "grunt-contrib-jshint": "*",
     "grunt-contrib-sass": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
-    "grunt-contrib-imagemin": "*"
+    "jshint-stylish": "^1.0.1"
   }
 }

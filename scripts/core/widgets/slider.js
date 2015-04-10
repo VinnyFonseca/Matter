@@ -1,12 +1,3 @@
-// Request Animation Frame
-
-var _requestAnimationFrame = function(win, t) {
-  return win["webkitR" + t] || win["r" + t] || win["mozR" + t]
-		  || win["msR" + t] || function(fn) { setTimeout(fn, 60) }
-}(window, "requestAnimationFrame");
-
-
-
 // Custom Get Element Position
 
 function getOffset(el) {
@@ -25,7 +16,6 @@ function getOffset(el) {
 // Custom Scroll
 
 function scrollTo(Y, duration, easingFunction, callback) {
-	var start = Date.now = Date.now || function() { return +new Date; };
 	var elem = document.documentElement.scrollTop ? document.documentElement : document.body;
 	var from = elem.scrollTop;
 
@@ -42,17 +32,12 @@ function scrollTo(Y, duration, easingFunction, callback) {
 
 	function scroll(timestamp) {
 		var currentTime = Date.now(),
-			time = min(1, ((currentTime - start) / duration)),
 			easedT = easingFunction(time);
 
 		elem.scrollTop = (easedT * (Y - from)) + from;
 
-		if(time < 1) requestAnimationFrame(scroll);
-		else
-			if(callback) callback();
+		if(callback) callback();
 	}
-
-	// _requestAnimationFrame(scroll);
 }
 
 
@@ -61,18 +46,18 @@ function scrollTo(Y, duration, easingFunction, callback) {
 
 var easing = {
 	linear: function (t) { return t },
-	easeInQuad: function (t) { return t*t },
-	easeOutQuad: function (t) { return t*(2-t) },
-	easeInOutQuad: function (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t },
-	easeInCubic: function (t) { return t*t*t },
-	easeOutCubic: function (t) { return (--t)*t*t+1 },
-	easeInOutCubic: function (t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 },
-	easeInQuart: function (t) { return t*t*t*t },
-	easeOutQuart: function (t) { return 1-(--t)*t*t*t },
-	easeInOutQuart: function (t) { return t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t },
-	easeInQuint: function (t) { return t*t*t*t*t },
-	easeOutQuint: function (t) { return 1+(--t)*t*t*t*t },
-	easeInOutQuint: function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
+	easeInQuad: function (t) { return t * t },
+	easeOutQuad: function (t) { return t * (2 - t) },
+	easeInOutQuad: function (t) { return t < 0.5 ? 2 * t * t :  - 1 + (4 - 2 * t) * t },
+	easeInCubic: function (t) { return t * t * t },
+	easeOutCubic: function (t) { return (--t) * t * t + 1 },
+	easeInOutCubic: function (t) { return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1 },
+	easeInQuart: function (t) { return t * t * t * t },
+	easeOutQuart: function (t) { return 1 - (--t) * t * t * t },
+	easeInOutQuart: function (t) { return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t },
+	easeInQuint: function (t) { return t * t * t * t * t },
+	easeOutQuint: function (t) { return 1 + (--t) * t * t * t * t },
+	easeInOutQuint: function (t) { return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t }
 }
 
 
@@ -172,6 +157,8 @@ function sliderInit(sliderId) {
 
 	// Create Bullets
 
+	var navBullet;
+
 	if ( navBullets === true && isMultiSlide ) {
 		var navWrapperEl = '<div class="slider-nav"></div>';
 		sliderActive.append(navWrapperEl);
@@ -183,9 +170,9 @@ function sliderInit(sliderId) {
 			navWrapper.append(navBulletEl);
 		}
 
-		var navBullet = sliderActive.find('.slider-bullet');
+		navBullet = sliderActive.find('.slider-bullet');
 	} else {
-		var navBullet = sliderActive.find('.bullet');
+		navBullet = sliderActive.find('.bullet');
 	}
 
 
@@ -214,8 +201,8 @@ function sliderInit(sliderId) {
 				movable.prepend(container.eq(i));
 			}
 		} else {
-			for ( var i = minCount; i <= slideCurrent; i++ ) {
-				movable.append(container.eq(i - 1));
+			for ( var j = minCount; j <= slideCurrent; j++ ) {
+				movable.append(container.eq(j - 1));
 			}
 		}
 
@@ -479,7 +466,7 @@ function sliderInit(sliderId) {
 					movable.hasClass("stopped")
 				) {
 					sliderStart();
-				};
+				}
 			});
 		}
 	}

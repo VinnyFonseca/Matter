@@ -2,57 +2,6 @@
 
 if (!window.console) console = { log: function() {} };
 
-window.hasOwnProperty = window.hasOwnProperty || Object.prototype.hasOwnProperty;
-
-if ( !Array.prototype.indexOf ) {
-	Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
-		"use strict";
-		if (this == null) {
-			throw new TypeError();
-		}
-		var t = Object(this);
-		var len = t.length >>> 0;
-		if (len === 0) {
-			return -1;
-		}
-		var n = 0;
-		if (arguments.length > 1) {
-			n = Number(arguments[1]);
-			if (n != n) { // shortcut for verifying if it's NaN
-				n = 0;
-			} else if (n != 0 && n != Infinity && n != -Infinity) {
-				n = (n > 0 || -1) * Math.floor(Math.abs(n));
-			}
-		}
-		if (n >= len) {
-			return -1;
-		}
-		var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0);
-		for (; k < len; k++) {
-			if (k in t && t[k] === searchElement) {
-				return k;
-			}
-		}
-		return -1;
-	}
-}
-
-
-
-
-// ECMAScript5 Polyfills
-
-Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-}
-NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = 0, len = this.length; i < len; i++) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-}
-
 
 
 
@@ -65,102 +14,6 @@ function loadScript(src, callback) {
 
 	if ( callback ) script.onload = callback;
 	document.body.appendChild(script);
-}
-
-
-
-
-// Randomisation
-
-function randomizeInteger(min, max) {
-	return Math.floor(Math.random() * (max - min)) + min;
-}
-
-
-
-
-// Easter Eggs
-
-function buildKonami() {
-	var img = '<img class="konami" style="width: 100%;" src="scripts/core/konami/contra.gif">';
-	$(".main").prepend(img);
-}
-
-function initKonami(callback) {
-	var userCode = [],
-		userString = "",
-		konamiCoding = false;
-
-	function resetKonami() {
-		userCode = [];
-		userString = "";
-		konamiCoding = false;
-
-		$(".konami").remove();
-	}
-
-	function konami(event) {
-		var konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
-		var konamiString = konamiCode.join(", ");
-
-		if ( event.keyCode == 38 ) konamiCoding = true;
-
-		if ( konamiCoding && userString.length <= konamiString.length ) {
-			if ( userString.indexOf(konamiString) == -1 ) {
-				userCode.push(event.keyCode);
-				userString = userCode.join(", ");
-			}
-			if ( userString.indexOf(konamiString) != -1 ) {
-				console.log("Easter Egg :: Konami!");
-				resetKonami();
-
-				callback();
-
-				if ( event.keyCode == 27 ) {
-					resetKonami();
-				}
-			}
-		} else {
-			resetKonami();
-		}
-	}
-
-	$(document).on("keyup", konami);
-}
-
-
-
-
-// Call popup window
-
-function popupWindow(url, title, w, h) {
-	var left = (screen.width / 2) - (w / 2);
-	var top = (screen.height / 2) - (h / 2);
-	return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-}
-
-
-
-
-// Highlight
-
-function highlight(el, val) {
-	var match = RegExp(val, 'gi');
-
-	el.each(function() {
-		$(this).filter(function() {
-			return match.test($(this).text());
-		}).html(function() {
-			if ( !val ) return $(this).text();
-			return $(this).text().replace(match, '<span class="highlight">$&</span>');
-		});
-	});
-}
-
-function unhighlight(el) {
-	el.find("span.highlight").replaceWith(function() {
-		return $(this).text();
-	});
 }
 
 
@@ -197,12 +50,56 @@ function initSVGs() {
 
 
 
-// URL
+// Randomisation
+
+function randomizeInteger(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+
+
+
+// Popup
+
+function popupWindow(url, title, w, h) {
+	var left = (screen.width / 2) - (w / 2);
+	var top = (screen.height / 2) - (h / 2);
+	return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+}
+
+
+
+
+// Highlight
+
+function highlight(el, val) {
+	var match = RegExp(val, 'gi');
+
+	el.each(function() {
+		$(this).filter(function() {
+			return match.test($(this).text());
+		}).html(function() {
+			if ( !val ) return $(this).text();
+			return $(this).text().replace(match, '<span class="highlight">$&</span>');
+		});
+	});
+}
+
+function unhighlight(el) {
+	el.find("span.highlight").replaceWith(function() {
+		return $(this).text();
+	});
+}
+
+
+
+
+// URLs
 
 function URLQueryObject() { // Creates an object from a query string
 	var urlParams = "";
 
-	(window.onpopstate = function () {
+	window.onpopstate = function() {
 		var match,
 			pl     = /\+/g,  // Regex for replacing addition symbol with a space
 			search = /([^&=]+)=?([^&]*)/g,
@@ -210,10 +107,10 @@ function URLQueryObject() { // Creates an object from a query string
 			query  = window.location.search.substring(1);
 
 		urlParams = {};
-		while (match = search.exec(query)) {
+		while (match == search.exec(query)) {
 		   urlParams[decode(match[1])] = decode(match[2]);
 		}
-	})();
+	}
 
 	return urlParams;
 }
@@ -221,10 +118,9 @@ function URLQueryObject() { // Creates an object from a query string
 
 
 
-// AJAX System
+// AJAX
 
-var returnedData,
-	dataObject;
+var dataObject;
 
 function dataRequest(url, type, successFunction) {
 	if ( config.application.debug ) console.log('AJAX ~~ Request');
@@ -232,7 +128,7 @@ function dataRequest(url, type, successFunction) {
 	request = $.ajax({
 		url: url,
 		type: type,
-		data: type == "POST" ? data : "",
+		data: type == "POST" ? dataObject : "",
 		dataType: "JSON",
 		success: function(data) {
 			if ( config.application.debug ) console.log('AJAX ~~ Success');
@@ -249,20 +145,18 @@ function dataRequest(url, type, successFunction) {
 
 
 
-// Init Hyperlinks
+// Hyperlinks
 
 var anchorClicked;
 
 function initLinks() {
-	// Smooth same page navigation for <a href="#target-anchor" class="anchor"></a> elements.
-
 	$(document).on("click", "a[href^='#']", function(event) {
 		var link = $(this).attr("href");
 
 		event.preventDefault();
 
-		if ( link === "#") {  // Blocks click event on empty (#) links and logs a message.
-			if ( config.application.debug ) console.log("Intentional: blocked behaviour on global.js.");
+		if ( link === "#") {
+			if ( config.application.debug ) console.log("System :: Link blocked");
 		} else {
 			if ( $($.attr(this, "href")).length ) {
 				anchorClicked = true;
@@ -286,7 +180,7 @@ function initLinks() {
 
 
 
-// Detect Scroll Progress
+// Scroll Progress
 
 function scrollProgress() {
 	var scrollPercentage = (pageTop * 100) / ($(document).height() - $(window).height());
@@ -305,7 +199,7 @@ function initFramework() {
 
 	if ( config.application.touch ) { // If touch device
 		FastClick.attach(document.body); // Removes 300ms delay from taps on mobile devices. Requires fastclick.js.
-		$(".map-wrapper").addClass("map-mobile"); // Fixes image distortion on Google Maps - See _base.scss.
+		$(".map-canvas").addClass("map-mobile"); // Fixes image distortion on Google Maps - See _base.scss.
 	}
 
 

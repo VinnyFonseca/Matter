@@ -27,8 +27,8 @@ function initAutocomplete() {
 						var property = object[parameter];
 
 						if ( property instanceof Array ) {
-							for ( var k = 0; k < property.length; k++ ) {
-								if ( $.inArray(property[k], tempArray) < 0 ) tempArray.push(property[k]);
+							for ( var j = 0; j < property.length; j++ ) {
+								if ( $.inArray(property[j], tempArray) < 0 ) tempArray.push(property[j]);
 							}
 						} else {
 							if ( $.inArray(property, tempArray) < 0 ) tempArray.push(property);
@@ -37,7 +37,7 @@ function initAutocomplete() {
 
 					tempArray.sort();
 
-					for ( var i = 0; i < tempArray.length; i++ ) list.append("<li>" + tempArray[i] + "</li>");
+					for ( var k = 0; k < tempArray.length; k++ ) list.append("<li>" + tempArray[k] + "</li>");
 				}
 				populateList(parameter);
 
@@ -108,7 +108,11 @@ function initAutocomplete() {
 					var filter = $(target).val();
 
 					item.each(function() {
-						$(this).text().search(new RegExp(filter, "i")) < 0 ? $(this).removeClass("selected") : $(this).addClass("selected");
+						if ( $(this).text().search(new RegExp(filter, "i")) < 0 ) {
+							$(this).removeClass("selected");
+						} else {
+							$(this).addClass("selected");
+						}
 					}).on("click", function() {
 						input.val($(this).text()).trigger({type: "keydown", which: 13});
 						el.removeClass("active");

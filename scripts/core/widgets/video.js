@@ -1,12 +1,12 @@
 // Video
 
-function initVideo() {
+var initVideo = function() {
 	var ytAPIVideoReady = false,
 		ytAPIFrameReady = false;
 
 	// Youtube
 
-	function ytFramePlayers() {
+	var ytFramePlayers = function() {
 		if ( $("iframe[src*='youtube']").length ) {
 			$("iframe[src*='youtube']").each(function(i) {
 				if ( !$(this).parents(".video-frame").length ) {
@@ -33,7 +33,7 @@ function initVideo() {
 											<img class="svg icon icon-play" src="img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-play.png\'">\
 											<img class="svg icon icon-pause" src="img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-pause.png\'">\
 										</div>\
-										<iframe id="' + name + '" src="' + el.attr("src") + "?" + serialise(playerVars) + '" frameborder="0" allowfullscreen></iframe>\
+										<iframe id="' + name + '" src="' + el.attr("src") + "?" + playerVars.serialise() + '" frameborder="0" allowfullscreen></iframe>\
 									</div>';
 
 					el.replaceWith(widget);
@@ -44,7 +44,7 @@ function initVideo() {
 				}
 			});
 
-			function ytFrameBuild(name) {
+			var ytFrameBuild = function(name) {
 				var currentPlayer = new YT.Player(name, {
 						events: {
 							'onReady': onPlayerReady,
@@ -55,7 +55,7 @@ function initVideo() {
 					preview = wrapper.children(".video-thumb"),
 					button = wrapper.children(".video-button");
 
-				function onPlayerReady() {
+				var onPlayerReady = function() {
 					wrapper.addClass("loaded");
 
 					button.off().on("click", function() {
@@ -73,7 +73,7 @@ function initVideo() {
 					});
 				}
 
-				function onPlayerStateChange(event) {
+				var onPlayerStateChange = function(event) {
 					if ( event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED ) { // Ended OR Paused
 						wrapper.removeClass("playing");
 					}
@@ -83,7 +83,7 @@ function initVideo() {
 	}
 
 
-	function ytVideoPlayers() {
+	var ytVideoPlayers = function() {
 		if ( $(".video-frame[data-video-service='youtube']").length ) {
 			$(".video-frame[data-video-service='youtube']").each(function(i) {
 				var el = $(this),
@@ -107,7 +107,7 @@ function initVideo() {
 				ytVideoBuild(name, videoID);
 			});
 
-			function ytVideoBuild(name, videoID) {
+			var ytVideoBuild = function(name, videoID) {
 				var currentPlayer = new YT.Player(name, {
 						videoId: videoID,
 						width: '1280',
@@ -131,7 +131,7 @@ function initVideo() {
 					preview = wrapper.children(".video-thumb"),
 					button = wrapper.children(".video-button");
 
-				function onPlayerReady() {
+				var onPlayerReady = function() {
 					wrapper.addClass("loaded");
 
 					button.off().on("click", function() {
@@ -149,7 +149,7 @@ function initVideo() {
 					});
 				}
 
-				function onPlayerStateChange(event) {
+				var onPlayerStateChange = function(event) {
 					if ( event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED ) { // Ended OR Paused
 						wrapper.removeClass("playing");
 					}
@@ -185,7 +185,7 @@ function initVideo() {
 
 	// Vimeo
 
-	function vimFramePlayers() {
+	var vimFramePlayers = function() {
 		if ( $("iframe[src*='vimeo']").length ) {
 			$("iframe[src*='vimeo']").each(function(i) {
 				if ( !$(this).parents(".video-frame").length ) {
@@ -205,7 +205,7 @@ function initVideo() {
 											<img class="svg icon icon-play" src="img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-play.png\'">\
 											<img class="svg icon icon-pause" src="img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-pause.png\'">\
 										</div>\
-										<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + serialise(playerVars) + '" frameborder="0" allowfullscreen></iframe>\
+										<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + playerVars.serialise() + '" frameborder="0" allowfullscreen></iframe>\
 									</div>';
 
 					el.wrap(widget);
@@ -214,7 +214,7 @@ function initVideo() {
 
 					dataRequest("//vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
 
-					function build(data) {
+					var build = function(data) {
 						var videoThumb = data[0].thumbnail_large;
 						el.parents(".video-frame").children(".video-thumb").css({"background": "url(" + videoThumb + ")"});
 						el.remove();
@@ -224,7 +224,7 @@ function initVideo() {
 				}
 			});
 
-			function vimFrameBuild(name) {
+			var vimFrameBuild = function(name) {
 				var currentPlayer = $("#" + name),
 					wrapper = $("." + name),
 					preview = wrapper.children(".video-thumb"),
@@ -234,7 +234,7 @@ function initVideo() {
 					.on("load", onPlayerReady)
 					.on("pause finish", onPlayerStop);
 
-				function onPlayerReady() {
+				var onPlayerReady = function() {
 					wrapper.addClass("loaded");
 
 					button.off().on("click", function() {
@@ -252,7 +252,7 @@ function initVideo() {
 					});
 				}
 
-				function onPlayerStop() {
+				var onPlayerStop = function() {
 					wrapper.removeClass("playing");
 				}
 			}
@@ -260,7 +260,7 @@ function initVideo() {
 	}
 
 
-	function vimVideoPlayers() {
+	var vimVideoPlayers = function() {
 		if ( $(".video-frame[data-video-service='vimeo']").length ) {
 			$(".video-frame[data-video-service='vimeo']").each(function(i) {
 				var el = $(this),
@@ -277,7 +277,7 @@ function initVideo() {
 									<img class="svg icon icon-play" src="img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-play.png\'">\
 									<img class="svg icon icon-pause" src="img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-pause.png\'">\
 								</div>\
-								<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + serialise(playerVars) + '" frameborder="0" allowfullscreen></iframe>';
+								<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + playerVars.serialise() + '" frameborder="0" allowfullscreen></iframe>';
 
 				el.html("").addClass(name).append(widget);
 
@@ -285,7 +285,7 @@ function initVideo() {
 
 				dataRequest("//vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
 
-				function build(data) {
+				var build = function(data) {
 					var videoThumb = data[0].thumbnail_large;
 					el.children(".video-thumb").css({"background": "url(" + videoThumb + ")"});
 				}
@@ -293,7 +293,7 @@ function initVideo() {
 				vimVideoBuild(name);
 			});
 
-			function vimVideoBuild(name) {
+			var vimVideoBuild = function(name) {
 				var currentPlayer = $("#" + name),
 					wrapper = $("." + name),
 					preview = wrapper.children(".video-thumb"),
@@ -303,7 +303,7 @@ function initVideo() {
 					.on("load", onPlayerReady)
 					.on("pause finish", onPlayerStop);
 
-				function onPlayerReady() {
+				var onPlayerReady = function() {
 					wrapper.addClass("loaded");
 
 					button.off().on("click", function() {
@@ -321,7 +321,7 @@ function initVideo() {
 					});
 				}
 
-				function onPlayerStop() {
+				var onPlayerStop = function() {
 					wrapper.removeClass("playing");
 				}
 			}

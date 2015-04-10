@@ -67,7 +67,39 @@ module.exports = function(grunt) {
 		},
 
 
-		// Config for grunt-contrib-watch (javascript concatenation)
+		// Config for grunt-contrib-jshint (javascript lint)
+
+		jshint: {
+			options: {
+				reporter: require('jshint-stylish'),
+				force: true,
+				ignores: ['scripts/build.js', 'scripts/core/vendor/**/*.js'],
+				'-W001': false,
+
+				// Enforcing
+				notypeof: true,
+				funcscope: true,
+				unused: false,
+				globals: {
+					browser: true,
+					devel: true,
+					jQuery: true,
+					console: true,
+					document: true,
+					module: true
+				},
+
+				// Relaxing
+				asi: true,
+				eqnull: true,
+				loopfunc: true,
+				multistr: true
+			},
+			files: ['scripts/**/*.js']
+		},
+
+
+		// Config for grunt-contrib-watch (overseer)
 
 		watch: {
 			html: {
@@ -92,7 +124,7 @@ module.exports = function(grunt) {
 			js: {
 				options: { livereload: true	},
 				files: ['scripts/**/*.js', '!scripts/*.js'],
-				tasks: ['uglify']
+				tasks: ['jshint', 'uglify']
 			}
 		},
 
@@ -120,6 +152,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
 
