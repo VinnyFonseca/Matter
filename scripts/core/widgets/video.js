@@ -1,13 +1,50 @@
 // Video
 
-var initVideo = function() {
+function initVideo() {
 	var ytAPIVideoReady = false,
 		ytAPIFrameReady = false;
 
 	// Youtube
 
-	var ytFramePlayers = function() {
+	function ytFramePlayers() {
 		if ( $("iframe[src*='youtube']").length ) {
+			var ytFrameBuild = function(name) {
+				var currentPlayer = new YT.Player(name, {
+						events: {
+							'onReady': onPlayerReady,
+							'onStateChange': onPlayerStateChange
+						}
+					}),
+					wrapper = $("." + name),
+					preview = wrapper.children(".video-thumb"),
+					button = wrapper.children(".video-button");
+
+				function onPlayerReady() {
+					wrapper.addClass("loaded");
+
+					button.off().on("click", function() {
+						if ( !wrapper.hasClass("playing") ) {
+							wrapper.addClass("playing");
+							if ( !config.application.touch ) currentPlayer.playVideo();
+						} else {
+							currentPlayer.pauseVideo();
+						}
+					});
+
+					preview.off().on("click", function() {
+						wrapper.addClass("playing");
+						if ( !config.application.touch ) currentPlayer.playVideo();
+					});
+				}
+
+				function onPlayerStateChange(event) {
+					if ( event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED ) { // Ended OR Paused
+						wrapper.removeClass("playing");
+					}
+				}
+			}
+
+
 			$("iframe[src*='youtube']").each(function(i) {
 				if ( !$(this).parents(".video-frame").length ) {
 					var el = $(this),
@@ -33,7 +70,7 @@ var initVideo = function() {
 											<img class="svg icon icon-play" src="img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-play.png\'">\
 											<img class="svg icon icon-pause" src="img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-pause.png\'">\
 										</div>\
-										<iframe id="' + name + '" src="' + el.attr("src") + "?" + playerVars.serialise() + '" frameborder="0" allowfullscreen></iframe>\
+										<iframe id="' + name + '" src="' + el.attr("src") + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>\
 									</div>';
 
 					el.replaceWith(widget);
@@ -43,70 +80,12 @@ var initVideo = function() {
 					ytFrameBuild(name);
 				}
 			});
-
-			var ytFrameBuild = function(name) {
-				var currentPlayer = new YT.Player(name, {
-						events: {
-							'onReady': onPlayerReady,
-							'onStateChange': onPlayerStateChange
-						}
-					}),
-					wrapper = $("." + name),
-					preview = wrapper.children(".video-thumb"),
-					button = wrapper.children(".video-button");
-
-				var onPlayerReady = function() {
-					wrapper.addClass("loaded");
-
-					button.off().on("click", function() {
-						if ( !wrapper.hasClass("playing") ) {
-							wrapper.addClass("playing");
-							if ( !config.application.touch ) currentPlayer.playVideo();
-						} else {
-							currentPlayer.pauseVideo();
-						}
-					});
-
-					preview.off().on("click", function() {
-						wrapper.addClass("playing");
-						if ( !config.application.touch ) currentPlayer.playVideo();
-					});
-				}
-
-				var onPlayerStateChange = function(event) {
-					if ( event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED ) { // Ended OR Paused
-						wrapper.removeClass("playing");
-					}
-				}
-			}
 		}
 	}
 
 
-	var ytVideoPlayers = function() {
+	function ytVideoPlayers() {
 		if ( $(".video-frame[data-video-service='youtube']").length ) {
-			$(".video-frame[data-video-service='youtube']").each(function(i) {
-				var el = $(this),
-					name = "ytVideoPlayer-" + i,
-					videoID = el.data("video-id"),
-					videoThumb = "//img.youtube.com/vi/" + videoID + "/hqdefault.jpg",
-					widget =   '<div class="video-overlay"></div>\
-								<img class="video-loader" src="img/loader.gif" alt="Video loader">\
-								<div class="video-thumb" style="background: url(' + videoThumb + ');">&nbsp;</div>\
-								<div class="video-button">\
-									<img class="svg icon icon-play" src="img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-play.png\'">\
-									<img class="svg icon icon-pause" src="img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-pause.png\'">\
-								</div>\
-								<div id="' + name + '"></div>';
-
-				el.html("").addClass(name).append(widget);
-				el.children(".video-thumb").css({"background": "url(" + videoThumb + ")"});
-
-				initSVGs();
-
-				ytVideoBuild(name, videoID);
-			});
-
 			var ytVideoBuild = function(name, videoID) {
 				var currentPlayer = new YT.Player(name, {
 						videoId: videoID,
@@ -131,7 +110,7 @@ var initVideo = function() {
 					preview = wrapper.children(".video-thumb"),
 					button = wrapper.children(".video-button");
 
-				var onPlayerReady = function() {
+				function onPlayerReady() {
 					wrapper.addClass("loaded");
 
 					button.off().on("click", function() {
@@ -149,12 +128,35 @@ var initVideo = function() {
 					});
 				}
 
-				var onPlayerStateChange = function(event) {
+				function onPlayerStateChange(event) {
 					if ( event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED ) { // Ended OR Paused
 						wrapper.removeClass("playing");
 					}
 				}
 			}
+
+
+			$(".video-frame[data-video-service='youtube']").each(function(i) {
+				var el = $(this),
+					name = "ytVideoPlayer-" + i,
+					videoID = el.data("video-id"),
+					videoThumb = "//img.youtube.com/vi/" + videoID + "/hqdefault.jpg",
+					widget =   '<div class="video-overlay"></div>\
+								<img class="video-loader" src="img/loader.gif" alt="Video loader">\
+								<div class="video-thumb" style="background: url(' + videoThumb + ');">&nbsp;</div>\
+								<div class="video-button">\
+									<img class="svg icon icon-play" src="img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-play.png\'">\
+									<img class="svg icon icon-pause" src="img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-pause.png\'">\
+								</div>\
+								<div id="' + name + '"></div>';
+
+				el.html("").addClass(name).append(widget);
+				el.children(".video-thumb").css({"background": "url(" + videoThumb + ")"});
+
+				initSVGs();
+
+				ytVideoBuild(name, videoID);
+			});
 		}
 	}
 
@@ -185,8 +187,42 @@ var initVideo = function() {
 
 	// Vimeo
 
-	var vimFramePlayers = function() {
+	function vimFramePlayers() {
 		if ( $("iframe[src*='vimeo']").length ) {
+			var vimFrameBuild = function(name) {
+				var currentPlayer = $("#" + name),
+					wrapper = $("." + name),
+					preview = wrapper.children(".video-thumb"),
+					button = wrapper.children(".video-button");
+
+				currentPlayer
+					.on("load", onPlayerReady)
+					.on("pause finish", onPlayerStop);
+
+				function onPlayerReady() {
+					wrapper.addClass("loaded");
+
+					button.off().on("click", function() {
+						if ( !wrapper.hasClass("playing") ) {
+							wrapper.addClass("playing");
+							if ( !config.application.touch ) currentPlayer.vimeo("play");
+						} else {
+							currentPlayer.vimeo("pause");
+						}
+					});
+
+					preview.off().on("click", function() {
+						wrapper.addClass("playing");
+						if ( !config.application.touch ) currentPlayer.vimeo("play");
+					});
+				}
+
+				function onPlayerStop() {
+					wrapper.removeClass("playing");
+				}
+			}
+
+
 			$("iframe[src*='vimeo']").each(function(i) {
 				if ( !$(this).parents(".video-frame").length ) {
 					var el = $(this),
@@ -205,26 +241,29 @@ var initVideo = function() {
 											<img class="svg icon icon-play" src="img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-play.png\'">\
 											<img class="svg icon icon-pause" src="img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-pause.png\'">\
 										</div>\
-										<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + playerVars.serialise() + '" frameborder="0" allowfullscreen></iframe>\
+										<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>\
 									</div>';
 
 					el.wrap(widget);
 
 					initSVGs();
 
-					dataRequest("//vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
-
-					var build = function(data) {
+					dataRequest("//vimeo.com/api/v2/video/" + videoID + ".json", "GET", function(data) {
 						var videoThumb = data[0].thumbnail_large;
 						el.parents(".video-frame").children(".video-thumb").css({"background": "url(" + videoThumb + ")"});
 						el.remove();
-					}
+					});
 
 					vimFrameBuild(name);
 				}
 			});
+		}
+	}
 
-			var vimFrameBuild = function(name) {
+
+	function vimVideoPlayers() {
+		if ( $(".video-frame[data-video-service='vimeo']").length ) {
+			var vimVideoBuild = function(name) {
 				var currentPlayer = $("#" + name),
 					wrapper = $("." + name),
 					preview = wrapper.children(".video-thumb"),
@@ -234,7 +273,7 @@ var initVideo = function() {
 					.on("load", onPlayerReady)
 					.on("pause finish", onPlayerStop);
 
-				var onPlayerReady = function() {
+				function onPlayerReady() {
 					wrapper.addClass("loaded");
 
 					button.off().on("click", function() {
@@ -252,16 +291,12 @@ var initVideo = function() {
 					});
 				}
 
-				var onPlayerStop = function() {
+				function onPlayerStop() {
 					wrapper.removeClass("playing");
 				}
 			}
-		}
-	}
 
 
-	var vimVideoPlayers = function() {
-		if ( $(".video-frame[data-video-service='vimeo']").length ) {
 			$(".video-frame[data-video-service='vimeo']").each(function(i) {
 				var el = $(this),
 					name = "vimVideoPlayer-" + i,
@@ -277,54 +312,19 @@ var initVideo = function() {
 									<img class="svg icon icon-play" src="img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-play.png\'">\
 									<img class="svg icon icon-pause" src="img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-pause.png\'">\
 								</div>\
-								<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + playerVars.serialise() + '" frameborder="0" allowfullscreen></iframe>';
+								<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>';
 
 				el.html("").addClass(name).append(widget);
 
 				initSVGs();
 
-				dataRequest("//vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
-
-				var build = function(data) {
+				dataRequest("//vimeo.com/api/v2/video/" + videoID + ".json", "GET", function(data) {
 					var videoThumb = data[0].thumbnail_large;
 					el.children(".video-thumb").css({"background": "url(" + videoThumb + ")"});
-				}
+				});
 
 				vimVideoBuild(name);
 			});
-
-			var vimVideoBuild = function(name) {
-				var currentPlayer = $("#" + name),
-					wrapper = $("." + name),
-					preview = wrapper.children(".video-thumb"),
-					button = wrapper.children(".video-button");
-
-				currentPlayer
-					.on("load", onPlayerReady)
-					.on("pause finish", onPlayerStop);
-
-				var onPlayerReady = function() {
-					wrapper.addClass("loaded");
-
-					button.off().on("click", function() {
-						if ( !wrapper.hasClass("playing") ) {
-							wrapper.addClass("playing");
-							if ( !config.application.touch ) currentPlayer.vimeo("play");
-						} else {
-							currentPlayer.vimeo("pause");
-						}
-					});
-
-					preview.off().on("click", function() {
-						wrapper.addClass("playing");
-						if ( !config.application.touch ) currentPlayer.vimeo("play");
-					});
-				}
-
-				var onPlayerStop = function() {
-					wrapper.removeClass("playing");
-				}
-			}
 		}
 	}
 

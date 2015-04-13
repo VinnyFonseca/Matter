@@ -56,8 +56,8 @@ module.exports = function(grunt) {
 				},
 				files: {
 					'scripts/build.js': [
-						'scripts/core/vendor/jquery-1.11.2.min.js',
-						'scripts/core/vendor/modernizr-full.min.js',
+						'scripts/core/vendor/jquery-1.11.2.js',
+						'scripts/core/vendor/modernizr-latest.js',
 						'scripts/dev/config.js',
 						'scripts/core/**/*.js',
 						'scripts/dev/**/*.js'

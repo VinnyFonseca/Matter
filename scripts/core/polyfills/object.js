@@ -110,11 +110,11 @@ Array.prototype.reduce = function() { // Join all internal arrays
 
 // Objects
 
-Object.prototype.serialise = function() { // Join all internal arrays
+function serialize(obj) {
 	var str = [];
-	for ( var p in this ) {
-		if ( this.hasOwnProperty(p) ) {
-			str.push(encodeURIComponent(p) + "=" + encodeURIComponent(this[p]));
+	for ( var p in obj ) {
+		if ( obj.hasOwnProperty(p) ) {
+			str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 		}
 	}
 	return str.join("&");
