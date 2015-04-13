@@ -49,7 +49,7 @@ module.exports = function(grunt) {
 		uglify: {
 			dist: {
 				options: {
-					beautify: false,
+					beautify: true,
 					sourceMap: true,
 					sourceMapIncludeSources: true,
 					sourceMapName: 'scripts/build.js.map'
@@ -58,6 +58,7 @@ module.exports = function(grunt) {
 					'scripts/build.js': [
 						'scripts/core/vendor/jquery-1.11.2.js',
 						'scripts/core/vendor/modernizr-latest.js',
+						'scripts/core/vendor/device.js',
 						'scripts/dev/config.js',
 						'scripts/core/**/*.js',
 						'scripts/dev/**/*.js'

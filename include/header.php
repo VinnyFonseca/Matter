@@ -42,7 +42,7 @@
 		</div>
 
 		<a href="index.php" class="logo valign-middle">
-			<img src="img/logo.png" width="40" height="40" alt="">
+			<img src="img/logo.png" alt="">
 			<span class="font-large font-custom">Matter</span>
 		</a>
 

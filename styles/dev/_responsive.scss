@@ -90,13 +90,13 @@
 	header,
 	.header {
 		position: fixed;
-		margin-top: (-$navItemHeight * $navItemCount) + 2;
+		transform: translateY(- $navItemHeight * $navItemCount);
 		transition-property: transform;
 		transition-duration: $animDuration;
 		transition-timing-function: $animEasing;
 
 		&.active {
-			transform: translateY($navItemHeight * $navItemCount);
+			transform: translateY(0);
 		}
 
 		.logo {
@@ -121,6 +121,10 @@
 				border-left: 0;
 				border-bottom: 1px solid $ce;
 				vertical-align: baseline;
+
+				& > * {
+					@include font-size($fontSize);
+				}
 			}
 		}
 	}

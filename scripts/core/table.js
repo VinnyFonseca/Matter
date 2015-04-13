@@ -37,14 +37,14 @@ function initTables() {
 				var mobileTable = $('.' + id + '-row-' + l);
 				if ( el.children("caption").length ) mobileTable.prepend("<caption>Row of " + el.children("caption").html() + "</caption>");
 
-				Object.keys(rowGroup).forEach(function(key) {
+				for ( var key in rowGroup ) {
 					var row = '<tr>\
 								   <th scope="row">' + key + '</th>\
 								   <td>' + rowGroup[key] + '</td>\
 							   </tr>';
 
 					mobileTable.children("tbody").append(row);
-				});
+				}
 			}
 		});
 

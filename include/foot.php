@@ -14,8 +14,8 @@
 		</script>
 		-->
 
-		<!--[if !IE 8]>
+		<!--[if !IE 8]><!-->
 		<script>document.write('<script async src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
-		<![endif]-->
+		<!--<![endif]-->
 	</body>
 </html>

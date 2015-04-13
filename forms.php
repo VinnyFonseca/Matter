@@ -137,13 +137,13 @@
 			<fieldset>
 				<legend>Toggle Checkboxes</legend>
 
-				<input id="f8" type="togglecheckbox" data-validation="checkbox" required>
+				<input id="f8" type="checkbox" data-toggle="true" data-validation="checkbox" required>
 				<label for="f8">I accept the following lipsum</label>
 
-				<input id="f9" type="togglecheckbox" data-validation="checkbox" required>
+				<input id="f9" type="checkbox" data-toggle="true" data-validation="checkbox" required>
 				<label for="f9">Terms &amp; lipsum</label>
 
-				<input id="f10" type="togglecheckbox" data-validation="checkbox" required>
+				<input id="f10" type="checkbox" data-toggle="true" data-validation="checkbox" required>
 				<label for="f10">Check if you don't want to lipsum</label>
 			</fieldset>
 
@@ -166,13 +166,13 @@
 
 			<fieldset>
 				<legend>Toggle Radio Buttons</legend>
-				<input id="f11" type="toggleradio" name="toggle-group-1" data-validation="radio" required>
+				<input id="f11" type="radio" data-toggle="true" name="toggle-group-1" data-validation="radio" required>
 				<label for="f11">Select this to choose the following lipsum</label>
 
-				<input id="f12" type="toggleradio" name="toggle-group-1" data-validation="radio" required>
+				<input id="f12" type="radio" data-toggle="true" name="toggle-group-1" data-validation="radio" required>
 				<label for="f12">Select this to choose the Terms &amp; lipsum</label>
 
-				<input id="f13" type="toggleradio" name="toggle-group-1" data-validation="radio" required>
+				<input id="f13" type="radio" data-toggle="true" name="toggle-group-1" data-validation="radio" required>
 				<label for="f13">Select this to choose lipsum</label>
 			</fieldset>
 
@@ -426,15 +426,15 @@
 				</tr>
 				<tr valign="middle">
 					<td valign="middle">
-						<input class="valid" id="f203" type="togglecheckbox" name="toggle-demo" required checked>
+						<input class="valid" id="f203" type="checkbox" data-toggle="true" name="toggle-demo" required checked>
 						<label for="f203">Checkbox</label>
 					</td>
 					<td valign="middle">
-						<input class="invalid" id="f204" type="togglecheckbox" name="toggle-demo" required>
+						<input class="invalid" id="f204" type="checkbox" data-toggle="true" name="toggle-demo" required>
 						<label for="f204">Checkbox</label>
 					</td>
 					<td valign="middle">
-						<input id="f205" type="togglecheckbox" name="toggle-demo" readonly>
+						<input id="f205" type="checkbox" data-toggle="true" name="toggle-demo" readonly>
 						<label for="f205">Checkbox</label>
 					</td>
 				</tr>
@@ -454,15 +454,15 @@
 				</tr>
 				<tr valign="middle">
 					<td valign="middle">
-						<input class="valid" id="f209" type="toggleradio" name="toggle-demo" required checked>
+						<input class="valid" id="f209" type="radio" data-toggle="true" name="toggle-demo" required checked>
 						<label for="f209">Radio</label>
 					</td>
 					<td valign="middle">
-						<input class="invalid" id="f210" type="toggleradio" name="toggle-demo" required>
+						<input class="invalid" id="f210" type="radio" data-toggle="true" name="toggle-demo" required>
 						<label for="f210">Radio</label>
 					</td>
 					<td valign="middle">
-						<input id="f211" type="toggleradio" name="toggle-demo" readonly>
+						<input id="f211" type="radio" data-toggle="true" name="toggle-demo" readonly>
 						<label for="f211">Radio</label>
 					</td>
 				</tr>
@@ -614,10 +614,10 @@
 		<fieldset>
 			<legend>Toggles Group</legend>
 
-			<input id="f305" type="toggle" />
+			<input id="f305" type="checkbox" data-toggle="true" />
 			<label for="f305">Toggle</label>
 
-			<input id="f306" type="toggle" checked />
+			<input id="f306" type="checkbox" data-toggle="true" checked />
 			<label for="f306">Toggle Checked</label>
 		</fieldset>
 
@@ -625,7 +625,7 @@
 &lt;fieldset&gt;
 	&lt;legend&gt;Toggles Group&lt;/legend&gt;
 
-	&lt;input <span class="emphasis">id="f103"</span> type="toggle" /&gt;
+	&lt;input <span class="emphasis">id="f103"</span> type="checkbox" <span class="emphasis">data-toggle="true"</span> /&gt;
 	&lt;label <span class="emphasis">for="f103"</span>&gt;Toggle&lt;/label&gt;
 &lt;/fieldset&gt;
 </pre>

@@ -2,15 +2,21 @@
 
 window.hasOwnProperty = window.hasOwnProperty || Object.prototype.hasOwnProperty;
 
+if( typeof String.prototype.trim !== 'function' ) {
+	String.prototype.trim = function() {
+		return this.replace(/^\s+|\s+$/g, '');
+	}
+}
+
 Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
+	this.parentElement.removeChild(this);
 }
 NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = 0, len = this.length; i < len; i++) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
+	for(var i = 0, len = this.length; i < len; i++) {
+		if(this[i] && this[i].parentElement) {
+			this[i].parentElement.removeChild(this[i]);
+		}
+	}
 }
 
 
@@ -52,6 +58,37 @@ if (!Array.prototype.indexOf) {
 	}
 }
 
+if (!Array.prototype.forEach) {
+	Array.prototype.forEach = function (callbackfn, thisArg) {
+		var O = Object(this),
+			lenValue = O.length,
+			len = lenValue >>> 0,
+			T,
+			k,
+			Pk,
+			kPresent,
+			kValue;
+
+		if (typeof callbackfn !== 'function') {
+			throw new TypeError();
+		}
+
+		T = thisArg ? thisArg : undefined;
+
+		k = 0;
+		while (k < len) {
+			Pk = k.toString();
+			kPresent = O.hasOwnProperty(Pk);
+			if (kPresent) {
+				kValue = O[Pk];
+				callbackfn.call(T, kValue, k, O);
+			}
+			k += 1;
+		}
+		return undefined;
+	};
+}
+
 
 
 
@@ -67,7 +104,7 @@ Array.prototype.clean = function(deleteValue) { // Delete empty values
 		}
 	}
 	return this;
-};
+}
 
 Array.prototype.uniques = function() { // Gather duplicate values
 	return this.reduce(function(a, b){
@@ -81,7 +118,7 @@ Array.prototype.contains = function(v) { // Contains specified value
 		if (this[i] === v)	return true;
 	}
 	return false;
-};
+}
 
 Array.prototype.duplicates = function() { // Gather duplicate values
 	var arrayLength = this.length, i, j, result = [];
@@ -103,7 +140,7 @@ Array.prototype.reduce = function() { // Join all internal arrays
 		}
 	}
 	return a;
-};
+}
 
 
 

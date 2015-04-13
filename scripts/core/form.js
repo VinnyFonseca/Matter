@@ -114,61 +114,57 @@ function initForm() {
 	if ( $("input[type='checkbox']").length ) {
 		$("input[type='checkbox']").each(function() {
 			var el = $(this);
-			el.wrap("<div class='controller checkbox'></div>");
-			var parent = el.parents(".controller");
-			parent.next("label").prepend(toggle).appendTo(parent);
-		});
 
-		if ( config.application.debug ) console.log("Form :: Checkboxes");
+			if ( el.attr("data-toggle") === "true" ) {
+				var toggleCheck = '<span class="toggle-body">\
+									<span class="toggle-switch"></span>\
+									<span class="toggle-track">\
+									<span class="toggle-background"></span>\
+										<span class="toggle-background toggle-background-negative"></span>\
+									</span>\
+								</span>';
+
+				el.wrap("<div class='controller toggle'></div>");
+				var parent = el.parents(".controller");
+				parent.next("label").prepend(toggleCheck).appendTo(parent);
+
+				if ( config.application.debug ) console.log("Form :: Toggle Checkboxes");
+			} else {
+				el.wrap("<div class='controller checkbox'></div>");
+				var parent = el.parents(".controller");
+				parent.next("label").appendTo(parent);
+
+				if ( config.application.debug ) console.log("Form :: Checkboxes");
+			}
+		});
 	}
 
 	if ( $("input[type='radio']").length ) {
 		$("input[type='radio']").each(function() {
 			var el = $(this);
-			el.wrap("<div class='controller radio'></div>");
-			var parent = el.parents(".controller");
-			parent.next("label").prepend(toggle).appendTo(parent);
+
+			if ( el.attr("data-toggle") === "true" ) {
+				var toggleRadio = '<span class="toggle-body">\
+									<span class="toggle-switch"></span>\
+									<span class="toggle-track">\
+									<span class="toggle-background"></span>\
+										<span class="toggle-background toggle-background-negative"></span>\
+									</span>\
+								</span>';
+
+				el.wrap("<div class='controller toggle'></div>");
+				var parent = el.parents(".controller");
+				parent.next("label").prepend(toggleRadio).appendTo(parent);
+
+				if ( config.application.debug ) console.log("Form :: Toggle Radios");
+			} else {
+				el.wrap("<div class='controller radio'></div>");
+				var parent = el.parents(".controller");
+				parent.next("label").appendTo(parent);
+
+				if ( config.application.debug ) console.log("Form :: Radios");
+			}
 		});
-
-		if ( config.application.debug ) console.log("Form :: Radios");
-	}
-
-	if ( $("input[type='togglecheckbox']").length ) {
-		var toggleCheck = '<span class="toggle-body">\
-							<span class="toggle-switch"></span>\
-							<span class="toggle-track">\
-							<span class="toggle-background"></span>\
-								<span class="toggle-background toggle-background-negative"></span>\
-							</span>\
-						</span>';
-
-		$("input[type='togglecheckbox']").each(function() {
-			var el = $(this);
-			el.attr("type", "checkbox").wrap("<div class='controller toggle'></div>");
-			var parent = el.parents(".controller");
-			parent.next("label").prepend(toggleCheck).appendTo(parent);
-		});
-
-		if ( config.application.debug ) console.log("Form :: Toggle Checkboxes");
-	}
-
-	if ( $("input[type='toggleradio']").length ) {
-		var toggleRadio = '<span class="toggle-body">\
-							<span class="toggle-switch"></span>\
-							<span class="toggle-track">\
-							<span class="toggle-background"></span>\
-								<span class="toggle-background toggle-background-negative"></span>\
-							</span>\
-						</span>';
-
-		$("input[type='toggleradio']").each(function() {
-			var el = $(this);
-			el.attr("type", "radio").wrap("<div class='controller toggle'></div>");
-			var parent = el.parents(".controller");
-			parent.next("label").prepend(toggleRadio).appendTo(parent);
-		});
-
-		if ( config.application.debug ) console.log("Form :: Toggle Radios");
 	}
 
 	$(document).on("click", "input[type='checkbox'][readonly], input[type='radio'][readonly]", function(event) {
