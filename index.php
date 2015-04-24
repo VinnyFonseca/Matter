@@ -9,7 +9,7 @@
 	<div class="intro">
 		<div class="wrapper">
 			<p class="lead">
-				A <strong>SASS</strong> and <strong>Compass</strong> front-end framework designed to make HTML work <strong>for</strong> you.
+				A <strong>SASS</strong> front-end framework designed to make HTML work <strong>for</strong> you.
 			</p>
 
 			<p>No more de-styling and restyling. Use HTML's default behaviour to leverage your web application and improve your workflow.</p>

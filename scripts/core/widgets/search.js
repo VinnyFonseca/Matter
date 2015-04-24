@@ -12,16 +12,16 @@ function initSearch() {
 				outputArray = [],
 
 				tagcloudElement = '<ul class="tagcloud"></ul>',
-				tagclose = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">',
+				tagclose = '<img class="svg icon icon-close" src="' + config.application.root + 'img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-close.png\'">',
 
 				resultsControlsElement = '<div class="search-controls"></div>',
 				resultsCountElement = '<div class="search-count"></div>',
 				resultsViewsElement = '<div class="search-views">\
 											<div class="search-view" data-view="grid">\
-												<img class="svg icon icon-grid" src="img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-grid.png\'">\
+												<img class="svg icon icon-grid" src="' + config.application.root + 'img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-grid.png\'">\
 											</div>\
 											<div class="search-view" data-view="list">\
-												<img class="svg icon icon-list" src="img/icons/icon-list.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-list.png\'">\
+												<img class="svg icon icon-list" src="' + config.application.root + 'img/icons/icon-list.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-list.png\'">\
 											</div>\
 										</div>',
 

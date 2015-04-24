@@ -1,6 +1,15 @@
 		<!-- Minified JS - Includes all .js from scripts folder -->
 		<script async type="text/javascript" src="scripts/build.js"></script>
 
+		<!-- Third Party CDN Plugins -->
+		<!-- AddThis -->
+		<!-- Go to www.addthis.com/dashboard to customize your tools -->
+
+		<!--
+			<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5523a958478e32cb" async="async"></script>
+		-->
+
+
 		<!-- Google Analytics -->
 		<!--
 		<script type="text/javascript">

@@ -1,7 +1,8 @@
 var config = {
 	application: {
 		touch: Modernizr.touch && !device.desktop(), // bool: Modernizr check returns true or false.
-		debug: true // bool: use if (debug) console.log(); instead of console.log; for permanent debugging messages.
+		debug: true, // bool: use if (debug) console.log(); instead of console.log; for permanent debugging messages.
+		root: typeof rootPath === "undefined" ? "" : rootPath // Path variable for server side configuration for javascript image loading.
 	},
 	accessibility: {
 		font: {
@@ -13,7 +14,7 @@ var config = {
 		uploadlimit: 3 // int: Multiple file upload limit.
 	},
 	search: {
-		view: "list", // str: "grid", "list".
+		view: "grid", // str: "grid", "list".
 		display: "full", // str: "full", "mini".
 		count: 10, // int: Number of items to show per page.
 		pagination: false // bool: Toggle pagination controls and loading of page elements only.

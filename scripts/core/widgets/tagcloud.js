@@ -8,7 +8,7 @@ function initTagClouds() {
 				tagArray = [],
 				tagCloud = '<ul class="tagcloud" data-tag="tagcloud-' + index + '"></ul>',
 				tagHidden = '<input type="hidden" class="tagcloud-result" data-tag="tagcloud-' + index + '">',
-				tagClose = '<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">';
+				tagClose = '<img class="svg icon icon-close" src="' + config.application.root + 'img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-close.png\'">';
 
 			$(tagHidden).insertAfter(el);
 			$(tagCloud).insertAfter(el);

@@ -136,10 +136,10 @@ var sliderInit = function(sliderId) {
 
 	var arrowEl =  '<div class="slider-arrow-wrapper">\
 						<div class="slider-arrow slider-arrow-prev valign-middle">\
-							<img class="svg icon icon-caret-left" src="img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-left.png\'">\
+							<img class="svg icon icon-caret-left" src="' + config.application.root + 'img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-caret-left.png\'">\
 						</div>\
 						<div class="slider-arrow slider-arrow-next valign-middle">\
-							<img class="svg icon icon-caret-right" src="img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-right.png\'">\
+							<img class="svg icon icon-caret-right" src="' + config.application.root + 'img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-caret-right.png\'">\
 						</div>\
 					</div>';
 
