@@ -2,9 +2,12 @@
 
 function initTables() {
 	if ( config.tables.responsive && $("table").length ) {
-		$("table").each(function() {
-			var el = $(this),
-				id = this.id,
+		$("table").each(function(index) {
+			var el = $(this);
+
+			el.attr("id", "table-" + index);
+
+			var id = this.id,
 				table = document.getElementById(id),
 				data = [],
 				headers = [];

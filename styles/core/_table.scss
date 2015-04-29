@@ -9,11 +9,12 @@ table {
 	min-width: 100%;
 	text-align: center;
 	border-radius: $radius;
-    // border-collapse: collapse;
+    border-collapse: collapse;
 
 	caption {
 		position: relative;
-		margin-bottom: floor($spacing / 2);
+		margin-top: floor($spacing / 2);
+		margin-bottom: floor($spacing / 1.5);
 		@include font-size($fontSize * 1.2);
 		font-weight: bold;
 	}
@@ -22,29 +23,27 @@ table {
 	tbody {
 		position: relative;
 		margin: 0 auto;
-
-		th,
-		tr,
-		td {
-			margin: 0;
-			padding: floor($spacing / 2) floor($spacing / 1.5);
-			border: 1px solid $cd;
-
-			> * {
-				margin: 0 !important;
-			}
-		}
 	}
 
-	th {
-		text-align: center;
-		background: $ce;
+	th,
+	tr,
+	td {
+		margin: 0;
+		padding: floor($spacing / 2) floor($spacing / 1.5);
+		border: 1px solid $cd;
+
+		> * {
+			margin: 0 !important;
+		}
 	}
 
 	tr {
 		&:first-child {
 			th,
 			td {
+				font-weight: bold;
+				text-align: center;
+				background: $ce;
 				white-space: nowrap;
 
 				&:first-child {
@@ -71,6 +70,16 @@ table {
 		&.even {
 			td {
 				background: $cf;
+			}
+		}
+
+		th,
+		td {
+			&:first-child {
+				font-weight: bold;
+				text-align: center;
+				background: $ce;
+				white-space: nowrap;
 			}
 		}
 	}

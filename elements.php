@@ -599,43 +599,39 @@
 			The following table has a caption. The first row and the first column contain header cells (<code>th</code>) only. Other cells are data cells (<code>td</code>).
 		</p>
 
-		<table id="table-1" summary="Each row names a Nordic country and specifies its total area and land area, in square kilometers">
+		<table summary="Each row names a Nordic country and specifies its total area and land area, in square kilometers">
 			<caption>Sample table: Areas of the Nordic countries, in sq km</caption>
 
-			<thead>
-				<tr>
-					<th scope="col">Country</th>
-					<th scope="col">Total area</th>
-					<th scope="col">Land area</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">Denmark</th>
-					<td> 43,070 </td>
-					<td> 42,370</td>
-				</tr>
-				<tr>
-					<th scope="row">Finland</th>
-					<td>337,030 </td>
-					<td>305,470</td>
-				</tr>
-				<tr>
-					<th scope="row">Iceland</th>
-					<td>103,000 </td>
-					<td>100,250</td>
-				</tr>
-				<tr>
-					<th scope="row">Norway</th>
-					<td>324,220 </td>
-					<td>307,860</td>
-				</tr>
-				<tr>
-					<th scope="row">Sweden</th>
-					<td>449,964 </td>
-					<td>410,928</td>
-				</tr>
-			</tbody>
+			<tr>
+				<td>Country</td>
+				<td>Total area</td>
+				<td>Land area</td>
+			</tr>
+			<tr>
+				<th>Denmark</th>
+				<td>43,070</td>
+				<td>42,370</td>
+			</tr>
+			<tr>
+				<th>Finland</th>
+				<td>337,030</td>
+				<td>305,470</td>
+			</tr>
+			<tr>
+				<th>Iceland</th>
+				<td>103,000</td>
+				<td>100,250</td>
+			</tr>
+			<tr>
+				<th>Norway</th>
+				<td>324,220</td>
+				<td>307,860</td>
+			</tr>
+			<tr>
+				<th>Sweden</th>
+				<td>449,964</td>
+				<td>410,928</td>
+			</tr>
 		</table>
 
 		<h4>Character Test</h4>
@@ -644,60 +640,56 @@
 			The following table has no caption, and has some sample characters with annotations. If the browser's default font does notcontain all of them, they may get displayed using backup fonts. This may cause stylistic differences, but it should not prevent the characters from being displayed at all.
 		</p>
 
-		<table id="table-2">
-			<thead>
-				<tr>
-					<th scope="col">Char.</th>
-					<th scope="col">Explanation</th>
-					<th scope="col">HTML Entity</th>
-					<th scope="col">Unicode</th>
-					<th scope="col">Notes</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">ê</td>
-					<td>e with circumflex</td>
-					<td><code>&amp;ecirc;</code></td>
-					<td><code>&amp;#234;</code></td>
-					<td>Latin 1 character</td>
-				</tr>
-				<tr>
-					<th scope="row">—</td>
-					<td>em dash</td>
-					<td><code>&amp;mdash;</code></td>
-					<td><code>&amp;#8212;</code></td>
-					<td>Windows Latin 1 character</td>
-				</tr>
-				<tr>
-					<th scope="row">Ā</td>
-					<td>A with macron (line above)</td>
-					<td><code>&amp;Amacr;</code></td>
-					<td><code>&amp;#256;</code></td>
-					<td>Latin Extended-A character</td>
-				</tr>
-				<tr>
-					<th scope="row">Ω</td>
-					<td>capital omega</td>
-					<td><code>&amp;Omega;</code></td>
-					<td><code>&amp;#937;</code></td>
-					<td>Greek letter</td>
-				</tr>
-				<tr>
-					<th scope="row">−</td>
-					<td>minus sign</td>
-					<td><code>&amp;minus;</code></td>
-					<td><code>&amp;#8722;</code></td>
-					<td>Unicode minus</td>
-				</tr>
-				<tr>
-					<th scope="row">Ø</td>
-					<td>diameter sign</td>
-					<td><code>&amp;Oslash;</code></td>
-					<td><code>&amp;#216;</code></td>
-					<td>Relatively rare</td>
-				</tr>
-			</tbody>
+		<table>
+			<tr>
+				<td>Char.</td>
+				<td>Explanation</td>
+				<td>HTML Entity</td>
+				<td>Unicode</td>
+				<td>Notes</td>
+			</tr>
+			<tr>
+				<td>ê</td>
+				<td>e with circumflex</td>
+				<td><code>&amp;ecirc;</code></td>
+				<td><code>&amp;#234;</code></td>
+				<td>Latin 1 character</td>
+			</tr>
+			<tr>
+				<td>—</td>
+				<td>em dash</td>
+				<td><code>&amp;mdash;</code></td>
+				<td><code>&amp;#8212;</code></td>
+				<td>Windows Latin 1 character</td>
+			</tr>
+			<tr>
+				<td>Ā</td>
+				<td>A with macron (line above)</td>
+				<td><code>&amp;Amacr;</code></td>
+				<td><code>&amp;#256;</code></td>
+				<td>Latin Extended-A character</td>
+			</tr>
+			<tr>
+				<td>Ω</td>
+				<td>capital omega</td>
+				<td><code>&amp;Omega;</code></td>
+				<td><code>&amp;#937;</code></td>
+				<td>Greek letter</td>
+			</tr>
+			<tr>
+				<td>−</td>
+				<td>minus sign</td>
+				<td><code>&amp;minus;</code></td>
+				<td><code>&amp;#8722;</code></td>
+				<td>Unicode minus</td>
+			</tr>
+			<tr>
+				<td>Ø</td>
+				<td>diameter sign</td>
+				<td><code>&amp;Oslash;</code></td>
+				<td><code>&amp;#216;</code></td>
+				<td>Relatively rare</td>
+			</tr>
 		</table>
 
 	</div>
