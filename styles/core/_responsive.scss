@@ -177,7 +177,18 @@
 	table {
 		caption {
 			@include font-size($fontSize);
-			text-align: left;
+			text-align: center;
+		}
+
+		tr {
+			th,
+			td {
+				&:last-child {
+					font-weight: normal;
+					text-align: left;
+					background: none;
+				}
+			}
 		}
 	}
 
