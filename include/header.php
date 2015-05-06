@@ -4,7 +4,10 @@
 	<![endif]-->
 
 	<a href="#" class="anchor" id="get-started"></a>
-	<a href="#get-started" class="button primary back-to-top">Top</a>
+
+	<a href="#get-started" class="button primary back-to-top">
+		<img class="svg icon icon-arrow-up" src="img/icons/icon-arrow-up.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-arrow-up.png'">
+	</a>
 
 
 	<div class="overlay" id="example">

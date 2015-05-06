@@ -115,14 +115,30 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 	padding-top: $spacing;
 	padding-bottom: $spacing;
 }
+
 .intro {
 	display: block;
 	position: relative;
 	margin: 0;
-	padding: $spacing 0;
-	color: $cf;
-	background: $brand1 url($introBg) no-repeat center bottom;
-	background-size: cover;
+	padding: 0;
+	text-align: center;
+	z-index: 1;
+
+	.parallax {
+		display: block;
+		position: relative;
+		padding: $spacing 0;
+		color: $cf;
+		background: $brand1 url($introBg) no-repeat center bottom;
+		background-size: cover;
+	}
+
+	img {
+		display: block;
+		position: relative;
+		margin: 0 auto;
+		margin-bottom: floor($spacing * 1.5);
+	}
 }
 
 
@@ -131,26 +147,28 @@ $sidebarWidth: 300px;
 .main {
 	display: block;
 	position: relative;
+	left: 0;
+	background-color: $cf;
+	z-index: 2;
+	transition: left $animDuration $animEasing;
 
 	&.sidebar-on {
+		left: - $sidebarWidth / 4;
+
 		.sidebar {
 			transform: translateX(0);
 
 			.sidebar-trigger {
-				transform: translateX(0);
-				border-left-width: 1px;
-				border-right-width: 0;
-				border-radius: $radius 0 0 $radius;
+				transform: translateX(46px);
+				border-left-width: 0;
+				border-right-width: 1px;
+				border-radius: 0 $radius $radius 0;
 
 				&:before {
-					content: "\00AB" !important;
+					content: "\00BB" !important;
 				}
 			}
 		}
-	}
-
-	&.docs {
-		padding-left: $sidebarWidth;
 	}
 
 	.sidebar {
@@ -160,12 +178,13 @@ $sidebarWidth: 300px;
 		padding: 0;
 		width: $sidebarWidth;
 		top: $headerHeight;
-		left: 0;
+		right: 0;
 		bottom: 0;
 		border-right: 1px solid $c3;
 		background-color: $c3;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 		z-index: 70;
+		transform: translateX($sidebarWidth);
 		transition: transform $animDuration $animEasing;
 
 		& > * {
@@ -175,10 +194,10 @@ $sidebarWidth: 300px;
 		.sidebar-trigger {
 			display: none;
 			position: absolute;
-			padding: 6px;
-			width: 42px;
-			height: 42px;
-			right: 0;
+			padding: 8px 0;
+			width: 46px;
+			height: 46px;
+			left: -46px;
 			top: 12px;
 			color: $cf;
 			@include font-size($fontSize * 2);
@@ -186,13 +205,12 @@ $sidebarWidth: 300px;
 			line-height: 0.7 !important;
 			border: 1px solid $brand1;
 			border-left-width: 0;
-			border-radius: 0 $radius $radius 0;
+			border-radius: $radius 0 0 $radius;
 			background-color: $brand1;
 			cursor: pointer;
 			z-index: 10;
 			opacity: 0.85;
 			transition: transform $animDuration $animEasing;
-			transform: translateX(42px);
 
 			&:hover,
 			&:active {
@@ -200,13 +218,14 @@ $sidebarWidth: 300px;
 				background-color: $brand2;
 			}
 			&:before {
-				content: "\00BB";
+				content: "\00AB";
 			}
 		}
 
 		h1, h2, h3, h4, h5, h6 {
-			margin-top: 8px;
+			margin-top: 10px;
 			color: $cd !important;
+			text-align: right;
 		}
 
 		ul {
@@ -255,10 +274,15 @@ $sidebarWidth: 300px;
 
 .back-to-top {
 	position: fixed;
+	width: 44px;
+	height: 44px;
 	right: 10px;
 	bottom: 10px;
+	border-radius: 1000px;
+	@include opacity(0.85);
 	z-index: 80;
-	opacity: 0.85;
+
+	@extend .valign-middle;
 }
 
 

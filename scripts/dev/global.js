@@ -55,9 +55,10 @@ $(document).ready(function() {
 });
 
 
-// Sidebar anchors
 
-$(window).on("scroll", function() {
+// Window Events
+
+window.onscroll = function() {
 	if ( !anchorClicked ) {
 		$("a.anchor").each(function(i) {
 			var top = $(this).offset().top - 200;
@@ -75,4 +76,15 @@ $(window).on("scroll", function() {
 			}
 		});
 	}
-});
+
+
+	// Intro Parallax
+
+	$(".intro .parallax").css({
+		"-webkit-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
+		"-moz-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
+		"-ms-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
+		"-o-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
+		"transform": "translate3d(0, " + pageTop / 2 + "px, 0)"
+	});
+};
