@@ -11,9 +11,10 @@
     "grunt-autoprefixer": "*",
     "grunt-contrib-imagemin": "*",
     "grunt-contrib-jshint": "*",
+    "jshint-stylish": "*",
     "grunt-contrib-sass": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
-    "jshint-stylish": "^1.0.1"
+    "grunt-browser-sync": "*"
   }
 }

@@ -624,27 +624,27 @@
 				<td>Land area</td>
 			</tr>
 			<tr>
-				<th>Denmark</th>
+				<td>Denmark</td>
 				<td>43,070</td>
 				<td>42,370</td>
 			</tr>
 			<tr>
-				<th>Finland</th>
+				<td>Finland</td>
 				<td>337,030</td>
 				<td>305,470</td>
 			</tr>
 			<tr>
-				<th>Iceland</th>
+				<td>Iceland</td>
 				<td>103,000</td>
 				<td>100,250</td>
 			</tr>
 			<tr>
-				<th>Norway</th>
+				<td>Norway</td>
 				<td>324,220</td>
 				<td>307,860</td>
 			</tr>
 			<tr>
-				<th>Sweden</th>
+				<td>Sweden</td>
 				<td>449,964</td>
 				<td>410,928</td>
 			</tr>

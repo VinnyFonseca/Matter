@@ -100,30 +100,43 @@ module.exports = function(grunt) {
 		},
 
 
+		// Config for grunt-browser-sync (browser synchronisation and auto-reloader)
+
+		browserSync: {
+			bsFiles: {
+				src: [
+					"styles/*.css",
+					"scripts/*.js",
+					"*.html",
+					"*.php"
+				]
+			}
+		},
+
+
 		// Config for grunt-contrib-watch (overseer)
 
 		watch: {
+			options: { livereload: false },
 			html: {
-				options: { livereload: true	},
+				// options: { livereload: true	},
 				files: ['**/*.html']
 			},
 			php: {
-				options: { livereload: true	},
+				// options: { livereload: true	},
 				files: ['**/*.php']
 			},
 			css: {
-				options: { livereload: true	},
+				// options: { livereload: true	},
 				files: ['**/*.css']
 			},
 			sass: {
-				options: {
-					livereload: false
-				},
+				// options: { livereload: false },
 				files: ['**/*.{scss,sass}'],
 				tasks: ['sass', 'autoprefixer']
 			},
 			js: {
-				options: { livereload: true	},
+				// options: { livereload: true	},
 				files: ['scripts/**/*.js', '!scripts/*.js'],
 				tasks: ['uglify', 'jshint']
 			}
@@ -155,9 +168,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-browser-sync');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
 
 	// TASKS =====================================/
 
-	grunt.registerTask('default', ['watch']);
+	grunt.registerTask('default', ['browserSync', 'watch']);
 };

@@ -85,6 +85,7 @@ window.onscroll = function() {
 		"-moz-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
 		"-ms-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
 		"-o-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
-		"transform": "translate3d(0, " + pageTop / 2 + "px, 0)"
+		"transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
+		"opacity": 1 - (pageTop / 500)
 	});
 };
