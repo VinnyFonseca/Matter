@@ -273,11 +273,11 @@ $(window).on("load", function() {
 });
 
 $(window).on("resize", function() {
-	isWideScreen = $(window).width() > 768;
+	isWideScreen = $(this).width() > 768;
 });
 
 $(window).on("scroll", function() {
 	pageTop = $(document).scrollTop();
-	pageBottom = pageTop + $(window).height();
+	pageBottom = pageTop + $(this).height();
 	scrollProgress();
 });
