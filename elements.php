@@ -165,6 +165,14 @@
 				<img class="svg icon icon-pin" src="img/icons/icon-pin.svg" onerror="this.onerror=null;this.src='img/icons/icon-pin.png'">
 			</div>
 
+			<div class="icon-container" data-icon="calendar" data-tooltip="calendar">
+				<img class="svg icon icon-calendar" src="img/icons/icon-calendar.svg" onerror="this.onerror=null;this.src='img/icons/icon-calendar.png'">
+			</div>
+
+			<div class="icon-container" data-icon="speech-bubble" data-tooltip="speech-bubble">
+				<img class="svg icon icon-speech-bubble" src="img/icons/icon-speech-bubble.svg" onerror="this.onerror=null;this.src='img/icons/icon-speech-bubble.png'">
+			</div>
+
 			<div class="icon-container" data-icon="print" data-tooltip="print">
 				<img class="svg icon icon-print" src="img/icons/icon-print.svg" onerror="this.onerror=null;this.src='img/icons/icon-print.png'">
 			</div>
@@ -199,6 +207,14 @@
 
 			<div class="icon-container" data-icon="share" data-tooltip="share">
 				<img class="svg icon icon-share" src="img/icons/icon-share.svg" onerror="this.onerror=null;this.src='img/icons/icon-share.png'">
+			</div>
+
+			<div class="icon-container" data-icon="play" data-tooltip="play">
+				<img class="svg icon icon-play" src="img/icons/icon-play.svg" onerror="this.onerror=null;this.src='img/icons/icon-play.png'">
+			</div>
+
+			<div class="icon-container" data-icon="pause" data-tooltip="pause">
+				<img class="svg icon icon-pause" src="img/icons/icon-pause.svg" onerror="this.onerror=null;this.src='img/icons/icon-pause.png'">
 			</div>
 		</div>
 

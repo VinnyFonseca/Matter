@@ -34,7 +34,7 @@
 		<title>Matter</title>
 
 		<!-- Minified CSS - Includes all .scss from style folder -->
-		<link rel="stylesheet" href="styles/build.css" type="text/css" media="screen">
+		<link rel="stylesheet" href="styles/build.css" type="text/css" media="all">
 
 		<!--[if lt IE 9]>
 		<script type="text/javascript" src="scripts/core/vendor/html5shiv-printshiv.js"></script>
