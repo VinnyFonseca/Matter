@@ -19,12 +19,8 @@
 			<h3>Example Overlay</h3>
 		</div>
 	</div>
-	<div class="notification" data-type="">
-		<span class="notification-message"></span>
-		<div class="notification-close">
-			<img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
-		</div>
-	</div>
+
+	<div class="notification-wrapper"></div>
 
 
 	<header>

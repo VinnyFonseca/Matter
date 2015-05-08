@@ -111,58 +111,31 @@ function initForm() {
 
 	// Checkboxes, Radio buttons & Toggles
 
-	if ( $("input[type='checkbox']").length ) {
-		$("input[type='checkbox']").each(function() {
-			var el = $(this);
+	var toggle = '<span class="toggle-body">\
+					  <span class="toggle-switch"></span>\
+					  <span class="toggle-track">\
+					  <span class="toggle-background"></span>\
+						  <span class="toggle-background toggle-background-negative"></span>\
+					  </span>\
+				  </span>';
+
+	if ( $("input[type='checkbox'], input[type='radio']").length ) {
+		$("input[type='checkbox'], input[type='radio']").each(function() {
+			var el = $(this),
+				type = el.attr("type");
 
 			if ( el.attr("data-toggle") === "true" ) {
-				var toggleCheck = '<span class="toggle-body">\
-									<span class="toggle-switch"></span>\
-									<span class="toggle-track">\
-									<span class="toggle-background"></span>\
-										<span class="toggle-background toggle-background-negative"></span>\
-									</span>\
-								</span>';
-
 				el.wrap("<div class='controller toggle'></div>");
 				var parent = el.parents(".controller");
-				parent.next("label").prepend(toggleCheck).appendTo(parent);
+				parent.next("label").prepend(toggle).appendTo(parent);
 
-				if ( config.application.debug ) console.log("Form :: Toggle Checkboxes");
+				if ( config.application.debug ) console.log("Form :: Toggle " + type.toCamelCase());
 			} else {
-				el.wrap("<div class='controller checkbox'></div>");
+				el.wrap("<div class='controller '" + type + "></div>");
 				var parent = el.parents(".controller");
 				parent.next("label").appendTo(parent);
 
-				if ( config.application.debug ) console.log("Form :: Checkboxes");
-			}
-		});
-	}
-
-	if ( $("input[type='radio']").length ) {
-		$("input[type='radio']").each(function() {
-			var el = $(this);
-
-			if ( el.attr("data-toggle") === "true" ) {
-				var toggleRadio = '<span class="toggle-body">\
-									<span class="toggle-switch"></span>\
-									<span class="toggle-track">\
-									<span class="toggle-background"></span>\
-										<span class="toggle-background toggle-background-negative"></span>\
-									</span>\
-								</span>';
-
-				el.wrap("<div class='controller toggle'></div>");
-				var parent = el.parents(".controller");
-				parent.next("label").prepend(toggleRadio).appendTo(parent);
-
-				if ( config.application.debug ) console.log("Form :: Toggle Radios");
-			} else {
-				el.wrap("<div class='controller radio'></div>");
-				var parent = el.parents(".controller");
-				parent.next("label").appendTo(parent);
-
-				if ( config.application.debug ) console.log("Form :: Radios");
+				if ( config.application.debug ) console.log("Form :: " + type.toCamelCase());
 			}
 		});
 	}

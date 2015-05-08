@@ -1,28 +1,37 @@
 // Notification
 
-.notification {
+.notification-wrapper {
 	display: block;
 	position: fixed;
-	margin: 0 2%;
-	padding: $spacing floor($spacing * 1.75) $spacing $spacing;
-	width: 310px;
-	top: $headerHeight;
+	margin: 0;
+	width: 300px;
+	top: floor($headerHeight + ($spacing / 2));
+	right: floor($spacing / 2);
+	z-index: 140;
+}
+
+.notification {
+	display: block;
+	position: relative;
+	margin: 0 0 5px 0;
+	padding: $spacing floor(($spacing * 1.5) + 20) $spacing $spacing;
 	color: $cf;
+	border-radius: $radius;
 	background: $brand1;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
 	@include opacity(0);
 	cursor: pointer;
 	overflow: hidden;
-	z-index: 140;
+	z-index: 1000;
 
-	transform: translateY(-100%);
+	transform: translateY(-20%);
 
 	transition-property: transform, top, opacity;
 	transition-duration: $animDuration;
 	transition-timing-function: $animEasing;
 
 	&:hover {
-		background: $brand2;
+		background: $brand2 !important;
 	}
 
 	&.active {
@@ -50,16 +59,17 @@
 		display: block;
 		position: absolute;
 		margin: 0;
-		width: 16px;
-		height: 16px;
-		top: floor($spacing / 2);
-		right: floor($spacing / 2);
+		margin-top: -10px;
+		width: 20px;
+		height: 20px;
+		top: 50%;
+		// top: floor($spacing / 2);
+		right: $spacing;
 		border: 0 !important;
 
 		.icon {
 			width: 100%;
 			height: 100%;
-			top: -3px;
 		}
 	}
 }

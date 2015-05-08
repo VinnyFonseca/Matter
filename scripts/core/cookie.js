@@ -44,11 +44,11 @@ function initCookies() {
 
 	if ( firstVisitCookie === null ) {
 		cookieSystem.set("firstVisit", "yes", 365);
-		var cookieDelay = 0,
-			cookieTone = "warning",
-			cookieMessage = "Matter uses cookies to give you a better experience. By continuing to browse you are accepting our <a href='#' target='_blank'>Terms &amp; Conditions</a>.";
+		var cookieMessage = "Matter uses cookies to give you a better experience. By continuing to browse you are accepting our <a href='#' target='_blank'>Terms &amp; Conditions</a>.",
+			cookieDelay = 0,
+			cookieTone = "warning";
 
-		notify(cookieMessage, cookieTone, cookieDelay);
+		notify(cookieMessage, cookieDelay, cookieTone);
 	}
 
 	if ( config.application.debug ) console.log("System :: Cookie System");

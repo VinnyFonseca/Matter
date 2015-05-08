@@ -103,13 +103,24 @@ module.exports = function(grunt) {
 		// Config for grunt-browser-sync (browser synchronisation and auto-reloader)
 
 		browserSync: {
-			bsFiles: {
-				src: [
-					"styles/*.css",
-					"scripts/*.js",
-					"*.html",
-					"*.php"
-				]
+			dist: {
+				bsFiles: {
+					src: [
+						"images/*.*",
+						"styles/*.css",
+						"scripts/*.js",
+						"*.html",
+						"*.php",
+					]
+				},
+                options: {
+                	minify: false,
+                	logLevel: "info",
+                	logConnections: true,
+                	logFileChanges: true,
+                	ghostMode: true,
+                    watchTask: true // < VERY important
+                }
 			}
 		},
 
@@ -117,26 +128,25 @@ module.exports = function(grunt) {
 		// Config for grunt-contrib-watch (overseer)
 
 		watch: {
-			options: { livereload: false },
 			html: {
-				// options: { livereload: true	},
+				options: { livereload: true },
 				files: ['**/*.html']
 			},
 			php: {
-				// options: { livereload: true	},
+				options: { livereload: true },
 				files: ['**/*.php']
 			},
 			css: {
-				// options: { livereload: true	},
+				options: { livereload: true },
 				files: ['**/*.css']
 			},
 			sass: {
-				// options: { livereload: false },
+				options: { livereload: false },
 				files: ['**/*.{scss,sass}'],
 				tasks: ['sass', 'autoprefixer']
 			},
 			js: {
-				// options: { livereload: true	},
+				options: { livereload: true },
 				files: ['scripts/**/*.js', '!scripts/*.js'],
 				tasks: ['uglify', 'jshint']
 			}
