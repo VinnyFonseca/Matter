@@ -12,9 +12,12 @@
 
 .notification {
 	display: block;
-	position: relative;
+	position: absolute;
 	margin: 0 0 5px 0;
 	padding: $spacing floor(($spacing * 1.5) + 20) $spacing $spacing;
+	width: 100%;
+	top: 0;
+	left: 0;
 	color: $cf;
 	border-radius: $radius;
 	background: $brand1;
@@ -24,7 +27,7 @@
 	overflow: hidden;
 	z-index: 1000;
 
-	transform: translateY(-20%);
+	transform: translateX(20%);
 
 	transition-property: transform, top, opacity;
 	transition-duration: $animDuration;
@@ -35,8 +38,10 @@
 	}
 
 	&.active {
+		position: relative;
 		@include opacity(1);
-		transform: translateY(0);
+		transform: translateX(0);
+		z-index: 900;
 	}
 
 	&.success {
@@ -63,7 +68,6 @@
 		width: 20px;
 		height: 20px;
 		top: 50%;
-		// top: floor($spacing / 2);
 		right: $spacing;
 		border: 0 !important;
 
