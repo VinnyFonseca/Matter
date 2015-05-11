@@ -77,10 +77,6 @@ if (!window.console) console = { log: function() {} };
 
 // Slider Init Function
 
-String.prototype.bool = function() {
-    return (/^true$/i).test(this);
-};
-
 var sliderInit = function(sliderId) {
 	var sliderActive = $('#' + sliderId);
 	var containerWrapper = sliderActive.find('.slider-container-wrapper');
@@ -124,7 +120,7 @@ var sliderInit = function(sliderId) {
 		movable.css({
 			'margin-left': sliderWidth * (loopUnit - uniqueCount),
 			'width': sliderWidth * container.size(),
-			'height': container.eq(slideCurrent % uniqueCount).height(),
+			'height': container.eq(slideCurrent % uniqueCount).outerHeight(),
 			'left': - sliderWidth * loopUnit
 		});
 	}
@@ -284,7 +280,7 @@ var sliderInit = function(sliderId) {
 
 		if ( slideAnimation === "slide" ) {
 			movable.animate({
-				'height': container.eq(slideCurrent % uniqueCount).height(),
+				'height': container.eq(slideCurrent % uniqueCount).outerHeight(),
 				'left': movePos
 			}, {
 				duration: animDuration,
@@ -303,7 +299,7 @@ var sliderInit = function(sliderId) {
 				})
 				.fadeIn(animDuration + 250)
 				.animate({
-					'height': container.eq(slideCurrent % uniqueCount).height()
+					'height': container.eq(slideCurrent % uniqueCount).outerHeight()
 				}, {
 					duration: animDuration,
 					complete: function() {

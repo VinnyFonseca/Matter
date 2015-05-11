@@ -147,7 +147,7 @@ Array.prototype.reduce = function() { // Join all internal arrays
 
 // Objects
 
-function serialize(obj) {
+var serialize = function(obj) {
 	var str = [];
 	for ( var p in obj ) {
 		if ( obj.hasOwnProperty(p) ) {
@@ -162,15 +162,16 @@ function serialize(obj) {
 
 // Strings
 
-if(!String.prototype.trim) {
+if ( !String.prototype.trim ) {
 	String.prototype.trim = function () {
 		return this.replace(/^\s+|\s+$/g,'');
 	};
 }
 
-String.prototype.toCamelCase = function(str) {
-    return str
-        .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
-        .replace(/\s/g, '')
-        .replace(/^(.)/, function($1) { return $1.toLowerCase(); });
+String.prototype.toCamelCase = function() {
+	return this.replace(/(\-[a-z])/g, function($1) { return $1.toUpperCase().replace('-',''); } );
+}
+
+String.prototype.bool = function() {
+    return (/^true$/i).test(this);
 }

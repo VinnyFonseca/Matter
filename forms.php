@@ -3,14 +3,14 @@
 
 
 <div class="main docs">
+
+	<div class="sidebar">
+		<div class="sidebar-trigger"></div>
+		<h3>Forms</h3>
+	</div>
+
+
 	<div class="wrapper">
-
-		<div class="sidebar">
-			<div class="sidebar-trigger"></div>
-			<h3>Forms</h3>
-		</div>
-
-
 
 		<p class="emphasis">Note: This section is currently under heavy development.</p>
 

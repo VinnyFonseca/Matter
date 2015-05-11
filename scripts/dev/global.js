@@ -16,7 +16,7 @@ $(document).ready(function() {
 	$(".nav-trigger").on("click", function() {
 		$("header").toggleClass("active");
 	});
-	$("html").on("click", function(event) {
+	$("html, body").on("click", function(event) {
 		if ( !$(event.target).closest("header").length ) $("header").removeClass("active");
 	});
 
@@ -41,7 +41,7 @@ $(document).ready(function() {
 		}
 	});
 	$("html, body").on("click", function(event) {
-		if ( !$(event.target).closest(".sidebar") && $(".main").hasClass("sidebar-on") ) {
+		if ( !$(event.target).closest(".sidebar").length && $(".main").hasClass("sidebar-on") ) {
 			$(".main").removeClass("sidebar-on");
 		}
 	});

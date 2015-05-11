@@ -193,12 +193,12 @@ var scrollProgress = function() {
 
 // Initialisation
 
-var initFramework = function() {
+var matterReady = function() {
 	isWideScreen = $(window).width() > 768;
 
 	if ( config.application.touch ) { // If touch device
 		FastClick.attach(document.body); // Removes 300ms delay from taps on mobile devices. Requires fastclick.js.
-		$(".map-canvas").addClass("map-mobile"); // Fixes image distortion on Google Maps - See _base.scss.
+		$(".map-canvas").addClass("map-mobile"); // Fixes image distortion on Google Maps - See styles/core/widgets/_map.scss.
 	}
 
 
@@ -233,10 +233,6 @@ var initFramework = function() {
 	initOverlays();
 	initNotifications();
 	initTooltips();
-	initSliders();
-	initMap();
-	initTwitter();
-	initVideo();
 
 
 	// Search Init
@@ -258,6 +254,14 @@ var initFramework = function() {
 }
 
 
+var matterDeferred = function() {
+	initSliders();
+	initMap();
+	initTwitter();
+	initVideo();
+}
+
+
 
 
 // Window Load
@@ -266,10 +270,11 @@ var isWideScreen;
 var pageTop;
 var pageBottom;
 
-$(document).ready(initFramework);
+$(document).ready(matterReady);
 
 $(window).on("load", function() {
 	$("body").removeClass("preload"); // Fix for CSS3 animation on load.
+	matterDeferred();
 });
 
 $(window).on("resize", function() {

@@ -3,14 +3,14 @@
 
 
 <div class="main docs">
+
+	<div class="sidebar">
+		<div class="sidebar-trigger"></div>
+		<h3>Search Engine</h3>
+	</div>
+
+
 	<div class="wrapper">
-
-		<div class="sidebar">
-			<div class="sidebar-trigger"></div>
-			<h3>Search Engine</h3>
-		</div>
-
-
 
 		<a href="#" class="anchor" id="search"></a>
 

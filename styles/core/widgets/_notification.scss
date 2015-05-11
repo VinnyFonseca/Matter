@@ -12,7 +12,7 @@
 
 .notification {
 	display: block;
-	position: absolute;
+	position: relative;
 	margin: 0 0 5px 0;
 	padding: $spacing floor(($spacing * 1.5) + 20) $spacing $spacing;
 	width: 100%;
@@ -27,7 +27,7 @@
 	overflow: hidden;
 	z-index: 1000;
 
-	transform: translateX(20%);
+	transform: translateX(40%);
 
 	transition-property: transform, top, opacity;
 	transition-duration: $animDuration;
@@ -38,7 +38,6 @@
 	}
 
 	&.active {
-		position: relative;
 		@include opacity(1);
 		transform: translateX(0);
 		z-index: 900;

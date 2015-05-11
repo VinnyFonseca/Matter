@@ -104,7 +104,7 @@ module.exports = function(grunt) {
 
 		browserSync: {
 			dist: {
-				bsFiles: {
+				files: {
 					src: [
 						"images/*.*",
 						"styles/*.css",
@@ -113,14 +113,16 @@ module.exports = function(grunt) {
 						"*.php",
 					]
 				},
-                options: {
-                	minify: false,
-                	logLevel: "info",
-                	logConnections: true,
-                	logFileChanges: true,
-                	ghostMode: true,
-                    watchTask: true // < VERY important
-                }
+				options: {
+					open: "ui",
+					server: false,
+					watchTask: true, // < VERY important
+					reloadOnRestart: true,
+					minify: false,
+					logLevel: "info",
+					logConnections: false,
+					logFileChanges: false
+				}
 			}
 		},
 

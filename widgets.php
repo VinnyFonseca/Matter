@@ -3,14 +3,14 @@
 
 
 <div class="main docs">
+
+	<div class="sidebar">
+		<div class="sidebar-trigger"></div>
+		<h3>Widgets</h3>
+	</div>
+
+
 	<div class="wrapper">
-
-		<div class="sidebar">
-			<div class="sidebar-trigger"></div>
-			<h3>Widgets</h3>
-		</div>
-
-
 
 		<a href="#" class="anchor" id="notifications"></a>
 
@@ -30,7 +30,7 @@
 			Apply <code>data-notification="true"</code> to any element. Click trigger.
 		</p>
 		<p>
-			Functionality is set by <code>data-message</code>, <code>data-tone</code>and <code>data-delay</code> attributes on the trigger element.
+			Functionality is set by <code>data-message</code>, <code>data-delay</code> and <code>data-tone</code> attributes on the trigger element.
 		</p>
 		<p class="emphasis">
 			Note: If the parameters above are ommitted, they will fallback to default parameters. <code>data-notification</code> and <code>data-message</code> are obligatory.
@@ -77,7 +77,7 @@
 		</p>
 
 <pre>
-&lt;div class="button primary" <span class="emphasis">data-notification="true" data-message="Success!" data-tone="success" data-delay="3000"</span>&gt;
+&lt;div class="button primary" <span class="emphasis">data-notification="true" data-message="Success!" data-delay="3000" data-tone="success"</span>&gt;
 	Delay 3000
 &lt;/div&gt;
 </pre>
@@ -139,17 +139,17 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider">
+		<div class="slider" data-slider="true">
 			<div class="slider-container-wrapper">
 				<div class="slider-movable">
 					<div class="slider-container">
-						<img src="http://placehold.it/940x320" />
+						<img src="http://placehold.it/959x350" />
 					</div>
 					<div class="slider-container">
-						<img src="http://placehold.it/941x320" />
+						<img src="http://placehold.it/960x350" />
 					</div>
 					<div class="slider-container">
-						<img src="http://placehold.it/942x321" />
+						<img src="http://placehold.it/961x350" />
 					</div>
 				</div>
 			</div>
@@ -160,7 +160,7 @@
 		</p>
 
 <pre>
-&lt;div class="slider" <span class="emphasis">data-bullets="true" data-arrows="true" data-slideshow="true" data-animation="slide"</span>&gt;
+&lt;div class="slider" <span class="emphasis">data-slider="true"</span>&gt;
 	&lt;div class="slider-container-wrapper"&gt;
 		&lt;div class="slider-movable"&gt;
 			&lt;div class="slider-container"&gt;
@@ -265,7 +265,7 @@
 			<button data-tooltip="Lorem ipsum Laborum">Hover this button</button>
 		</p>
 
-		<img src="http://placehold.it/960x300&text=Image,%20hover%20me" data-tooltip="Using data-tooltip 1" />
+		<img src="http://placehold.it/1280x350&text=Image,%20hover%20me" data-tooltip="Using data-tooltip 1" />
 
 		<p>
 			<strong>Example:</strong>

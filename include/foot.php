@@ -23,12 +23,9 @@
 		</script>
 		-->
 
-		<!--[if !IE 8]><!-->
-		<!-- <script>document.write('<script async src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script> -->
-		<!--<![endif]-->
 		<script type='text/javascript' id="__bs_script__">
 			//<![CDATA[
-			    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.2.7.1.js'><\/script>".replace("HOST", location.hostname));
+			    document.write("<script async src='http://" + location.hostname + ":3000/browser-sync/browser-sync-client.2.7.1.js'><\/script>");
 			//]]>
 		</script>
 	</body>

@@ -8,7 +8,8 @@
 
 	.user {
 		position: relative;
-		margin-bottom: floor($spacing / 2);
+		margin-bottom: $spacing;
+		padding: 0;
 		font-size: 0;
 
 		a {
