@@ -44,11 +44,7 @@ function initCookies() {
 
 	if ( firstVisitCookie === null ) {
 		cookieSystem.set("firstVisit", "yes", 365);
-		var cookieMessage = "Matter uses cookies to give you a better experience. By continuing to browse you are accepting our <a href='#' target='_blank'>Terms &amp; Conditions</a>.",
-			cookieDelay = 0,
-			cookieTone = "warning";
-
-		notify(cookieMessage, cookieDelay, cookieTone);
+		notify(config.cookie.firstVisit.message, config.cookie.firstVisit.delay, config.cookie.firstVisit.tone);
 	}
 
 	if ( config.application.debug ) console.log("System :: Cookie System");

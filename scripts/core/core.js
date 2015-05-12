@@ -255,6 +255,10 @@ var matterReady = function() {
 
 
 var matterDeferred = function() {
+	$("body").removeClass("preload");
+
+	// Deferred Init
+
 	initSliders();
 	initMap();
 	initTwitter();
@@ -270,12 +274,9 @@ var isWideScreen;
 var pageTop;
 var pageBottom;
 
-$(document).ready(matterReady);
+$(document).on("ready", matterReady);
 
-$(window).on("load", function() {
-	$("body").removeClass("preload"); // Fix for CSS3 animation on load.
-	matterDeferred();
-});
+$(window).on("load", matterDeferred);
 
 $(window).on("resize", function() {
 	isWideScreen = $(this).width() > 768;

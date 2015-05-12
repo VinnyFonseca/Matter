@@ -15,7 +15,7 @@ var getOffset = function(el) {
 
 // Custom Scroll
 
-var scrollTo = function(Y, duration, easingFunction, callback) {
+var scrollToOnClick = function(Y, duration, easingFunction, callback) {
 	var elem = document.documentElement.scrollTop ? document.documentElement : document.body;
 	var from = elem.scrollTop;
 
@@ -332,7 +332,7 @@ var sliderInit = function(sliderId) {
 		slideAny(index);
 
 		var elementTop = getOffset(sliderActive).top - 100;
-		scrollTo(elementTop, 350, easing.easeOutQuad);
+		scrollToOnClick(elementTop, 350, easing.easeOutQuad);
 	});
 
 

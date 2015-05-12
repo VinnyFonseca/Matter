@@ -37,6 +37,6 @@
 		<link rel="stylesheet" href="styles/build.css" type="text/css" media="all">
 
 		<!--[if lt IE 9]>
-		<script type="text/javascript" src="scripts/core/vendor/html5shiv-printshiv.js"></script>
+		<script type="text/javascript" src="scripts/core/vendor/fallback/html5shiv-printshiv.js"></script>
 		<![endif]-->
 	</head>

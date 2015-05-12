@@ -6,6 +6,24 @@ module.exports = function(grunt) {
 
 		// CONFIG ===================================/
 
+		// Config for grunt-contrib-sass (no compass, ~6s compiling time)
+
+		sass: {
+			dist: {
+				options: {
+					style: 'compressed'
+				},
+				files: [{
+					expand: true,
+					cwd: 'styles',
+					src: '{,*/}*.{scss,sass}',
+					dest: 'styles',
+					ext: '.css'
+				}]
+			}
+		},
+
+
 		// Config for grunt-autoprefixer (avoid unnecessary mixin usage)
 
 		autoprefixer: {
@@ -26,24 +44,6 @@ module.exports = function(grunt) {
 		},
 
 
-		// Config for grunt-contrib-sass (no compass, ~6s compiling time)
-
-		sass: {
-			dist: {
-				options: {
-					style: 'compressed'
-				},
-				files: [{
-					expand: true,
-					cwd: 'styles',
-					src: '{,*/}*.{scss,sass}',
-					dest: 'styles',
-					ext: '.css'
-				}]
-			}
-		},
-
-
 		// Config for grunt-contrib-uglify (javascript concatenation)
 
 		uglify: {
@@ -56,11 +56,14 @@ module.exports = function(grunt) {
 				},
 				files: {
 					'scripts/build.js': [
-						'scripts/core/vendor/jquery-1.11.2.js',
-						'scripts/core/vendor/modernizr-latest.js',
-						'scripts/core/vendor/device.js',
+						'scripts/core/engine/jquery-1.11.2.js',
+						'scripts/core/engine/modernizr-latest.js',
+						'scripts/core/engine/device.js',
 						'scripts/dev/config.js',
-						'scripts/core/**/*.js',
+						'scripts/core/polyfills/*.js',
+						'scripts/core/vendor/*.js',
+						'scripts/core/widgets/*.js',
+						'scripts/core/*.js',
 						'scripts/dev/**/*.js'
 					]
 				}
@@ -74,7 +77,7 @@ module.exports = function(grunt) {
 			options: {
 				reporter: require('jshint-stylish'),
 				force: true,
-				ignores: ['scripts/build.js', 'scripts/core/vendor/**/*.js'],
+				ignores: ['scripts/build.js', 'scripts/core/engine/**/*.js', 'scripts/core/vendor/**/*.js'],
 				'-W001': false,
 
 				// Enforcing
@@ -106,11 +109,11 @@ module.exports = function(grunt) {
 			dist: {
 				files: {
 					src: [
-						"images/*.*",
-						"styles/*.css",
-						"scripts/*.js",
-						"*.html",
-						"*.php",
+						"**/*.html",
+						"**/*.php",
+						"images/**/*.*",
+						"styles/build.css",
+						"scripts/build.js"
 					]
 				},
 				options: {
@@ -118,10 +121,8 @@ module.exports = function(grunt) {
 					server: false,
 					watchTask: true, // < VERY important
 					reloadOnRestart: true,
-					minify: false,
 					logLevel: "info",
-					logConnections: false,
-					logFileChanges: false
+					logPrefix: "Matter"
 				}
 			}
 		},
@@ -182,6 +183,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-browser-sync');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
+
 
 	// TASKS =====================================/
 

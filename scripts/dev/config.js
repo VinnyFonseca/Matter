@@ -9,26 +9,26 @@ var config = {
 			range: 3 // int: number of increase and decrease steps for font size controls.
 		}
 	},
+	cookie: {
+		firstVisit: {
+			message: "Matter uses cookies to give you a better experience. By continuing to browse you are accepting our <a href='#' target='_blank'>Terms &amp; Conditions</a>.", // str: First visit cookie message.
+			delay: 0, // int: First visit cookie delay on screen. 0 is permanent.
+			tone: "warning" // str: "default", "success", "warning", "failure".
+		}
+	},
 	forms: {
 		validation: true, // bool: Toggles client-side validation.
 		uploadlimit: 3 // int: Multiple file upload limit.
+	},
+	notification: {
+		tone: "default", // str: "default", "success", "warning", "failure".
+		delay: 5000, // int: miliseconds for disappearance.
 	},
 	search: {
 		view: "grid", // str: "grid", "list".
 		display: "full", // str: "full", "mini".
 		count: 10, // int: Number of items to show per page.
 		pagination: false // bool: Toggle pagination controls and loading of page elements only.
-	},
-	tables: {
-		responsive: true // bool: Converts every row into a separate table on mobiles.
-	},
-	notification: {
-		tone: "default", // str: "default", "success", "warning", "failure".
-		delay: 5000, // int: miliseconds for disappearance.
-	},
-	tooltip: {
-		position: "center", // str: "left", "center", "right".
-		bound: true // bool: Sets boundaries to .wrapper (content container).
 	},
 	slider: {
 		arrows: true, // bool: Show arrows.
@@ -38,6 +38,13 @@ var config = {
 		interval: 5000, // int: miliseconds for slide interval.
 		threshold: 10, // int: px distance on X axis from touchstart to current touch position.
 		animation: "slide" // str: "slide", "fade".
+	},
+	tables: {
+		responsive: true // bool: Converts every row into a separate table on mobiles.
+	},
+	tooltip: {
+		position: "center", // str: "left", "center", "right".
+		bound: true // bool: Sets boundaries to .wrapper (content container).
 	},
 	twitter: {
 		widgetId: '492660537293938688', // Generated via Twitter.com. See the matterframework.net/widgets..
