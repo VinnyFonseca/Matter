@@ -193,6 +193,8 @@ var scrollProgress = function() {
 
 // Initialisation
 
+var ms = new Date().getTime();
+
 var matterReady = function() {
 	isWideScreen = $(window).width() > 768;
 
@@ -247,10 +249,6 @@ var matterReady = function() {
 	initForm();
 	initDropdowns();
 	initValidation();
-
-
-	var ms = new Date().getTime();
-	if ( config.application.debug ) console.log("Done •• Matter in " + (new Date().getTime() - ms) + " milliseconds");
 }
 
 
@@ -263,6 +261,8 @@ var matterDeferred = function() {
 	initMap();
 	initTwitter();
 	initVideo();
+
+	if ( config.application.debug ) console.log("Done •• Matter in " + (new Date().getTime() - ms) + " milliseconds");
 }
 
 
