@@ -7,8 +7,6 @@
   "license": "MIT",
   "version": "1.0.0",
   "devDependencies": {
-    "grunt-": "*",
-    "grunt-cli": "*",
     "grunt-contrib-sass": "*",
     "grunt-autoprefixer": "*",
     "grunt-contrib-uglify": "*",

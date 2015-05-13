@@ -1,3 +1,13 @@
+@media screen and (max-width: $screenWide + $sidebarWidth) {
+
+	.wrapper {
+		width: 100%;
+	}
+
+}
+
+
+
 @media screen and (min-width: $screenWide + 1) {
 
 }
@@ -20,20 +30,23 @@
 		}
 	}
 
-	.wrapper {
-		width: 100%;
-	}
-
 	.main {
 		&.docs {
 			padding-left: 0;
 		}
-	}
-	.sidebar {
-		transform: translateX(-$sidebarWidth);
 
-		.sidebar-trigger {
-			display: block !important;
+		.sidebar {
+			left: auto;
+			right: 0;
+			transform: translateX($sidebarWidth);
+
+			.sidebar-trigger {
+				display: block !important;
+			}
+
+			h1, h2, h3, h4, h5, h6 {
+				text-align: right;
+			}
 		}
 	}
 

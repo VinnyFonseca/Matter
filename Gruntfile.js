@@ -187,5 +187,5 @@ module.exports = function(grunt) {
 
 	// TASKS =====================================/
 
-	grunt.registerTask('default', ['browserSync', 'watch']);
+	grunt.registerTask('default', ['sass', 'autoprefixer', 'uglify', 'jshint', 'browserSync', 'watch']);
 };

@@ -248,8 +248,8 @@ var matterReady = function() {
 
 	initForm();
 	initDropdowns();
-	initValidation();
-}
+	initValidation()
+;}
 
 
 var matterDeferred = function() {

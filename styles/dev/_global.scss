@@ -154,6 +154,10 @@ $sidebarWidth: 300px;
 	z-index: 2;
 	transition: left $animDuration $animEasing;
 
+	&.docs {
+		padding-left: $sidebarWidth;
+	}
+
 	&.sidebar-on {
 		left: - $sidebarWidth / 4;
 
@@ -184,13 +188,12 @@ $sidebarWidth: 300px;
 		padding: 0;
 		width: $sidebarWidth;
 		top: $headerHeight;
-		right: 0;
+		left: 0;
 		bottom: 0;
 		border-right: 1px solid $c3;
 		background-color: $c3;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 		z-index: 70;
-		transform: translateX($sidebarWidth);
 		transition: transform $animDuration $animEasing;
 
 		& > * {
@@ -231,7 +234,6 @@ $sidebarWidth: 300px;
 		h1, h2, h3, h4, h5, h6 {
 			margin-top: 10px;
 			color: $cd !important;
-			text-align: right;
 		}
 
 		ul {
