@@ -232,10 +232,9 @@ input[type="checkbox"] {
 	display: inline-block;
 	position: absolute;
 	margin: 0;
-	margin-right: 4px;
 	padding: 0;
-	width: 15px;
-	height: 15px;
+	width: 16px !important;
+	height: 16px !important;
 	top: 9px;
 	left: 7px;
 	border: 0;
@@ -249,6 +248,7 @@ input[type="checkbox"] {
 	position: relative;
 	margin: 0;
 	margin-top: 2px;
+	text-align: left;
 
 	&:active {
 		label {
@@ -297,11 +297,6 @@ input[type="checkbox"] {
 			margin-left: 10px;
 			margin-right: 0;
 		}
-	}
-
-	input[type="radio"],
-	input[type="checkbox"] {
-		display: none;
 	}
 
 	&.checkbox {
@@ -772,7 +767,6 @@ optgroup {
 		margin-top: 0;
 		padding: 0;
 		width: 100%;
-		max-height: ($dropdownItemHeight * $dropdownItemCount) + px;
 		overflow: auto;
 		overflow-x: hidden;
 		z-index: 15;

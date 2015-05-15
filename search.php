@@ -41,13 +41,13 @@
 			</div>
 			<div class="row">
 				<div class="column" data-span="4">
-					<select class="keep" data-search-parameter="Type"></select>
+					<select class="keep" data-search-parameter="Type" size="10"></select>
 				</div>
 				<div class="column" data-span="4">
-					<select class="keep" data-search-parameter="Categories"></select>
+					<select class="keep" data-search-parameter="Categories" size="10"></select>
 				</div>
 				<div class="column" data-span="4">
-					<select class="keep" data-search-parameter="Tags"></select>
+					<select class="keep" data-search-parameter="Tags" size="10"></select>
 				</div>
 			</div>
 
