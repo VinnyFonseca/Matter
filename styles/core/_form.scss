@@ -809,6 +809,7 @@ optgroup {
 			position: absolute;
 			width: auto;
 			height: 0;
+			max-height: ($dropdownItemHeight * $dropdownItemCount) + px;
 			left: 5px;
 			right: 5px;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
