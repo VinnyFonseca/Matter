@@ -191,6 +191,7 @@ var scrollProgress = function() {
 
 
 
+
 // Initialisation
 
 var ms = new Date().getTime();
@@ -222,6 +223,7 @@ var matterReady = function() {
 
 	// System Init
 
+	initAnimationFrame();
 	initSVGs();
 	initCookies();
 	initLinks();
@@ -248,8 +250,8 @@ var matterReady = function() {
 
 	initForm();
 	initDropdowns();
-	initValidation()
-;}
+	initValidation();
+}
 
 
 var matterDeferred = function() {

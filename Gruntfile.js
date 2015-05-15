@@ -64,7 +64,8 @@ module.exports = function(grunt) {
 						'scripts/core/vendor/*.js',
 						'scripts/core/widgets/*.js',
 						'scripts/core/*.js',
-						'scripts/dev/**/*.js'
+						'scripts/dev/**/*.js',
+						'!scripts/core/debug/*.js'
 					]
 				}
 			}
@@ -77,7 +78,13 @@ module.exports = function(grunt) {
 			options: {
 				reporter: require('jshint-stylish'),
 				force: true,
-				ignores: ['scripts/build.js', 'scripts/core/engine/**/*.js', 'scripts/core/vendor/**/*.js'],
+				ignores: [
+					'scripts/build.js',
+					'scripts/core/engine/**/*.js',
+					'scripts/core/debug/**/*.js',
+					'scripts/core/polyfills/**/*.js',
+					'scripts/core/vendor/**/*.js'
+				],
 				'-W001': false,
 
 				// Enforcing
@@ -166,7 +173,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: 'img',
-					src: ['**/*.{png,jpg,gif}'],
+					src: ['**/*.{png, jpg, gif}', '!min'],
 					dest: 'img/min'
 				}]
 			}

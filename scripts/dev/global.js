@@ -58,8 +58,21 @@ $(document).ready(function() {
 
 // Window Events
 
+var introParallax = function() {
+	$(".intro .parallax").css({
+		"-webkit-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
+		"-moz-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
+		"-ms-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
+		"-o-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
+		"transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
+		"opacity": 1 - (pageTop / 500)
+	});
+}
+
 window.onscroll = function() {
-	if ( !anchorClicked ) {
+	requestAnimationFrame(introParallax);
+
+	if ( !anchorClicked && $("a.anchor").length ) {
 		$("a.anchor").each(function(i) {
 			var top = $(this).offset().top - 200;
 
@@ -76,16 +89,4 @@ window.onscroll = function() {
 			}
 		});
 	}
-
-
-	// Intro Parallax
-
-	$(".intro .parallax").css({
-		"-webkit-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
-		"-moz-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
-		"-ms-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
-		"-o-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
-		"transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
-		"opacity": 1 - (pageTop / 500)
-	});
 };

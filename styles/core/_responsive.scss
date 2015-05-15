@@ -246,7 +246,7 @@
 
 
 
-@media screen and (max-width: ($screenMobileL - 1)) {
+@media screen and (max-width: $screenMobileL) {
 
 
 	// Columns
@@ -277,6 +277,6 @@
 
 
 
-@media screen and (max-width: ($screenMobileS - 1)) {
+@media screen and (max-width: $screenMobileS) {
 
 }

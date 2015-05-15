@@ -9,6 +9,10 @@
 		<img class="svg icon icon-arrow-up" src="img/icons/icon-arrow-up.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-arrow-up.png'">
 	</a>
 
+	<div class="button tertiary rwd-debug">
+		<img class="svg icon icon-mobile" src="img/icons/icon-mobile.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-mobile.png'">
+	</div>
+
 
 	<div class="overlay" id="example">
 		<div class="modal">

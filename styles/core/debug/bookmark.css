@@ -1,0 +1,251 @@
+/*
+	Breakpoint Tester (BETA) V 1.0
+	Copyright (C) 2013, Mandar Shirke
+*/
+
+a,abbr,address,article,aside,audio,b,blockquote,body,canvas,caption,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,hr,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,p,pre,q,samp,section,small,span,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,ul,var,video {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+article,aside,audio,canvas,figcaption,figure,figure img,footer,header,hgroup,nav,section,video {
+    display: block;
+}
+
+a {
+    outline: 0;
+}
+
+a img {
+    border: 0;
+}
+
+.qcContainer:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix:after,
+.clearfix:before,
+.row:after,
+.row:before {
+    content: '\0020';
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+.clearfix:after,
+.row:after {
+    clear: both;
+}
+
+.clearfix,
+.row {
+    zoom: 1;
+}
+
+.clear {
+    clear: both;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+body {
+    -webkit-tap-highlight-color: #ffff9e;
+}
+
+::-moz-selection,
+::selection {
+    background: #ffff9e;
+}
+
+img::-moz-selection,
+img::selection {
+    background: 0 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background: #eee;
+    height: 100%;
+    min-width: 960px;
+    overflow: hidden;
+}
+
+#topHeader {
+    position: relative;
+    background: #fff;
+}
+
+#logo {
+    float: left;
+}
+
+#logo a {
+    display: block;
+    width: 70px;
+    height: 70px;
+    margin-right: 1px;
+    background: #7C5EB3;
+}
+
+#bpCount {
+    float: left;
+    position: relative;
+    width: 192px;
+    height: 70px;
+    color: #fff;
+    background: #0299BF;
+}
+
+#count {
+    position: absolute;
+    width: 65px;
+    height: 70px;
+    color: #fff;
+    font: 100 36px/70px Arial, Helvetica, sans-serif;
+    text-align: center;
+    background: #E03A36;
+    text-indent: 5px;
+}
+
+#count:after {
+    content: "";
+    position: absolute;
+    margin-left: 10px;
+    width: 0;
+    height: 0;
+    border-top: 35px solid transparent;
+    border-bottom: 35px solid transparent;
+    border-left: 12px solid #E03A36;
+    z-index: 9;
+}
+
+#countText {
+    position: absolute;
+    left: 73px;
+    height: 70px;
+    padding-left: 18px;
+}
+
+#countText span {
+    display: block;
+    margin-top: 18px;
+    font: 100 11px/18px Helvetica, Helvetica, sans-serif;
+    letter-spacing: 1px;
+}
+
+#bpList {
+    float: left;
+    list-style: none;
+    position: relative;
+    width: 700px;
+    height: 70px;
+}
+
+#bpList > li {
+    float: left;
+    position: relative;
+    margin: 2px;
+    border-radius: 4px;
+    background-color: #f2f2f2;
+    overflow: hidden;
+}
+
+#bpList > li > a {
+    display: block;
+    width: 70px;
+    height: 35px;
+    color: #555;
+    font: 600 13px/35px Helvetica, Arial, sans-serif;
+    text-align: center;
+    text-decoration: none;
+}
+
+#bpList > li > a > span {
+    margin-left: 1px;
+    color: #999;
+    font-weight: 100;
+}
+
+#bpList > li > a > input {
+    display: none;
+}
+
+#bpList > li.active > a,
+#bpList > li.active > a:hover {
+    color: #fff;
+    background-color: #7C5EB3;
+    box-shadow: none;
+}
+
+#bpList > li:hover > a > span,
+#bpList > li.active > a > span {
+    color: #fff;
+}
+
+#bpList > li > a:hover {
+    color: #fff;
+    background-color: #0299BF;
+}
+
+#qcWWW {
+    position: relative;
+    top: -6px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+#qcWW {
+    list-style: none;
+    position: relative;
+    white-space: nowrap;
+}
+
+#qcWW li {
+    position: relative;
+    top: 6px;
+    display: inline-block;
+    padding: 0 26px 24px;
+    border-right: 1px #f8f8f8 solid;
+    margin-left: 0;
+    overflow: hidden;
+}
+
+header.frameTitle {
+    position: relative;
+    color: #f8f8f8;
+    font: 600 72px/68px Helvetica, Helvetica, sans-serif;
+    z-index: 99;
+    text-transform: uppercase;
+}
+
+body:not(:-moz-handler-blocked) header.frameTitle {
+    top: 7px;
+}
+
+.frameWrapper {
+    position: relative;
+    width: 100%;
+    background: #f8f8f8 url(../img/loader.gif) center center no-repeat;
+    border-radius: 3px;
+}
+
+.frameWrapper iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+}
