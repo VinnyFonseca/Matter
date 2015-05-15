@@ -122,16 +122,17 @@ function initForm() {
 	if ( $("input[type='checkbox'], input[type='radio']").length ) {
 		$("input[type='checkbox'], input[type='radio']").each(function() {
 			var el = $(this),
-				type = el.attr("type"),
-				parent = el.parents(".controller");
+				type = el.attr("type");
 
 			if ( el.attr("data-toggle") === "true" ) {
 				el.wrap("<div class='controller toggle'></div>");
+				var parent = el.parents(".controller");
 				parent.next("label").prepend(toggle).appendTo(parent);
 
 				if ( config.application.debug ) console.log("Form :: Toggle " + type.toCamelCase());
 			} else {
 				el.wrap("<div class='controller " + type + "'></div>");
+				var parent = el.parents(".controller");
 				parent.next("label").appendTo(parent);
 
 				if ( config.application.debug ) console.log("Form :: " + type.toCamelCase());

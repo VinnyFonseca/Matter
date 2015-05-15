@@ -401,10 +401,10 @@
 				</tr>
 				<tr valign="middle">
 					<td valign="middle">
-						<textarea class="valid" name="textarea" cols="30" rows="5" required>Textarea</textarea>
+						<textarea class="valid" name="textarea" cols="30" rows="5">Textarea</textarea>
 					</td>
 					<td valign="middle">
-						<textarea class="invalid" name="textarea" cols="30" rows="5" required>Textarea</textarea>
+						<textarea class="invalid" name="textarea" cols="30" rows="5">Textarea</textarea>
 					</td>
 					<td valign="middle">
 						<textarea name="textarea" cols="30" rows="5" readonly>Textarea</textarea>
@@ -412,11 +412,11 @@
 				</tr>
 				<tr valign="middle">
 					<td valign="middle">
-						<input class="valid" id="f200" type="checkbox" name="checkbox" required checked>
+						<input class="valid" id="f200" type="checkbox" name="checkbox" checked>
 						<label for="f200">Checkbox</label>
 					</td>
 					<td valign="middle">
-						<input class="invalid" id="f201" type="checkbox" name="checkbox" required>
+						<input class="invalid" id="f201" type="checkbox" name="checkbox">
 						<label for="f201">Checkbox</label>
 					</td>
 					<td valign="middle">
@@ -426,11 +426,11 @@
 				</tr>
 				<tr valign="middle">
 					<td valign="middle">
-						<input class="valid" id="f203" type="checkbox" data-toggle="true" name="toggle-demo" required checked>
+						<input class="valid" id="f203" type="checkbox" data-toggle="true" name="toggle-demo" checked>
 						<label for="f203">Checkbox</label>
 					</td>
 					<td valign="middle">
-						<input class="invalid" id="f204" type="checkbox" data-toggle="true" name="toggle-demo" required>
+						<input class="invalid" id="f204" type="checkbox" data-toggle="true" name="toggle-demo">
 						<label for="f204">Checkbox</label>
 					</td>
 					<td valign="middle">
@@ -440,11 +440,11 @@
 				</tr>
 				<tr valign="middle">
 					<td valign="middle">
-						<input class="valid" id="f206" type="radio" name="radio-demo" required checked>
+						<input class="valid" id="f206" type="radio" name="radio-demo" checked>
 						<label for="f206">Radio</label>
 					</td>
 					<td valign="middle">
-						<input class="invalid" id="f207" type="radio" name="radio-demo" required>
+						<input class="invalid" id="f207" type="radio" name="radio-demo">
 						<label for="f207">Radio</label>
 					</td>
 					<td valign="middle">
@@ -454,11 +454,11 @@
 				</tr>
 				<tr valign="middle">
 					<td valign="middle">
-						<input class="valid" id="f209" type="radio" data-toggle="true" name="toggle-demo" required checked>
+						<input class="valid" id="f209" type="radio" data-toggle="true" name="toggle-demo" checked>
 						<label for="f209">Radio</label>
 					</td>
 					<td valign="middle">
-						<input class="invalid" id="f210" type="radio" data-toggle="true" name="toggle-demo" required>
+						<input class="invalid" id="f210" type="radio" data-toggle="true" name="toggle-demo">
 						<label for="f210">Radio</label>
 					</td>
 					<td valign="middle">
