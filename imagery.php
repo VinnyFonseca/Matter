@@ -55,7 +55,9 @@
 		<img src="http://placehold.it/1280x720"
 			 sizes="(min-width: 40em) 80vw, 100vw"
 			 srcset="http://placehold.it/800x480 480w,
+					 http://placehold.it/1024x600 480w 2x,
 					 http://placehold.it/1024x600 768w,
+					 http://placehold.it/1280x720 768w 2x,
 					 http://placehold.it/1280x720 960w"
 			 alt="Placeholder Image." />
 
@@ -63,10 +65,10 @@
 &lt;img src="http://placehold.it/1280x720"
 	 sizes="(min-width: 40em) 80vw, 100vw"
 	 srcset="http://placehold.it/800x480 480w,
-	     http://placehold.it/1024x600 480w 2x,
-	     http://placehold.it/1024x600 768w,
-	     http://placehold.it/1280x720 768w 2x,
-	     http://placehold.it/1280x720 960w"
+			 http://placehold.it/1024x600 480w 2x,
+			 http://placehold.it/1024x600 768w,
+			 http://placehold.it/1280x720 768w 2x,
+			 http://placehold.it/1280x720 960w"
 	 alt="Placeholder Image."&gt;
 </pre>
 
@@ -150,14 +152,14 @@
 &lt;/picture>
 </pre>
 
+		<br>
+
 		<p>
 			So, the solution that Matter uses is to mimic the same media queries we have on the framework, which covers the vast majority of design cases.
 		</p>
 
-		<br>
-
-		<p>
-			Change <code>min-width</code> to <code>max-width</code> queries and reverse the order of the queries to cater for a mobile-first approach.
+		<p class="emphasis">
+			Note: Change <code>min-width</code> to <code>max-width</code> queries and reverse the order of the queries to cater for a mobile-first approach.
 		</p>
 
 		<picture>
@@ -200,7 +202,8 @@
 			<li><code>max-width: 480px</code> - 720px</li>
 			<li><code>max-width: 768px</code> - 1152px</li>
 			<li><code>max-width: 960px</code> - 1440px</li>
-			<li><code>min-width: 961px</code> - 1920px (Full HD, wide enough for big screens)</li>
+			<li><code>max-width: 1280px</code> - 1920px</li>
+			<li><code>min-width: 1281px</code> - 1920px</li>
 		</ul>
 
 		<p>
@@ -211,7 +214,8 @@
 			<li><code>max-width: 480px</code> - 640px</li>
 			<li><code>max-width: 768px</code> - 1024px</li>
 			<li><code>max-width: 960px</code> - 1280px</li>
-			<li><code>min-width: 961px</code> - 1920px (Full HD, wide enough for big screens)</li>
+			<li><code>max-width: 1280px</code> - 1920px</li>
+			<li><code>min-width: 1281px</code> - 1920px</li>
 		</ul>
 
 		<p>

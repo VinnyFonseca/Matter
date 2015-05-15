@@ -53,9 +53,6 @@
 				<li>
 					<a href="http://sass-lang.com/" target="_blank" class="explicit">Sass</a> <code>gem install sass</code>
 				</li>
-				<li>
-					<a href="http://compass-style.org/" target="_blank" class="explicit">Compass</a> <code>gem install compass</code>
-				</li>
 			</ol>
 
 			<strong>&minus;&nbsp;&nbsp;and&nbsp;&nbsp;&minus;</strong>

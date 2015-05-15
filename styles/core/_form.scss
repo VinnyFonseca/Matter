@@ -206,6 +206,19 @@ input[type="button"] {
 			background-color: $brand2;
 		}
 	}
+
+	&.tertiary {
+		color: $cf;
+		background-color: $brand3;
+
+		&:hover {
+			background-color: $brand2;
+		}
+		&:active,
+		&:visited {
+			background-color: $brand3;
+		}
+	}
 }
 
 button {

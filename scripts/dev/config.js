@@ -2,7 +2,7 @@ var config = {
 	application: {
 		touch: Modernizr.touch && !device.desktop(), // bool: Modernizr check returns true or false.
 		debug: true, // bool: use if (debug) console.log(); instead of console.log; for permanent debugging messages.
-		root: typeof rootPath === "undefined" ? "" : rootPath // Path variable for server side configuration for javascript image loading.
+		root: typeof rootPath === "undefined" ? "" : rootPath // Path variable for javascript server side image loading.
 	},
 	accessibility: {
 		font: {
