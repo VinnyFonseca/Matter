@@ -124,7 +124,7 @@ var returnedData,
 	dataObject = "";
 
 var dataRequest = function(url, type, successFunction) {
-	if ( config.application.debug ) console.log('AJAX ~~ Request');
+	if ( config.application.debug ) console.log('AJAX ~~ Request (' + url + ')');
 
 	request = $.ajax({
 		url: url,
@@ -132,12 +132,12 @@ var dataRequest = function(url, type, successFunction) {
 		data: type == "POST" ? dataObject : "",
 		dataType: "JSON",
 		success: function(data) {
-			if ( config.application.debug ) console.log('AJAX ~~ Success');
+			if ( config.application.debug ) console.log('AJAX ~~ Success (' + url + ')');
 			// if ( config.application.debug ) console.log(data);
 			if ( typeof successFunction !== 'undefined' ) successFunction(data);
 		},
 		error: function(request, status, error) {
-			if ( config.application.debug ) console.log('AJAX ~~ Error');
+			if ( config.application.debug ) console.log('AJAX ~~ Error (' + url + ')');
 			// if ( config.application.debug ) console.log(request, status, error, request.statusText);
 		}
 	});

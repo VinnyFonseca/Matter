@@ -247,7 +247,7 @@
 				<code>h3</code>
 			</dt>
 			<dd>
-				<h2>Sample Heading</h2>
+				<h3>Sample Heading</h3>
 			</dd>
 			<dt>
 				<code>h4</code>
@@ -259,7 +259,7 @@
 				<code>h5</code>
 			</dt>
 			<dd>
-				<h4>Sample Heading</h4>
+				<h5>Sample Heading</h5>
 			</dd>
 			<dt>
 				<code>h6</code>

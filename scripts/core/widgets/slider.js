@@ -355,14 +355,14 @@ var sliderInit = function(sliderId) {
 				dragStart = e.pageX || e.originalEvent.touches[0].pageX;
 				dragX = e.pageX || e.originalEvent.touches[0].pageX;
 
-				down = true;
+				if ( isMultiSlide ) down = true;
 			})
 			.on("mousemove touchmove", function(e) {
 				dragX = e.pageX || e.originalEvent.touches[0].pageX;
 				dragY = e.pageY || e.originalEvent.touches[0].pageY;
 				initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < -config.slider.threshold;
 
-				if ( down && initDrag && !animating) {
+				if ( down && initDrag && !animating ) {
 					if ( !config.application.touch ) e.preventDefault();
 
 					dragging = true;
