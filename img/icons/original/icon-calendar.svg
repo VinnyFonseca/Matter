@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<g id="calendar">
+	<g>
+		<rect x="22.333" y="24.475" style="fill:#F2F2F2;" width="7.5" height="7.5"/>
+		<rect x="33.583" y="24.475" style="fill:#F2F2F2;" width="7.5" height="7.5"/>
+		<rect x="44.883" y="24.475" style="fill:#F2F2F2;" width="7.5" height="7.5"/>
+		<rect x="11.083" y="35.725" style="fill:#F2F2F2;" width="7.5" height="7.5"/>
+		<rect x="22.333" y="35.725" style="fill:#F2F2F2;" width="7.5" height="7.5"/>
+		<rect x="33.583" y="35.725" style="fill:#F2F2F2;" width="7.5" height="7.5"/>
+		<rect x="44.883" y="35.725" style="fill:#F2F2F2;" width="7.5" height="7.5"/>
+		<rect x="11.083" y="46.975" style="fill:#F2F2F2;" width="7.5" height="7.5"/>
+		<rect x="22.333" y="46.975" style="fill:#F2F2F2;" width="7.5" height="7.5"/>
+		<rect x="33.583" y="46.975" style="fill:#F2F2F2;" width="7.5" height="7.5"/>
+		<path style="fill:#F2F2F2;" d="M52.383,9.475v-5.65c0-1-0.85-1.85-1.85-1.85h-7.5c-1,0-1.85,0.85-1.85,1.85v5.65h-18.85v-5.65
+			c0-1-0.85-1.85-1.85-1.85h-7.5c-1,0-1.85,0.85-1.85,1.85v5.65h-7.45v52.55h56.35V9.475H52.383L52.383,9.475z M44.883,5.675h3.75
+			v7.5h-3.75V5.675z M14.833,5.675h3.75v7.5h-3.75V5.675z M56.133,58.275h-48.8v-37.55h48.8V58.275z"/>
+	</g>
+</g>
+<g id="Layer_1">
+</g>
+</svg>
