@@ -89,133 +89,17 @@
 		</p>
 
 		<div class="icon-wrapper">
-			<div class="icon-container" data-icon="arrow-up" data-tooltip="arrow-up">
-				<img class="svg icon icon-arrow-up" src="img/icons/icon-arrow-up.svg" onerror="this.onerror=null;this.src='img/icons/icon-arrow-up.png'">
-			</div>
+			<?php
+				foreach(glob('./img/icons/*.svg') as $icon) {
+				    if($icon == '.' || $icon == '..') continue;
+					$file = basename(preg_replace('/\\.[^.\\s]{3,4}$/', '', $icon));
+					$name = str_replace('icon-', '', $file);
 
-			<div class="icon-container" data-icon="arrow-right" data-tooltip="arrow-right">
-				<img class="svg icon icon-arrow-right" src="img/icons/icon-arrow-right.svg" onerror="this.onerror=null;this.src='img/icons/icon-arrow-right.png'">
-			</div>
-
-			<div class="icon-container" data-icon="arrow-down" data-tooltip="arrow-down">
-				<img class="svg icon icon-arrow-down" src="img/icons/icon-arrow-down.svg" onerror="this.onerror=null;this.src='img/icons/icon-arrow-down.png'">
-			</div>
-
-			<div class="icon-container" data-icon="arrow-left" data-tooltip="arrow-left">
-				<img class="svg icon icon-arrow-left" src="img/icons/icon-arrow-left.svg" onerror="this.onerror=null;this.src='img/icons/icon-arrow-left.png'">
-			</div>
-
-			<div class="icon-container" data-icon="caret-up" data-tooltip="caret-up">
-				<img class="svg icon icon-caret-up" src="img/icons/icon-caret-up.svg" onerror="this.onerror=null;this.src='img/icons/icon-caret-up.png'">
-			</div>
-
-			<div class="icon-container" data-icon="caret-right" data-tooltip="caret-right">
-				<img class="svg icon icon-caret-right" src="img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src='img/icons/icon-caret-right.png'">
-			</div>
-
-			<div class="icon-container" data-icon="caret-down" data-tooltip="caret-down">
-				<img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src='img/icons/icon-caret-down.png'">
-			</div>
-
-			<div class="icon-container" data-icon="caret-left" data-tooltip="caret-left">
-				<img class="svg icon icon-caret-left" src="img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src='img/icons/icon-caret-left.png'">
-			</div>
-
-			<div class="icon-container" data-icon="plus" data-tooltip="add, plus">
-				<img class="svg icon icon-plus" src="img/icons/icon-plus.svg" onerror="this.onerror=null;this.src='img/icons/icon-plus.png'">
-			</div>
-
-			<div class="icon-container" data-icon="remove" data-tooltip="remove, minus">
-				<img class="svg icon icon-remove" src="img/icons/icon-remove.svg" onerror="this.onerror=null;this.src='img/icons/icon-remove.png'">
-			</div>
-
-			<div class="icon-container" data-icon="close" data-tooltip="close, delete">
-				<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
-			</div>
-
-			<div class="icon-container" data-icon="tick" data-tooltip="tick, check">
-				<img class="svg icon icon-tick" src="img/icons/icon-tick.svg" onerror="this.onerror=null;this.src='img/icons/icon-tick.png'">
-			</div>
-
-			<div class="icon-container" data-icon="download" data-tooltip="download">
-				<img class="svg icon icon-download" src="img/icons/icon-download.svg" onerror="this.onerror=null;this.src='img/icons/icon-download.png'">
-			</div>
-
-			<div class="icon-container" data-icon="menu" data-tooltip="menu">
-				<img class="svg icon icon-menu" src="img/icons/icon-menu.svg" onerror="this.onerror=null;this.src='img/icons/icon-menu.png'">
-			</div>
-
-			<div class="icon-container" data-icon="search" data-tooltip="search">
-				<img class="svg icon icon-search" src="img/icons/icon-search.svg" onerror="this.onerror=null;this.src='img/icons/icon-search.png'">
-			</div>
-
-			<div class="icon-container" data-icon="grid" data-tooltip="grid">
-				<img class="svg icon icon-grid" src="img/icons/icon-grid.svg" onerror="this.onerror=null;this.src='img/icons/icon-grid.png'">
-			</div>
-
-			<div class="icon-container" data-icon="list" data-tooltip="list">
-				<img class="svg icon icon-list" src="img/icons/icon-list.svg" onerror="this.onerror=null;this.src='img/icons/icon-list.png'">
-			</div>
-
-			<div class="icon-container" data-icon="settings" data-tooltip="settings">
-				<img class="svg icon icon-settings" src="img/icons/icon-settings.svg" onerror="this.onerror=null;this.src='img/icons/icon-settings.png'">
-			</div>
-
-			<div class="icon-container" data-icon="pin" data-tooltip="pin">
-				<img class="svg icon icon-pin" src="img/icons/icon-pin.svg" onerror="this.onerror=null;this.src='img/icons/icon-pin.png'">
-			</div>
-
-			<div class="icon-container" data-icon="calendar" data-tooltip="calendar">
-				<img class="svg icon icon-calendar" src="img/icons/icon-calendar.svg" onerror="this.onerror=null;this.src='img/icons/icon-calendar.png'">
-			</div>
-
-			<div class="icon-container" data-icon="speech-bubble" data-tooltip="speech-bubble">
-				<img class="svg icon icon-speech-bubble" src="img/icons/icon-speech-bubble.svg" onerror="this.onerror=null;this.src='img/icons/icon-speech-bubble.png'">
-			</div>
-
-			<div class="icon-container" data-icon="print" data-tooltip="print">
-				<img class="svg icon icon-print" src="img/icons/icon-print.svg" onerror="this.onerror=null;this.src='img/icons/icon-print.png'">
-			</div>
-
-			<div class="icon-container" data-icon="email" data-tooltip="email">
-				<img class="svg icon icon-email" src="img/icons/icon-email.svg" onerror="this.onerror=null;this.src='img/icons/icon-email.png'">
-			</div>
-
-			<div class="icon-container" data-icon="facebook" data-tooltip="facebook">
-				<img class="svg icon icon-facebook" src="img/icons/icon-facebook.svg" onerror="this.onerror=null;this.src='img/icons/icon-facebook.png'">
-			</div>
-
-			<div class="icon-container" data-icon="twitter" data-tooltip="twitter">
-				<img class="svg icon icon-twitter" src="img/icons/icon-twitter.svg" onerror="this.onerror=null;this.src='img/icons/icon-twitter.png'">
-			</div>
-
-			<div class="icon-container" data-icon="gplus" data-tooltip="gplus">
-				<img class="svg icon icon-gplus" src="img/icons/icon-gplus.svg" onerror="this.onerror=null;this.src='img/icons/icon-gplus.png'">
-			</div>
-
-			<div class="icon-container" data-icon="linkedin" data-tooltip="linkedin">
-				<img class="svg icon icon-linkedin" src="img/icons/icon-linkedin.svg" onerror="this.onerror=null;this.src='img/icons/icon-linkedin.png'">
-			</div>
-
-			<div class="icon-container" data-icon="instagram" data-tooltip="instagram">
-				<img class="svg icon icon-instagram" src="img/icons/icon-instagram.svg" onerror="this.onerror=null;this.src='img/icons/icon-instagram.png'">
-			</div>
-
-			<div class="icon-container" data-icon="youtube" data-tooltip="youtube">
-				<img class="svg icon icon-youtube" src="img/icons/icon-youtube.svg" onerror="this.onerror=null;this.src='img/icons/icon-youtube.png'">
-			</div>
-
-			<div class="icon-container" data-icon="share" data-tooltip="share">
-				<img class="svg icon icon-share" src="img/icons/icon-share.svg" onerror="this.onerror=null;this.src='img/icons/icon-share.png'">
-			</div>
-
-			<div class="icon-container" data-icon="play" data-tooltip="play">
-				<img class="svg icon icon-play" src="img/icons/icon-play.svg" onerror="this.onerror=null;this.src='img/icons/icon-play.png'">
-			</div>
-
-			<div class="icon-container" data-icon="pause" data-tooltip="pause">
-				<img class="svg icon icon-pause" src="img/icons/icon-pause.svg" onerror="this.onerror=null;this.src='img/icons/icon-pause.png'">
-			</div>
+					echo "<div class='icon-container' data-icon=" . $name . " data-tooltip=" . $name . ">
+							  <img class='svg icon " . $file . "' src='img/icons/" . $file . ".svg' onerror='this.onerror=null;this.src=\"img/icons/" . $file . ".png\"'>
+						  </div>";
+				}
+			?>
 		</div>
 
 <pre>
