@@ -1,6 +1,6 @@
 // Tables
 
-function initTables() {
+var initTables = function() {
 	if ( config.tables.responsive && $("table").length ) {
 		$("table").each(function(index) {
 			var el = $(this);

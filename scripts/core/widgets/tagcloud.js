@@ -1,6 +1,6 @@
 // Tag Cloud
 
-function initTagClouds() {
+var initTagClouds = function() {
 	if ( $("[data-tagcloud]").length ) {
 		$("[data-tagcloud]").each(function(i) {
 			var el = $(this),
@@ -16,7 +16,7 @@ function initTagClouds() {
 			var target = $(".tagcloud[data-tag='tagcloud-" + index + "']"),
 				hidden = $("input[data-tag='tagcloud-" + index + "']");
 
-			function updateArray() {
+			var updateArray = function() {
 				tagArray = [];
 				for ( var i = 0; i < target.children(".tag").length; i++ ) tagArray.push(target.children(".tag").eq(i).data("tag"));
 				hidden.val(tagArray);

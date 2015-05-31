@@ -91,6 +91,14 @@
 		}
 	}
 
+	.brochure {
+		display: none;
+
+		&.active {
+			display: block;
+		}
+	}
+
 	.overlay {
 		background: transparent url("../img/pixel-black.png") repeat left top;
 	}

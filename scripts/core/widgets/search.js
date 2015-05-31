@@ -1,6 +1,6 @@
 // Unified Search
 
-function initSearch() {
+var initSearch = function() {
 	if ( $("[data-search]").length ) {
 		$("[data-search]").each(function(i) {
 			var el = $(this),
@@ -64,9 +64,7 @@ function initSearch() {
 
 			// Init
 
-			dataRequest(url, "GET", build);
-
-			function build(data) {
+			var buildSystem = function(data) {
 				var JSONobjects = data.Results,
 					parameterArray = [],
 					resultArray = [];
@@ -75,7 +73,7 @@ function initSearch() {
 
 				// Populate Dropdowns
 
-				function populateSelects(parameter) {
+				var populateSelects = function(parameter) {
 					var target = el.find("select[data-search-parameter='" + parameter + "']");
 
 					var tempArray = [];
@@ -110,7 +108,7 @@ function initSearch() {
 
 				// Interactive Elements
 
-				function inputInit() {
+				var inputInit = function() {
 					var parameter = input.data("search-parameter");
 
 					parameterArray.push(parameter);
@@ -195,7 +193,7 @@ function initSearch() {
 					});
 				}
 
-				function updateTags(parameter) {
+				var updateTags = function(parameter) {
 					var target = tagcloud.children(".tag[data-tag-parameter='" + parameter + "']");
 
 					var tempArray = [];
@@ -218,7 +216,7 @@ function initSearch() {
 
 				// Results Update functions
 
-				function updateResults() {
+				var updateResults = function() {
 
 					// Create all arrays for analysis and populate allArray with all items for comparison.
 
@@ -248,7 +246,7 @@ function initSearch() {
 
 					// Input
 
-					function inputAnalysis() {
+					var inputAnalysis = function() {
 						if ( input.length ) {
 							var parameter = input.data("search-parameter"),
 								criteria = parameter.replace(/\s/g, "").split(","),
@@ -286,7 +284,7 @@ function initSearch() {
 
 					// Tags
 
-					function tagAnalysis() {
+					var tagAnalysis = function() {
 						for ( var n = 0; n < tagcloud.children(".tag").length; n++ ) {
 							var parameter = tagcloud.children(".tag").eq(n).data("tag-parameter"),
 								criteria = parameter,
@@ -345,7 +343,7 @@ function initSearch() {
 
 					// Empty Final array, compare id repetition against number of inputs, rebuild finalArray.
 
-					function countRepeated(arr) {
+					var countRepeated = function(arr) {
 						var counts = {};
 						for ( var i = 0; i < arr.length; i++ ) {
 						    var num = arr[i];
@@ -374,8 +372,8 @@ function initSearch() {
 					var firstLoad = true;
 					var pagination;
 
-					function rebuild() {
-						function loadItems() {
+					var rebuildSystem = function() {
+						var loadItems = function() {
 							results.append(resultsPaginationElement);
 
 							for ( var i = 0; i < JSONobjects.length; i++ ) {
@@ -456,7 +454,7 @@ function initSearch() {
 
 						// Post build
 
-						function showItem(el, i) {
+						var showItem = function(el, i) {
 							if ( i < (config.search.count * currentPage) ) {
 								if ( config.search.pagination ) {
 									el.eq(i).removeClass("loading");
@@ -511,7 +509,7 @@ function initSearch() {
 					}
 
 					results.html("");
-					rebuild();
+					rebuildSystem();
 
 
 					// Pagination and Selective loading
@@ -547,12 +545,12 @@ function initSearch() {
 								complete: function() { anchorClicked = false; }
 							});
 
-							rebuild();
+							rebuildSystem();
 						});
 					} else {
 						load.on("click", function() {
 							currentPage++;
-							rebuild();
+							rebuildSystem();
 						});
 					}
 				}
@@ -564,6 +562,8 @@ function initSearch() {
 				initDropdowns();
 				updateResults();
 			}
+
+			dataRequest(url, "GET", buildSystem);
 		});
 
 		if ( config.application.debug ) console.log("Search :: Unified Search");

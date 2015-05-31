@@ -9,6 +9,14 @@ var config = {
 			range: 3 // int: number of increase and decrease steps for font size controls.
 		}
 	},
+	typography: {
+		autoresize: {
+			characters: 30,
+			rows: 2,
+			minFontSize: 36,
+			maxFontSize: 72
+		}
+	},
 	cookie: {
 		firstVisit: {
 			message: "Matter uses cookies to give you a better experience. By continuing to browse you are accepting our <a href='#' target='_blank'>Terms &amp; Conditions</a>.", // str: First visit cookie message.

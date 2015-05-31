@@ -1,6 +1,6 @@
 // Overlays
 
-function initOverlays() {
+var initOverlays = function() {
 	if ( $("[data-overlay]").length ) {
 		$("[data-overlay]").each(function() {
 			var el = $(this),

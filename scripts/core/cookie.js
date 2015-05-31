@@ -2,7 +2,7 @@
 
 var cookieSystem;
 
-function initCookies() {
+var initCookies = function() {
 	cookieSystem = {
 		get: function(sKey) {
 			return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
@@ -37,14 +37,6 @@ function initCookies() {
 		has: function(sKey) {
 			return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
 		}
-	};
-
-
-	var firstVisitCookie = cookieSystem.get("firstVisit");
-
-	if ( firstVisitCookie === null ) {
-		cookieSystem.set("firstVisit", "yes", 365);
-		notify(config.cookie.firstVisit.message, config.cookie.firstVisit.delay, config.cookie.firstVisit.tone);
 	}
 
 	if ( config.application.debug ) console.log("System :: Cookie System");

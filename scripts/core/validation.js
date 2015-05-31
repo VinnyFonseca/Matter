@@ -1,3 +1,5 @@
+// Validation
+
 var initValidation = function() {
 	if ( config.forms.validation && $("[data-validation]").length ) {
 

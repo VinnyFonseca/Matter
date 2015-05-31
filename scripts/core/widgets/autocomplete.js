@@ -1,6 +1,6 @@
 // Autocomplete
 
-function initAutocomplete() {
+var initAutocomplete = function() {
 	if ( $("[data-autocomplete]").length ) {
 		$("[data-autocomplete]").each(function() {
 			var el = $(this),
@@ -14,12 +14,10 @@ function initAutocomplete() {
 			el.append("<ul class='autocomplete-results'></ul>");
 			var list = el.children("ul");
 
-			dataRequest(url, "GET", build);
-
-			function build(data) {
+			var buildSystem = function(data) {
 				var JSONobjects = data.Results;
 
-				function populateList(parameter) {
+				var populateList = function(parameter) {
 					var tempArray = [];
 
 					for ( var i = 0; i < JSONobjects.length; i++ ) {
@@ -104,7 +102,7 @@ function initAutocomplete() {
 					});
 
 
-				function showResults(target) {
+				var showResults = function(target) {
 					var filter = $(target).val();
 
 					item.each(function() {
@@ -128,6 +126,8 @@ function initAutocomplete() {
 					}
 				}
 			}
+
+			dataRequest(url, "GET", buildSystem);
 		});
 
 		if ( config.application.debug ) console.log("Search :: Autocomplete");

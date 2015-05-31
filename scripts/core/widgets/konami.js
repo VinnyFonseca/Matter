@@ -1,17 +1,16 @@
+// Konami Easter Egg
 
-
-
-function buildKonami() {
-	var img = '<img class="konami" style="width: 100%;" src="scripts/core/konami/contra.gif">';
-	$(".main").prepend(img);
-}
-
-function initKonami(callback) {
+var initKonami = function(callback) {
 	var userCode = [],
 		userString = "",
 		konamiCoding = false;
 
-	function resetKonami() {
+	var buildKonami = function() {
+		var img = '<img class="konami" style="width: 100%;" src="scripts/core/konami/contra.gif">';
+		$(".main").prepend(img);
+	}
+
+	var resetKonami = function() {
 		userCode = [];
 		userString = "";
 		konamiCoding = false;
@@ -19,7 +18,7 @@ function initKonami(callback) {
 		$(".konami").remove();
 	}
 
-	function konami(event) {
+	var callKonami = function(event) {
 		var konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
 		var konamiString = konamiCode.join(", ");
 
@@ -30,11 +29,11 @@ function initKonami(callback) {
 				userCode.push(event.keyCode);
 				userString = userCode.join(", ");
 			}
+
 			if ( userString.indexOf(konamiString) != -1 ) {
 				console.log("Easter Egg :: Konami!");
 				resetKonami();
-
-				callback();
+				buildKonami();
 
 				if ( event.keyCode == 27 ) {
 					resetKonami();
@@ -45,7 +44,7 @@ function initKonami(callback) {
 		}
 	}
 
-	$(document).on("keyup", konami);
+	$(document).on("keyup", callKonami);
 
 	if ( config.application.debug ) console.log("Widget :: Konami");
 }

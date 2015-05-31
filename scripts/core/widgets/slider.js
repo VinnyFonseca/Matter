@@ -65,34 +65,24 @@ var easing = {
 
 // ----------------------------------------------------------------------- //
 
-
-// Console Log Fix
-
-if (!window.console) console = { log: function() {} };
-
-
-
-
-// ----------------------------------------------------------------------- //
-
 // Slider Init Function
 
 var sliderInit = function(sliderId) {
-	var sliderActive = $('#' + sliderId);
-	var containerWrapper = sliderActive.find('.slider-container-wrapper');
-	var container = sliderActive.find('.slider-container');
-	var movable = sliderActive.find('.slider-movable');
+	var sliderActive = $('#' + sliderId),
+		containerWrapper = sliderActive.find('.slider-container-wrapper'),
+		container = sliderActive.find('.slider-container'),
+		movable = sliderActive.find('.slider-movable'),
 
-	var navBullets = !!sliderActive.attr("data-bullets") ? sliderActive.attr("data-bullets").bool() : config.slider.bullets;
-	var navArrows = !!sliderActive.attr("data-arrows") ? sliderActive.attr("data-arrows").bool() : config.slider.arrows;
-	var slideShow = !!sliderActive.attr("data-slideshow") ? sliderActive.attr("data-slideshow").bool() : config.slider.slideshow;
-	var slideAnimation = !!sliderActive.attr("data-animation") ? sliderActive.attr("data-animation") : config.slider.animation;
-	var slideTrigger = sliderActive.width() / 6;
-	var slideTolerance = 50;
+		navBullets = !!sliderActive.attr("data-bullets") ? sliderActive.attr("data-bullets").bool() : config.slider.bullets,
+		navArrows = !!sliderActive.attr("data-arrows") ? sliderActive.attr("data-arrows").bool() : config.slider.arrows,
+		slideShow = !!sliderActive.attr("data-slideshow") ? sliderActive.attr("data-slideshow").bool() : config.slider.slideshow,
+		slideAnimation = !!sliderActive.attr("data-animation") ? sliderActive.attr("data-animation") : config.slider.animation,
 
+		slideTrigger = sliderActive.width() / 6,
+		slideTolerance = 50,
 
-	var animDuration = config.slider.duration;
-	var animInterval = config.slider.interval;
+		animDuration = config.slider.duration,
+		animInterval = config.slider.interval;
 
 
 
