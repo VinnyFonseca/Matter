@@ -68,6 +68,13 @@
 
 			@extend .valign-middle;
 
+			&:hover {
+				background-color: $brand2;
+			}
+			&:active {
+				background-color: $brand1;
+			}
+
 			.icon-close {
 				display: block;
 				position: absolute;
