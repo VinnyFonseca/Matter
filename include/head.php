@@ -11,6 +11,11 @@
 		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 
+	    <!--[if IE]>
+	    <meta http-equiv="Page-Enter" content="blendTrans(duration=0)" />
+	    <meta http-equiv="Page-Exit" content="blendTrans(duration=0)" />
+	    <![endif]-->
+
 		<!-- Favicons -->
 		<link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-touch-icon-57x57.png">
 		<link rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-touch-icon-60x60.png">

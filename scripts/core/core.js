@@ -96,7 +96,7 @@ var unhighlight = function(el) {
 
 // URLs
 
-var URLQueryObject = function() { // Creates an object from a query string
+var URLQueryObject = function() { // Creates an object from the URL's query string
 	var urlParams = "";
 
 	window.onpopstate = function() {
@@ -218,13 +218,14 @@ var matterReady = function() {
 
 	// Easter Eggs Init
 
-	initKonami(buildKonami);
+	initKonami();
 
 
 	// System Init
 
 	initAnimationFrame();
 	initSVGs();
+	initSession();
 	initCookies();
 	initLinks();
 	initTables();
@@ -251,6 +252,11 @@ var matterReady = function() {
 	initForm();
 	initDropdowns();
 	initValidation();
+
+
+	// Global Init
+
+	initGlobal();
 }
 
 
@@ -259,6 +265,7 @@ var matterDeferred = function() {
 
 	// Deferred Init
 
+	initBrochure();
 	initSliders();
 	initMap();
 	initTwitter();

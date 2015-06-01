@@ -12,7 +12,6 @@
     "grunt-contrib-uglify": "*",
     "grunt-contrib-jshint": "*",
     "jshint-stylish": "*",
-    "grunt-contrib-imagemin": "*",
     "grunt-contrib-watch": "*",
     "grunt-browser-sync": "*"
   }

@@ -2,7 +2,7 @@
 
 var notificationCount = 0;
 
-function Timer(callback, delay) {
+var Timer = function(callback, delay) {
 	var timerId, start, remaining = delay;
 
 	this.stop = function() {
@@ -21,14 +21,11 @@ function Timer(callback, delay) {
 	this.resume();
 }
 
-function notify(message, delay, tone) {
+var notify = function(message, delay, tone) {
 	delay = typeof delay === "undefined" || isNaN(delay) || delay === "" ? config.notification.delay : delay;
 	tone = typeof tone === "undefined" || tone === "" ? config.notification.tone : tone;
 
-	// var isOn = typeof timer !== "undefined";
-	// if (isOn) timer.stop();
-
-	function notifyShow() {
+	var notifyShow = function() {
 		var notification = '<div class="notification notification-' + notificationCount + '" data-type="' + tone + '">\
 								<span class="notification-message">' + message + '</span>\
 								<div class="notification-close">\
@@ -75,16 +72,9 @@ function notify(message, delay, tone) {
 	}
 
 	notifyShow();
-
-	// if ( $(".notification").hasClass("active") ) {
-	// 	$(".notification").removeClass("active");
-	// 	setTimeout(notifyShow, 300);
-	// } else {
-	// 	notifyShow();
-	// }
 }
 
-function initNotifications() {
+var initNotifications = function() {
 	if ( $("[data-notification]").length ) {
 		$("[data-notification]").on("click", function() {
 			var message = $(this).attr("data-message"),

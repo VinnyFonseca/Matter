@@ -160,23 +160,6 @@ module.exports = function(grunt) {
 				files: ['scripts/**/*.js', '!scripts/*.js'],
 				tasks: ['uglify', 'jshint']
 			}
-		},
-
-
-		// Config for grunt-contrib-imagemin (image compression)
-
-		imagemin: {
-			dist: {
-				options: {
-					optimizationLevel: 5
-				},
-				files: [{
-					expand: true,
-					cwd: 'img',
-					src: ['**/*.{png, jpg, gif}', '!min'],
-					dest: 'img/min'
-				}]
-			}
 		}
 	});
 
@@ -189,7 +172,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-browser-sync');
-	grunt.loadNpmTasks('grunt-contrib-imagemin');
 
 
 	// TASKS =====================================/

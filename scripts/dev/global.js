@@ -1,4 +1,15 @@
-$(document).ready(function() {
+var initGlobal = function() {
+
+	// First Visit Cookie
+
+	var firstVisitCookie = cookieSystem.get("firstVisit");
+
+	if ( firstVisitCookie === null ) {
+		cookieSystem.set("firstVisit", "yes", 365);
+		notify(config.cookie.firstVisit.message, config.cookie.firstVisit.delay, config.cookie.firstVisit.tone);
+	}
+
+
 
 	// Nav
 
@@ -19,6 +30,7 @@ $(document).ready(function() {
 	$("html, body").on("click", function(event) {
 		if ( !$(event.target).closest("header").length ) $("header").removeClass("active");
 	});
+
 
 
 	// Sidebar
@@ -52,7 +64,7 @@ $(document).ready(function() {
 
 		$(".main").removeClass("sidebar-on");
 	});
-});
+}
 
 
 
@@ -89,4 +101,4 @@ window.onscroll = function() {
 			}
 		});
 	}
-};
+}

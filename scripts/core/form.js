@@ -1,4 +1,6 @@
-function initForm() {
+// Forms
+
+var initForm = function() {
 	// Country Dropdowns
 
 	if ( $("select[data-countries]").length ) {
@@ -6,7 +8,7 @@ function initForm() {
 			var el = $(this),
 				url = el.data("countries");
 
-			function buildCountries(data) {
+			var buildCountries = function(data) {
 				for (var i = 0; i < data.length; i++ ) {
 					var name = data[i].Name,
 						code = data[i].Code,
@@ -122,17 +124,18 @@ function initForm() {
 	if ( $("input[type='checkbox'], input[type='radio']").length ) {
 		$("input[type='checkbox'], input[type='radio']").each(function() {
 			var el = $(this),
-				type = el.attr("type");
+				type = el.attr("type"),
+				parent = "";
 
 			if ( el.attr("data-toggle") === "true" ) {
 				el.wrap("<div class='controller toggle'></div>");
-				var parent = el.parents(".controller");
+				parent = el.parents(".controller");
 				parent.next("label").prepend(toggle).appendTo(parent);
 
 				if ( config.application.debug ) console.log("Form :: Toggle " + type.toCamelCase());
 			} else {
 				el.wrap("<div class='controller " + type + "'></div>");
-				var parent = el.parents(".controller");
+				parent = el.parents(".controller");
 				parent.next("label").appendTo(parent);
 
 				if ( config.application.debug ) console.log("Form :: " + type.toCamelCase());
@@ -201,7 +204,7 @@ function initForm() {
 	}
 }
 
-function initDropdowns() {
+var initDropdowns = function() {
 	if ( $("select").length ) {
 		var buildDropdowns = function() {
 			$("select").each(function() {
