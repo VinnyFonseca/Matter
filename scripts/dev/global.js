@@ -6,6 +6,7 @@ var initGlobal = function() {
 
 	if ( firstVisitCookie === null ) {
 		cookieSystem.set("firstVisit", "yes", 365);
+		$(".notification-wrapper").addClass("cookie");
 		notify(config.cookie.firstVisit.message, config.cookie.firstVisit.delay, config.cookie.firstVisit.tone);
 	}
 
@@ -26,6 +27,9 @@ var initGlobal = function() {
 
 	$(".nav-trigger").on("click", function() {
 		$("header").toggleClass("active");
+	});
+	$(".nav-close").on("click", function() {
+		$("header").removeClass("active");
 	});
 	$("html, body").on("click", function(event) {
 		if ( !$(event.target).closest("header").length ) $("header").removeClass("active");
@@ -81,7 +85,7 @@ var introParallax = function() {
 	});
 }
 
-window.onscroll = function() {
+$(window).on("scroll", function() {
 	requestAnimationFrame(introParallax);
 
 	if ( !anchorClicked && $("a.anchor").length ) {
@@ -101,4 +105,4 @@ window.onscroll = function() {
 			}
 		});
 	}
-}
+});

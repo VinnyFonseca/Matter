@@ -14,6 +14,8 @@ var initSearch = function() {
 				tagcloudElement = '<ul class="tagcloud"></ul>',
 				tagclose = '<img class="svg icon icon-close" src="' + config.application.root + 'img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-close.png\'">',
 
+				searchView = !!el.data("search-view") ? el.data("search-view") : config.search.view,
+				searchDisplay = !!el.data("search-display") ? el.data("search-display") : config.search.display,
 				resultsControlsElement = '<div class="search-controls"></div>',
 				resultsCountElement = '<div class="search-count"></div>',
 				resultsViewsElement = '<div class="search-views">\
@@ -26,11 +28,16 @@ var initSearch = function() {
 										</div>',
 
 				resultsPaginationElement = '<div class="search-pagination"></div>',
-				resultsElement = '<div class="search-results loading ' + config.search.display + '" data-view="' + config.search.view + '"></div>',
+				resultsElement = '<div class="search-results loading ' + searchDisplay + '" data-view="' + searchView + '"></div>',
 				loadElement = '<button class="primary center search-load">Load More</button>';
 
-			$(".search-container").append(resultsElement);
-			var results = $(".search-container .search-results");
+			if ( !$(".search-results").length ) {
+				$(".search-container").append(resultsElement);
+			} else {
+				$(".search-results").addClass("loading").addClass(searchDisplay).attr("data-view", searchView);
+			}
+
+			var results = $(".search-results");
 
 			$(tagcloudElement).insertBefore(results);
 			$(resultsControlsElement).insertBefore(results);
@@ -52,7 +59,7 @@ var initSearch = function() {
 
 			// View change
 
-			views.children(".search-view[data-view='" + config.search.view + "']").addClass("active");
+			views.children(".search-view[data-view='" + searchView + "']").addClass("active");
 			views.on("click", ".search-view", function() {
 				var el = $(this),
 					view = el.data("view");

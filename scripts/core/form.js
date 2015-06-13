@@ -281,12 +281,6 @@ var initDropdowns = function() {
 					select.on("focus", function() {
 						$(".dropdown-wrapper").removeClass("active");
 						dropWrapper.addClass("active");
-
-						if ( pageBottom >= dropWrapper.offset().top + dropdown.height() + 35 && !dropdown.hasClass("up") ) {
-							dropdown.removeClass("bound").addClass("default");
-						} else {
-							dropdown.removeClass("default").addClass("bound");
-						}
 					}).on("change", function() {
 						var selected = $(this).children("option:selected");
 
@@ -316,20 +310,6 @@ var initDropdowns = function() {
 		}
 
 		buildDropdowns();
-
-
-		// Detect dropdown window fit
-
-		$(window).on("scroll", function() {
-			var el = $(".dropdown-wrapper.active"),
-				drop = el.children(".dropdown");
-
-			if ( el.length && pageBottom >= el.offset().top + drop.height() + 55 && !drop.hasClass("up") ) {
-				drop.removeClass("bound").addClass("default");
-			} else {
-				drop.removeClass("default").addClass("bound");
-			}
-		});
 
 		if ( config.application.debug ) console.log("Form :: Dropdowns");
 
