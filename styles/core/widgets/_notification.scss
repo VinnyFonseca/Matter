@@ -2,12 +2,29 @@
 
 .notification-wrapper {
 	display: block;
-	position: fixed;
-	margin: 0;
+	position: absolute;
+	margin: floor($spacing / 2);
 	width: 300px;
-	top: floor($headerHeight + ($spacing / 2));
-	right: floor($spacing / 2);
+	top: 100%;
+	right: 0;
 	z-index: 140;
+
+	&.cookie {
+		position: fixed;
+		top: auto;
+		bottom: 0;
+
+		.notification {
+			margin: 0;
+			transform: translateX(0) translateY(40%);
+
+			&.active {
+				@include opacity(1);
+				transform: translateX(0) translateY(0);
+				z-index: 900;
+			}
+		}
+	}
 }
 
 .notification {

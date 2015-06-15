@@ -37,4 +37,6 @@ var initSession = function() {
 			}
 		}
 	}
+
+	if ( config.application.debug ) console.log("System :: Session System");
 }

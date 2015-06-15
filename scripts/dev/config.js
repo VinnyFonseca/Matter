@@ -21,8 +21,11 @@ var config = {
 		firstVisit: {
 			message: "Matter uses cookies to give you a better experience. By continuing to browse you are accepting our <a href='#' target='_blank'>Terms &amp; Conditions</a>.", // str: First visit cookie message.
 			delay: 0, // int: First visit cookie delay on screen. 0 is permanent.
-			tone: "warning" // str: "default", "success", "warning", "failure".
+			tone: "default" // str: "default", "success", "warning", "failure".
 		}
+	},
+	brochure: {
+		active: true
 	},
 	forms: {
 		validation: true, // bool: Toggles client-side validation.

@@ -37,7 +37,7 @@ var initSVGs = function() {
 				var svg = $(data).find('svg');
 				if(typeof imgID !== 'undefined') svg = svg.attr('id', imgID);
 				if(typeof imgClass !== 'undefined') svg = svg.attr('class', imgClass + ' replaced-svg');
-				svg.find("*").removeAttr("style");
+				if ( img.hasClass("icon") ) svg.find("*").removeAttr("style");
 				svg = svg.removeAttr('xmlns:a');
 				img.replaceWith(svg);
 			}, 'xml');
@@ -152,18 +152,18 @@ var anchorClicked;
 
 var initLinks = function() {
 	$(document).on("click", "a[href^='#']", function(event) {
-		var link = $(this).attr("href");
+		var link = $.attr(this, "href");
 
 		event.preventDefault();
 
 		if ( link === "#") {
 			if ( config.application.debug ) console.log("System :: Link blocked");
 		} else {
-			if ( $($.attr(this, "href")).length ) {
+			if ( $(link).length ) {
 				anchorClicked = true;
 
 				$("html, body").animate({
-					scrollTop: $( $.attr(this, "href") ).offset().top - 90
+					scrollTop: $(link).offset().top - 90
 				}, {
 					duration: 1000,
 					queue: false,
