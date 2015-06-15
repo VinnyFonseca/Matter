@@ -29,8 +29,8 @@ var initSearch = function() {
 				resultsElement = '<div class="search-results loading ' + config.search.display + '" data-view="' + config.search.view + '"></div>',
 				loadElement = '<button class="primary center search-load">Load More</button>';
 
-			$(".search-container").append(resultsElement);
-			var results = $(".search-container .search-results");
+			if ( !$(".search-results").length ) $(".search-container").append(resultsElement);
+			var results = $(".search-results");
 
 			$(tagcloudElement).insertBefore(results);
 			$(resultsControlsElement).insertBefore(results);

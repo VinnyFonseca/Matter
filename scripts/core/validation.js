@@ -252,7 +252,7 @@ var initValidation = function() {
 
 						el.find("[data-validation='date']").datepicker("remove");
 						el.find("input, select, textarea").attr("readonly", "readonly");
-						el.find("button").attr("readonly", "readonly");
+						el.find("button, input[type='submit']").attr("readonly", "readonly");
 
 						initDropdowns();
 
@@ -267,7 +267,7 @@ var initValidation = function() {
 						el.find("[required]:not('.valid')").addClass("invalid");
 
 						el.find(".form-loader").hide();
-						el.find("button").show();
+						el.find("button, input[type='submit']").show();
 
 						notify("Form not submitted. Please review.", "failure", 3000);
 					}
@@ -346,7 +346,7 @@ var initValidation = function() {
 					var type = form.attr("data-validation"),
 						value = "";
 
-					form.find("button").hide();
+					form.find("button, input[type='submit']").hide();
 					form.find(".form-loader").show();
 
 					event.preventDefault();
