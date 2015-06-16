@@ -1,117 +1,46 @@
-// Custom Get Element Position
-
-var getOffset = function(el) {
-	var _x = 0;
-	var _y = 0;
-	while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
-		_x += el.offsetLeft;
-		_y += el.offsetTop;
-		el = el.offsetParent;
-	}
-	return { top: _y, left: _x };
-}
-
-
-
-// Custom Scroll
-
-var scrollToOnClick = function(Y, duration, easingFunction, callback) {
-	var elem = document.documentElement.scrollTop ? document.documentElement : document.body;
-	var from = elem.scrollTop;
-
-	if( from === Y ) {
-		if ( typeof callback != 'undefined' ) {
-			callback();
-		}
-		return; /* Prevent scrolling to the Y point if already there */
-	}
-
-	var min = function(a, b) {
-		return a < b ? a : b;
-	}
-
-	var scroll = function(timestamp) {
-		var currentTime = Date.now(),
-			easedT = easingFunction(time);
-
-		elem.scrollTop = (easedT * (Y - from)) + from;
-
-		if(callback) callback();
-	}
-}
-
-
-
-// Custom Easing
-
-var easing = {
-	linear: function(t) { return t },
-	easeInQuad: function(t) { return t * t },
-	easeOutQuad: function(t) { return t * (2 - t) },
-	easeInOutQuad: function(t) { return t < 0.5 ? 2 * t * t :  - 1 + (4 - 2 * t) * t },
-	easeInCubic: function(t) { return t * t * t },
-	easeOutCubic: function(t) { return (--t) * t * t + 1 },
-	easeInOutCubic: function(t) { return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1 },
-	easeInQuart: function(t) { return t * t * t * t },
-	easeOutQuart: function(t) { return 1 - (--t) * t * t * t },
-	easeInOutQuart: function(t) { return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t },
-	easeInQuint: function(t) { return t * t * t * t * t },
-	easeOutQuint: function(t) { return 1 + (--t) * t * t * t * t },
-	easeInOutQuint: function(t) { return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t }
-}
-
-
-
-
-// ----------------------------------------------------------------------- //
-
-// Slider Init Function
+// Slider
 
 var sliderInit = function(sliderId) {
-	var sliderActive = $('#' + sliderId),
-		containerWrapper = sliderActive.find('.slider-container-wrapper'),
-		container = sliderActive.find('.slider-container'),
-		movable = sliderActive.find('.slider-movable'),
+	var sliderActive = $('#' + sliderId);
+	var slideWrapper = sliderActive.find('.slider-container-wrapper');
+	var slideMovable = sliderActive.find('.slider-movable');
+	var slide = sliderActive.find('.slider-container');
 
-		navBullets = !!sliderActive.attr("data-bullets") ? sliderActive.attr("data-bullets").bool() : config.slider.bullets,
-		navArrows = !!sliderActive.attr("data-arrows") ? sliderActive.attr("data-arrows").bool() : config.slider.arrows,
-		slideShow = !!sliderActive.attr("data-slideshow") ? sliderActive.attr("data-slideshow").bool() : config.slider.slideshow,
-		slideAnimation = !!sliderActive.attr("data-animation") ? sliderActive.attr("data-animation") : config.slider.animation,
+	var hasBullets = !!sliderActive.attr("data-bullets") ? sliderActive.attr("data-bullets").bool() : config.slider.bullets;
+	var hasArrows = !!sliderActive.attr("data-arrows") ? sliderActive.attr("data-arrows").bool() : config.slider.arrows;
+	var autoSlide = !!sliderActive.attr("data-slideshow") ? sliderActive.attr("data-slideshow").bool() : config.slider.slideshow;
+	var slideAnimation = !!sliderActive.attr("data-animation") ? sliderActive.attr("data-animation") : config.slider.animation;
 
-		slideTrigger = sliderActive.width() / 6,
-		slideTolerance = 50,
+	var slideTrigger = sliderActive.width() / 6;
+	var slideTolerance = 50;
+	var slideDirection = "next";
 
-		animDuration = config.slider.duration,
-		animInterval = config.slider.interval;
+	var animDuration = config.slider.duration;
+	var animInterval = config.slider.interval;
+	var animating = false;
+	var stopped = false;
 
 
 
 	// Position Containers
 
-	var sliderWidth = sliderActive.width();
+	var sliderWidth = slideWrapper.width();
 	var sliderHeight;
-	var movePos = 0;
-
-
-	container.clone().prependTo(movable);
-	container = sliderActive.find('.slider-container');
-	container.css({'width': sliderWidth});
-
-	var uniqueCount = (container.length / 2);
-	var isMultiSlide = uniqueCount > 1;
-
+	var slideCount = slide.length;
+	var isMultiSlide = slideCount > 1;
+	var slideStep = sliderWidth * loopUnit;
 
 	var containerPos = function() {
-		sliderWidth = sliderActive.width();
-		container.css({
+		sliderWidth = slideWrapper.width();
+		slide.css({
 			'width': sliderWidth
 		});
 
-		movable.css({
-			'margin-left': sliderWidth * (loopUnit - uniqueCount),
-			'width': sliderWidth * container.size(),
-			'height': container.eq(slideCurrent % uniqueCount).outerHeight(),
-			'left': - sliderWidth * loopUnit
+		slideMovable.css({
+			'margin-left': slideStep,
+			'width': sliderWidth * slideCount,
+			'height': slide.eq(slideCurrent).outerHeight(),
+			'left': - slideStep
 		});
 	}
 	containerPos();
@@ -129,7 +58,7 @@ var sliderInit = function(sliderId) {
 						</div>\
 					</div>';
 
-	containerWrapper.prepend(arrowEl);
+	slideWrapper.prepend(arrowEl);
 
 	initSVGs();
 
@@ -137,7 +66,7 @@ var sliderInit = function(sliderId) {
 	var arrowPrev = sliderActive.find('.slider-arrow-prev');
 	var arrowNext = sliderActive.find('.slider-arrow-next');
 
-	if ( navArrows === true && isMultiSlide ) arrows.show();
+	if ( hasArrows === true && isMultiSlide ) arrows.show();
 
 
 
@@ -145,13 +74,13 @@ var sliderInit = function(sliderId) {
 
 	var navBullet;
 
-	if ( navBullets === true && isMultiSlide ) {
+	if ( hasBullets === true && isMultiSlide ) {
 		var navWrapperEl = '<div class="slider-nav"></div>';
 		sliderActive.append(navWrapperEl);
 
 		var navWrapper = sliderActive.find('.slider-nav');
 
-		for ( var i = 0; i < uniqueCount; i++ ) {
+		for ( var i = 0; i < slideCount; i++ ) {
 			var navBulletEl = '<div class="slider-bullet">&bull;</div>';
 			navWrapper.append(navBulletEl);
 		}
@@ -165,34 +94,37 @@ var sliderInit = function(sliderId) {
 
 	// Custom Animate Functions
 
-	var animating = false;
-	var stopped = false;
-
 	var slideCurrent = 0;
 	var slideBefore = 0;
 	var loopUnit = 0;
 	var loopCount = 0;
 	var minCount = 0;
-	var maxCount = container.length  - 1;
+	var maxCount = slideCount  - 1;
 
 
 
 	// Controls Cloning Functions
 
-	var direction;
+	var clone = true;
 
 	var cloneSlide = function() {
-		if ( direction == "prev" ) {
-			for ( var i = maxCount; i >= slideCurrent; i-- ) {
-				movable.prepend(container.eq(i));
+		if ( clone ) {
+			if ( slideDirection == "prev" ) {
+				for ( var i = maxCount; i >= slideCurrent; i-- ) {
+					slideMovable.prepend(slide.eq(i));
+				}
 			}
-		} else {
-			for ( var j = minCount; j <= slideCurrent; j++ ) {
-				movable.append(container.eq(j - 1));
-			}
-		}
 
-		movable.css({ 'margin-left': sliderWidth * (loopUnit - uniqueCount) });
+			if ( slideDirection == "next" ) {
+				for ( var j = minCount; j <= slideCurrent; j++ ) {
+					slideMovable.append(slide.eq(j - 1));
+				}
+			}
+
+			slideMovable.css({ 'margin-left': slideStep });
+
+			clone = false;
+		}
 	}
 
 
@@ -200,7 +132,7 @@ var sliderInit = function(sliderId) {
 
 	var slidePrev = function() {
 		if ( animating === false ) {
-			direction = "prev";
+			slideDirection = "prev";
 
 			slideBefore = slideCurrent;
 			loopUnit--;
@@ -212,13 +144,12 @@ var sliderInit = function(sliderId) {
 				slideCurrent--;
 			}
 
-			cloneSlide();
 			slideAction();
 		}
 	}
 	var slideNext = function() {
 		if ( animating === false ) {
-			direction = "next";
+			slideDirection = "next";
 
 			slideBefore = slideCurrent;
 			loopUnit++;
@@ -230,28 +161,22 @@ var sliderInit = function(sliderId) {
 				slideCurrent++;
 			}
 
-			cloneSlide();
 			slideAction();
 		}
 	}
 	var slideAny = function(i) {
 		if ( animating === false ) {
-			if ( slideCurrent < uniqueCount ) {
-				slideCurrent = i;
-			} else {
-				slideCurrent = i + uniqueCount;
-			}
+			slideCurrent = i;
 
 			loopUnit = (slideCurrent + ((maxCount + 1) * loopCount));
 
 			if ( slideCurrent < slideBefore ) {
-				direction = "prev";
+				slideDirection = "prev";
 			}
 			if ( slideCurrent > slideBefore ) {
-				direction = "next";
+				slideDirection = "next";
 			}
 
-			cloneSlide();
 			slideAction();
 
 			slideBefore = slideCurrent;
@@ -266,42 +191,46 @@ var sliderInit = function(sliderId) {
 
 	var slideAction = function() {
 		animating = true;
-		movePos = - (sliderWidth * loopUnit);
+		slideStep = sliderWidth * loopUnit;
+
+		if ( slideDirection == "prev") cloneSlide();
 
 		if ( slideAnimation === "slide" ) {
-			movable.animate({
-				'height': container.eq(slideCurrent % uniqueCount).outerHeight(),
-				'left': movePos
+			slideMovable.animate({
+				'height': slide.eq(slideCurrent).outerHeight(),
+				'left': - slideStep
 			}, {
 				duration: animDuration,
 				complete: function() {
 					animating = false;
 					animDuration = config.slider.duration;
+					if ( slideDirection == "next") cloneSlide();
 					containerPos();
 				}
 			});
 		}
 		if ( slideAnimation === "fade" ) {
-			movable
+			slideMovable
 				.hide()
 				.css({
-					'left': movePos
+					'left': - slideStep
 				})
 				.fadeIn(animDuration + 250)
 				.animate({
-					'height': container.eq(slideCurrent % uniqueCount).outerHeight()
+					'height': slide.eq(slideCurrent).outerHeight()
 				}, {
 					duration: animDuration,
 					complete: function() {
 						animating = false;
 						animDuration = config.slider.duration;
+					if ( slideDirection == "next") cloneSlide();
 						containerPos();
 					}
 				});
 		}
 
 		navBullet.removeClass('active');
-		navBullet.eq(slideCurrent % uniqueCount).addClass('active');
+		navBullet.eq(slideCurrent).addClass('active');
 	}
 	slideAction();
 
@@ -311,18 +240,23 @@ var sliderInit = function(sliderId) {
 	// Nav actions
 
 	arrowNext.on('click', function() {
+		clone = true;
 		slideNext();
 	});
 	arrowPrev.on('click', function() {
+		clone = true;
 		slidePrev();
 	});
 
 	navBullet.on('click', function() {
+		clone = true;
+
 		var index = $(this).index();
 		slideAny(index);
 
-		var elementTop = getOffset(sliderActive).top - 100;
-		scrollToOnClick(elementTop, 350, easing.easeOutQuad);
+		$("html, body").animate({
+			scrollTop: sliderActive.offset().top - 90
+		}, 1000);
 	});
 
 
@@ -339,26 +273,38 @@ var sliderInit = function(sliderId) {
 			sliderLeft = sliderActive.offset().left + slideTolerance,
 			sliderRight = sliderActive.offset().left + sliderActive.width() - slideTolerance;
 
-		movable
+		slideMovable
 			.on("mousedown touchstart", function(e) {
 				if ( !config.application.touch ) e.preventDefault();
 				dragStart = e.pageX || e.originalEvent.touches[0].pageX;
 				dragX = e.pageX || e.originalEvent.touches[0].pageX;
 
+				clone = true;
 				if ( isMultiSlide ) down = true;
 			})
 			.on("mousemove touchmove", function(e) {
 				dragX = e.pageX || e.originalEvent.touches[0].pageX;
 				dragY = e.pageY || e.originalEvent.touches[0].pageY;
-				initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < -config.slider.threshold;
+				initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < - config.slider.threshold;
 
 				if ( down && initDrag && !animating ) {
 					if ( !config.application.touch ) e.preventDefault();
 
 					dragging = true;
 
-					movable.css({
-						'left': movePos - (dragStart - dragX)
+					if ( dragX > dragStart ) {
+						if ( clone ) {
+							$('.slider-container:last-child').prependTo(slideMovable);
+							slideMovable.css({ 'margin-left': slideStep - sliderWidth });
+							clone = false;
+						}
+					} else {
+						$('.slider-container:first-child').appendTo(slideMovable);
+						slideMovable.css({ 'margin-left': slideStep });
+					}
+
+					slideMovable.css({
+						'left': - slideStep - (dragStart - dragX)
 					});
 
 					var inBounds = dragX <= sliderLeft || dragX >= sliderRight || dragY <= sliderTop || dragY >= sliderBottom;
@@ -398,6 +344,8 @@ var sliderInit = function(sliderId) {
 						slideAction();
 					}
 				}
+
+				clone = false;
 			});
 	}
 
@@ -423,15 +371,15 @@ var sliderInit = function(sliderId) {
 	// Slide Show
 
 	var sliderStart = function() {
-		movable.removeClass("stopped");
+		slideMovable.removeClass("stopped");
 		slideTimer = setInterval(slideNext, animInterval);
 	}
 	var sliderStop = function() {
-		movable.addClass("stopped");
+		slideMovable.addClass("stopped");
 		clearInterval(slideTimer);
 	}
 
-	if ( slideShow !== false && isMultiSlide ) {
+	if ( autoSlide !== false && isMultiSlide ) {
 		sliderStart();
 
 		if ( !config.application.touch ) {
@@ -442,15 +390,12 @@ var sliderInit = function(sliderId) {
 				sliderStart();
 			});
 		} else {
-			movable.on('click touchstart', function() {
+			slideMovable.on('click touchstart', function() {
 				sliderStop();
 			});
 
 			$("html").on('click touchstart', function(event) {
-				if (
-					!$(event.target).closest(".slider").length &&
-					movable.hasClass("stopped")
-				) {
+				if ( !$(event.target).closest(".slider").length && slideMovable.hasClass("stopped") ) {
 					sliderStart();
 				}
 			});

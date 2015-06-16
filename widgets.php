@@ -139,7 +139,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-slider="true">
+		<div class="slider" data-slider="true" data-slideshow="false">
 			<div class="slider-container-wrapper">
 				<div class="slider-movable">
 					<div class="slider-container">
