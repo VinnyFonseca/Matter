@@ -13,7 +13,7 @@ var sliderInit = function(sliderId) {
 
 	var slideTrigger = sliderActive.width() / 6;
 	var slideTolerance = 50;
-	var slideDirection = "next";
+	var slideDirection;
 
 	var animDuration = config.slider.duration;
 	var animInterval = config.slider.interval;
@@ -29,6 +29,13 @@ var sliderInit = function(sliderId) {
 	var slideCount = slide.length;
 	var isMultiSlide = slideCount > 1;
 	var slideStep = sliderWidth * loopUnit;
+
+	var slideCurrent = 0;
+	var slideBefore = 0;
+	var loopUnit = 0;
+	var loopCount = 0;
+	var minCount = 0;
+	var maxCount = slideCount  - 1;
 
 	var containerPos = function() {
 		sliderWidth = slideWrapper.width();
@@ -90,16 +97,8 @@ var sliderInit = function(sliderId) {
 		navBullet = sliderActive.find('.bullet');
 	}
 
-
-
-	// Custom Animate Functions
-
-	var slideCurrent = 0;
-	var slideBefore = 0;
-	var loopUnit = 0;
-	var loopCount = 0;
-	var minCount = 0;
-	var maxCount = slideCount  - 1;
+	navBullet.removeClass('active');
+	navBullet.eq(slideCurrent).addClass('active');
 
 
 
@@ -254,16 +253,35 @@ var sliderInit = function(sliderId) {
 		var index = $(this).index();
 		slideAny(index);
 
-		$("html, body").animate({
-			scrollTop: sliderActive.offset().top - 90
-		}, 1000);
+		// $("html, body").animate({
+		// 	scrollTop: sliderActive.offset().top - 90
+		// }, 1000);
 	});
+
+	document.onkeydown = function(e) {
+		e = e || window.event;
+		switch(e.which || e.keyCode) {
+			case 39: // right
+				clone = true;
+				slideNext();
+				break;
+
+			case 37: // left
+				clone = true;
+				slidePrev();
+				break;
+
+			default: return; // exit this handler for other keys
+		}
+		e.preventDefault();
+	};
 
 
 	// Dragging if animation = "slider"
 
 	if ( slideAnimation === "slide" ) {
 		var down = false,
+			cloned = false,
 			dragging = false,
 			dragStart,
 			dragX,
@@ -293,14 +311,28 @@ var sliderInit = function(sliderId) {
 					dragging = true;
 
 					if ( dragX > dragStart ) {
-						if ( clone ) {
-							$('.slider-container:last-child').prependTo(slideMovable);
-							slideMovable.css({ 'margin-left': slideStep - sliderWidth });
+						if ( !cloned ) {
+							slideStep = (sliderWidth * loopUnit) + sliderWidth;
+							slideDirection = "prev";
+
+							$('.slide-clone').remove();
+							$('.slider-container:last-child').clone().addClass("slide-clone").prependTo(slideMovable);
+							slideMovable.css({ 'margin-left': slideStep });
+
 							clone = false;
+							cloned = true;
 						}
 					} else {
-						$('.slider-container:first-child').appendTo(slideMovable);
-						slideMovable.css({ 'margin-left': slideStep });
+						if ( cloned ) {
+							slideStep = sliderWidth * loopUnit;
+							slideDirection = "prev";
+
+							$('.slide-clone').remove();
+							slideMovable.css({ 'margin-left': slideStep });
+
+							clone = true;
+							cloned = false;
+						}
 					}
 
 					slideMovable.css({
@@ -310,18 +342,16 @@ var sliderInit = function(sliderId) {
 					var inBounds = dragX <= sliderLeft || dragX >= sliderRight || dragY <= sliderTop || dragY >= sliderBottom;
 
 					if ( inBounds ) {
+						down = false;
+						dragging = false;
+
 						if ( dragStart - dragX > slideTrigger ) {
-							down = false;
-							dragging = false;
 							slideNext();
 						} else if ( dragStart - dragX < - slideTrigger ) {
-							down = false;
-							dragging = false;
 							slidePrev();
 						} else {
+							clone = false;
 							animDuration = 250;
-							down = false;
-							dragging = false;
 							slideAction();
 						}
 					}
@@ -341,30 +371,13 @@ var sliderInit = function(sliderId) {
 					} else if ( dragStart - dragEnd < - slideTrigger ) {
 						slidePrev();
 					} else {
+						clone = false;
+						animDuration = 250;
 						slideAction();
 					}
 				}
-
-				clone = false;
 			});
 	}
-
-
-	document.onkeydown = function(e) {
-		e = e || window.event;
-		switch(e.which || e.keyCode) {
-			case 39: // right
-				slideNext();
-				break;
-
-			case 37: // left
-				slidePrev();
-				break;
-
-			default: return; // exit this handler for other keys
-		}
-		e.preventDefault();
-	};
 
 
 
@@ -379,7 +392,7 @@ var sliderInit = function(sliderId) {
 		clearInterval(slideTimer);
 	}
 
-	if ( autoSlide !== false && isMultiSlide ) {
+	if ( isMultiSlide && autoSlide !== false ) {
 		sliderStart();
 
 		if ( !config.application.touch ) {
