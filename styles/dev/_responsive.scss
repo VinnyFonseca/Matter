@@ -79,34 +79,42 @@
 
 	// Nav
 
-	$navItemHeight: 52px;
-	$navItemCount: 8;
-
 	header,
 	.header {
 		position: fixed;
-		transform: translateY(- $navItemHeight * $navItemCount);
-		transition-property: transform;
-		transition-duration: $animDuration;
-		transition-timing-function: $animEasing;
 
 		&.active {
-			transform: translateY(0);
+
+			nav,
+			.nav {
+				transform: translateY(0);
+			}
 		}
 
 		.logo {
-			height: $headerHeight + 3;
+			height: 76px;
 
 			span {
 				display: inline-block;
 			}
 		}
 
+		.nav-layer {
+			z-index: 15;
+		}
+
 		nav,
 		.nav {
 			display: block;
-			position: relative;
-			float: none;
+			position: absolute;
+			top: 100%;
+			width: 100%;
+			height: auto;
+			background-color: $cf;
+			transform: translateY(-100%);
+			transition-property: transform;
+			transition-duration: $animDuration;
+			transition-timing-function: $animEasing;
 
 			.nav-item {
 				display: block;
