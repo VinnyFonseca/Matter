@@ -18,7 +18,8 @@ var config = {
 		}
 	},
 	cookie: {
-		firstVisit: {
+		only: false,
+		first: {
 			message: "Matter uses cookies to give you a better experience. By continuing to browse you are accepting our <a href='#' target='_blank'>Terms &amp; Conditions</a>.", // str: First visit cookie message.
 			delay: 0, // int: First visit cookie delay on screen. 0 is permanent.
 			tone: "default" // str: "default", "success", "warning", "failure".
@@ -32,6 +33,7 @@ var config = {
 		uploadlimit: 3 // int: Multiple file upload limit.
 	},
 	notification: {
+		on: true,
 		tone: "default", // str: "default", "success", "warning", "failure".
 		delay: 5000, // int: miliseconds for disappearance.
 	},
@@ -47,7 +49,7 @@ var config = {
 		slideshow: true, // bool: Automatic slide change.
 		duration: 500, // int: miliseconds for slide change.
 		interval: 5000, // int: miliseconds for slide interval.
-		threshold: 10, // int: px distance on X axis from touchstart to current touch position.
+		threshold: 30, // int: px distance on X axis from touchstart to current touch position.
 		animation: "slide" // str: "slide", "fade".
 	},
 	tables: {

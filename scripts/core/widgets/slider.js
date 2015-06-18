@@ -107,7 +107,7 @@ var sliderInit = function(sliderId) {
 	var clone = true;
 
 	var cloneSlide = function() {
-		if ( clone ) {
+		if ( clone && !cloned ) {
 			if ( slideDirection == "prev" ) {
 				for ( var i = maxCount; i >= slideCurrent; i-- ) {
 					slideMovable.prepend(slide.eq(i));
@@ -130,7 +130,7 @@ var sliderInit = function(sliderId) {
 	// Controls Interaction Functions
 
 	var slidePrev = function() {
-		if ( animating === false ) {
+		if ( !animating ) {
 			slideDirection = "prev";
 
 			slideBefore = slideCurrent;
@@ -147,7 +147,7 @@ var sliderInit = function(sliderId) {
 		}
 	}
 	var slideNext = function() {
-		if ( animating === false ) {
+		if ( !animating ) {
 			slideDirection = "next";
 
 			slideBefore = slideCurrent;
@@ -164,7 +164,7 @@ var sliderInit = function(sliderId) {
 		}
 	}
 	var slideAny = function(i) {
-		if ( animating === false ) {
+		if ( !animating ) {
 			slideCurrent = i;
 
 			loopUnit = (slideCurrent + ((maxCount + 1) * loopCount));
@@ -192,7 +192,15 @@ var sliderInit = function(sliderId) {
 		animating = true;
 		slideStep = sliderWidth * loopUnit;
 
-		if ( slideDirection == "prev") cloneSlide();
+		if ( slideDirection == "prev" ) cloneSlide();
+
+		var slideEnd = function() {
+			cloned = false;
+			animating = false;
+			animDuration = config.slider.duration;
+			if ( slideDirection == "next" ) cloneSlide();
+			containerPos();
+		}
 
 		if ( slideAnimation === "slide" ) {
 			slideMovable.animate({
@@ -200,12 +208,7 @@ var sliderInit = function(sliderId) {
 				'left': - slideStep
 			}, {
 				duration: animDuration,
-				complete: function() {
-					animating = false;
-					animDuration = config.slider.duration;
-					if ( slideDirection == "next") cloneSlide();
-					containerPos();
-				}
+				complete: slideEnd
 			});
 		}
 		if ( slideAnimation === "fade" ) {
@@ -219,12 +222,7 @@ var sliderInit = function(sliderId) {
 					'height': slide.eq(slideCurrent).outerHeight()
 				}, {
 					duration: animDuration,
-					complete: function() {
-						animating = false;
-						animDuration = config.slider.duration;
-					if ( slideDirection == "next") cloneSlide();
-						containerPos();
-					}
+					complete: slideEnd
 				});
 		}
 
@@ -297,7 +295,6 @@ var sliderInit = function(sliderId) {
 				dragStart = e.pageX || e.originalEvent.touches[0].pageX;
 				dragX = e.pageX || e.originalEvent.touches[0].pageX;
 
-				clone = true;
 				if ( isMultiSlide ) down = true;
 			})
 			.on("mousemove touchmove", function(e) {
@@ -312,25 +309,22 @@ var sliderInit = function(sliderId) {
 
 					if ( dragX > dragStart ) {
 						if ( !cloned ) {
-							slideStep = (sliderWidth * loopUnit) + sliderWidth;
 							slideDirection = "prev";
 
-							$('.slide-clone').remove();
-							$('.slider-container:last-child').clone().addClass("slide-clone").prependTo(slideMovable);
-							slideMovable.css({ 'margin-left': slideStep });
+							$('.slider-container:last-child').prependTo(slideMovable);
+							slideMovable.css({ 'margin-left': slideStep - sliderWidth });
 
-							clone = false;
 							cloned = true;
 						}
 					} else {
+						clone = true;
+
 						if ( cloned ) {
-							slideStep = sliderWidth * loopUnit;
 							slideDirection = "prev";
 
-							$('.slide-clone').remove();
+							$('.slider-container:first-child').appendTo(slideMovable);
 							slideMovable.css({ 'margin-left': slideStep });
 
-							clone = true;
 							cloned = false;
 						}
 					}
@@ -350,9 +344,19 @@ var sliderInit = function(sliderId) {
 						} else if ( dragStart - dragX < - slideTrigger ) {
 							slidePrev();
 						} else {
-							clone = false;
 							animDuration = 250;
 							slideAction();
+
+							setTimeout(function() {
+								if ( cloned ) {
+									slideDirection = "prev";
+
+									$('.slider-container:first-child').appendTo(slideMovable);
+									slideMovable.css({ 'margin-left': slideStep });
+
+									cloned = false;
+								}
+							}, animDuration);
 						}
 					}
 				}
@@ -371,9 +375,19 @@ var sliderInit = function(sliderId) {
 					} else if ( dragStart - dragEnd < - slideTrigger ) {
 						slidePrev();
 					} else {
-						clone = false;
 						animDuration = 250;
 						slideAction();
+
+						setTimeout(function() {
+							if ( cloned ) {
+								slideDirection = "prev";
+
+								$('.slider-container:first-child').appendTo(slideMovable);
+								slideMovable.css({ 'margin-left': slideStep });
+
+								cloned = false;
+							}
+						}, animDuration);
 					}
 				}
 			});

@@ -20,7 +20,7 @@ var initBreakpointDebug = function(url, callback) {
 }
 
 $(document).ready(function() {
-	if ( config.application.debug ) {
+	if ( config.application.debug && !config.application.touch ) {
 		$(".rwd-debug").removeClass("hidden").on("click", function() {
 			initBreakpointDebug('scripts/core/debug/breakpoint.js', function() {
 				var doc = document;

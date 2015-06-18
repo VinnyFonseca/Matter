@@ -69,7 +69,11 @@ var notify = function(message, delay, tone) {
 		if ( config.application.debug ) console.log("Trigger :: Notification | Delay: " + delay);
 	}
 
-	notifyShow();
+	if ( config.notification.on && config.cookie.only ) {
+		if ( $(".notification-wrapper").hasClass("cookie") ) notifyShow();
+	} else {
+		if ( config.notification.on ) notifyShow();
+	}
 }
 
 var initNotifications = function() {

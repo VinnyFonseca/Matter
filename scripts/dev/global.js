@@ -7,7 +7,7 @@ var initGlobal = function() {
 	if ( firstVisitCookie === null ) {
 		cookieSystem.set("firstVisit", "yes", 365);
 		$(".notification-wrapper").addClass("cookie");
-		notify(config.cookie.firstVisit.message, config.cookie.firstVisit.delay, config.cookie.firstVisit.tone);
+		notify(config.cookie.first.message, config.cookie.first.delay, config.cookie.first.tone);
 	}
 
 
