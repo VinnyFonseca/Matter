@@ -40,7 +40,9 @@ var initSVGs = function() {
 				if ( img.hasClass("icon") ) svg.find("*").removeAttr("style");
 				svg = svg.removeAttr('xmlns:a');
 				img.replaceWith(svg);
-			}, 'xml');
+			}, 'xml').fail(function() {
+                img.removeClass("svg");
+            });
 		});
 
 		if ( config.application.debug ) console.log("System :: SVG Injection @ " + svgCount + " images");
