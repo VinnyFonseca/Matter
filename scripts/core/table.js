@@ -22,13 +22,13 @@ var initTables = function() {
 			}
             
 			for ( var l = data.length - 1; l >= 0; l-- ) {
-				var rowData = data[l];
+				var rowGroup = data[l];
                 var tbody = $("<tbody/>");
                 
-				for ( var key in rowData ) {
+				for ( var key in rowGroup ) {
 					var row = '<tr>\
 								   <th scope="row">' + key + '</th>\
-								   <td>' + rowData[key] + '</td>\
+								   <td>' + rowGroup[key] + '</td>\
 							   </tr>';
 
 					tbody.append(row);
