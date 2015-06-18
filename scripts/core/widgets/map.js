@@ -437,10 +437,10 @@ var map,
 	};
 
 var buildMap = function() {
-	var init = function() {
+	var init = function(data) {
 		var mapOptions = {
-			center: new google.maps.LatLng(51.507333, - 0.107806),
-			zoom: 15,
+			center: new google.maps.LatLng(data.Options[0].CenterLat, data.Options[0].CenterLng),
+			zoom: data.Options[0].Zoom,
 			zoomControl: true,
 			zoomControlOptions: {
 				style: google.maps.ZoomControlStyle.LARGE
@@ -488,10 +488,10 @@ var buildMap = function() {
 			iw = new google.maps.InfoWindow();
 
 			google.maps.event.addListener(marker, 'click', function() {
-				if (infoWindowVisible()) {
+				// if (infoWindowVisible()) {
 					iw.close();
 					infoWindowVisible(false);
-				} else {
+				// } else {
 					var html = "<div class='gm-info'><h4>" + title + "</h4><p>" + desc + "<p><p>" + telephone + "<p><a href='mailto:" + email + "' >" + email + "<a><a href='" + link + "'' >" + web + "<a></div>";
 					iw = new google.maps.InfoWindow(
 					{
@@ -499,7 +499,7 @@ var buildMap = function() {
 					});
 					iw.open(map, marker);
 					infoWindowVisible(true);
-				}
+				// }
 			});
 
 			google.maps.event.addListener(iw, 'closeclick', function() {
@@ -507,64 +507,32 @@ var buildMap = function() {
 			});
 		}
 
-		var locations = [
-			['Purestone TFM', 'Award winning digital communications agency.', '02037355460', 'info@purestone.co.uk', 'http://www.purestone.co.uk', 51.5071911, -0.1076299, 'img/markers/default.png']
-		];
-
-		for (i = 0; i < locations.length; i++) {
-			if (locations[i][1] == 'undefined') {
-				description = '';
-			} else {
-				description = locations[i][1];
-			}
-
-			if (locations[i][2] == 'undefined') {
-				telephone = '';
-			} else {
-				telephone = locations[i][2];
-			}
-
-			if (locations[i][3] == 'undefined') {
-				email = '';
-			} else {
-				email = locations[i][3];
-			}
-
-			if (locations[i][4] == 'undefined') {
-				web = '';
-			} else {
-				web = locations[i][4];
-			}
-
-			if (locations[i][7] == 'undefined') {
-				markericon = '';
-			} else {
-				markericon = locations[i][7];
-			}
+		for (i = 0; i < data.Markers.length; i++) {
 
 			marker = new google.maps.Marker( {
-				icon: markericon,
-				position: new google.maps.LatLng(locations[i][5], locations[i][6]),
+				icon: data.Markers[i].Marker,
+				position: new google.maps.LatLng(data.Markers[i].Lat, data.Markers[i].Lng),
 				map: map,
-				title: locations[i][0],
-				desc: description,
-				tel: telephone,
-				email: email,
-				web: web
+				title: data.Markers[i].Title,
+				desc: data.Markers[i].Desc,
+				tel: data.Markers[i].Tel,
+				email: data.Markers[i].Email,
+				web: data.Markers[i].Url
 			});
 
-			bindInfoWindow(marker, map, locations[i][0], description, telephone, email, web);
+			bindInfoWindow(marker, map, data.Markers[i].Title, data.Markers[i].Desc, data.Markers[i].Tel, data.Markers[i].Email, data.Markers[i].Url);
 		}
 	}
 
 	if ( window.google && google.maps ) {
-		init();
-		// google.maps.event.addDomListener(window, 'load', init);
-		google.maps.event.addDomListener(window, "resize", function() {
-			var center = map.getCenter();
-			google.maps.event.trigger(map, "resize");
-			map.setCenter(center);
-		});
+		$('.map-canvas').each(function() {
+			dataRequest($(this).data("feed"), "GET", init);
+			google.maps.event.addDomListener(window, "resize", function() {
+				var center = map.getCenter();
+				google.maps.event.trigger(map, "resize");
+				map.setCenter(center);
+			});
+		})
 
 		if ( config.application.debug ) console.log("Widget ~~ Map");
 	}
