@@ -315,7 +315,7 @@
 		</p>
 
 		<div class="map-wrapper framed">
-			<div class="map-canvas" id="map-canvas"></div>
+			<div class="map-canvas" id="map-canvas" data-feed="scripts/dev/data/map-config.json"></div>
 		</div>
 
 		<p>

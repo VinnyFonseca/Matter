@@ -21,7 +21,7 @@ header,
 		position: relative;
 		margin-left: floor($spacing / 1.5);
 		padding: floor($spacing / 1.5) 0;
-		height: $headerHeight;
+		height: 67px;
 		color: $fontColor;
 		text-decoration: none !important;
 		white-space: nowrap;
@@ -37,11 +37,11 @@ header,
 	}
 
 	.nav-trigger {
-		position: relative;
-		float: right;
+		position: absolute;
+		margin-top: -12px;
 		width: 24px;
 		height: 24px;
-		top: $spacing + 4;
+		top: 50%;
 		right: $spacing;
 		cursor: pointer;
 
@@ -62,18 +62,27 @@ header,
 		}
 	}
 
+	.nav-layer {
+		display: block;
+		position: relative;
+		background-color: $cf;
+		z-index: 5;
+	}
+
 	nav,
 	.nav {
 		display: block;
-		position: relative;
-		float: right;
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
 		white-space: nowrap;
 		z-index: 10;
 
 		.nav-item {
 			display: inline-block;
 			padding: $spacing;
-			height: $headerHeight;
+			height: 100%;
 			border-left: 1px solid $ce;
 			font-size: 0 !important;
 
