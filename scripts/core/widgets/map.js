@@ -438,8 +438,44 @@ var map,
 
 var buildMap = function() {
 	var init = function() {
+
+		var Lat,
+			Lng,
+			locations = [];
+
+		if ( $('#map-canvas').data('locations') ) {
+			console.log('data-loc Found.');
+			var mapData = $('#map-canvas').data('locations');
+			var mapDataArray = mapData.split(',');
+			Lat = mapDataArray[5];
+			Lng = mapDataArray[6];
+			locations.push(mapDataArray);
+
+		} else {
+			console.log('data-loc not Found.');
+			locations = [
+				[
+					'Purestone TFM',
+					'Award winning digital communications agency.',
+					'02037355460',
+					'info@purestone.co.uk',
+					'http://www.purestone.co.uk',
+					51.5071911,
+					-0.1076299,
+					'img/markers/default.png'
+				]
+			];
+
+			Lat = 51.5071911;
+			Lng = -0.1076299;
+		}
+		console.log(mapDataArray);
+		console.log(Lat);
+		console.log(Lng);
+		console.log(locations);
+
 		var mapOptions = {
-			center: new google.maps.LatLng(51.507333, - 0.107806),
+			center: new google.maps.LatLng(Lat, Lng),
 			zoom: 15,
 			zoomControl: true,
 			zoomControlOptions: {
@@ -507,9 +543,9 @@ var buildMap = function() {
 			});
 		}
 
-		var locations = [
-			['Purestone TFM', 'Award winning digital communications agency.', '02037355460', 'info@purestone.co.uk', 'http://www.purestone.co.uk', 51.5071911, -0.1076299, 'img/markers/default.png']
-		];
+		// var locations = [
+		// 	['Purestone TFM', 'Award winning digital communications agency.', '02037355460', 'info@purestone.co.uk', 'http://www.purestone.co.uk', 51.5071911, -0.1076299, 'img/markers/default.png']
+		// ];
 
 		for (i = 0; i < locations.length; i++) {
 			if (locations[i][1] == 'undefined') {
