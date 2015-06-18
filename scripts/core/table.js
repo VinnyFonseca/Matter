@@ -2,52 +2,43 @@
 
 var initTables = function() {
 	if ( config.tables.responsive && $("table").length ) {
-		$("table").each(function(index) {
-			var el = $(this);
-
-			el.attr("id", "table-" + index);
-
-			var id = this.id,
-				table = document.getElementById(id),
+		$("table").addClass("table-original").each(function(index) {
+			var el = $(this),
+                caption = el.children("caption"),
+                table = this,
 				data = [],
 				headers = [];
 
-			el.addClass("table-original");
-
-			for ( var i = table.rows[0].cells.length - 1; i >= 0; i-- ) {
-				headers[i] = table.rows[0].cells[i].innerHTML;
+			for ( var i = 0, rlen = table.rows.length; i < rlen; i++ ) {
+                var rowData = {};
+				for ( var j = 0, clen = table.rows[i].cells.length; j < clen; j++ ) {
+                    var cellData = table.rows[i].cells[j].innerHTML;
+                    if ( i > 0 ) 
+					    rowData[headers[j]] = cellData;
+                    else 
+                        headers[j] = cellData;
+                }
+                if ( i > 0 ) data.push(rowData);
 			}
-
-			for ( var j = table.rows.length - 1; j >= 1; j-- ) {
-				var tableRow = table.rows[j]; var rowData = {};
-
-				for ( var k = 0; k < tableRow.cells.length; k++ ) {
-					rowData[headers[k]] = tableRow.cells[k].innerHTML;
-				}
-
-				data.push(rowData);
-			}
-
-			for ( var l = 0; l < data.length; l++ ) {
+            
+			for ( var l = data.length - 1; l >= 0; l-- ) {
 				var rowGroup = data[l];
-				var mobileTableRaw = '<table class="' + id + '-row-' + l + ' table-mirror">\
-										  <tbody>\
-										  </tbody>\
-									  </table>';
-
-				$(mobileTableRaw).insertAfter(el);
-
-				var mobileTable = $('.' + id + '-row-' + l);
-				if ( el.children("caption").length ) mobileTable.prepend("<caption>Row of " + el.children("caption").html() + "</caption>");
-
+                var tbody = $("<tbody/>");
+                
 				for ( var key in rowGroup ) {
 					var row = '<tr>\
 								   <th scope="row">' + key + '</th>\
 								   <td>' + rowGroup[key] + '</td>\
 							   </tr>';
 
-					mobileTable.children("tbody").append(row);
+					tbody.append(row);
 				}
+                
+                var mobileTable = $("<table/>").addClass("table-mirror");
+                if ( caption.length )
+                    $('<caption/>').text("Row of " + caption.text()).prependTo(mobileTable); 
+                
+                mobileTable.append(tbody).insertAfter(el);
 			}
 		});
 
