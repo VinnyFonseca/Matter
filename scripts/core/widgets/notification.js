@@ -36,13 +36,16 @@ var notify = function(message, delay, tone) {
 		$(".notification-wrapper").append(notification);
 		var el = $(".notification-" + notificationCount);
 
+		var clear = function() {
+			el.removeClass("active");
+			setTimeout(function() {
+				$(".notification-wrapper").removeClass("cookie");
+				el.remove();
+			}, 300);
+		}
+
 		if ( delay !== 0 ) {
-			timer = new Timer(function() {
-				el.removeClass("active");
-				setTimeout(function() {
-					el.remove();
-				}, 300);
-			}, delay);
+			timer = new Timer(clear, delay);
 		}
 
 		el
@@ -55,12 +58,7 @@ var notify = function(message, delay, tone) {
 			.on("mouseleave", function() {
 				if ( delay !== 0 ) timer.resume();
 			})
-			.on("click", function() {
-				el.removeClass("active");
-				setTimeout(function() {
-					el.remove();
-				}, 300);
-			});
+			.on("click", clear);
 
 		setTimeout(function() {
 			el.addClass("active");

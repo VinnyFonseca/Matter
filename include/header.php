@@ -22,8 +22,6 @@
 	</div>
 
 
-	<div class="notification-wrapper"></div>
-
 	<div class="overlay" id="example">
 		<div class="modal">
 			<div class="overlay-close">
@@ -55,9 +53,6 @@
 	<div class="brochure-wrapper">
 		<h4 class="brochure-title">
 			Your brochure
-			<!-- <script type="text/javascript">
-				document.write(document.title);
-			</script> -->
 		</h4>
 
 		<div class="brochure-item-wrapper"></div>
@@ -77,11 +72,6 @@
 
 	<header>
 		<nav class="block-reset">
-			<!-- <?php
-				foreach(glob('*.php') as $file) {
-					echo "<a href='" . $file . "' class='nav-item'><span>" . ucfirst(preg_replace('/\\.[^.\\s]{3,4}$/', '', $file)) . "</span></a>";
-				}
-			?> -->
 			<a href="index.php" class="nav-item"><span>Get Started</span></a>
 			<a href="structure.php" class="nav-item"><span>Structure</span></a>
 			<a href="grid.php" class="nav-item"><span>Grid</span></a>
@@ -90,9 +80,6 @@
 			<a href="forms.php" class="nav-item"><span>Forms</span></a>
 			<a href="widgets.php" class="nav-item"><span>Widgets</span></a>
 			<a href="search.php" class="nav-item"><span>Search Engine</span></a>
-			<!--
-			<a href="tips.php" class="nav-item"><span>Tips &amp; Tricks</span></a>
-			-->
 		</nav>
 
 		<div class="nav-trigger mobile-show">
@@ -105,4 +92,5 @@
 		</a>
 
 		<div class="scroll-progress"></div>
+		<div class="notification-wrapper"></div>
 	</header>

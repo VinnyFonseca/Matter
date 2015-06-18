@@ -50,7 +50,7 @@ var initVideo = function() {
 						name = "ytFramePlayer-" + i,
 						videoSRC = el.attr("src").split("/"),
 						videoID = videoSRC[videoSRC.length - 1].split("?")[0],
-						videoThumb = !!el.attr('data-video-thumb') && el.attr('data-video-thumb') !== "" ? el.data("video-thumb") : "//img.youtube.com/vi/" + videoID + "/hqdefault.jpg",
+						videoThumb = !!el.attr('data-video-thumb') && el.attr('data-video-thumb') !== "" ? el.data("video-thumb") : "https://img.youtube.com/vi/" + videoID + "/hqdefault.jpg",
 						playerVars = {
 							rel: 0,
 							wmode:'transparent',
@@ -138,7 +138,7 @@ var initVideo = function() {
 				var el = $(this),
 					name = "ytVideoPlayer-" + i,
 					videoID = el.data("video-id"),
-					videoThumb = !!el.attr('data-video-thumb') && el.attr('data-video-thumb') !== "" ? el.data("video-thumb") : "//img.youtube.com/vi/" + videoID + "/hqdefault.jpg",
+					videoThumb = !!el.attr('data-video-thumb') && el.attr('data-video-thumb') !== "" ? el.data("video-thumb") : "https://img.youtube.com/vi/" + videoID + "/hqdefault.jpg",
 					widget =   '<div class="video-overlay"></div>\
 								<img class="video-loader" src="' + config.application.root + 'img/loader.gif" alt="Video loader">\
 								<div class="video-thumb" style="background: url(' + videoThumb + ');">&nbsp;</div>\
@@ -238,7 +238,7 @@ var initVideo = function() {
 											<img class="svg icon icon-play" src="' + config.application.root + 'img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-play.png\'">\
 											<img class="svg icon icon-pause" src="' + config.application.root + 'img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-pause.png\'">\
 										</div>\
-										<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>\
+										<iframe id="' + name + '" src="https://player.vimeo.com/video/' + videoID + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>\
 									</div>';
 
 					el.wrap(widget);
@@ -256,7 +256,7 @@ var initVideo = function() {
 							el.remove();
 						}
 
-						dataRequest("//vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
+						dataRequest("https://vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
 					}
 
 					vimFrameBuild(name);
@@ -316,7 +316,7 @@ var initVideo = function() {
 									<img class="svg icon icon-play" src="' + config.application.root + 'img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-play.png\'">\
 									<img class="svg icon icon-pause" src="' + config.application.root + 'img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-pause.png\'">\
 								</div>\
-								<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>';
+								<iframe id="' + name + '" src="https://player.vimeo.com/video/' + videoID + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>';
 
 				el.html("").addClass(name).append(widget);
 
@@ -331,7 +331,7 @@ var initVideo = function() {
 						el.children(".video-thumb").css({"background": "url(" + videoThumb + ")"});
 					}
 
-					dataRequest("//vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
+					dataRequest("https://vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
 				}
 
 				vimVideoBuild(name);

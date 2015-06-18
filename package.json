@@ -7,7 +7,7 @@
   "license": "MIT",
   "version": "1.0.0",
   "devDependencies": {
-    "grunt-contrib-sass": "*",
+    "grunt-sass": "*",
     "grunt-autoprefixer": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-jshint": "*",

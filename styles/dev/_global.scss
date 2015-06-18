@@ -114,8 +114,8 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 
 
 .wrapper {
-	padding-top: $spacing;
-	padding-bottom: $spacing;
+	padding: floor($spacing * 1.5) $spacing;
+	width: $screenWide;
 	transition: opacity $animDuration $animEasing;
 }
 
@@ -131,7 +131,7 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 	.parallax {
 		display: block;
 		position: relative;
-		padding: $spacing 0;
+		padding: $spacing  0;
 		color: $cf;
 		background: $brand1 url($introBg) no-repeat center bottom;
 		background-size: cover;
@@ -307,6 +307,11 @@ $sidebarWidth: 300px;
 		border-radius: 1000px;
 
 		@extend .valign-middle;
+	}
+
+	.brochure-trigger {
+		display: none;
+		margin-left: auto;
 	}
 }
 

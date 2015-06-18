@@ -1,11 +1,11 @@
-@mixin fontface($fontname) {
+@mixin fontface($family, $filename) {
 	@font-face {
-		font-family: $fontname;
-		src: url("../fonts/" + $fontname + ".eot");
-		src: url("../fonts/" + $fontname + ".eot#iefix") format("embedded-opentype"),
-			 url("../fonts/" + $fontname + ".woff") format("woff"),
-			 url("../fonts/" + $fontname + ".ttf") format("truetype"),
-			 url("../fonts/" + $fontname + ".svg#" + $fontname) format("svg");
+		font-family: $family;
+		src: url("../fonts/" + $filename + ".eot");
+		src: url("../fonts/" + $filename + ".eot#iefix") format("embedded-opentype"),
+			 url("../fonts/" + $filename + ".woff") format("woff"),
+			 url("../fonts/" + $filename + ".ttf") format("truetype"),
+			 url("../fonts/" + $filename + ".svg#" + $filename) format("svg");
 		font: {
 			style: normal;
 			weight: normal;
@@ -25,6 +25,19 @@
 	-moz-opacity: $value;
 	filter: alpha(opacity=#{$value * 100});
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$value * 100})";
+}
+
+
+@mixin linear-gradient($start: #f1f1f1, $from: 0%, $stop: #d9d9d9, $to: 100%) {
+	background: $start;
+	background: -webkit-gradient(linear, left top, right top, from($start), to($stop));
+	background: -moz-linear-gradient(left, $start $from, $stop $to);
+	background: -moz-gradient(left, $start $from, $stop $to);
+	background: -webkit-linear-gradient(left, $start $from,$stop $to);
+	background: -o-linear-gradient(left, $start $from,$stop $to);
+	background: -ms-linear-gradient(left, $start $from,$stop $to);
+	background: linear-gradient(to right, $start $from,$stop $to);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start)}', endColorstr='#{ie-hex-str($stop)}', GradientType=1);
 }
 
 

@@ -6,20 +6,17 @@ module.exports = function(grunt) {
 
 		// CONFIG ===================================/
 
-		// Config for grunt-contrib-sass (no compass, ~6s compiling time)
+		// Config for grunt-sass (libsass, ~4s compiling time)
 
 		sass: {
 			dist: {
 				options: {
-					style: 'compressed'
+					sourceMap: true,
+					outputStyle: 'compressed'
 				},
-				files: [{
-					expand: true,
-					cwd: 'styles',
-					src: '{,*/}*.{scss,sass}',
-					dest: 'styles',
-					ext: '.css'
-				}]
+			        files: {
+			            'styles/build.css': 'styles/build.scss'
+			        }
 			}
 		},
 
@@ -118,13 +115,13 @@ module.exports = function(grunt) {
 					src: [
 						"**/*.html",
 						"**/*.php",
-						"images/**/*.*",
+						"img/**/*.*",
 						"styles/build.css",
 						"scripts/build.js"
 					]
 				},
 				options: {
-					open: "ui",
+					open: false,
 					server: false,
 					watchTask: true, // < VERY important
 					reloadOnRestart: true,
@@ -140,11 +137,11 @@ module.exports = function(grunt) {
 		watch: {
 			html: {
 				options: { livereload: true },
-				files: ['**/*.html']
+				files: ['*.html, **/*.html']
 			},
 			php: {
 				options: { livereload: true },
-				files: ['**/*.php']
+				files: ['*.php, **/*.php']
 			},
 			css: {
 				options: { livereload: true },
@@ -152,7 +149,7 @@ module.exports = function(grunt) {
 			},
 			sass: {
 				options: { livereload: false },
-				files: ['**/*.{scss,sass}'],
+				files: ['styles/**/*.{scss,sass}'],
 				tasks: ['sass', 'autoprefixer']
 			},
 			js: {
@@ -167,7 +164,7 @@ module.exports = function(grunt) {
 	// DEPENDENT PLUGINS =========================/
 
 	grunt.loadNpmTasks('grunt-autoprefixer');
-	grunt.loadNpmTasks('grunt-contrib-sass');
+	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');

@@ -1,11 +1,5 @@
 // Responsive
 
-@media screen and (min-width: $screenWide + 1) {
-
-}
-
-
-
 @media screen and (max-width: $screenWide) {
 
 	.search-results {
@@ -15,12 +9,6 @@
 			}
 		}
 	}
-
-}
-
-
-
-@media screen and (min-width: $screenDesktop + 1) {
 
 }
 
@@ -54,24 +42,17 @@
 
 
 
-@media screen and (min-width: ($screenTablet + 1)) {
+@media screen and (max-width: $screenTabletL) {
 
 	.mobile-show {
+		display: block !important;
+	}
+	.mobile-hide {
 		display: none !important;
 	}
 
 	.table-mirror {
-		display: none !important;
-	}
-
-}
-
-
-
-@media screen and (max-width: $screenTablet) {
-
-	.mobile-hide {
-		display: none !important;
+		display: block !important;
 	}
 
 
@@ -92,6 +73,12 @@
 				width: 50% !important;
 			}
 		}
+
+		@for $i from 1 through ($columns / 6) {
+			&[data-span="#{$i}"] {
+				width: 33.333% !important;
+			}
+		}
 	}
 
 	.button,
@@ -100,7 +87,6 @@
 	input[type="submit"],
 	input[type="button"] {
 		margin-bottom: 4px;
-		width: 100% !important;
 	}
 
 
@@ -154,15 +140,6 @@
 		&[data-view="grid"] {
 			.search-item {
 				width: percentage(6 / 12) - 2;
-			}
-		}
-		&[data-view="list"] {
-			.search-item {
-				padding-left: 25%;
-
-				.img {
-					width: 25%;
-				}
 			}
 		}
 	}
@@ -246,6 +223,12 @@
 
 
 
+@media screen and (max-width: $screenTabletS) {
+
+}
+
+
+
 @media screen and (max-width: $screenMobileL) {
 
 
@@ -257,6 +240,12 @@
 		@for $i from 1 through ($columns / 4) {
 			&[data-span="#{$i}"] {
 				width: 100% !important;
+			}
+		}
+
+		@for $i from 1 through ($columns / 6) {
+			&[data-span="#{$i}"] {
+				width: 50% !important;
 			}
 		}
 	}

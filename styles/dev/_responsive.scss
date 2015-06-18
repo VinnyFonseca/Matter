@@ -8,12 +8,6 @@
 
 
 
-@media screen and (min-width: $screenWide + 1) {
-
-}
-
-
-
 @media screen and (max-width: $screenWide) {
 
 	header,
@@ -54,12 +48,6 @@
 
 
 
-@media screen and (min-width: $screenDesktop + 1) {
-
-}
-
-
-
 @media screen and (max-width: $screenDesktop) {
 
 	header,
@@ -86,13 +74,7 @@
 
 
 
-@media screen and (min-width: $screenTablet + 1) {
-
-}
-
-
-
-@media screen and (max-width: $screenTablet) {
+@media screen and (max-width: $screenTabletL) {
 
 
 	// Nav
@@ -161,6 +143,12 @@
 			display: block !important;
 		}
 	}
+
+}
+
+
+
+@media screen and (max-width: $screenTabletS) {
 
 }
 

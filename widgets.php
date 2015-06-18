@@ -139,7 +139,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-slider="true">
+		<div class="slider" data-slider="true" data-slideshow="false">
 			<div class="slider-container-wrapper">
 				<div class="slider-movable">
 					<div class="slider-container">
@@ -406,7 +406,7 @@
 					Youtube iFrame
 				</p>
 
-				<iframe width="1280" height="600" src="//www.youtube.com/embed/uxfuuvjT1OY" frameborder="0" allowfullscreen></iframe>
+				<iframe width="1280" height="600" src="https://www.youtube.com/embed/uxfuuvjT1OY" frameborder="0" allowfullscreen></iframe>
 			</div>
 			<div class="column" data-span="6">
 				<p class="emphasis">
@@ -420,7 +420,7 @@
 					Vimeo iFrame
 				</p>
 
-				<iframe src="//player.vimeo.com/video/47911018" frameborder="0" allowfullscreen></iframe>
+				<iframe src="https://player.vimeo.com/video/47911018" frameborder="0" allowfullscreen></iframe>
 			</div>
 			<div class="column" data-span="6">
 				<p class="emphasis">

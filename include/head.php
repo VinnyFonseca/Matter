@@ -31,7 +31,7 @@
 		<link rel="icon" type="image/png" href="img/favicon/favicon-96x96.png" sizes="96x96">
 		<link rel="icon" type="image/png" href="img/favicon/android-chrome-192x192.png" sizes="192x192">
 		<link rel="icon" type="image/png" href="img/favicon/favicon-16x16.png" sizes="16x16">
-		<link rel="manifest" href="img/favicon/android-chrome-manifest.json">
+		<link rel="manifest" href="img/favicon/manifest.json">
 		<meta name="msapplication-TileColor" content="#86669e">
 		<meta name="msapplication-TileImage" content="img/favicon/mstile-144x144.png">
 		<meta name="theme-color" content="#86669e">
