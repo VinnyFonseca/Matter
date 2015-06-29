@@ -4,7 +4,7 @@ var initFontSizeControls = function() {
 	if ( $(".font-control").length ) {
 		var defaultSize = 10,
 			fontSize = defaultSize,
-			range = config.accessibility.font.range;
+			range = config.typography.resize.range;
 
 		if ( cookieSystem.get("fontSize") === null ) cookieSystem.set("fontSize", fontSize, 365);
 

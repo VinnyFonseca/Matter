@@ -56,7 +56,7 @@ var initForm = function() {
 		var initFileInputs = function() {
 			var el = $(".multifile-wrapper"),
 				inputCount = el.length,
-				inputLimit = config.forms.uploadlimit,
+				inputLimit = config.forms.multiUploadlimit,
 				limitElement = $(".multi-limit"),
 				currentCount = inputLimit - el.find(".loaded").length,
 				isSingular = currentCount == 1 ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(),

@@ -56,16 +56,15 @@ var sliderInit = function(sliderId) {
 
 	// Create Arrows
 
-	var arrowEl =  '<div class="slider-arrow-wrapper">\
-						<div class="slider-arrow slider-arrow-prev valign-middle">\
-							<img class="svg icon icon-caret-left" src="' + config.application.root + 'img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-caret-left.png\'">\
-						</div>\
-						<div class="slider-arrow slider-arrow-next valign-middle">\
-							<img class="svg icon icon-caret-right" src="' + config.application.root + 'img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-caret-right.png\'">\
-						</div>\
-					</div>';
+	var arrowPrevEl =  '<div class="slider-arrow slider-arrow-prev valign-middle">\
+						  <div class="triangle triangle-left">&nbsp;<div>\
+					  </div>';
+	var arrowNextEl =  '<div class="slider-arrow slider-arrow-next valign-middle">\
+						  <div class="triangle triangle-right">&nbsp;<div>\
+					  </div>';
 
-	slideWrapper.prepend(arrowEl);
+	slideWrapper.prepend(arrowPrevEl);
+	slideWrapper.prepend(arrowNextEl);
 
 	initSVGs();
 
@@ -195,6 +194,7 @@ var sliderInit = function(sliderId) {
 		if ( slideDirection == "prev" ) cloneSlide();
 
 		var slideEnd = function() {
+			clone = true;
 			cloned = false;
 			animating = false;
 			animDuration = config.slider.duration;

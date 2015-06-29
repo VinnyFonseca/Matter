@@ -4,38 +4,33 @@ var config = {
 		debug: true, // bool: use if (debug) console.log(); instead of console.log; for permanent debugging messages.
 		root: typeof rootPath === "undefined" ? "" : rootPath // Path variable for javascript server side image loading.
 	},
-	accessibility: {
-		font: {
-			range: 3 // int: number of increase and decrease steps for font size controls.
-		}
-	},
 	typography: {
+		resize: {
+			range: 3 // int: number of increase and decrease steps for font size controls.
+		},
 		autoresize: {
-			characters: 30,
-			rows: 2,
-			minFontSize: 36,
-			maxFontSize: 72
+			characters: 30, // Int: number of characters per line
+			rows: 2, // Int: maximum number of rows
+			minFontSize: 36, // Int: minimum font size allowed
+			maxFontSize: 72 // Int: maximum font size allowed
 		}
-	},
-	cookie: {
-		only: false,
-		first: {
-			message: "Matter uses cookies to give you a better experience. By continuing to browse you are accepting our <a href='#' target='_blank'>Terms &amp; Conditions</a>.", // str: First visit cookie message.
-			delay: 0, // int: First visit cookie delay on screen. 0 is permanent.
-			tone: "default" // str: "default", "success", "warning", "failure".
-		}
-	},
-	brochure: {
-		active: true
 	},
 	forms: {
 		validation: true, // bool: Toggles client-side validation.
-		uploadlimit: 3 // int: Multiple file upload limit.
+		multiUploadlimit: 3 // int: Multiple file upload limit.
 	},
 	notification: {
-		on: true,
+		active: true, // bool: on or off
 		tone: "default", // str: "default", "success", "warning", "failure".
 		delay: 5000, // int: miliseconds for disappearance.
+	},
+	cookie: {
+		active: true, // bool: on or off
+		message: "We use cookies to give you a better experience. By continuing to browse you are accepting our <a href='#' target='_blank'>Terms &amp; Conditions</a>.", // str: First visit cookie message.
+		delay: 0 // int: First visit cookie delay on screen. 0 is permanent.
+	},
+	brochure: {
+		active: true // bool: on or off
 	},
 	search: {
 		view: "grid", // str: "grid", "list".
@@ -56,8 +51,8 @@ var config = {
 		responsive: true // bool: Converts every row into a separate table on mobiles.
 	},
 	tooltip: {
-		position: "center", // str: "left", "center", "right".
-		bound: true // bool: Sets boundaries to .wrapper (content container).
+		bound: true, // bool: Sets boundaries to .wrapper (content container).
+		position: "center" // str: "left", "center", "right".
 	},
 	twitter: {
 		widgetId: '492660537293938688', // Generated via Twitter.com. See the matterframework.net/widgets..
