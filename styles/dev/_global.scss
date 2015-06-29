@@ -144,6 +144,28 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 		color: $cf;
 		background: $brand1 url($introBg) no-repeat center bottom;
 		background-size: cover;
+
+		&.parallax-noes {
+			background: $brand1 url("../img/pictures/black-hole.jpg") no-repeat center center;
+			background-size: cover;
+
+			p.lead {
+				@extend .font-custom;
+				@include font-size($fontSize * 7);
+				line-height: 1.2;
+			}
+		}
+
+		&.parallax-dev {
+			background: $brand1 url("../img/pictures/galaxy.jpg") no-repeat center center;
+			background-size: cover;
+
+			p.lead {
+				@extend .font-custom;
+				@include font-size($fontSize * 7);
+				line-height: 1.2;
+			}
+		}
 	}
 
 	img {
@@ -359,7 +381,7 @@ footer,
 	padding: floor($spacing / 1.5) $spacing;
 	width: 100%;
 	color: $cf;
-	background: $brand1 url($introBg) no-repeat center bottom;
+	background: $brand1 url($introBg) no-repeat center 65%;
 	background-size: cover;
 	z-index: 80;
 

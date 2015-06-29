@@ -185,12 +185,14 @@ var sliderInit = function(sliderId) {
 
 			loopUnit = (slideCurrent + ((maxCount + 1) * loopCount));
 
-			if ( slideCurrent < slideBefore ) {
+			if ( slideCurrent <= slideBefore ) {
 				slideDirection = "prev";
 			}
 			if ( slideCurrent > slideBefore ) {
 				slideDirection = "next";
 			}
+
+			console.log(slideCurrent, slideBefore, slideDirection);
 
 			slideAction();
 
