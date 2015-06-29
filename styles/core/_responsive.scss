@@ -21,6 +21,18 @@
 	}
 
 
+	// Slider
+
+	.slider-nav {
+		.slider-bullet {
+			&.slider-thumbnail {
+				padding-bottom: 9%;
+				width: 9%;
+			}
+		}
+	}
+
+
 	// Map
 
 	.map-wrapper {
@@ -207,6 +219,15 @@
 		}
 	}
 
+	.slider-nav {
+		.slider-bullet {
+			&.slider-thumbnail {
+				padding-bottom: 12%;
+				width: 12%;
+			}
+		}
+	}
+
 
 	// Twitter
 
@@ -248,6 +269,18 @@
 		@for $i from 1 through ($columns / 6) {
 			&[data-span="#{$i}"] {
 				width: 50% !important;
+			}
+		}
+	}
+
+
+	// Slider
+
+	.slider-nav {
+		.slider-bullet {
+			&.slider-thumbnail {
+				padding-bottom: 19%;
+				width: 19%;
 			}
 		}
 	}

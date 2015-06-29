@@ -1,3 +1,23 @@
+var stickyControls = function() {
+	var controlsBottom = $(".controls").offset().top + $(".controls").outerHeight();
+
+	if ( controlsBottom >= $("footer").offset().top ) {
+		$(".controls").css({
+			"position": "absolute",
+			"top": $("footer").offset().top - $(".controls").outerHeight(),
+			"bottom": "auto"
+		});
+	}
+
+	if ( $(document).scrollTop() + $(window).height() < controlsBottom ) {
+		$(".controls").css({
+			"position": "fixed",
+			"top": "auto",
+			"bottom": 0
+		});
+	}
+}
+
 var initGlobal = function() {
 
 	// First Visit Cookie
@@ -86,6 +106,7 @@ var introParallax = function() {
 }
 
 $(window).on("scroll", function() {
+	stickyControls();
 	requestAnimationFrame(introParallax);
 
 	if ( !anchorClicked && $("a.anchor").length ) {
@@ -105,4 +126,6 @@ $(window).on("scroll", function() {
 			}
 		});
 	}
-});
+})
+.on("load", stickyControls)
+.on("resize", stickyControls);

@@ -20,10 +20,6 @@
 			}
 			&:active {
 				background: $brand2;
-
-				.icon {
-					@include svgColor($c3);
-				}
 			}
 
 			&.slider-arrow-prev {
@@ -59,31 +55,38 @@
 		> * {
 			@include font-size($fontSize);
 		}
+
+		.slide {
+			position: relative;
+		}
+	}
+}
+
+.slide {
+	display: inline-block;
+	position: absolute;
+	margin: 0;
+	padding: 2px;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: $brand1;
+	vertical-align: top;
+	overflow: hidden;
+	white-space: normal;
+	visibility: hidden;
+
+	&:first-child {
+		position: relative;
+		visibility: visible;
 	}
 
-	.slider-container {
-		display: inline-block;
+	> img {
+		display: block;
 		position: relative;
-		margin: 0;
-		padding: 2px;
 		width: 100%;
-		background-color: $brand1;
-		vertical-align: top;
-		overflow: hidden;
-		white-space: normal;
-		visibility: hidden;
-
-		&:first-child {
-			visibility: visible;
-		}
-
-		> img {
-			display: block;
-			position: relative;
-			width: 100%;
-			height: auto;
-			top: 0;
-		}
+		height: auto;
+		top: 0;
 	}
 }
 

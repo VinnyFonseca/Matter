@@ -22,19 +22,31 @@
 			They are responsive and cross-browser compliant. They can be used for <strong>cookie messages</strong>, <strong>form validation</strong>, <strong>progress updates</strong>, <strong>user information</strong>, etc...
 		</p>
 
-		<p>
-			<strong>Usage:</strong>
-		</p>
 
 		<p>
-			Apply <code>data-notification="true"</code> to any element. Click trigger.
+			<strong>Demo:</strong>
 		</p>
-		<p>
-			Functionality is set by <code>data-message</code>, <code>data-delay</code> and <code>data-tone</code> attributes on the trigger element.
-		</p>
-		<p class="emphasis">
-			Note: If the parameters above are ommitted, they will fallback to default parameters. <code>data-notification</code> and <code>data-message</code> are obligatory.
-		</p>
+
+		<div class="button primary" data-notification="true" data-message="Undeclared delay (default 5000ms)">
+			Undeclared delay
+		</div>
+		<div class="button primary" data-notification="true" data-message="Delay 0 seconds (persistent)" data-delay="0">
+			Declared 0 delay
+		</div>
+		<div class="button primary" data-notification="true" data-message="Delay 3 seconds (3000ms)" data-delay="3000">
+			Declared 3(s) delay
+		</div>
+		<br>
+		<div class="button primary" data-notification="true" data-message="Success message." data-delay="0" data-tone="success">
+			Success tone
+		</div>
+		<div class="button primary" data-notification="true" data-message="Warning message." data-delay="0" data-tone="warning">
+			Warning tone
+		</div>
+		<div class="button primary" data-notification="true" data-message="Failure message." data-delay="0" data-tone="failure">
+			Failure tone
+		</div>
+
 
 		<dl>
 			<dt>
@@ -48,39 +60,20 @@
 			</dd>
 		</dl>
 
-		<p>
-			<strong>Demo:</strong>
-		</p>
-
-		<div class="button primary" data-notification="true" data-message="Undeclared delay (default 5000ms)">
-			Undeclared
-		</div>
-		<div class="button primary" data-notification="true" data-delay="0" data-message="Delay 0 seconds (persistent)">
-			Declared 0
-		</div>
-		<div class="button primary" data-notification="true" data-delay="3000" data-message="Delay 3 seconds (3000ms)">
-			Declared 3
-		</div>
-
-		<div class="button primary" data-notification="true" data-delay="0" data-tone="success" data-message="Success message.">
-			Success
-		</div>
-		<div class="button primary" data-notification="true" data-delay="0" data-tone="warning" data-message="Warning message.">
-			Warning
-		</div>
-		<div class="button primary" data-notification="true" data-delay="0" data-tone="failure" data-message="Failure message.">
-			Failure
-		</div>
 
 		<p>
-			<strong>Example:</strong>
+			<strong>Code example:</strong>
 		</p>
 
 <pre>
-&lt;div class="button primary" <span class="emphasis">data-notification="true" data-message="Success!" data-delay="3000" data-tone="success"</span>&gt;
+&lt;div class="button primary" <span class="emphasis">data-notification="true" data-{{message|delay|tone}}="{{value}}"</span>&gt;
 	Delay 3000
 &lt;/div&gt;
 </pre>
+
+		<p class="emphasis">
+			Note: If any the data attributes are ommitted, they will fallback to their defaults. <code>data-notification</code> and <code>data-message</code> are obligatory.
+		</p>
 
 
 
@@ -96,13 +89,23 @@
 			Hand coded image slider with horizontal slide transitions. Supports multiple instances and infinite slides.
 		</p>
 
-		<p>
-			<strong>Usage:</strong>
-		</p>
 
 		<p>
-			Insert the example code below anywhere in your page, then define the specifics for each slider on the data attributes.
+			<strong>Demo:</strong>
 		</p>
+
+		<div class="slider" data-slider="true" data-thumbnails="true">
+			<div class="slide">
+				<img class="thumb" src="http://placehold.it/959x350" />
+			</div>
+			<div class="slide">
+				<img class="thumb" src="http://placehold.it/960x350" />
+			</div>
+			<div class="slide">
+				<img class="thumb" src="http://placehold.it/961x350" />
+			</div>
+		</div>
+
 
 		<dl>
 			<dt>
@@ -122,6 +125,9 @@
 				<code>slideshow: true</code>
 			</dd>
 			<dd>
+				<code>animation: "slide"</code> &nbsp;<small class="gray"><strong>slide | fade</strong></small>
+			</dd>
+			<dd>
 				<code>duration: 500</code>
 			</dd>
 			<dd>
@@ -130,52 +136,23 @@
 			<dd>
 				<code>threshold: 0</code>
 			</dd>
-			<dd>
-				<code>trigger: $(".wrapper").width() / 6</code>
-			</dd>
-			<dd>
-				<code>animation: "slide"</code> &nbsp;<small class="gray"><strong>slide | fade</strong></small>
-			</dd>
 		</dl>
 
-		<p>
-			<strong>Demo:</strong>
-		</p>
-
-		<div class="slider" data-slider="true" data-thumbnails="true">
-			<div class="slider-container-wrapper">
-				<div class="slider-movable">
-					<div class="slider-container">
-						<img class="thumb" src="http://placehold.it/959x350" />
-					</div>
-					<div class="slider-container">
-						<img class="thumb" src="http://placehold.it/960x350" />
-					</div>
-					<div class="slider-container">
-						<img class="thumb" src="http://placehold.it/961x350" />
-					</div>
-				</div>
-			</div>
-		</div>
 
 		<p>
-			<strong>Example:</strong>
+			<strong>Code example:</strong>
 		</p>
 
 <pre>
-&lt;div class="slider" <span class="emphasis">data-slider="true"</span>&gt;
-	&lt;div class="slider-container-wrapper"&gt;
-		&lt;div class="slider-movable"&gt;
-			&lt;div class="slider-container"&gt;
-				&lt;img src="http://placehold.it/1280x420" /&gt;
-			&lt;/div&gt;
-			&lt;div class="slider-container"&gt;
-				&lt;img src="http://placehold.it/1280x420" /&gt;
-			&lt;/div&gt;
-			&lt;div class="slider-container"&gt;
-				&lt;img src="http://placehold.it/1280x420" /&gt;
-			&lt;/div&gt;
-		&lt;/div&gt;
+&lt;div class="slider" <span class="emphasis">data-slider="true" data-{{nav|arrows|thumbnails|slideshow|animation}}="{{value}}"</span>&gt;
+	&lt;div class="slide"&gt;
+		&lt;img src="http://placehold.it/959x350" /&gt;
+	&lt;/div&gt;
+	&lt;div class="slide"&gt;
+		&lt;img src="http://placehold.it/960x350" /&gt;
+	&lt;/div&gt;
+	&lt;div class="slide"&gt;
+		&lt;img src="http://placehold.it/961x350" /&gt;
 	&lt;/div&gt;
 &lt;/div&gt;
 </pre>
@@ -194,26 +171,23 @@
 			Overlay elements, centered vertically and horizontally, that support any type of content.
 		</p>
 
-		<p>
-			<strong>Usage:</strong>
-		</p>
-
-		<p>
-			Create an overlay as per the example below, then simply use <code>data-overlay="<var>ID</var>"</code> on any clickable element to call that overlay.
-		</p>
 
 		<p>
 			<strong>Demo:</strong>
 		</p>
 
-		<button class="primary" data-overlay="example">Call "Example" overlay</button>
+		<button class="primary" data-overlay="example">Call id="example" overlay</button>
+
 
 		<p>
-			<strong>Example:</strong>
+			<strong>Code example:</strong>
 		</p>
 
 <pre>
-&lt;button class="primary" <span class="emphasis">data-overlay="example"</span>&gt;Call "Example" overlay&lt;/button&gt;
+&lt;button class="primary" <span class="emphasis">data-overlay="example"</span>&gt;Call id="example" overlay&lt;/button&gt;
+
+
+// Add the block below right after the opening of the &lt;body&gt; tag.
 
 &lt;div class="overlay" <span class="emphasis">id="example"</span>&gt;
 	&lt;div class="modal"&gt;
@@ -240,13 +214,17 @@
 			Note: Tooltips are disabled on touch devices as it depends on <code>:hover</code> pseudo-selector.
 		</p>
 
+
 		<p>
-			<strong>Usage:</strong>
+			<strong>Demo:</strong>
 		</p>
 
 		<p>
-			Add a class <code>.tooltip</code> and an attribute <code>data-tooltip</code> to any HTML element.
+			<button data-tooltip="Lorem ipsum Laborum">Hover this button</button>
 		</p>
+
+		<img src="http://placehold.it/1280x350&text=Image,%20hover%20me" data-tooltip="Using data-tooltip 1" />
+
 
 		<dl>
 			<dt>
@@ -260,18 +238,9 @@
 			</dd>
 		</dl>
 
-		<p>
-			<strong>Demo:</strong>
-		</p>
 
 		<p>
-			<button data-tooltip="Lorem ipsum Laborum">Hover this button</button>
-		</p>
-
-		<img src="http://placehold.it/1280x350&text=Image,%20hover%20me" data-tooltip="Using data-tooltip 1" />
-
-		<p>
-			<strong>Example:</strong>
+			<strong>Code example:</strong>
 		</p>
 
 <pre>
@@ -293,16 +262,17 @@
 		</p>
 
 		<p>
-			This specific map can be found at <a href="https://mapbuildr.com/buildr/kokih7" target="_blank">https://mapbuildr.com/buildr/kokih7</a>
+			This map requires a data-feed attribute that calls a json config file.
 		</p>
 
 		<p>
-			<strong>Usage:</strong>
+			<strong>Demo:</strong>
 		</p>
 
-		<p>
-			Insert the example code below anywhere in your page.
-		</p>
+		<div class="map-wrapper framed">
+			<div id="map-canvas" class="map-canvas" data-feed="scripts/dev/data/map-config.json"></div>
+		</div>
+
 
 		<dl>
 			<dt>
@@ -313,21 +283,14 @@
 			</dd>
 		</dl>
 
-		<p>
-			<strong>Demo:</strong>
-		</p>
-
-		<div class="map-wrapper framed">
-			<div class="map-canvas" id="map-canvas" data-feed="scripts/dev/data/map-config.json"></div>
-		</div>
 
 		<p>
-			<strong>Example:</strong>
+			<strong>Code example:</strong>
 		</p>
 
 <pre>
 &lt;div class="map-wrapper"&gt;
-	&lt;div id="map-canvas"&gt;&lt;/div&gt;
+	&lt;div <span class="emphasis">id="map-canvas" class="map-canvas" data-feed="scripts/dev/data/map-config.json"</span>&gt;&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -345,13 +308,56 @@
 			<strong>Credit:</strong> <a href="http://jasonmayes.com/projects/twitterApi/" target="_blank">Jason Mayes' twitter fetcher plugin</a>.
 		</p>
 
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<div data-twitter="true"></div>
+
+
+		<dl>
+			<dt>
+				<strong>Defaults:</strong>
+			</dt>
+
+			<dd>
+				<code>widgetId: '492660537293938688'</code>
+			</dd>
+			<dd>
+				<code>startAt: 0</code>
+			</dd>
+			<dd>
+				<code>maxTweets: 3</code>
+			</dd>
+			<dd>
+				<code>enableLinks: true</code>
+			</dd>
+			<dd>
+				<code>showUser: true</code>
+			</dd>
+			<dd>
+				<code>showTime: true</code>
+			</dd>
+			<dd>
+				<code>showRetweet: false</code>
+			</dd>
+			<dd>
+				<code>showFollow: false</code>
+			</dd>
+			<dd>
+				<code>showInteraction: false</code>
+			</dd>
+		</dl>
+
+
 		<p>
 			<strong>Usage:</strong>
 		</p>
 
 		<ol>
 			<li>
-				Insert the code example below wherever you wish to display the widget.
+				Insert the code example where you wish to display the widget.
 			</li>
 			<li>
 				Generate a widget ID.
@@ -367,17 +373,14 @@
 			</li>
 		</ol>
 
-		<p>
-			<strong>Demo:</strong>
-		</p>
-
-		<div data-twitter="true"></div>
 
 		<p>
-			<strong>Example:</strong>
+			<strong>Code example:</strong>
 		</p>
 
-		<pre>&lt;div data-twitter="true"&gt;&lt;/div&gt;</pre>
+<pre>
+	&lt;div data-twitter="true" data-{{widgetId|startAt|maxTweets}}="{{value}}"&gt;&lt;/div&gt;
+</pre>
 
 
 
@@ -393,11 +396,6 @@
 			Supports youtube and vimeo.
 		</p>
 
-		<p>
-			<strong>Usage:</strong>
-		</p>
-
-		<p>Insert the example code below anywhere in your page.</p>
 
 		<p>
 			<strong>Demo:</strong>
@@ -435,11 +433,8 @@
 		</div>
 
 
-
-
-
 		<p>
-			<strong>Example:</strong>
+			<strong>Code example:</strong>
 		</p>
 
 		<p class="emphasis">
@@ -494,20 +489,6 @@
 			Note: Chosen font size is saved in a cookie and is persistent throughout the site.
 		</p>
 
-		<p>
-			<strong>Usage:</strong>
-		</p>
-
-		<p>Insert the example code below anywhere in your page.</p>
-
-		<dl>
-			<dt>
-				<strong>Defaults:</strong>
-			</dt>
-			<dd>
-				<code>range: 3</code>
-			</dd>
-		</dl>
 
 		<p>
 			<strong>Demo:</strong>
@@ -519,8 +500,19 @@
 			<button class="font-up">A+</button>
 		</div>
 
+
+		<dl>
+			<dt>
+				<strong>Defaults:</strong>
+			</dt>
+			<dd>
+				<code>range: 3</code>
+			</dd>
+		</dl>
+
+
 		<p>
-			<strong>Example:</strong>
+			<strong>Code example:</strong>
 		</p>
 
 <pre>

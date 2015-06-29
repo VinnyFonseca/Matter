@@ -2,9 +2,17 @@
 
 var sliderInit = function(sliderId) {
 	var sliderActive = $('#' + sliderId);
+	var slideWrapperEl = '<div class="slider-container-wrapper"></div>';
+	var slideMovableEl = '<div class="slider-movable"></div>';
+
+	sliderActive.append(slideWrapperEl);
 	var slideWrapper = sliderActive.find('.slider-container-wrapper');
+
+	slideWrapper.append(slideMovableEl);
 	var slideMovable = sliderActive.find('.slider-movable');
-	var slide = sliderActive.find('.slider-container');
+
+	var slide = sliderActive.find('.slide');
+	slide.appendTo(slideMovable);
 
 	var hasNav = !!sliderActive.attr("data-nav") ? sliderActive.attr("data-nav").bool() : config.slider.nav;
 	var hasArrows = !!sliderActive.attr("data-arrows") ? sliderActive.attr("data-arrows").bool() : config.slider.arrows;
@@ -320,7 +328,7 @@ var sliderInit = function(sliderId) {
 						if ( !cloned ) {
 							slideDirection = "prev";
 
-							$('.slider-container:last-child').prependTo(slideMovable);
+							$('.slide:last-child').prependTo(slideMovable);
 							slideMovable.css({ 'margin-left': slideStep - sliderWidth });
 
 							cloned = true;
@@ -331,7 +339,7 @@ var sliderInit = function(sliderId) {
 						if ( cloned ) {
 							slideDirection = "prev";
 
-							$('.slider-container:first-child').appendTo(slideMovable);
+							$('.slide:first-child').appendTo(slideMovable);
 							slideMovable.css({ 'margin-left': slideStep });
 
 							cloned = false;
@@ -360,7 +368,7 @@ var sliderInit = function(sliderId) {
 								if ( cloned ) {
 									slideDirection = "prev";
 
-									$('.slider-container:first-child').appendTo(slideMovable);
+									$('.slide:first-child').appendTo(slideMovable);
 									slideMovable.css({ 'margin-left': slideStep });
 
 									cloned = false;
@@ -391,7 +399,7 @@ var sliderInit = function(sliderId) {
 							if ( cloned ) {
 								slideDirection = "prev";
 
-								$('.slider-container:first-child').appendTo(slideMovable);
+								$('.slide:first-child').appendTo(slideMovable);
 								slideMovable.css({ 'margin-left': slideStep });
 
 								cloned = false;
@@ -454,7 +462,7 @@ var initSliders = function() {
 					sliderInit(slider.id = 'slider-' + i);
 				}, 250 * i);
 			})
-			.find('.slider-container').css({ 'visibility': 'visible' });
+			.find('.slide').css({ 'visibility': 'visible' });
 
 		if ( config.application.debug ) console.log("Widget :: Sliders");
 	}

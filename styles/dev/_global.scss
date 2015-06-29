@@ -220,7 +220,7 @@ $sidebarWidth: 300px;
 			width: 46px;
 			height: 46px;
 			left: -46px;
-			top: 12px;
+			top: 6px;
 			color: $cf;
 			@include font-size($fontSize * 2);
 			text-align: center;
@@ -303,7 +303,7 @@ $sidebarWidth: 300px;
 	right: 0;
 	bottom: 0;
 	text-align: right;
-	z-index: 80;
+	z-index: 90;
 
 	@extend .block-reset;
 
