@@ -72,7 +72,8 @@
 
 	<header>
 		<nav class="block-reset">
-			<a href="index.php" class="nav-item"><span>Get Started</span></a>
+			<a href="home.php" class="nav-item"><span>Get Started</span></a>
+			<a href="under-development.php" class="nav-item"><span>Tips</span></a>
 			<a href="structure.php" class="nav-item"><span>Structure</span></a>
 			<a href="grid.php" class="nav-item"><span>Grid</span></a>
 			<a href="elements.php" class="nav-item"><span>Elements</span></a>

@@ -14,7 +14,7 @@
 				</p>
 
 				<p class="font-large">
-					Framework is being created.
+					This page is being created.
 				</p>
 			</div>
 		</div>
