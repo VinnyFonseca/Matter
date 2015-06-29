@@ -6,8 +6,9 @@ var sliderInit = function(sliderId) {
 	var slideMovable = sliderActive.find('.slider-movable');
 	var slide = sliderActive.find('.slider-container');
 
-	var hasBullets = !!sliderActive.attr("data-bullets") ? sliderActive.attr("data-bullets").bool() : config.slider.bullets;
+	var hasNav = !!sliderActive.attr("data-nav") ? sliderActive.attr("data-nav").bool() : config.slider.nav;
 	var hasArrows = !!sliderActive.attr("data-arrows") ? sliderActive.attr("data-arrows").bool() : config.slider.arrows;
+	var hasThumbnails = !!sliderActive.attr("data-thumbnails") ? sliderActive.attr("data-thumbnails").bool() : config.slider.thumbnails;
 	var autoSlide = !!sliderActive.attr("data-slideshow") ? sliderActive.attr("data-slideshow").bool() : config.slider.slideshow;
 	var slideAnimation = !!sliderActive.attr("data-animation") ? sliderActive.attr("data-animation") : config.slider.animation;
 
@@ -80,14 +81,22 @@ var sliderInit = function(sliderId) {
 
 	var navBullet;
 
-	if ( hasBullets === true && isMultiSlide ) {
+	if ( hasNav === true && isMultiSlide ) {
 		var navWrapperEl = '<div class="slider-nav"></div>';
 		sliderActive.append(navWrapperEl);
 
 		var navWrapper = sliderActive.find('.slider-nav');
 
 		for ( var i = 0; i < slideCount; i++ ) {
-			var navBulletEl = '<div class="slider-bullet">&bull;</div>';
+			var navBulletEl = "";
+
+			if ( hasThumbnails ) {
+				var sliderImg = slide.eq(i).find("img.thumb").attr("src");
+				navBulletEl = '<div class="slider-bullet slider-thumbnail" style="background: url(\'' + sliderImg + '\') no-repeat center center;">&nbsp;</div>';
+			} else {
+				navBulletEl = '<div class="slider-bullet">&bull;</div>';
+			}
+
 			navWrapper.append(navBulletEl);
 		}
 

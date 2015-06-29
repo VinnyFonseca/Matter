@@ -39,8 +39,9 @@ var config = {
 		pagination: false // bool: Toggle pagination controls and loading of page elements only.
 	},
 	slider: {
+		nav: true, // bool: Show bullets.
 		arrows: true, // bool: Show arrows.
-		bullets: true, // bool: Show bullets.
+		thumbnails: false, // bool: Show thumbnails.
 		slideshow: true, // bool: Automatic slide change.
 		duration: 500, // int: miliseconds for slide change.
 		interval: 5000, // int: miliseconds for slide interval.

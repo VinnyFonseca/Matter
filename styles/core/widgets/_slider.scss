@@ -147,10 +147,8 @@ $bulletDiameter: 16px;
 .slider-nav {
 	display: block;
 	position: relative;
-	margin: floor($spacing / 2) 0 0;
+	margin: 0.5% -0.5% 0;
 	padding: 0;
-	width: 100%;
-	height: $bulletDiameter;
 	text-align: center;
 	font-size: 0;
 	cursor: default;
@@ -158,14 +156,22 @@ $bulletDiameter: 16px;
 	.slider-bullet {
 		display: inline-block;
 		position: relative;
-		margin: 0 4px;
+		margin: 0.5%;
 		width: $bulletDiameter;
 		height: $bulletDiameter;
 		background-color: $brand2;
 		border-radius: $bulletDiameter;
-		@include opacity(0.75);
+		@include opacity(0.5);
 		user-select: none;
 		cursor: pointer;
+
+		&.slider-thumbnail {
+			padding-bottom: 5.25%;
+			width: 5.25%;
+			height: auto;
+			border-radius: $radius;
+			background-size: cover !important;
+		}
 
 		&:hover {
 			@include opacity(1);

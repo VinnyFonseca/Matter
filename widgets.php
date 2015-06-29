@@ -110,10 +110,13 @@
 			</dt>
 
 			<dd>
+				<code>nav: true</code>
+			</dd>
+			<dd>
 				<code>arrows: true</code>
 			</dd>
 			<dd>
-				<code>bullets: true</code>
+				<code>thumbnails: false</code>
 			</dd>
 			<dd>
 				<code>slideshow: true</code>
@@ -139,17 +142,17 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-slider="true" data-slideshow="false">
+		<div class="slider" data-slider="true" data-thumbnails="true">
 			<div class="slider-container-wrapper">
 				<div class="slider-movable">
 					<div class="slider-container">
-						<img src="http://placehold.it/959x350" />
+						<img class="thumb" src="http://placehold.it/959x350" />
 					</div>
 					<div class="slider-container">
-						<img src="http://placehold.it/960x350" />
+						<img class="thumb" src="http://placehold.it/960x350" />
 					</div>
 					<div class="slider-container">
-						<img src="http://placehold.it/961x350" />
+						<img class="thumb" src="http://placehold.it/961x350" />
 					</div>
 				</div>
 			</div>
