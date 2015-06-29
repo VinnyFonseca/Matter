@@ -1,6 +1,7 @@
 // Notifications
 
 var notificationCount = 0;
+var cookieNotify = false;
 
 var Timer = function(callback, delay) {
 	var timerId, start, remaining = delay;
@@ -39,14 +40,11 @@ var notify = function(message, delay, tone) {
 		var clear = function() {
 			el.removeClass("active");
 			setTimeout(function() {
-				$(".notification-wrapper").removeClass("cookie");
 				el.remove();
 			}, 300);
 		}
 
-		if ( delay !== 0 ) {
-			timer = new Timer(clear, delay);
-		}
+		if ( delay !== 0 ) timer = new Timer(clear, delay);
 
 		el
 			.addClass(tone)
@@ -60,6 +58,15 @@ var notify = function(message, delay, tone) {
 			})
 			.on("click", clear);
 
+		console.log(cookieNotify);
+
+		if ( cookieNotify ) {
+			el.addClass("cookie");
+			cookieNotify = false;
+		}
+
+		console.log(cookieNotify);
+
 		setTimeout(function() {
 			el.addClass("active");
 		}, 10);
@@ -69,10 +76,10 @@ var notify = function(message, delay, tone) {
 		if ( config.application.debug ) console.log("Trigger :: Notification | Delay: " + delay);
 	}
 
-	if ( config.cookie.active ) {
-		if ( $(".notification-wrapper").hasClass("cookie") ) notifyShow();
+	if ( config.notification.active ) {
+		notifyShow();
 	} else {
-		if ( config.notification.active ) notifyShow();
+		if ( config.cookie.active ) notifyShow();
 	}
 }
 

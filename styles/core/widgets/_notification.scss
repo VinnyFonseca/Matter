@@ -8,23 +8,6 @@
 	top: 100%;
 	right: 0;
 	z-index: 140;
-
-	&.cookie {
-		position: fixed;
-		top: auto;
-		bottom: 0;
-
-		.notification {
-			margin: 0;
-			transform: translateX(0) translateY(40%);
-
-			&.active {
-				@include opacity(1);
-				transform: translateX(0) translateY(0);
-				z-index: 900;
-			}
-		}
-	}
 }
 
 .notification {
@@ -34,9 +17,8 @@
 	padding: $spacing floor(($spacing * 1.5) + 20) $spacing $spacing;
 	width: 100%;
 	top: 0;
-	left: 0;
+	right: 0;
 	color: $cf;
-	border-radius: $radius;
 	background: $brand1;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
 	@include opacity(0);
@@ -46,9 +28,11 @@
 
 	transform: translateX(40%);
 
-	transition-property: transform, top, opacity;
-	transition-duration: $animDuration;
-	transition-timing-function: $animEasing;
+	transition: {
+		property: transform, top, opacity;
+		duration: $animDuration;
+		timing-function: $animEasing;
+	}
 
 	&:hover {
 		background: $brand2 !important;
@@ -68,6 +52,23 @@
 	}
 	&.failure {
 		background: $notifyFailureBgColor;
+	}
+
+	&.cookie {
+		position: fixed;
+		margin: 0;
+		top: auto;
+		right: floor($spacing / 2);
+		bottom: floor($spacing / 2);
+		left: auto;
+		width: 300px;
+		transform: translateX(0) translateY(40%);
+
+		&.active {
+			@include opacity(1);
+			transform: translateX(0) translateY(0);
+			z-index: 900;
+		}
 	}
 
 

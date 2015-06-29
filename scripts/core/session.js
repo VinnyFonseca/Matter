@@ -21,7 +21,6 @@ var initSession = function() {
 				sessionSave();
 			},
 			get: function(name) {
-				// alert(JSON.stringify(store[name]));
 				return store[name];
 			},
 			remove: function(name) {

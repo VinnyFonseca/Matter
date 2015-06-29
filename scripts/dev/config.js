@@ -21,8 +21,8 @@ var config = {
 	},
 	notification: {
 		active: true, // bool: on or off
-		tone: "default", // str: "default", "success", "warning", "failure".
 		delay: 5000, // int: miliseconds for disappearance.
+		tone: "default" // str: "default", "success", "warning", "failure".
 	},
 	cookie: {
 		active: true, // bool: on or off
