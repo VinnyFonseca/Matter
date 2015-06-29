@@ -173,7 +173,9 @@
 	// Notification
 
 	.notification-wrapper {
-		width: 96%;
+		margin: 3%;
+		width: 94%;
+		@include font-size($fontSize);
 	}
 
 
