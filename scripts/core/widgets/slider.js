@@ -57,11 +57,11 @@ var sliderInit = function(sliderId) {
 	// Create Arrows
 
 	var arrowPrevEl =  '<div class="slider-arrow slider-arrow-prev valign-middle">\
-						  <div class="triangle triangle-left">&nbsp;<div>\
-					  </div>';
+							<img class="svg icon icon-caret-left" src="' + config.application.root + 'img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-caret-left.png\'">\
+					    </div>';
 	var arrowNextEl =  '<div class="slider-arrow slider-arrow-next valign-middle">\
-						  <div class="triangle triangle-right">&nbsp;<div>\
-					  </div>';
+							<img class="svg icon icon-caret-right" src="' + config.application.root + 'img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-caret-right.png\'">\
+					    </div>';
 
 	slideWrapper.prepend(arrowPrevEl);
 	slideWrapper.prepend(arrowNextEl);
