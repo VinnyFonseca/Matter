@@ -99,8 +99,14 @@ var sliderInit = function(sliderId) {
 			var navBulletEl = "";
 
 			if ( hasThumbnails ) {
-				var sliderImg = slide.eq(i).find("img.thumb").attr("src");
-				navBulletEl = '<div class="slider-bullet slider-thumbnail" style="background: url(\'' + sliderImg + '\') no-repeat center center;">&nbsp;</div>';
+				var thumbSlide = slide.eq(i);
+				var slideImg = thumbSlide.data("thumb");
+
+
+				thumbSlide.css({ "background-image": "url('" + slideImg + "')" });
+				navBulletEl = '<div class="slider-bullet" style="background: url(\'' + slideImg + '\') no-repeat center center;">&nbsp;</div>';
+
+				navWrapper.addClass("thumbs");
 			} else {
 				navBulletEl = '<div class="slider-bullet">&bull;</div>';
 			}

@@ -58,14 +58,10 @@ var notify = function(message, delay, tone) {
 			})
 			.on("click", clear);
 
-		console.log(cookieNotify);
-
 		if ( cookieNotify ) {
 			el.addClass("cookie");
 			cookieNotify = false;
 		}
-
-		console.log(cookieNotify);
 
 		setTimeout(function() {
 			el.addClass("active");

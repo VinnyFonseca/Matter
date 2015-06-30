@@ -3,8 +3,9 @@
 .slider {
 	display: block;
 	position: relative;
-	margin: 0 auto !important;
-	padding: 0 !important;
+	margin: 0 auto;
+	margin-bottom: $spacing;
+	padding: 0;
 	width: 100%;
 
 	&:hover {
@@ -66,10 +67,11 @@
 	display: inline-block;
 	position: absolute;
 	margin: 0;
-	padding: 2px;
+	padding: 0;
 	width: 100%;
 	top: 0;
 	left: 0;
+	border: 2px solid $brand1;
 	background-color: $brand1;
 	vertical-align: top;
 	overflow: hidden;
@@ -87,6 +89,20 @@
 		width: 100%;
 		height: auto;
 		top: 0;
+	}
+
+	&.thumb {
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: cover;
+
+		&:after {
+			display: block;
+			position: relative;
+			width: 100%;
+			padding-bottom: 52.5%;
+			content: "";
+		}
 	}
 }
 
@@ -167,23 +183,10 @@ $bulletDiameter: 16px;
 		@include opacity(0.5);
 		user-select: none;
 		cursor: pointer;
-
-		&.slider-thumbnail {
-			padding-bottom: 5.25%;
-			width: 5.25%;
-			height: auto;
-			border-radius: $radius;
-			background-size: cover !important;
-			transition: {
-				property: transform opacity;
-				duration: 0.1s;
-				timing-function: $animEasing;
-			}
-
-			&:hover {
-				transform: scale(1.1);
-				z-index: 10;
-			}
+		transition: {
+			property: transform opacity;
+			duration: 0.1s;
+			timing-function: $animEasing;
 		}
 
 		&:hover {
@@ -195,6 +198,23 @@ $bulletDiameter: 16px;
 		&:focus {
 			background-color: $brand1;
 			@include opacity(1);
+		}
+	}
+
+	&.thumbs {
+		text-align: left;
+
+		.slider-bullet {
+			padding-bottom: 5.25%;
+			width: 5.25%;
+			height: auto;
+			border-radius: $radius;
+			background-size: cover !important;
+
+			&:hover {
+				// transform: scale(1.1);
+				z-index: 10;
+			}
 		}
 	}
 }

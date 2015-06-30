@@ -94,7 +94,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-slider="true" data-thumbnails="true">
+		<div class="slider" data-slider="true">
 			<div class="slide">
 				<img class="thumb" src="http://placehold.it/959x350" />
 			</div>
@@ -104,6 +104,19 @@
 			<div class="slide">
 				<img class="thumb" src="http://placehold.it/961x350" />
 			</div>
+		</div>
+
+		<div class="slider" data-slider="true" data-thumbnails="true">
+			<div class="slide thumb" data-thumb="img/pictures/slider/1.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/2.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/3.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/4.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/5.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/6.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/7.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/8.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/9.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/10.jpg"></div>
 		</div>
 
 
@@ -154,6 +167,18 @@
 	&lt;div class="slide"&gt;
 		&lt;img src="http://placehold.it/961x350" /&gt;
 	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+		<p>
+			<strong>data-thumbnails="true":</strong>
+		</p>
+
+<pre>
+&lt;div class="slider" <span class="emphasis">data-slider="true" data-thumbnails="true"</span>&gt;
+	&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+	&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+	&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
