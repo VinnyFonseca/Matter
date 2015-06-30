@@ -131,15 +131,11 @@ var sliderInit = function(sliderId) {
 	var cloneSlide = function() {
 		if ( clone && !cloned ) {
 			if ( slideDirection == "prev" ) {
-				for ( var i = maxCount; i >= slideCurrent; i-- ) {
-					slideMovable.prepend(slide.eq(i));
-				}
+				for ( var i = maxCount; i >= slideCurrent; i-- ) slideMovable.prepend(slide.eq(i));
 			}
 
 			if ( slideDirection == "next" ) {
-				for ( var j = minCount; j <= slideCurrent; j++ ) {
-					slideMovable.append(slide.eq(j - 1));
-				}
+				for ( var j = minCount; j <= slideCurrent; j++ ) slideMovable.append(slide.eq(j - 1));
 			}
 
 			slideMovable.css({ 'margin-left': slideStep });
@@ -336,7 +332,7 @@ var sliderInit = function(sliderId) {
 						if ( !cloned ) {
 							slideDirection = "prev";
 
-							$('.slide:last-child').prependTo(slideMovable);
+							sliderActive.find('.slide:last-child').prependTo(slideMovable);
 							slideMovable.css({ 'margin-left': slideStep - sliderWidth });
 
 							cloned = true;
@@ -347,7 +343,7 @@ var sliderInit = function(sliderId) {
 						if ( cloned ) {
 							slideDirection = "prev";
 
-							$('.slide:first-child').appendTo(slideMovable);
+							sliderActive.find('.slide:first-child').appendTo(slideMovable);
 							slideMovable.css({ 'margin-left': slideStep });
 
 							cloned = false;
@@ -376,7 +372,7 @@ var sliderInit = function(sliderId) {
 								if ( cloned ) {
 									slideDirection = "prev";
 
-									$('.slide:first-child').appendTo(slideMovable);
+									sliderActive.find('.slide:first-child').appendTo(slideMovable);
 									slideMovable.css({ 'margin-left': slideStep });
 
 									cloned = false;
@@ -407,7 +403,7 @@ var sliderInit = function(sliderId) {
 							if ( cloned ) {
 								slideDirection = "prev";
 
-								$('.slide:first-child').appendTo(slideMovable);
+								sliderActive.find('.slide:first-child').appendTo(slideMovable);
 								slideMovable.css({ 'margin-left': slideStep });
 
 								cloned = false;

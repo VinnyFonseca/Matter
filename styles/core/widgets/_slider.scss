@@ -10,7 +10,7 @@
 
 	&:hover {
 		.slider-arrow {
-			opacity: 1;
+			@include opacity(1);
 
 			&:hover {
 				background: $brand1;
@@ -41,7 +41,7 @@
 	display: block;
 	position: relative;
 	width: 100%;
-	overflow: hidden;
+	// overflow: hidden;
 
 	.slider-movable {
 		display: block;
@@ -126,7 +126,7 @@ $arrowDiameter: 48px;
 	cursor: pointer;
 	z-index: 50;
 	vertical-align: middle;
-	opacity: 0;
+	@include opacity(0);
 	user-select: none;
 	transition: {
 		property: margin background opacity;
