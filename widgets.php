@@ -171,7 +171,7 @@
 </pre>
 
 		<p>
-			<strong>data-thumbnails="true":</strong>
+			<strong>Image gallery example:</strong>
 		</p>
 
 <pre>

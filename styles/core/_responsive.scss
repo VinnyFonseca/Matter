@@ -24,8 +24,8 @@
 	// Slider
 
 	.slider-nav {
-		.slider-bullet {
-			&.slider-thumbnail {
+		&.thumbs {
+			.slider-bullet {
 				padding-bottom: 9%;
 				width: 9%;
 			}
@@ -220,8 +220,8 @@
 	}
 
 	.slider-nav {
-		.slider-bullet {
-			&.slider-thumbnail {
+		&.thumbs {
+			.slider-bullet {
 				padding-bottom: 11.5%;
 				width: 11.5%;
 			}
@@ -277,8 +277,8 @@
 	// Slider
 
 	.slider-nav {
-		.slider-bullet {
-			&.slider-thumbnail {
+		&.thumbs {
+			.slider-bullet {
 				padding-bottom: 19%;
 				width: 19%;
 			}
