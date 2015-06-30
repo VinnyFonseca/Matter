@@ -2,13 +2,13 @@
 
 var sliderInit = function(sliderId) {
 	var sliderActive = $('#' + sliderId);
-	var slideWrapperEl = '<div class="slider-container-wrapper"></div>';
+	var slideContainerEl = '<div class="slider-container"></div>';
 	var slideMovableEl = '<div class="slider-movable"></div>';
 
-	sliderActive.append(slideWrapperEl);
-	var slideWrapper = sliderActive.find('.slider-container-wrapper');
+	sliderActive.append(slideContainerEl);
+	var slideContainer = sliderActive.find('.slider-container');
 
-	slideWrapper.append(slideMovableEl);
+	slideContainer.append(slideMovableEl);
 	var slideMovable = sliderActive.find('.slider-movable');
 
 	var slide = sliderActive.find('.slide');
@@ -20,10 +20,6 @@ var sliderInit = function(sliderId) {
 	var autoSlide = !!sliderActive.attr("data-slideshow") ? sliderActive.attr("data-slideshow").bool() : config.slider.slideshow;
 	var slideAnimation = !!sliderActive.attr("data-animation") ? sliderActive.attr("data-animation") : config.slider.animation;
 
-	var slideTrigger = sliderActive.width() / 6;
-	var slideTolerance = 50;
-	var slideDirection;
-
 	var animDuration = config.slider.duration;
 	var animInterval = config.slider.interval;
 	var animating = false;
@@ -33,11 +29,14 @@ var sliderInit = function(sliderId) {
 
 	// Position Containers
 
-	var sliderWidth = slideWrapper.width();
+	var sliderWidth = sliderActive.width();
 	var sliderHeight;
 	var slideCount = slide.length;
 	var isMultiSlide = slideCount > 1;
 	var slideStep = sliderWidth * loopUnit;
+	var slideTrigger = sliderWidth / 6;
+	var slideTolerance = 50;
+	var slideDirection;
 
 	var slideCurrent = 0;
 	var slideBefore = 0;
@@ -45,21 +44,6 @@ var sliderInit = function(sliderId) {
 	var loopCount = 0;
 	var minCount = 0;
 	var maxCount = slideCount  - 1;
-
-	var containerPos = function() {
-		sliderWidth = slideWrapper.width();
-		slide.css({
-			'width': sliderWidth
-		});
-
-		slideMovable.css({
-			'margin-left': slideStep,
-			'width': sliderWidth * slideCount,
-			'height': slide.eq(slideCurrent).outerHeight(),
-			'left': - slideStep
-		});
-	}
-	containerPos();
 
 
 
@@ -72,14 +56,14 @@ var sliderInit = function(sliderId) {
 							<img class="svg icon icon-caret-right" src="' + config.application.root + 'img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-caret-right.png\'">\
 					    </div>';
 
-	slideWrapper.prepend(arrowPrevEl);
-	slideWrapper.prepend(arrowNextEl);
+	slideContainer.prepend(arrowPrevEl);
+	slideContainer.prepend(arrowNextEl);
 
 	initSVGs();
 
-	var arrows = sliderActive.find('.slider-arrow');
-	var arrowPrev = sliderActive.find('.slider-arrow-prev');
-	var arrowNext = sliderActive.find('.slider-arrow-next');
+	var arrows = slideContainer.children('.slider-arrow');
+	var arrowPrev = slideContainer.children('.slider-arrow-prev');
+	var arrowNext = slideContainer.children('.slider-arrow-next');
 
 	if ( hasArrows === true && isMultiSlide ) arrows.show();
 
@@ -93,7 +77,7 @@ var sliderInit = function(sliderId) {
 		var navWrapperEl = '<div class="slider-nav"></div>';
 		sliderActive.append(navWrapperEl);
 
-		var navWrapper = sliderActive.find('.slider-nav');
+		var navWrapper = sliderActive.children('.slider-nav');
 
 		for ( var i = 0; i < slideCount; i++ ) {
 			var navBulletEl = "";
@@ -124,6 +108,26 @@ var sliderInit = function(sliderId) {
 
 
 
+	// Main container repositioning
+
+	var containerPos = function() {
+		sliderWidth = sliderActive.width();
+
+		slide.css({
+			'width': sliderWidth
+		});
+
+		slideMovable.css({
+			'margin-left': slideStep,
+			'width': sliderWidth * slideCount,
+			'height': slide.eq(slideCurrent).outerHeight(),
+			'left': - slideStep
+		});
+	}
+	containerPos();
+
+
+
 	// Controls Cloning Functions
 
 	var clone = true;
@@ -131,18 +135,82 @@ var sliderInit = function(sliderId) {
 	var cloneSlide = function() {
 		if ( clone && !cloned ) {
 			if ( slideDirection == "prev" ) {
-				for ( var i = maxCount; i >= slideCurrent; i-- ) slideMovable.prepend(slide.eq(i));
+				for ( var i = maxCount; i >= slideCurrent; i-- ) {
+					slideMovable.prepend(slide.eq(i));
+				}
 			}
-
 			if ( slideDirection == "next" ) {
-				for ( var j = minCount; j <= slideCurrent; j++ ) slideMovable.append(slide.eq(j - 1));
+				for ( var j = minCount; j <= slideCurrent; j++ ) {
+					slideMovable.append(slide.eq(j - 1));
+				}
 			}
-
 			slideMovable.css({ 'margin-left': slideStep });
-
 			clone = false;
 		}
 	}
+
+
+
+	// Partial Controls Interaction Functions
+
+	var isPartial = !!sliderActive.attr("data-partial") ? sliderActive.attr("data-partial").bool() : false;
+	var partialMin = 0;
+	var partialMax = slide.find(".part").length;
+	var partialCount = 0;
+	var partialCycle = 0;
+	var partialWidth = slide.find(".part").outerWidth();
+
+	var slidePartialPrev = function() {
+		partialCurrent = slide.eq(slideCurrent).children(".part").length;
+
+		partialCount > 0 ? partialCount-- : partialCount = 0;
+		partialCycle > 0 ? partialCycle-- : partialCycle = partialCurrent;
+
+		console.log(partialMin, partialCount, partialCycle, partialCurrent);
+
+		if ( partialCycle > partialMin ) {
+			slideStep = (sliderWidth * loopUnit) - (partialWidth * partialCycle);
+
+			slideMovable.animate({
+				'left': - slideStep
+			}, animDuration);
+		} else {
+			partialCycle = partialCurrent;
+
+			if ( slideCurrent > minCount ) {
+				slideCurrent--;
+			} else {
+				slideCurrent = maxCount;
+			}
+
+			slideAny(slideCurrent);
+		}
+	}
+	var slidePartialNext = function() {
+		partialCurrent = slide.eq(slideCurrent).children(".part").length;
+
+		partialCount < partialMax ? partialCount++ : partialCount - partialMax;
+		partialCycle < partialMax ? partialCycle++ : partialCycle - partialMax;
+
+		if ( partialCycle < partialCurrent ) {
+			slideStep = (sliderWidth * loopUnit) + (partialWidth * partialCycle);
+
+			slideMovable.animate({
+				'left': - slideStep
+			}, animDuration);
+		} else {
+			partialCycle = 0;
+
+			if ( slideCurrent < maxCount ) {
+				slideCurrent++;
+			} else {
+				slideCurrent = 0;
+			}
+
+			slideAny(slideCurrent);
+		}
+	}
+
 
 
 	// Controls Interaction Functions
@@ -151,7 +219,6 @@ var sliderInit = function(sliderId) {
 		if ( !animating ) {
 			slideDirection = "prev";
 
-			slideBefore = slideCurrent;
 			loopUnit--;
 
 			if ( slideCurrent <= minCount ) {
@@ -162,13 +229,13 @@ var sliderInit = function(sliderId) {
 			}
 
 			slideAction();
+			slideBefore = slideCurrent;
 		}
 	}
 	var slideNext = function() {
 		if ( !animating ) {
 			slideDirection = "next";
 
-			slideBefore = slideCurrent;
 			loopUnit++;
 
 			if ( slideCurrent == maxCount ) {
@@ -179,6 +246,7 @@ var sliderInit = function(sliderId) {
 			}
 
 			slideAction();
+			slideBefore = slideCurrent;
 		}
 	}
 	var slideAny = function(i) {
@@ -187,17 +255,10 @@ var sliderInit = function(sliderId) {
 
 			loopUnit = (slideCurrent + ((maxCount + 1) * loopCount));
 
-			if ( slideCurrent <= slideBefore ) {
-				slideDirection = "prev";
-			}
-			if ( slideCurrent > slideBefore ) {
-				slideDirection = "next";
-			}
-
-			console.log(slideCurrent, slideBefore, slideDirection);
+			if ( slideCurrent < slideBefore ) slideDirection = "prev";
+			if ( slideCurrent > slideBefore ) slideDirection = "next";
 
 			slideAction();
-
 			slideBefore = slideCurrent;
 		}
 	}
@@ -212,6 +273,11 @@ var sliderInit = function(sliderId) {
 		animating = true;
 		slideStep = sliderWidth * loopUnit;
 
+		if ( isPartial ) {
+			partialCurrent = slide.eq(slideCurrent).children(".part").length;
+			partialCycle = 0;
+		}
+
 		if ( slideDirection == "prev" ) cloneSlide();
 
 		var slideEnd = function() {
@@ -219,6 +285,7 @@ var sliderInit = function(sliderId) {
 			cloned = false;
 			animating = false;
 			animDuration = config.slider.duration;
+
 			if ( slideDirection == "next" ) cloneSlide();
 			containerPos();
 		}
@@ -238,7 +305,7 @@ var sliderInit = function(sliderId) {
 				.css({
 					'left': - slideStep
 				})
-				.fadeIn(animDuration + 250)
+				.fadeIn(animDuration * 1.5)
 				.animate({
 					'height': slide.eq(slideCurrent).outerHeight()
 				}, {
@@ -254,46 +321,52 @@ var sliderInit = function(sliderId) {
 
 
 
-
 	// Nav actions
 
 	arrowNext.on('click', function() {
-		clone = true;
-		slideNext();
+		if ( isPartial ) {
+			slidePartialNext();
+		} else {
+			slideNext();
+		}
 	});
 	arrowPrev.on('click', function() {
-		clone = true;
-		slidePrev();
+		if ( isPartial ) {
+			slidePartialPrev();
+		} else {
+			slidePrev();
+		}
 	});
 
 	navBullet.on('click', function() {
-		clone = true;
-
 		var index = $(this).index();
 		slideAny(index);
-
-		// $("html, body").animate({
-		// 	scrollTop: sliderActive.offset().top - 90
-		// }, 1000);
 	});
 
 	document.onkeydown = function(e) {
 		e = e || window.event;
 		switch(e.which || e.keyCode) {
 			case 39: // right
-				clone = true;
-				slideNext();
+				if ( isPartial ) {
+					slidePartialNext();
+				} else {
+					slideNext();
+				}
 				break;
 
 			case 37: // left
-				clone = true;
-				slidePrev();
+				if ( isPartial ) {
+					slidePartialPrev();
+				} else {
+					slidePrev();
+				}
 				break;
 
 			default: return; // exit this handler for other keys
 		}
 		e.preventDefault();
 	};
+
 
 
 	// Dragging if animation = "slider"
@@ -454,6 +527,7 @@ var sliderInit = function(sliderId) {
 		containerPos();
 	});
 }
+
 
 
 var initSliders = function() {

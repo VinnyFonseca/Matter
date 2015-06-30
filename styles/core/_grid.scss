@@ -9,27 +9,27 @@
 	> * {
 		@include font-size($fontSize);
 	}
+}
 
-	.column {
-		display: inline-block;
-		position: relative;
-		margin: 0;
-		padding: $gutter / 2;
-		width: 100%;
-		vertical-align: top;
+.column {
+	display: inline-block;
+	position: relative;
+	margin: 0;
+	padding: $gutter / 2;
+	width: 100%;
+	vertical-align: top;
 
-		@for $i from 1 through $columns {
-			&[data-span="#{$i}"] {
-				width: percentage($i / $columns);
-			}
+	@for $i from 1 through $columns {
+		&[data-span="#{$i}"] {
+			width: percentage($i / $columns);
 		}
 	}
+}
 
-	.cell {
-		display: block;
-		position: relative;
-		padding: floor($spacing / 2);
-	}
+.cell {
+	display: block;
+	position: relative;
+	padding: floor($spacing / 2);
 }
 
 .debug {

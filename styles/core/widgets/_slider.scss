@@ -37,29 +37,22 @@
 
 // The whole shebang
 
-.slider-container-wrapper {
+.slider-container {
 	display: block;
 	position: relative;
 	width: 100%;
 	overflow: hidden;
+}
 
-	.slider-movable {
-		display: block;
+.slider-movable {
+	display: block;
+	position: relative;
+	left: 0;
+	white-space: nowrap;
+	cursor: -webkit-grab;
+
+	.slide {
 		position: relative;
-		left: 0;
-		font-size: 0;
-		white-space: nowrap;
-		cursor: -webkit-grab;
-
-		transform: translateX(0) translate3d(0, 0, 0);
-
-		> * {
-			@include font-size($fontSize);
-		}
-
-		.slide {
-			position: relative;
-		}
 	}
 }
 
@@ -77,6 +70,7 @@
 	overflow: hidden;
 	white-space: normal;
 	visibility: hidden;
+	@extend .block-reset;
 
 	&:first-child {
 		position: relative;

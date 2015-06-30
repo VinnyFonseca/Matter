@@ -94,19 +94,37 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-slider="true">
+		<div class="slider" data-slider="true" data-slideshow="false">
 			<div class="slide">
-				<img class="thumb" src="http://placehold.it/959x350" />
+				<div class="column part" data-span="4">
+					<img class="thumb" src="http://placehold.it/959x350" />
+				</div>
+				<div class="column part" data-span="4">
+					<img class="thumb" src="http://placehold.it/960x350" />
+				</div>
+				<div class="column part" data-span="4">
+					<img class="thumb" src="http://placehold.it/961x350" />
+				</div>
 			</div>
 			<div class="slide">
-				<img class="thumb" src="http://placehold.it/960x350" />
+				<div class="column part" data-span="4">
+					<img class="thumb" src="http://placehold.it/962x350" />
+				</div>
+				<div class="column part" data-span="4">
+					<img class="thumb" src="http://placehold.it/963x350" />
+				</div>
+				<div class="column part" data-span="4">
+					<img class="thumb" src="http://placehold.it/964x350" />
+				</div>
 			</div>
 			<div class="slide">
-				<img class="thumb" src="http://placehold.it/961x350" />
+				<div class="column part" data-span="4">
+					<img class="thumb" src="http://placehold.it/965x350" />
+				</div>
 			</div>
 		</div>
 
-		<div class="slider" data-slider="true" data-thumbnails="true">
+		<div class="slider" data-slider="true" data-thumbnails="true" data-slideshow="false">
 			<div class="slide thumb" data-thumb="img/pictures/slider/1.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/2.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/3.jpg"></div>
