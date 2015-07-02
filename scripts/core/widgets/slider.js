@@ -48,6 +48,44 @@ var sliderInit = function(sliderId) {
 
 
 
+	// Slide Show
+
+	var slideTimer;
+
+	var sliderStart = function() {
+		slideMovable.removeClass("stopped");
+		slideTimer = setInterval(slideNext, animInterval);
+	}
+	var sliderStop = function() {
+		slideMovable.addClass("stopped");
+		clearInterval(slideTimer);
+	}
+
+	if ( isMultiSlide && autoSlide !== false ) {
+		sliderStart();
+
+		if ( !config.application.touch ) {
+			sliderActive.on('mouseenter', function() {
+				sliderStop();
+			});
+			sliderActive.on('mouseleave', function() {
+				sliderStart();
+			});
+		} else {
+			slideMovable.on('click touchstart', function() {
+				sliderStop();
+			});
+
+			$("html").on('click touchstart', function(event) {
+				if ( !$(event.target).closest(".slider").length && slideMovable.hasClass("stopped") ) {
+					sliderStart();
+				}
+			});
+		}
+	}
+
+
+
 	// Create Arrows
 
 	var arrowPrevEl =  '<div class="slider-arrow slider-arrow-prev valign-middle">\
@@ -254,7 +292,11 @@ var sliderInit = function(sliderId) {
 		navBullet.eq(slideCurrent).addClass('active');
 	}
 
-	slideAction();
+	slideAction(0);
+
+	$(window).on("resize", function() {
+		slideAction(0);
+	});
 
 
 
@@ -401,48 +443,6 @@ var sliderInit = function(sliderId) {
 			}
 		});
 	}
-
-
-
-	// Slide Show
-
-	var slideTimer;
-
-	var sliderStart = function() {
-		slideMovable.removeClass("stopped");
-		slideTimer = setInterval(slideNext, animInterval);
-	}
-	var sliderStop = function() {
-		slideMovable.addClass("stopped");
-		clearInterval(slideTimer);
-	}
-
-	if ( isMultiSlide && autoSlide !== false ) {
-		sliderStart();
-
-		if ( !config.application.touch ) {
-			sliderActive.on('mouseenter', function() {
-				sliderStop();
-			});
-			sliderActive.on('mouseleave', function() {
-				sliderStart();
-			});
-		} else {
-			slideMovable.on('click touchstart', function() {
-				sliderStop();
-			});
-
-			$("html").on('click touchstart', function(event) {
-				if ( !$(event.target).closest(".slider").length && slideMovable.hasClass("stopped") ) {
-					sliderStart();
-				}
-			});
-		}
-	}
-
-	$(window).on("resize", function() {
-		slideAction(0);
-	});
 }
 
 
