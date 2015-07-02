@@ -1,213 +1,213 @@
 // Main Container
 
 .slider {
-	display: block;
+	display: none;
 	position: relative;
 	margin: 0 auto;
 	margin-bottom: $spacing;
 	padding: 0;
 	width: 100%;
 
-	&:hover {
-		.slider-arrow {
-			@include opacity(1);
 
-			&:hover {
-				background: $brand1;
-
-				.icon {
-					@include svgColor($cf);
-				}
-			}
-			&:active {
-				background: $brand2;
-			}
-
-			&.slider-arrow-prev {
-				margin-left: 0;
-			}
-			&.slider-arrow-next {
-				margin-right: 0;
-			}
-		}
-	}
-}
-
-
-
-// The whole shebang
-
-.slider-container {
-	display: block;
-	position: relative;
-	width: 100%;
-	overflow: hidden;
-}
-
-.slider-movable {
-	display: block;
-	position: relative;
-	left: 0;
-	white-space: nowrap;
-	cursor: -webkit-grab;
-
-	.slide {
-		position: relative;
-	}
-}
-
-.slide {
-	display: inline-block;
-	position: absolute;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	top: 0;
-	left: 0;
-	border: 2px solid $brand1;
-	background-color: $brand1;
-	vertical-align: top;
-	overflow: hidden;
-	white-space: normal;
-	visibility: hidden;
-	@extend .block-reset;
-
-	&:first-child {
-		position: relative;
-		visibility: visible;
-	}
-
-	> img {
+	.slider-container {
 		display: block;
 		position: relative;
 		width: 100%;
-		height: auto;
-		top: 0;
+		overflow: hidden;
+
+		&:hover {
+			.slider-arrow {
+				@include opacity(1);
+
+				&:hover {
+					@include background-opacity($brand1, 0.75);
+
+					.icon {
+						@include svgColor($cf);
+					}
+				}
+				&:active {
+					@include background-opacity($brand2, 0.75);
+				}
+
+				&.slider-arrow-prev {
+					margin-left: 0;
+				}
+				&.slider-arrow-next {
+					margin-right: 0;
+				}
+			}
+		}
 	}
 
-	&.thumb {
-		background-repeat: no-repeat;
-		background-position: center center;
-		background-size: cover;
+	.slider-movable {
+		display: block;
+		position: relative;
+		margin: 0;
+		left: 0;
+		white-space: nowrap !important;
+		overflow: visible !important;
+		cursor: -webkit-grab;
 
-		&:after {
+		@extend .valign-middle;
+
+		.slide {
+			position: relative;
+		}
+	}
+
+	.slide {
+		display: inline-block;
+		position: absolute;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		top: 0;
+		left: 0;
+		border: 2px solid $brand1;
+		background-color: $brand1;
+		vertical-align: top;
+		overflow: hidden;
+		white-space: normal;
+		visibility: hidden;
+		@extend .block-reset;
+
+		&:first-child {
+			position: relative;
+			visibility: visible;
+		}
+
+		> img {
 			display: block;
 			position: relative;
 			width: 100%;
-			padding-bottom: 52.5%;
-			content: "";
+			height: auto;
+			top: 0;
+		}
+
+		&.thumb {
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: cover;
+
+			&:after {
+				display: block;
+				position: relative;
+				width: 100%;
+				padding-bottom: 52.5%;
+				content: "";
+			}
 		}
 	}
-}
 
 
 
-// Arrow Navigation
+	// Arrow Navigation
 
-$arrowDiameter: 48px;
+	$arrowDiameter: 48px;
 
-.slider-arrow {
-	display: none;
-	position: absolute;
-	margin-top: -($arrowDiameter / 2);
-	padding: 0;
-	width: $arrowDiameter;
-	height: $arrowDiameter;
-	top: 50%;
-	text-align: center;
-	background: rgba(255, 255, 255, 0.5);
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
-	z-index: 50;
-	vertical-align: middle;
-	@include opacity(0);
-	user-select: none;
-	transition: {
-		property: margin background opacity;
-		duration: $animDuration / 2;
-		timing-function: $animEasing;
-	}
-
-	&.slider-arrow-prev {
-		float: left;
-		margin-left: -5%;
-		left: 0;
-		border-top-right-radius: $radius;
-		border-bottom-right-radius: $radius;
-	}
-	&.slider-arrow-next {
-		float: right;
-		margin-right: -5%;
-		right: 0;
-		border-top-left-radius: $radius;
-		border-bottom-left-radius: $radius;
-	}
-
-	.icon {
-		width: 22px;
-		height: 22px;
-		@include svgColor($brand1);
-	}
-}
-
-
-
-
-// Bullet Navigation (if navContainer is not defined)
-
-$bulletDiameter: 16px;
-
-.slider-nav {
-	display: block;
-	position: relative;
-	margin: 0.5% -0.5% 0;
-	padding: 0;
-	text-align: center;
-	font-size: 0;
-	cursor: default;
-
-	.slider-bullet {
-		display: inline-block;
-		position: relative;
-		margin: 0.5%;
-		width: $bulletDiameter;
-		height: $bulletDiameter;
-		background-color: $brand2;
-		border-radius: $bulletDiameter;
-		@include opacity(0.5);
-		user-select: none;
+	.slider-arrow {
+		display: none;
+		position: absolute;
+		padding: 0;
+		width: $arrowDiameter;
+		top: 0;
+		bottom: 0;
+		text-align: center;
+		background: rgba(255, 255, 255, 0.5);
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		cursor: pointer;
+		z-index: 50;
+		vertical-align: middle;
+		@include opacity(0);
+		user-select: none;
 		transition: {
-			property: transform opacity;
-			duration: 0.1s;
+			property: margin background opacity;
+			duration: $animDuration / 2;
 			timing-function: $animEasing;
 		}
 
-		&:hover {
-			@include opacity(1);
+		&.slider-arrow-prev {
+			float: left;
+			margin-left: -5%;
+			left: 0;
+			border-top-right-radius: $radius;
+			border-bottom-right-radius: $radius;
+		}
+		&.slider-arrow-next {
+			float: right;
+			margin-right: -5%;
+			right: 0;
+			border-top-left-radius: $radius;
+			border-bottom-left-radius: $radius;
 		}
 
-		&:active,
-		&.active,
-		&:focus {
-			background-color: $brand1;
-			@include opacity(1);
+		.icon {
+			width: 22px;
+			height: 22px;
+			@include svgColor($brand1);
 		}
 	}
 
-	&.thumbs {
-		text-align: left;
+
+
+
+	// Bullet Navigation (if navContainer is not defined)
+
+	$bulletDiameter: 16px;
+
+	.slider-nav {
+		display: block;
+		position: relative;
+		margin: 0.5% -0.5% 0;
+		padding: 0;
+		text-align: center;
+		font-size: 0;
+		cursor: default;
 
 		.slider-bullet {
-			padding-bottom: 5.25%;
-			width: 5.25%;
-			height: auto;
-			border-radius: $radius;
-			background-size: cover !important;
+			display: inline-block;
+			position: relative;
+			margin: 0.5%;
+			width: $bulletDiameter;
+			height: $bulletDiameter;
+			background-color: $brand2;
+			border-radius: $bulletDiameter;
+			@include opacity(0.5);
+			user-select: none;
+			cursor: pointer;
+			transition: {
+				property: transform opacity;
+				duration: 0.1s;
+				timing-function: $animEasing;
+			}
 
 			&:hover {
-				// transform: scale(1.1);
-				z-index: 10;
+				@include opacity(1);
+			}
+
+			&:active,
+			&.active,
+			&:focus {
+				background-color: $brand1;
+				@include opacity(1);
+			}
+		}
+
+		&.thumbs {
+			text-align: left;
+
+			.slider-bullet {
+				padding-bottom: 5.25%;
+				width: 5.25%;
+				height: auto;
+				border-radius: $radius;
+				background-size: cover !important;
+
+				&:hover {
+					// transform: scale(1.1);
+					z-index: 10;
+				}
 			}
 		}
 	}

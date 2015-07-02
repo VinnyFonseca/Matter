@@ -42,6 +42,7 @@ var config = {
 		nav: true, // bool: Show bullets.
 		arrows: true, // bool: Show arrows.
 		thumbnails: false, // bool: Show thumbnails.
+		show: 1, // bool: Automatic slide change.
 		slideshow: true, // bool: Automatic slide change.
 		animation: "slide", // str: "slide", "fade".
 		duration: 500, // int: miliseconds for slide change.

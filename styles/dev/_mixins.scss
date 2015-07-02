@@ -27,6 +27,11 @@
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$value * 100})";
 }
 
+@mixin background-opacity($color, $opacity: 0.5) {
+    background-color: $color; /* The Fallback */
+    background-color: rgba($color, $opacity);
+}
+
 
 @mixin linear-gradient($start: #f1f1f1, $from: 0%, $stop: #d9d9d9, $to: 100%) {
 	background: $start;

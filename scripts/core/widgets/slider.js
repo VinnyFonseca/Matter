@@ -5,20 +5,22 @@ var sliderInit = function(sliderId) {
 	var slideContainerEl = '<div class="slider-container"></div>';
 	var slideMovableEl = '<div class="slider-movable"></div>';
 
-	sliderActive.append(slideContainerEl);
+	sliderActive.show().append(slideContainerEl);
 	var slideContainer = sliderActive.find('.slider-container');
 
 	slideContainer.append(slideMovableEl);
 	var slideMovable = sliderActive.find('.slider-movable');
 
 	var slide = sliderActive.find('.slide');
-	slide.appendTo(slideMovable);
+	slide.each(function() { $(this).attr("data-index", $(this).index()) }).appendTo(slideMovable);
 
 	var hasNav = !!sliderActive.attr("data-nav") ? sliderActive.attr("data-nav").bool() : config.slider.nav;
 	var hasArrows = !!sliderActive.attr("data-arrows") ? sliderActive.attr("data-arrows").bool() : config.slider.arrows;
 	var hasThumbnails = !!sliderActive.attr("data-thumbnails") ? sliderActive.attr("data-thumbnails").bool() : config.slider.thumbnails;
-	var autoSlide = !!sliderActive.attr("data-slideshow") ? sliderActive.attr("data-slideshow").bool() : config.slider.slideshow;
+	var slidesToShow = !!sliderActive.attr("data-show") ? parseInt(sliderActive.attr("data-show"), 10) : config.slider.show;
 	var slideAnimation = !!sliderActive.attr("data-animation") ? sliderActive.attr("data-animation") : config.slider.animation;
+	var autoSlide = !!sliderActive.attr("data-slideshow") ? sliderActive.attr("data-slideshow").bool() : config.slider.slideshow;
+
 
 	var animDuration = config.slider.duration;
 	var animInterval = config.slider.interval;
@@ -29,14 +31,16 @@ var sliderInit = function(sliderId) {
 
 	// Position Containers
 
-	var sliderWidth = sliderActive.width();
+	var sliderWidth = sliderActive.width() / slidesToShow;
 	var sliderHeight;
 	var slideCount = slide.length;
 	var isMultiSlide = slideCount > 1;
-	var slideStep = sliderWidth * loopUnit;
+	var slideStep = sliderWidth;
 	var slideTrigger = sliderWidth / 6;
 	var slideTolerance = 50;
 	var slideDirection;
+
+	if ( slidesToShow >= slideCount ) slidesToShow = slideCount - 1;
 
 	var slideCurrent = 0;
 	var slideBefore = 0;
@@ -82,14 +86,13 @@ var sliderInit = function(sliderId) {
 		for ( var i = 0; i < slideCount; i++ ) {
 			var navBulletEl = "";
 
+			var thumbSlide = slide.eq(i);
+			var slideImg = thumbSlide.data("thumb");
+
+			if ( slide.eq(i).hasClass("thumb") ) thumbSlide.css({ "background-image": "url('" + slideImg + "')" });
+
 			if ( hasThumbnails ) {
-				var thumbSlide = slide.eq(i);
-				var slideImg = thumbSlide.data("thumb");
-
-
-				thumbSlide.css({ "background-image": "url('" + slideImg + "')" });
 				navBulletEl = '<div class="slider-bullet" style="background: url(\'' + slideImg + '\') no-repeat center center;">&nbsp;</div>';
-
 				navWrapper.addClass("thumbs");
 			} else {
 				navBulletEl = '<div class="slider-bullet">&bull;</div>';
@@ -111,17 +114,15 @@ var sliderInit = function(sliderId) {
 	// Main container repositioning
 
 	var containerPos = function() {
-		sliderWidth = sliderActive.width();
+		sliderWidth = sliderActive.width() / slidesToShow;
 
 		slide.css({
 			'width': sliderWidth
 		});
 
 		slideMovable.css({
-			'margin-left': slideStep,
-			'width': sliderWidth * slideCount,
-			'height': slide.eq(slideCurrent).outerHeight(),
-			'left': - slideStep
+			'margin-left': 0,
+			'left': 0
 		});
 	}
 	containerPos();
@@ -132,7 +133,7 @@ var sliderInit = function(sliderId) {
 
 	var clone = true;
 
-	var cloneSlide = function() {
+	var slideClone = function() {
 		if ( clone && !cloned ) {
 			if ( slideDirection == "prev" ) {
 				for ( var i = maxCount; i >= slideCurrent; i-- ) {
@@ -140,74 +141,16 @@ var sliderInit = function(sliderId) {
 				}
 			}
 			if ( slideDirection == "next" ) {
+				slide.each(function() {
+
+				})
 				for ( var j = minCount; j <= slideCurrent; j++ ) {
 					slideMovable.append(slide.eq(j - 1));
 				}
 			}
+
 			slideMovable.css({ 'margin-left': slideStep });
 			clone = false;
-		}
-	}
-
-
-
-	// Partial Controls Interaction Functions
-
-	var isPartial = !!sliderActive.attr("data-partial") ? sliderActive.attr("data-partial").bool() : false;
-	var partialMin = 0;
-	var partialMax = slide.find(".part").length;
-	var partialCount = 0;
-	var partialCycle = 0;
-	var partialWidth = slide.find(".part").outerWidth();
-
-	var slidePartialPrev = function() {
-		partialCurrent = slide.eq(slideCurrent).children(".part").length;
-
-		partialCount > 0 ? partialCount-- : partialCount = 0;
-		partialCycle > 0 ? partialCycle-- : partialCycle = partialCurrent;
-
-		console.log(partialMin, partialCount, partialCycle, partialCurrent);
-
-		if ( partialCycle > partialMin ) {
-			slideStep = (sliderWidth * loopUnit) - (partialWidth * partialCycle);
-
-			slideMovable.animate({
-				'left': - slideStep
-			}, animDuration);
-		} else {
-			partialCycle = partialCurrent;
-
-			if ( slideCurrent > minCount ) {
-				slideCurrent--;
-			} else {
-				slideCurrent = maxCount;
-			}
-
-			slideAny(slideCurrent);
-		}
-	}
-	var slidePartialNext = function() {
-		partialCurrent = slide.eq(slideCurrent).children(".part").length;
-
-		partialCount < partialMax ? partialCount++ : partialCount - partialMax;
-		partialCycle < partialMax ? partialCycle++ : partialCycle - partialMax;
-
-		if ( partialCycle < partialCurrent ) {
-			slideStep = (sliderWidth * loopUnit) + (partialWidth * partialCycle);
-
-			slideMovable.animate({
-				'left': - slideStep
-			}, animDuration);
-		} else {
-			partialCycle = 0;
-
-			if ( slideCurrent < maxCount ) {
-				slideCurrent++;
-			} else {
-				slideCurrent = 0;
-			}
-
-			slideAny(slideCurrent);
 		}
 	}
 
@@ -219,16 +162,14 @@ var sliderInit = function(sliderId) {
 		if ( !animating ) {
 			slideDirection = "prev";
 
-			loopUnit--;
 
 			if ( slideCurrent <= minCount ) {
 				slideCurrent = maxCount;
-				loopCount--;
 			} else {
 				slideCurrent--;
 			}
 
-			slideAction();
+			slideAction(-1);
 			slideBefore = slideCurrent;
 		}
 	}
@@ -236,16 +177,14 @@ var sliderInit = function(sliderId) {
 		if ( !animating ) {
 			slideDirection = "next";
 
-			loopUnit++;
 
-			if ( slideCurrent == maxCount ) {
+			if ( slideCurrent >= maxCount ) {
 				slideCurrent = minCount;
-				loopCount++;
 			} else {
 				slideCurrent++;
 			}
 
-			slideAction();
+			slideAction(1);
 			slideBefore = slideCurrent;
 		}
 	}
@@ -253,12 +192,10 @@ var sliderInit = function(sliderId) {
 		if ( !animating ) {
 			slideCurrent = i;
 
-			loopUnit = (slideCurrent + ((maxCount + 1) * loopCount));
-
 			if ( slideCurrent < slideBefore ) slideDirection = "prev";
 			if ( slideCurrent > slideBefore ) slideDirection = "next";
 
-			slideAction();
+			slideAction(slideCurrent - slideBefore);
 			slideBefore = slideCurrent;
 		}
 	}
@@ -267,28 +204,21 @@ var sliderInit = function(sliderId) {
 
 	// Main Slider Animation
 
-	var slideTimer;
+	var slideEnd = function() {
+		clone = true;
+		cloned = false;
+		animating = false;
+		animDuration = config.slider.duration;
 
-	var slideAction = function() {
+		if ( slideDirection == "next" ) slideClone();
+		containerPos();
+	}
+
+	var slideAction = function(i) {
 		animating = true;
-		slideStep = sliderWidth * loopUnit;
+		slideStep = sliderWidth * i;
 
-		if ( isPartial ) {
-			partialCurrent = slide.eq(slideCurrent).children(".part").length;
-			partialCycle = 0;
-		}
-
-		if ( slideDirection == "prev" ) cloneSlide();
-
-		var slideEnd = function() {
-			clone = true;
-			cloned = false;
-			animating = false;
-			animDuration = config.slider.duration;
-
-			if ( slideDirection == "next" ) cloneSlide();
-			containerPos();
-		}
+		if ( slideDirection == "prev" ) slideClone();
 
 		if ( slideAnimation === "slide" ) {
 			slideMovable.animate({
@@ -303,7 +233,7 @@ var sliderInit = function(sliderId) {
 			slideMovable
 				.hide()
 				.css({
-					'left': - slideStep
+					'left': slideStep
 				})
 				.fadeIn(animDuration * 1.5)
 				.animate({
@@ -317,6 +247,7 @@ var sliderInit = function(sliderId) {
 		navBullet.removeClass('active');
 		navBullet.eq(slideCurrent).addClass('active');
 	}
+
 	slideAction();
 
 
@@ -324,46 +255,33 @@ var sliderInit = function(sliderId) {
 	// Nav actions
 
 	arrowNext.on('click', function() {
-		if ( isPartial ) {
-			slidePartialNext();
-		} else {
-			slideNext();
-		}
+		clone = true;
+		slideNext();
 	});
 	arrowPrev.on('click', function() {
-		if ( isPartial ) {
-			slidePartialPrev();
-		} else {
-			slidePrev();
-		}
+		clone = true;
+		slidePrev();
 	});
-
 	navBullet.on('click', function() {
-		var index = $(this).index();
-		slideAny(index);
+		clone = true;
+		slideAny($(this).index());
 	});
 
 	document.onkeydown = function(e) {
 		e = e || window.event;
+
 		switch(e.which || e.keyCode) {
 			case 39: // right
-				if ( isPartial ) {
-					slidePartialNext();
-				} else {
-					slideNext();
-				}
+				slideNext();
 				break;
 
 			case 37: // left
-				if ( isPartial ) {
-					slidePartialPrev();
-				} else {
-					slidePrev();
-				}
+				slidePrev();
 				break;
 
 			default: return; // exit this handler for other keys
 		}
+
 		e.preventDefault();
 	};
 
@@ -394,7 +312,10 @@ var sliderInit = function(sliderId) {
 			.on("mousemove touchmove", function(e) {
 				dragX = e.pageX || e.originalEvent.touches[0].pageX;
 				dragY = e.pageY || e.originalEvent.touches[0].pageY;
-				initDrag = dragX - dragStart > config.slider.threshold || dragX - dragStart < - config.slider.threshold;
+
+				var dragNext = dragStart - dragX;
+				var dragPrev = dragX - dragStart;
+				initDrag = dragPrev > config.slider.threshold || dragNext > config.slider.threshold;
 
 				if ( down && initDrag && !animating ) {
 					if ( !config.application.touch ) e.preventDefault();
@@ -404,10 +325,8 @@ var sliderInit = function(sliderId) {
 					if ( dragX > dragStart ) {
 						if ( !cloned ) {
 							slideDirection = "prev";
-
 							sliderActive.find('.slide:last-child').prependTo(slideMovable);
-							slideMovable.css({ 'margin-left': slideStep - sliderWidth });
-
+							slideMovable.css({ 'margin-left': - sliderWidth });
 							cloned = true;
 						}
 					} else {
@@ -415,19 +334,17 @@ var sliderInit = function(sliderId) {
 
 						if ( cloned ) {
 							slideDirection = "prev";
-
 							sliderActive.find('.slide:first-child').appendTo(slideMovable);
-							slideMovable.css({ 'margin-left': slideStep });
-
+							slideMovable.css({ 'margin-left': 0 });
 							cloned = false;
 						}
 					}
 
 					slideMovable.css({
-						'left': - slideStep - (dragStart - dragX)
+						'left': - (dragStart - dragX)
 					});
 
-					var inBounds = dragX <= sliderLeft || dragX >= sliderRight || dragY <= sliderTop || dragY >= sliderBottom;
+					var inBounds = dragX <= sliderLeft || dragX >= sliderRight || dragY <= sliderTop || dragY >= sliderBottom || dragNext >= sliderWidth || dragPrev >= sliderWidth;
 
 					if ( inBounds ) {
 						down = false;
@@ -446,7 +363,7 @@ var sliderInit = function(sliderId) {
 									slideDirection = "prev";
 
 									sliderActive.find('.slide:first-child').appendTo(slideMovable);
-									slideMovable.css({ 'margin-left': slideStep });
+									slideMovable.css({ 'margin-left': 0 });
 
 									cloned = false;
 								}
@@ -491,6 +408,8 @@ var sliderInit = function(sliderId) {
 
 	// Slide Show
 
+	var slideTimer;
+
 	var sliderStart = function() {
 		slideMovable.removeClass("stopped");
 		slideTimer = setInterval(slideNext, animInterval);
@@ -531,7 +450,7 @@ var sliderInit = function(sliderId) {
 
 
 var initSliders = function() {
-	var slider = $("[data-slider]");
+	var slider = $("[data-slider='true']");
 
 	if ( slider.length ) {
 		slider
