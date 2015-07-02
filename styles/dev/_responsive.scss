@@ -144,6 +144,27 @@
 	}
 
 
+	.slider {
+		&.full {
+			.slide {
+				width: 100%;
+			}
+		}
+		&.third {
+			.slide {
+				margin: 0 1%;
+				width: 48%;
+			}
+		}
+		&.fifth {
+			.slide {
+				margin: 0 0.5%;
+				width: 49%;
+			}
+		}
+	}
+
+
 	.footer,
 	footer {
 		> a {
@@ -166,6 +187,27 @@
 	.icon-wrapper {
 		.icon-container {
 			width: 13.266%;
+		}
+	}
+
+
+	.slider {
+		&.full {
+			.slide {
+				width: 100%;
+			}
+		}
+		&.third {
+			.slide {
+				margin: 0;
+				width: 100%;
+			}
+		}
+		&.fifth {
+			.slide {
+				margin: 0;
+				width: 100%;
+			}
 		}
 	}
 

@@ -373,6 +373,28 @@ $sidebarWidth: 300px;
 
 
 
+.slider {
+	&.full {
+		.slide {
+			width: 100%;
+		}
+	}
+	&.third {
+		.slide {
+			margin: 0 1%;
+			width: 31.333%;
+		}
+	}
+	&.fifth {
+		.slide {
+			margin: 0 0.5%;
+			width: 19%;
+		}
+	}
+}
+
+
+
 
 footer,
 .footer {

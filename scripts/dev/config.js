@@ -45,8 +45,8 @@ var config = {
 		show: 1, // bool: Automatic slide change.
 		slideshow: true, // bool: Automatic slide change.
 		animation: "slide", // str: "slide", "fade".
-		duration: 500, // int: miliseconds for slide change.
-		interval: 5000, // int: miliseconds for slide interval.
+		duration: 750, // int: miliseconds for slide change.
+		interval: 7500, // int: miliseconds for slide interval.
 		threshold: 20 // int: px distance on X axis from touchstart to current touch position.
 	},
 	tables: {

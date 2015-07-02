@@ -15,7 +15,6 @@ var sliderInit = function(sliderId) {
 	slide.each(function() { $(this).attr("data-index", $(this).index()) }).appendTo(slideMovable);
 
 
-	var slidesToShow = !!sliderActive.attr("data-show") ? parseInt(sliderActive.attr("data-show"), 10) : config.slider.show;
 	var hasNav = !!sliderActive.attr("data-nav") ? sliderActive.attr("data-nav").bool() : config.slider.nav;
 	var hasArrows = !!sliderActive.attr("data-arrows") ? sliderActive.attr("data-arrows").bool() : config.slider.arrows;
 	var hasThumbnails = !!sliderActive.attr("data-thumbnails") ? sliderActive.attr("data-thumbnails").bool() : config.slider.thumbnails;
@@ -31,22 +30,21 @@ var sliderInit = function(sliderId) {
 
 	// Position Containers
 
-	var sliderWidth = sliderActive.width() / slidesToShow;
 	var slideCount = slide.length;
-	var isMultiSlide = slideCount > 1;
-	var slideStep = sliderWidth;
-	var slideTrigger = sliderWidth / 6;
-	var slideTolerance = 50;
-	var slideDirection;
-
-	if ( slidesToShow >= slideCount ) slidesToShow = slideCount - 1;
-
 	var slideCurrent = 0;
 	var slideBefore = 0;
 	var loopUnit = 0;
 	var loopCount = 0;
 	var minCount = 0;
 	var maxCount = slideCount  - 1;
+
+	var sliderWidth = slide.eq(slideCurrent).outerWidth(true);
+	var sliderHeight = slide.eq(slideCurrent).outerHeight(true);
+	var isMultiSlide = slideCount > 1;
+	var slideStep = sliderWidth;
+	var slideTrigger = sliderWidth / 4;
+	var slideTolerance = 50;
+	var slideDirection;
 
 
 
@@ -113,21 +111,19 @@ var sliderInit = function(sliderId) {
 	// Main container repositioning
 
 	var containerPos = function() {
-		sliderWidth = sliderActive.width() / slidesToShow;
-
-		slide.outerWidth(sliderWidth, true);
-
 		slideMovable.css({
 			'margin-left': 0,
 			'left': 0,
-			'height': slide.eq(slideCurrent).outerHeight(true)
+			'height': sliderHeight
 		});
 
 		sliderTop = sliderActive.offset().top + (slideTolerance / 2),
 		sliderBottom = sliderActive.offset().top + sliderActive.height() - (slideTolerance / 2),
 		sliderLeft = sliderActive.offset().left + slideTolerance,
 		sliderRight = sliderActive.offset().left + sliderActive.width() - slideTolerance;
+		slideTrigger = sliderWidth / 4;
 	}
+
 	containerPos();
 
 
@@ -221,11 +217,17 @@ var sliderInit = function(sliderId) {
 		animating = true;
 		slideStep = sliderWidth * i;
 
+		sliderWidth = slide.eq(slideCurrent).outerWidth(true);
+		sliderHeight = slide.eq(slideCurrent).outerHeight(true);
+
+
 		if ( slideDirection == "prev" ) slideClone();
 
 		if ( slideAnimation === "slide" ) {
-			slideMovable.animate({
-				'height': slide.eq(slideCurrent).outerHeight(true),
+			slideMovable
+			.stop(true, false)
+			.animate({
+				'height': sliderHeight,
 				'left': - slideStep
 			}, {
 				duration: animDuration,
@@ -239,8 +241,9 @@ var sliderInit = function(sliderId) {
 					'left': slideStep
 				})
 				.fadeIn(animDuration * 1.5)
+				.stop(true, false)
 				.animate({
-					'height': slide.eq(slideCurrent).outerHeight(true)
+					'height': sliderHeight
 				}, {
 					duration: animDuration,
 					complete: slideEnd
@@ -304,107 +307,99 @@ var sliderInit = function(sliderId) {
 			sliderLeft = sliderActive.offset().left + slideTolerance,
 			sliderRight = sliderActive.offset().left + sliderActive.width() - slideTolerance;
 
-		slideMovable
-			.on("mousedown touchstart", function(e) {
+		var slideKickback = function() {
+			animDuration = 250;
+
+			setTimeout(function() {
+				if ( cloned ) {
+					slideDirection = "prev";
+
+					sliderActive.find('.slide:first-child').appendTo(slideMovable);
+					slideMovable.css({ 'margin-left': 0 });
+
+					cloned = false;
+				}
+			}, animDuration);
+		}
+
+		slideMovable.on("mousedown touchstart", function(e) {
+			if ( !config.application.touch ) e.preventDefault();
+			dragStart = e.pageX || e.originalEvent.touches[0].pageX;
+			dragX = e.pageX || e.originalEvent.touches[0].pageX;
+
+			if ( isMultiSlide ) down = true;
+		})
+		.on("mousemove touchmove", function(e) {
+			dragX = e.pageX || e.originalEvent.touches[0].pageX;
+			dragY = e.pageY || e.originalEvent.touches[0].pageY;
+
+			var dragNext = dragStart - dragX;
+			var dragPrev = dragX - dragStart;
+			initDrag = dragPrev > config.slider.threshold || dragNext > config.slider.threshold;
+
+			if ( down && initDrag && !animating ) {
 				if ( !config.application.touch ) e.preventDefault();
-				dragStart = e.pageX || e.originalEvent.touches[0].pageX;
-				dragX = e.pageX || e.originalEvent.touches[0].pageX;
 
-				if ( isMultiSlide ) down = true;
-			})
-			.on("mousemove touchmove", function(e) {
-				dragX = e.pageX || e.originalEvent.touches[0].pageX;
-				dragY = e.pageY || e.originalEvent.touches[0].pageY;
+				dragging = true;
 
-				var dragNext = dragStart - dragX;
-				var dragPrev = dragX - dragStart;
-				initDrag = dragPrev > config.slider.threshold || dragNext > config.slider.threshold;
-
-				if ( down && initDrag && !animating ) {
-					if ( !config.application.touch ) e.preventDefault();
-
-					dragging = true;
-
-					if ( dragX > dragStart ) {
-						if ( !cloned ) {
-							slideDirection = "prev";
-							sliderActive.find('.slide:last-child').prependTo(slideMovable);
-							slideMovable.css({ 'margin-left': - sliderWidth });
-							cloned = true;
-						}
-					} else {
-						clone = true;
-
-						if ( cloned ) {
-							slideDirection = "prev";
-							sliderActive.find('.slide:first-child').appendTo(slideMovable);
-							slideMovable.css({ 'margin-left': 0 });
-							cloned = false;
-						}
+				if ( dragX > dragStart ) {
+					if ( !cloned ) {
+						slideDirection = "prev";
+						sliderActive.find('.slide:last-child').prependTo(slideMovable);
+						slideMovable.css({ 'margin-left': - sliderWidth });
+						cloned = true;
 					}
+				} else {
+					clone = true;
 
-					slideMovable.css({
-						'left': - (dragStart - dragX)
-					});
-
-					var inBounds = dragX <= sliderLeft || dragX >= sliderRight || dragY <= sliderTop || dragY >= sliderBottom || dragNext >= sliderWidth || dragPrev >= sliderWidth;
-
-					if ( inBounds ) {
-						down = false;
-						dragging = false;
-
-						if ( dragStart - dragX > slideTrigger ) {
-							slideNext();
-						} else if ( dragStart - dragX < - slideTrigger ) {
-							slidePrev();
-						} else {
-							animDuration = 250;
-							slideAction();
-
-							setTimeout(function() {
-								if ( cloned ) {
-									slideDirection = "prev";
-
-									sliderActive.find('.slide:first-child').appendTo(slideMovable);
-									slideMovable.css({ 'margin-left': 0 });
-
-									cloned = false;
-								}
-							}, animDuration);
-						}
+					if ( cloned ) {
+						slideDirection = "prev";
+						sliderActive.find('.slide:first-child').appendTo(slideMovable);
+						slideMovable.css({ 'margin-left': 0 });
+						cloned = false;
 					}
 				}
-			})
-			.on("mouseleave mouseup touchend", function(e) {
-				if ( !config.application.touch ) e.preventDefault();
 
-				down = false;
+				slideMovable.css({
+					'left': - (dragStart - dragX)
+				});
 
-				if ( dragging && !animating ) {
+				var inBounds = dragX <= sliderLeft || dragX >= sliderRight || dragY <= sliderTop || dragY >= sliderBottom || dragNext >= sliderWidth || dragPrev >= sliderWidth;
+
+				if ( inBounds ) {
+					down = false;
 					dragging = false;
-					dragEnd = dragX;
 
-					if ( dragStart - dragEnd > slideTrigger ) {
+					if ( dragStart - dragX > slideTrigger ) {
 						slideNext();
-					} else if ( dragStart - dragEnd < - slideTrigger ) {
+					} else if ( dragX - dragStart > slideTrigger ) {
 						slidePrev();
 					} else {
-						animDuration = 250;
-						slideAction();
-
-						setTimeout(function() {
-							if ( cloned ) {
-								slideDirection = "prev";
-
-								sliderActive.find('.slide:first-child').appendTo(slideMovable);
-								slideMovable.css({ 'margin-left': slideStep });
-
-								cloned = false;
-							}
-						}, animDuration);
+						slideKickback();
+						slideAction(0);
 					}
 				}
-			});
+			}
+		})
+		.on("mouseleave mouseup touchend", function(e) {
+			if ( !config.application.touch ) e.preventDefault();
+
+			down = false;
+
+			if ( dragging && !animating ) {
+				dragging = false;
+				dragEnd = dragX;
+
+				if ( dragStart - dragEnd > slideTrigger ) {
+					slideNext();
+				} else if ( dragStart - dragEnd < - slideTrigger ) {
+					slidePrev();
+				} else {
+					slideKickback();
+					slideAction(0);
+				}
+			}
+		});
 	}
 
 
@@ -446,7 +441,7 @@ var sliderInit = function(sliderId) {
 	}
 
 	$(window).on("resize", function() {
-		containerPos();
+		slideAction(0);
 	});
 }
 

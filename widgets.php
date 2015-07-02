@@ -94,7 +94,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-slider="true" data-thumbnails="true" data-show="1">
+		<div class="slider full" data-slider="true" data-slideshow="false" data-thumbnails="true">
 			<div class="slide thumb" data-thumb="img/pictures/slider/1.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/2.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/3.jpg"></div>
@@ -107,7 +107,7 @@
 			<div class="slide thumb" data-thumb="img/pictures/slider/10.jpg"></div>
 		</div>
 
-		<div class="slider" data-slider="true" data-show="6">
+		<div class="slider fifth" data-slider="true">
 			<div class="slide">
 				<div class="cell">
 					<h3 class="emphasis">Test 1</h2>
@@ -173,7 +173,7 @@
 			</div>
 		</div>
 
-		<div class="slider" data-slider="true" data-show="3">
+		<div class="slider third" data-slider="true">
 			<div class="slide thumb" data-thumb="img/pictures/slider/1.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/2.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/3.jpg"></div>
@@ -192,9 +192,6 @@
 				<strong>Defaults:</strong>
 			</dt>
 
-			<dd>
-				<code>show: 1</code>
-			</dd>
 			<dd>
 				<code>nav: true</code>
 			</dd>

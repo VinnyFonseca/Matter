@@ -20,14 +20,10 @@
 				@include opacity(1);
 
 				&:hover {
-					@include background-opacity($brand1, 0.75);
-
-					.icon {
-						@include svgColor($cf);
-					}
+					@include background-opacity($brand2, 0.75);
 				}
 				&:active {
-					@include background-opacity($brand2, 0.75);
+					@include background-opacity($c2, 0.75);
 				}
 
 				&.slider-arrow-prev {
@@ -45,6 +41,7 @@
 		position: relative;
 		margin: 0;
 		left: 0;
+		width: 100%;
 		white-space: nowrap !important;
 		overflow: visible !important;
 		cursor: -webkit-grab;
@@ -59,7 +56,7 @@
 	.slide {
 		display: inline-block;
 		position: absolute;
-		margin: 0 5px;
+		margin: 0;
 		padding: 0;
 		width: 100%;
 		top: 0;
@@ -103,7 +100,7 @@
 
 	// Arrow Navigation
 
-	$arrowDiameter: 48px;
+	$arrowDiameter: 56px;
 
 	.slider-arrow {
 		display: none;
@@ -113,16 +110,15 @@
 		top: 0;
 		bottom: 0;
 		text-align: center;
-		background: rgba(255, 255, 255, 0.5);
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		cursor: pointer;
 		z-index: 50;
-		vertical-align: middle;
+		@include background-opacity($brand1, 0.75);
 		@include opacity(0);
+		vertical-align: middle;
 		user-select: none;
 		transition: {
 			property: margin background opacity;
-			duration: $animDuration / 2;
+			duration: $animDuration / 3;
 			timing-function: $animEasing;
 		}
 
@@ -130,21 +126,17 @@
 			float: left;
 			margin-left: -5%;
 			left: 0;
-			border-top-right-radius: $radius;
-			border-bottom-right-radius: $radius;
 		}
 		&.slider-arrow-next {
 			float: right;
 			margin-right: -5%;
 			right: 0;
-			border-top-left-radius: $radius;
-			border-bottom-left-radius: $radius;
 		}
 
 		.icon {
 			width: 22px;
 			height: 22px;
-			@include svgColor($brand1);
+			@include svgColor($cf);
 		}
 	}
 
@@ -167,7 +159,7 @@
 		.slider-bullet {
 			display: inline-block;
 			position: relative;
-			margin: floor($spacing / 2.5) floor($spacing / 2.5);
+			margin: floor($spacing / 1.5) floor($spacing / 2.5);
 			width: $bulletDiameter;
 			height: $bulletDiameter;
 			background-color: $brand2;

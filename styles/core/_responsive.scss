@@ -23,11 +23,13 @@
 
 	// Slider
 
-	.slider-nav {
-		&.thumbs {
-			.slider-bullet {
-				padding-bottom: 9%;
-				width: 9%;
+	.slider {
+		.slider-nav {
+			&.thumbs {
+				.slider-bullet {
+					padding-bottom: 9%;
+					width: 9%;
+				}
 			}
 		}
 	}
@@ -208,13 +210,18 @@
 		}
 
 		.slider-arrow {
-			@include opacity(1);
+			@include opacity(0.75);
+			background-color: transparent !important;
 
 			&.slider-arrow-prev {
 				margin-left: 0;
 			}
 			&.slider-arrow-next {
 				margin-right: 0;
+			}
+
+			.icon {
+				@include svgColor($brand1);
 			}
 		}
 
