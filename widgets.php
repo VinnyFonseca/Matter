@@ -94,16 +94,17 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-slider="true" data-show="2">
-			<div class="slide">
-				<img src="http://placehold.it/959x350" />
-			</div>
-			<div class="slide">
-				<img src="http://placehold.it/960x350" />
-			</div>
-			<div class="slide">
-				<img src="http://placehold.it/961x350" />
-			</div>
+		<div class="slider" data-slider="true" data-thumbnails="true" data-show="3">
+			<div class="slide thumb" data-thumb="img/pictures/slider/1.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/2.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/3.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/4.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/5.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/6.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/7.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/8.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/9.jpg"></div>
+			<div class="slide thumb" data-thumb="img/pictures/slider/10.jpg"></div>
 		</div>
 
 		<div class="slider" data-slider="true" data-show="6">
@@ -170,19 +171,6 @@
 					<strong>Supports any type of data</strong>
 				</div>
 			</div>
-		</div>
-
-		<div class="slider" data-slider="true" data-thumbnails="true" data-show="3">
-			<div class="slide thumb" data-thumb="img/pictures/slider/1.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/2.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/3.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/4.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/5.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/6.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/7.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/8.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/9.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/10.jpg"></div>
 		</div>
 
 		<div class="slider" data-slider="true" data-show="5">
