@@ -5,7 +5,7 @@ var sliderInit = function(sliderId) {
 	var slideContainerEl = '<div class="slider-container"></div>';
 	var slideMovableEl = '<div class="slider-movable"></div>';
 
-	sliderActive.show().append(slideContainerEl);
+	sliderActive.append(slideContainerEl);
 	var slideContainer = sliderActive.find('.slider-container');
 
 	slideContainer.append(slideMovableEl);
@@ -14,13 +14,13 @@ var sliderInit = function(sliderId) {
 	var slide = sliderActive.find('.slide');
 	slide.each(function() { $(this).attr("data-index", $(this).index()) }).appendTo(slideMovable);
 
+
+	var slidesToShow = !!sliderActive.attr("data-show") ? parseInt(sliderActive.attr("data-show"), 10) : config.slider.show;
 	var hasNav = !!sliderActive.attr("data-nav") ? sliderActive.attr("data-nav").bool() : config.slider.nav;
 	var hasArrows = !!sliderActive.attr("data-arrows") ? sliderActive.attr("data-arrows").bool() : config.slider.arrows;
 	var hasThumbnails = !!sliderActive.attr("data-thumbnails") ? sliderActive.attr("data-thumbnails").bool() : config.slider.thumbnails;
-	var slidesToShow = !!sliderActive.attr("data-show") ? parseInt(sliderActive.attr("data-show"), 10) : config.slider.show;
 	var slideAnimation = !!sliderActive.attr("data-animation") ? sliderActive.attr("data-animation") : config.slider.animation;
 	var autoSlide = !!sliderActive.attr("data-slideshow") ? sliderActive.attr("data-slideshow").bool() : config.slider.slideshow;
-
 
 	var animDuration = config.slider.duration;
 	var animInterval = config.slider.interval;
@@ -32,7 +32,6 @@ var sliderInit = function(sliderId) {
 	// Position Containers
 
 	var sliderWidth = sliderActive.width() / slidesToShow;
-	var sliderHeight;
 	var slideCount = slide.length;
 	var isMultiSlide = slideCount > 1;
 	var slideStep = sliderWidth;
@@ -116,14 +115,18 @@ var sliderInit = function(sliderId) {
 	var containerPos = function() {
 		sliderWidth = sliderActive.width() / slidesToShow;
 
-		slide.css({
-			'width': sliderWidth
-		});
+		slide.outerWidth(sliderWidth, true);
 
 		slideMovable.css({
 			'margin-left': 0,
-			'left': 0
+			'left': 0,
+			'height': slide.eq(slideCurrent).outerHeight(true)
 		});
+
+		sliderTop = sliderActive.offset().top + (slideTolerance / 2),
+		sliderBottom = sliderActive.offset().top + sliderActive.height() - (slideTolerance / 2),
+		sliderLeft = sliderActive.offset().left + slideTolerance,
+		sliderRight = sliderActive.offset().left + sliderActive.width() - slideTolerance;
 	}
 	containerPos();
 
@@ -222,7 +225,7 @@ var sliderInit = function(sliderId) {
 
 		if ( slideAnimation === "slide" ) {
 			slideMovable.animate({
-				'height': slide.eq(slideCurrent).outerHeight(),
+				'height': slide.eq(slideCurrent).outerHeight(true),
 				'left': - slideStep
 			}, {
 				duration: animDuration,
@@ -237,7 +240,7 @@ var sliderInit = function(sliderId) {
 				})
 				.fadeIn(animDuration * 1.5)
 				.animate({
-					'height': slide.eq(slideCurrent).outerHeight()
+					'height': slide.eq(slideCurrent).outerHeight(true)
 				}, {
 					duration: animDuration,
 					complete: slideEnd

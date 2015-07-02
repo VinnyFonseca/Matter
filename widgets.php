@@ -96,13 +96,79 @@
 
 		<div class="slider" data-slider="true" data-show="2">
 			<div class="slide">
-				<img class="thumb" src="http://placehold.it/959x350" />
+				<img src="http://placehold.it/959x350" />
 			</div>
 			<div class="slide">
-				<img class="thumb" src="http://placehold.it/960x350" />
+				<img src="http://placehold.it/960x350" />
 			</div>
 			<div class="slide">
-				<img class="thumb" src="http://placehold.it/961x350" />
+				<img src="http://placehold.it/961x350" />
+			</div>
+		</div>
+
+		<div class="slider" data-slider="true" data-show="6">
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 1</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 2</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 3</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 4</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 5</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 6</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 7</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 8</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 9</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
 			</div>
 		</div>
 
@@ -119,7 +185,7 @@
 			<div class="slide thumb" data-thumb="img/pictures/slider/10.jpg"></div>
 		</div>
 
-		<div class="slider" data-slider="true" data-show="3">
+		<div class="slider" data-slider="true" data-show="5">
 			<div class="slide thumb" data-thumb="img/pictures/slider/1.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/2.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/3.jpg"></div>
@@ -139,6 +205,9 @@
 			</dt>
 
 			<dd>
+				<code>show: 1</code>
+			</dd>
+			<dd>
 				<code>nav: true</code>
 			</dd>
 			<dd>
@@ -148,10 +217,10 @@
 				<code>thumbnails: false</code>
 			</dd>
 			<dd>
-				<code>slideshow: true</code>
+				<code>animation: "slide"</code> &nbsp;<small class="gray"><strong>slide | fade</strong></small>
 			</dd>
 			<dd>
-				<code>animation: "slide"</code> &nbsp;<small class="gray"><strong>slide | fade</strong></small>
+				<code>slideshow: true</code>
 			</dd>
 			<dd>
 				<code>duration: 500</code>

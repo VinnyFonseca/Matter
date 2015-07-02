@@ -47,7 +47,7 @@ var config = {
 		animation: "slide", // str: "slide", "fade".
 		duration: 500, // int: miliseconds for slide change.
 		interval: 5000, // int: miliseconds for slide interval.
-		threshold: 30 // int: px distance on X axis from touchstart to current touch position.
+		threshold: 20 // int: px distance on X axis from touchstart to current touch position.
 	},
 	tables: {
 		responsive: true // bool: Converts every row into a separate table on mobiles.

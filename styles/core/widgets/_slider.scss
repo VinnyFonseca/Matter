@@ -1,7 +1,7 @@
 // Main Container
 
 .slider {
-	display: none;
+	display: block;
 	position: relative;
 	margin: 0 auto;
 	margin-bottom: $spacing;
@@ -59,18 +59,17 @@
 	.slide {
 		display: inline-block;
 		position: absolute;
-		margin: 0;
+		margin: 0 5px;
 		padding: 0;
 		width: 100%;
 		top: 0;
 		left: 0;
 		border: 2px solid $brand1;
-		background-color: $brand1;
+		background-color: $ce;
 		vertical-align: top;
 		overflow: hidden;
 		white-space: normal;
 		visibility: hidden;
-		@extend .block-reset;
 
 		&:first-child {
 			position: relative;
@@ -168,7 +167,7 @@
 		.slider-bullet {
 			display: inline-block;
 			position: relative;
-			margin: floor($spacing / 2) floor($spacing / 4);
+			margin: floor($spacing / 2.5) floor($spacing / 2.5);
 			width: $bulletDiameter;
 			height: $bulletDiameter;
 			background-color: $brand2;
