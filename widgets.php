@@ -95,16 +95,16 @@
 		</p>
 
 		<div class="slider full" data-slider="true" data-slideshow="false" data-thumbnails="true">
-			<div class="slide thumb" data-thumb="img/pictures/slider/1.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/2.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/3.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/4.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/5.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/6.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/7.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/8.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/9.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/10.jpg"></div>
+			<div class="slide thumb" data-thumb="1.jpg"></div>
+			<div class="slide thumb" data-thumb="2.jpg"></div>
+			<div class="slide thumb" data-thumb="3.jpg"></div>
+			<div class="slide thumb" data-thumb="4.jpg"></div>
+			<div class="slide thumb" data-thumb="5.jpg"></div>
+			<div class="slide thumb" data-thumb="6.jpg"></div>
+			<div class="slide thumb" data-thumb="7.jpg"></div>
+			<div class="slide thumb" data-thumb="8.jpg"></div>
+			<div class="slide thumb" data-thumb="9.jpg"></div>
+			<div class="slide thumb" data-thumb="10.jpg"></div>
 		</div>
 
 		<div class="slider fifth" data-slider="true">
@@ -174,16 +174,16 @@
 		</div>
 
 		<div class="slider third" data-slider="true">
-			<div class="slide thumb" data-thumb="img/pictures/slider/1.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/2.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/3.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/4.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/5.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/6.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/7.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/8.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/9.jpg"></div>
-			<div class="slide thumb" data-thumb="img/pictures/slider/10.jpg"></div>
+			<div class="slide thumb" data-thumb="1.jpg"></div>
+			<div class="slide thumb" data-thumb="2.jpg"></div>
+			<div class="slide thumb" data-thumb="3.jpg"></div>
+			<div class="slide thumb" data-thumb="4.jpg"></div>
+			<div class="slide thumb" data-thumb="5.jpg"></div>
+			<div class="slide thumb" data-thumb="6.jpg"></div>
+			<div class="slide thumb" data-thumb="7.jpg"></div>
+			<div class="slide thumb" data-thumb="8.jpg"></div>
+			<div class="slide thumb" data-thumb="9.jpg"></div>
+			<div class="slide thumb" data-thumb="10.jpg"></div>
 		</div>
 
 

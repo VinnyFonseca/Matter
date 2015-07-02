@@ -83,13 +83,13 @@ var sliderInit = function(sliderId) {
 		for ( var i = 0; i < slideCount; i++ ) {
 			var navBulletEl = "";
 
-			var thumbSlide = slide.eq(i);
-			var slideImg = thumbSlide.data("thumb");
+			var slideThumb = slide.eq(i);
+			var slideImg = slideThumb.data("thumb");
 
-			if ( slide.eq(i).hasClass("thumb") ) thumbSlide.css({ "background-image": "url('" + slideImg + "')" });
+			if ( slide.eq(i).hasClass("thumb") ) slideThumb.css({ "background-image": "url('img/pictures/slider/" + slideImg + "')" });
 
 			if ( hasThumbnails ) {
-				navBulletEl = '<div class="slider-bullet" style="background: url(\'' + slideImg + '\') no-repeat center center;">&nbsp;</div>';
+				navBulletEl = '<div class="slider-bullet" style="background: url(\'img/pictures/slider/thumbs/' + slideImg + '\') no-repeat center center;">&nbsp;</div>';
 				navWrapper.addClass("thumbs");
 			} else {
 				navBulletEl = '<div class="slider-bullet">&bull;</div>';
