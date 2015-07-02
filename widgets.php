@@ -94,7 +94,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-slider="true" data-thumbnails="true" data-show="3">
+		<div class="slider" data-slider="true" data-thumbnails="true" data-show="1">
 			<div class="slide thumb" data-thumb="img/pictures/slider/1.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/2.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/3.jpg"></div>
@@ -173,7 +173,7 @@
 			</div>
 		</div>
 
-		<div class="slider" data-slider="true" data-show="5">
+		<div class="slider" data-slider="true" data-show="3">
 			<div class="slide thumb" data-thumb="img/pictures/slider/1.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/2.jpg"></div>
 			<div class="slide thumb" data-thumb="img/pictures/slider/3.jpg"></div>
