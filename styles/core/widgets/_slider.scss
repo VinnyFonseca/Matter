@@ -168,7 +168,7 @@
 		.slider-bullet {
 			display: inline-block;
 			position: relative;
-			margin: 0.5%;
+			margin: floor($spacing / 2) floor($spacing / 4);
 			width: $bulletDiameter;
 			height: $bulletDiameter;
 			background-color: $brand2;
@@ -198,6 +198,7 @@
 			text-align: left;
 
 			.slider-bullet {
+				margin: 0.5%;
 				padding-bottom: 5.25%;
 				width: 5.25%;
 				height: auto;
