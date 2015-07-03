@@ -155,9 +155,9 @@ var sliderInit = function(sliderId) {
 			'height': sliderHeight
 		});
 
-		sliderTop = sliderActive.offset().top + (slideTolerance / 2),
-		sliderBottom = sliderActive.offset().top + sliderActive.height() - (slideTolerance / 2),
-		sliderLeft = sliderActive.offset().left + slideTolerance,
+		sliderTop = sliderActive.offset().top + (slideTolerance / 2);
+		sliderBottom = sliderActive.offset().top + sliderActive.height() - (slideTolerance / 2);
+		sliderLeft = sliderActive.offset().left + slideTolerance;
 		sliderRight = sliderActive.offset().left + sliderActive.width() - slideTolerance;
 		slideTrigger = sliderWidth / 4;
 	}
