@@ -43,19 +43,8 @@
 			<h4>1. Requirements</h4>
 
 			<p class="emphasis">
-				Note: Use <code>sudo</code> on *nix systems to install gems and node packages.
+				Note: Use <code>sudo</code> on *nix systems to install node packages.
 			</p>
-
-			<ol>
-				<li>
-					<a href="http://rubyinstaller.org/" target="_blank" class="explicit">Ruby</a>
-				</li>
-				<li>
-					<a href="http://sass-lang.com/" target="_blank" class="explicit">Sass</a> <code>gem install sass</code>
-				</li>
-			</ol>
-
-			<strong>&minus;&nbsp;&nbsp;and&nbsp;&nbsp;&minus;</strong>
 
 			<ol>
 				<li>
