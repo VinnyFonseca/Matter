@@ -19,7 +19,6 @@ body {
 	color: $fontColor;
 	font-family: $bodyFont;
 	@include font-size($fontSize);
-
 	&.preload {
 		* {
 			transition-property: none !important;
@@ -35,6 +34,9 @@ body {
 
 	text-size-adjust: none;
 	font-smoothing: subpixel-antialiased;
+
+	touch-callout: none;
+	tap-highlight-color: rgba(0,0,0,0);
 
 	&:before, &:after {
 		box-sizing: inherit;

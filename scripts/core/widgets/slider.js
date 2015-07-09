@@ -15,11 +15,11 @@ var sliderInit = function(sliderId) {
 	slide.each(function() { $(this).attr("data-index", $(this).index()) }).appendTo(slideMovable);
 
 
-	var hasNav = !!sliderActive.attr("data-nav") ? sliderActive.attr("data-nav").bool() : config.slider.nav;
-	var hasArrows = !!sliderActive.attr("data-arrows") ? sliderActive.attr("data-arrows").bool() : config.slider.arrows;
-	var hasThumbnails = !!sliderActive.attr("data-thumbnails") ? sliderActive.attr("data-thumbnails").bool() : config.slider.thumbnails;
-	var slideAnimation = !!sliderActive.attr("data-animation") ? sliderActive.attr("data-animation") : config.slider.animation;
-	var autoSlide = !!sliderActive.attr("data-slideshow") ? sliderActive.attr("data-slideshow").bool() : config.slider.slideshow;
+	var hasNav = !!sliderActive.attr("data-nav") ? sliderActive.data("nav") : config.slider.nav;
+	var hasArrows = !!sliderActive.attr("data-arrows") ? sliderActive.data("arrows") : config.slider.arrows;
+	var hasThumbnails = !!sliderActive.attr("data-thumbnails") ? sliderActive.data("thumbnails") : config.slider.thumbnails;
+	var slideAnimation = !!sliderActive.attr("data-animation") ? sliderActive.data("animation") : config.slider.animation;
+	var slideShow = !!sliderActive.attr("data-slideshow") ? sliderActive.data("slideshow") : config.slider.slideshow;
 
 	var animDuration = config.slider.duration;
 	var animInterval = config.slider.interval;

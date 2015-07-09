@@ -10,6 +10,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
 		<meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="format-detection" content="telephone=no">
 
 	    <!--[if IE]>
 	    <meta http-equiv="Page-Enter" content="blendTrans(duration=0)" />
