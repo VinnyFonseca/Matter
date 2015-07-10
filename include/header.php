@@ -10,6 +10,35 @@
 		<div class="button primary brochure-trigger">
 			<img class="svg icon icon-brochure" src="img/icons/icon-brochure.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-brochure.png'" alt="Brochure icon">
 			<div class="brochure-counter" data-count="0">&nbsp;</div>
+
+			<div class="brochure-wrapper">
+				<h4 class="brochure-title">
+					Your brochure
+				</h4>
+
+				<div class="brochure-item-wrapper"></div>
+
+				<div class="brochure-links">
+					<div class="brochure-cta" data-overlay="brochure-share">
+						<img class="svg icon icon-share" src="img/icons/icon-share.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-share.png'" alt="share icon">
+						<span>Share</span>
+					</div>
+					<div class="brochure-cta" data-overlay="brochure-download">
+						<img class="svg icon icon-download" src="img/icons/icon-download.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-download.png'" alt="download icon">
+						<span>Download</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="button primary resize-trigger">
+			<img class="svg icon icon-brochure" src="img/icons/icon-brochure.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-brochure.png'" alt="Brochure icon">
+
+			<div class="font-control">
+				<button class="font-down">A&minus;</button>
+				<button class="font-reset primary">A</button>
+				<button class="font-up">A+</button>
+			</div>
 		</div>
 
 		<div class="button tertiary rwd-debug hidden">
@@ -47,25 +76,6 @@
 			</div>
 
 			<h3>Download your brochure</h3>
-		</div>
-	</div>
-
-	<div class="brochure-wrapper">
-		<h4 class="brochure-title">
-			Your brochure
-		</h4>
-
-		<div class="brochure-item-wrapper"></div>
-
-		<div class="brochure-links">
-			<div class="brochure-cta" data-overlay="brochure-share">
-				<img class="svg icon icon-share" src="img/icons/icon-share.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-share.png'" alt="share icon">
-				<span>Share</span>
-			</div>
-			<div class="brochure-cta" data-overlay="brochure-download">
-				<img class="svg icon icon-download" src="img/icons/icon-download.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-download.png'" alt="download icon">
-				<span>Download</span>
-			</div>
 		</div>
 	</div>
 
