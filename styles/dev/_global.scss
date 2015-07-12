@@ -338,11 +338,53 @@ $sidebarWidth: 300px;
 		border-radius: 1000px;
 
 		@extend .valign-middle;
+
+		> .icon {
+			display: block;
+			position: absolute;
+			margin-top: -9px;
+			margin-left: -9px;
+			width: 18px;
+			height: 18px;
+			top: 50%;
+			left: 50%;
+			font-size: 16px !important;
+			font-weight: bold;
+			line-height: 1;
+		}
+	}
+}
+
+.font-wrapper {
+	display: block;
+	position: absolute;
+	margin: 0;
+	padding: floor($spacing / 2);
+	right: 125%;
+	bottom: 0;
+	text-align: left;
+	border: 1px solid $ce;
+	border-radius: $radius;
+	background-color: $cf;
+	box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+	white-space: nowrap;
+	z-index: 80;
+	@include opacity(0);
+	transform: scale(0);
+	transform-origin: right bottom;
+	transition: all $animDuration $animEasing;
+
+	&.active {
+		@include opacity(1);
+		transform: scale(1);
 	}
 
-	.brochure-trigger {
-		display: none;
-		margin-left: auto;
+	button,
+	.button {
+		margin: 0;
+		width: 45px;
+		height: 45px;
+		font-size: 16px !important;
 	}
 }
 
