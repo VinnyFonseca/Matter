@@ -1,7 +1,25 @@
 // Accessibility: Global font resizing controls
 
 var initFontSizeControls = function() {
-	if ( $(".font-control").length ) {
+	if ( $(".font-wrapper").length ) {
+		$(".font-trigger").on("click", function(event) {
+			if ( !$(event.target).closest(".font-wrapper").length ) {
+				if ( !$(".font-wrapper").hasClass("active") ) {
+					$(this).addClass("active");
+					$(".font-wrapper").addClass("active");
+				} else {
+					$(this).removeClass("active");
+					$(".font-wrapper").removeClass("active");
+				}
+			}
+		});
+		$(document).on("click", function(event) {
+			if (!$(event.target).closest(".font-trigger.active, .font-wrapper.active").length) {
+				$(".font-trigger, .font-wrapper").removeClass("active");
+			}
+		});
+
+
 		var defaultSize = 10,
 			fontSize = defaultSize,
 			range = config.typography.resize.range;

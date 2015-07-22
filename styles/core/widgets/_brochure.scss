@@ -1,31 +1,29 @@
 // Brochure
 
-.brochure-trigger {
-	display: block;
-	margin: 0;
 
-	.brochure-counter {
-		display: block;
-		position: absolute;
-		width: 20px;
-		height: 20px;
-		top: -5px;
-		right: -5px;
-		@include font-size($fontSize / 1.2);
-		font-weight: 600;
-		background-color: $brand2;
-		border-radius: 1000px;
-	}
+
+.brochure-counter {
+	display: block;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	top: -5px;
+	right: -5px;
+	@include font-size($fontSize / 1.2);
+	font-weight: 600;
+	background-color: $brand2;
+	border-radius: 1000px;
 }
 
 .brochure-wrapper {
 	display: block;
-	position: fixed;
-	margin-right: 60px;
+	position: absolute;
+	margin: 0;
 	padding: $spacing $spacing floor($spacing / 2);
 	width: 240px;
-	right: 0;
-	bottom: 65px;
+	right: 125%;
+	bottom: 0;
+	text-align: left;
 	border: 1px solid $ce;
 	border-radius: $radius;
 	background-color: $cf;
@@ -89,7 +87,7 @@
 	.brochure-links {
 		display: block;
 		position: relative;
-		text-align: left;
+		color: $c2;
 
 		.brochure-cta {
 			display: block;

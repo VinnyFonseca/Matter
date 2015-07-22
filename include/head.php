@@ -47,3 +47,86 @@
 		<script type="text/javascript" src="scripts/core/vendor/fallback/html5shiv-printshiv.js"></script>
 		<![endif]-->
 	</head>
+
+	<body class="preload">
+		<!--[if lt IE 8]>
+		<p class="emphasis">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+
+		<a href="#" class="anchor" id="get-started"></a>
+
+
+		<div class="controls">
+			<div class="button primary brochure-trigger">
+				<img class="svg icon icon-brochure" src="img/icons/icon-brochure.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-brochure.png'" alt="Brochure icon">
+				<div class="brochure-counter" data-count="0">&nbsp;</div>
+
+				<div class="brochure-wrapper">
+					<h4 class="brochure-title">
+						Your brochure
+					</h4>
+
+					<div class="brochure-item-wrapper"></div>
+
+					<div class="brochure-links">
+						<div class="brochure-cta" data-overlay="brochure-share">
+							<img class="svg icon icon-share" src="img/icons/icon-share.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-share.png'" alt="share icon">
+							<span>Share</span>
+						</div>
+						<div class="brochure-cta" data-overlay="brochure-download">
+							<img class="svg icon icon-download" src="img/icons/icon-download.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-download.png'" alt="download icon">
+							<span>Download</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="button primary font-trigger">
+				<span class="icon">A+</span>
+
+				<div class="font-wrapper">
+					<button class="font-item font-down">A&minus;</button>
+					<button class="font-item font-reset primary">A</button>
+					<button class="font-item font-up">A&plus;</button>
+				</div>
+			</div>
+
+			<br>
+
+			<div class="button tertiary rwd-debug hidden">
+				<img class="svg icon icon-mobile" src="img/icons/icon-mobile.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-mobile.png'">
+			</div>
+
+			<a href="#get-started" class="button primary back-to-top">
+				<img class="svg icon icon-arrow-up" src="img/icons/icon-arrow-up.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-arrow-up.png'">
+			</a>
+		</div>
+
+
+		<div class="overlay" id="example">
+			<div class="modal">
+				<div class="overlay-close">
+					<img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
+				</div>
+
+				<h3>Example Overlay</h3>
+			</div>
+		</div>
+		<div class="overlay" id="brochure-share">
+			<div class="modal">
+				<div class="overlay-close">
+					<img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
+				</div>
+
+				<h3>Share your brochure</h3>
+			</div>
+		</div>
+		<div class="overlay" id="brochure-download">
+			<div class="modal">
+				<div class="overlay-close">
+					<img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
+				</div>
+
+				<h3>Download your brochure</h3>
+			</div>
+		</div>
