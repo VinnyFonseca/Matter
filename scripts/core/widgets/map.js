@@ -439,7 +439,6 @@ var map,
 
 var testHiRes = function() {
     var dpr = window.devicePixelRatio || (window.screen.deviceXDPI / window.screen.logicalXDPI) || 1;
-    console.log(dpr);
     return !!(dpr > 1);
 };
 
