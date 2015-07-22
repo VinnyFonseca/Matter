@@ -61,7 +61,7 @@ var sliderInit = function(sliderId) {
 		clearInterval(slideTimer);
 	}
 
-	if ( isMultiSlide && autoSlide !== false ) {
+	if ( isMultiSlide && slideShow !== false ) {
 		sliderStart();
 
 		if ( !config.application.touch ) {
