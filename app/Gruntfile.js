@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 					outputStyle: 'compressed'
 				},
 			        files: {
-			            'www/styles/build.css': 'app/styles/build.scss'
+			            'web/styles/build.css': 'app/styles/build.scss'
 			        }
 			}
 		},
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'app/styles',
 					src: '{,*/}*.css',
-					dest: 'www/styles',
+					dest: 'web/styles',
 					ext: '.css'
 				}]
 			}
@@ -49,10 +49,10 @@ module.exports = function(grunt) {
 					beautify: false,
 					sourceMap: true,
 					sourceMapIncludeSources: true,
-					sourceMapName: 'www/scripts/build.js.map'
+					sourceMapName: 'web/scripts/build.js.map'
 				},
 				files: {
-					'www/scripts/build.js': [
+					'web/scripts/build.js': [
 						'app/scripts/core/engine/jquery-1.11.2.js',
 						'app/scripts/core/engine/modernizr-latest.js',
 						'app/scripts/core/engine/device.js',
@@ -112,11 +112,11 @@ module.exports = function(grunt) {
 			dist: {
 				files: {
 					src: [
-						"www/**/*.html",
-						"www/**/*.php",
-						"www/img/**/*.*",
-						"www/styles/**/*.css",
-						"www/scripts/**/*.js"
+						"web/**/*.html",
+						"web/**/*.php",
+						"web/img/**/*.*",
+						"web/styles/**/*.css",
+						"web/scripts/**/*.js"
 					]
 				},
 				options: {
@@ -136,15 +136,15 @@ module.exports = function(grunt) {
 		watch: {
 			html: {
 				options: { livereload: true },
-				files: ['www/**/*.html']
+				files: ['web/**/*.html']
 			},
 			php: {
 				options: { livereload: true },
-				files: ['www/**/*.php']
+				files: ['web/**/*.php']
 			},
 			css: {
 				options: { livereload: true },
-				files: ['www/**/*.css']
+				files: ['web/**/*.css']
 			},
 			sass: {
 				options: { livereload: false },
