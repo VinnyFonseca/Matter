@@ -21,30 +21,15 @@ $itemQty: 7;
 	background-clip: padding-box;
 	outline: 0;
 
-	&.active {
-		ul {
-			@include opacity(1);
-			transform: translateY(0);
-			visibility: visible;
-			z-index: 9999;
-		}
-		.divider {
-			@include opacity(1);
-			transform: translateX(0);
-			visibility: visible;
-			z-index: 9999;
-		}
-	}
-
-	ul {
+	.autocomplete-list {
 		display: block;
 		position: absolute;
 		margin: 0;
 		padding: 0;
-		width: 99%;
 		max-height: ($itemHeight * $itemQty) + px;
 		top: 100%;
-		left: 0.5%;
+		left: 1%;
+		right: 1%;
 		list-style: none;
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 		overflow: auto;
@@ -57,12 +42,27 @@ $itemQty: 7;
 		transition-duration: $animDuration;
 		transition-timing-function: $animEasing;
 
-		li {
+		&.active {
+			@include opacity(1);
+			transform: translateY(0);
+			visibility: visible;
+			z-index: 9999;
+		}
+	}
+
+	ul {
+		display: block;
+		position: relative;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		li:not(.divider) {
 			display: none;
 			position: relative;
 			margin: 0;
 			margin-top: -1px;
-			padding: floor($spacing / 2) floor($spacing / 1.5);
+			padding: floor($spacing / 2) floor($spacing / 1.25);
 			border: 1px solid $ce;
 			background: $cf;
 
@@ -87,7 +87,6 @@ $itemQty: 7;
 
 			&.selected {
 				display: block;
-				padding-left: 24px;
 				cursor: pointer;
 			}
 
@@ -103,25 +102,13 @@ $itemQty: 7;
 
 	.divider {
 		display: block;
-		position: absolute;
+		position: relative;
 		margin: 0;
-		margin-top: -1px;
-		padding: 9px 12px;
-		top: 100%;
-		right: 99.5%;
+		padding: floor($spacing / 2) floor($spacing / 1.25);
 		color: $fontColor !important;
 		font-weight: bold;
 		background-color: $ce;
 		border: 1px solid $ce;
-		border-top-left-radius: $radius;
-		border-bottom-left-radius: $radius;
-		visibility: hidden;
-		z-index: -1;
 		cursor: default;
-		@include opacity(0);
-		transform: translateX(10px);
-		transition-property: opacity, transform;
-		transition-duration: $animDuration;
-		transition-timing-function: $animEasing;
 	}
 }
