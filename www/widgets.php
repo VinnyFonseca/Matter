@@ -362,7 +362,7 @@
 		</p>
 
 		<div class="map-wrapper framed">
-			<div id="map-canvas" class="map-canvas" data-feed="scripts/dev/data/map-config.json"></div>
+			<div id="map-canvas" class="map-canvas" data-feed="scripts/data/map-config.json"></div>
 		</div>
 
 
@@ -382,7 +382,7 @@
 
 <pre>
 &lt;div class="map-wrapper"&gt;
-	&lt;div <span class="emphasis">id="map-canvas" class="map-canvas" data-feed="scripts/dev/data/map-config.json"</span>&gt;&lt;/div&gt;
+	&lt;div <span class="emphasis">id="map-canvas" class="map-canvas" data-feed="scripts/data/map-config.json"</span>&gt;&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 

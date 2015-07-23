@@ -56,7 +56,7 @@
 			<textarea name="textarea" rows="5" cols="50" placeholder="Default text" data-validation="text" required></textarea>
 
 			<label>Select</label>
-			<select name="country" data-validation="select" data-countries="scripts/dev/data/countries.json" required>
+			<select name="country" data-validation="select" data-countries="scripts/data/countries.json" required>
 				<option value="" default selected>Select country...</option>
 			</select>
 
@@ -113,7 +113,7 @@
 			</fieldset>
 
 			<!-- <label>Select List</label>
-			<select name="country" data-validation="select" data-countries="scripts/dev/data/countries.json" size="5" required>
+			<select name="country" data-validation="select" data-countries="scripts/data/countries.json" size="5" required>
 				<option value="" default selected>Select country...</option>
 			</select> -->
 
