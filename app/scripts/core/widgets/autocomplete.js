@@ -5,6 +5,7 @@ var initAutocomplete = function() {
 		$("[data-autocomplete]").each(function() {
 			var el = $(this),
 				input = el.children("input"),
+				loader = el.children(".loader"),
 				resultIndex = 0,
 				showCount = $(window).width() > 480 ? 7 : 5,
 				resultsMax = 10,
@@ -20,7 +21,6 @@ var initAutocomplete = function() {
 				list.children(".loader").hide();
 
 				list.append("<ul class='autocomplete-results'></ul>");
-				var parameterResults = input.data("autocomplete-parameter");
 				var results = list.children(".autocomplete-results");
 				results.append("<li class='divider'><span class='match-count'>0</span>Match<span class='plural'>es</span></li>");
 
@@ -49,6 +49,8 @@ var initAutocomplete = function() {
 							var listBottom = listTop + list.height();
 							var resultTop;
 							var resultBottom;
+
+							loader.show();
 
 							if ( event.keyCode === 38 && resultIndex > 0 ) { // Arrow Up
 								result.removeClass("active");
@@ -178,17 +180,21 @@ var initAutocomplete = function() {
 						} else {
 							list.height(result.outerHeight() * totalShowing);
 						}
+
+						loader.hide();
 					}
 				}
 
 
 				var populate = function() {
 					var JSONobjects = data.Results;
+					var parameter = input.data("autocomplete-parameter");
+
 					var tempArray = [];
 
 					for ( var i = 0; i < JSONobjects.length; i++ ) {
 						var object = JSONobjects[i];
-						var property = object[parameterResults];
+						var property = object[parameter];
 
 						if ( property instanceof Array ) {
 							for ( var j = 0; j < property.length; j++ ) {
@@ -208,11 +214,13 @@ var initAutocomplete = function() {
 
 				var suggest = function(data) {
 					var JSONobjects = data.Results;
+					var parameter = "PageTitle";
+
 					var tempArray = [];
 
 					for ( var i = 0; i < JSONobjects.length; i++ ) {
 						var object = JSONobjects[i];
-						var property = object[parameterSuggestions];
+						var property = object[parameter];
 
 						if ( property instanceof Array ) {
 							for ( var j = 0; j < property.length; j++ ) {
@@ -231,7 +239,6 @@ var initAutocomplete = function() {
 					if ( suggestedArray.length > 0) {
 						list.append("<ul class='autocomplete-suggestions'></ul>");
 						var suggestions = list.children(".autocomplete-suggestions");
-						var parameterSuggestions = "PageTitle";
 						suggestions.prepend("<li class='divider'>Suggested Items</li>");
 					}
 
@@ -253,7 +260,6 @@ var initAutocomplete = function() {
 					if ( keyContactArray.length > 0) {
 						list.append("<ul class='autocomplete-key-contacts'></ul>");
 						var keyContacts = list.children(".autocomplete-key-contacts");
-						var parameterKeyContacts = "PageTitle";
 						keyContacts.append("<li class='divider'>Key Contacts</li>");
 					}
 
@@ -272,13 +278,27 @@ var initAutocomplete = function() {
 			}
 
 
+			// Async requests
+
 			// input.on("keydown", function(event) {
 			// 	if ( list.hasClass("active") ) {
+			// 		var results = list.children("ul.autocomplete-results");
+			// 		var result = results.children("li:not(.divider)");
+
+			// 		var suggestions = list.children("ul.autocomplete-suggestions");
+			// 		var suggestion = suggestions.children("li:not(.divider)");
+
+			// 		var keyContacts = list.children("ul.autocomplete-key-contacts");
+			// 		var keyContact = keyContacts.children("li:not(.divider)");
+
+
 			// 		var selectedResult = results.children("li.selected");
 			// 		var listTop = list.scrollTop();
 			// 		var listBottom = listTop + list.height();
 			// 		var resultTop;
 			// 		var resultBottom;
+
+			// 		loader.show();
 
 			// 		if ( event.keyCode === 38 && resultIndex > 0 ) { // Arrow Up
 			// 			result.removeClass("active");
@@ -318,11 +338,11 @@ var initAutocomplete = function() {
 			// 	}
 			// })
 			// .on("keyup", function(event) {
-			// 	show(this);
+			// 	show();
 			// })
 			// .on("focus", function() {
 			// 	resultIndex = list.find("li.active").length ? resultIndex : -1;
-			// 	show(this);
+			// 	show();
 			// })
 			// .on("blur", function() {
 			// 	if ( selecting === false ) {

@@ -18,6 +18,22 @@
 	background-clip: padding-box;
 	outline: 0;
 
+	$loaderDiameter: 21px;
+
+	input {
+		padding-right: (floor($spacing / 1.5) * 2) + $loaderDiameter;
+	}
+
+	.loader {
+		display: none;
+		position: absolute;
+		width: $loaderDiameter;
+		height: $loaderDiameter;
+		top: (47 / 2)  - ($loaderDiameter / 2);
+		right: floor($spacing / 1.5);
+		z-index: 10;
+	}
+
 	.autocomplete-list {
 		display: block;
 		position: absolute;
