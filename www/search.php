@@ -28,7 +28,7 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="autocomplete-wrapper" data-autocomplete="true" data-autocomplete-results="scripts/data/search.json" data-autocomplete-suggestions="scripts/data/search-suggestions.json">
+		<div class="autocomplete-wrapper" data-autocomplete="true" data-autocomplete-feed="scripts/data/search.json">
 			<img class="loader" src="img/loader.gif" height="16" width="16" alt="">
 			<input type="text" placeholder="Type to search..." data-autocomplete-parameter="Title">
 		</div>
