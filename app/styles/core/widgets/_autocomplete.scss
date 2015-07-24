@@ -1,8 +1,5 @@
 // Autocomplete
 
-$itemHeight: 47;
-$itemQty: 7;
-
 .autocomplete-wrapper {
 	display: block;
 	position: relative;
@@ -26,7 +23,6 @@ $itemQty: 7;
 		position: absolute;
 		margin: 0;
 		padding: 0;
-		max-height: ($itemHeight * $itemQty) + px;
 		top: 100%;
 		left: 1%;
 		right: 1%;
@@ -61,9 +57,8 @@ $itemQty: 7;
 			display: none;
 			position: relative;
 			margin: 0;
-			margin-top: -1px;
 			padding: floor($spacing / 2) floor($spacing / 1.25);
-			border: 1px solid $ce;
+			border-bottom: 1px solid $ce;
 			background: $cf;
 
 			&:hover {
@@ -108,7 +103,7 @@ $itemQty: 7;
 		color: $fontColor !important;
 		font-weight: bold;
 		background-color: $ce;
-		border: 1px solid $ce;
+		border-top: 1px solid $ce;
 		cursor: default;
 	}
 }

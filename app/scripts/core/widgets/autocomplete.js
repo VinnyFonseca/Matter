@@ -6,7 +6,8 @@ var initAutocomplete = function() {
 			var el = $(this),
 				input = el.children("input"),
 				resultIndex = 0,
-				show = $(window).width() > 480 ? 7 : 5,
+				showCount = $(window).width() > 480 ? 7 : 5,
+				resultsMax = 10,
 				selecting = false;
 
 			var urlResults = el.data("autocomplete-results");
@@ -15,19 +16,24 @@ var initAutocomplete = function() {
 			el.append("<div class='autocomplete-list'></div>");
 			var list = el.children(".autocomplete-list");
 
-			list.append("<ul class='autocomplete-results'></ul>");
-			var parameterResults = input.data("autocomplete-parameter");
-			var results = list.children(".autocomplete-results");
-			results.prepend("<li class='divider'>Matches</li>");
-
-
 			var build = function(data) {
+				list.children(".loader").hide();
+
+				list.append("<ul class='autocomplete-results'></ul>");
+				var parameterResults = input.data("autocomplete-parameter");
+				var results = list.children(".autocomplete-results");
+				results.append("<li class='divider'><span class='match-count'>0</span>Match<span class='plural'>es</span></li>");
+
 				var init = function() {
 					var results = list.children("ul.autocomplete-results");
 					var result = results.children("li:not(.divider)");
 
 					var suggestions = list.children("ul.autocomplete-suggestions");
 					var suggestion = suggestions.children("li:not(.divider)");
+
+					var keyContacts = list.children("ul.autocomplete-key-contacts");
+					var keyContact = keyContacts.children("li:not(.divider)");
+
 
 					list.on("mouseenter", function() {
 						selecting = true;
@@ -82,11 +88,11 @@ var initAutocomplete = function() {
 						}
 					})
 					.on("keyup", function(event) {
-						showItems(this);
+						show();
 					})
 					.on("focus", function() {
 						resultIndex = list.find("li.active").length ? resultIndex : -1;
-						showItems(this);
+						show();
 					})
 					.on("blur", function() {
 						if ( selecting === false ) {
@@ -96,15 +102,27 @@ var initAutocomplete = function() {
 					});
 
 
-					var showItems = function(target) {
-						var filter = $(target).val();
-						var term = new RegExp(filter, "i");
+					var show = function() {
+						var term = input.val();
+						var filter = new RegExp(term, "i");
+
+						results.show();
 
 						result.each(function() {
-							if ( $(this).text().search(term) < 0 ) {
+							if ( $(this).text().search(filter) < 0 ) {
 								$(this).removeClass("selected");
 							} else {
-								$(this).addClass("selected");
+								if ( results.children(".selected").length < resultsMax ) $(this).addClass("selected");
+							}
+
+							results.find(".divider .match-count").text(results.find(".selected").length + " ");
+
+							console.log(results.children(".selected").length);
+
+							if ( results.children(".selected").length == 1 ) {
+								results.find(".divider .plural").hide();
+							} else {
+								results.find(".divider .plural").show();
 							}
 						}).on("click", function() {
 							input.val($(this).text()).trigger({type: "keydown", which: 13});
@@ -112,9 +130,11 @@ var initAutocomplete = function() {
 							unhighlight(results.children("li.selected"));
 						});
 
-						if ( filter.length > 0 && result.hasClass("selected") ) {
-							list.addClass("active").height((result.outerHeight() - 1) * show);
-							highlight(results.children("li.selected"), filter);
+						if ( results.children(".selected").length === 0 ) results.hide();
+
+						if ( term.length > 0 && results.children(".selected").length ) {
+							list.addClass("active");
+							highlight(results.children("li.selected"), term);
 						} else {
 							list.removeClass("active");
 							unhighlight(results.children("li.selected"));
@@ -123,13 +143,41 @@ var initAutocomplete = function() {
 
 						// Code for keyword recognition on suggested items
 
+						suggestions.show();
+
 						suggestion.each(function() {
-							if ( $(this).data("keywords").search(term) < 0 ) {
+							if ( $(this).data("keywords").search(filter) < 0 ) {
 								$(this).removeClass("selected");
 							} else {
 								$(this).addClass("selected");
 							}
+
+							if ( suggestions.children(".selected").length === 0 ) suggestions.hide();
 						});
+
+
+						keyContacts.show();
+
+						keyContact.each(function() {
+							if ( $(this).data("keywords").search(filter) < 0 ) {
+								$(this).removeClass("selected");
+							} else {
+								$(this).addClass("selected");
+							}
+
+							if ( keyContacts.children(".selected").length === 0 ) keyContacts.hide();
+						});
+
+
+						// List height
+
+						var totalShowing = list.find("li.divider:visible").length + list.find("li.selected").length;
+
+						if ( totalShowing >= showCount ) {
+							list.height(result.outerHeight() * showCount);
+						} else {
+							list.height(result.outerHeight() * totalShowing);
+						}
 					}
 				}
 
@@ -182,8 +230,8 @@ var initAutocomplete = function() {
 
 					if ( suggestedArray.length > 0) {
 						list.append("<ul class='autocomplete-suggestions'></ul>");
-						var parameterSuggestions = "PageTitle";
 						var suggestions = list.children(".autocomplete-suggestions");
+						var parameterSuggestions = "PageTitle";
 						suggestions.prepend("<li class='divider'>Suggested Items</li>");
 					}
 
@@ -203,11 +251,14 @@ var initAutocomplete = function() {
 
 
 					if ( keyContactArray.length > 0) {
-						suggestions.append("<li class='divider'>Key Contacts</li>");
+						list.append("<ul class='autocomplete-key-contacts'></ul>");
+						var keyContacts = list.children(".autocomplete-key-contacts");
+						var parameterKeyContacts = "PageTitle";
+						keyContacts.append("<li class='divider'>Key Contacts</li>");
 					}
 
 					for ( var l = 0; l < keyContactArray.length; l++ ) {
-						suggestions.append(
+						keyContacts.append(
 							"<li data-keywords='" + keyContactArray[l].Keywords.join() + "'>\
 								<a href='" + keyContactArray[l].PageUrl + "'>" + keyContactArray[l].PageTitle + "</a>\
 							</li>"
@@ -219,6 +270,66 @@ var initAutocomplete = function() {
 
 				dataRequest(urlSuggestions, "GET", suggest);
 			}
+
+
+			// input.on("keydown", function(event) {
+			// 	if ( list.hasClass("active") ) {
+			// 		var selectedResult = results.children("li.selected");
+			// 		var listTop = list.scrollTop();
+			// 		var listBottom = listTop + list.height();
+			// 		var resultTop;
+			// 		var resultBottom;
+
+			// 		if ( event.keyCode === 38 && resultIndex > 0 ) { // Arrow Up
+			// 			result.removeClass("active");
+			// 			resultIndex--;
+			// 			selectedResult.eq(resultIndex).addClass("active");
+
+			// 			resultTop = selectedResult.eq(resultIndex).position().top;
+			// 			resultBottom = resultTop + selectedResult.eq(resultIndex).outerHeight();
+
+			// 			if ( resultTop < listTop ) list.scrollTop(resultBottom - list.height());
+			// 		}
+
+			// 		if ( event.keyCode === 40 && resultIndex < selectedResult.length - 1 ) { // Arrow Down
+			// 			result.removeClass("active");
+			// 			resultIndex++;
+			// 			selectedResult.eq(resultIndex).addClass("active");
+
+			// 			resultTop = selectedResult.eq(resultIndex).position().top;
+			// 			resultBottom = resultTop + selectedResult.eq(resultIndex).outerHeight();
+
+			// 			if ( resultBottom > listBottom ) list.scrollTop(resultTop);
+			// 		}
+
+			// 		if ( event.keyCode === 9 || event.keyCode === 13 ) { // Enter or Tab
+			// 			input.val(results.children("li.active").text());
+			// 			result.removeClass("active");
+			// 		}
+
+			// 		if ( event.keyCode === 8 || event.keyCode === 46 ) { // Backspace and Delete
+			// 			result.removeClass("active");
+			// 			resultIndex = -1;
+			// 		}
+
+			// 		if ( event.keyCode === 27 ) { // Escape
+			// 			input.blur();
+			// 		}
+			// 	}
+			// })
+			// .on("keyup", function(event) {
+			// 	show(this);
+			// })
+			// .on("focus", function() {
+			// 	resultIndex = list.find("li.active").length ? resultIndex : -1;
+			// 	show(this);
+			// })
+			// .on("blur", function() {
+			// 	if ( selecting === false ) {
+			// 		list.removeClass("active");
+			// 		unhighlight(list.find("li"));
+			// 	}
+			// });
 
 			dataRequest(urlResults, "GET", build);
 		});
