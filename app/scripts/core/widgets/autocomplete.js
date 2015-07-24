@@ -20,12 +20,15 @@ var initAutocomplete = function() {
 			var build = function(data) {
 				list.children(".loader").hide();
 
+				list.append("<ul class='no-results'><li>No matches found. Press Enter to search globally.</li></ul>");
+				var noResults = list.children("ul.no-results");
+				noResults.hide();
+
 				list.append("<ul class='autocomplete-results'></ul>");
-				var results = list.children(".autocomplete-results");
+				var results = list.children("ul.autocomplete-results");
 				results.append("<li class='divider'><span class='match-count'>0</span>Match<span class='plural'>es</span></li>");
 
 				var init = function() {
-					var results = list.children("ul.autocomplete-results");
 					var result = results.children("li:not(.divider)");
 
 					var suggestions = list.children("ul.autocomplete-suggestions");
@@ -50,10 +53,9 @@ var initAutocomplete = function() {
 							var resultTop;
 							var resultBottom;
 
-							loader.show();
+							result.removeClass("active");
 
 							if ( event.keyCode === 38 && resultIndex > 0 ) { // Arrow Up
-								result.removeClass("active");
 								resultIndex--;
 								selectedResult.eq(resultIndex).addClass("active");
 
@@ -64,7 +66,6 @@ var initAutocomplete = function() {
 							}
 
 							if ( event.keyCode === 40 && resultIndex < selectedResult.length - 1 ) { // Arrow Down
-								result.removeClass("active");
 								resultIndex++;
 								selectedResult.eq(resultIndex).addClass("active");
 
@@ -76,11 +77,9 @@ var initAutocomplete = function() {
 
 							if ( event.keyCode === 9 || event.keyCode === 13 ) { // Enter or Tab
 								input.val(results.children("li.active").text());
-								result.removeClass("active");
 							}
 
 							if ( event.keyCode === 8 || event.keyCode === 46 ) { // Backspace and Delete
-								result.removeClass("active");
 								resultIndex = -1;
 							}
 
@@ -109,6 +108,7 @@ var initAutocomplete = function() {
 						var filter = new RegExp(term, "i");
 
 						results.show();
+						loader.show();
 
 						result.each(function() {
 							if ( $(this).text().search(filter) < 0 ) {
@@ -118,8 +118,6 @@ var initAutocomplete = function() {
 							}
 
 							results.find(".divider .match-count").text(results.find(".selected").length + " ");
-
-							console.log(results.children(".selected").length);
 
 							if ( results.children(".selected").length == 1 ) {
 								results.find(".divider .plural").hide();
@@ -132,14 +130,14 @@ var initAutocomplete = function() {
 							unhighlight(results.children("li.selected"));
 						});
 
-						if ( results.children(".selected").length === 0 ) results.hide();
+						if ( results.children(".selected").length === 0 ) {
+							results.hide().find(".divider .match-count").text("No ");
+						}
 
-						if ( term.length > 0 && results.children(".selected").length ) {
+						if ( term.length > 0 ) {
 							list.addClass("active");
-							highlight(results.children("li.selected"), term);
 						} else {
 							list.removeClass("active");
-							unhighlight(results.children("li.selected"));
 						}
 
 
@@ -171,14 +169,22 @@ var initAutocomplete = function() {
 						});
 
 
-						// List height
+						// List states
 
 						var totalShowing = list.find("li.divider:visible").length + list.find("li.selected").length;
 
 						if ( totalShowing >= showCount ) {
-							list.height(result.outerHeight() * showCount);
+							list.css("height", list.find("li.selected").outerHeight() * showCount);
 						} else {
-							list.height(result.outerHeight() * totalShowing);
+							list.css("height", "auto");
+						}
+
+						if ( list.find(".selected").length > 0 ) {
+							noResults.hide();
+							highlight(results.children("li.selected"), term);
+						} else {
+							noResults.show();
+							unhighlight(results.children("li.selected"));
 						}
 
 						loader.hide();
@@ -238,7 +244,7 @@ var initAutocomplete = function() {
 
 					if ( suggestedArray.length > 0) {
 						list.append("<ul class='autocomplete-suggestions'></ul>");
-						var suggestions = list.children(".autocomplete-suggestions");
+						var suggestions = list.children("ul.autocomplete-suggestions");
 						suggestions.prepend("<li class='divider'>Suggested Items</li>");
 					}
 
@@ -259,7 +265,7 @@ var initAutocomplete = function() {
 
 					if ( keyContactArray.length > 0) {
 						list.append("<ul class='autocomplete-key-contacts'></ul>");
-						var keyContacts = list.children(".autocomplete-key-contacts");
+						var keyContacts = list.children("ul.autocomplete-key-contacts");
 						keyContacts.append("<li class='divider'>Key Contacts</li>");
 					}
 

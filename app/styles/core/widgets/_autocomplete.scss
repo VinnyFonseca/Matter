@@ -69,6 +69,24 @@
 		padding: 0;
 		list-style: none;
 
+		&.no-results {
+			li {
+				display: block !important;
+				cursor: default;
+
+				&:hover,
+				&:active,
+				&.active {
+					color: inherit !important;
+					background: $cf !important;
+
+					* {
+						color: inherit !important;
+					}
+				}
+			}
+		}
+
 		li:not(.divider) {
 			display: none;
 			position: relative;
