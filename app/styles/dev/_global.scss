@@ -445,7 +445,7 @@ footer,
 	padding: floor($spacing / 1.5) $spacing;
 	width: 100%;
 	color: $cf;
-	background: $brand1 url($introBg) no-repeat center 65%;
+	background: $brand1;
 	background-size: cover;
 	z-index: 80;
 
@@ -461,20 +461,24 @@ footer,
 	}
 
 	.author {
+		display: block;
 		position: relative;
 		float: right;
+		margin-left: floor($spacing / 2);
 		top: 10px;
 		right: 0;
 	}
 
 	.social {
-		display: none;
+		display: block;
 		position: relative;
+		float: right;
 		margin-top: floor($spacing / 2);
+		margin-left: floor($spacing / 2);
 		padding: 0;
 
 		.icon {
-			margin-right: floor($spacing / 2);
+			margin-left: floor($spacing / 2);
 			width: 24px;
 			height: 24px;
 			@include svgColor($cf);

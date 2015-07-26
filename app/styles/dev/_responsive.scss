@@ -52,12 +52,6 @@
 
 	header,
 	.header {
-		.logo {
-			span {
-				display: none;
-			}
-		}
-
 		nav,
 		.nav {
 			.nav-item {
@@ -93,7 +87,7 @@
 
 		.logo {
 			span {
-				display: inline-block;
+				display: none;
 			}
 		}
 
@@ -213,9 +207,8 @@
 
 
 	footer {
-		.social {
-			position: relative;
-			padding: floor($spacing / 1.5) $spacing;
+		.author {
+			display: none;
 		}
 	}
 
