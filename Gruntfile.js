@@ -14,9 +14,9 @@ module.exports = function(grunt) {
 					sourceMap: true,
 					outputStyle: 'compressed'
 				},
-			        files: {
-			            'www/styles/build.css': 'app/styles/build.scss'
-			        }
+				files: {
+					'www/styles/build.css': 'app/styles/build.scss'
+				}
 			}
 		},
 

@@ -24,8 +24,9 @@ var loadScript = function(src, callback) {
 var initSVGs = function() {
 	if ( !$("html").hasClass("lt-ie9") && $('img.svg').length ) {
 		var svgCount = 0;
+		console.log(Modernizr.svg);
 
-		$('img.svg').each(function(i) {
+		$("img[src$='.svg']").each(function(i) {
 			var img = $(this),
 				imgID = img.attr('id'),
 				imgClass = img.attr('class'),
@@ -33,16 +34,21 @@ var initSVGs = function() {
 
 			svgCount = i;
 
-			$.get(imgURL, function(data) {
-				var svg = $(data).find('svg');
-				if(typeof imgID !== 'undefined') svg = svg.attr('id', imgID);
-				if(typeof imgClass !== 'undefined') svg = svg.attr('class', imgClass + ' replaced-svg');
-				if ( img.hasClass("icon") ) svg.find("*").removeAttr("style");
-				svg = svg.removeAttr('xmlns:a');
-				img.replaceWith(svg);
-			}, 'xml').fail(function() {
-                img.removeClass("svg");
-            });
+			if ( !Modernizr.svg ) {
+				imgURL = imgURL.replace(".svg", ".png");
+				img.attr("src", imgURL + ".png");
+			} else {
+				$.get(imgURL, function(data) {
+					var svg = $(data).find('svg');
+					if(typeof imgID !== 'undefined') svg = svg.attr('id', imgID);
+					if(typeof imgClass !== 'undefined') svg = svg.attr('class', imgClass + ' replaced-svg');
+					if ( img.hasClass("icon") ) svg.find("*").removeAttr("style");
+					svg = svg.removeAttr('xmlns:a');
+					img.replaceWith(svg);
+				}, 'xml').fail(function() {
+	                img.removeClass("svg");
+	            });
+			}
 		});
 
 		if ( config.application.debug ) console.log("System :: SVG Injection @ " + svgCount + " images");

@@ -95,8 +95,8 @@
 					$file = basename(preg_replace('/\\.[^.\\s]{3,4}$/', '', $icon));
 					$name = str_replace('icon-', '', $file);
 
-					echo "<div class='icon-container' data-icon=" . $name . " data-tooltip=" . $name . ">
-							  <img class='svg icon " . $file . "' src='img/icons/" . $file . ".svg' onerror='this.onerror=null;this.src=\"img/icons/" . $file . ".png\"'>
+					echo "<div class='icon-container' data-icon='" . $name . "' data-tooltip='" . $name . "'>
+							  <img class='svg icon " . $file . "' src='img/icons/" . $file . ".svg'>
 						  </div>";
 				}
 			?>
