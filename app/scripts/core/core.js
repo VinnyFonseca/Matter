@@ -22,9 +22,8 @@ var loadScript = function(src, callback) {
 // SVG Injection
 
 var initSVGs = function() {
-	if ( !$("html").hasClass("lt-ie9") && $('img.svg').length ) {
+	if ( $("img[src$='.svg']").length ) {
 		var svgCount = 0;
-		console.log(Modernizr.svg);
 
 		$("img[src$='.svg']").each(function(i) {
 			var img = $(this),
@@ -36,16 +35,16 @@ var initSVGs = function() {
 
 			if ( !Modernizr.svg ) {
 				imgURL = imgURL.replace(".svg", ".png");
-				img.attr("src", imgURL + ".png");
+				img.attr("src", imgURL);
 			} else {
 				$.get(imgURL, function(data) {
-					var svg = $(data).find('svg');
-					if(typeof imgID !== 'undefined') svg = svg.attr('id', imgID);
-					if(typeof imgClass !== 'undefined') svg = svg.attr('class', imgClass + ' replaced-svg');
+					var svg = $(data).find("svg");
+					if(typeof imgID !== "undefined") svg = svg.attr("id", imgID);
+					if(typeof imgClass !== "undefined") svg = svg.attr("class", imgClass + " replaced-svg");
 					if ( img.hasClass("icon") ) svg.find("*").removeAttr("style");
-					svg = svg.removeAttr('xmlns:a');
+					svg = svg.removeAttr("xmlns:a");
 					img.replaceWith(svg);
-				}, 'xml').fail(function() {
+				}, "xml").fail(function() {
 	                img.removeClass("svg");
 	            });
 			}
