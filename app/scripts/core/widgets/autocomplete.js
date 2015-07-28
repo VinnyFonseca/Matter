@@ -58,8 +58,6 @@ var initAutocomplete = function() {
 
 				var itemsArray = tempArray.sort();
 
-				console.log(itemsArray);
-
 				for ( var k = 0; k < itemsArray.length; k++ ) {
 					results.append(
 						"<li data-keywords='" + itemsArray[k].Keywords.join() + "'>\

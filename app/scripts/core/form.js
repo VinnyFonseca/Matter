@@ -316,28 +316,3 @@ var initDropdowns = function() {
 		initSVGs();
 	}
 }
-
-
-
-
-$(window).load(function() {
-
-	// Datepicker
-
-	$("input[data-calendar='true']").datepicker({
-		autoclose: true,
-		format: "dd/mm/yyyy",
-		todayBtn: "linked",
-		todayHighlight: true,
-		startDate: new Date()
-	});
-
-	$(".input-daterange").datepicker({
-		autoclose: true,
-		format: "dd/mm/yyyy",
-		todayBtn: "linked",
-		todayHighlight: true,
-		startDate: new Date()
-	});
-
-});

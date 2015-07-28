@@ -7,12 +7,12 @@
   "license": "MIT",
   "version": "1.0.0",
   "devDependencies": {
-    "grunt-sass": "*",
     "grunt-autoprefixer": "*",
-    "grunt-contrib-uglify": "*",
+    "grunt-browser-sync": "*",
     "grunt-contrib-jshint": "*",
-    "jshint-stylish": "*",
+    "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
-    "grunt-browser-sync": "*"
+    "grunt-sass": "*",
+    "jshint-stylish": "*"
   }
 }

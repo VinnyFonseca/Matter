@@ -8,17 +8,13 @@ var clearBrochure = function() {
 var initBrochure = function() {
 	if ( config.brochure.active ) {
 		$(".brochure-trigger").show().on("click", function() {
-			if (!$(".brochure-wrapper").hasClass("active")) {
-				$(this).addClass("active");
-				$(".brochure-wrapper").addClass("active");
-			} else {
-				$(this).removeClass("active");
-				$(".brochure-wrapper").removeClass("active");
-			}
+			$(this).addClass("active");
+			$(".brochure-wrapper").addClass("active");
 		});
 		$(document).on("click", function(event) {
-			if (!$(event.target).closest(".brochure-trigger,.brochure-item, .brochure-wrapper.active").length) {
-				$(".brochure-trigger, .brochure-wrapper").removeClass("active");
+			if ( !$(event.target).closest(".brochure-trigger.active").length ) {
+				$(".brochure-trigger").removeClass("active");
+				$(".brochure-wrapper").removeClass("active");
 			}
 		});
 

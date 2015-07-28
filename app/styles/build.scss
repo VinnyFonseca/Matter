@@ -1,19 +1,17 @@
 // Global
 
 @import "dev/config";
-@import "dev/mixins";
+@import "core/mixins";
+@import "core/helper";
 
 
 
 // Core
 
-@import "core/helper";
-@import "core/table";
+@import "core/core";
 @import "core/grid";
 @import "core/form";
-@import "core/core";
-
-
+@import "core/table";
 
 // Widgets
 
@@ -22,6 +20,7 @@
 @import "core/widgets/overlay";
 @import "core/widgets/brochure";
 @import "core/widgets/slider";
+
 @import "core/widgets/map";
 @import "core/widgets/twitter";
 @import "core/widgets/video";
@@ -31,9 +30,10 @@
 @import "core/widgets/tagcloud";
 
 
+
 // Third Party
 
-@import "core/vendor/datepicker";
+// Third party partials here
 
 
 
@@ -47,5 +47,6 @@
 
 @import "core/responsive";
 @import "core/conditional";
+
 @import "dev/conditional";
 @import "dev/responsive";

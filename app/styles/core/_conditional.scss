@@ -41,8 +41,11 @@
 	input[type="radio"],
 	input[type="checkbox"] {
 		display: block;
-		margin-top: -1px;
+		position: relative;
+		margin-right: 5px;
 		padding: 0;
+		top: 1px;
+		left: 0;
 	}
 
 	.controller {

@@ -52,6 +52,12 @@
 
 	header,
 	.header {
+		.logo {
+			span {
+				display: none;
+			}
+		}
+
 		nav,
 		.nav {
 			.nav-item {
@@ -82,12 +88,6 @@
 			nav,
 			.nav {
 				transform: translateY(0);
-			}
-		}
-
-		.logo {
-			span {
-				display: none;
 			}
 		}
 

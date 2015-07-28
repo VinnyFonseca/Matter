@@ -53,16 +53,9 @@ module.exports = function(grunt) {
 				},
 				files: {
 					'www/scripts/build.js': [
-						'app/scripts/core/engine/jquery-1.11.3.js',
-						'app/scripts/core/engine/modernizr-latest.js',
-						'app/scripts/core/engine/device.js',
-						'app/scripts/dev/config.js',
-						'app/scripts/core/polyfills/*.js',
-						'app/scripts/core/vendor/*.js',
-						'app/scripts/core/widgets/*.js',
-						'app/scripts/core/*.js',
+						'app/scripts/core/**/*.js',
 						'app/scripts/dev/**/*.js',
-						'!app/scripts/core/debug/*.js'
+						'!app/scripts/debug/**/*.js'
 					]
 				}
 			}
@@ -76,10 +69,11 @@ module.exports = function(grunt) {
 				reporter: require('jshint-stylish'),
 				force: true,
 				ignores: [
+					'app/scripts/core/base/**/*.js',
 					'app/scripts/core/engine/**/*.js',
-					'app/scripts/core/debug/**/*.js',
 					'app/scripts/core/polyfills/**/*.js',
-					'app/scripts/core/vendor/**/*.js'
+					'app/scripts/core/vendor/**/*.js',
+					'app/scripts/debug/**/*.js'
 				],
 				'-W001': false,
 
@@ -162,8 +156,8 @@ module.exports = function(grunt) {
 
 	// DEPENDENT PLUGINS =========================/
 
-	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-sass');
+	grunt.loadNpmTasks('grunt-autoprefixer');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
@@ -172,5 +166,12 @@ module.exports = function(grunt) {
 
 	// TASKS =====================================/
 
-	grunt.registerTask('default', ['sass', 'autoprefixer', 'uglify', 'jshint', 'browserSync', 'watch']);
+	grunt.registerTask('default', [
+		'sass',
+		'autoprefixer',
+		'uglify',
+		'jshint',
+		'browserSync',
+		'watch'
+	]);
 };

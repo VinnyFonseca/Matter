@@ -22,9 +22,9 @@ var initBreakpointDebug = function(url, callback) {
 $(document).ready(function() {
 	if ( config.application.debug && !config.application.touch ) {
 		$(".rwd-debug").removeClass("hidden").on("click", function() {
-			initBreakpointDebug('scripts/core/debug/breakpoint.js', function() {
+			initBreakpointDebug('scripts/debug/breakpoint.js', function() {
 				var doc = document;
-				doc.write('<!DOCTYPE html>' + '<html>' + '<head>' + '<meta charset="UTF-8">' + '<title>Breakpoint Test - ' + doc.title + '</title>' + '<link rel="stylesheet" href="styles/core/debug/bookmark.css">' + '<script src="scripts/core/debug/bookmark.js"></script>' + '</head>' + '<body data-url="' + doc.URL + '">' + '<header id="topHeader" class="clearfix">' + '<a href="#"></a>' + '</section>' + '<section id="bpCount">' + '<div id="count">00</div>' + '<div id="countText"><span>BREAKPOINTS FOUND</span></div>' + '</section>' + mqUniqueBP + '</header>' + '<section id="qcWWW">' + '<ul id="qcWW"></ul>' + '</section>' + '</body>' + '</html>');
+				doc.write('<!DOCTYPE html>' + '<html>' + '<head>' + '<meta charset="UTF-8">' + '<title>Breakpoint Test - ' + doc.title + '</title>' + '<link rel="stylesheet" href="styles/debug/bookmark.css">' + '<script src="scripts/debug/bookmark.js"></script>' + '</head>' + '<body data-url="' + doc.URL + '">' + '<header id="topHeader" class="clearfix">' + '<a href="#"></a>' + '</section>' + '<section id="bpCount">' + '<div id="count">00</div>' + '<div id="countText"><span>BREAKPOINTS FOUND</span></div>' + '</section>' + mqUniqueBP + '</header>' + '<section id="qcWWW">' + '<ul id="qcWW"></ul>' + '</section>' + '</body>' + '</html>');
 			});
 		});
 	}

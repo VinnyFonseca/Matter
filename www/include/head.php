@@ -57,6 +57,20 @@
 
 
 		<div class="controls">
+			<div class="button tertiary rwd-debug hidden">
+				<img class="svg icon icon-mobile" src="img/icons/icon-mobile.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-mobile.png'">
+			</div>
+
+			<div class="button primary font-trigger">
+				<span class="icon">A+</span>
+
+				<div class="font-wrapper">
+					<button class="font-item font-down">A&minus;</button>
+					<button class="font-item font-reset primary">A</button>
+					<button class="font-item font-up">A&plus;</button>
+				</div>
+			</div>
+
 			<div class="button primary brochure-trigger">
 				<img class="svg icon icon-brochure" src="img/icons/icon-brochure.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-brochure.png'" alt="Brochure icon">
 				<div class="brochure-counter" data-count="0">&nbsp;</div>
@@ -79,22 +93,6 @@
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="button primary font-trigger">
-				<span class="icon">A+</span>
-
-				<div class="font-wrapper">
-					<button class="font-item font-down">A&minus;</button>
-					<button class="font-item font-reset primary">A</button>
-					<button class="font-item font-up">A&plus;</button>
-				</div>
-			</div>
-
-			<br>
-
-			<div class="button tertiary rwd-debug hidden">
-				<img class="svg icon icon-mobile" src="img/icons/icon-mobile.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-mobile.png'">
 			</div>
 
 			<a href="#get-started" class="button primary back-to-top">

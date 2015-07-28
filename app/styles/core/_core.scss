@@ -19,9 +19,16 @@ body {
 	color: $fontColor;
 	font-family: $bodyFont;
 	@include font-size($fontSize);
+
 	&.preload {
 		* {
 			transition-property: none !important;
+		}
+
+		input[type="checkbox"],
+		input[type="checkbox"],
+		select {
+			display: none;
 		}
 	}
 }
