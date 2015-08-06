@@ -568,6 +568,21 @@ var initSearch = function() {
 
 				initDropdowns();
 				updateResults();
+
+
+
+				// Query String Auto selecting
+
+				var queryObj = getQueryParameters();
+
+				for ( var prop in queryObj ) {
+					if( queryObj.hasOwnProperty(prop) ) {
+						var assignedDrop = prop;
+						var assignedVal = queryObj[prop];
+
+						$("select[data-search-parameter='" + assignedDrop + "']").val(assignedVal).trigger("change");
+					}
+				}
 			}
 
 			dataRequest(url, "GET", buildSystem);

@@ -103,6 +103,12 @@ var unhighlight = function(el) {
 
 // URLs
 
+var getQueryParameters = function(str) {
+	return (str || document.location.search).replace(/(^\?)/, '').split("&").map(function(n) {
+		return n = n.split("="), this[n[0]] = n[1], this;
+	}.bind({}))[0];
+}
+
 var URLQueryObject = function() { // Creates an object from the URL's query string
 	var urlParams = "";
 
