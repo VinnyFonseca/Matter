@@ -159,6 +159,13 @@
 	background: $ce;
 }
 
+.card {
+	@extend .framed;
+	border: 0;
+	background-color: $cf;
+	box-shadow: 0 2px 1px 0 rgba(0, 0, 0, .14), 0 3px 1px -3px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
 
 
 // Positioning
@@ -422,4 +429,8 @@
 	transition-property: all;
 	transition-duration: $animDuration;
 	transition-timing-function: $animEasing;
+}
+
+.hardware-accel {
+	transform: translateZ(0, 0, 0);
 }

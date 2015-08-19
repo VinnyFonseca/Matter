@@ -30,10 +30,10 @@
 
 		<div class="row debug">
 			<div class="column" data-span="4">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="8">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 		</div>
 
@@ -44,10 +44,10 @@
 <pre>
 &lt;div class="row"&gt;
 	&lt;div class="column" <span class="emphasis">data-span="4"</span>&gt;
-		&lt;div class="cell"&gt;Test&lt;/div&gt;
+		&lt;div class="cell"&gt;Word&lt;/div&gt;
 	&lt;/div&gt;
 	&lt;div class="column" <span class="emphasis">data-span="8"</span>&gt;
-		&lt;div class="cell"&gt;Test&lt;/div&gt;
+		&lt;div class="cell"&gt;Word&lt;/div&gt;
 	&lt;/div&gt;
 &lt;/div&gt;
 </pre>
@@ -68,160 +68,196 @@
 
 		<div class="row debug">
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 
 
-
 			<div class="column" data-span="2">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="2">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="2">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="2">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="2">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="2">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
-
 
 
 			<div class="column" data-span="3">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="3">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="3">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="3">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
-
 
 
 			<div class="column" data-span="4">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="4">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="4">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
-
 
 
 			<div class="column" data-span="5">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="5">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="2">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
-
 
 
 			<div class="column" data-span="6">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="6">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
-
 
 
 			<div class="column" data-span="7">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="5">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
-
 
 
 			<div class="column" data-span="8">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="4">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
-
 
 
 			<div class="column" data-span="9">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="3">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
-
 
 
 			<div class="column" data-span="10">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="2">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
-
 
 
 			<div class="column" data-span="11">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
 			<div class="column" data-span="1">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
 			</div>
-
 
 
 			<div class="column" data-span="12">
-				<div class="cell">Test</div>
+				<div class="cell">Word</div>
+			</div>
+		</div>
+
+
+		<hr>
+
+
+		<a href="#" class="anchor" id="push"></a>
+
+		<h2>Push Grid</h2>
+
+		<div class="row debug show-push">
+			<div class="column" data-span="1" data-push="11">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="2" data-push="10">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="3" data-push="9">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="4" data-push="8">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="5" data-push="7">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="6" data-push="6">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="7" data-push="5">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="8" data-push="4">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="9" data-push="3">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="10" data-push="2">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="11" data-push="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="12" data-push="0">
+				<div class="cell">Word</div>
 			</div>
 		</div>
 	</div>

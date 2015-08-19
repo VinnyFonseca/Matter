@@ -23,6 +23,9 @@
 		&[data-span="#{$i}"] {
 			width: percentage($i / $columns);
 		}
+		&[data-push="#{$i}"] {
+			margin-left: percentage($i / $columns);
+		}
 	}
 }
 
@@ -33,8 +36,38 @@
 }
 
 .debug {
-	.cell {
-		border: 1px dashed $cd;
-		background: $ce;
+	.column {
+		&:before,
+		&:after {
+			display: none;
+			position: absolute;
+			top: -5px;
+			color: $brand1;
+			@include font-size($fontSize / 1.8);
+			opacity: 0.75;
+			z-index: 5;
+		}
+
+		&:before {
+			display: block;
+			left: floor($spacing / 2) + 4;
+			color: $brand1;
+			content: "span " attr(data-span);
+		}
+
+		.cell {
+			@extend .framed;
+		}
+	}
+
+	&.show-push {
+		.column {
+			&:after {
+				display: block;
+				right: floor($spacing / 2) + 4;
+				color: $brand3;
+				content: "push " attr(data-push);
+			}
+		}
 	}
 }

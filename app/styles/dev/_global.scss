@@ -1,7 +1,7 @@
 // Base
 
 body {
-	padding-top: $headerHeight !important;
+	padding-top: $headerHeight - 1 !important;
 }
 
 header,
@@ -21,7 +21,7 @@ header,
 		position: relative;
 		margin-left: floor($spacing / 1.5);
 		padding: floor($spacing / 1.5) 0;
-		height: 67px;
+		height: $headerHeight;
 		color: $fontColor;
 		text-decoration: none !important;
 		white-space: nowrap;
