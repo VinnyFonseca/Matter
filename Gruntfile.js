@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 			dist: {
 				options: {
 					sourceMap: true,
-					outputStyle: 'compressed'
+					outputStyle: 'expanded'
 				},
 				files: {
 					'www/styles/build.css': 'app/styles/build.scss'
@@ -21,15 +21,18 @@ module.exports = function(grunt) {
 		},
 
 
-		// Config for grunt-autoprefixer (avoid unnecessary mixin usage)
+		// Config for grunt-postcss (multiple css post processors)
 
-		autoprefixer: {
+		postcss: {
+			options: {
+				safe: true,
+				map: true,
+				processors: [
+					require('autoprefixer-core')({browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']}),
+					require('cssnano')()
+				]
+			},
 			dist: {
-				options: {
-					safe: true,
-					map: true,
-					browsers: ['last 3 versions', '> 1%', 'ie 8', 'ie 7']
-				},
 				files: [{
 					expand: true,
 					cwd: 'app/styles',
@@ -143,7 +146,7 @@ module.exports = function(grunt) {
 			sass: {
 				options: { livereload: false },
 				files: ['app/styles/**/*.{scss,sass}'],
-				tasks: ['sass', 'autoprefixer']
+				tasks: ['sass', 'postcss']
 			},
 			js: {
 				options: { livereload: true },
@@ -157,7 +160,7 @@ module.exports = function(grunt) {
 	// DEPENDENT PLUGINS =========================/
 
 	grunt.loadNpmTasks('grunt-sass');
-	grunt.loadNpmTasks('grunt-autoprefixer');
+	grunt.loadNpmTasks('grunt-postcss');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
@@ -168,7 +171,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', [
 		'sass',
-		'autoprefixer',
+		'postcss',
 		'uglify',
 		'jshint',
 		'browserSync',

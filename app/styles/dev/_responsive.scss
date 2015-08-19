@@ -84,10 +84,9 @@
 		position: fixed;
 
 		&.active {
-
 			nav,
 			.nav {
-				transform: translateY(0);
+				transform: translateY(100%);
 			}
 		}
 
@@ -98,20 +97,15 @@
 
 		nav,
 		.nav {
-			display: block;
-			position: absolute;
-			top: 100%;
+			top: auto;
+			bottom: 0;
 			width: 100%;
 			height: auto;
-			background-color: $cf;
-			transform: translateY(-100%);
-			transition-property: transform;
-			transition-duration: $animDuration;
-			transition-timing-function: $animEasing;
+			transform: translateY(0);
+			transition: transform $animDuration $animEasing;
 
 			.nav-item {
 				display: block;
-				position: relative;
 				padding: floor($spacing / 1.5) $spacing;
 				height: auto;
 				border-left: 0;

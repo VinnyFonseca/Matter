@@ -43,7 +43,7 @@ var initSVGs = function() {
 					if(typeof imgClass !== "undefined") svg = svg.attr("class", imgClass + " replaced-svg");
 					if ( img.hasClass("icon") ) svg.find("*").removeAttr("style");
 					svg = svg.removeAttr("xmlns:a");
-					img.replaceWith(svg);
+					img.after(svg).remove();
 				}, "xml").fail(function() {
 	                img.removeClass("svg");
 	            });
