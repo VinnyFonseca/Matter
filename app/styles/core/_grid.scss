@@ -3,7 +3,7 @@
 .row {
 	display: block;
 	position: relative;
-	margin: (-$gutter / 2);
+	margin: 0 (- $gutter / 2);
 	font-size: 0;
 
 	> * {
@@ -56,6 +56,8 @@
 		}
 
 		.cell {
+			padding-top: 30px;
+			padding-bottom: 30px;
 			@extend .framed;
 		}
 	}

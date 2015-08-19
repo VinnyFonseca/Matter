@@ -222,6 +222,22 @@
 
 		<h2>Push Grid</h2>
 
+		<p>
+			<strong>Example</strong>
+		</p>
+
+<pre>
+&lt;div class="row"&gt;
+	&lt;div class="column" <span class="emphasis">data-span="8" data-push="4"</span>&gt;
+		&lt;div class="cell"&gt;Word&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+		<p class="emphasis">
+			Use <code>data-push</code> to specify how many columns you want a certain column to move.
+		</p>
+
 		<div class="row debug show-push">
 			<div class="column" data-span="1" data-push="11">
 				<div class="cell">Word</div>
