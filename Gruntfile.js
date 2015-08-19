@@ -4,16 +4,15 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
-		// CONFIG ===================================/
 
 		// Config for grunt-sass (libsass, ~4s compiling time)
 
 		sass: {
-			dist: {
-				options: {
-					sourceMap: true,
-					outputStyle: 'expanded'
-				},
+			options: {
+				sourceMap: true,
+				outputStyle: 'expanded'
+			},
+			main: {
 				files: {
 					'www/styles/build.css': 'app/styles/build.scss'
 				}
@@ -21,7 +20,7 @@ module.exports = function(grunt) {
 		},
 
 
-		// Config for grunt-postcss (multiple css post processors)
+		// Config for grunt-postcss (multiple css post processors, minification, autoprefixing)
 
 		postcss: {
 			options: {
@@ -32,14 +31,8 @@ module.exports = function(grunt) {
 					require('cssnano')()
 				]
 			},
-			dist: {
-				files: [{
-					expand: true,
-					cwd: 'app/styles',
-					src: '{,*/}*.css',
-					dest: 'www/styles',
-					ext: '.css'
-				}]
+			main: {
+				src: 'www/styles/build.css'
 			}
 		},
 
@@ -47,13 +40,13 @@ module.exports = function(grunt) {
 		// Config for grunt-contrib-uglify (javascript concatenation)
 
 		uglify: {
-			dist: {
-				options: {
-					beautify: false,
-					sourceMap: true,
-					sourceMapIncludeSources: true,
-					sourceMapName: 'www/scripts/build.js.map'
-				},
+			options: {
+				beautify: false,
+				sourceMap: true,
+				sourceMapIncludeSources: true,
+				sourceMapName: 'www/scripts/build.js.map'
+			},
+			main: {
 				files: {
 					'www/scripts/build.js': [
 						'app/scripts/core/**/*.js',
@@ -106,7 +99,15 @@ module.exports = function(grunt) {
 		// Config for grunt-browser-sync (browser synchronisation and auto-reloader)
 
 		browserSync: {
-			dist: {
+			options: {
+				open: false,
+				server: false,
+				watchTask: true, // < VERY important
+				reloadOnRestart: true,
+				logLevel: "info",
+				logPrefix: "Matter"
+			},
+			main: {
 				files: {
 					src: [
 						"www/**/*.html",
@@ -115,14 +116,6 @@ module.exports = function(grunt) {
 						"www/styles/**/*.css",
 						"www/scripts/**/*.js"
 					]
-				},
-				options: {
-					open: false,
-					server: false,
-					watchTask: true, // < VERY important
-					reloadOnRestart: true,
-					logLevel: "info",
-					logPrefix: "Matter"
 				}
 			}
 		},
