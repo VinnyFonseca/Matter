@@ -22,7 +22,7 @@
 			<input type="hidden" value="42">
 
 			<p class="emphasis">
-				Note: You can turn validation on or off at <code>config.js</code>.
+				Note: You can switch validation on or off at <code>config.js</code>.
 			</p>
 
 			<div class="form-info">
@@ -401,10 +401,10 @@
 				</tr>
 				<tr valign="middle">
 					<td valign="middle">
-						<textarea class="valid" name="textarea" cols="30" rows="5">Textarea</textarea>
+						<textarea class="valid" name="textarea" cols="30" rows="5" data-validation="text" required>Textarea</textarea>
 					</td>
 					<td valign="middle">
-						<textarea class="invalid" name="textarea" cols="30" rows="5">Textarea</textarea>
+						<textarea class="invalid" name="textarea" cols="30" rows="5" data-validation="text" required>Textarea</textarea>
 					</td>
 					<td valign="middle">
 						<textarea name="textarea" cols="30" rows="5" readonly>Textarea</textarea>
@@ -628,44 +628,6 @@
 	&lt;input <span class="emphasis">id="f103"</span> type="checkbox" <span class="emphasis">data-toggle="true"</span> /&gt;
 	&lt;label <span class="emphasis">for="f103"</span>&gt;Toggle&lt;/label&gt;
 &lt;/fieldset&gt;
-</pre>
-
-
-
-		<hr>
-
-
-
-		<a href="#" class="anchor" id="datepicker"></a>
-
-		<h2>Datepicker</h2>
-
-		<p>
-			<strong>Credit:</strong> <a href="https://bootstrap-datepicker.readthedocs.org/en/release/" target="_blank">Bootstrap Datepicker</a>
-		</p>
-
-		<label>Calendar input</label>
-		<input type="text" placeholder="dd/mm/yyyy" data-calendar="true">
-
-<pre>
-&lt;input type="text" placeholder="dd/mm/yyyy" <span class="emphasis">data-calendar="true"</span>&gt;
-</pre>
-
-		<br>
-
-		<label>Date range calendar input</label>
-		<div class="input-group input-daterange">
-			<input type="text" placeholder="Start date (dd/mm/yyyy)">
-			<div class="input-addon">to</div>
-			<input type="text" placeholder="End date (dd/mm/yyyy)">
-		</div>
-
-<pre>
-&lt;div class="input-group <span class="emphasis">input-daterange</span>"&gt;
-	&lt;input type="text" placeholder="Start date (dd/mm/yyyy)"&gt;
-	&lt;div class="input-addon"&gt;to&lt;/div&gt;
-	&lt;input type="text" placeholder="End date (dd/mm/yyyy)"&gt;
-&lt;/div&gt;
 </pre>
 
 

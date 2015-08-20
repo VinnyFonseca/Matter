@@ -36,7 +36,7 @@ var config = {
 		view: "grid", // str: "grid", "list".
 		display: "full", // str: "full", "mini".
 		count: 10, // int: Number of items to show per page.
-		pagination: false // bool: Toggle pagination controls and loading of page elements only.
+		pagination: true // bool: Toggle pagination controls and loading of page elements only.
 	},
 	slider: {
 		nav: true, // bool: Show bullets.
