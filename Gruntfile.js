@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 		sass: {
 			options: {
 				sourceMap: true,
-				outputStyle: 'expanded'
+				outputStyle: 'compressed'
 			},
 			main: {
 				files: {
@@ -27,8 +27,8 @@ module.exports = function(grunt) {
 				safe: true,
 				map: true,
 				processors: [
-					require('autoprefixer-core')({browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']}),
-					require('cssnano')()
+					require('rucksack-css')(),
+					require('autoprefixer-core')({browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']})
 				]
 			},
 			main: {

@@ -9,8 +9,8 @@
   "devDependencies": {
     "grunt-sass": "*",
     "grunt-postcss": "*",
+    "rucksack-css": "*",
     "autoprefixer-core": "*",
-    "cssnano": "*",
 
     "grunt-contrib-uglify": "*",
     "grunt-contrib-jshint": "*",
