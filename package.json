@@ -16,7 +16,7 @@
 		"grunt-sass": "*",
 		"grunt-postcss": "*",
 		"rucksack-css": "*",
-		"autoprefixer-core": "*",
+		"autoprefixer": "*",
 
 		"grunt-contrib-uglify": "*",
 		"grunt-contrib-jshint": "*",

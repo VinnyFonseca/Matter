@@ -28,7 +28,9 @@ module.exports = function(grunt) {
 				map: true,
 				processors: [
 					require('rucksack-css')(),
-					require('autoprefixer-core')({browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']})
+					require('autoprefixer')({
+						browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']
+					})
 				]
 			},
 			main: {

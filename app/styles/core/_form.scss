@@ -639,14 +639,7 @@ optgroup {
 		$pwdGreen: #66cc22;
 
 		background: $pwdRed;
-		background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VlNDQ0NCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2ZmYWEyMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM2NmNjMjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-		background: -moz-linear-gradient(left, $pwdRed 0%, $pwdYellow 50%, $pwdGreen 100%);
-		background: -webkit-gradient(linear, left top, right top, color-stop(0%, $pwdRed), color-stop(50%, $pwdYellow), color-stop(100%, $pwdGreen));
-		background: -webkit-linear-gradient(left, $pwdRed 0%, $pwdYellow 50%, $pwdGreen 100%);
-		background: -o-linear-gradient(left, $pwdRed 0%, $pwdYellow 50%, $pwdGreen 100%);
-		background: -ms-linear-gradient(left, $pwdRed 0%, $pwdYellow 50%, $pwdGreen 100%);
-		background: linear-gradient(to right, $pwdRed 0%, $pwdYellow 50%, $pwdGreen 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$pwdRed', endColorstr='$pwdGreen', GradientType=1);
+		@include linear-gradient($pwdRed, 0%, $pwdYellow, 100%)
 	}
 }
 
@@ -1188,8 +1181,8 @@ progress[value] {
 		border-radius: $radius;
 		background-image:
 			-webkit-linear-gradient( 135deg, transparent, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
-			-webkit-linear-gradient( top, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-			-webkit-linear-gradient( left, $brand1, $brand1);
+			-webkit-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
+			-webkit-linear-gradient( to right, $brand1, $brand1);
 		background-size:
 			($progressHeight * 2) $progressHeight,
 			100% 100%,
@@ -1213,8 +1206,8 @@ progress[value] {
 		border-radius: $radius;
 		background-image:
 			-moz-linear-gradient( 135deg, transparent, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
-			-moz-linear-gradient( top, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-			-moz-linear-gradient( left, $notifySuccessBgColor, $notifySuccessBgColor);
+			-moz-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
+			-moz-linear-gradient( to right, $notifySuccessBgColor, $notifySuccessBgColor);
 		background-size:
 			($progressHeight * 2) $progressHeight,
 			100% 100%,
@@ -1224,16 +1217,16 @@ progress[value] {
 	&.valid {
 		&::-webkit-progress-value {
 			background-image:
-				-webkit-linear-gradient( top, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-				-webkit-linear-gradient( left, $notifySuccessBgColor, $notifySuccessBgColor);
+				-webkit-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
+				-webkit-linear-gradient( to right, $notifySuccessBgColor, $notifySuccessBgColor);
 			background-size:
 				100% 100%,
 				100% 100%;
 		}
 		&::-moz-progress-bar {
 			background-image:
-				-moz-linear-gradient( top, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-				-moz-linear-gradient( left, $notifySuccessBgColor, $notifySuccessBgColor);
+				-moz-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
+				-moz-linear-gradient( to right, $notifySuccessBgColor, $notifySuccessBgColor);
 			background-size:
 				100% 100%,
 				100% 100%;
