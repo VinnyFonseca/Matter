@@ -206,3 +206,7 @@ String.prototype.toCamelCase = function() {
 String.prototype.bool = function() {
     return (/^true$/i).test(this);
 }
+
+String.prototype.friendly = function() {
+	return this.toLowerCase().replace(/&amp;/g, '&').replace(/[^\w\-\!\$\'\(\)\=\@\d_]+/g, "-").replace(/\-{2,}/g, "-").replace(/\-$/g, "");
+}
