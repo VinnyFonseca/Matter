@@ -47,7 +47,7 @@
 
 **/*.sublime*
 
-**/.sass-cache/
-
 **/assets/
 **/node_modules/
+**/.tmp/
+**/.sass-cache/
