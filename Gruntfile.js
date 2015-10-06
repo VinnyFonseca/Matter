@@ -5,6 +5,25 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 
 
+		// Config for grunt-ssi
+
+		ssi: {
+			options: {
+				cache: 'all',
+				ext: '.html',
+				baseDir: 'app/markup',
+			},
+			main: {
+				files: [{
+					expand: true,
+					cwd: 'app/markup',
+					src: ['*.html'],
+					dest: 'www',
+				}],
+			},
+		},
+
+
 		// Config for grunt-sass (libsass, ~4s compiling time)
 
 		sass: {
@@ -43,7 +62,7 @@ module.exports = function(grunt) {
 
 		uglify: {
 			options: {
-				beautify: false,
+				beautify: true,
 				sourceMap: true,
 				sourceMapIncludeSources: true,
 				sourceMapName: 'www/scripts/build.js.map'
@@ -51,9 +70,8 @@ module.exports = function(grunt) {
 			main: {
 				files: {
 					'www/scripts/build.js': [
-						'app/scripts/core/**/*.js',
-						'app/scripts/dev/**/*.js',
-						'!app/scripts/debug/**/*.js'
+						'app/scripts/matter/**/*.js',
+						'app/scripts/custom/**/*.js'
 					]
 				}
 			}
@@ -67,11 +85,10 @@ module.exports = function(grunt) {
 				reporter: require('jshint-stylish'),
 				force: true,
 				ignores: [
-					'app/scripts/core/base/**/*.js',
-					'app/scripts/core/engine/**/*.js',
-					'app/scripts/core/polyfills/**/*.js',
-					'app/scripts/core/vendor/**/*.js',
-					'app/scripts/debug/**/*.js'
+					'app/scripts/matter/base/**/*.js',
+					'app/scripts/matter/engine/**/*.js',
+					'app/scripts/matter/polyfills/**/*.js',
+					'app/scripts/matter/vendor/**/*.js'
 				],
 				'-W001': false,
 
@@ -90,9 +107,11 @@ module.exports = function(grunt) {
 
 				// Relaxing
 				asi: true,
+				expr: true,
 				eqnull: true,
 				loopfunc: true,
-				multistr: true
+				multistr: true,
+				scripturl: true
 			},
 			files: ['app/scripts/**/*.js']
 		},
@@ -102,8 +121,10 @@ module.exports = function(grunt) {
 
 		browserSync: {
 			options: {
-				open: false,
-				server: false,
+				server: {
+					baseDir: "www"
+				},
+				open: true,
 				watchTask: true, // < VERY important
 				reloadOnRestart: true,
 				logLevel: "info",
@@ -128,7 +149,8 @@ module.exports = function(grunt) {
 		watch: {
 			html: {
 				options: { livereload: true },
-				files: ['www/**/*.html']
+				files: ['app/markup/**/*.html'],
+				tasks: ['ssi']
 			},
 			php: {
 				options: { livereload: true },
@@ -154,6 +176,7 @@ module.exports = function(grunt) {
 
 	// DEPENDENT PLUGINS =========================/
 
+	grunt.loadNpmTasks('grunt-ssi');
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-postcss');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -165,6 +188,7 @@ module.exports = function(grunt) {
 	// TASKS =====================================/
 
 	grunt.registerTask('default', [
+		'ssi',
 		'sass',
 		'postcss',
 		'uglify',

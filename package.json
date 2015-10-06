@@ -1,28 +1,27 @@
 {
-	"name": "Matter",
-	"title": "SASS and Compass front-end framework",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/VinnyFonseca/matter.git"
-	},
-	"url": "http://matterframework.net",
-	"author": "Vinny Fonseca",
-	"copyright": "2015",
-	"license": "MIT",
-	"version": "1.0.0",
-	"devDependencies": {
-		"grunt": "*",
-		"grunt-cli": "*",
-		"grunt-sass": "*",
-		"grunt-postcss": "*",
-		"rucksack-css": "*",
-		"autoprefixer": "*",
-
-		"grunt-contrib-uglify": "*",
-		"grunt-contrib-jshint": "*",
-		"jshint-stylish": "*",
-
-		"grunt-contrib-watch": "*",
-		"grunt-browser-sync": "*"
-	}
+  "name": "Matter",
+  "title": "SASS and Compass front-end framework",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/VinnyFonseca/matter.git"
+  },
+  "url": "http://matterframework.net",
+  "author": "Vinny Fonseca",
+  "copyright": "2015",
+  "license": "MIT",
+  "version": "1.0.0",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-cli": "*",
+    "grunt-ssi": "*",
+    "grunt-sass": "*",
+    "grunt-postcss": "*",
+    "autoprefixer": "*",
+    "rucksack-css": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-jshint": "*",
+    "jshint-stylish": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-browser-sync": "*"
+  }
 }

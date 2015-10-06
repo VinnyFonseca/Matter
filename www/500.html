@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]> <html class="lt-ie10 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie10 lt-ie9 lt-ie8 ie7"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie10 lt-ie9 ie8"> <![endif]-->
+<!--[if IE 9]>    <html class="lt-ie10 ie9"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class=""> <!--<![endif]-->
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="format-detection" content="telephone=no">
+
+	    <!--[if IE]>
+	    <meta http-equiv="Page-Enter" content="blendTrans(duration=0)" />
+	    <meta http-equiv="Page-Exit" content="blendTrans(duration=0)" />
+	    <![endif]-->
+
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" href="img/favicon/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="img/favicon/favicon-194x194.png" sizes="194x194">
+		<link rel="icon" type="image/png" href="img/favicon/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="img/favicon/android-chrome-192x192.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="img/favicon/favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="img/favicon/manifest.json">
+		<meta name="msapplication-TileColor" content="#86669e">
+		<meta name="msapplication-TileImage" content="img/favicon/mstile-144x144.png">
+		<meta name="theme-color" content="#86669e">
+
+		<title>Matter</title>
+
+		<!-- Minified CSS - Includes all .scss from style folder -->
+		<link rel="stylesheet" href="styles/build.css" type="text/css" media="all">
+
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="scripts/html5shiv-printshiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="preload">
+		<!--[if lt IE 8]>
+		<p class="emphasis">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+
+		<a href="#" class="anchor" id="get-started"></a>
+
+
+		<div class="controls">
+			<div class="debug-trigger hidden">
+				<img class="svg icon icon-mobile" src="img/icons/icon-mobile.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-mobile.png'">
+			</div>
+
+			<div class="font-trigger hidden">
+				<span class="icon">A+</span>
+
+				<div class="font-wrapper">
+					<button class="font-item font-down">A&minus;</button>
+					<button class="font-item font-reset primary">A</button>
+					<button class="font-item font-up">A&plus;</button>
+				</div>
+			</div>
+
+			<div class="brochure-trigger hidden">
+				<img class="svg icon icon-brochure" src="img/icons/icon-brochure.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-brochure.png'" alt="Brochure icon">
+				<div class="brochure-counter" data-count="0">&nbsp;</div>
+
+				<div class="brochure-wrapper">
+					<h4 class="brochure-title">
+						Your brochure
+					</h4>
+
+					<div class="brochure-item-wrapper"></div>
+
+					<div class="brochure-links">
+						<div class="brochure-cta" data-overlay="brochure-share">
+							<img class="svg icon icon-share" src="img/icons/icon-share.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-share.png'" alt="share icon">
+							<span>Share</span>
+						</div>
+						<div class="brochure-cta" data-overlay="brochure-download">
+							<img class="svg icon icon-download" src="img/icons/icon-download.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-download.png'" alt="download icon">
+							<span>Download</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<a href="#get-started" class="top-trigger">
+				<img class="svg icon icon-arrow-up" src="img/icons/icon-arrow-up.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-arrow-up.png'">
+			</a>
+		</div>
+
+
+		<div class="overlay" id="example">
+			<div class="modal">
+				<div class="overlay-close">
+					<img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
+				</div>
+
+				<h3>Example Overlay</h3>
+			</div>
+		</div>
+		<div class="overlay" id="brochure-share">
+			<div class="modal">
+				<div class="overlay-close">
+					<img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
+				</div>
+
+				<h3>Share your brochure</h3>
+			</div>
+		</div>
+		<div class="overlay" id="brochure-download">
+			<div class="modal">
+				<div class="overlay-close">
+					<img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
+				</div>
+
+				<h3>Download your brochure</h3>
+			</div>
+		</div>
+
+<header>
+	<nav class="block-reset">
+		<a href="/" class="nav-item"><span>Get Started</span></a>
+		<a href="under-development.html" class="nav-item"><span>Tips</span></a>
+		<a href="structure.html" class="nav-item"><span>Structure</span></a>
+		<a href="grid.html" class="nav-item"><span>Grid</span></a>
+		<a href="elements.html" class="nav-item"><span>Elements</span></a>
+		<a href="imagery.html" class="nav-item"><span>Imagery</span></a>
+		<a href="forms.html" class="nav-item"><span>Forms</span></a>
+		<a href="widgets.html" class="nav-item"><span>Widgets</span></a>
+		<a href="search.html" class="nav-item"><span>Search Engine</span></a>
+	</nav>
+
+	<div class="nav-layer">
+		<div class="nav-trigger mobile-show">
+			<img class="svg icon icon-menu" src="img/icons/icon-menu.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icons/icon-menu.png'">
+		</div>
+
+		<a href="/" class="logo valign-middle">
+			<img src="img/logo.png" alt="">
+			<span class="font-large font-custom">Matter</span>
+		</a>
+	</div>
+
+	<div class="scroll-progress"></div>
+	<div class="notification-wrapper"></div>
+</header>
+
+
+
+<!-- Content -->
+
+<div class="main">
+	<div class="intro">
+		<div class="parallax parallax-noes">
+			<div class="wrapper">
+				<p class="lead">
+					Server err$#%2
+				</p>
+
+				<p class="font-expanded">
+					Whatever you're looking is now reaching the event horizon.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="main">
+		<div class="wrapper">
+			<h2>What's <sub><small class="light-gray">the</small></sub> Matter?</h2>
+
+			<p>
+				Matter is a <strong>SASS</strong> front-end framework and the result of <strong>years</strong> of problem solving, bug fixing, cross-browser and cross-platform testing. It went back to the basics and is designed to make HTML work <strong>for</strong> you, not against you.
+			</p>
+
+			<p>
+				It is built over <strong>many iterations</strong>, <strong>cleanups</strong>, <strong>revisions</strong> and <strong>upgrades</strong>, instead of a single sprint from the ground up. This process makes Matter <strong>stable</strong>, <strong>tested</strong> and with <strong>fewer bugs</strong>, while maintaining compatibility all the way to <strong>IE8</strong>.
+			</p>
+
+
+			<hr>
+
+
+			<a href="#" class="anchor" id="get-started"></a>
+
+			<h2>Get Started</h2>
+
+			<h4>1. Requirements</h4>
+
+			<p class="emphasis">
+				Note: Use <code>sudo</code> on *nix systems to install gems and node packages.
+			</p>
+
+			<ol>
+				<li>
+					<a href="http://rubyinstaller.org/" target="_blank" class="explicit">Ruby</a>
+				</li>
+				<li>
+					<a href="http://sass-lang.com/" target="_blank" class="explicit">Sass</a> <code>gem install sass</code>
+				</li>
+			</ol>
+
+			<strong>&minus;&nbsp;&nbsp;and&nbsp;&nbsp;&minus;</strong>
+
+			<ol>
+				<li>
+					<a href="http://nodejs.org/" target="_blank" class="explicit">Node</a>
+				</li>
+				<li>
+					<a href="https://www.npmjs.com/package/grunt" target="_blank" class="explicit">Grunt</a> <code>npm install -g grunt</code>
+				</li>
+				<li>
+					<a href="https://www.npmjs.com/package/grunt-cli" target="_blank" class="explicit">Grunt Command Line Interface (CLI)</a> <code>npm install -g grunt-cli</code>
+				</li>
+			</ol>
+
+			<br>
+
+			<p class="emphasis">
+				 Note: Node has some known installation issues with certain Linux distributions. See <a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#ubuntu-mint-elementary-os" target="_blank">here</a> or follow the code below:
+			</p>
+
+<pre>
+sudo apt-get install python-software-properties python g++ make
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs
+</pre>
+
+
+			<!-- <hr>
+
+
+			<h4>2. Download</h4>
+
+			<p>
+				<strong>Clone it on</strong> <a href="https://github.com/VinnyFonseca/matter.git" class="explicit" target="_blank">Github</a>.
+			</p> -->
+
+
+			<hr>
+
+
+			<h4>2. Grunt</h4>
+
+			<p>
+				<strong>First run?</strong> Navigate to Matter's directory and run <code>npm install</code> then run <code>grunt</code>.
+			</p>
+
+			<p>
+				<strong>Returning?</strong> Simply run <code>grunt</code>.
+			</p>
+
+
+			<hr>
+
+
+			<h2>Get to da code!</h2>
+		</div>
+	</div>
+</div>
+
+
+
+<footer>
+	<div class="social valign-middle">
+		<a href="#">
+			<img class="svg icon icon-youtube" src="img/icons/icon-youtube.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icon-youtube.png'">
+		</a>
+		<a href="#">
+			<img class="svg icon icon-twitter" src="img/icons/icon-twitter.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icon-twitter.png'">
+		</a>
+		<a href="#">
+			<img class="svg icon icon-facebook-full" src="img/icons/icon-facebook-full.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icon-facebook-full.png'">
+		</a>
+		<a href="#">
+			<img class="svg icon icon-linkedin-full" src="img/icons/icon-linkedin-full.svg" width="16" height="16" onerror="this.onerror=null;this.src='img/icon-linkedin-full.png'">
+		</a>
+	</div>
+
+	<div class="author">
+		by <a href="http://twitter.com/VinnyFonseca" class="no-icon" target="_blank">Vinny Fonseca</a>
+	</div>
+
+	<div class="font-large font-custom">Matter</div>
+</footer>
+		<!-- Minified JS - Includes all .js from scripts folder -->
+		<script async type="text/javascript" src="scripts/build.js"></script>
+
+
+		<!-- Third Party Plugins -->
+
+		<!-- AddThis -->
+		<!--
+			<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5523a958478e32cb" async="async"></script>
+		-->
+
+		<!-- Google Analytics -->
+		<!--
+		<script type="text/javascript">
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','_gaTracker');
+
+			_gaTracker('create', 'UA-XXXXXXXX-X', 'auto');
+			_gaTracker('send', 'pageview');
+		</script>
+		-->
+	</body>
+</html>

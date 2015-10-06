@@ -1,33 +1,33 @@
 // Global
 
-@import "dev/config";
-@import "core/mixins";
-@import "core/helper";
+@import "custom/config";
+@import "matter/mixins";
+@import "matter/helper";
 
 
 
 // Core
 
-@import "core/core";
-@import "core/grid";
-@import "core/form";
-@import "core/table";
+@import "matter/core";
+@import "matter/grid";
+@import "matter/form";
+@import "matter/table";
 
 // Widgets
 
-@import "core/widgets/notification";
-@import "core/widgets/tooltip";
-@import "core/widgets/overlay";
-@import "core/widgets/brochure";
-@import "core/widgets/slider";
+@import "matter/widgets/notification";
+@import "matter/widgets/tooltip";
+@import "matter/widgets/overlay";
+@import "matter/widgets/brochure";
+@import "matter/widgets/slider";
 
-@import "core/widgets/map";
-@import "core/widgets/twitter";
-@import "core/widgets/video";
+@import "matter/widgets/map";
+@import "matter/widgets/twitter";
+@import "matter/widgets/video";
 
-@import "core/widgets/search";
-@import "core/widgets/autocomplete";
-@import "core/widgets/tagcloud";
+@import "matter/widgets/search";
+@import "matter/widgets/autocomplete";
+@import "matter/widgets/tagcloud";
 
 
 
@@ -39,14 +39,14 @@
 
 // Dev
 
-@import "dev/global";
+@import "custom/global";
 
 
 
 // Cross browser/platform
 
-@import "core/responsive";
-@import "core/conditional";
+@import "matter/responsive";
+@import "matter/conditional";
 
-@import "dev/conditional";
-@import "dev/responsive";
+@import "custom/conditional";
+@import "custom/responsive";
