@@ -1,6 +1,6 @@
 // Responsive
 
-@media screen and (max-width: $screenWide) {
+@media screen and (max-width: $scrDeskL) {
 
 	.search-results {
 		&[data-view="grid"] {
@@ -14,7 +14,7 @@
 
 
 
-@media screen and (max-width: $screenDesktop) {
+@media screen and (max-width: $scrDeskS) {
 
 	.wrapper {
 		width: 100%;
@@ -56,7 +56,7 @@
 
 
 
-@media screen and (max-width: $screenTabletL) {
+@media screen and (max-width: $scrTablL) {
 
 	.mobile-show {
 		display: block !important;
@@ -73,7 +73,7 @@
 	// Font sizes
 
 	.structure.clean {
-		@include font-size($fontSize / 1.1);
+		font-size: $fsz / 1.1 + rem;
 	}
 
 
@@ -82,13 +82,13 @@
 	.column {
 		width: 100% !important;
 
-		@for $i from 1 through ($columns / 4) {
+		@for $i from 1 through ($col / 4) {
 			&[data-span="#{$i}"] {
 				width: 50% !important;
 			}
 		}
 
-		@for $i from 1 through ($columns / 6) {
+		@for $i from 1 through ($col / 6) {
 			&[data-span="#{$i}"] {
 				width: 33.333% !important;
 			}
@@ -126,12 +126,12 @@
 			text-align: left;
 
 			&:first-child {
-				border-top-radius: $radius;
+				border-top-radius: $rds;
 				border-bottom-radius: 0;
 			}
 			&:last-child {
 				border-top-radius: 0;
-				border-bottom-radius: $radius;
+				border-bottom-radius: $rds;
 			}
 		}
 
@@ -167,7 +167,7 @@
 
 	table {
 		caption {
-			@include font-size($fontSize);
+			font-size: $fsz + rem;
 			text-align: center;
 		}
 
@@ -189,7 +189,7 @@
 	.notification-wrapper {
 		margin: 3%;
 		width: 94%;
-		@include font-size($fontSize);
+		font-size: $fsz + rem;
 	}
 
 
@@ -205,12 +205,12 @@
 	.slider {
 		&:hover {
 			.slider-arrow {
-				@include opacity(1);
+				opacity: 1;
 			}
 		}
 
 		.slider-arrow {
-			@include opacity(0.75);
+			opacity: 0.75;
 			background-color: transparent !important;
 
 			&.slider-arrow-prev {
@@ -221,7 +221,7 @@
 			}
 
 			.icon {
-				@include svgColor($brand1);
+				@include svgColor($color1);
 			}
 		}
 
@@ -242,7 +242,7 @@
 		&.twitter-main {
 			.twitter-follow {
 				position: relative !important;
-				margin: floor($spacing / 1.5) auto 0 !important;
+				margin: floor($spc / 1.5) auto 0 !important;
 				top: 0;
 				right: 0;
 			}
@@ -253,13 +253,13 @@
 
 
 
-@media screen and (max-width: $screenTabletS) {
+@media screen and (max-width: $scrTablS) {
 
 }
 
 
 
-@media screen and (max-width: $screenMobileL) {
+@media screen and (max-width: $scrMoblL) {
 
 
 	// Columns
@@ -267,13 +267,13 @@
 	.column {
 		width: 100% !important;
 
-		@for $i from 1 through ($columns / 4) {
+		@for $i from 1 through ($col / 4) {
 			&[data-span="#{$i}"] {
 				width: 100% !important;
 			}
 		}
 
-		@for $i from 1 through ($columns / 6) {
+		@for $i from 1 through ($col / 6) {
 			&[data-span="#{$i}"] {
 				width: 50% !important;
 			}
@@ -310,6 +310,6 @@
 
 
 
-@media screen and (max-width: $screenMobileS) {
+@media screen and (max-width: $scrMoblS) {
 
 }

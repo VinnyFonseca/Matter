@@ -4,7 +4,7 @@
 	display: block;
 	position: relative;
 	margin: 0 auto;
-	margin-bottom: floor($spacing * 2);
+	margin-bottom: floor($spc * 2);
 	padding: 0;
 	width: 100%;
 
@@ -17,13 +17,13 @@
 
 		&:hover {
 			.slider-arrow {
-				@include opacity(1);
+				opacity: 1;
 
 				&:hover {
-					@include background-opacity($brand2, 0.75);
+					background-color: rgba($color2, 0.75);
 				}
 				&:active {
-					@include background-opacity($c2, 0.75);
+					background-color: rgba($c2, 0.75);
 				}
 
 				&.slider-arrow-prev {
@@ -111,8 +111,8 @@
 		text-align: center;
 		cursor: pointer;
 		z-index: 50;
-		@include background-opacity($brand1, 0.75);
-		@include opacity(0);
+		background-color: rgba($color1, 0.75);
+		opacity: 0;
 		vertical-align: middle;
 		user-select: none;
 		transition: {
@@ -158,12 +158,12 @@
 		.slider-bullet {
 			display: inline-block;
 			position: relative;
-			margin: floor($spacing / 1.5) floor($spacing / 2.5);
+			margin: floor($spc / 1.5) floor($spc / 2.5);
 			width: $bulletDiameter;
 			height: $bulletDiameter;
-			background-color: $brand2;
+			background-color: $color2;
 			border-radius: $bulletDiameter;
-			@include opacity(0.5);
+			opacity: 0.5;
 			user-select: none;
 			cursor: pointer;
 			transition: {
@@ -173,14 +173,14 @@
 			}
 
 			&:hover {
-				@include opacity(1);
+				opacity: 1;
 			}
 
 			&:active,
 			&.active,
 			&:focus {
-				background-color: $brand1;
-				@include opacity(1);
+				background-color: $color1;
+				opacity: 1;
 			}
 		}
 
@@ -192,7 +192,7 @@
 				padding-bottom: 5.25%;
 				width: 5.25%;
 				height: auto;
-				border-radius: $radius;
+				border-radius: $rds;
 				background-size: cover !important;
 
 				&:hover {

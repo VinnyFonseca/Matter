@@ -13,23 +13,9 @@
 	}
 }
 
-@mixin font-size($fontsize) {
-	font-size: $fontsize + px;
-	font-size: ($fontsize / 10) + rem;
-}
-
-
-@mixin opacity($value) {
-	opacity: $value;
-	-khtml-opacity: $value;
-	-moz-opacity: $value;
-	filter: alpha(opacity=#{$value * 100});
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$value * 100})";
-}
-
-@mixin background-opacity($color, $opacity: 0.5) {
-    background: $color; /* The Fallback */
-    background: rgba($color, $opacity);
+@mixin font-size($fsz) {
+	font-size: $fsz + px;
+	font-size: ($fsz / 10) + rem;
 }
 
 

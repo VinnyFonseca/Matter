@@ -315,10 +315,10 @@ var initAutocomplete = function() {
 				// suggest();
 				// init();
 
-				// request(urlSuggestions, "GET", suggest);
+				// requestData(urlSuggestions, "GET", suggest);
 			}
 
-			request(url, "GET", build);
+			requestData(url, "GET", build);
 		});
 
 		if ( config.application.debug ) console.log("Search :: Autocomplete");

@@ -585,7 +585,7 @@ var initSearch = function() {
 				}
 			}
 
-			request(url, "GET", buildSystem);
+			requestData(url, "GET", buildSystem);
 		});
 
 		if ( config.application.debug ) console.log("Search :: Unified Search");

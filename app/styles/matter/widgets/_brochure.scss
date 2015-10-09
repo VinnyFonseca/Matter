@@ -9,9 +9,9 @@
 	height: 20px;
 	top: -5px;
 	right: -5px;
-	@include font-size($fontSize / 1.2);
+	font-size: $fsz / 1.2 + rem;
 	font-weight: 600;
-	background-color: $brand2;
+	background-color: $color2;
 	border-radius: 1000px;
 }
 
@@ -19,24 +19,24 @@
 	display: block;
 	position: absolute;
 	margin: 0;
-	padding: $spacing $spacing floor($spacing / 2);
+	padding: $spc $spc floor($spc / 2);
 	width: 240px;
 	right: 0;
 	bottom: 125%;
 	text-align: left;
 	border: 1px solid $ce;
-	border-radius: $radius;
+	border-radius: $rds;
 	background-color: $cf;
 	box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
 	cursor: default;
 	z-index: 80;
-	@include opacity(0);
+	opacity: 0;
 	transform: scale(0);
 	transform-origin: right bottom;
 	transition: all $animDuration $animEasing;
 
 	&.active {
-		@include opacity(1);
+		opacity: 1;
 		transform: scale(1);
 	}
 
@@ -48,8 +48,8 @@
 	.brochure-item-wrapper {
 		display: block;
 		position: relative;
-		margin: $spacing (-$spacing) floor($spacing / 2);
-		padding: floor($spacing / 2);
+		margin: $spc (-$spc) floor($spc / 2);
+		padding: floor($spc / 2);
 		max-height: 230px;
 		background-color: $ce;
 		overflow: auto;
@@ -58,20 +58,20 @@
 			display: block;
 			position: relative;
 			margin: 5px 0;
-			padding: floor($spacing / 2);
-			padding-right: $spacing + $iconSize;
+			padding: floor($spc / 2);
+			padding-right: $spc + $iconsize;
 			color: $cf;
-			border-radius: $radius;
-			background-color: $brand1;
+			border-radius: $rds;
+			background-color: $color1;
 			cursor: pointer;
 
 			@extend .valign-middle;
 
 			&:hover {
-				background-color: $brand2;
+				background-color: $color2;
 			}
 			&:active {
-				background-color: $brand1;
+				background-color: $color1;
 			}
 
 			.icon-close {
@@ -79,7 +79,7 @@
 				position: absolute;
 				margin-top: -9px;
 				top: 50%;
-				right: floor($spacing / 2);
+				right: floor($spc / 2);
 				@include svgColor($cf);
 			}
 		}
@@ -106,7 +106,7 @@
 				margin-right: 10px;
 				width: 16px;
 				height: 16px;
-				@include svgColor($brand1);
+				@include svgColor($color1);
 			}
 		}
 	}

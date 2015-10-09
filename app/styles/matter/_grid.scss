@@ -3,28 +3,24 @@
 .row {
 	display: block;
 	position: relative;
-	margin: 0 (- $gutter / 2);
-	font-size: 0;
-
-	> * {
-		@include font-size($fontSize);
-	}
+	margin: 0 (- $gut / 2);
+	@extend .block-reset;
 }
 
 .column {
 	display: inline-block;
 	position: relative;
 	margin: 0;
-	padding: $gutter / 2;
+	padding: $gut / 2;
 	width: 100%;
 	vertical-align: top;
 
-	@for $i from 1 through $columns {
+	@for $i from 1 through $col {
 		&[data-span="#{$i}"] {
-			width: percentage($i / $columns);
+			width: percentage($i / $col);
 		}
 		&[data-push="#{$i}"] {
-			margin-left: percentage($i / $columns);
+			margin-left: percentage($i / $col);
 		}
 	}
 }
@@ -32,7 +28,7 @@
 .cell {
 	display: block;
 	position: relative;
-	padding: floor($spacing / 2);
+	padding: floor($spc / 2);
 }
 
 .debug {
@@ -42,16 +38,16 @@
 			display: none;
 			position: absolute;
 			top: -5px;
-			color: $brand1;
-			@include font-size($fontSize / 1.8);
+			color: $color1;
+			font-size: $fsz / 1.8 + rem;
 			opacity: 0.75;
 			z-index: 5;
 		}
 
 		&:before {
 			display: block;
-			left: floor($spacing / 2) + 4;
-			color: $brand1;
+			left: floor($spc / 2) + 4;
+			color: $color1;
 			content: "span " attr(data-span);
 		}
 
@@ -66,8 +62,8 @@
 		.column {
 			&:after {
 				display: block;
-				right: floor($spacing / 2) + 4;
-				color: $brand3;
+				right: floor($spc / 2) + 4;
+				color: $color3;
 				content: "push " attr(data-push);
 			}
 		}

@@ -18,9 +18,9 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'app/markup',
 					src: ['*.html'],
-					dest: 'www',
-				}],
-			},
+					dest: 'www'
+				}]
+			}
 		},
 
 
@@ -46,7 +46,15 @@ module.exports = function(grunt) {
 				safe: true,
 				map: true,
 				processors: [
-					require('rucksack-css')(),
+					require('rucksack-css')({
+						fallbacks: true
+					}),
+					require('pixrem')(16, { // Value is the same as on _config.scss $fsz variable multiplied by 10.
+						html: true,
+						replace: false,
+						atrules: true,
+						browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']
+					}),
 					require('autoprefixer')({
 						browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']
 					})
@@ -126,6 +134,7 @@ module.exports = function(grunt) {
 				},
 				open: true,
 				watchTask: true, // < VERY important
+				reloadDelay: 100,
 				reloadOnRestart: true,
 				logLevel: "info",
 				logPrefix: "Matter"
@@ -147,26 +156,30 @@ module.exports = function(grunt) {
 		// Config for grunt-contrib-watch (overseer)
 
 		watch: {
+			grunt: {
+				options: { reload: true, spawn: false },
+				files: ['Gruntfile.js']
+			},
 			html: {
-				options: { livereload: true },
+				options: { livereload: true, spawn: false },
 				files: ['app/markup/**/*.html'],
 				tasks: ['ssi']
 			},
 			php: {
-				options: { livereload: true },
+				options: { livereload: true, spawn: false },
 				files: ['www/**/*.php']
 			},
 			css: {
-				options: { livereload: true },
+				options: { livereload: true, spawn: false },
 				files: ['www/**/*.css']
 			},
 			sass: {
-				options: { livereload: false },
+				options: { livereload: false, spawn: false },
 				files: ['app/styles/**/*.{scss,sass}'],
 				tasks: ['sass', 'postcss']
 			},
 			js: {
-				options: { livereload: true },
+				options: { livereload: true, spawn: false },
 				files: ['app/scripts/**/*.js'],
 				tasks: ['uglify', 'jshint']
 			}

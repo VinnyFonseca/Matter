@@ -256,7 +256,7 @@ var initVideo = function() {
 							el.remove();
 						}
 
-						request("https://vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
+						requestData("https://vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
 					}
 
 					vimFrameBuild(name);
@@ -331,7 +331,7 @@ var initVideo = function() {
 						el.children(".video-thumb").css({"background": "url(" + videoThumb + ")"});
 					}
 
-					request("https://vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
+					requestData("https://vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
 				}
 
 				vimVideoBuild(name);

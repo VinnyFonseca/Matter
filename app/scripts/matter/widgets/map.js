@@ -533,7 +533,7 @@ var buildMap = function() {
 
 	if ( window.google && google.maps ) {
 		$('.map-canvas').each(function() {
-			request($(this).data("feed"), "GET", init);
+			requestData($(this).data("feed"), "GET", init);
 			google.maps.event.addDomListener(window, "resize", function() {
 				var center = map.getCenter();
 				google.maps.event.trigger(map, "resize");

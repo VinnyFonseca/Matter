@@ -6,11 +6,11 @@ iframe[src*="vimeo"] {
 .video-frame {
 	display: block;
 	position: relative;
-	margin: $spacing 0;
+	margin: $spc 0;
 	padding-bottom: 55.5%;
 	width: 100%;
-	border-left: 7px solid $brand1;
-	border-radius: $radius;
+	border-left: 7px solid $color1;
+	border-radius: $rds;
 	overflow: hidden;
 
 	&.loaded {
@@ -19,12 +19,12 @@ iframe[src*="vimeo"] {
 		}
 
 		.video-loader {
-			@include opacity(0);
+			opacity: 0;
 			visibility: hidden;
 		}
 
 		.video-button {
-			@include opacity(1);
+			opacity: 1;
 			cursor: pointer;
 		}
 	}
@@ -32,7 +32,7 @@ iframe[src*="vimeo"] {
 	&.playing {
 		.video-overlay,
 		.video-thumb {
-			@include opacity(0);
+			opacity: 0;
 			visibility: hidden;
 		}
 
@@ -40,7 +40,7 @@ iframe[src*="vimeo"] {
 			margin: 0;
 			width: 0;
 			height: 0;
-			@include opacity(0);
+			opacity: 0;
 
 			.icon {
 				transform: rotate(180deg);
@@ -62,7 +62,7 @@ iframe[src*="vimeo"] {
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		@include opacity(0.75);
+		opacity: 0.75;
 		background-position: center center !important;
 		background-size: cover !important;
 		z-index: 15;
@@ -71,7 +71,7 @@ iframe[src*="vimeo"] {
 		&:hover {
 			+ .video-button {
 				.icon {
-					@include svgColor($brand2);
+					@include svgColor($color2);
 				}
 			}
 		}
@@ -92,7 +92,7 @@ iframe[src*="vimeo"] {
 	.video-loader {
 		display: block;
 		position: absolute;
-		padding: $spacing;
+		padding: $spc;
 		margin-bottom: -42px;
 		margin-right: -42px;
 		width: 84px;
@@ -102,7 +102,7 @@ iframe[src*="vimeo"] {
 		border-radius: 1000px;
 		background: $cf;
 		z-index: 20;
-		@include opacity(1);
+		opacity: 1;
 		transition: opacity $animDuration $animEasing;
 	}
 
@@ -119,14 +119,14 @@ iframe[src*="vimeo"] {
 		border-radius: 1000px;
 		background: $c3;
 		z-index: 25;
-		@include opacity(0);
+		opacity: 0;
 		transition: all ($animDuration) $animEasing;
 
 		@extend .valign-middle;
 
 		&:hover {
 			.icon {
-				@include svgColor($brand2);
+				@include svgColor($color2);
 			}
 		}
 
@@ -136,7 +136,7 @@ iframe[src*="vimeo"] {
 			width: 45%;
 			height: 45%;
 			left: 3px;
-			@include svgColor($brand1);
+			@include svgColor($color1);
 			transition: all ($animDuration) $animEasing;
 
 			* {

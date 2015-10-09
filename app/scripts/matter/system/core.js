@@ -211,7 +211,7 @@ var URLQueryObject = function() { // Creates an object from the URL's query stri
 var returnedData,
 	dataObject = "";
 
-var request = function(url, type, successFunction) {
+var requestData = function(url, type, successFunction) {
 	if ( config.application.debug ) console.log('AJAX ~~ Request (' + url + ')');
 
 	request = $.ajax({

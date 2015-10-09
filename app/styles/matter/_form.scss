@@ -14,10 +14,10 @@ form {
 fieldset {
 	display: block;
 	position: relative;
-	margin: $spacing 0;
-	padding: floor($spacing / 1.5) $spacing;
+	margin: $spc 0;
+	padding: floor($spc / 1.5) $spc;
 	border: 1px solid $cd;
-	border-radius: $radius;
+	border-radius: $rds;
 	box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.05);
 
 	legend {
@@ -28,7 +28,7 @@ fieldset {
 		padding: 0 7px;
 		top: -1px;
 		color: $c8;
-		@include font-size($fontSize / 1.1);
+		font-size: $fsz / 1.1 + rem;
 		background: $cf;
 	}
 }
@@ -40,8 +40,8 @@ label {
 	margin: 0 3px;
 	padding: 10px 0 3px;
 	color: $c8;
-	font-family: $bodyFont;
-	@include font-size($fontSize / 1.1);
+	font-family: $fontText;
+	font-size: $fsz / 1.1 + rem;
 
 	&.control {
 		display: inline-block;
@@ -58,15 +58,15 @@ textarea {
 	position: relative;
 	color: $c3;
 	margin: 0;
-	margin-bottom: floor($spacing / 2);
-	padding: floor($spacing / 2) floor($spacing / 1.5);
+	margin-bottom: floor($spc / 2);
+	padding: floor($spc / 2) floor($spc / 1.5);
 	width: 100%;
-	font-family: $bodyFont;
-	@include font-size($fontSize);
+	font-family: $fontText;
+	font-size: $fsz + rem;
 	font-weight: 300;
 	text-align: left;
 	border: 1px solid $cc;
-	border-radius: $radius;
+	border-radius: $rds;
 	background: #fafafa;
 	background-clip: padding-box;
 	outline: 0;
@@ -139,15 +139,15 @@ input[type="button"] {
 	display: inline-block;
 	position: relative;
 	margin: 2px auto;
-	padding: floor($spacing / 2) floor($spacing / 1.5);
+	padding: floor($spc / 2) floor($spc / 1.5);
 	min-width: 42px;
-	color: $fontColor;
-	font-family: $bodyFont;
-	@include font-size($fontSize);
+	color: $colorText;
+	font-family: $fontText;
+	font-size: $fsz + rem;
 	text-align: center;
 	text-decoration: none !important;
 	border: 0;
-	border-radius: $radius;
+	border-radius: $rds;
 	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
 	background: $ce;
 	cursor: pointer !important;
@@ -183,40 +183,40 @@ input[type="button"] {
 
 	&.primary {
 		color: $cf;
-		background-color: $brand1;
+		background-color: $color1;
 
 		&:hover {
-			background-color: $brand2;
+			background-color: $color2;
 		}
 		&:active,
 		&:visited {
-			background-color: $brand1;
+			background-color: $color1;
 		}
 	}
 
 	&.secondary {
 		color: $cf;
-		background-color: $brand2;
+		background-color: $color2;
 
 		&:hover {
-			background-color: $brand1;
+			background-color: $color1;
 		}
 		&:active,
 		&:visited {
-			background-color: $brand2;
+			background-color: $color2;
 		}
 	}
 
 	&.tertiary {
 		color: $cf;
-		background-color: $brand3;
+		background-color: $color3;
 
 		&:hover {
-			background-color: $brand2;
+			background-color: $color2;
 		}
 		&:active,
 		&:visited {
-			background-color: $brand3;
+			background-color: $color3;
 		}
 	}
 }
@@ -303,7 +303,7 @@ input[type="checkbox"] {
 		label {
 			&:before,
 			&:after {
-				border-radius: $radius;
+				border-radius: $rds;
 			}
 		}
 
@@ -311,7 +311,7 @@ input[type="checkbox"] {
 			&:checked {
 				+ label:before,
 				+ label:after {
-					@include font-size($fontSize * 1.09);
+					font-size: $fsz * 1.09 + rem;
 					content: url('../img/icons/icon-control-checkbox.png');
 				}
 			}
@@ -329,7 +329,7 @@ input[type="checkbox"] {
 			&:checked {
 				+ label:before,
 				+ label:after {
-					@include font-size($fontSize * 1.09);
+					font-size: $fsz * 1.09 + rem;
 					content: url('../img/icons/icon-control-radio.png');
 				}
 			}
@@ -420,13 +420,13 @@ input[type="checkbox"] {
 				top: 0;
 				right: -10px;
 				bottom: 0;
-				background: $notifySuccessBgColor url('../img/icons/icon-toggle-tick.png') center center no-repeat;
+				background: $notifySuccessColorBg url('../img/icons/icon-toggle-tick.png') center center no-repeat;
 				transition: left $animEasing $animDuration, right $animEasing $animDuration;
 			}
 			.toggle-background-negative {
 				left: -($tglW - ($swtSz / 2));
 				right: auto;
-				background: $notifyFailureBgColor url('../img/icons/icon-toggle-close.png') center center no-repeat;
+				background: $notifyFailureColorBg url('../img/icons/icon-toggle-close.png') center center no-repeat;
 			}
 		}
 	}
@@ -439,13 +439,13 @@ select[multiple] {
 	height: auto;
 
 	option {
-		padding: floor($spacing / 2) floor($spacing / 1.5);
+		padding: floor($spc / 2) floor($spc / 1.5);
 	}
 }
 
 select[size="0"],
 select[size="1"] {
-	padding: floor($spacing / 2) floor($spacing / 1.5);
+	padding: floor($spc / 2) floor($spc / 1.5);
 	height: auto;
 
 	option {
@@ -472,19 +472,19 @@ optgroup {
 .input-group {
 	display: block;
 	position: relative;
-	margin-bottom: floor($spacing / 2);
+	margin-bottom: floor($spc / 2);
 	font-size: 0;
 
 	> * {
-		@include font-size($fontSize);
+		font-size: $fsz + rem;
 	}
 
 	.password-wrapper {
 		display: inline-block;
 		margin: 0;
 		width: 45%;
-		border-top-left-radius: $radius;
-		border-bottom-left-radius: $radius;
+		border-top-left-radius: $rds;
+		border-bottom-left-radius: $rds;
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 
@@ -494,34 +494,34 @@ optgroup {
 	}
 
 	label {
-		@include font-size($fontSize / 1.1);
+		font-size: $fsz / 1.1 + rem;
 	}
 
 	input {
 		display: inline-block;
 		margin: 0;
 		width: 45%;
-		border-top-left-radius: $radius;
-		border-bottom-left-radius: $radius;
+		border-top-left-radius: $rds;
+		border-bottom-left-radius: $rds;
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 
 		&[data-validation="match"] {
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
-			border-top-right-radius: $radius;
-			border-bottom-right-radius: $radius;
+			border-top-right-radius: $rds;
+			border-bottom-right-radius: $rds;
 		}
 	}
 
 	.input-addon {
 		display: inline-block;
 		margin: 0;
-		padding: floor($spacing / 2) floor($spacing / 1.5);
+		padding: floor($spc / 2) floor($spc / 1.5);
 		width: 10%;
 		color: $c8;
-		font-family: $bodyFont;
-		@include font-size($fontSize);
+		font-family: $fontText;
+		font-size: $fsz + rem;
 		text-align: center;
 		border: 1px solid $cc;
 		border-left: 0;
@@ -534,9 +534,9 @@ optgroup {
 // Info
 
 .form-info {
-	margin-bottom: floor($spacing / 2);
+	margin-bottom: floor($spc / 2);
 	color: $c2;
-	@include font-size($fontSize / 1.1);
+	font-size: $fsz / 1.1 + rem;
 }
 
 .indicator-required {
@@ -563,7 +563,7 @@ optgroup {
 	padding: 5px;
 	width: 42px;
 	height: 42px;
-	@include svgColor($brand1);
+	@include svgColor($color1);
 	vertical-align: middle;
 }
 
@@ -571,18 +571,18 @@ optgroup {
 // Credit Cards
 
 .card-wrapper {
-	margin: $spacing 0;
-	padding: floor($spacing / 1.5);
+	margin: $spc 0;
+	padding: floor($spc / 1.5);
 
 	.column > * {
 		margin-bottom: 0 !important;
 	}
 
 	.card-type {
-		margin-bottom: floor($spacing / 2);
+		margin-bottom: floor($spc / 2);
 
 		.card {
-			margin-right: floor($spacing / 2);
+			margin-right: floor($spc / 2);
 			height: 45px;
 		}
 	}
@@ -605,10 +605,10 @@ optgroup {
 .password-wrapper {
 	display: inline-block;
 	position: relative;
-	margin-bottom: $spacing / 2;
+	margin-bottom: $spc / 2;
 	width: 100%;
 	vertical-align: top;
-	border-radius: $radius;
+	border-radius: $rds;
 	overflow: hidden;
 
 	input {
@@ -651,11 +651,11 @@ optgroup {
 	position: relative;
 	color: $c2;
 	margin: 0;
-	margin-bottom: $spacing / 2;
+	margin-bottom: $spc / 2;
 	padding: 0;
 	width: 100%;
-	font-family: $bodyFont;
-	@include font-size($fontSize);
+	font-family: $fontText;
+	font-size: $fsz + rem;
 	text-align: left;
 	vertical-align: top;
 	cursor: pointer;
@@ -666,7 +666,7 @@ optgroup {
 	&:hover,
 	&.active {
 		.dropdown-arrow {
-			background-color: $brand2;
+			background-color: $color2;
 
 			.icon {
 				@include svgColor($cf);
@@ -717,9 +717,9 @@ optgroup {
 	.dropdown-current {
 		display: block;
 		position: relative;
-		padding: floor($spacing / 2) floor($spacing / 1.5);
+		padding: floor($spc / 2) floor($spc / 1.5);
 		border: 1px solid $cd;
-		border-radius: $radius;
+		border-radius: $rds;
 		background: #fafafa;
 		white-space: nowrap;
 		text-overflow: ellipsis;
@@ -739,8 +739,8 @@ optgroup {
 		bottom: 0;
 		text-align: center;
 		border: 0 solid rgba(0, 0, 0, 0.4);
-		border-radius: 0 $radius $radius 0 !important;
-		background: $brand1;
+		border-radius: 0 $rds $rds 0 !important;
+		background: $color1;
 		z-index: 50;
 
 		.icon {
@@ -767,7 +767,7 @@ optgroup {
 		.dropdown-item {
 			display: block;
 			position: relative;
-			padding: floor($spacing / 1.5) !important;
+			padding: floor($spc / 1.5) !important;
 			background: $ce;
 			white-space: nowrap;
 			text-overflow: ellipsis;
@@ -776,13 +776,13 @@ optgroup {
 
 			&:hover {
 				color: $cf;
-				background: $brand2 !important;
+				background: $color2 !important;
 			}
 
 			&:active,
 			&.active {
 				color: $cf;
-				background: $brand1 !important;
+				background: $color1 !important;
 			}
 		}
 	}
@@ -795,7 +795,7 @@ optgroup {
 
 		.dropdown-current {
 			padding-right: 54px;
-			color: $brand1;
+			color: $color1;
 		}
 
 		.dropdown {
@@ -806,7 +806,7 @@ optgroup {
 			left: 5px;
 			right: 5px;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-			@include opacity(0);
+			opacity: 0;
 			transition: {
 				property: opacity transform;
 				duration: $animDuration;
@@ -842,7 +842,7 @@ optgroup {
 		&.active {
 			.dropdown {
 				height: auto;
-				@include opacity(1);
+				opacity: 1;
 				transform: translateY(0) translateZ(0px) !important;
 			}
 		}
@@ -857,7 +857,7 @@ optgroup {
 		.dropdown {
 			position: relative;
 			border: 1px solid $cd;
-			border-radius: $radius;
+			border-radius: $rds;
 			background: $cf;
 			overflow: auto;
 
@@ -880,7 +880,7 @@ optgroup {
 .file-wrapper,
 .multifile-wrapper {
 	position: relative;
-	margin-bottom: $spacing / 2;
+	margin-bottom: $spc / 2;
 	width: 100%;
 	border: 0;
 	white-space: nowrap;
@@ -894,10 +894,10 @@ optgroup {
 	input[type="file"] {
 		position: relative;
 		margin: 0;
-		padding: floor($spacing / 2) floor($spacing / 1.5);
+		padding: floor($spc / 2) floor($spc / 1.5);
 		text-align: right;
 		z-index: 5;
-		@include opacity(0);
+		opacity: 0;
 	}
 
 	.fakefile {
@@ -928,15 +928,15 @@ optgroup {
 		.file-result {
 			display: block;
 			position: absolute;
-			padding: floor($spacing / 2) floor($spacing / 1.5);
+			padding: floor($spc / 2) floor($spc / 1.5);
 			padding-left: $buttonWidth + 15;
 			padding-right: 44px;
 			width: 100%;
 			top: 0px;
 			left: 0px;
-			color: $brand1;
+			color: $color1;
 			border: 1px solid $cd;
-			border-radius: $radius;
+			border-radius: $rds;
 			background: $cf;
 			overflow: hidden;
 			text-overflow: ellipsis;
@@ -959,9 +959,9 @@ optgroup {
 			border: 0 solid rgba(0, 0, 0, 0.4);
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
-			border-top-right-radius: $radius;
-			border-bottom-right-radius: $radius;
-			background: $brand1;
+			border-top-right-radius: $rds;
+			border-bottom-right-radius: $rds;
+			background: $color1;
 			z-index: 50;
 
 			@extend .valign-middle;
@@ -980,59 +980,59 @@ optgroup {
 // Validation
 
 .input-validation-error {
-	border: 2px solid $validationFailureBorderColor;
+	border: 2px solid $inputFailureColorBorder;
 }
 .field-validation-error {
 	display: block;
 	margin-top: 5px;
-	color: $validationFailureFontColor;
-	@include font-size($fontSize / 1.1);
+	color: $inputFailureColorText;
+	font-size: $fsz / 1.1 + rem;
 }
 
 .dropdown-current,
 [required] {
 	&.valid {
-		color: $validationSuccessFontColor !important;
-		border-color: $validationSuccessBorderColor;
-		background-color: $validationSuccessBgColor !important;
+		color: $inputSuccessColorText !important;
+		border-color: $inputSuccessColorBorder;
+		background-color: $inputSuccessColorBg !important;
 
 		&::-webkit-input-placeholder {
-			color: $validationSuccessFontColor !important;
+			color: $inputSuccessColorText !important;
 		}
 		&::-moz-placeholder {
-			color: $validationSuccessFontColor !important;
+			color: $inputSuccessColorText !important;
 		}
 		&:-moz-placeholder {
-			color: $validationSuccessFontColor !important;
+			color: $inputSuccessColorText !important;
 		}
 		&:-ms-input-placeholder {
-			color: $validationSuccessFontColor !important;
+			color: $inputSuccessColorText !important;
 		}
 		&.placeholder-text,
 		&.placeholder_text {
-			color: $validationSuccessFontColor !important;
+			color: $inputSuccessColorText !important;
 		}
 	}
 	&.invalid {
-		color: $validationFailureFontColor !important;
-		border-color: $validationFailureBorderColor;
-		background-color: $validationFailureBgColor !important;
+		color: $inputFailureColorText !important;
+		border-color: $inputFailureColorBorder;
+		background-color: $inputFailureColorBg !important;
 
 		&::-webkit-input-placeholder {
-			color: $validationFailureFontColor !important;
+			color: $inputFailureColorText !important;
 		}
 		&::-moz-placeholder {
-			color: $validationFailureFontColor !important;
+			color: $inputFailureColorText !important;
 		}
 		&:-moz-placeholder {
-			color: $validationFailureFontColor !important;
+			color: $inputFailureColorText !important;
 		}
 		&:-ms-input-placeholder {
-			color: $validationFailureFontColor !important;
+			color: $inputFailureColorText !important;
 		}
 		&.placeholder-text,
 		&.placeholder_text {
-			color: $validationFailureFontColor !important;
+			color: $inputFailureColorText !important;
 		}
 	}
 }
@@ -1085,27 +1085,27 @@ optgroup {
 		}
 		&.valid {
 			+ label {
-				color: $validationSuccessFontColor !important;
+				color: $inputSuccessColorText !important;
 
 				.toggle-switch,
 				&:before,
 				&:after {
-					color: $validationSuccessFontColor !important;
-					border-color: $validationSuccessBorderColor;
-					background-color: $validationSuccessBgColor !important;
+					color: $inputSuccessColorText !important;
+					border-color: $inputSuccessColorBorder;
+					background-color: $inputSuccessColorBg !important;
 				}
 			}
 		}
 		&.invalid {
 			+ label {
-				color: $validationFailureFontColor !important;
+				color: $inputFailureColorText !important;
 
 				.toggle-switch,
 				&:before,
 				&:after {
-					color: $validationFailureFontColor !important;
-					border-color: $validationFailureBorderColor;
-					background-color: $validationFailureBgColor !important;
+					color: $inputFailureColorText !important;
+					border-color: $inputFailureColorBorder;
+					background-color: $inputFailureColorBg !important;
 				}
 			}
 		}
@@ -1140,7 +1140,7 @@ $progressHeight: 42px;
 progress {
 	display: block;
 	position: relative;
-	margin: floor($spacing / 2) 0;
+	margin: floor($spc / 2) 0;
 	padding: 0;
 	width: 100%;
 	height: $progressHeight;
@@ -1160,29 +1160,29 @@ progress {
 progress[value] {
 	display: block;
 	position: relative;
-	margin: 0 0 floor($spacing / 2);
+	margin: 0 0 floor($spc / 2);
 	padding: 0;
 	width: 100%;
 	height: $progressHeight;
-	color: $brand1;
+	color: $color1;
 	border: none;
-	border-radius: $radius;
+	border-radius: $rds;
 	background-color: $ce;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) inset;
 	appearance: none;
 
 	&::-webkit-progress-bar {
-		border-radius: $radius;
+		border-radius: $rds;
 		background-color: $ce;
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) inset;
 	}
 	&::-webkit-progress-value {
 		position: relative;
-		border-radius: $radius;
+		border-radius: $rds;
 		background-image:
 			-webkit-linear-gradient( 135deg, transparent, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
 			-webkit-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-			-webkit-linear-gradient( to right, $brand1, $brand1);
+			-webkit-linear-gradient( to right, $color1, $color1);
 		background-size:
 			($progressHeight * 2) $progressHeight,
 			100% 100%,
@@ -1203,11 +1203,11 @@ progress[value] {
 		content: '';
 	}
 	&::-moz-progress-bar {
-		border-radius: $radius;
+		border-radius: $rds;
 		background-image:
 			-moz-linear-gradient( 135deg, transparent, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
 			-moz-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-			-moz-linear-gradient( to right, $notifySuccessBgColor, $notifySuccessBgColor);
+			-moz-linear-gradient( to right, $notifySuccessColorBg, $notifySuccessColorBg);
 		background-size:
 			($progressHeight * 2) $progressHeight,
 			100% 100%,
@@ -1218,7 +1218,7 @@ progress[value] {
 		&::-webkit-progress-value {
 			background-image:
 				-webkit-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-				-webkit-linear-gradient( to right, $notifySuccessBgColor, $notifySuccessBgColor);
+				-webkit-linear-gradient( to right, $notifySuccessColorBg, $notifySuccessColorBg);
 			background-size:
 				100% 100%,
 				100% 100%;
@@ -1226,7 +1226,7 @@ progress[value] {
 		&::-moz-progress-bar {
 			background-image:
 				-moz-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-				-moz-linear-gradient( to right, $notifySuccessBgColor, $notifySuccessBgColor);
+				-moz-linear-gradient( to right, $notifySuccessColorBg, $notifySuccessColorBg);
 			background-size:
 				100% 100%,
 				100% 100%;
@@ -1238,7 +1238,7 @@ progress[value] {
 .progress-bar {
 	width: 100%;
 	height: $progressHeight;
-	border-radius: $radius;
+	border-radius: $rds;
 	background-color: $ce;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) inset;
 
@@ -1246,8 +1246,8 @@ progress[value] {
 		display: block;
 		height: $progressHeight;
 		text-indent: -9999px;
-		border-radius: $radius;
-		background-color: $brand1;
+		border-radius: $rds;
+		background-color: $color1;
 	}
 }
 
@@ -1257,7 +1257,7 @@ label[data-progress] {
 
 	&.active {
 		&:after {
-			@include opacity(1);
+			opacity: 1;
 		}
 	}
 
@@ -1266,14 +1266,14 @@ label[data-progress] {
 		padding: 2px 5px;
 		top: 46px;
 		right: 36px;
-		@include font-size($fontSize / 1.2);
-		color: $brand1;
+		font-size: $fsz / 1.2 + rem;
+		color: $color1;
 		text-align: center;
-		border-radius: $radius;
+		border-radius: $rds;
 		background-color: $ce;
 		content: attr(data-progress) '%';
 		z-index: 20;
-		@include opacity(0);
+		opacity: 0;
 		transition: opacity $animDuration $animEasing;
 	}
 }

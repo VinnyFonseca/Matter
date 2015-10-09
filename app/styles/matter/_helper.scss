@@ -13,7 +13,7 @@
 	font-size: 0;
 
 	> * {
-		@include font-size($fontSize);
+		font-size: $fsz + rem;
 	}
 }
 
@@ -29,27 +29,27 @@
 	margin: 0 !important;
 }
 .margin-ver {
-	margin-top: $spacing !important;
-	margin-bottom: $spacing !important;
+	margin-top: $spc !important;
+	margin-bottom: $spc !important;
 }
 .margin-top {
-	margin-top: $spacing !important;
+	margin-top: $spc !important;
 }
 .margin-bottom {
-	margin-bottom: $spacing !important;
+	margin-bottom: $spc !important;
 }
 .margin-hor {
-	margin-left: $spacing !important;
-	margin-right: $spacing !important;
+	margin-left: $spc !important;
+	margin-right: $spc !important;
 }
 .margin-left {
-	margin-left: $spacing !important;
+	margin-left: $spc !important;
 }
 .margin-right {
-	margin-right: $spacing !important;
+	margin-right: $spc !important;
 }
 .fullmargin {
-	margin: $spacing !important;
+	margin: $spc !important;
 }
 
 
@@ -57,27 +57,27 @@
 	padding: 0 !important;
 }
 .padding-ver {
-	padding-top: $spacing !important;
-	padding-bottom: $spacing !important;
+	padding-top: $spc !important;
+	padding-bottom: $spc !important;
 }
 .padding-top {
-	padding-top: $spacing !important;
+	padding-top: $spc !important;
 }
 .padding-bottom {
-	padding-bottom: $spacing !important;
+	padding-bottom: $spc !important;
 }
 .padding-hor {
-	padding-left: $spacing !important;
-	padding-right: $spacing !important;
+	padding-left: $spc !important;
+	padding-right: $spc !important;
 }
 .padding-left {
-	padding-left: $spacing !important;
+	padding-left: $spc !important;
 }
 .padding-right {
-	padding-right: $spacing !important;
+	padding-right: $spc !important;
 }
 .fullpadding {
-	padding: $spacing !important;
+	padding: $spc !important;
 }
 
 
@@ -85,7 +85,7 @@
 	border: none !important;
 }
 .border {
-	border: 2px dotted $validationFailureBorderColor !important;
+	border: 2px dotted $inputFailureColorBorder !important;
 }
 .dotted {
 	border-style: dotted !important;
@@ -96,27 +96,27 @@
 
 
 .round {
-	border-radius: $radius !important;
+	border-radius: $rds !important;
 }
 .top-round {
 	border-radius: 0 !important;
-	border-top-left-radius: $radius !important;
-	border-top-right-radius: $radius !important;
+	border-top-left-radius: $rds !important;
+	border-top-right-radius: $rds !important;
 }
 .right-round {
 	border-radius: 0 !important;
-	border-top-right-radius: $radius !important;
-	border-bottom-right-radius: $radius !important;
+	border-top-right-radius: $rds !important;
+	border-bottom-right-radius: $rds !important;
 }
 .bottom-round {
 	border-radius: 0 !important;
-	border-bottom-left-radius: $radius !important;
-	border-bottom-right-radius: $radius !important;
+	border-bottom-left-radius: $rds !important;
+	border-bottom-right-radius: $rds !important;
 }
 .left-round {
 	border-radius: 0 !important;
-	border-top-left-radius: $radius !important;
-	border-bottom-left-radius: $radius !important;
+	border-top-left-radius: $rds !important;
+	border-bottom-left-radius: $rds !important;
 }
 .circle {
 	border-radius: 1000px !important;
@@ -139,23 +139,23 @@
 	margin-left: 0;
 	margin-right: 0;
 	padding: 0;
-	color: $fontColor;
+	color: $colorText;
 	border: 0;
 	border-radius: 0;
 	background: none;
 
 	.emphasis {
-		color: $brand2;
+		color: $color2;
 	}
 }
 
 .framed {
 	margin-left: 0;
 	margin-right: 0;
-	padding: floor($spacing / 2);
-	color: $fontColor;
+	padding: floor($spc / 2);
+	color: $colorText;
 	border: 1px solid $cd;
-	border-radius: $radius;
+	border-radius: $rds;
 	background: $ce;
 }
 
@@ -199,7 +199,7 @@
 
 	& > * {
 		display: inline-block;
-		@include font-size($fontSize);
+		font-size: $fsz + rem;
 		vertical-align: middle !important;
 	}
 }
@@ -252,7 +252,7 @@
 }
 .highlight {
 	display: inline !important;
-	border-radius: $radius !important;
+	border-radius: $rds !important;
 	background: rgba(0, 0, 0, 0.1) !important;
 }
 .disappear {
@@ -288,47 +288,47 @@
 // Typography
 
 .font-custom {
-	font-family: $headingFont;
+	font-family: $fontHeading;
 }
 
 .font-zero {
 	font-size: 0 !important;
 }
 .font-xxsmall {
-	@include font-size($fontSize / 2.2);
+	font-size: $fsz / 2.2 + rem;
 }
 .font-xsmall {
-	@include font-size($fontSize / 1.8);
+	font-size: $fsz / 1.8 + rem;
 }
 .font-small {
-	@include font-size($fontSize / 1.4);
+	font-size: $fsz / 1.4 + rem;
 }
 .font-reduced {
-	@include font-size($fontSize / 1.2);
+	font-size: $fsz / 1.2 + rem;
 }
 .font-normal {
-	@include font-size($fontSize);
+	font-size: $fsz + rem;
 }
 .font-medium {
-	@include font-size($fontSize * 1.2);
+	font-size: $fsz * 1.2 + rem;
 }
 .font-expanded {
-	@include font-size($fontSize * 1.4);
+	font-size: $fsz * 1.4 + rem;
 }
 .font-large {
-	@include font-size($fontSize * 1.7);
+	font-size: $fsz * 1.7 + rem;
 }
 .font-xlarge {
-	@include font-size($fontSize * 2);
+	font-size: $fsz * 2 + rem;
 }
 .font-xxlarge {
-	@include font-size($fontSize * 2.4);
+	font-size: $fsz * 2.4 + rem;
 }
 .font-max {
-	@include font-size($fontSize * 2.8);
+	font-size: $fsz * 2.8 + rem;
 }
 .font-ultra {
-	@include font-size($fontSize * 3.2);
+	font-size: $fsz * 3.2 + rem;
 }
 
 

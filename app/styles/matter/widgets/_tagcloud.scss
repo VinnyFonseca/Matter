@@ -2,13 +2,13 @@
 	display: none;
 	position: relative;
 	margin: 0;
-	margin-bottom: floor($spacing / 2);
-	padding: floor($spacing / 4) floor($spacing / 4);
+	margin-bottom: floor($spc / 2);
+	padding: floor($spc / 4) floor($spc / 4);
 	width: 100%;
 	color: $c8;
 	text-align: left;
 	border: 1px dashed $cd;
-	border-radius: $radius;
+	border-radius: $rds;
 	background: $ce;
 	list-style: none;
 	overflow: hidden;
@@ -24,17 +24,17 @@
 		padding: 4px 8px;
 		padding-right: 28px;
 		color: $cf;
-		@include font-size($fontSize / 1.1);
-		border-radius: $radius;
-		background: $brand1;
+		font-size: $fsz / 1.1 + rem;
+		border-radius: $rds;
+		background: $color1;
 		cursor: pointer !important;
 		white-space: nowrap;
 
 		&:hover {
-			background-color: $brand2;
+			background-color: $color2;
 		}
 		&:active {
-			background-color: $brand3;
+			background-color: $color3;
 		}
 
 		.icon {
@@ -49,9 +49,9 @@
 
 		@for $i from 0 through 4 {
 			&[data-tag-group="#{$i}"] {
-				// background-color: darken($brand1, percentage($i / 10));
-				// background-color: lighten($brand1, percentage($i / 10));
-				background-color: adjust-hue($brand1, -($i * 45));
+				// background-color: darken($color1, percentage($i / 10));
+				// background-color: lighten($color1, percentage($i / 10));
+				background-color: adjust-hue($color1, -($i * 45));
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-@media screen and (max-width: $screenWide + $sidebarWidth) {
+@media screen and (max-width: $scrDeskL + $sidebarWidth) {
 
 	.wrapper {
 		width: 100%;
@@ -8,17 +8,17 @@
 
 
 
-@media screen and (max-width: $screenWide) {
+@media screen and (max-width: $scrDeskL) {
 
 	header,
 	.header {
 		nav,
 		.nav {
 			.nav-item {
-				padding: $spacing floor($spacing / 1.5);
+				padding: $spc floor($spc / 1.5);
 
 				& > * {
-					@include font-size($fontSize / 1.1);
+					font-size: $fsz / 1.1 + rem;
 				}
 			}
 		}
@@ -48,7 +48,7 @@
 
 
 
-@media screen and (max-width: $screenDesktop) {
+@media screen and (max-width: $scrDeskS) {
 
 	header,
 	.header {
@@ -61,10 +61,10 @@
 		nav,
 		.nav {
 			.nav-item {
-				padding: $spacing floor($spacing / 2);
+				padding: $spc floor($spc / 2);
 
 				& > * {
-					@include font-size($fontSize / 1.1);
+					font-size: $fsz / 1.1 + rem;
 				}
 			}
 		}
@@ -74,7 +74,7 @@
 
 
 
-@media screen and (max-width: $screenTabletL) {
+@media screen and (max-width: $scrTablL) {
 
 
 	// Nav
@@ -106,14 +106,14 @@
 
 			.nav-item {
 				display: block;
-				padding: floor($spacing / 1.5) $spacing;
+				padding: floor($spc / 1.5) $spc;
 				height: auto;
 				border-left: 0;
 				border-bottom: 1px solid $ce;
 				vertical-align: baseline;
 
 				& > * {
-					@include font-size($fontSize);
+					font-size: $fsz + rem;
 				}
 			}
 		}
@@ -164,13 +164,13 @@
 
 
 
-@media screen and (max-width: $screenTabletS) {
+@media screen and (max-width: $scrTablS) {
 
 }
 
 
 
-@media screen and (max-width: $screenMobileL) {
+@media screen and (max-width: $scrMoblL) {
 
 	.icon-wrapper {
 		.icon-container {
@@ -210,6 +210,6 @@
 
 
 
-@media screen and (max-width: $screenMobileS) {
+@media screen and (max-width: $scrMoblS) {
 
 }

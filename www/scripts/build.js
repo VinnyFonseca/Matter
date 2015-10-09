@@ -3735,7 +3735,7 @@ var cookieSystem, initCookies = function() {
         }, f = window.location.search.substring(1);
         for (a = {}; b == d.exec(f); ) a[e(b[1])] = e(b[2]);
     }, a;
-}, returnedData, dataObject = "", request = function(a, b, c) {
+}, returnedData, dataObject = "", requestData = function(a, b, c) {
     config.application.debug && console.log("AJAX ~~ Request (" + a + ")"), request = $.ajax({
         url: a,
         type: b,
@@ -3815,9 +3815,9 @@ var initForm = function() {
             }
             initDropdowns();
         };
-        request(b, "GET", c);
+        requestData(b, "GET", c);
     }), config.application.debug && console.log("Form :: Country Dropdowns"));
-    var a = '<div class="file-wrapper mobile-hide"></div>', b = '<div class="fakefile">							<div class="button primary fake-upload">Choose File</div>							<div class="file-result">No file chosen</div>						</div>', c = '<div class="multifile-info form-info">							You\'ve got <strong class="emphasis multi-limit font-medium">0</strong>\r\n							remaining upload<span class="plural">s</span>.						</div>', d = '<div class="multifile-wrapper mobile-hide last"></div>', e = '<div class="fakefile">							<div class="button primary fake-upload">Choose File</div>							<div class="file-result">No file chosen</div>							<div class="button primary fake-close">								<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">							</div>						</div>';
+    var a = '<div class="file-wrapper mobile-hide"></div>', b = '<div class="fakefile">							<div class="button primary fake-upload">Choose File</div>							<div class="file-result">No file chosen</div>						</div>', c = '<div class="multifile-info form-info">							You\'ve got <strong class="emphasis multi-limit font-medium">0</strong> remaining upload<span class="plural">s</span>.						</div>', d = '<div class="multifile-wrapper mobile-hide last"></div>', e = '<div class="fakefile">							<div class="button primary fake-upload">Choose File</div>							<div class="file-result">No file chosen</div>							<div class="button primary fake-close">								<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">							</div>						</div>';
     if ($("input[type='file']").each(function() {
         $(this).data("multi") ? $(this).before(c).wrap(d).after(e) : $(this).wrap(a).after(b);
     }), $(".file-wrapper").length && ($(".file-wrapper:not('.last')").each(function() {
@@ -4778,7 +4778,7 @@ var initAutocomplete = function() {
             };
             v();
         };
-        request(b, "GET", k);
+        requestData(b, "GET", k);
     }), config.application.debug && console.log("Search :: Autocomplete"));
 }, clearBrochure = function() {
     $(".brochure-counter").html(0), sessionSystem.remove("brochure");
@@ -5233,7 +5233,7 @@ var initAutocomplete = function() {
         }), d(marker, map, a.Markers[i].Title, a.Markers[i].Desc, a.Markers[i].Tel, a.Markers[i].Email, a.Markers[i].Url);
     };
     window.google && google.maps && ($(".map-canvas").each(function() {
-        request($(this).data("feed"), "GET", a), google.maps.event.addDomListener(window, "resize", function() {
+        requestData($(this).data("feed"), "GET", a), google.maps.event.addDomListener(window, "resize", function() {
             var a = map.getCenter();
             google.maps.event.trigger(map, "resize"), map.setCenter(a);
         });
@@ -5458,7 +5458,7 @@ var initAutocomplete = function() {
                 $("select[data-search-parameter='" + s + "']").val(u).trigger("change");
             }
         };
-        request(c, "GET", w);
+        requestData(c, "GET", w);
     }), config.application.debug && console.log("Search :: Unified Search"));
 }, sliderInit = function(a) {
     var b = $("#" + a), c = '<div class="slider-container"></div>', d = '<div class="slider-movable"></div>';
@@ -5930,7 +5930,7 @@ var twitterConfig, initVideo = function() {
                                 background: "url(" + b + ")"
                             }), c.remove();
                         };
-                        request("https://vimeo.com/api/v2/video/" + f + ".json", "GET", j);
+                        requestData("https://vimeo.com/api/v2/video/" + f + ".json", "GET", j);
                     }
                     a(d);
                 }
@@ -5967,7 +5967,7 @@ var twitterConfig, initVideo = function() {
                             background: "url(" + b + ")"
                         });
                     };
-                    request("https://vimeo.com/api/v2/video/" + e + ".json", "GET", i);
+                    requestData("https://vimeo.com/api/v2/video/" + e + ".json", "GET", i);
                 }
                 a(d);
             });

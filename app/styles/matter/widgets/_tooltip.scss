@@ -8,21 +8,21 @@ $animBounce: cubic-bezier(.15,.7,.6,1.7);
 	padding: 3px 7px;
 	max-width: 200px;
 	color: $cf;
-	@include font-size($fontSize / 1.2);
+	font-size: $fsz / 1.2 + rem;
 	font-weight: normal;
 	border: 0;
-	border-radius: $radius;
-	background: $brand1;
+	border-radius: $rds;
+	background: $color1;
 	z-index: 9999;
 
-	@include opacity(0);
+	opacity: 0;
 	transform: scale(0.6);
 	transition-property: opacity, transform;
 	transition-duration: $animDuration / 2;
 	transition-timing-function: $animBounce;
 
 	&.active {
-		@include opacity(1);
+		opacity: 1;
 		transform: scale(1);
 	}
 

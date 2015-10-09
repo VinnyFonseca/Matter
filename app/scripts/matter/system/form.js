@@ -20,7 +20,7 @@ var initForm = function() {
 				initDropdowns();
 			}
 
-			request(url, "GET", buildCountries);
+			requestData(url, "GET", buildCountries);
 		});
 
 		if ( config.application.debug ) console.log("Form :: Country Dropdowns");
@@ -37,8 +37,7 @@ var initForm = function() {
 						</div>';
 
 	var multiFileIntro = '<div class="multifile-info form-info">\
-							You\'ve got <strong class="emphasis multi-limit font-medium">0</strong>
-							remaining upload<span class="plural">s</span>.\
+							You\'ve got <strong class="emphasis multi-limit font-medium">0</strong> remaining upload<span class="plural">s</span>.\
 						</div>';
 	var multiFileWrapper = '<div class="multifile-wrapper mobile-hide last"></div>';
 	var multiFileFake = '<div class="fakefile">\

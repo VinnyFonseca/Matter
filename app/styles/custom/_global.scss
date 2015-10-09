@@ -1,5 +1,7 @@
 // Base
 
+$headerHeight: 68px;
+
 body {
 	padding-top: $headerHeight - 1 !important;
 }
@@ -19,10 +21,10 @@ header,
 	.logo {
 		display: inline-block;
 		position: relative;
-		margin-left: floor($spacing / 1.5);
-		padding: floor($spacing / 1.5) 0;
+		margin-left: floor($spc / 1.5);
+		padding: floor($spc / 1.5) 0;
 		height: $headerHeight;
-		color: $fontColor;
+		color: $colorText;
 		text-decoration: none !important;
 		white-space: nowrap;
 
@@ -42,22 +44,22 @@ header,
 		width: 24px;
 		height: 24px;
 		top: 50%;
-		right: $spacing;
+		right: $spc;
 		cursor: pointer;
 
 		.icon {
 			width: 100%;
 			height: 100%;
-			@include svgColor($brand1);
+			@include svgColor($color1);
 		}
 		&:hover {
 			.icon {
-				@include svgColor($brand2);
+				@include svgColor($color2);
 			}
 		}
 		&:active {
 			.icon {
-				@include svgColor($brand1);
+				@include svgColor($color1);
 			}
 		}
 	}
@@ -83,7 +85,7 @@ header,
 		.nav-item {
 			display: inline-block;
 			position: relative;
-			padding: $spacing;
+			padding: $spc;
 			height: 100%;
 			border-left: 1px solid $ce;
 			font-size: 0 !important;
@@ -92,15 +94,15 @@ header,
 
 			&.active {
 				color: $cf;
-				border-color: $brand1 !important;
-				background: $brand1 !important;
+				border-color: $color1 !important;
+				background: $color1 !important;
 				cursor: default;
 			}
 			&:hover,
 			&:active {
 				color: $cf;
-				border-color: $brand2;
-				background: $brand2;
+				border-color: $color2;
+				background: $color2;
 			}
 		}
 	}
@@ -112,7 +114,7 @@ header,
 		height: 2px;
 		bottom: -2px;
 		font-size: 0;
-		background: $brand1;
+		background: $color1;
 	}
 }
 
@@ -125,8 +127,8 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 
 
 .wrapper {
-	padding: floor($spacing * 1.5) $spacing;
-	width: $screenWide;
+	padding: floor($spc * 1.5) $spc;
+	width: $scrDeskL;
 	transition: opacity $animDuration $animEasing;
 }
 
@@ -142,29 +144,29 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 	.parallax {
 		display: block;
 		position: relative;
-		padding: $spacing  0;
+		padding: $spc  0;
 		color: $cf;
-		background: $brand1 url($introBg) no-repeat center bottom;
+		background: $color1 url($introBg) no-repeat center bottom;
 		background-size: cover;
 
 		&.parallax-noes {
-			background: $brand1 url("../img/pictures/black-hole.jpg") no-repeat center center;
+			background: $color1 url("../img/pictures/black-hole.jpg") no-repeat center center;
 			background-size: cover;
 
 			p.lead {
 				@extend .font-custom;
-				@include font-size($fontSize * 7);
+				font-size: $fsz * 7 + rem;
 				line-height: 1.2;
 			}
 		}
 
 		&.parallax-dev {
-			background: $brand1 url("../img/pictures/galaxy.jpg") no-repeat center center;
+			background: $color1 url("../img/pictures/galaxy.jpg") no-repeat center center;
 			background-size: cover;
 
 			p.lead {
 				@extend .font-custom;
-				@include font-size($fontSize * 7);
+				font-size: $fsz * 7 + rem;
 				line-height: 1.2;
 			}
 		}
@@ -174,7 +176,7 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 		display: block;
 		position: relative;
 		margin: 0 auto;
-		margin-bottom: floor($spacing * 1.5);
+		margin-bottom: floor($spc * 1.5);
 	}
 }
 
@@ -187,7 +189,7 @@ $sidebarWidth: 300px;
 	display: block;
 	position: relative;
 	left: 0;
-	background-color: $bodyColor;
+	background-color: $colorBody;
 	z-index: 2;
 	transition: left $animDuration $animEasing;
 
@@ -199,7 +201,7 @@ $sidebarWidth: 300px;
 		left: - $sidebarWidth / 4;
 
 		.wrapper {
-			@include opacity(0.15);
+			opacity: 0.15;
 		}
 
 		.sidebar {
@@ -209,7 +211,7 @@ $sidebarWidth: 300px;
 				transform: translateX(46px);
 				border-left-width: 0;
 				border-right-width: 1px;
-				border-radius: 0 $radius $radius 0;
+				border-radius: 0 $rds $rds 0;
 
 				&:before {
 					content: "\00BB" !important;
@@ -234,7 +236,7 @@ $sidebarWidth: 300px;
 		transition: transform $animDuration $animEasing;
 
 		& > * {
-			padding: 0 $spacing;
+			padding: 0 $spc;
 		}
 
 		.sidebar-trigger {
@@ -246,13 +248,13 @@ $sidebarWidth: 300px;
 			left: -46px;
 			top: 6px;
 			color: $cf;
-			@include font-size($fontSize * 2);
+			font-size: $fsz * 2 + rem;
 			text-align: center;
 			line-height: 0.7 !important;
-			border: 1px solid $brand1;
+			border: 1px solid $color1;
 			border-left-width: 0;
-			border-radius: $radius 0 0 $radius;
-			background-color: $brand1;
+			border-radius: $rds 0 0 $rds;
+			background-color: $color1;
 			cursor: pointer;
 			z-index: 10;
 			opacity: 0.85;
@@ -260,8 +262,8 @@ $sidebarWidth: 300px;
 
 			&:hover,
 			&:active {
-				border-color: $brand2;
-				background-color: $brand2;
+				border-color: $color2;
+				background-color: $color2;
 			}
 			&:before {
 				content: "\00AB";
@@ -277,7 +279,7 @@ $sidebarWidth: 300px;
 			display: block;
 			position: relative;
 			margin: 0;
-			margin-top: floor($spacing / 2);
+			margin-top: floor($spc / 2);
 			padding: 0;
 			list-style: none;
 			border-top: 1px solid $c3;
@@ -291,25 +293,25 @@ $sidebarWidth: 300px;
 				a {
 					display: block;
 					position: relative;
-					padding: 8px $spacing;
+					padding: 8px $spc;
 					color: $cd !important;
-					@include font-size($fontSize / 1.1);
+					font-size: $fsz / 1.1 + rem;
 					text-decoration: none !important;
 					border-top: 1px solid $c4;
 					border-bottom: 1px solid $c3;
 
 					&:hover {
-						border-top: 1px solid $brand1;
-						background-color: $brand1;
+						border-top: 1px solid $color1;
+						background-color: $color1;
 					}
 					&:active {
-						border-top: 1px solid $brand2;
-						background-color: $brand2;
+						border-top: 1px solid $color2;
+						background-color: $color2;
 					}
 					&.active {
 						color: $cf !important;
-						border-top: 1px solid $brand1;
-						background-color: $brand1;
+						border-top: 1px solid $color1;
+						background-color: $color1;
 					}
 				}
 			}
@@ -366,24 +368,24 @@ $sidebarWidth: 300px;
 	display: block;
 	position: absolute;
 	margin: 0;
-	padding: floor($spacing / 2);
+	padding: floor($spc / 2);
 	right: 0;
 	bottom: 125%;
 	text-align: left;
 	border: 1px solid $ce;
-	border-radius: $radius;
+	border-radius: $rds;
 	background-color: $cf;
 	box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
 	white-space: nowrap;
 	cursor: default;
 	z-index: 80;
-	@include opacity(0);
+	opacity: 0;
 	transform: scale(0);
 	transform-origin: right bottom;
 	transition: all $animDuration $animEasing;
 
 	&.active {
-		@include opacity(1);
+		opacity: 1;
 		transform: scale(1);
 	}
 
@@ -409,14 +411,14 @@ $sidebarWidth: 300px;
 		padding: 10px;
 		width: 5.666%;
 		border: 1px solid $cd;
-		border-radius: $radius;
+		border-radius: $rds;
 		background-color: $ce;
 
 		.icon {
 			margin: 0;
 			width: 100%;
 			height: 100%;
-			@include svgColor($brand1);
+			@include svgColor($color1);
 		}
 	}
 }
@@ -450,10 +452,10 @@ footer,
 .footer {
 	display: block;
 	position: relative;
-	padding: floor($spacing / 1.5) $spacing;
+	padding: floor($spc / 1.5) $spc;
 	width: 100%;
 	color: $cf;
-	background: $brand1;
+	background: $color1;
 	background-size: cover;
 	z-index: 80;
 
@@ -472,7 +474,7 @@ footer,
 		display: block;
 		position: relative;
 		float: right;
-		margin-left: floor($spacing / 2);
+		margin-left: floor($spc / 2);
 		top: 10px;
 		right: 0;
 	}
@@ -481,12 +483,12 @@ footer,
 		display: block;
 		position: relative;
 		float: right;
-		margin-top: floor($spacing / 2);
-		margin-left: floor($spacing / 2);
+		margin-top: floor($spc / 2);
+		margin-left: floor($spc / 2);
 		padding: 0;
 
 		.icon {
-			margin-left: floor($spacing / 2);
+			margin-left: floor($spc / 2);
 			width: 24px;
 			height: 24px;
 			@include svgColor($cf);
@@ -497,7 +499,7 @@ footer,
 
 			&:hover {
 				.icon {
-					@include svgColor($brand2);
+					@include svgColor($color2);
 				}
 			}
 			&:active {
