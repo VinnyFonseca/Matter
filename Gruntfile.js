@@ -11,8 +11,7 @@ module.exports = function(grunt) {
 			options: {
 				cache: 'all',
 				ext: '.html',
-				baseDir: 'app/markup',
-                cacheDir: '.ssi-cache'
+				baseDir: 'app/markup'
 			},
 			main: {
 				files: [{
