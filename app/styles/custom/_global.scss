@@ -14,8 +14,8 @@ header,
 	padding: 0;
 	width: 100%;
 	top: 0;
+	border-bottom: 1px solid $ce;
 	background: $cf;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 	z-index: 150;
 
 	.logo {
@@ -75,22 +75,29 @@ header,
 	.nav {
 		display: block;
 		position: absolute;
+		padding: floor($spc / 1.5);
+		height: 100%;
 		top: 0;
 		right: 0;
-		height: 100%;
 		background-color: $cf;
 		white-space: nowrap;
 		z-index: 10;
+		@extend .valign-middle;
 
 		.nav-item {
 			display: inline-block;
 			position: relative;
-			padding: $spc;
-			height: 100%;
-			border-left: 1px solid $ce;
-			font-size: 0 !important;
-
+			margin: 0 3px;
+			padding: floor($spc / 1.5);
+			border: 1px solid $ce;
+			border-radius: $rds;
+			background-color: #fafafa;
 			@extend .valign-middle;
+
+			span {
+				font-size: $fsz / 1.2 + rem !important;
+				line-height: 1.3;
+			}
 
 			&.active {
 				color: $cf;
@@ -221,7 +228,7 @@ $sidebarWidth: 300px;
 	}
 
 	.sidebar {
-		display: block;
+		display: none;
 		position: fixed;
 		margin: 0;
 		padding: 0;
@@ -283,7 +290,6 @@ $sidebarWidth: 300px;
 			padding: 0;
 			list-style: none;
 			border-top: 1px solid $c3;
-			background-color: $c4;
 
 			li {
 				display: block;
@@ -293,12 +299,14 @@ $sidebarWidth: 300px;
 				a {
 					display: block;
 					position: relative;
+					margin: 3px 5px;
 					padding: 8px $spc;
 					color: $cd !important;
 					font-size: $fsz / 1.1 + rem;
 					text-decoration: none !important;
-					border-top: 1px solid $c4;
-					border-bottom: 1px solid $c3;
+					border: 1px solid $c3;
+					border-radius: $rds;
+					background-color: $c4;
 
 					&:hover {
 						border-top: 1px solid $color1;

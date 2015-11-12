@@ -96,7 +96,7 @@
 					$name = str_replace('icon-', '', $file);
 
 					echo "<div class='icon-container' data-icon='" . $name . "' data-tooltip='" . $name . "'>
-							  <img class='svg icon " . $file . "' src='img/icons/" . $file . ".svg'>
+							  <img class='svg icon " . $file . "' src='/img/icons/" . $file . ".svg' width='16' height='16' onerror='this.onerror=null;this.src=\'/img/icons/" . $file . ".png\'' alt='CTA icon'>
 						  </div>";
 				}
 			?>

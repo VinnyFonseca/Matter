@@ -310,10 +310,10 @@ var matterReady = function() {
 	// Logs Legend
 
 	if ( config.application.debug ) {
-		console.log(":: means DOM.ready");
-		console.log("~~ means Async");
-		console.log("•• means Complete");
-		console.log("== means User Action");
+		console.log(":: is DOM.ready");
+		console.log("~~ is Async");
+		console.log("•• is Complete");
+		console.log("== is User Action");
 		console.log(" ");
 	}
 
@@ -367,10 +367,8 @@ var matterDeferred = function() {
 
 	// Deferred Init
 
-	initBrochure();
 	initSliders();
 	initMap();
-	initTwitter();
 	initVideo();
 
 	if ( config.application.debug ) console.log("Done •• Matter in " + (new Date().getTime() - ms) + " milliseconds");

@@ -39,15 +39,17 @@ var initGlobal = function() {
 
 	// Sidebar
 
-	$(".sidebar").append("<ul></ul>");
+	if ( $(".main a.anchor").length > 1 ) {
+		$(".sidebar").append("<ul></ul>").show();
 
-	$(".main a.anchor").each(function(i) {
-		var id = $(this).attr("id");
-		var name = $(this).next().html();
+		$(".main a.anchor").each(function(i) {
+			var id = $(this).attr("id");
+			var name = $(this).next().html();
 
-		$(".sidebar ul").append('<li><a href="#' + id + '">' + name + '</a></li>');
-		if ( i === 0 ) $(".sidebar ul a").addClass("active");
-	});
+			$(".sidebar ul").append('<li><a href="#' + id + '">' + name + '</a></li>');
+			if ( i === 0 ) $(".sidebar ul a").addClass("active");
+		});
+	}
 
 	$(".sidebar-trigger").on("click", function() {
 		if ( !$(".main").hasClass("sidebar-on") ) {

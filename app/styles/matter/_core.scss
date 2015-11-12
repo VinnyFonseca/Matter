@@ -287,11 +287,12 @@ tt,
 verbatim {
 	display: inline-block;
 	position: relative;
-	padding: 0 8px;
+	padding: 2px 4px;
 	color: $colorText;
-	font-family: $fontMono;
 	font-size: $fsz * 1.1 + rem;
+	font-family: $fontMono;
 	font-weight: normal;
+	line-height: 1;
 	border: 1px solid $cd;
 	border-radius: $rds;
 	background: $ce;

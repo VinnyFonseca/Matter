@@ -364,7 +364,7 @@ var sliderInit = function(sliderId) {
 			}, animDuration);
 		}
 
-		slideMovable.on("mousedown touchstart", function(e) {
+		sliderActive.on("mousedown touchstart", function(e) {
 			if ( !config.application.touch ) e.preventDefault();
 			dragStart = e.pageX || e.originalEvent.touches[0].pageX;
 			dragX = e.pageX || e.originalEvent.touches[0].pageX;

@@ -25,25 +25,6 @@ function FastClick(a) {
     }, !1), a.onclick = null));
 }
 
-function initTwitter() {
-    $("[data-twitter]").length && ($("[data-twitter]").each(function(a) {
-        var b = $(this), c = b.attr("id"), d = b.data("widget-id"), e = b.data("start-at");
-        maxTweets = b.data("max-tweets"), "undefined" == typeof c && (b.attr("id", "widget-twitter-" + a), 
-        twitterConfig = {
-            domId: b.attr("id"),
-            widgetId: "undefined" != typeof d ? d : config.twitter.widgetId,
-            startAt: "undefined" != typeof e ? e : (config.twitter.startAt + config.twitter.maxTweets) * a,
-            maxTweets: "undefined" != typeof maxTweets ? maxTweets : config.twitter.maxTweets,
-            enableLinks: config.twitter.enableLinks,
-            showUser: config.twitter.showUser,
-            showTime: config.twitter.showTime,
-            showRetweet: config.twitter.showRetweet,
-            showFollow: config.twitter.showFollow,
-            showInteraction: config.twitter.showInteraction
-        }, twitterFetcher.fetch(twitterConfig));
-    }), config.application.debug && console.log("Widget :: Twitter"));
-}
-
 !function(a, b) {
     "object" == typeof module && "object" == typeof module.exports ? module.exports = a.document ? b(a, !0) : function(a) {
         if (!a.document) throw new Error("jQuery requires a window with a document");
@@ -3770,15 +3751,14 @@ var cookieSystem, initCookies = function() {
     $(".scroll-progress").width(a + "%");
 }, ms = new Date().getTime(), matterReady = function() {
     isWideScreen = $(window).width() > 768, config.application.touch && (FastClick.attach(document.body), 
-    $(".map-canvas").addClass("map-mobile")), config.application.debug && (console.log(":: means DOM.ready"), 
-    console.log("~~ means Async"), console.log("•• means Complete"), console.log("== means User Action"), 
+    $(".map-canvas").addClass("map-mobile")), config.application.debug && (console.log(":: is DOM.ready"), 
+    console.log("~~ is Async"), console.log("•• is Complete"), console.log("== is User Action"), 
     console.log(" ")), initKonami(), initAnimationFrame(), initSVGs(), initSession(), 
     initCookies(), initLinks(), initTables(), scrollProgress(), initFontSizeControls(), 
     initOverlays(), initNotifications(), initTooltips(), initSearch(), initAutocomplete(), 
     initTagClouds(), initForm(), initDropdowns(), initValidation(), initGlobal();
 }, matterDeferred = function() {
-    $("body").removeClass("preload"), initBrochure(), initSliders(), initMap(), initTwitter(), 
-    initVideo(), config.application.debug && console.log("Done •• Matter in " + (new Date().getTime() - ms) + " milliseconds");
+    $("body").removeClass("preload"), initSliders(), initMap(), initVideo(), config.application.debug && console.log("Done •• Matter in " + (new Date().getTime() - ms) + " milliseconds");
 }, isWideScreen, pageTop, pageBottom;
 
 $(document).on("ready", matterReady), $(window).on("load", matterDeferred), $(window).on("resize", function() {
@@ -4780,37 +4760,6 @@ var initAutocomplete = function() {
         };
         requestData(b, "GET", k);
     }), config.application.debug && console.log("Search :: Autocomplete"));
-}, clearBrochure = function() {
-    $(".brochure-counter").html(0), sessionSystem.remove("brochure");
-}, initBrochure = function() {
-    if (config.brochure.active) {
-        $(".brochure-trigger").removeClass("hidden").on("click", function() {
-            $(this).addClass("active"), $(".brochure-wrapper").addClass("active");
-        }), $(document).on("click", function(a) {
-            $(a.target).closest(".brochure-trigger.active").length || ($(".brochure-trigger").removeClass("active"), 
-            $(".brochure-wrapper").removeClass("active"));
-        });
-        var a = [], b = [], c = sessionSystem.get("brochure"), d = {
-            Name: document.title,
-            URL: document.location.href
-        };
-        if ("undefined" == typeof e) var e = !0;
-        if (void 0 === c) e && a.push(d), sessionSystem.set("brochure", a); else {
-            for (var f = 0; f < c.length; f++) a.push(c[f]), b.push(c[f].URL == d.URL);
-            e && !b.contains(!0) && a.push(d), sessionSystem.set("brochure", a);
-        }
-        $(".brochure-counter").html(a.length), 1 == a.length && notify("Current page was added to your brochure.");
-        for (var g = 0; g < a.length; g++) {
-            var h = '<div class="brochure-item" data-url="' + a[g].URL + '">									<span class="brochure-item-name">' + a[g].Name + '</span>									<img class="svg icon icon-close" src="' + config.application.root + 'img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-close.png\'" alt="Delete icon">								</div>';
-            $(".brochure-item-wrapper").append(h);
-        }
-        $(".brochure-item").on("click", function() {
-            var b = ($(this).children("span").html(), $(this).data("url"));
-            $(this).remove();
-            for (var c = 0; c < a.length; c++) a[c].URL == b && a.splice(c, 1);
-            $(".brochure-counter").html(a.length), sessionSystem.set("brochure", a);
-        }), config.application.debug && console.log("System :: Brochure System");
-    }
 }, initFontSizeControls = function() {
     if (config.typography.resize.active) {
         $(".font-trigger").removeClass("hidden").on("click", function(a) {
@@ -5576,7 +5525,7 @@ var initAutocomplete = function() {
                 }), ba = !1);
             }, o);
         };
-        f.on("mousedown touchstart", function(a) {
+        b.on("mousedown touchstart", function(a) {
             config.application.touch || a.preventDefault(), Y = a.pageX || a.originalEvent.touches[0].pageX, 
             Z = a.pageX || a.originalEvent.touches[0].pageX, y && (aa = !0);
         }).on("mousemove touchmove", function(a) {
@@ -5712,110 +5661,7 @@ var initAutocomplete = function() {
             });
         }), config.application.debug && console.log("Widget :: Tooltips");
     }
-};
-
-!function(a, b) {
-    "function" == typeof define && define.amd ? define([], b) : "object" == typeof exports ? module.exports = b() : b();
-}(this, function() {
-    function a(a) {
-        return a.replace(/<b[^>]*>(.*?)<\/b>/gi, function(a, b) {
-            return b;
-        }).replace(/class=".*?"|data-query-source=".*?"|dir=".*?"|rel=".*?"/gi, "");
-    }
-    function b(a) {
-        for (var b = a.getElementsByTagName("a"), c = b.length - 1; c >= 0; c--) b[c].setAttribute("target", "_blank");
-    }
-    function c(a, b) {
-        for (var c = [], d = new RegExp("(^| )" + b + "( |$)"), e = a.getElementsByTagName("*"), f = 0, g = e.length; g > f; f++) d.test(e[f].className) && c.push(e[f]);
-        return c;
-    }
-    function d(a) {
-        if (void 0 !== a) {
-            var b = a.innerHTML.match(/data-srcset="([A-z0-9%_\.-]+)/i)[0];
-            return decodeURIComponent(b).split('"')[1];
-        }
-    }
-    var e, f = "", g = 0, h = 20, i = !0, j = [], k = !1, l = !0, m = !0, n = !0, o = !0, p = !0, q = !1, r = !0, s = null, t = null, u = !0, v = "en", w = {
-        fetch: function(a) {
-            function b() {
-                k = !0, f = e.domId, g = e.startAt, h = e.maxTweets + e.startAt, i = e.enableLinks, 
-                m = e.showUser, l = e.showTime, n = e.showRetweet, o = e.showFollow, s = e.dateFunction, 
-                t = e.customCallback, p = e.showInteraction, q = e.showImages, r = e.linksInNewWindow;
-                var a = document.createElement("script");
-                a.type = "text/javascript", a.src = "//cdn.syndication.twimg.com/widgets/timelines/" + e.widgetId + "?&lang=" + (e.lang || v) + "&callback=twitterFetcher.callback&suppress_response_codes=true&rnd=" + Math.random(), 
-                document.getElementsByTagName("head")[0].appendChild(a);
-            }
-            e = a, void 0 === e.startAt && (e.startAt = 0), void 0 === e.maxTweets && (e.maxTweets = 5), 
-            void 0 === e.enableLinks && (e.enableLinks = !0), void 0 === e.showUser && (e.showUser = !0), 
-            void 0 === e.showTime && (e.showTime = !0), void 0 === e.dateFunction && (e.dateFunction = "default"), 
-            void 0 === e.showRetweet && (e.showRetweet = !0), void 0 === e.showFollow && (e.showFollow = !0), 
-            void 0 === e.customCallback && (e.customCallback = null), void 0 === e.showInteraction && (e.showInteraction = !0), 
-            void 0 === e.showImages && (e.showImages = !1), void 0 === e.linksInNewWindow && (e.linksInNewWindow = !0), 
-            k ? j.push(e) : b();
-        },
-        handler: function(a) {
-            var b = a.length, c = 0, d = $("#" + f), e = '<div class="twitter-user"></div>';
-            for (e += '<div class="content">'; b > c; ) e += "<hr>", e += '<div class="tweet-item">' + a[c] + "</div>", 
-            c++;
-            if (e += "</div>", e += '<div class="button primary input-medium twitter-follow">Follow</div>', 
-            d.html(e), n) {
-                var g = d.find(".user");
-                g.each(function() {
-                    $(this).find("img").attr("class", "box-logo"), $(this).find("span").eq(0).replaceWith(function() {
-                        return $(this).html();
-                    }), $(this).find("span").eq(1).attr("class", "handle"), $(this).find("a").attr("target", "_blank").addClass("no-icon").addClass("valign-middle");
-                });
-            } else {
-                d.addClass("twitter-main"), d.find(".twitter-user").append("<h4 class='user'>" + d.find(".user:first-child").html() + "</h4>");
-                var h = d.find(".twitter-user .user");
-                h.find("img").attr("class", "box-logo"), h.find("span").eq(0).replaceWith(function() {
-                    return $(this).html();
-                }), h.find("span").eq(1).attr("class", "handle"), h.find("a").attr("target", "_blank").addClass("no-icon"), 
-                o && d.find(".twitter-follow").show();
-            }
-            d.find(".button").on("click", function() {
-                return popupWindow("https://twitter.com/intent/user?screen_name=" + user.find("span").eq(1).html().substr(1), "Twitter Follow", 640, 600), 
-                !1;
-            });
-        },
-        callback: function(e) {
-            var f = document.createElement("div");
-            f.innerHTML = e.body, "undefined" == typeof f.getElementsByClassName && (u = !1);
-            var o = [], t = [], v = [], x = [], y = [], z = [], A = 0;
-            if (u) for (var B = f.getElementsByClassName("tweet"); A < B.length; ) B[A].getElementsByClassName("retweet-credit").length > 0 ? y.push(!0) : y.push(!1), 
-            (!y[A] || y[A] && n) && (o.push(B[A].getElementsByClassName("e-entry-title")[0]), 
-            z.push(B[A].getAttribute("data-tweet-id")), t.push(B[A].getElementsByClassName("p-author")[0]), 
-            v.push(B[A].getElementsByClassName("dt-updated")[0]), void 0 !== B[A].getElementsByClassName("inline-media")[0] ? x.push(B[A].getElementsByClassName("inline-media")[0]) : x.push(void 0)), 
-            A++; else for (var C = c(f, "tweet"); A < C.length; ) o.push(c(C[A], "e-entry-title")[0]), 
-            z.push(C[A].getAttribute("data-tweet-id")), t.push(c(C[A], "p-author")[0]), v.push(c(C[A], "dt-updated")[0]), 
-            void 0 !== c(C[A], "inline-media")[0] ? x.push(c(C[A], "inline-media")[0]) : x.push(void 0), 
-            c(C[A], "retweet-credit").length > 0 ? y.push(!0) : y.push(!1), A++;
-            o.length > h && (o.splice(h, o.length - h), t.splice(h, t.length - h), v.splice(h, v.length - h), 
-            y.splice(h, y.length - h), x.splice(h, x.length - h));
-            for (var D = [], E = o.length, F = g; E > F; ) {
-                if ("string" != typeof s) {
-                    var G = v[F].getAttribute("datetime"), H = new Date(v[F].getAttribute("datetime").replace(/-/g, "/").replace("T", " ").split("+")[0]), I = s(H, G);
-                    if (v[F].setAttribute("aria-label", I), o[F].innerText) if (u) v[F].innerText = I; else {
-                        var J = document.createElement("p"), K = document.createTextNode(I);
-                        J.appendChild(K), J.setAttribute("aria-label", I), v[F] = J;
-                    } else v[F].textContent = I;
-                }
-                var L = "";
-                i ? (r && (b(o[F]), m && b(t[F])), m && (L += '<div class="user">' + a(t[F].innerHTML) + "</div>"), 
-                L += '<p class="tweet">' + a(o[F].innerHTML) + "</p>", l && (L += '<p class="timePosted">' + v[F].getAttribute("aria-label") + "</p>")) : o[F].innerText ? (m && (L += '<p class="user">' + t[F].innerText + "</p>"), 
-                L += '<p class="tweet">' + o[F].innerText + "</p>", l && (L += '<p class="timePosted">' + v[F].innerText + "</p>")) : (m && (L += '<p class="user">' + t[F].textContent + "</p>"), 
-                L += '<p class="tweet">' + o[F].textContent + "</p>", l && (L += '<p class="timePosted">' + v[F].textContent + "</p>")), 
-                p && (L += '<p class="interact"><a href="https://twitter.com/intent/tweet?in_reply_to=' + z[F] + '" class="twitter_reply_icon"' + (r ? ' target="_blank">' : ">") + 'Reply</a><a href="https://twitter.com/intent/retweet?tweet_id=' + z[F] + '" class="twitter_retweet_icon"' + (r ? ' target="_blank">' : ">") + 'Retweet</a><a href="https://twitter.com/intent/favorite?tweet_id=' + z[F] + '" class="twitter_fav_icon"' + (r ? ' target="_blank">' : ">") + "Favorite</a></p>"), 
-                q && void 0 !== x[F] && (L += '<div class="media"><img src="' + d(x[F]) + '" alt="Image from tweet" /></div>'), 
-                D.push(L), F++;
-            }
-            w.handler(D), k = !1, j.length > 0 && (w.fetch(j[0]), j.splice(0, 1));
-        }
-    };
-    return window.twitterFetcher = w, w;
-});
-
-var twitterConfig, initVideo = function() {
+}, initVideo = function() {
     var a = !1, b = !1, c = function() {
         if ($("iframe[src*='youtube']").length) {
             var a = function(a) {
@@ -6056,10 +5902,11 @@ var twitterConfig, initVideo = function() {
         $("header").removeClass("active");
     }), $("html, body").on("click", function(a) {
         $(a.target).closest("header").length || $("header").removeClass("active");
-    }), $(".sidebar").append("<ul></ul>"), $(".main a.anchor").each(function(a) {
+    }), $(".main a.anchor").length > 1 && ($(".sidebar").append("<ul></ul>").show(), 
+    $(".main a.anchor").each(function(a) {
         var b = $(this).attr("id"), c = $(this).next().html();
         $(".sidebar ul").append('<li><a href="#' + b + '">' + c + "</a></li>"), 0 === a && $(".sidebar ul a").addClass("active");
-    }), $(".sidebar-trigger").on("click", function() {
+    })), $(".sidebar-trigger").on("click", function() {
         $(".main").hasClass("sidebar-on") ? $(".main").removeClass("sidebar-on") : $(".main").addClass("sidebar-on");
     }), $("html, body").on("click", function(a) {
         !$(a.target).closest(".sidebar").length && $(".main").hasClass("sidebar-on") && $(".main").removeClass("sidebar-on");

@@ -15,8 +15,6 @@
 		nav,
 		.nav {
 			.nav-item {
-				padding: $spc floor($spc / 1.5);
-
 				& > * {
 					font-size: $fsz / 1.1 + rem;
 				}
@@ -61,7 +59,7 @@
 		nav,
 		.nav {
 			.nav-item {
-				padding: $spc floor($spc / 2);
+				padding: floor($spc / 2);
 
 				& > * {
 					font-size: $fsz / 1.1 + rem;
@@ -81,8 +79,6 @@
 
 	header,
 	.header {
-		position: fixed;
-
 		&.active {
 			nav,
 			.nav {
@@ -101,15 +97,15 @@
 			bottom: 0;
 			width: 100%;
 			height: auto;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 			transform: translateY(0);
 			transition: transform $animDuration $animEasing;
 
 			.nav-item {
 				display: block;
+				margin: 3px 0;
 				padding: floor($spc / 1.5) $spc;
 				height: auto;
-				border-left: 0;
-				border-bottom: 1px solid $ce;
 				vertical-align: baseline;
 
 				& > * {
