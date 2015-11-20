@@ -4713,7 +4713,8 @@ var initAutocomplete = function() {
                         $(this).text().search(f) >= 0 ? k.children(".selected").length < g && $(this).addClass("selected") : $(this).removeClass("selected"), 
                         k.find(".divider .match-count").text(k.find(".selected").length + " "), 1 == k.children(".selected").length ? k.find(".divider .plural").hide() : k.find(".divider .plural").show();
                     }).on("click", function() {
-                        c.val($(this).text()).trigger({
+                        var a = $(this).text().trim();
+                        c.val(a).trigger({
                             type: "keydown",
                             which: 13
                         }), j.removeClass("active"), unhighlight(k.children("li.selected"));
@@ -5418,135 +5419,135 @@ var initAutocomplete = function() {
     g.each(function() {
         $(this).attr("data-index", $(this).index());
     }).appendTo(f);
-    var h, i, j = b.attr("data-nav") ? b.data("nav") : config.slider.nav, k = b.attr("data-arrows") ? b.data("arrows") : config.slider.arrows, l = b.attr("data-thumbnails") ? b.data("thumbnails") : config.slider.thumbnails, m = b.attr("data-animation") ? b.data("animation") : config.slider.animation, n = b.attr("data-slideshow") ? b.data("slideshow") : config.slider.slideshow, o = config.slider.duration, p = config.slider.interval, q = !1, r = g.length, s = 0, t = 0, u = 0, v = r - 1, w = g.eq(s).outerWidth(!0), x = g.eq(s).outerHeight(!0), y = r > 1, z = w, A = w / 4, B = 50, C = function() {
-        f.removeClass("stopped"), i = setInterval(U, p);
-    }, D = function() {
-        f.addClass("stopped"), clearInterval(i);
-    };
-    y && n !== !1 && (C(), config.application.touch ? (f.on("click touchstart", function() {
-        D();
-    }), $("html").on("click touchstart", function(a) {
-        !$(a.target).closest(".slider").length && f.hasClass("stopped") && C();
-    })) : (b.on("mouseenter", function() {
-        D();
-    }), b.on("mouseleave", function() {
-        C();
-    })));
-    var E = '<div class="slider-arrow slider-arrow-prev valign-middle">							<img class="svg icon icon-caret-left" src="' + config.application.root + 'img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-caret-left.png'\">					    </div>", F = '<div class="slider-arrow slider-arrow-next valign-middle">							<img class="svg icon icon-caret-right" src="' + config.application.root + 'img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-caret-right.png'\">					    </div>";
-    e.prepend(E), e.prepend(F), initSVGs();
-    var G = e.children(".slider-arrow"), H = e.children(".slider-arrow-prev"), I = e.children(".slider-arrow-next");
-    k === !0 && y && G.show();
-    var J;
-    if (j === !0 && y) {
-        var K = '<div class="slider-nav"></div>';
-        b.append(K);
-        for (var L = b.children(".slider-nav"), M = 0; r > M; M++) {
-            var N = "", O = g.eq(M), P = O.data("thumb");
-            g.eq(M).hasClass("thumb") && O.css({
-                "background-image": "url('img/pictures/slider/" + P + "')"
-            }), l ? (N = '<div class="slider-bullet" style="background: url(\'img/pictures/slider/thumbs/' + P + "') no-repeat center center;\">&nbsp;</div>", 
-            L.addClass("thumbs")) : N = '<div class="slider-bullet">&bull;</div>', L.append(N);
+    var h, i = b.attr("data-nav") ? b.data("nav") : config.slider.nav, j = b.attr("data-arrows") ? b.data("arrows") : config.slider.arrows, k = b.attr("data-thumbnails") ? b.data("thumbnails") : config.slider.thumbnails, l = b.attr("data-animation") ? b.data("animation") : config.slider.animation, m = b.attr("data-slideshow") ? b.data("slideshow") : config.slider.slideshow, n = config.slider.duration, o = config.slider.interval, p = !1, q = g.length, r = 0, s = 0, t = 0, u = q - 1, v = g.eq(r).outerWidth(!0), w = g.eq(r).outerHeight(!0), x = q > 1, y = v, z = v / 4, A = 50, B = '<div class="slider-arrow slider-arrow-prev valign-middle">							<img class="svg icon icon-caret-left" src="' + config.application.root + 'img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-caret-left.png'\">					    </div>", C = '<div class="slider-arrow slider-arrow-next valign-middle">							<img class="svg icon icon-caret-right" src="' + config.application.root + 'img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-caret-right.png'\">					    </div>";
+    e.prepend(B), e.prepend(C), initSVGs();
+    var D = e.children(".slider-arrow"), E = e.children(".slider-arrow-prev"), F = e.children(".slider-arrow-next");
+    j === !0 && x && D.show();
+    var G;
+    if (i === !0 && x) {
+        var H = '<div class="slider-nav"></div>';
+        b.append(H);
+        for (var I = b.children(".slider-nav"), J = 0; q > J; J++) {
+            var K = "", L = g.eq(J), M = L.data("thumb");
+            g.eq(J).hasClass("thumb") && L.css({
+                "background-image": "url('img/pictures/slider/" + M + "')"
+            }), k ? (K = '<div class="slider-bullet" style="background: url(\'img/pictures/slider/thumbs/' + M + "') no-repeat center center;\">&nbsp;</div>", 
+            I.addClass("thumbs")) : K = '<div class="slider-bullet">&bull;</div>', I.append(K);
         }
-        J = b.find(".slider-bullet");
-    } else J = b.find(".bullet");
-    J.removeClass("active"), J.eq(s).addClass("active");
-    var Q = function() {
+        G = b.find(".slider-bullet");
+    } else G = b.find(".bullet");
+    G.removeClass("active"), G.eq(r).addClass("active");
+    var N = function() {
         f.css({
             "margin-left": 0,
             left: 0,
-            height: x
-        }), da = b.offset().top + B / 2, ea = b.offset().top + b.height() - B / 2, fa = b.offset().left + B, 
-        ga = b.offset().left + b.width() - B, A = w / 4;
+            height: w
+        }), da = b.offset().top + A / 2, ea = b.offset().top + b.height() - A / 2, fa = b.offset().left + A, 
+        ga = b.offset().left + b.width() - A, z = v / 4;
     };
-    Q();
-    var R = !0, S = function() {
-        if (R && !ba) {
-            if ("prev" == h) for (var a = v; a >= s; a--) f.prepend(g.eq(a));
+    N();
+    var O = !0, P = function() {
+        if (O && !ba) {
+            if ("prev" == h) for (var a = u; a >= r; a--) f.prepend(g.eq(a));
             if ("next" == h) {
                 g.each(function() {});
-                for (var b = u; s >= b; b++) f.append(g.eq(b - 1));
+                for (var b = t; r >= b; b++) f.append(g.eq(b - 1));
             }
             f.css({
-                "margin-left": z
-            }), R = !1;
+                "margin-left": y
+            }), O = !1;
         }
+    }, Q = function() {
+        p || (h = "prev", t >= r ? r = u : r--, U(-1), s = r);
+    }, R = function() {
+        p || (h = "next", r >= u ? r = t : r++, U(1), s = r);
+    }, S = function(a) {
+        p || (r = a, s > r && (h = "prev"), r > s && (h = "next"), U(r - s), s = r);
     }, T = function() {
-        q || (h = "prev", u >= s ? s = v : s--, X(-1), t = s);
-    }, U = function() {
-        q || (h = "next", s >= v ? s = u : s++, X(1), t = s);
-    }, V = function(a) {
-        q || (s = a, t > s && (h = "prev"), s > t && (h = "next"), X(s - t), t = s);
-    }, W = function() {
-        R = !0, ba = !1, q = !1, o = config.slider.duration, "next" == h && S(), Q();
-    }, X = function(a) {
-        q = !0, z = w * a, w = g.eq(s).outerWidth(!0), x = g.eq(s).outerHeight(!0), "prev" == h && S(), 
-        "slide" === m && f.stop(!0, !1).animate({
-            height: x,
-            left: -z
+        O = !0, ba = !1, p = !1, n = config.slider.duration, "next" == h && P(), N();
+    }, U = function(a) {
+        p = !0, y = v * a, v = g.eq(r).outerWidth(!0), w = g.eq(r).outerHeight(!0), "prev" == h && P(), 
+        "slide" === l && f.stop(!0, !1).animate({
+            height: w,
+            left: -y
         }, {
-            duration: o,
-            complete: W
-        }), "fade" === m && f.hide().css({
-            left: z
-        }).fadeIn(1.5 * o).stop(!0, !1).animate({
-            height: x
+            duration: n,
+            complete: T
+        }), "fade" === l && f.hide().css({
+            left: y
+        }).fadeIn(1.5 * n).stop(!0, !1).animate({
+            height: w
         }, {
-            duration: o,
-            complete: W
-        }), J.removeClass("active"), J.eq(s).addClass("active");
+            duration: n,
+            complete: T
+        }), G.removeClass("active"), G.eq(r).addClass("active");
     };
-    if (X(0), $(window).on("resize", function() {
-        X(0);
-    }), I.on("click", function() {
-        R = !0, U();
-    }), H.on("click", function() {
-        R = !0, T();
-    }), J.on("click", function() {
-        R = !0, V($(this).index());
+    U(0), $(window).on("resize", function() {
+        U(0);
+    }), F.on("click", function() {
+        O = !0, R();
+    }), E.on("click", function() {
+        O = !0, Q();
+    }), G.on("click", function() {
+        O = !0, S($(this).index());
     }), document.onkeydown = function(a) {
         switch (a = a || window.event, a.which || a.keyCode) {
           case 39:
-            U();
+            R();
             break;
 
           case 37:
-            T();
+            Q();
             break;
 
           default:
             return;
         }
         a.preventDefault();
-    }, "slide" === m) {
-        var Y, Z, _, aa = !1, ba = !1, ca = !1, da = b.offset().top + B / 2, ea = b.offset().top + b.height() - B / 2, fa = b.offset().left + B, ga = b.offset().left + b.width() - B, ha = function() {
-            o = 250, setTimeout(function() {
+    };
+    var V, W = function() {
+        f.removeClass("stopped"), V = setInterval(R, o);
+    }, X = function() {
+        f.addClass("stopped"), clearInterval(V);
+    };
+    if (x && m !== !1 && (W(), config.application.touch ? (f.on("click touchstart", function() {
+        X();
+    }), $("html").on("click touchstart", function(a) {
+        !$(a.target).closest(".slider").length && f.hasClass("stopped") && W();
+    })) : (b.on("mouseenter", function() {
+        X();
+    }), b.on("mouseleave", function() {
+        W();
+    }))), "slide" === l) {
+        var Y, Z, _, aa = !1, ba = !1, ca = !1, da = b.offset().top + A / 2, ea = b.offset().top + b.height() - A / 2, fa = b.offset().left + A, ga = b.offset().left + b.width() - A, ha = function() {
+            n = 250, setTimeout(function() {
                 ba && (h = "prev", b.find(".slide:first-child").appendTo(f), f.css({
                     "margin-left": 0
                 }), ba = !1);
-            }, o);
+            }, n);
         };
         b.on("mousedown touchstart", function(a) {
             config.application.touch || a.preventDefault(), Y = a.pageX || a.originalEvent.touches[0].pageX, 
-            Z = a.pageX || a.originalEvent.touches[0].pageX, y && (aa = !0);
+            Z = a.pageX || a.originalEvent.touches[0].pageX, x && (aa = !0);
         }).on("mousemove touchmove", function(a) {
             Z = a.pageX || a.originalEvent.touches[0].pageX, dragY = a.pageY || a.originalEvent.touches[0].pageY;
             var c = Y - Z, d = Z - Y;
-            if (initDrag = d > config.slider.threshold || c > config.slider.threshold, aa && initDrag && !q) {
+            if (initDrag = d > config.slider.threshold || c > config.slider.threshold, aa && initDrag && !p) {
                 config.application.touch || a.preventDefault(), ca = !0, Z > Y ? ba || (h = "prev", 
                 b.find(".slide:last-child").prependTo(f), f.css({
-                    "margin-left": -w
-                }), ba = !0) : (R = !0, ba && (h = "prev", b.find(".slide:first-child").appendTo(f), 
+                    "margin-left": -v
+                }), ba = !0) : (O = !0, ba && (h = "prev", b.find(".slide:first-child").appendTo(f), 
                 f.css({
                     "margin-left": 0
                 }), ba = !1)), f.css({
                     left: -(Y - Z)
                 });
-                var e = fa >= Z || Z >= ga || dragY <= da || dragY >= ea || c >= w || d >= w;
-                e && (aa = !1, ca = !1, Y - Z > A ? U() : Z - Y > A ? T() : (ha(), X(0)));
+                var e = fa >= Z || Z >= ga || dragY <= da || dragY >= ea || c >= v || d >= v;
+                e && (aa = !1, ca = !1, Y - Z > z ? R() : Z - Y > z ? Q() : (ha(), U(0)));
             }
         }).on("mouseleave mouseup touchend", function(a) {
-            config.application.touch || a.preventDefault(), aa = !1, ca && !q && (ca = !1, _ = Z, 
-            Y - _ > A ? U() : -A > Y - _ ? T() : (ha(), X(0)));
+            config.application.touch || a.preventDefault(), aa = !1, ca && !p && (ca = !1, _ = Z, 
+            Y - _ > z ? R() : -z > Y - _ ? Q() : (ha(), U(0)));
         });
     }
 }, initSliders = function() {

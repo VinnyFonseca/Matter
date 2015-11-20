@@ -115,7 +115,8 @@ var initAutocomplete = function() {
 								results.find(".divider .plural").show();
 							}
 						}).on("click", function() {
-							input.val($(this).text()).trigger({type: "keydown", which: 13});
+							var value = $(this).text().trim();
+							input.val(value).trigger({type: "keydown", which: 13});
 							list.removeClass("active");
 							unhighlight(results.children("li.selected"));
 						});
