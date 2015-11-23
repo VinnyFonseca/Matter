@@ -6,7 +6,7 @@ var initKonami = function(callback) {
 		konamiCoding = false;
 
 	var buildKonami = function() {
-		var img = '<img class="konami" style="width: 100%;" src="scripts/core/konami/contra.gif">';
+		var img = '<img class="konami" style="width: 100%;" src="img/konami/contra.gif">';
 		$(".main").prepend(img);
 	}
 

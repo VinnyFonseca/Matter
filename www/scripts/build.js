@@ -3922,7 +3922,6 @@ window.console || (console = {
     if ("function" != typeof a) throw new TypeError();
     for (c = b ? b : void 0, d = 0; j > d; ) e = d.toString(), f = h.hasOwnProperty(e), 
     f && (g = h[e], a.call(c, g, d, h)), d += 1;
-    return void 0;
 }), Array.prototype.clean = function(a) {
     for (var b = 0; b < this.length; b++) this[b] == a && (this.splice(b, 1), b--);
     return this;
@@ -4802,7 +4801,7 @@ var initAutocomplete = function() {
     }();
 }, initKonami = function(a) {
     var b = [], c = "", d = !1, e = function() {
-        var a = '<img class="konami" style="width: 100%;" src="scripts/core/konami/contra.gif">';
+        var a = '<img class="konami" style="width: 100%;" src="img/konami/contra.gif">';
         $(".main").prepend(a);
     }, f = function() {
         b = [], c = "", d = !1, $(".konami").remove();

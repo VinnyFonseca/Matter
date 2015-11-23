@@ -1,128 +1,14 @@
 // Base
 
-$headerHeight: 68px;
-
-body {
-	padding-top: $headerHeight - 1 !important;
-}
-
-header,
-.header {
-	display: block;
-	position: fixed;
-	margin-top: 0;
-	padding: 0;
-	width: 100%;
-	top: 0;
-	border-bottom: 1px solid $ce;
-	background: $cf;
-	z-index: 150;
-
-	.logo {
-		display: inline-block;
-		position: relative;
-		margin-left: floor($spc / 1.5);
-		padding: floor($spc / 1.5) 0;
-		height: $headerHeight;
-		color: $colorText;
-		text-decoration: none !important;
-		white-space: nowrap;
-
-		img {
-			margin-right: 10px;
-			height: 100%;
-		}
-
-		span {
-			position: relative;
-		}
-	}
-
-	.nav-trigger {
-		position: absolute;
-		margin-top: -12px;
-		width: 24px;
-		height: 24px;
-		top: 50%;
-		right: $spc;
-		cursor: pointer;
-
-		.icon {
-			width: 100%;
-			height: 100%;
-			@include svgColor($color1);
-		}
-		&:hover {
-			.icon {
-				@include svgColor($color2);
-			}
-		}
-		&:active {
-			.icon {
-				@include svgColor($color1);
-			}
-		}
-	}
-
-	.nav-layer {
-		display: block;
-		position: relative;
-		background-color: $cf;
-		z-index: 5;
-	}
-
-	nav,
-	.nav {
-		display: block;
-		position: absolute;
-		padding: floor($spc / 1.5);
-		height: 100%;
-		top: 0;
-		right: 0;
-		background-color: $cf;
-		white-space: nowrap;
-		z-index: 10;
-		@extend .valign-middle;
-
-		.nav-item {
-			display: inline-block;
-			position: relative;
-			margin: 0 3px;
-			padding: floor($spc / 1.5);
-			border: 1px solid $ce;
-			border-radius: $rds;
-			background-color: #fafafa;
-			@extend .valign-middle;
-
-			span {
-				font-size: $fsz / 1.2 + rem !important;
-				line-height: 1.3;
-			}
-
-			&.active {
-				color: $cf;
-				border-color: $color1 !important;
-				background: $color1 !important;
-				cursor: default;
-			}
-			&:hover,
-			&:active {
-				color: $cf;
-				border-color: $color2;
-				background: $color2;
-			}
-		}
-	}
-}
-
 .scroll-progress {
 	display: block;
-	position: absolute;
+	position: fixed;
 	width: 0;
 	height: 3px;
-	top: 100%;
+	top: 0;
 	font-size: 0;
 	background: $color3;
+	z-index: 150;
 }
 
 
@@ -247,7 +133,7 @@ $sidebarWidth: 300px;
 		margin: 0;
 		padding: 0;
 		width: $sidebarWidth;
-		top: $headerHeight;
+		top: 0;
 		left: 0;
 		bottom: 0;
 		border-right: 1px solid $c3;
