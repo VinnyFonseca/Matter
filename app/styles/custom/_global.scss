@@ -113,16 +113,16 @@ header,
 			}
 		}
 	}
+}
 
-	.scroll-progress {
-		display: block;
-		position: absolute;
-		width: 0;
-		height: 2px;
-		bottom: -2px;
-		font-size: 0;
-		background: $color1;
-	}
+.scroll-progress {
+	display: block;
+	position: absolute;
+	width: 0;
+	height: 3px;
+	top: 100%;
+	font-size: 0;
+	background: $color3;
 }
 
 
@@ -179,11 +179,25 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 		}
 	}
 
-	img {
-		display: block;
+	.logo {
+		display: inline-block;
 		position: relative;
 		margin: 0 auto;
 		margin-bottom: floor($spc * 1.5);
+		padding: floor($spc * 2);
+		background-color: rgba(#fff, 0.75);
+		@extend .circle;
+		overflow: visible;
+	}
+
+	h1 {
+		color: $cf !important;
+	}
+
+	a {
+		margin-top: $spc;
+		@extend .font-medium;
+		@extend .secondary;
 	}
 }
 
@@ -336,7 +350,7 @@ $sidebarWidth: 300px;
 	position: fixed;
 	padding: 5px;
 	right: 0;
-	bottom: 0;
+	top: 0;
 	text-align: right;
 	z-index: 90;
 	@extend .block-reset;
