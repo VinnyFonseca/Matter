@@ -6,11 +6,11 @@ iframe[src*="vimeo"] {
 .video-frame {
 	display: block;
 	position: relative;
-	margin: $spc 0;
+	margin: $spacing 0;
 	padding-bottom: 55.5%;
 	width: 100%;
 	border-left: 7px solid $color1;
-	border-radius: $rds;
+	border-radius: $radius;
 	overflow: hidden;
 
 	&.loaded {
@@ -92,7 +92,7 @@ iframe[src*="vimeo"] {
 	.video-loader {
 		display: block;
 		position: absolute;
-		padding: $spc;
+		padding: $spacing;
 		margin-bottom: -42px;
 		margin-right: -42px;
 		width: 84px;

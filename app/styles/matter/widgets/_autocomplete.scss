@@ -6,11 +6,11 @@
 	color: $c2;
 	margin: 0;
 	margin-top: 2px;
-	margin-bottom: floor($spc / 2);
+	margin-bottom: floor($spacing / 2);
 	padding: 0;
 	width: 100%;
-	font-family: $fontText;
-	font-size: $fsz + rem;
+	font-family: $bodyFont;
+	font-size: $fontSize + rem;
 	text-align: left;
 	vertical-align: top;
 	cursor: pointer;
@@ -21,7 +21,7 @@
 	$loaderDiameter: 21px;
 
 	input {
-		padding-right: (floor($spc / 1.5) * 2) + $loaderDiameter;
+		padding-right: (floor($spacing / 1.5) * 2) + $loaderDiameter;
 	}
 
 	.loader {
@@ -30,7 +30,7 @@
 		width: $loaderDiameter;
 		height: $loaderDiameter;
 		top: (47 / 2)  - ($loaderDiameter / 2);
-		right: floor($spc / 1.5);
+		right: floor($spacing / 1.5);
 		z-index: 10;
 	}
 
@@ -91,7 +91,7 @@
 			display: none;
 			position: relative;
 			margin: 0;
-			padding: floor($spc / 2) floor($spc / 1.25);
+			padding: floor($spacing / 2) floor($spacing / 1.25);
 			border-bottom: 1px solid $ce;
 			background: $cf;
 
@@ -133,8 +133,8 @@
 		display: block;
 		position: relative;
 		margin: 0;
-		padding: floor($spc / 2) floor($spc / 1.25);
-		color: $colorText !important;
+		padding: floor($spacing / 2) floor($spacing / 1.25);
+		color: $bodyTextColor !important;
 		font-weight: bold;
 		background-color: $ce;
 		border-top: 1px solid $ce;

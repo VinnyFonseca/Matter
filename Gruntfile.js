@@ -5,17 +5,66 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 
 
+		// Config for grunt-notify
+
+		notify: {
+			ssi: {
+				options: {
+					title: 'Server Side Includes',
+					message: 'Compilation completed'
+				}
+			},
+			sass: {
+				options: {
+					title: 'SASS',
+					message: 'Preprocessing completed'
+				}
+			},
+			postcss: {
+				options: {
+					title: 'PostCSS',
+					message: 'Postprocessing completed'
+				}
+			},
+			uglify: {
+				options: {
+					title: 'Scripts',
+					message: 'Compilation completed'
+				}
+			},
+			jshint: {
+				options: {
+					title: 'Scripts',
+					message: 'Hinting completed'
+				}
+			},
+			browserSync: {
+				options: {
+					title: 'Sync',
+					message: 'Process started'
+				}
+			},
+			watch: {
+				options: {
+					title: 'Watch',
+					message: 'Process started'
+				}
+			}
+		},
+
+
 		// Config for grunt-ssi
 
 		ssi: {
 			options: {
 				cache: 'all',
 				ext: '.html',
+				encoding: 'utf8',
 				baseDir: 'app/markup'
 			},
 			main: {
 				files: [{
-					expand: true,
+					expand: false,
 					cwd: 'app/markup',
 					src: ['*.html'],
 					dest: 'www'
@@ -163,7 +212,7 @@ module.exports = function(grunt) {
 			html: {
 				options: { livereload: true, spawn: false },
 				files: ['app/markup/**/*.html'],
-				tasks: ['ssi']
+				tasks: ['ssi', 'notify:ssi']
 			},
 			php: {
 				options: { livereload: true, spawn: false },
@@ -176,12 +225,12 @@ module.exports = function(grunt) {
 			sass: {
 				options: { livereload: false, spawn: false },
 				files: ['app/styles/**/*.{scss,sass}'],
-				tasks: ['sass', 'postcss']
+				tasks: ['sass', 'notify:sass', 'postcss', 'notify:postcss']
 			},
 			js: {
 				options: { livereload: true, spawn: false },
 				files: ['app/scripts/**/*.js'],
-				tasks: ['uglify', 'jshint']
+				tasks: ['uglify', 'notify:uglify', 'jshint', 'notify:jshint']
 			}
 		}
 	});
@@ -189,6 +238,7 @@ module.exports = function(grunt) {
 
 	// DEPENDENT PLUGINS =========================/
 
+	grunt.loadNpmTasks('grunt-notify');
 	grunt.loadNpmTasks('grunt-ssi');
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-postcss');
@@ -202,11 +252,18 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', [
 		'ssi',
+		'notify:ssi',
 		'sass',
+		'notify:sass',
 		'postcss',
+		'notify:postcss',
 		'uglify',
+		'notify:uglify',
 		'jshint',
+		'notify:jshint',
 		'browserSync',
-		'watch'
+		'notify:browserSync',
+		'watch',
+		'notify:watch'
 	]);
 };

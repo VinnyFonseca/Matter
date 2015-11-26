@@ -8,10 +8,10 @@ $animBounce: cubic-bezier(.15,.7,.6,1.7);
 	padding: 3px 7px;
 	max-width: 200px;
 	color: $cf;
-	font-size: $fsz / 1.2 + rem;
+	font-size: $fontSize / 1.2 + rem;
 	font-weight: normal;
 	border: 0;
-	border-radius: $rds;
+	border-radius: $radius;
 	background: $color1;
 	z-index: 9999;
 

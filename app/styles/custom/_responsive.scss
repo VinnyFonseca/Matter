@@ -16,7 +16,7 @@
 		.nav {
 			.nav-item {
 				& > * {
-					font-size: $fsz / 1.1 + rem;
+					font-size: $fontSize / 1.1 + rem;
 				}
 			}
 		}
@@ -59,10 +59,10 @@
 		nav,
 		.nav {
 			.nav-item {
-				padding: floor($spc / 2);
+				padding: floor($spacing / 2);
 
 				& > * {
-					font-size: $fsz / 1.1 + rem;
+					font-size: $fontSize / 1.1 + rem;
 				}
 			}
 		}
@@ -104,12 +104,12 @@
 			.nav-item {
 				display: block;
 				margin: 3px 0;
-				padding: floor($spc / 1.5) $spc;
+				padding: floor($spacing / 1.5) $spacing;
 				height: auto;
 				vertical-align: baseline;
 
 				& > * {
-					font-size: $fsz + rem;
+					font-size: $fontSize + rem;
 				}
 			}
 		}

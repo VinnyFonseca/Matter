@@ -3,7 +3,7 @@
 .notification-wrapper {
 	display: block;
 	position: absolute;
-	margin: floor($spc / 2);
+	margin: floor($spacing / 2);
 	width: 300px;
 	top: 100%;
 	right: 0;
@@ -14,12 +14,12 @@
 	display: block;
 	position: relative;
 	margin: 0 0 5px 0;
-	padding: $spc floor(($spc * 1.5) + 20) $spc $spc;
+	padding: $spacing floor(($spacing * 1.5) + 20) $spacing $spacing;
 	width: 100%;
 	top: 0;
 	right: 0;
 	color: $cf;
-	border-radius: $rds;
+	border-radius: $radius;
 	background: $color1;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
 	opacity: 0;
@@ -46,21 +46,21 @@
 	}
 
 	&.success {
-		background: $notifySuccessColorBg;
+		background: $notifySuccessBgColor;
 	}
 	&.warning {
-		background: $notifyWarningColorBg;
+		background: $notifyWarningBgColor;
 	}
 	&.failure {
-		background: $notifyFailureColorBg;
+		background: $notifyFailureBgColor;
 	}
 
 	&.cookie {
 		position: fixed;
 		margin: 0;
 		top: auto;
-		right: floor($spc / 2);
-		bottom: floor($spc / 2);
+		right: floor($spacing / 2);
+		bottom: floor($spacing / 2);
 		left: auto;
 		width: 300px;
 		transform: translateX(0) translateY(40%);
@@ -86,7 +86,7 @@
 		width: 20px;
 		height: 20px;
 		top: 50%;
-		right: $spc;
+		right: $spacing;
 		border: 0 !important;
 
 		.icon {

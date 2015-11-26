@@ -24,5 +24,8 @@
     "jshint-stylish": "*",
     "grunt-contrib-watch": "*",
     "grunt-browser-sync": "*"
+  },
+  "devDependencies": {
+    "grunt-notify": "^0.4.3"
   }
 }

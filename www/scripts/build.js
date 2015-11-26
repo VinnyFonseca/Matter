@@ -5904,8 +5904,9 @@ var initAutocomplete = function() {
         $(a.target).closest("header").length || $("header").removeClass("active");
     }), $(".main a.anchor").length > 1 && ($(".sidebar").append("<ul></ul>").show(), 
     $(".main a.anchor").each(function(a) {
-        var b = $(this).attr("id"), c = $(this).next().html();
-        $(".sidebar ul").append('<li><a href="#' + b + '">' + c + "</a></li>"), 0 === a && $(".sidebar ul a").addClass("active");
+        var b = $(this).attr("id"), c = $(this).next(), d = $(this).next().html(), e = "H2" == c.prop("nodeName") ? "main" : "sub";
+        $(".sidebar ul").append('<li><a href="#' + b + '" class="' + e + '">' + d + "</a></li>"), 
+        0 === a && $(".sidebar ul a").addClass("active");
     })), $(".sidebar-trigger").on("click", function() {
         $(".main").hasClass("sidebar-on") ? $(".main").removeClass("sidebar-on") : $(".main").addClass("sidebar-on");
     }), $("html, body").on("click", function(a) {
@@ -5926,7 +5927,7 @@ var initAutocomplete = function() {
 
 $(window).on("scroll", function() {
     requestAnimationFrame(introParallax), !anchorClicked && $("a.anchor").length && $("a.anchor").each(function(a) {
-        var b = $(this).offset().top - 200;
+        var b = $(this).offset().top;
         pageTop >= b && ($(".sidebar li").find("a").removeClass("active"), $(".sidebar li").eq(a - 1).find("a").addClass("active")), 
         b > pageTop && $(".sidebar li").eq(a + 1).find("a").removeClass("active"), pageTop + $(window).height() >= $(document).height() && ($(".sidebar li").find("a").removeClass("active"), 
         $(".sidebar li").eq($(".sidebar li").length - 1).find("a").addClass("active"));

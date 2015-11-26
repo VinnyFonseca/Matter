@@ -2,13 +2,13 @@
 	display: none;
 	position: relative;
 	margin: 0;
-	margin-bottom: floor($spc / 2);
-	padding: floor($spc / 4) floor($spc / 4);
+	margin-bottom: floor($spacing / 2);
+	padding: floor($spacing / 4) floor($spacing / 4);
 	width: 100%;
 	color: $c8;
 	text-align: left;
 	border: 1px dashed $cd;
-	border-radius: $rds;
+	border-radius: $radius;
 	background: $ce;
 	list-style: none;
 	overflow: hidden;
@@ -24,8 +24,8 @@
 		padding: 4px 8px;
 		padding-right: 28px;
 		color: $cf;
-		font-size: $fsz / 1.1 + rem;
-		border-radius: $rds;
+		font-size: $fontSize / 1.1 + rem;
+		border-radius: $radius;
 		background: $color1;
 		cursor: pointer !important;
 		white-space: nowrap;

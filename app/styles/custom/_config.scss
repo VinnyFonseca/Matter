@@ -1,15 +1,15 @@
 // General
 
-$spc: 20px; // Spacing variable user throughout
-$rds: 3px; // Radius value
+$spacing: 20px; // Spacing variable user throughout
+$radius: 5px; // Radius value
 
 
 
 
 // Grid System
 
-$col: 12; // Number of columns on the grid
-$gut: $spc; // Gutter pixel value
+$columns: 12; // Number of columns on the grid
+$gut: $spacing; // Gutter pixel value
 
 
 
@@ -43,9 +43,9 @@ $color3: #E03A36; // Tertiary colour
 
 // Global
 
-$colorBody: $cf; // Body background colour
-$colorHeading: $color1; // Heading colour
-$colorText: $c2; // Text colour
+$bodyBgColor: $cf; // Body background colour
+$headingTextColor: $color1; // Heading colour
+$bodyTextColor: $c2; // Text colour
 
 
 
@@ -56,54 +56,61 @@ $colorText: $c2; // Text colour
 @import url("//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700");
 @import url("//fonts.googleapis.com/css?family=Ubuntu+Mono");
 
-$fontText: 'Open Sans', sans-serif;
-$fontHeading: 'Roboto Slab', serif;
-$fontMono: 'Ubuntu Mono', monospace;
+@import url("//fonts.googleapis.com/css?family=Overlock:400,700,900");
+@import url("//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic");
+@import url("//fonts.googleapis.com/css?family=Source+Code+Pro:400,500");
 
-$fsz: 1.5; // REM measure. 1.0rem = 10px; Change the root value of pixrem's postcss module on GruntFile.js to this value multiplied by 10.
-$lh: $fsz; // Line Height
+@import url("//fonts.googleapis.com/css?family=Comfortaa:400,700,300");
+@import url("//fonts.googleapis.com/css?family=Maven Pro:400,700");
+
+$headingFont: 'Maven Pro', serif;
+$bodyFont: 'Open Sans', sans-serif;
+$monoFont: 'Source Code Pro', monospace;
+
+$fontSize: 1.6; // REM measure. 1.0rem = 10px; Change the root value of pixrem's postcss module on GruntFile.js to this value multiplied by 10.
+$lineHeight: $fontSize + 0.2; // Line Height
 
 
 
 
 // Iconography
 
-$iconsize: 18px;
+$iconSize: 18px;
 
 
 
 
 // Forms
 
-$inputFocusColor: rgba($color2, 0.35); // Input focus
+$focusColor: rgba($color2, 0.35); // Input focus
 
-$inputBrdrWidth: 1px;
-$inputBrdrColor: $cc;
-$inputBrdrStyle: solid;
+$borderWidth: 1px;
+$borderColor: $cc;
+$borderStyle: solid;
 
 
 // Validation
 
-$inputSuccessColorText: #008800; // Success text
-$inputSuccessColorBorder: #44bb44; // Success border
-$inputSuccessColorBg: #eeffee; // Success background
+$successTextColor: #008800; // Success text
+$successBorderColor: #44bb44; // Success border
+$successBgColor: #eeffee; // Success background
 
-$inputWarningColorText: #dd8800; // Warning text
-$inputWarningColorBorder: #ffaa22; // Warning border
-$inputWarningColorBg: #aa5500; // Warning background
+$warningTextColor: #dd8800; // Warning text
+$warningBorderColor: #ffaa22; // Warning border
+$warningBgColor: #aa5500; // Warning background
 
-$inputFailureColorText: #dd0000; // Failure text
-$inputFailureColorBorder: #ff7777; // Failure border
-$inputFailureColorBg: #fff2f2; // Failure background
+$cfailureTextColor: #dd0000; // Failure text
+$cfailureBorderColor: #ff7777; // Failure border
+$cfailureBgColor: #fff2f2; // Failure background
 
 
 
 
 // Notification
 
-$notifySuccessColorBg: #44bb44;
-$notifyWarningColorBg: #DD8800;
-$notifyFailureColorBg: #DD0000;
+$notifySuccessBgColor: #44bb44;
+$notifyWarningBgColor: #DD8800;
+$notifyFailureBgColor: #DD0000;
 
 
 

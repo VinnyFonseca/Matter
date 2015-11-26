@@ -4,7 +4,7 @@
 	display: block;
 	position: relative;
 	margin: 0 auto;
-	margin-bottom: floor($spc * 2);
+	margin-bottom: floor($spacing * 2);
 	padding: 0;
 	width: 100%;
 
@@ -99,13 +99,13 @@
 
 	// Arrow Navigation
 
-	$arrowDiameter: 56px;
+	$carrowDiameter: 56px;
 
 	.slider-arrow {
 		display: none;
 		position: absolute;
 		padding: 0;
-		width: $arrowDiameter;
+		width: $carrowDiameter;
 		top: 0;
 		bottom: 0;
 		text-align: center;
@@ -144,7 +144,7 @@
 
 	// Bullet Navigation (if navContainer is not defined)
 
-	$bulletDiameter: 16px;
+	$cbulletDiameter: 16px;
 
 	.slider-nav {
 		display: block;
@@ -158,11 +158,11 @@
 		.slider-bullet {
 			display: inline-block;
 			position: relative;
-			margin: floor($spc / 1.5) floor($spc / 2.5);
-			width: $bulletDiameter;
-			height: $bulletDiameter;
+			margin: floor($spacing / 1.5) floor($spacing / 2.5);
+			width: $cbulletDiameter;
+			height: $cbulletDiameter;
 			background-color: $color2;
-			border-radius: $bulletDiameter;
+			border-radius: $cbulletDiameter;
 			opacity: 0.5;
 			user-select: none;
 			cursor: pointer;
@@ -192,7 +192,7 @@
 				padding-bottom: 5.25%;
 				width: 5.25%;
 				height: auto;
-				border-radius: $rds;
+				border-radius: $radius;
 				background-size: cover !important;
 
 				&:hover {

@@ -44,9 +44,11 @@ var initGlobal = function() {
 
 		$(".main a.anchor").each(function(i) {
 			var id = $(this).attr("id");
+			var target = $(this).next();
 			var name = $(this).next().html();
+			var type = target.prop('nodeName') == "H2" ? "main" : "sub";
 
-			$(".sidebar ul").append('<li><a href="#' + id + '">' + name + '</a></li>');
+			$(".sidebar ul").append('<li><a href="#' + id + '" class="' + type + '">' + name + '</a></li>');
 			if ( i === 0 ) $(".sidebar ul a").addClass("active");
 		});
 	}
@@ -92,7 +94,7 @@ $(window).on("scroll", function() {
 
 	if ( !anchorClicked && $("a.anchor").length ) {
 		$("a.anchor").each(function(i) {
-			var top = $(this).offset().top - 200;
+			var top = $(this).offset().top;
 
 			if ( pageTop >= top ) {
 				$(".sidebar li").find("a").removeClass("active");

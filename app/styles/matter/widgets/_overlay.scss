@@ -25,12 +25,12 @@
 		display: block;
 		position: absolute;
 		margin: 0;
-		padding: $spc;
+		padding: $spacing;
 		top: 10%;
 		right: 10%;
 		bottom: 10%;
 		left: 10%;
-		border-radius: $rds;
+		border-radius: $radius;
 		background: $cf;
 		opacity: 0;
 		transform: translateY(-10%);
@@ -41,7 +41,7 @@
 		.overlay-close {
 			display: block;
 			position: absolute;
-			padding: floor($spc / 2);
+			padding: floor($spacing / 2);
 			width: 38px;
 			height: 38px;
 			top: -19px;

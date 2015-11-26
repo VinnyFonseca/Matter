@@ -1,5 +1,10 @@
 // Base
 
+header {
+	display: block;
+	position: relative;
+}
+
 .scroll-progress {
 	display: block;
 	position: fixed;
@@ -20,7 +25,7 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 
 
 .wrapper {
-	padding: floor($spc * 1.5) $spc;
+	padding: floor($spacing * 1.5) $spacing;
 	width: $scrDeskL;
 	transition: opacity $animDuration $animEasing;
 }
@@ -37,7 +42,7 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 	.parallax {
 		display: block;
 		position: relative;
-		padding: $spc  0;
+		padding: $spacing  0;
 		color: $cf;
 		background: $color1 url($introBg) no-repeat center bottom;
 		background-size: cover;
@@ -48,43 +53,38 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 
 			p.lead {
 				@extend .font-custom;
-				font-size: $fsz * 7 + rem;
-				line-height: 1.2;
-			}
-		}
-
-		&.parallax-dev {
-			background: $color1 url("../img/pictures/galaxy.jpg") no-repeat center center;
-			background-size: cover;
-
-			p.lead {
-				@extend .font-custom;
-				font-size: $fsz * 7 + rem;
+				font-size: $fontSize * 7 + rem;
 				line-height: 1.2;
 			}
 		}
 	}
 
-	.logo {
-		display: inline-block;
-		position: relative;
-		margin: 0 auto;
-		margin-bottom: floor($spc * 1.5);
-		padding: floor($spc * 2);
-		background-color: rgba(#fff, 0.75);
-		@extend .circle;
-		overflow: visible;
-	}
-
-	h1 {
+	* {
 		color: $cf !important;
 	}
 
+	h1 {
+		font-size: $fontSize * 3.6 + rem;
+		line-height: 1;
+	}
+
 	a {
-		margin-top: $spc;
+		margin-top: $spacing;
 		@extend .font-medium;
 		@extend .secondary;
 	}
+}
+
+.logo {
+	display: inline-block;
+	position: relative;
+	margin: 0 auto;
+	margin-bottom: floor($spacing * 1.5);
+	padding: floor($spacing * 2);
+	background-color: rgba($cf, 0.75);
+	overflow: visible;
+
+	@extend .circle;
 }
 
 
@@ -96,12 +96,20 @@ $sidebarWidth: 300px;
 	display: block;
 	position: relative;
 	left: 0;
-	background-color: $colorBody;
+	background-color: $bodyBgColor;
 	z-index: 2;
 	transition: left $animDuration $animEasing;
 
 	&.docs {
-		padding-left: $sidebarWidth;
+		margin-left: $sidebarWidth;
+
+		.wrapper {
+			padding: floor($spacing * 1.5) floor($spacing * 2);
+		}
+
+		h1 {
+			padding: 0;
+		}
 	}
 
 	&.sidebar-on {
@@ -118,7 +126,7 @@ $sidebarWidth: 300px;
 				transform: translateX(46px);
 				border-left-width: 0;
 				border-right-width: 1px;
-				border-radius: 0 $rds $rds 0;
+				border-radius: 0 $radius $radius 0;
 
 				&:before {
 					content: "\00BB" !important;
@@ -126,104 +134,167 @@ $sidebarWidth: 300px;
 			}
 		}
 	}
+}
 
-	.sidebar {
+.sidebar {
+	display: block;
+	position: fixed;
+	margin: 0;
+	padding: floor($spacing * 1.5) 0;
+	width: $sidebarWidth;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	border-right: 1px solid $c3;
+	background-color: $c3;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+	z-index: 70;
+	transition: transform $animDuration $animEasing;
+
+	> * {
+		padding: 0 $spacing;
+	}
+
+
+	.sidebar-trigger {
 		display: none;
-		position: fixed;
-		margin: 0;
-		padding: 0;
-		width: $sidebarWidth;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		border-right: 1px solid $c3;
-		background-color: $c3;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-		z-index: 70;
+		position: absolute;
+		padding: 8px 0;
+		margin-top: -23px;
+		width: 46px;
+		height: 46px;
+		left: -46px;
+		top: 50%;
+		color: $cf;
+		font-size: $fontSize * 2 + rem;
+		text-align: center;
+		line-height: 0.7 !important;
+		border: 1px solid $color1;
+		border-left-width: 0;
+		border-radius: $radius 0 0 $radius;
+		background-color: $color1;
+		cursor: pointer;
+		z-index: 10;
+		opacity: 0.85;
 		transition: transform $animDuration $animEasing;
 
-		& > * {
-			padding: 0 $spc;
+		&:hover,
+		&:active {
+			border-color: $color2;
+			background-color: $color2;
 		}
-
-		.sidebar-trigger {
-			display: none;
-			position: absolute;
-			padding: 8px 0;
-			width: 46px;
-			height: 46px;
-			left: -46px;
-			top: 6px;
-			color: $cf;
-			font-size: $fsz * 2 + rem;
-			text-align: center;
-			line-height: 0.7 !important;
-			border: 1px solid $color1;
-			border-left-width: 0;
-			border-radius: $rds 0 0 $rds;
-			background-color: $color1;
-			cursor: pointer;
-			z-index: 10;
-			opacity: 0.85;
-			transition: transform $animDuration $animEasing;
-
-			&:hover,
-			&:active {
-				border-color: $color2;
-				background-color: $color2;
-			}
-			&:before {
-				content: "\00AB";
-			}
+		&:before {
+			content: "\00AB";
 		}
+	}
 
-		h1, h2, h3, h4, h5, h6 {
-			margin-top: 15px;
-			color: $cd !important;
+
+	a {
+		display: block;
+		margin-bottom: $spacing;
+		padding: 0 $spacing;
+	}
+
+	.logo {
+		display: inline-block;
+		margin: 0;
+		margin-right: floor($spacing / 2);
+		padding: floor($spacing / 2);
+		width: 64px;
+		height: 64px;
+		background-color: $cf;
+		vertical-align: middle;
+
+		+ h2 {
+			display: inline-block;
+			vertical-align: middle;
 		}
+	}
 
-		ul {
+
+	h1, h2, h3, h4, h5, h6 {
+		padding: 0;
+		color: $cd !important;
+	}
+
+	h4 {
+		padding: 0 $spacing;
+	}
+
+
+	ul {
+		display: block;
+		position: absolute;
+		margin: 0;
+		padding: 0 floor($spacing / 1.5) floor($spacing / 1.5);
+		top: 160px;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		list-style: none;
+		border-top: 1px solid $c3;
+		overflow: auto;
+
+		li {
 			display: block;
-			position: relative;
 			margin: 0;
-			margin-top: floor($spc / 2);
 			padding: 0;
-			list-style: none;
-			border-top: 1px solid $c3;
 
-			li {
+			a {
 				display: block;
-				margin: 0;
-				padding: 0;
+				position: relative;
+				margin: 3px 5px;
+				padding: 7px 12px;
+				color: $cd !important;
+				text-decoration: none !important;
+				border: 1px solid $c3;
+				border-radius: $radius;
+				background-color: $c4;
 
-				a {
-					display: block;
-					position: relative;
-					margin: 3px 5px;
-					padding: 8px $spc;
-					color: $cd !important;
-					font-size: $fsz / 1.1 + rem;
-					text-decoration: none !important;
-					border: 1px solid $c3;
-					border-radius: $rds;
-					background-color: $c4;
+				&:hover,
+				&.active {
+					border-top: 1px solid $color1;
+					background-color: $color1;
+				}
+				&:active {
+					border-top: 1px solid $color2;
+					background-color: $color2;
+				}
 
-					&:hover {
-						border-top: 1px solid $color1;
-						background-color: $color1;
-					}
-					&:active {
-						border-top: 1px solid $color2;
-						background-color: $color2;
-					}
-					&.active {
-						color: $cf !important;
-						border-top: 1px solid $color1;
-						background-color: $color1;
-					}
+				&.main {
+					font-size: $fontSize + rem;
+				}
+				&.sub {
+					padding-left: 36px;
+					font-size: $fontSize / 1.2 + rem;
 				}
 			}
 		}
+	}
+}
+
+.separator {
+	display: block;
+	position: relative;
+	margin: floor($spacing * 2) 0 floor($spacing * 1.5);
+	width: 100px;
+	height: 0;
+	border-top: 3px solid $color1;
+}
+
+.structure {
+	color: $c6;
+
+	* {
+		color: $cf;
+	}
+
+	.emphasis {
+		color: $color3;
+	}
+
+	span {
+		color: $color2;
 	}
 }
 
@@ -276,12 +347,12 @@ $sidebarWidth: 300px;
 	display: block;
 	position: absolute;
 	margin: 0;
-	padding: floor($spc / 2);
+	padding: floor($spacing / 2);
 	right: 0;
 	bottom: 125%;
 	text-align: left;
 	border: 1px solid $ce;
-	border-radius: $rds;
+	border-radius: $radius;
 	background-color: $cf;
 	box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
 	white-space: nowrap;
@@ -319,7 +390,7 @@ $sidebarWidth: 300px;
 		padding: 10px;
 		width: 5.666%;
 		border: 1px solid $cd;
-		border-radius: $rds;
+		border-radius: $radius;
 		background-color: $ce;
 
 		.icon {
@@ -360,7 +431,7 @@ footer,
 .footer {
 	display: block;
 	position: relative;
-	padding: floor($spc / 1.5) $spc;
+	padding: floor($spacing / 1.5) $spacing;
 	width: 100%;
 	color: $cf;
 	background: $color1;
@@ -382,7 +453,7 @@ footer,
 		display: block;
 		position: relative;
 		float: right;
-		margin-left: floor($spc / 2);
+		margin-left: floor($spacing / 2);
 		top: 10px;
 		right: 0;
 	}
@@ -391,12 +462,12 @@ footer,
 		display: block;
 		position: relative;
 		float: right;
-		margin-top: floor($spc / 2);
-		margin-left: floor($spc / 2);
+		margin-top: floor($spacing / 2);
+		margin-left: floor($spacing / 2);
 		padding: 0;
 
 		.icon {
-			margin-left: floor($spc / 2);
+			margin-left: floor($spacing / 2);
 			width: 24px;
 			height: 24px;
 			@include svgColor($cf);
