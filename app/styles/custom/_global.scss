@@ -222,7 +222,7 @@ $sidebarWidth: 300px;
 	}
 
 
-	ul {
+	nav {
 		display: block;
 		position: absolute;
 		margin: 0;
@@ -235,38 +235,46 @@ $sidebarWidth: 300px;
 		border-top: 1px solid $c3;
 		overflow: auto;
 
-		li {
-			display: block;
-			margin: 0;
-			padding: 0;
-
+		.selected {
 			a {
-				display: block;
-				position: relative;
-				margin: 3px 5px;
-				padding: 7px 12px;
-				color: $cd !important;
-				text-decoration: none !important;
-				border: 1px solid $c3;
-				border-radius: $radius;
-				background-color: $c4;
-
-				&:hover,
-				&.active {
-					border-top: 1px solid $color1;
-					background-color: $color1;
-				}
-				&:active {
-					border-top: 1px solid $color2;
-					background-color: $color2;
-				}
-
-				&.main {
-					font-size: $fontSize + rem;
-				}
 				&.sub {
-					padding-left: 36px;
-					font-size: $fontSize / 1.2 + rem;
+					display: block;
+				}
+			}
+		}
+
+		a {
+			display: block;
+			position: relative;
+			margin: 3px 5px;
+			padding: 7px 12px;
+			color: $cd !important;
+			text-decoration: none !important;
+			border: 1px solid $c3;
+			border-radius: $radius;
+			background-color: $c4;
+
+			&:hover,
+			&.active {
+				border-top: 1px solid $color1;
+				background-color: $color1;
+			}
+			&:active {
+				border-top: 1px solid $color2;
+				background-color: $color2;
+			}
+
+			&.core {
+				font-size: $fontSize + rem;
+			}
+			&.sub {
+				display: none;
+				margin-left: 22px;
+				padding: 5px 10px;
+				font-size: $fontSize / 1.1 + rem;
+
+				&.visible {
+					display: block;
 				}
 			}
 		}
@@ -282,20 +290,14 @@ $sidebarWidth: 300px;
 	border-top: 3px solid $color1;
 }
 
-.structure {
-	color: $c6;
+pre {
+	color: $cd;
 
-	* {
-		color: $cf;
-	}
-
-	.emphasis {
-		color: $color3;
-	}
-
-	span {
-		color: $color2;
-	}
+	.folder { color: #CCAAEE; }
+	.file { font-style: italic; }
+	.system { color: #FF6666; }
+	.emphasis { color: #CCAAEE; }
+	i { color: $c6; }
 }
 
 

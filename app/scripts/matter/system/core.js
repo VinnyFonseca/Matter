@@ -265,7 +265,7 @@ var initLinks = function() {
 				anchorClicked = true;
 
 				$("html, body").animate({
-					scrollTop: $(link).offset().top - 90
+					scrollTop: $(link).offset().top - 40
 				}, {
 					duration: 1000,
 					queue: false,
@@ -336,7 +336,6 @@ var matterReady = function() {
 
 	// Widgets Init
 
-	initFontSizeControls();
 	initOverlays();
 	initNotifications();
 	initTooltips();

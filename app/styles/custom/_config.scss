@@ -1,7 +1,7 @@
 // General
 
 $spacing: 20px; // Spacing variable user throughout
-$radius: 5px; // Radius value
+$radius: 3px; // Radius value
 
 
 
@@ -68,7 +68,7 @@ $bodyFont: 'Open Sans', sans-serif;
 $monoFont: 'Source Code Pro', monospace;
 
 $fontSize: 1.6; // REM measure. 1.0rem = 10px; Change the root value of pixrem's postcss module on GruntFile.js to this value multiplied by 10.
-$lineHeight: $fontSize + 0.2; // Line Height
+$lineHeight: $fontSize + 0.1; // Line Height
 
 
 

@@ -25,6 +25,19 @@ function FastClick(a) {
     }, !1), a.onclick = null));
 }
 
+function detectSidebar() {
+    !anchorClicked && $("a.anchor").length && $("a.anchor").each(function(a) {
+        var b = $(this).offset().top - 40, c = $(".sidebar a").length;
+        if (pageTop >= b && ($(".sidebar a").removeClass("active"), $(".sidebar a").eq(a).addClass("active"), 
+        $(".sidebar a").eq(a).hasClass("core"))) {
+            $(".sidebar a").eq(a).addClass("active");
+            var d = $(".sidebar a").eq(a).data("container");
+            $(".sidebar .container").removeClass("selected"), $(".sidebar .container[data-type=" + d + "]").addClass("selected");
+        }
+        pageTop + $(window).height() >= $(document).height() && $(".sidebar a").removeClass("active").eq(c - 1).addClass("active");
+    });
+}
+
 !function(a, b) {
     "object" == typeof module && "object" == typeof module.exports ? module.exports = a.document ? b(a, !0) : function(a) {
         if (!a.document) throw new Error("jQuery requires a window with a document");
@@ -3737,7 +3750,7 @@ var cookieSystem, initCookies = function() {
         var b = $.attr(this, "href");
         if (a.preventDefault(), "#" === b) config.application.debug && console.log("System :: Link blocked"); else if ($(b).length) return anchorClicked = !0, 
         $("html, body").animate({
-            scrollTop: $(b).offset().top - 90
+            scrollTop: $(b).offset().top - 40
         }, {
             duration: 1e3,
             queue: !1,
@@ -3754,9 +3767,9 @@ var cookieSystem, initCookies = function() {
     $(".map-canvas").addClass("map-mobile")), config.application.debug && (console.log(":: is DOM.ready"), 
     console.log("~~ is Async"), console.log("•• is Complete"), console.log("== is User Action"), 
     console.log(" ")), initKonami(), initAnimationFrame(), initSVGs(), initSession(), 
-    initCookies(), initLinks(), initTables(), scrollProgress(), initFontSizeControls(), 
-    initOverlays(), initNotifications(), initTooltips(), initSearch(), initAutocomplete(), 
-    initTagClouds(), initForm(), initDropdowns(), initValidation(), initGlobal();
+    initCookies(), initLinks(), initTables(), scrollProgress(), initOverlays(), initNotifications(), 
+    initTooltips(), initSearch(), initAutocomplete(), initTagClouds(), initForm(), initDropdowns(), 
+    initValidation(), initGlobal();
 }, matterDeferred = function() {
     $("body").removeClass("preload"), initSliders(), initMap(), initVideo(), config.application.debug && console.log("Done •• Matter in " + (new Date().getTime() - ms) + " milliseconds");
 }, isWideScreen, pageTop, pageBottom;
@@ -4760,26 +4773,6 @@ var initAutocomplete = function() {
         };
         requestData(b, "GET", k);
     }), config.application.debug && console.log("Search :: Autocomplete"));
-}, initFontSizeControls = function() {
-    if (config.typography.resize.active) {
-        $(".font-trigger").removeClass("hidden").on("click", function(a) {
-            $(a.target).closest(".font-wrapper").length || ($(".font-wrapper").hasClass("active") ? ($(this).removeClass("active"), 
-            $(".font-wrapper").removeClass("active")) : ($(this).addClass("active"), $(".font-wrapper").addClass("active")));
-        }), $(document).on("click", function(a) {
-            $(a.target).closest(".font-trigger.active, .font-wrapper.active").length || $(".font-trigger, .font-wrapper").removeClass("active");
-        });
-        var a = 10, b = a, c = config.typography.resize.range;
-        null === cookieSystem.get("fontSize") && cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), 
-        $("html").css("font-size", b + "px"), $(".font-up").click(function() {
-            a + c > b && b++, cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), 
-            $("html").css("font-size", b + "px");
-        }), $(".font-reset").click(function() {
-            b = a, cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), $("html").css("font-size", b + "px");
-        }), $(".font-down").click(function() {
-            b > a - c && b--, cookieSystem.set("fontSize", b, 365), b = cookieSystem.get("fontSize"), 
-            $("html").css("font-size", b + "px");
-        }), config.application.debug && console.log("Widget :: Font Size Controls");
-    }
 }, textResize = function(a) {
     var b = $(a), c = config.typography.autoresize.characters, d = config.typography.autoresize.rows, e = config.typography.autoresize.minFontSize, f = config.typography.autoresize.maxFontSize, g = e;
     (function() {
@@ -5896,23 +5889,31 @@ var initAutocomplete = function() {
     for (var b, c = this.location.href, d = c.split("/"), e = $("nav"), f = 0; f < d.length; f++) b = d[d.length - 1].split(".")[0];
     e.children("a").removeClass("active");
     b.length ? e.children("a[href*=" + b + "]").addClass("active") : e.children("a").eq(0).addClass("active");
-    $(".nav-trigger").on("click", function() {
+    if ($(".nav-trigger").on("click", function() {
         $("header").toggleClass("active");
     }), $(".nav-close").on("click", function() {
         $("header").removeClass("active");
     }), $("html, body").on("click", function(a) {
         $(a.target).closest("header").length || $("header").removeClass("active");
-    }), $(".main a.anchor").length > 1 && ($(".sidebar").append("<ul></ul>").show(), 
-    $(".main a.anchor").each(function(a) {
-        var b = $(this).attr("id"), c = $(this).next(), d = $(this).next().html(), e = "H2" == c.prop("nodeName") ? "main" : "sub";
-        $(".sidebar ul").append('<li><a href="#' + b + '" class="' + e + '">' + d + "</a></li>"), 
-        0 === a && $(".sidebar ul a").addClass("active");
-    })), $(".sidebar-trigger").on("click", function() {
+    }), $(".main a.anchor").length > 1) {
+        $(".sidebar").append("<nav></nav>").show();
+        var g;
+        $(".main a.anchor").each(function(a) {
+            var b = $(this), c = b.attr("id"), d = b.next(), e = d.html(), f = "H2" == d.prop("nodeName") ? "core" : "sub";
+            "core" == f && (g = c, $(".sidebar nav").append('<div class="container" data-type="' + g + '"></div>')), 
+            $(".sidebar .container[data-type=" + g + "]").append('<a href="#' + c + '" class="' + f + '" data-container="' + g + '">' + e + "</a>");
+        });
+    }
+    $(".sidebar-trigger").on("click", function() {
         $(".main").hasClass("sidebar-on") ? $(".main").removeClass("sidebar-on") : $(".main").addClass("sidebar-on");
     }), $("html, body").on("click", function(a) {
         !$(a.target).closest(".sidebar").length && $(".main").hasClass("sidebar-on") && $(".main").removeClass("sidebar-on");
-    }), $(".sidebar li a").on("click", function(a) {
-        $(".sidebar li a").removeClass("active"), $(this).addClass("active"), $(".main").removeClass("sidebar-on");
+    }), $(".sidebar a").on("click", function(a) {
+        if ($(this).hasClass("core")) {
+            var b = $(this).data("container");
+            $(".sidebar .container").removeClass("selected"), $(".sidebar .container[data-type=" + b + "]").addClass("selected");
+        }
+        $(".sidebar a").removeClass("active"), $(this).addClass("active"), $(".main").removeClass("sidebar-on");
     });
 }, introParallax = function() {
     $(".intro .parallax").css({
@@ -5926,11 +5927,6 @@ var initAutocomplete = function() {
 };
 
 $(window).on("scroll", function() {
-    requestAnimationFrame(introParallax), !anchorClicked && $("a.anchor").length && $("a.anchor").each(function(a) {
-        var b = $(this).offset().top;
-        pageTop >= b && ($(".sidebar li").find("a").removeClass("active"), $(".sidebar li").eq(a - 1).find("a").addClass("active")), 
-        b > pageTop && $(".sidebar li").eq(a + 1).find("a").removeClass("active"), pageTop + $(window).height() >= $(document).height() && ($(".sidebar li").find("a").removeClass("active"), 
-        $(".sidebar li").eq($(".sidebar li").length - 1).find("a").addClass("active"));
-    });
+    requestAnimationFrame(introParallax), detectSidebar();
 });
 //# sourceMappingURL=build.js.map

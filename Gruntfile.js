@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 			uglify: {
 				options: {
 					title: 'Scripts',
-					message: 'Compilation completed'
+					message: 'Uglification completed'
 				}
 			},
 			jshint: {
@@ -53,6 +53,7 @@ module.exports = function(grunt) {
 		},
 
 
+
 		// Config for grunt-ssi
 
 		ssi: {
@@ -64,13 +65,14 @@ module.exports = function(grunt) {
 			},
 			main: {
 				files: [{
-					expand: false,
+					expand: true,
 					cwd: 'app/markup',
 					src: ['*.html'],
 					dest: 'www'
 				}]
 			}
 		},
+
 
 
 		// Config for grunt-sass (libsass, ~4s compiling time)
@@ -113,6 +115,7 @@ module.exports = function(grunt) {
 				src: 'www/styles/build.css'
 			}
 		},
+
 
 
 		// Config for grunt-contrib-uglify (javascript concatenation)
@@ -172,6 +175,7 @@ module.exports = function(grunt) {
 			},
 			files: ['app/scripts/**/*.js']
 		},
+
 
 
 		// Config for grunt-browser-sync (browser synchronisation and auto-reloader)

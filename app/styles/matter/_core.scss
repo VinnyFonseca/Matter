@@ -111,7 +111,17 @@ p {
 	padding: floor($spacing / 2) 0;
 
 	&.lead {
-		font-size: $fontSize * 1.3 + rem;
+		font-size: $fontSize * 1.2 + rem;
+
+		&:first-letter {
+			position: relative;
+			color: $color1;
+			font-family: "Times New Roman", Times, Baskerville, Georgia, serif;
+			font-size: $fontSize * 3 + rem;
+			font-weight: bold;
+			line-height: 1;
+			transform: rotate(30deg);
+		}
 	}
 }
 
@@ -151,7 +161,7 @@ a {
 		pointer-events: none;
 	}
 
-	&.explicit {
+	&[data-explicit="true"] {
 		&:after {
 			margin: 0 4px;
 			color: $ca;
