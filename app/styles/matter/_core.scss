@@ -112,16 +112,6 @@ p {
 
 	&.lead {
 		font-size: $fontSize * 1.2 + rem;
-
-		&:first-letter {
-			position: relative;
-			color: $color1;
-			font-family: "Times New Roman", Times, Baskerville, Georgia, serif;
-			font-size: $fontSize * 3 + rem;
-			font-weight: bold;
-			line-height: 1;
-			transform: rotate(30deg);
-		}
 	}
 }
 

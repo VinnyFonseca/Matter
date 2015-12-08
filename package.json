@@ -10,22 +10,22 @@
   "copyright": "2015",
   "license": "MIT",
   "version": "1.0.0",
-  "dependencies": {
+  "devDependencies": {
     "grunt": "*",
     "grunt-cli": "*",
     "grunt-ssi": "*",
     "grunt-sass": "*",
     "grunt-postcss": "*",
     "autoprefixer": "*",
-    "rucksack-css": "*",
     "pixrem": "*",
+    "rucksack-css": "*",
+    "grunt-uncss": "^0.4.4",
+    "documentjs": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-jshint": "*",
     "jshint-stylish": "*",
     "grunt-contrib-watch": "*",
-    "grunt-browser-sync": "*"
-  },
-  "devDependencies": {
-    "grunt-notify": "^0.4.3"
+    "grunt-browser-sync": "*",
+    "grunt-notify": "*"
   }
 }

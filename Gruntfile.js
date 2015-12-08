@@ -26,6 +26,18 @@ module.exports = function(grunt) {
 					message: 'Postprocessing completed'
 				}
 			},
+			uncss: {
+				options: {
+					title: 'UnCSS',
+					message: 'Cleaning completed'
+				}
+			},
+			documentjs: {
+				options: {
+					title: 'Document JS',
+					message: 'Styleguide created'
+				}
+			},
 			uglify: {
 				options: {
 					title: 'Scripts',
@@ -40,7 +52,7 @@ module.exports = function(grunt) {
 			},
 			browserSync: {
 				options: {
-					title: 'Sync',
+					title: 'BrowserSync',
 					message: 'Process started'
 				}
 			},
@@ -113,6 +125,31 @@ module.exports = function(grunt) {
 			},
 			main: {
 				src: 'www/styles/build.css'
+			}
+		},
+
+
+
+		// Config for uncss (Unused CSS removal by scanning html files)
+
+		uncss: {
+			main: {
+				files: {
+					'www/styles/build.css': ['www/*.html']
+				}
+			}
+		},
+
+
+
+		// Config for documentjs (CSS style guides automatic generation)
+
+		documentjs: {
+			sites: {
+				"styles": {
+					"glob": "www/styles/build.css",
+					"dest": "app/styles/styleguide"
+				}
 			}
 		},
 
@@ -210,29 +247,29 @@ module.exports = function(grunt) {
 
 		watch: {
 			grunt: {
-				options: { reload: true, spawn: false },
+				options: { reload: true },
 				files: ['Gruntfile.js']
 			},
 			html: {
-				options: { livereload: true, spawn: false },
+				options: { livereload: 31337 },
 				files: ['app/markup/**/*.html'],
 				tasks: ['ssi', 'notify:ssi']
 			},
 			php: {
-				options: { livereload: true, spawn: false },
+				options: { livereload: 31337 },
 				files: ['www/**/*.php']
 			},
 			css: {
-				options: { livereload: true, spawn: false },
+				options: { livereload: 31337 },
 				files: ['www/**/*.css']
 			},
 			sass: {
-				options: { livereload: false, spawn: false },
+				options: { livereload: false },
 				files: ['app/styles/**/*.{scss,sass}'],
-				tasks: ['sass', 'notify:sass', 'postcss', 'notify:postcss']
+				tasks: ['sass', 'notify:sass', 'postcss', 'notify:postcss', 'documentjs:styles', 'notify:documentjs']
 			},
 			js: {
-				options: { livereload: true, spawn: false },
+				options: { livereload: 31337 },
 				files: ['app/scripts/**/*.js'],
 				tasks: ['uglify', 'notify:uglify', 'jshint', 'notify:jshint']
 			}
@@ -246,6 +283,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-ssi');
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-postcss');
+	grunt.loadNpmTasks('grunt-uncss');
+	grunt.loadNpmTasks('documentjs');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
@@ -261,6 +300,8 @@ module.exports = function(grunt) {
 		'notify:sass',
 		'postcss',
 		'notify:postcss',
+		'documentjs',
+		'notify:documentjs',
 		'uglify',
 		'notify:uglify',
 		'jshint',
