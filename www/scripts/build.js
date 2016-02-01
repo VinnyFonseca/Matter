@@ -1,453 +1,470 @@
-function FastClick(a) {
+function FastClick(layer) {
     "use strict";
-    function b(a, b) {
+    function bind(method, context) {
         return function() {
-            return a.apply(b, arguments);
+            return method.apply(context, arguments);
         };
     }
-    var c;
+    var oldOnClick;
     this.trackingClick = !1, this.trackingClickStart = 0, this.targetElement = null, 
     this.touchStartX = 0, this.touchStartY = 0, this.lastTouchIdentifier = 0, this.touchBoundary = 10, 
-    this.layer = a, FastClick.notNeeded(a) || (deviceIsAndroid && (a.addEventListener("mouseover", b(this.onMouse, this), !0), 
-    a.addEventListener("mousedown", b(this.onMouse, this), !0), a.addEventListener("mouseup", b(this.onMouse, this), !0)), 
-    a.addEventListener("click", b(this.onClick, this), !0), a.addEventListener("touchstart", b(this.onTouchStart, this), !1), 
-    a.addEventListener("touchmove", b(this.onTouchMove, this), !1), a.addEventListener("touchend", b(this.onTouchEnd, this), !1), 
-    a.addEventListener("touchcancel", b(this.onTouchCancel, this), !1), Event.prototype.stopImmediatePropagation || (a.removeEventListener = function(b, c, d) {
-        var e = Node.prototype.removeEventListener;
-        "click" === b ? e.call(a, b, c.hijacked || c, d) : e.call(a, b, c, d);
-    }, a.addEventListener = function(b, c, d) {
-        var e = Node.prototype.addEventListener;
-        "click" === b ? e.call(a, b, c.hijacked || (c.hijacked = function(a) {
-            a.propagationStopped || c(a);
-        }), d) : e.call(a, b, c, d);
-    }), "function" == typeof a.onclick && (c = a.onclick, a.addEventListener("click", function(a) {
-        c(a);
-    }, !1), a.onclick = null));
+    this.layer = layer, FastClick.notNeeded(layer) || (deviceIsAndroid && (layer.addEventListener("mouseover", bind(this.onMouse, this), !0), 
+    layer.addEventListener("mousedown", bind(this.onMouse, this), !0), layer.addEventListener("mouseup", bind(this.onMouse, this), !0)), 
+    layer.addEventListener("click", bind(this.onClick, this), !0), layer.addEventListener("touchstart", bind(this.onTouchStart, this), !1), 
+    layer.addEventListener("touchmove", bind(this.onTouchMove, this), !1), layer.addEventListener("touchend", bind(this.onTouchEnd, this), !1), 
+    layer.addEventListener("touchcancel", bind(this.onTouchCancel, this), !1), Event.prototype.stopImmediatePropagation || (layer.removeEventListener = function(type, callback, capture) {
+        var rmv = Node.prototype.removeEventListener;
+        "click" === type ? rmv.call(layer, type, callback.hijacked || callback, capture) : rmv.call(layer, type, callback, capture);
+    }, layer.addEventListener = function(type, callback, capture) {
+        var adv = Node.prototype.addEventListener;
+        "click" === type ? adv.call(layer, type, callback.hijacked || (callback.hijacked = function(event) {
+            event.propagationStopped || callback(event);
+        }), capture) : adv.call(layer, type, callback, capture);
+    }), "function" == typeof layer.onclick && (oldOnClick = layer.onclick, layer.addEventListener("click", function(event) {
+        oldOnClick(event);
+    }, !1), layer.onclick = null));
 }
 
 function detectSidebar() {
-    !anchorClicked && $("a.anchor").length && $("a.anchor").each(function(a) {
-        var b = $(this).offset().top - 40, c = $(".sidebar a").length;
-        if (pageTop >= b && ($(".sidebar a").removeClass("active"), $(".sidebar a").eq(a).addClass("active"), 
-        $(".sidebar a").eq(a).hasClass("core"))) {
-            $(".sidebar a").eq(a).addClass("active");
-            var d = $(".sidebar a").eq(a).data("container");
-            $(".sidebar .container").removeClass("selected"), $(".sidebar .container[data-type=" + d + "]").addClass("selected");
+    !anchorClicked && $("a.anchor").length && $("a.anchor").each(function(i) {
+        var top = $(this).offset().top - 40, length = $(".sidebar a").length;
+        if (pageTop >= top && ($(".sidebar a").removeClass("active"), $(".sidebar a").eq(i).addClass("active"), 
+        $(".sidebar a").eq(i).hasClass("core"))) {
+            $(".sidebar a").eq(i).addClass("active");
+            var container = $(".sidebar a").eq(i).data("container");
+            $(".sidebar .container").removeClass("selected"), $(".sidebar .container[data-type=" + container + "]").addClass("selected");
         }
-        pageTop + $(window).height() >= $(document).height() && $(".sidebar a").removeClass("active").eq(c - 1).addClass("active");
+        pageTop + $(window).height() >= $(document).height() && $(".sidebar a").removeClass("active").eq(length - 1).addClass("active");
     });
 }
 
-!function(a, b) {
-    "object" == typeof module && "object" == typeof module.exports ? module.exports = a.document ? b(a, !0) : function(a) {
-        if (!a.document) throw new Error("jQuery requires a window with a document");
-        return b(a);
-    } : b(a);
-}("undefined" != typeof window ? window : this, function(a, b) {
-    function c(a) {
-        var b = "length" in a && a.length, c = ea.type(a);
-        return "function" === c || ea.isWindow(a) ? !1 : 1 === a.nodeType && b ? !0 : "array" === c || 0 === b || "number" == typeof b && b > 0 && b - 1 in a;
+!function(global, factory) {
+    "object" == typeof module && "object" == typeof module.exports ? module.exports = global.document ? factory(global, !0) : function(w) {
+        if (!w.document) throw new Error("jQuery requires a window with a document");
+        return factory(w);
+    } : factory(global);
+}("undefined" != typeof window ? window : this, function(window, noGlobal) {
+    function isArraylike(obj) {
+        var length = "length" in obj && obj.length, type = jQuery.type(obj);
+        return "function" === type || jQuery.isWindow(obj) ? !1 : 1 === obj.nodeType && length ? !0 : "array" === type || 0 === length || "number" == typeof length && length > 0 && length - 1 in obj;
     }
-    function d(a, b, c) {
-        if (ea.isFunction(b)) return ea.grep(a, function(a, d) {
-            return !!b.call(a, d, a) !== c;
+    function winnow(elements, qualifier, not) {
+        if (jQuery.isFunction(qualifier)) return jQuery.grep(elements, function(elem, i) {
+            return !!qualifier.call(elem, i, elem) !== not;
         });
-        if (b.nodeType) return ea.grep(a, function(a) {
-            return a === b !== c;
+        if (qualifier.nodeType) return jQuery.grep(elements, function(elem) {
+            return elem === qualifier !== not;
         });
-        if ("string" == typeof b) {
-            if (ma.test(b)) return ea.filter(b, a, c);
-            b = ea.filter(b, a);
+        if ("string" == typeof qualifier) {
+            if (risSimple.test(qualifier)) return jQuery.filter(qualifier, elements, not);
+            qualifier = jQuery.filter(qualifier, elements);
         }
-        return ea.grep(a, function(a) {
-            return ea.inArray(a, b) >= 0 !== c;
+        return jQuery.grep(elements, function(elem) {
+            return jQuery.inArray(elem, qualifier) >= 0 !== not;
         });
     }
-    function e(a, b) {
-        do a = a[b]; while (a && 1 !== a.nodeType);
-        return a;
+    function sibling(cur, dir) {
+        do cur = cur[dir]; while (cur && 1 !== cur.nodeType);
+        return cur;
     }
-    function f(a) {
-        var b = ua[a] = {};
-        return ea.each(a.match(ta) || [], function(a, c) {
-            b[c] = !0;
-        }), b;
+    function createOptions(options) {
+        var object = optionsCache[options] = {};
+        return jQuery.each(options.match(rnotwhite) || [], function(_, flag) {
+            object[flag] = !0;
+        }), object;
     }
-    function g() {
-        oa.addEventListener ? (oa.removeEventListener("DOMContentLoaded", h, !1), a.removeEventListener("load", h, !1)) : (oa.detachEvent("onreadystatechange", h), 
-        a.detachEvent("onload", h));
+    function detach() {
+        document.addEventListener ? (document.removeEventListener("DOMContentLoaded", completed, !1), 
+        window.removeEventListener("load", completed, !1)) : (document.detachEvent("onreadystatechange", completed), 
+        window.detachEvent("onload", completed));
     }
-    function h() {
-        (oa.addEventListener || "load" === event.type || "complete" === oa.readyState) && (g(), 
-        ea.ready());
+    function completed() {
+        (document.addEventListener || "load" === event.type || "complete" === document.readyState) && (detach(), 
+        jQuery.ready());
     }
-    function i(a, b, c) {
-        if (void 0 === c && 1 === a.nodeType) {
-            var d = "data-" + b.replace(za, "-$1").toLowerCase();
-            if (c = a.getAttribute(d), "string" == typeof c) {
+    function dataAttr(elem, key, data) {
+        if (void 0 === data && 1 === elem.nodeType) {
+            var name = "data-" + key.replace(rmultiDash, "-$1").toLowerCase();
+            if (data = elem.getAttribute(name), "string" == typeof data) {
                 try {
-                    c = "true" === c ? !0 : "false" === c ? !1 : "null" === c ? null : +c + "" === c ? +c : ya.test(c) ? ea.parseJSON(c) : c;
+                    data = "true" === data ? !0 : "false" === data ? !1 : "null" === data ? null : +data + "" === data ? +data : rbrace.test(data) ? jQuery.parseJSON(data) : data;
                 } catch (e) {}
-                ea.data(a, b, c);
-            } else c = void 0;
+                jQuery.data(elem, key, data);
+            } else data = void 0;
         }
-        return c;
+        return data;
     }
-    function j(a) {
-        var b;
-        for (b in a) if (("data" !== b || !ea.isEmptyObject(a[b])) && "toJSON" !== b) return !1;
+    function isEmptyDataObject(obj) {
+        var name;
+        for (name in obj) if (("data" !== name || !jQuery.isEmptyObject(obj[name])) && "toJSON" !== name) return !1;
         return !0;
     }
-    function k(a, b, c, d) {
-        if (ea.acceptData(a)) {
-            var e, f, g = ea.expando, h = a.nodeType, i = h ? ea.cache : a, j = h ? a[g] : a[g] && g;
-            if (j && i[j] && (d || i[j].data) || void 0 !== c || "string" != typeof b) return j || (j = h ? a[g] = W.pop() || ea.guid++ : g), 
-            i[j] || (i[j] = h ? {} : {
-                toJSON: ea.noop
-            }), ("object" == typeof b || "function" == typeof b) && (d ? i[j] = ea.extend(i[j], b) : i[j].data = ea.extend(i[j].data, b)), 
-            f = i[j], d || (f.data || (f.data = {}), f = f.data), void 0 !== c && (f[ea.camelCase(b)] = c), 
-            "string" == typeof b ? (e = f[b], null == e && (e = f[ea.camelCase(b)])) : e = f, 
-            e;
+    function internalData(elem, name, data, pvt) {
+        if (jQuery.acceptData(elem)) {
+            var ret, thisCache, internalKey = jQuery.expando, isNode = elem.nodeType, cache = isNode ? jQuery.cache : elem, id = isNode ? elem[internalKey] : elem[internalKey] && internalKey;
+            if (id && cache[id] && (pvt || cache[id].data) || void 0 !== data || "string" != typeof name) return id || (id = isNode ? elem[internalKey] = deletedIds.pop() || jQuery.guid++ : internalKey), 
+            cache[id] || (cache[id] = isNode ? {} : {
+                toJSON: jQuery.noop
+            }), ("object" == typeof name || "function" == typeof name) && (pvt ? cache[id] = jQuery.extend(cache[id], name) : cache[id].data = jQuery.extend(cache[id].data, name)), 
+            thisCache = cache[id], pvt || (thisCache.data || (thisCache.data = {}), thisCache = thisCache.data), 
+            void 0 !== data && (thisCache[jQuery.camelCase(name)] = data), "string" == typeof name ? (ret = thisCache[name], 
+            null == ret && (ret = thisCache[jQuery.camelCase(name)])) : ret = thisCache, ret;
         }
     }
-    function l(a, b, c) {
-        if (ea.acceptData(a)) {
-            var d, e, f = a.nodeType, g = f ? ea.cache : a, h = f ? a[ea.expando] : ea.expando;
-            if (g[h]) {
-                if (b && (d = c ? g[h] : g[h].data)) {
-                    ea.isArray(b) ? b = b.concat(ea.map(b, ea.camelCase)) : b in d ? b = [ b ] : (b = ea.camelCase(b), 
-                    b = b in d ? [ b ] : b.split(" ")), e = b.length;
-                    for (;e--; ) delete d[b[e]];
-                    if (c ? !j(d) : !ea.isEmptyObject(d)) return;
+    function internalRemoveData(elem, name, pvt) {
+        if (jQuery.acceptData(elem)) {
+            var thisCache, i, isNode = elem.nodeType, cache = isNode ? jQuery.cache : elem, id = isNode ? elem[jQuery.expando] : jQuery.expando;
+            if (cache[id]) {
+                if (name && (thisCache = pvt ? cache[id] : cache[id].data)) {
+                    jQuery.isArray(name) ? name = name.concat(jQuery.map(name, jQuery.camelCase)) : name in thisCache ? name = [ name ] : (name = jQuery.camelCase(name), 
+                    name = name in thisCache ? [ name ] : name.split(" ")), i = name.length;
+                    for (;i--; ) delete thisCache[name[i]];
+                    if (pvt ? !isEmptyDataObject(thisCache) : !jQuery.isEmptyObject(thisCache)) return;
                 }
-                (c || (delete g[h].data, j(g[h]))) && (f ? ea.cleanData([ a ], !0) : ca.deleteExpando || g != g.window ? delete g[h] : g[h] = null);
+                (pvt || (delete cache[id].data, isEmptyDataObject(cache[id]))) && (isNode ? jQuery.cleanData([ elem ], !0) : support.deleteExpando || cache != cache.window ? delete cache[id] : cache[id] = null);
             }
         }
     }
-    function m() {
+    function returnTrue() {
         return !0;
     }
-    function n() {
+    function returnFalse() {
         return !1;
     }
-    function o() {
+    function safeActiveElement() {
         try {
-            return oa.activeElement;
-        } catch (a) {}
+            return document.activeElement;
+        } catch (err) {}
     }
-    function p(a) {
-        var b = Ka.split("|"), c = a.createDocumentFragment();
-        if (c.createElement) for (;b.length; ) c.createElement(b.pop());
-        return c;
+    function createSafeFragment(document) {
+        var list = nodeNames.split("|"), safeFrag = document.createDocumentFragment();
+        if (safeFrag.createElement) for (;list.length; ) safeFrag.createElement(list.pop());
+        return safeFrag;
     }
-    function q(a, b) {
-        var c, d, e = 0, f = typeof a.getElementsByTagName !== xa ? a.getElementsByTagName(b || "*") : typeof a.querySelectorAll !== xa ? a.querySelectorAll(b || "*") : void 0;
-        if (!f) for (f = [], c = a.childNodes || a; null != (d = c[e]); e++) !b || ea.nodeName(d, b) ? f.push(d) : ea.merge(f, q(d, b));
-        return void 0 === b || b && ea.nodeName(a, b) ? ea.merge([ a ], f) : f;
+    function getAll(context, tag) {
+        var elems, elem, i = 0, found = typeof context.getElementsByTagName !== strundefined ? context.getElementsByTagName(tag || "*") : typeof context.querySelectorAll !== strundefined ? context.querySelectorAll(tag || "*") : void 0;
+        if (!found) for (found = [], elems = context.childNodes || context; null != (elem = elems[i]); i++) !tag || jQuery.nodeName(elem, tag) ? found.push(elem) : jQuery.merge(found, getAll(elem, tag));
+        return void 0 === tag || tag && jQuery.nodeName(context, tag) ? jQuery.merge([ context ], found) : found;
     }
-    function r(a) {
-        Ea.test(a.type) && (a.defaultChecked = a.checked);
+    function fixDefaultChecked(elem) {
+        rcheckableType.test(elem.type) && (elem.defaultChecked = elem.checked);
     }
-    function s(a, b) {
-        return ea.nodeName(a, "table") && ea.nodeName(11 !== b.nodeType ? b : b.firstChild, "tr") ? a.getElementsByTagName("tbody")[0] || a.appendChild(a.ownerDocument.createElement("tbody")) : a;
+    function manipulationTarget(elem, content) {
+        return jQuery.nodeName(elem, "table") && jQuery.nodeName(11 !== content.nodeType ? content : content.firstChild, "tr") ? elem.getElementsByTagName("tbody")[0] || elem.appendChild(elem.ownerDocument.createElement("tbody")) : elem;
     }
-    function t(a) {
-        return a.type = (null !== ea.find.attr(a, "type")) + "/" + a.type, a;
+    function disableScript(elem) {
+        return elem.type = (null !== jQuery.find.attr(elem, "type")) + "/" + elem.type, 
+        elem;
     }
-    function u(a) {
-        var b = Va.exec(a.type);
-        return b ? a.type = b[1] : a.removeAttribute("type"), a;
+    function restoreScript(elem) {
+        var match = rscriptTypeMasked.exec(elem.type);
+        return match ? elem.type = match[1] : elem.removeAttribute("type"), elem;
     }
-    function v(a, b) {
-        for (var c, d = 0; null != (c = a[d]); d++) ea._data(c, "globalEval", !b || ea._data(b[d], "globalEval"));
+    function setGlobalEval(elems, refElements) {
+        for (var elem, i = 0; null != (elem = elems[i]); i++) jQuery._data(elem, "globalEval", !refElements || jQuery._data(refElements[i], "globalEval"));
     }
-    function w(a, b) {
-        if (1 === b.nodeType && ea.hasData(a)) {
-            var c, d, e, f = ea._data(a), g = ea._data(b, f), h = f.events;
-            if (h) {
-                delete g.handle, g.events = {};
-                for (c in h) for (d = 0, e = h[c].length; e > d; d++) ea.event.add(b, c, h[c][d]);
+    function cloneCopyEvent(src, dest) {
+        if (1 === dest.nodeType && jQuery.hasData(src)) {
+            var type, i, l, oldData = jQuery._data(src), curData = jQuery._data(dest, oldData), events = oldData.events;
+            if (events) {
+                delete curData.handle, curData.events = {};
+                for (type in events) for (i = 0, l = events[type].length; l > i; i++) jQuery.event.add(dest, type, events[type][i]);
             }
-            g.data && (g.data = ea.extend({}, g.data));
+            curData.data && (curData.data = jQuery.extend({}, curData.data));
         }
     }
-    function x(a, b) {
-        var c, d, e;
-        if (1 === b.nodeType) {
-            if (c = b.nodeName.toLowerCase(), !ca.noCloneEvent && b[ea.expando]) {
-                e = ea._data(b);
-                for (d in e.events) ea.removeEvent(b, d, e.handle);
-                b.removeAttribute(ea.expando);
+    function fixCloneNodeIssues(src, dest) {
+        var nodeName, e, data;
+        if (1 === dest.nodeType) {
+            if (nodeName = dest.nodeName.toLowerCase(), !support.noCloneEvent && dest[jQuery.expando]) {
+                data = jQuery._data(dest);
+                for (e in data.events) jQuery.removeEvent(dest, e, data.handle);
+                dest.removeAttribute(jQuery.expando);
             }
-            "script" === c && b.text !== a.text ? (t(b).text = a.text, u(b)) : "object" === c ? (b.parentNode && (b.outerHTML = a.outerHTML), 
-            ca.html5Clone && a.innerHTML && !ea.trim(b.innerHTML) && (b.innerHTML = a.innerHTML)) : "input" === c && Ea.test(a.type) ? (b.defaultChecked = b.checked = a.checked, 
-            b.value !== a.value && (b.value = a.value)) : "option" === c ? b.defaultSelected = b.selected = a.defaultSelected : ("input" === c || "textarea" === c) && (b.defaultValue = a.defaultValue);
+            "script" === nodeName && dest.text !== src.text ? (disableScript(dest).text = src.text, 
+            restoreScript(dest)) : "object" === nodeName ? (dest.parentNode && (dest.outerHTML = src.outerHTML), 
+            support.html5Clone && src.innerHTML && !jQuery.trim(dest.innerHTML) && (dest.innerHTML = src.innerHTML)) : "input" === nodeName && rcheckableType.test(src.type) ? (dest.defaultChecked = dest.checked = src.checked, 
+            dest.value !== src.value && (dest.value = src.value)) : "option" === nodeName ? dest.defaultSelected = dest.selected = src.defaultSelected : ("input" === nodeName || "textarea" === nodeName) && (dest.defaultValue = src.defaultValue);
         }
     }
-    function y(b, c) {
-        var d, e = ea(c.createElement(b)).appendTo(c.body), f = a.getDefaultComputedStyle && (d = a.getDefaultComputedStyle(e[0])) ? d.display : ea.css(e[0], "display");
-        return e.detach(), f;
+    function actualDisplay(name, doc) {
+        var style, elem = jQuery(doc.createElement(name)).appendTo(doc.body), display = window.getDefaultComputedStyle && (style = window.getDefaultComputedStyle(elem[0])) ? style.display : jQuery.css(elem[0], "display");
+        return elem.detach(), display;
     }
-    function z(a) {
-        var b = oa, c = _a[a];
-        return c || (c = y(a, b), "none" !== c && c || ($a = ($a || ea("<iframe frameborder='0' width='0' height='0'/>")).appendTo(b.documentElement), 
-        b = ($a[0].contentWindow || $a[0].contentDocument).document, b.write(), b.close(), 
-        c = y(a, b), $a.detach()), _a[a] = c), c;
+    function defaultDisplay(nodeName) {
+        var doc = document, display = elemdisplay[nodeName];
+        return display || (display = actualDisplay(nodeName, doc), "none" !== display && display || (iframe = (iframe || jQuery("<iframe frameborder='0' width='0' height='0'/>")).appendTo(doc.documentElement), 
+        doc = (iframe[0].contentWindow || iframe[0].contentDocument).document, doc.write(), 
+        doc.close(), display = actualDisplay(nodeName, doc), iframe.detach()), elemdisplay[nodeName] = display), 
+        display;
     }
-    function A(a, b) {
+    function addGetHookIf(conditionFn, hookFn) {
         return {
             get: function() {
-                var c = a();
-                if (null != c) return c ? void delete this.get : (this.get = b).apply(this, arguments);
+                var condition = conditionFn();
+                if (null != condition) return condition ? void delete this.get : (this.get = hookFn).apply(this, arguments);
             }
         };
     }
-    function B(a, b) {
-        if (b in a) return b;
-        for (var c = b.charAt(0).toUpperCase() + b.slice(1), d = b, e = mb.length; e--; ) if (b = mb[e] + c, 
-        b in a) return b;
-        return d;
+    function vendorPropName(style, name) {
+        if (name in style) return name;
+        for (var capName = name.charAt(0).toUpperCase() + name.slice(1), origName = name, i = cssPrefixes.length; i--; ) if (name = cssPrefixes[i] + capName, 
+        name in style) return name;
+        return origName;
     }
-    function C(a, b) {
-        for (var c, d, e, f = [], g = 0, h = a.length; h > g; g++) d = a[g], d.style && (f[g] = ea._data(d, "olddisplay"), 
-        c = d.style.display, b ? (f[g] || "none" !== c || (d.style.display = ""), "" === d.style.display && Ca(d) && (f[g] = ea._data(d, "olddisplay", z(d.nodeName)))) : (e = Ca(d), 
-        (c && "none" !== c || !e) && ea._data(d, "olddisplay", e ? c : ea.css(d, "display"))));
-        for (g = 0; h > g; g++) d = a[g], d.style && (b && "none" !== d.style.display && "" !== d.style.display || (d.style.display = b ? f[g] || "" : "none"));
-        return a;
+    function showHide(elements, show) {
+        for (var display, elem, hidden, values = [], index = 0, length = elements.length; length > index; index++) elem = elements[index], 
+        elem.style && (values[index] = jQuery._data(elem, "olddisplay"), display = elem.style.display, 
+        show ? (values[index] || "none" !== display || (elem.style.display = ""), "" === elem.style.display && isHidden(elem) && (values[index] = jQuery._data(elem, "olddisplay", defaultDisplay(elem.nodeName)))) : (hidden = isHidden(elem), 
+        (display && "none" !== display || !hidden) && jQuery._data(elem, "olddisplay", hidden ? display : jQuery.css(elem, "display"))));
+        for (index = 0; length > index; index++) elem = elements[index], elem.style && (show && "none" !== elem.style.display && "" !== elem.style.display || (elem.style.display = show ? values[index] || "" : "none"));
+        return elements;
     }
-    function D(a, b, c) {
-        var d = ib.exec(b);
-        return d ? Math.max(0, d[1] - (c || 0)) + (d[2] || "px") : b;
+    function setPositiveNumber(elem, value, subtract) {
+        var matches = rnumsplit.exec(value);
+        return matches ? Math.max(0, matches[1] - (subtract || 0)) + (matches[2] || "px") : value;
     }
-    function E(a, b, c, d, e) {
-        for (var f = c === (d ? "border" : "content") ? 4 : "width" === b ? 1 : 0, g = 0; 4 > f; f += 2) "margin" === c && (g += ea.css(a, c + Ba[f], !0, e)), 
-        d ? ("content" === c && (g -= ea.css(a, "padding" + Ba[f], !0, e)), "margin" !== c && (g -= ea.css(a, "border" + Ba[f] + "Width", !0, e))) : (g += ea.css(a, "padding" + Ba[f], !0, e), 
-        "padding" !== c && (g += ea.css(a, "border" + Ba[f] + "Width", !0, e)));
-        return g;
+    function augmentWidthOrHeight(elem, name, extra, isBorderBox, styles) {
+        for (var i = extra === (isBorderBox ? "border" : "content") ? 4 : "width" === name ? 1 : 0, val = 0; 4 > i; i += 2) "margin" === extra && (val += jQuery.css(elem, extra + cssExpand[i], !0, styles)), 
+        isBorderBox ? ("content" === extra && (val -= jQuery.css(elem, "padding" + cssExpand[i], !0, styles)), 
+        "margin" !== extra && (val -= jQuery.css(elem, "border" + cssExpand[i] + "Width", !0, styles))) : (val += jQuery.css(elem, "padding" + cssExpand[i], !0, styles), 
+        "padding" !== extra && (val += jQuery.css(elem, "border" + cssExpand[i] + "Width", !0, styles)));
+        return val;
     }
-    function F(a, b, c) {
-        var d = !0, e = "width" === b ? a.offsetWidth : a.offsetHeight, f = ab(a), g = ca.boxSizing && "border-box" === ea.css(a, "boxSizing", !1, f);
-        if (0 >= e || null == e) {
-            if (e = bb(a, b, f), (0 > e || null == e) && (e = a.style[b]), db.test(e)) return e;
-            d = g && (ca.boxSizingReliable() || e === a.style[b]), e = parseFloat(e) || 0;
+    function getWidthOrHeight(elem, name, extra) {
+        var valueIsBorderBox = !0, val = "width" === name ? elem.offsetWidth : elem.offsetHeight, styles = getStyles(elem), isBorderBox = support.boxSizing && "border-box" === jQuery.css(elem, "boxSizing", !1, styles);
+        if (0 >= val || null == val) {
+            if (val = curCSS(elem, name, styles), (0 > val || null == val) && (val = elem.style[name]), 
+            rnumnonpx.test(val)) return val;
+            valueIsBorderBox = isBorderBox && (support.boxSizingReliable() || val === elem.style[name]), 
+            val = parseFloat(val) || 0;
         }
-        return e + E(a, b, c || (g ? "border" : "content"), d, f) + "px";
+        return val + augmentWidthOrHeight(elem, name, extra || (isBorderBox ? "border" : "content"), valueIsBorderBox, styles) + "px";
     }
-    function G(a, b, c, d, e) {
-        return new G.prototype.init(a, b, c, d, e);
+    function Tween(elem, options, prop, end, easing) {
+        return new Tween.prototype.init(elem, options, prop, end, easing);
     }
-    function H() {
+    function createFxNow() {
         return setTimeout(function() {
-            nb = void 0;
-        }), nb = ea.now();
+            fxNow = void 0;
+        }), fxNow = jQuery.now();
     }
-    function I(a, b) {
-        var c, d = {
-            height: a
-        }, e = 0;
-        for (b = b ? 1 : 0; 4 > e; e += 2 - b) c = Ba[e], d["margin" + c] = d["padding" + c] = a;
-        return b && (d.opacity = d.width = a), d;
+    function genFx(type, includeWidth) {
+        var which, attrs = {
+            height: type
+        }, i = 0;
+        for (includeWidth = includeWidth ? 1 : 0; 4 > i; i += 2 - includeWidth) which = cssExpand[i], 
+        attrs["margin" + which] = attrs["padding" + which] = type;
+        return includeWidth && (attrs.opacity = attrs.width = type), attrs;
     }
-    function J(a, b, c) {
-        for (var d, e = (tb[b] || []).concat(tb["*"]), f = 0, g = e.length; g > f; f++) if (d = e[f].call(c, b, a)) return d;
+    function createTween(value, prop, animation) {
+        for (var tween, collection = (tweeners[prop] || []).concat(tweeners["*"]), index = 0, length = collection.length; length > index; index++) if (tween = collection[index].call(animation, prop, value)) return tween;
     }
-    function K(a, b, c) {
-        var d, e, f, g, h, i, j, k, l = this, m = {}, n = a.style, o = a.nodeType && Ca(a), p = ea._data(a, "fxshow");
-        c.queue || (h = ea._queueHooks(a, "fx"), null == h.unqueued && (h.unqueued = 0, 
-        i = h.empty.fire, h.empty.fire = function() {
-            h.unqueued || i();
-        }), h.unqueued++, l.always(function() {
-            l.always(function() {
-                h.unqueued--, ea.queue(a, "fx").length || h.empty.fire();
+    function defaultPrefilter(elem, props, opts) {
+        var prop, value, toggle, tween, hooks, oldfire, display, checkDisplay, anim = this, orig = {}, style = elem.style, hidden = elem.nodeType && isHidden(elem), dataShow = jQuery._data(elem, "fxshow");
+        opts.queue || (hooks = jQuery._queueHooks(elem, "fx"), null == hooks.unqueued && (hooks.unqueued = 0, 
+        oldfire = hooks.empty.fire, hooks.empty.fire = function() {
+            hooks.unqueued || oldfire();
+        }), hooks.unqueued++, anim.always(function() {
+            anim.always(function() {
+                hooks.unqueued--, jQuery.queue(elem, "fx").length || hooks.empty.fire();
             });
-        })), 1 === a.nodeType && ("height" in b || "width" in b) && (c.overflow = [ n.overflow, n.overflowX, n.overflowY ], 
-        j = ea.css(a, "display"), k = "none" === j ? ea._data(a, "olddisplay") || z(a.nodeName) : j, 
-        "inline" === k && "none" === ea.css(a, "float") && (ca.inlineBlockNeedsLayout && "inline" !== z(a.nodeName) ? n.zoom = 1 : n.display = "inline-block")), 
-        c.overflow && (n.overflow = "hidden", ca.shrinkWrapBlocks() || l.always(function() {
-            n.overflow = c.overflow[0], n.overflowX = c.overflow[1], n.overflowY = c.overflow[2];
+        })), 1 === elem.nodeType && ("height" in props || "width" in props) && (opts.overflow = [ style.overflow, style.overflowX, style.overflowY ], 
+        display = jQuery.css(elem, "display"), checkDisplay = "none" === display ? jQuery._data(elem, "olddisplay") || defaultDisplay(elem.nodeName) : display, 
+        "inline" === checkDisplay && "none" === jQuery.css(elem, "float") && (support.inlineBlockNeedsLayout && "inline" !== defaultDisplay(elem.nodeName) ? style.zoom = 1 : style.display = "inline-block")), 
+        opts.overflow && (style.overflow = "hidden", support.shrinkWrapBlocks() || anim.always(function() {
+            style.overflow = opts.overflow[0], style.overflowX = opts.overflow[1], style.overflowY = opts.overflow[2];
         }));
-        for (d in b) if (e = b[d], pb.exec(e)) {
-            if (delete b[d], f = f || "toggle" === e, e === (o ? "hide" : "show")) {
-                if ("show" !== e || !p || void 0 === p[d]) continue;
-                o = !0;
+        for (prop in props) if (value = props[prop], rfxtypes.exec(value)) {
+            if (delete props[prop], toggle = toggle || "toggle" === value, value === (hidden ? "hide" : "show")) {
+                if ("show" !== value || !dataShow || void 0 === dataShow[prop]) continue;
+                hidden = !0;
             }
-            m[d] = p && p[d] || ea.style(a, d);
-        } else j = void 0;
-        if (ea.isEmptyObject(m)) "inline" === ("none" === j ? z(a.nodeName) : j) && (n.display = j); else {
-            p ? "hidden" in p && (o = p.hidden) : p = ea._data(a, "fxshow", {}), f && (p.hidden = !o), 
-            o ? ea(a).show() : l.done(function() {
-                ea(a).hide();
-            }), l.done(function() {
-                var b;
-                ea._removeData(a, "fxshow");
-                for (b in m) ea.style(a, b, m[b]);
+            orig[prop] = dataShow && dataShow[prop] || jQuery.style(elem, prop);
+        } else display = void 0;
+        if (jQuery.isEmptyObject(orig)) "inline" === ("none" === display ? defaultDisplay(elem.nodeName) : display) && (style.display = display); else {
+            dataShow ? "hidden" in dataShow && (hidden = dataShow.hidden) : dataShow = jQuery._data(elem, "fxshow", {}), 
+            toggle && (dataShow.hidden = !hidden), hidden ? jQuery(elem).show() : anim.done(function() {
+                jQuery(elem).hide();
+            }), anim.done(function() {
+                var prop;
+                jQuery._removeData(elem, "fxshow");
+                for (prop in orig) jQuery.style(elem, prop, orig[prop]);
             });
-            for (d in m) g = J(o ? p[d] : 0, d, l), d in p || (p[d] = g.start, o && (g.end = g.start, 
-            g.start = "width" === d || "height" === d ? 1 : 0));
+            for (prop in orig) tween = createTween(hidden ? dataShow[prop] : 0, prop, anim), 
+            prop in dataShow || (dataShow[prop] = tween.start, hidden && (tween.end = tween.start, 
+            tween.start = "width" === prop || "height" === prop ? 1 : 0));
         }
     }
-    function L(a, b) {
-        var c, d, e, f, g;
-        for (c in a) if (d = ea.camelCase(c), e = b[d], f = a[c], ea.isArray(f) && (e = f[1], 
-        f = a[c] = f[0]), c !== d && (a[d] = f, delete a[c]), g = ea.cssHooks[d], g && "expand" in g) {
-            f = g.expand(f), delete a[d];
-            for (c in f) c in a || (a[c] = f[c], b[c] = e);
-        } else b[d] = e;
+    function propFilter(props, specialEasing) {
+        var index, name, easing, value, hooks;
+        for (index in props) if (name = jQuery.camelCase(index), easing = specialEasing[name], 
+        value = props[index], jQuery.isArray(value) && (easing = value[1], value = props[index] = value[0]), 
+        index !== name && (props[name] = value, delete props[index]), hooks = jQuery.cssHooks[name], 
+        hooks && "expand" in hooks) {
+            value = hooks.expand(value), delete props[name];
+            for (index in value) index in props || (props[index] = value[index], specialEasing[index] = easing);
+        } else specialEasing[name] = easing;
     }
-    function M(a, b, c) {
-        var d, e, f = 0, g = sb.length, h = ea.Deferred().always(function() {
-            delete i.elem;
-        }), i = function() {
-            if (e) return !1;
-            for (var b = nb || H(), c = Math.max(0, j.startTime + j.duration - b), d = c / j.duration || 0, f = 1 - d, g = 0, i = j.tweens.length; i > g; g++) j.tweens[g].run(f);
-            return h.notifyWith(a, [ j, f, c ]), 1 > f && i ? c : (h.resolveWith(a, [ j ]), 
+    function Animation(elem, properties, options) {
+        var result, stopped, index = 0, length = animationPrefilters.length, deferred = jQuery.Deferred().always(function() {
+            delete tick.elem;
+        }), tick = function() {
+            if (stopped) return !1;
+            for (var currentTime = fxNow || createFxNow(), remaining = Math.max(0, animation.startTime + animation.duration - currentTime), temp = remaining / animation.duration || 0, percent = 1 - temp, index = 0, length = animation.tweens.length; length > index; index++) animation.tweens[index].run(percent);
+            return deferred.notifyWith(elem, [ animation, percent, remaining ]), 1 > percent && length ? remaining : (deferred.resolveWith(elem, [ animation ]), 
             !1);
-        }, j = h.promise({
-            elem: a,
-            props: ea.extend({}, b),
-            opts: ea.extend(!0, {
+        }, animation = deferred.promise({
+            elem: elem,
+            props: jQuery.extend({}, properties),
+            opts: jQuery.extend(!0, {
                 specialEasing: {}
-            }, c),
-            originalProperties: b,
-            originalOptions: c,
-            startTime: nb || H(),
-            duration: c.duration,
+            }, options),
+            originalProperties: properties,
+            originalOptions: options,
+            startTime: fxNow || createFxNow(),
+            duration: options.duration,
             tweens: [],
-            createTween: function(b, c) {
-                var d = ea.Tween(a, j.opts, b, c, j.opts.specialEasing[b] || j.opts.easing);
-                return j.tweens.push(d), d;
+            createTween: function(prop, end) {
+                var tween = jQuery.Tween(elem, animation.opts, prop, end, animation.opts.specialEasing[prop] || animation.opts.easing);
+                return animation.tweens.push(tween), tween;
             },
-            stop: function(b) {
-                var c = 0, d = b ? j.tweens.length : 0;
-                if (e) return this;
-                for (e = !0; d > c; c++) j.tweens[c].run(1);
-                return b ? h.resolveWith(a, [ j, b ]) : h.rejectWith(a, [ j, b ]), this;
+            stop: function(gotoEnd) {
+                var index = 0, length = gotoEnd ? animation.tweens.length : 0;
+                if (stopped) return this;
+                for (stopped = !0; length > index; index++) animation.tweens[index].run(1);
+                return gotoEnd ? deferred.resolveWith(elem, [ animation, gotoEnd ]) : deferred.rejectWith(elem, [ animation, gotoEnd ]), 
+                this;
             }
-        }), k = j.props;
-        for (L(k, j.opts.specialEasing); g > f; f++) if (d = sb[f].call(j, a, k, j.opts)) return d;
-        return ea.map(k, J, j), ea.isFunction(j.opts.start) && j.opts.start.call(a, j), 
-        ea.fx.timer(ea.extend(i, {
-            elem: a,
-            anim: j,
-            queue: j.opts.queue
-        })), j.progress(j.opts.progress).done(j.opts.done, j.opts.complete).fail(j.opts.fail).always(j.opts.always);
+        }), props = animation.props;
+        for (propFilter(props, animation.opts.specialEasing); length > index; index++) if (result = animationPrefilters[index].call(animation, elem, props, animation.opts)) return result;
+        return jQuery.map(props, createTween, animation), jQuery.isFunction(animation.opts.start) && animation.opts.start.call(elem, animation), 
+        jQuery.fx.timer(jQuery.extend(tick, {
+            elem: elem,
+            anim: animation,
+            queue: animation.opts.queue
+        })), animation.progress(animation.opts.progress).done(animation.opts.done, animation.opts.complete).fail(animation.opts.fail).always(animation.opts.always);
     }
-    function N(a) {
-        return function(b, c) {
-            "string" != typeof b && (c = b, b = "*");
-            var d, e = 0, f = b.toLowerCase().match(ta) || [];
-            if (ea.isFunction(c)) for (;d = f[e++]; ) "+" === d.charAt(0) ? (d = d.slice(1) || "*", 
-            (a[d] = a[d] || []).unshift(c)) : (a[d] = a[d] || []).push(c);
+    function addToPrefiltersOrTransports(structure) {
+        return function(dataTypeExpression, func) {
+            "string" != typeof dataTypeExpression && (func = dataTypeExpression, dataTypeExpression = "*");
+            var dataType, i = 0, dataTypes = dataTypeExpression.toLowerCase().match(rnotwhite) || [];
+            if (jQuery.isFunction(func)) for (;dataType = dataTypes[i++]; ) "+" === dataType.charAt(0) ? (dataType = dataType.slice(1) || "*", 
+            (structure[dataType] = structure[dataType] || []).unshift(func)) : (structure[dataType] = structure[dataType] || []).push(func);
         };
     }
-    function O(a, b, c, d) {
-        function e(h) {
-            var i;
-            return f[h] = !0, ea.each(a[h] || [], function(a, h) {
-                var j = h(b, c, d);
-                return "string" != typeof j || g || f[j] ? g ? !(i = j) : void 0 : (b.dataTypes.unshift(j), 
-                e(j), !1);
-            }), i;
+    function inspectPrefiltersOrTransports(structure, options, originalOptions, jqXHR) {
+        function inspect(dataType) {
+            var selected;
+            return inspected[dataType] = !0, jQuery.each(structure[dataType] || [], function(_, prefilterOrFactory) {
+                var dataTypeOrTransport = prefilterOrFactory(options, originalOptions, jqXHR);
+                return "string" != typeof dataTypeOrTransport || seekingTransport || inspected[dataTypeOrTransport] ? seekingTransport ? !(selected = dataTypeOrTransport) : void 0 : (options.dataTypes.unshift(dataTypeOrTransport), 
+                inspect(dataTypeOrTransport), !1);
+            }), selected;
         }
-        var f = {}, g = a === Rb;
-        return e(b.dataTypes[0]) || !f["*"] && e("*");
+        var inspected = {}, seekingTransport = structure === transports;
+        return inspect(options.dataTypes[0]) || !inspected["*"] && inspect("*");
     }
-    function P(a, b) {
-        var c, d, e = ea.ajaxSettings.flatOptions || {};
-        for (d in b) void 0 !== b[d] && ((e[d] ? a : c || (c = {}))[d] = b[d]);
-        return c && ea.extend(!0, a, c), a;
+    function ajaxExtend(target, src) {
+        var deep, key, flatOptions = jQuery.ajaxSettings.flatOptions || {};
+        for (key in src) void 0 !== src[key] && ((flatOptions[key] ? target : deep || (deep = {}))[key] = src[key]);
+        return deep && jQuery.extend(!0, target, deep), target;
     }
-    function Q(a, b, c) {
-        for (var d, e, f, g, h = a.contents, i = a.dataTypes; "*" === i[0]; ) i.shift(), 
-        void 0 === e && (e = a.mimeType || b.getResponseHeader("Content-Type"));
-        if (e) for (g in h) if (h[g] && h[g].test(e)) {
-            i.unshift(g);
+    function ajaxHandleResponses(s, jqXHR, responses) {
+        for (var firstDataType, ct, finalDataType, type, contents = s.contents, dataTypes = s.dataTypes; "*" === dataTypes[0]; ) dataTypes.shift(), 
+        void 0 === ct && (ct = s.mimeType || jqXHR.getResponseHeader("Content-Type"));
+        if (ct) for (type in contents) if (contents[type] && contents[type].test(ct)) {
+            dataTypes.unshift(type);
             break;
         }
-        if (i[0] in c) f = i[0]; else {
-            for (g in c) {
-                if (!i[0] || a.converters[g + " " + i[0]]) {
-                    f = g;
+        if (dataTypes[0] in responses) finalDataType = dataTypes[0]; else {
+            for (type in responses) {
+                if (!dataTypes[0] || s.converters[type + " " + dataTypes[0]]) {
+                    finalDataType = type;
                     break;
                 }
-                d || (d = g);
+                firstDataType || (firstDataType = type);
             }
-            f = f || d;
+            finalDataType = finalDataType || firstDataType;
         }
-        return f ? (f !== i[0] && i.unshift(f), c[f]) : void 0;
+        return finalDataType ? (finalDataType !== dataTypes[0] && dataTypes.unshift(finalDataType), 
+        responses[finalDataType]) : void 0;
     }
-    function R(a, b, c, d) {
-        var e, f, g, h, i, j = {}, k = a.dataTypes.slice();
-        if (k[1]) for (g in a.converters) j[g.toLowerCase()] = a.converters[g];
-        for (f = k.shift(); f; ) if (a.responseFields[f] && (c[a.responseFields[f]] = b), 
-        !i && d && a.dataFilter && (b = a.dataFilter(b, a.dataType)), i = f, f = k.shift()) if ("*" === f) f = i; else if ("*" !== i && i !== f) {
-            if (g = j[i + " " + f] || j["* " + f], !g) for (e in j) if (h = e.split(" "), h[1] === f && (g = j[i + " " + h[0]] || j["* " + h[0]])) {
-                g === !0 ? g = j[e] : j[e] !== !0 && (f = h[0], k.unshift(h[1]));
+    function ajaxConvert(s, response, jqXHR, isSuccess) {
+        var conv2, current, conv, tmp, prev, converters = {}, dataTypes = s.dataTypes.slice();
+        if (dataTypes[1]) for (conv in s.converters) converters[conv.toLowerCase()] = s.converters[conv];
+        for (current = dataTypes.shift(); current; ) if (s.responseFields[current] && (jqXHR[s.responseFields[current]] = response), 
+        !prev && isSuccess && s.dataFilter && (response = s.dataFilter(response, s.dataType)), 
+        prev = current, current = dataTypes.shift()) if ("*" === current) current = prev; else if ("*" !== prev && prev !== current) {
+            if (conv = converters[prev + " " + current] || converters["* " + current], !conv) for (conv2 in converters) if (tmp = conv2.split(" "), 
+            tmp[1] === current && (conv = converters[prev + " " + tmp[0]] || converters["* " + tmp[0]])) {
+                conv === !0 ? conv = converters[conv2] : converters[conv2] !== !0 && (current = tmp[0], 
+                dataTypes.unshift(tmp[1]));
                 break;
             }
-            if (g !== !0) if (g && a["throws"]) b = g(b); else try {
-                b = g(b);
-            } catch (l) {
+            if (conv !== !0) if (conv && s["throws"]) response = conv(response); else try {
+                response = conv(response);
+            } catch (e) {
                 return {
                     state: "parsererror",
-                    error: g ? l : "No conversion from " + i + " to " + f
+                    error: conv ? e : "No conversion from " + prev + " to " + current
                 };
             }
         }
         return {
             state: "success",
-            data: b
+            data: response
         };
     }
-    function S(a, b, c, d) {
-        var e;
-        if (ea.isArray(b)) ea.each(b, function(b, e) {
-            c || Vb.test(a) ? d(a, e) : S(a + "[" + ("object" == typeof e ? b : "") + "]", e, c, d);
-        }); else if (c || "object" !== ea.type(b)) d(a, b); else for (e in b) S(a + "[" + e + "]", b[e], c, d);
+    function buildParams(prefix, obj, traditional, add) {
+        var name;
+        if (jQuery.isArray(obj)) jQuery.each(obj, function(i, v) {
+            traditional || rbracket.test(prefix) ? add(prefix, v) : buildParams(prefix + "[" + ("object" == typeof v ? i : "") + "]", v, traditional, add);
+        }); else if (traditional || "object" !== jQuery.type(obj)) add(prefix, obj); else for (name in obj) buildParams(prefix + "[" + name + "]", obj[name], traditional, add);
     }
-    function T() {
+    function createStandardXHR() {
         try {
-            return new a.XMLHttpRequest();
-        } catch (b) {}
+            return new window.XMLHttpRequest();
+        } catch (e) {}
     }
-    function U() {
+    function createActiveXHR() {
         try {
-            return new a.ActiveXObject("Microsoft.XMLHTTP");
-        } catch (b) {}
+            return new window.ActiveXObject("Microsoft.XMLHTTP");
+        } catch (e) {}
     }
-    function V(a) {
-        return ea.isWindow(a) ? a : 9 === a.nodeType ? a.defaultView || a.parentWindow : !1;
+    function getWindow(elem) {
+        return jQuery.isWindow(elem) ? elem : 9 === elem.nodeType ? elem.defaultView || elem.parentWindow : !1;
     }
-    var W = [], X = W.slice, Y = W.concat, Z = W.push, $ = W.indexOf, _ = {}, aa = _.toString, ba = _.hasOwnProperty, ca = {}, da = "1.11.3", ea = function(a, b) {
-        return new ea.fn.init(a, b);
-    }, fa = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ga = /^-ms-/, ha = /-([\da-z])/gi, ia = function(a, b) {
-        return b.toUpperCase();
+    var deletedIds = [], slice = deletedIds.slice, concat = deletedIds.concat, push = deletedIds.push, indexOf = deletedIds.indexOf, class2type = {}, toString = class2type.toString, hasOwn = class2type.hasOwnProperty, support = {}, version = "1.11.3", jQuery = function(selector, context) {
+        return new jQuery.fn.init(selector, context);
+    }, rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, rmsPrefix = /^-ms-/, rdashAlpha = /-([\da-z])/gi, fcamelCase = function(all, letter) {
+        return letter.toUpperCase();
     };
-    ea.fn = ea.prototype = {
-        jquery: da,
-        constructor: ea,
+    jQuery.fn = jQuery.prototype = {
+        jquery: version,
+        constructor: jQuery,
         selector: "",
         length: 0,
         toArray: function() {
-            return X.call(this);
+            return slice.call(this);
         },
-        get: function(a) {
-            return null != a ? 0 > a ? this[a + this.length] : this[a] : X.call(this);
+        get: function(num) {
+            return null != num ? 0 > num ? this[num + this.length] : this[num] : slice.call(this);
         },
-        pushStack: function(a) {
-            var b = ea.merge(this.constructor(), a);
-            return b.prevObject = this, b.context = this.context, b;
+        pushStack: function(elems) {
+            var ret = jQuery.merge(this.constructor(), elems);
+            return ret.prevObject = this, ret.context = this.context, ret;
         },
-        each: function(a, b) {
-            return ea.each(this, a, b);
+        each: function(callback, args) {
+            return jQuery.each(this, callback, args);
         },
-        map: function(a) {
-            return this.pushStack(ea.map(this, function(b, c) {
-                return a.call(b, c, b);
+        map: function(callback) {
+            return this.pushStack(jQuery.map(this, function(elem, i) {
+                return callback.call(elem, i, elem);
             }));
         },
         slice: function() {
-            return this.pushStack(X.apply(this, arguments));
+            return this.pushStack(slice.apply(this, arguments));
         },
         first: function() {
             return this.eq(0);
@@ -455,447 +472,466 @@ function detectSidebar() {
         last: function() {
             return this.eq(-1);
         },
-        eq: function(a) {
-            var b = this.length, c = +a + (0 > a ? b : 0);
-            return this.pushStack(c >= 0 && b > c ? [ this[c] ] : []);
+        eq: function(i) {
+            var len = this.length, j = +i + (0 > i ? len : 0);
+            return this.pushStack(j >= 0 && len > j ? [ this[j] ] : []);
         },
         end: function() {
             return this.prevObject || this.constructor(null);
         },
-        push: Z,
-        sort: W.sort,
-        splice: W.splice
-    }, ea.extend = ea.fn.extend = function() {
-        var a, b, c, d, e, f, g = arguments[0] || {}, h = 1, i = arguments.length, j = !1;
-        for ("boolean" == typeof g && (j = g, g = arguments[h] || {}, h++), "object" == typeof g || ea.isFunction(g) || (g = {}), 
-        h === i && (g = this, h--); i > h; h++) if (null != (e = arguments[h])) for (d in e) a = g[d], 
-        c = e[d], g !== c && (j && c && (ea.isPlainObject(c) || (b = ea.isArray(c))) ? (b ? (b = !1, 
-        f = a && ea.isArray(a) ? a : []) : f = a && ea.isPlainObject(a) ? a : {}, g[d] = ea.extend(j, f, c)) : void 0 !== c && (g[d] = c));
-        return g;
-    }, ea.extend({
-        expando: "jQuery" + (da + Math.random()).replace(/\D/g, ""),
+        push: push,
+        sort: deletedIds.sort,
+        splice: deletedIds.splice
+    }, jQuery.extend = jQuery.fn.extend = function() {
+        var src, copyIsArray, copy, name, options, clone, target = arguments[0] || {}, i = 1, length = arguments.length, deep = !1;
+        for ("boolean" == typeof target && (deep = target, target = arguments[i] || {}, 
+        i++), "object" == typeof target || jQuery.isFunction(target) || (target = {}), i === length && (target = this, 
+        i--); length > i; i++) if (null != (options = arguments[i])) for (name in options) src = target[name], 
+        copy = options[name], target !== copy && (deep && copy && (jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy))) ? (copyIsArray ? (copyIsArray = !1, 
+        clone = src && jQuery.isArray(src) ? src : []) : clone = src && jQuery.isPlainObject(src) ? src : {}, 
+        target[name] = jQuery.extend(deep, clone, copy)) : void 0 !== copy && (target[name] = copy));
+        return target;
+    }, jQuery.extend({
+        expando: "jQuery" + (version + Math.random()).replace(/\D/g, ""),
         isReady: !0,
-        error: function(a) {
-            throw new Error(a);
+        error: function(msg) {
+            throw new Error(msg);
         },
         noop: function() {},
-        isFunction: function(a) {
-            return "function" === ea.type(a);
+        isFunction: function(obj) {
+            return "function" === jQuery.type(obj);
         },
-        isArray: Array.isArray || function(a) {
-            return "array" === ea.type(a);
+        isArray: Array.isArray || function(obj) {
+            return "array" === jQuery.type(obj);
         },
-        isWindow: function(a) {
-            return null != a && a == a.window;
+        isWindow: function(obj) {
+            return null != obj && obj == obj.window;
         },
-        isNumeric: function(a) {
-            return !ea.isArray(a) && a - parseFloat(a) + 1 >= 0;
+        isNumeric: function(obj) {
+            return !jQuery.isArray(obj) && obj - parseFloat(obj) + 1 >= 0;
         },
-        isEmptyObject: function(a) {
-            var b;
-            for (b in a) return !1;
+        isEmptyObject: function(obj) {
+            var name;
+            for (name in obj) return !1;
             return !0;
         },
-        isPlainObject: function(a) {
-            var b;
-            if (!a || "object" !== ea.type(a) || a.nodeType || ea.isWindow(a)) return !1;
+        isPlainObject: function(obj) {
+            var key;
+            if (!obj || "object" !== jQuery.type(obj) || obj.nodeType || jQuery.isWindow(obj)) return !1;
             try {
-                if (a.constructor && !ba.call(a, "constructor") && !ba.call(a.constructor.prototype, "isPrototypeOf")) return !1;
-            } catch (c) {
+                if (obj.constructor && !hasOwn.call(obj, "constructor") && !hasOwn.call(obj.constructor.prototype, "isPrototypeOf")) return !1;
+            } catch (e) {
                 return !1;
             }
-            if (ca.ownLast) for (b in a) return ba.call(a, b);
-            for (b in a) ;
-            return void 0 === b || ba.call(a, b);
+            if (support.ownLast) for (key in obj) return hasOwn.call(obj, key);
+            for (key in obj) ;
+            return void 0 === key || hasOwn.call(obj, key);
         },
-        type: function(a) {
-            return null == a ? a + "" : "object" == typeof a || "function" == typeof a ? _[aa.call(a)] || "object" : typeof a;
+        type: function(obj) {
+            return null == obj ? obj + "" : "object" == typeof obj || "function" == typeof obj ? class2type[toString.call(obj)] || "object" : typeof obj;
         },
-        globalEval: function(b) {
-            b && ea.trim(b) && (a.execScript || function(b) {
-                a.eval.call(a, b);
-            })(b);
+        globalEval: function(data) {
+            data && jQuery.trim(data) && (window.execScript || function(data) {
+                window.eval.call(window, data);
+            })(data);
         },
-        camelCase: function(a) {
-            return a.replace(ga, "ms-").replace(ha, ia);
+        camelCase: function(string) {
+            return string.replace(rmsPrefix, "ms-").replace(rdashAlpha, fcamelCase);
         },
-        nodeName: function(a, b) {
-            return a.nodeName && a.nodeName.toLowerCase() === b.toLowerCase();
+        nodeName: function(elem, name) {
+            return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
         },
-        each: function(a, b, d) {
-            var e, f = 0, g = a.length, h = c(a);
-            if (d) {
-                if (h) for (;g > f && (e = b.apply(a[f], d), e !== !1); f++) ; else for (f in a) if (e = b.apply(a[f], d), 
-                e === !1) break;
-            } else if (h) for (;g > f && (e = b.call(a[f], f, a[f]), e !== !1); f++) ; else for (f in a) if (e = b.call(a[f], f, a[f]), 
-            e === !1) break;
-            return a;
+        each: function(obj, callback, args) {
+            var value, i = 0, length = obj.length, isArray = isArraylike(obj);
+            if (args) {
+                if (isArray) for (;length > i && (value = callback.apply(obj[i], args), value !== !1); i++) ; else for (i in obj) if (value = callback.apply(obj[i], args), 
+                value === !1) break;
+            } else if (isArray) for (;length > i && (value = callback.call(obj[i], i, obj[i]), 
+            value !== !1); i++) ; else for (i in obj) if (value = callback.call(obj[i], i, obj[i]), 
+            value === !1) break;
+            return obj;
         },
-        trim: function(a) {
-            return null == a ? "" : (a + "").replace(fa, "");
+        trim: function(text) {
+            return null == text ? "" : (text + "").replace(rtrim, "");
         },
-        makeArray: function(a, b) {
-            var d = b || [];
-            return null != a && (c(Object(a)) ? ea.merge(d, "string" == typeof a ? [ a ] : a) : Z.call(d, a)), 
-            d;
+        makeArray: function(arr, results) {
+            var ret = results || [];
+            return null != arr && (isArraylike(Object(arr)) ? jQuery.merge(ret, "string" == typeof arr ? [ arr ] : arr) : push.call(ret, arr)), 
+            ret;
         },
-        inArray: function(a, b, c) {
-            var d;
-            if (b) {
-                if ($) return $.call(b, a, c);
-                for (d = b.length, c = c ? 0 > c ? Math.max(0, d + c) : c : 0; d > c; c++) if (c in b && b[c] === a) return c;
+        inArray: function(elem, arr, i) {
+            var len;
+            if (arr) {
+                if (indexOf) return indexOf.call(arr, elem, i);
+                for (len = arr.length, i = i ? 0 > i ? Math.max(0, len + i) : i : 0; len > i; i++) if (i in arr && arr[i] === elem) return i;
             }
             return -1;
         },
-        merge: function(a, b) {
-            for (var c = +b.length, d = 0, e = a.length; c > d; ) a[e++] = b[d++];
-            if (c !== c) for (;void 0 !== b[d]; ) a[e++] = b[d++];
-            return a.length = e, a;
+        merge: function(first, second) {
+            for (var len = +second.length, j = 0, i = first.length; len > j; ) first[i++] = second[j++];
+            if (len !== len) for (;void 0 !== second[j]; ) first[i++] = second[j++];
+            return first.length = i, first;
         },
-        grep: function(a, b, c) {
-            for (var d, e = [], f = 0, g = a.length, h = !c; g > f; f++) d = !b(a[f], f), d !== h && e.push(a[f]);
-            return e;
+        grep: function(elems, callback, invert) {
+            for (var callbackInverse, matches = [], i = 0, length = elems.length, callbackExpect = !invert; length > i; i++) callbackInverse = !callback(elems[i], i), 
+            callbackInverse !== callbackExpect && matches.push(elems[i]);
+            return matches;
         },
-        map: function(a, b, d) {
-            var e, f = 0, g = a.length, h = c(a), i = [];
-            if (h) for (;g > f; f++) e = b(a[f], f, d), null != e && i.push(e); else for (f in a) e = b(a[f], f, d), 
-            null != e && i.push(e);
-            return Y.apply([], i);
+        map: function(elems, callback, arg) {
+            var value, i = 0, length = elems.length, isArray = isArraylike(elems), ret = [];
+            if (isArray) for (;length > i; i++) value = callback(elems[i], i, arg), null != value && ret.push(value); else for (i in elems) value = callback(elems[i], i, arg), 
+            null != value && ret.push(value);
+            return concat.apply([], ret);
         },
         guid: 1,
-        proxy: function(a, b) {
-            var c, d, e;
-            return "string" == typeof b && (e = a[b], b = a, a = e), ea.isFunction(a) ? (c = X.call(arguments, 2), 
-            d = function() {
-                return a.apply(b || this, c.concat(X.call(arguments)));
-            }, d.guid = a.guid = a.guid || ea.guid++, d) : void 0;
+        proxy: function(fn, context) {
+            var args, proxy, tmp;
+            return "string" == typeof context && (tmp = fn[context], context = fn, fn = tmp), 
+            jQuery.isFunction(fn) ? (args = slice.call(arguments, 2), proxy = function() {
+                return fn.apply(context || this, args.concat(slice.call(arguments)));
+            }, proxy.guid = fn.guid = fn.guid || jQuery.guid++, proxy) : void 0;
         },
         now: function() {
             return +new Date();
         },
-        support: ca
-    }), ea.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function(a, b) {
-        _["[object " + b + "]"] = b.toLowerCase();
+        support: support
+    }), jQuery.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function(i, name) {
+        class2type["[object " + name + "]"] = name.toLowerCase();
     });
-    var ja = function(a) {
-        function b(a, b, c, d) {
-            var e, f, g, h, i, j, l, n, o, p;
-            if ((b ? b.ownerDocument || b : O) !== G && F(b), b = b || G, c = c || [], h = b.nodeType, 
-            "string" != typeof a || !a || 1 !== h && 9 !== h && 11 !== h) return c;
-            if (!d && I) {
-                if (11 !== h && (e = sa.exec(a))) if (g = e[1]) {
-                    if (9 === h) {
-                        if (f = b.getElementById(g), !f || !f.parentNode) return c;
-                        if (f.id === g) return c.push(f), c;
-                    } else if (b.ownerDocument && (f = b.ownerDocument.getElementById(g)) && M(b, f) && f.id === g) return c.push(f), 
-                    c;
+    var Sizzle = function(window) {
+        function Sizzle(selector, context, results, seed) {
+            var match, elem, m, nodeType, i, groups, old, nid, newContext, newSelector;
+            if ((context ? context.ownerDocument || context : preferredDoc) !== document && setDocument(context), 
+            context = context || document, results = results || [], nodeType = context.nodeType, 
+            "string" != typeof selector || !selector || 1 !== nodeType && 9 !== nodeType && 11 !== nodeType) return results;
+            if (!seed && documentIsHTML) {
+                if (11 !== nodeType && (match = rquickExpr.exec(selector))) if (m = match[1]) {
+                    if (9 === nodeType) {
+                        if (elem = context.getElementById(m), !elem || !elem.parentNode) return results;
+                        if (elem.id === m) return results.push(elem), results;
+                    } else if (context.ownerDocument && (elem = context.ownerDocument.getElementById(m)) && contains(context, elem) && elem.id === m) return results.push(elem), 
+                    results;
                 } else {
-                    if (e[2]) return $.apply(c, b.getElementsByTagName(a)), c;
-                    if ((g = e[3]) && v.getElementsByClassName) return $.apply(c, b.getElementsByClassName(g)), 
-                    c;
+                    if (match[2]) return push.apply(results, context.getElementsByTagName(selector)), 
+                    results;
+                    if ((m = match[3]) && support.getElementsByClassName) return push.apply(results, context.getElementsByClassName(m)), 
+                    results;
                 }
-                if (v.qsa && (!J || !J.test(a))) {
-                    if (n = l = N, o = b, p = 1 !== h && a, 1 === h && "object" !== b.nodeName.toLowerCase()) {
-                        for (j = z(a), (l = b.getAttribute("id")) ? n = l.replace(ua, "\\$&") : b.setAttribute("id", n), 
-                        n = "[id='" + n + "'] ", i = j.length; i--; ) j[i] = n + m(j[i]);
-                        o = ta.test(a) && k(b.parentNode) || b, p = j.join(",");
+                if (support.qsa && (!rbuggyQSA || !rbuggyQSA.test(selector))) {
+                    if (nid = old = expando, newContext = context, newSelector = 1 !== nodeType && selector, 
+                    1 === nodeType && "object" !== context.nodeName.toLowerCase()) {
+                        for (groups = tokenize(selector), (old = context.getAttribute("id")) ? nid = old.replace(rescape, "\\$&") : context.setAttribute("id", nid), 
+                        nid = "[id='" + nid + "'] ", i = groups.length; i--; ) groups[i] = nid + toSelector(groups[i]);
+                        newContext = rsibling.test(selector) && testContext(context.parentNode) || context, 
+                        newSelector = groups.join(",");
                     }
-                    if (p) try {
-                        return $.apply(c, o.querySelectorAll(p)), c;
-                    } catch (q) {} finally {
-                        l || b.removeAttribute("id");
+                    if (newSelector) try {
+                        return push.apply(results, newContext.querySelectorAll(newSelector)), results;
+                    } catch (qsaError) {} finally {
+                        old || context.removeAttribute("id");
                     }
                 }
             }
-            return B(a.replace(ia, "$1"), b, c, d);
+            return select(selector.replace(rtrim, "$1"), context, results, seed);
         }
-        function c() {
-            function a(c, d) {
-                return b.push(c + " ") > w.cacheLength && delete a[b.shift()], a[c + " "] = d;
+        function createCache() {
+            function cache(key, value) {
+                return keys.push(key + " ") > Expr.cacheLength && delete cache[keys.shift()], cache[key + " "] = value;
             }
-            var b = [];
-            return a;
+            var keys = [];
+            return cache;
         }
-        function d(a) {
-            return a[N] = !0, a;
+        function markFunction(fn) {
+            return fn[expando] = !0, fn;
         }
-        function e(a) {
-            var b = G.createElement("div");
+        function assert(fn) {
+            var div = document.createElement("div");
             try {
-                return !!a(b);
-            } catch (c) {
+                return !!fn(div);
+            } catch (e) {
                 return !1;
             } finally {
-                b.parentNode && b.parentNode.removeChild(b), b = null;
+                div.parentNode && div.parentNode.removeChild(div), div = null;
             }
         }
-        function f(a, b) {
-            for (var c = a.split("|"), d = a.length; d--; ) w.attrHandle[c[d]] = b;
+        function addHandle(attrs, handler) {
+            for (var arr = attrs.split("|"), i = attrs.length; i--; ) Expr.attrHandle[arr[i]] = handler;
         }
-        function g(a, b) {
-            var c = b && a, d = c && 1 === a.nodeType && 1 === b.nodeType && (~b.sourceIndex || V) - (~a.sourceIndex || V);
-            if (d) return d;
-            if (c) for (;c = c.nextSibling; ) if (c === b) return -1;
+        function siblingCheck(a, b) {
+            var cur = b && a, diff = cur && 1 === a.nodeType && 1 === b.nodeType && (~b.sourceIndex || MAX_NEGATIVE) - (~a.sourceIndex || MAX_NEGATIVE);
+            if (diff) return diff;
+            if (cur) for (;cur = cur.nextSibling; ) if (cur === b) return -1;
             return a ? 1 : -1;
         }
-        function h(a) {
-            return function(b) {
-                var c = b.nodeName.toLowerCase();
-                return "input" === c && b.type === a;
+        function createInputPseudo(type) {
+            return function(elem) {
+                var name = elem.nodeName.toLowerCase();
+                return "input" === name && elem.type === type;
             };
         }
-        function i(a) {
-            return function(b) {
-                var c = b.nodeName.toLowerCase();
-                return ("input" === c || "button" === c) && b.type === a;
+        function createButtonPseudo(type) {
+            return function(elem) {
+                var name = elem.nodeName.toLowerCase();
+                return ("input" === name || "button" === name) && elem.type === type;
             };
         }
-        function j(a) {
-            return d(function(b) {
-                return b = +b, d(function(c, d) {
-                    for (var e, f = a([], c.length, b), g = f.length; g--; ) c[e = f[g]] && (c[e] = !(d[e] = c[e]));
+        function createPositionalPseudo(fn) {
+            return markFunction(function(argument) {
+                return argument = +argument, markFunction(function(seed, matches) {
+                    for (var j, matchIndexes = fn([], seed.length, argument), i = matchIndexes.length; i--; ) seed[j = matchIndexes[i]] && (seed[j] = !(matches[j] = seed[j]));
                 });
             });
         }
-        function k(a) {
-            return a && "undefined" != typeof a.getElementsByTagName && a;
+        function testContext(context) {
+            return context && "undefined" != typeof context.getElementsByTagName && context;
         }
-        function l() {}
-        function m(a) {
-            for (var b = 0, c = a.length, d = ""; c > b; b++) d += a[b].value;
-            return d;
+        function setFilters() {}
+        function toSelector(tokens) {
+            for (var i = 0, len = tokens.length, selector = ""; len > i; i++) selector += tokens[i].value;
+            return selector;
         }
-        function n(a, b, c) {
-            var d = b.dir, e = c && "parentNode" === d, f = Q++;
-            return b.first ? function(b, c, f) {
-                for (;b = b[d]; ) if (1 === b.nodeType || e) return a(b, c, f);
-            } : function(b, c, g) {
-                var h, i, j = [ P, f ];
-                if (g) {
-                    for (;b = b[d]; ) if ((1 === b.nodeType || e) && a(b, c, g)) return !0;
-                } else for (;b = b[d]; ) if (1 === b.nodeType || e) {
-                    if (i = b[N] || (b[N] = {}), (h = i[d]) && h[0] === P && h[1] === f) return j[2] = h[2];
-                    if (i[d] = j, j[2] = a(b, c, g)) return !0;
+        function addCombinator(matcher, combinator, base) {
+            var dir = combinator.dir, checkNonElements = base && "parentNode" === dir, doneName = done++;
+            return combinator.first ? function(elem, context, xml) {
+                for (;elem = elem[dir]; ) if (1 === elem.nodeType || checkNonElements) return matcher(elem, context, xml);
+            } : function(elem, context, xml) {
+                var oldCache, outerCache, newCache = [ dirruns, doneName ];
+                if (xml) {
+                    for (;elem = elem[dir]; ) if ((1 === elem.nodeType || checkNonElements) && matcher(elem, context, xml)) return !0;
+                } else for (;elem = elem[dir]; ) if (1 === elem.nodeType || checkNonElements) {
+                    if (outerCache = elem[expando] || (elem[expando] = {}), (oldCache = outerCache[dir]) && oldCache[0] === dirruns && oldCache[1] === doneName) return newCache[2] = oldCache[2];
+                    if (outerCache[dir] = newCache, newCache[2] = matcher(elem, context, xml)) return !0;
                 }
             };
         }
-        function o(a) {
-            return a.length > 1 ? function(b, c, d) {
-                for (var e = a.length; e--; ) if (!a[e](b, c, d)) return !1;
+        function elementMatcher(matchers) {
+            return matchers.length > 1 ? function(elem, context, xml) {
+                for (var i = matchers.length; i--; ) if (!matchers[i](elem, context, xml)) return !1;
                 return !0;
-            } : a[0];
+            } : matchers[0];
         }
-        function p(a, c, d) {
-            for (var e = 0, f = c.length; f > e; e++) b(a, c[e], d);
-            return d;
+        function multipleContexts(selector, contexts, results) {
+            for (var i = 0, len = contexts.length; len > i; i++) Sizzle(selector, contexts[i], results);
+            return results;
         }
-        function q(a, b, c, d, e) {
-            for (var f, g = [], h = 0, i = a.length, j = null != b; i > h; h++) (f = a[h]) && (!c || c(f, d, e)) && (g.push(f), 
-            j && b.push(h));
-            return g;
+        function condense(unmatched, map, filter, context, xml) {
+            for (var elem, newUnmatched = [], i = 0, len = unmatched.length, mapped = null != map; len > i; i++) (elem = unmatched[i]) && (!filter || filter(elem, context, xml)) && (newUnmatched.push(elem), 
+            mapped && map.push(i));
+            return newUnmatched;
         }
-        function r(a, b, c, e, f, g) {
-            return e && !e[N] && (e = r(e)), f && !f[N] && (f = r(f, g)), d(function(d, g, h, i) {
-                var j, k, l, m = [], n = [], o = g.length, r = d || p(b || "*", h.nodeType ? [ h ] : h, []), s = !a || !d && b ? r : q(r, m, a, h, i), t = c ? f || (d ? a : o || e) ? [] : g : s;
-                if (c && c(s, t, h, i), e) for (j = q(t, n), e(j, [], h, i), k = j.length; k--; ) (l = j[k]) && (t[n[k]] = !(s[n[k]] = l));
-                if (d) {
-                    if (f || a) {
-                        if (f) {
-                            for (j = [], k = t.length; k--; ) (l = t[k]) && j.push(s[k] = l);
-                            f(null, t = [], j, i);
+        function setMatcher(preFilter, selector, matcher, postFilter, postFinder, postSelector) {
+            return postFilter && !postFilter[expando] && (postFilter = setMatcher(postFilter)), 
+            postFinder && !postFinder[expando] && (postFinder = setMatcher(postFinder, postSelector)), 
+            markFunction(function(seed, results, context, xml) {
+                var temp, i, elem, preMap = [], postMap = [], preexisting = results.length, elems = seed || multipleContexts(selector || "*", context.nodeType ? [ context ] : context, []), matcherIn = !preFilter || !seed && selector ? elems : condense(elems, preMap, preFilter, context, xml), matcherOut = matcher ? postFinder || (seed ? preFilter : preexisting || postFilter) ? [] : results : matcherIn;
+                if (matcher && matcher(matcherIn, matcherOut, context, xml), postFilter) for (temp = condense(matcherOut, postMap), 
+                postFilter(temp, [], context, xml), i = temp.length; i--; ) (elem = temp[i]) && (matcherOut[postMap[i]] = !(matcherIn[postMap[i]] = elem));
+                if (seed) {
+                    if (postFinder || preFilter) {
+                        if (postFinder) {
+                            for (temp = [], i = matcherOut.length; i--; ) (elem = matcherOut[i]) && temp.push(matcherIn[i] = elem);
+                            postFinder(null, matcherOut = [], temp, xml);
                         }
-                        for (k = t.length; k--; ) (l = t[k]) && (j = f ? aa(d, l) : m[k]) > -1 && (d[j] = !(g[j] = l));
+                        for (i = matcherOut.length; i--; ) (elem = matcherOut[i]) && (temp = postFinder ? indexOf(seed, elem) : preMap[i]) > -1 && (seed[temp] = !(results[temp] = elem));
                     }
-                } else t = q(t === g ? t.splice(o, t.length) : t), f ? f(null, g, t, i) : $.apply(g, t);
+                } else matcherOut = condense(matcherOut === results ? matcherOut.splice(preexisting, matcherOut.length) : matcherOut), 
+                postFinder ? postFinder(null, results, matcherOut, xml) : push.apply(results, matcherOut);
             });
         }
-        function s(a) {
-            for (var b, c, d, e = a.length, f = w.relative[a[0].type], g = f || w.relative[" "], h = f ? 1 : 0, i = n(function(a) {
-                return a === b;
-            }, g, !0), j = n(function(a) {
-                return aa(b, a) > -1;
-            }, g, !0), k = [ function(a, c, d) {
-                var e = !f && (d || c !== C) || ((b = c).nodeType ? i(a, c, d) : j(a, c, d));
-                return b = null, e;
-            } ]; e > h; h++) if (c = w.relative[a[h].type]) k = [ n(o(k), c) ]; else {
-                if (c = w.filter[a[h].type].apply(null, a[h].matches), c[N]) {
-                    for (d = ++h; e > d && !w.relative[a[d].type]; d++) ;
-                    return r(h > 1 && o(k), h > 1 && m(a.slice(0, h - 1).concat({
-                        value: " " === a[h - 2].type ? "*" : ""
-                    })).replace(ia, "$1"), c, d > h && s(a.slice(h, d)), e > d && s(a = a.slice(d)), e > d && m(a));
+        function matcherFromTokens(tokens) {
+            for (var checkContext, matcher, j, len = tokens.length, leadingRelative = Expr.relative[tokens[0].type], implicitRelative = leadingRelative || Expr.relative[" "], i = leadingRelative ? 1 : 0, matchContext = addCombinator(function(elem) {
+                return elem === checkContext;
+            }, implicitRelative, !0), matchAnyContext = addCombinator(function(elem) {
+                return indexOf(checkContext, elem) > -1;
+            }, implicitRelative, !0), matchers = [ function(elem, context, xml) {
+                var ret = !leadingRelative && (xml || context !== outermostContext) || ((checkContext = context).nodeType ? matchContext(elem, context, xml) : matchAnyContext(elem, context, xml));
+                return checkContext = null, ret;
+            } ]; len > i; i++) if (matcher = Expr.relative[tokens[i].type]) matchers = [ addCombinator(elementMatcher(matchers), matcher) ]; else {
+                if (matcher = Expr.filter[tokens[i].type].apply(null, tokens[i].matches), matcher[expando]) {
+                    for (j = ++i; len > j && !Expr.relative[tokens[j].type]; j++) ;
+                    return setMatcher(i > 1 && elementMatcher(matchers), i > 1 && toSelector(tokens.slice(0, i - 1).concat({
+                        value: " " === tokens[i - 2].type ? "*" : ""
+                    })).replace(rtrim, "$1"), matcher, j > i && matcherFromTokens(tokens.slice(i, j)), len > j && matcherFromTokens(tokens = tokens.slice(j)), len > j && toSelector(tokens));
                 }
-                k.push(c);
+                matchers.push(matcher);
             }
-            return o(k);
+            return elementMatcher(matchers);
         }
-        function t(a, c) {
-            var e = c.length > 0, f = a.length > 0, g = function(d, g, h, i, j) {
-                var k, l, m, n = 0, o = "0", p = d && [], r = [], s = C, t = d || f && w.find.TAG("*", j), u = P += null == s ? 1 : Math.random() || .1, v = t.length;
-                for (j && (C = g !== G && g); o !== v && null != (k = t[o]); o++) {
-                    if (f && k) {
-                        for (l = 0; m = a[l++]; ) if (m(k, g, h)) {
-                            i.push(k);
+        function matcherFromGroupMatchers(elementMatchers, setMatchers) {
+            var bySet = setMatchers.length > 0, byElement = elementMatchers.length > 0, superMatcher = function(seed, context, xml, results, outermost) {
+                var elem, j, matcher, matchedCount = 0, i = "0", unmatched = seed && [], setMatched = [], contextBackup = outermostContext, elems = seed || byElement && Expr.find.TAG("*", outermost), dirrunsUnique = dirruns += null == contextBackup ? 1 : Math.random() || .1, len = elems.length;
+                for (outermost && (outermostContext = context !== document && context); i !== len && null != (elem = elems[i]); i++) {
+                    if (byElement && elem) {
+                        for (j = 0; matcher = elementMatchers[j++]; ) if (matcher(elem, context, xml)) {
+                            results.push(elem);
                             break;
                         }
-                        j && (P = u);
+                        outermost && (dirruns = dirrunsUnique);
                     }
-                    e && ((k = !m && k) && n--, d && p.push(k));
+                    bySet && ((elem = !matcher && elem) && matchedCount--, seed && unmatched.push(elem));
                 }
-                if (n += o, e && o !== n) {
-                    for (l = 0; m = c[l++]; ) m(p, r, g, h);
-                    if (d) {
-                        if (n > 0) for (;o--; ) p[o] || r[o] || (r[o] = Y.call(i));
-                        r = q(r);
+                if (matchedCount += i, bySet && i !== matchedCount) {
+                    for (j = 0; matcher = setMatchers[j++]; ) matcher(unmatched, setMatched, context, xml);
+                    if (seed) {
+                        if (matchedCount > 0) for (;i--; ) unmatched[i] || setMatched[i] || (setMatched[i] = pop.call(results));
+                        setMatched = condense(setMatched);
                     }
-                    $.apply(i, r), j && !d && r.length > 0 && n + c.length > 1 && b.uniqueSort(i);
+                    push.apply(results, setMatched), outermost && !seed && setMatched.length > 0 && matchedCount + setMatchers.length > 1 && Sizzle.uniqueSort(results);
                 }
-                return j && (P = u, C = s), p;
+                return outermost && (dirruns = dirrunsUnique, outermostContext = contextBackup), 
+                unmatched;
             };
-            return e ? d(g) : g;
+            return bySet ? markFunction(superMatcher) : superMatcher;
         }
-        var u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L, M, N = "sizzle" + 1 * new Date(), O = a.document, P = 0, Q = 0, R = c(), S = c(), T = c(), U = function(a, b) {
-            return a === b && (E = !0), 0;
-        }, V = 1 << 31, W = {}.hasOwnProperty, X = [], Y = X.pop, Z = X.push, $ = X.push, _ = X.slice, aa = function(a, b) {
-            for (var c = 0, d = a.length; d > c; c++) if (a[c] === b) return c;
+        var i, support, Expr, getText, isXML, tokenize, compile, select, outermostContext, sortInput, hasDuplicate, setDocument, document, docElem, documentIsHTML, rbuggyQSA, rbuggyMatches, matches, contains, expando = "sizzle" + 1 * new Date(), preferredDoc = window.document, dirruns = 0, done = 0, classCache = createCache(), tokenCache = createCache(), compilerCache = createCache(), sortOrder = function(a, b) {
+            return a === b && (hasDuplicate = !0), 0;
+        }, MAX_NEGATIVE = 1 << 31, hasOwn = {}.hasOwnProperty, arr = [], pop = arr.pop, push_native = arr.push, push = arr.push, slice = arr.slice, indexOf = function(list, elem) {
+            for (var i = 0, len = list.length; len > i; i++) if (list[i] === elem) return i;
             return -1;
-        }, ba = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped", ca = "[\\x20\\t\\r\\n\\f]", da = "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+", ea = da.replace("w", "w#"), fa = "\\[" + ca + "*(" + da + ")(?:" + ca + "*([*^$|!~]?=)" + ca + "*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + ea + "))|)" + ca + "*\\]", ga = ":(" + da + ")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|" + fa + ")*)|.*)\\)|)", ha = new RegExp(ca + "+", "g"), ia = new RegExp("^" + ca + "+|((?:^|[^\\\\])(?:\\\\.)*)" + ca + "+$", "g"), ja = new RegExp("^" + ca + "*," + ca + "*"), ka = new RegExp("^" + ca + "*([>+~]|" + ca + ")" + ca + "*"), la = new RegExp("=" + ca + "*([^\\]'\"]*?)" + ca + "*\\]", "g"), ma = new RegExp(ga), na = new RegExp("^" + ea + "$"), oa = {
-            ID: new RegExp("^#(" + da + ")"),
-            CLASS: new RegExp("^\\.(" + da + ")"),
-            TAG: new RegExp("^(" + da.replace("w", "w*") + ")"),
-            ATTR: new RegExp("^" + fa),
-            PSEUDO: new RegExp("^" + ga),
-            CHILD: new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(" + ca + "*(even|odd|(([+-]|)(\\d*)n|)" + ca + "*(?:([+-]|)" + ca + "*(\\d+)|))" + ca + "*\\)|)", "i"),
-            bool: new RegExp("^(?:" + ba + ")$", "i"),
-            needsContext: new RegExp("^" + ca + "*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(" + ca + "*((?:-\\d)?\\d*)" + ca + "*\\)|)(?=[^-]|$)", "i")
-        }, pa = /^(?:input|select|textarea|button)$/i, qa = /^h\d$/i, ra = /^[^{]+\{\s*\[native \w/, sa = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/, ta = /[+~]/, ua = /'|\\/g, va = new RegExp("\\\\([\\da-f]{1,6}" + ca + "?|(" + ca + ")|.)", "ig"), wa = function(a, b, c) {
-            var d = "0x" + b - 65536;
-            return d !== d || c ? b : 0 > d ? String.fromCharCode(d + 65536) : String.fromCharCode(d >> 10 | 55296, 1023 & d | 56320);
-        }, xa = function() {
-            F();
+        }, booleans = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped", whitespace = "[\\x20\\t\\r\\n\\f]", characterEncoding = "(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+", identifier = characterEncoding.replace("w", "w#"), attributes = "\\[" + whitespace + "*(" + characterEncoding + ")(?:" + whitespace + "*([*^$|!~]?=)" + whitespace + "*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + identifier + "))|)" + whitespace + "*\\]", pseudos = ":(" + characterEncoding + ")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|" + attributes + ")*)|.*)\\)|)", rwhitespace = new RegExp(whitespace + "+", "g"), rtrim = new RegExp("^" + whitespace + "+|((?:^|[^\\\\])(?:\\\\.)*)" + whitespace + "+$", "g"), rcomma = new RegExp("^" + whitespace + "*," + whitespace + "*"), rcombinators = new RegExp("^" + whitespace + "*([>+~]|" + whitespace + ")" + whitespace + "*"), rattributeQuotes = new RegExp("=" + whitespace + "*([^\\]'\"]*?)" + whitespace + "*\\]", "g"), rpseudo = new RegExp(pseudos), ridentifier = new RegExp("^" + identifier + "$"), matchExpr = {
+            ID: new RegExp("^#(" + characterEncoding + ")"),
+            CLASS: new RegExp("^\\.(" + characterEncoding + ")"),
+            TAG: new RegExp("^(" + characterEncoding.replace("w", "w*") + ")"),
+            ATTR: new RegExp("^" + attributes),
+            PSEUDO: new RegExp("^" + pseudos),
+            CHILD: new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\(" + whitespace + "*(even|odd|(([+-]|)(\\d*)n|)" + whitespace + "*(?:([+-]|)" + whitespace + "*(\\d+)|))" + whitespace + "*\\)|)", "i"),
+            bool: new RegExp("^(?:" + booleans + ")$", "i"),
+            needsContext: new RegExp("^" + whitespace + "*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\(" + whitespace + "*((?:-\\d)?\\d*)" + whitespace + "*\\)|)(?=[^-]|$)", "i")
+        }, rinputs = /^(?:input|select|textarea|button)$/i, rheader = /^h\d$/i, rnative = /^[^{]+\{\s*\[native \w/, rquickExpr = /^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/, rsibling = /[+~]/, rescape = /'|\\/g, runescape = new RegExp("\\\\([\\da-f]{1,6}" + whitespace + "?|(" + whitespace + ")|.)", "ig"), funescape = function(_, escaped, escapedWhitespace) {
+            var high = "0x" + escaped - 65536;
+            return high !== high || escapedWhitespace ? escaped : 0 > high ? String.fromCharCode(high + 65536) : String.fromCharCode(high >> 10 | 55296, 1023 & high | 56320);
+        }, unloadHandler = function() {
+            setDocument();
         };
         try {
-            $.apply(X = _.call(O.childNodes), O.childNodes), X[O.childNodes.length].nodeType;
-        } catch (ya) {
-            $ = {
-                apply: X.length ? function(a, b) {
-                    Z.apply(a, _.call(b));
-                } : function(a, b) {
-                    for (var c = a.length, d = 0; a[c++] = b[d++]; ) ;
-                    a.length = c - 1;
+            push.apply(arr = slice.call(preferredDoc.childNodes), preferredDoc.childNodes), 
+            arr[preferredDoc.childNodes.length].nodeType;
+        } catch (e) {
+            push = {
+                apply: arr.length ? function(target, els) {
+                    push_native.apply(target, slice.call(els));
+                } : function(target, els) {
+                    for (var j = target.length, i = 0; target[j++] = els[i++]; ) ;
+                    target.length = j - 1;
                 }
             };
         }
-        v = b.support = {}, y = b.isXML = function(a) {
-            var b = a && (a.ownerDocument || a).documentElement;
-            return b ? "HTML" !== b.nodeName : !1;
-        }, F = b.setDocument = function(a) {
-            var b, c, d = a ? a.ownerDocument || a : O;
-            return d !== G && 9 === d.nodeType && d.documentElement ? (G = d, H = d.documentElement, 
-            c = d.defaultView, c && c !== c.top && (c.addEventListener ? c.addEventListener("unload", xa, !1) : c.attachEvent && c.attachEvent("onunload", xa)), 
-            I = !y(d), v.attributes = e(function(a) {
-                return a.className = "i", !a.getAttribute("className");
-            }), v.getElementsByTagName = e(function(a) {
-                return a.appendChild(d.createComment("")), !a.getElementsByTagName("*").length;
-            }), v.getElementsByClassName = ra.test(d.getElementsByClassName), v.getById = e(function(a) {
-                return H.appendChild(a).id = N, !d.getElementsByName || !d.getElementsByName(N).length;
-            }), v.getById ? (w.find.ID = function(a, b) {
-                if ("undefined" != typeof b.getElementById && I) {
-                    var c = b.getElementById(a);
-                    return c && c.parentNode ? [ c ] : [];
+        support = Sizzle.support = {}, isXML = Sizzle.isXML = function(elem) {
+            var documentElement = elem && (elem.ownerDocument || elem).documentElement;
+            return documentElement ? "HTML" !== documentElement.nodeName : !1;
+        }, setDocument = Sizzle.setDocument = function(node) {
+            var hasCompare, parent, doc = node ? node.ownerDocument || node : preferredDoc;
+            return doc !== document && 9 === doc.nodeType && doc.documentElement ? (document = doc, 
+            docElem = doc.documentElement, parent = doc.defaultView, parent && parent !== parent.top && (parent.addEventListener ? parent.addEventListener("unload", unloadHandler, !1) : parent.attachEvent && parent.attachEvent("onunload", unloadHandler)), 
+            documentIsHTML = !isXML(doc), support.attributes = assert(function(div) {
+                return div.className = "i", !div.getAttribute("className");
+            }), support.getElementsByTagName = assert(function(div) {
+                return div.appendChild(doc.createComment("")), !div.getElementsByTagName("*").length;
+            }), support.getElementsByClassName = rnative.test(doc.getElementsByClassName), support.getById = assert(function(div) {
+                return docElem.appendChild(div).id = expando, !doc.getElementsByName || !doc.getElementsByName(expando).length;
+            }), support.getById ? (Expr.find.ID = function(id, context) {
+                if ("undefined" != typeof context.getElementById && documentIsHTML) {
+                    var m = context.getElementById(id);
+                    return m && m.parentNode ? [ m ] : [];
                 }
-            }, w.filter.ID = function(a) {
-                var b = a.replace(va, wa);
-                return function(a) {
-                    return a.getAttribute("id") === b;
+            }, Expr.filter.ID = function(id) {
+                var attrId = id.replace(runescape, funescape);
+                return function(elem) {
+                    return elem.getAttribute("id") === attrId;
                 };
-            }) : (delete w.find.ID, w.filter.ID = function(a) {
-                var b = a.replace(va, wa);
-                return function(a) {
-                    var c = "undefined" != typeof a.getAttributeNode && a.getAttributeNode("id");
-                    return c && c.value === b;
+            }) : (delete Expr.find.ID, Expr.filter.ID = function(id) {
+                var attrId = id.replace(runescape, funescape);
+                return function(elem) {
+                    var node = "undefined" != typeof elem.getAttributeNode && elem.getAttributeNode("id");
+                    return node && node.value === attrId;
                 };
-            }), w.find.TAG = v.getElementsByTagName ? function(a, b) {
-                return "undefined" != typeof b.getElementsByTagName ? b.getElementsByTagName(a) : v.qsa ? b.querySelectorAll(a) : void 0;
-            } : function(a, b) {
-                var c, d = [], e = 0, f = b.getElementsByTagName(a);
-                if ("*" === a) {
-                    for (;c = f[e++]; ) 1 === c.nodeType && d.push(c);
-                    return d;
+            }), Expr.find.TAG = support.getElementsByTagName ? function(tag, context) {
+                return "undefined" != typeof context.getElementsByTagName ? context.getElementsByTagName(tag) : support.qsa ? context.querySelectorAll(tag) : void 0;
+            } : function(tag, context) {
+                var elem, tmp = [], i = 0, results = context.getElementsByTagName(tag);
+                if ("*" === tag) {
+                    for (;elem = results[i++]; ) 1 === elem.nodeType && tmp.push(elem);
+                    return tmp;
                 }
-                return f;
-            }, w.find.CLASS = v.getElementsByClassName && function(a, b) {
-                return I ? b.getElementsByClassName(a) : void 0;
-            }, K = [], J = [], (v.qsa = ra.test(d.querySelectorAll)) && (e(function(a) {
-                H.appendChild(a).innerHTML = "<a id='" + N + "'></a><select id='" + N + "-\f]' msallowcapture=''><option selected=''></option></select>", 
-                a.querySelectorAll("[msallowcapture^='']").length && J.push("[*^$]=" + ca + "*(?:''|\"\")"), 
-                a.querySelectorAll("[selected]").length || J.push("\\[" + ca + "*(?:value|" + ba + ")"), 
-                a.querySelectorAll("[id~=" + N + "-]").length || J.push("~="), a.querySelectorAll(":checked").length || J.push(":checked"), 
-                a.querySelectorAll("a#" + N + "+*").length || J.push(".#.+[+~]");
-            }), e(function(a) {
-                var b = d.createElement("input");
-                b.setAttribute("type", "hidden"), a.appendChild(b).setAttribute("name", "D"), a.querySelectorAll("[name=d]").length && J.push("name" + ca + "*[*^$|!~]?="), 
-                a.querySelectorAll(":enabled").length || J.push(":enabled", ":disabled"), a.querySelectorAll("*,:x"), 
-                J.push(",.*:");
-            })), (v.matchesSelector = ra.test(L = H.matches || H.webkitMatchesSelector || H.mozMatchesSelector || H.oMatchesSelector || H.msMatchesSelector)) && e(function(a) {
-                v.disconnectedMatch = L.call(a, "div"), L.call(a, "[s!='']:x"), K.push("!=", ga);
-            }), J = J.length && new RegExp(J.join("|")), K = K.length && new RegExp(K.join("|")), 
-            b = ra.test(H.compareDocumentPosition), M = b || ra.test(H.contains) ? function(a, b) {
-                var c = 9 === a.nodeType ? a.documentElement : a, d = b && b.parentNode;
-                return a === d || !(!d || 1 !== d.nodeType || !(c.contains ? c.contains(d) : a.compareDocumentPosition && 16 & a.compareDocumentPosition(d)));
+                return results;
+            }, Expr.find.CLASS = support.getElementsByClassName && function(className, context) {
+                return documentIsHTML ? context.getElementsByClassName(className) : void 0;
+            }, rbuggyMatches = [], rbuggyQSA = [], (support.qsa = rnative.test(doc.querySelectorAll)) && (assert(function(div) {
+                docElem.appendChild(div).innerHTML = "<a id='" + expando + "'></a><select id='" + expando + "-\f]' msallowcapture=''><option selected=''></option></select>", 
+                div.querySelectorAll("[msallowcapture^='']").length && rbuggyQSA.push("[*^$]=" + whitespace + "*(?:''|\"\")"), 
+                div.querySelectorAll("[selected]").length || rbuggyQSA.push("\\[" + whitespace + "*(?:value|" + booleans + ")"), 
+                div.querySelectorAll("[id~=" + expando + "-]").length || rbuggyQSA.push("~="), div.querySelectorAll(":checked").length || rbuggyQSA.push(":checked"), 
+                div.querySelectorAll("a#" + expando + "+*").length || rbuggyQSA.push(".#.+[+~]");
+            }), assert(function(div) {
+                var input = doc.createElement("input");
+                input.setAttribute("type", "hidden"), div.appendChild(input).setAttribute("name", "D"), 
+                div.querySelectorAll("[name=d]").length && rbuggyQSA.push("name" + whitespace + "*[*^$|!~]?="), 
+                div.querySelectorAll(":enabled").length || rbuggyQSA.push(":enabled", ":disabled"), 
+                div.querySelectorAll("*,:x"), rbuggyQSA.push(",.*:");
+            })), (support.matchesSelector = rnative.test(matches = docElem.matches || docElem.webkitMatchesSelector || docElem.mozMatchesSelector || docElem.oMatchesSelector || docElem.msMatchesSelector)) && assert(function(div) {
+                support.disconnectedMatch = matches.call(div, "div"), matches.call(div, "[s!='']:x"), 
+                rbuggyMatches.push("!=", pseudos);
+            }), rbuggyQSA = rbuggyQSA.length && new RegExp(rbuggyQSA.join("|")), rbuggyMatches = rbuggyMatches.length && new RegExp(rbuggyMatches.join("|")), 
+            hasCompare = rnative.test(docElem.compareDocumentPosition), contains = hasCompare || rnative.test(docElem.contains) ? function(a, b) {
+                var adown = 9 === a.nodeType ? a.documentElement : a, bup = b && b.parentNode;
+                return a === bup || !(!bup || 1 !== bup.nodeType || !(adown.contains ? adown.contains(bup) : a.compareDocumentPosition && 16 & a.compareDocumentPosition(bup)));
             } : function(a, b) {
                 if (b) for (;b = b.parentNode; ) if (b === a) return !0;
                 return !1;
-            }, U = b ? function(a, b) {
-                if (a === b) return E = !0, 0;
-                var c = !a.compareDocumentPosition - !b.compareDocumentPosition;
-                return c ? c : (c = (a.ownerDocument || a) === (b.ownerDocument || b) ? a.compareDocumentPosition(b) : 1, 
-                1 & c || !v.sortDetached && b.compareDocumentPosition(a) === c ? a === d || a.ownerDocument === O && M(O, a) ? -1 : b === d || b.ownerDocument === O && M(O, b) ? 1 : D ? aa(D, a) - aa(D, b) : 0 : 4 & c ? -1 : 1);
+            }, sortOrder = hasCompare ? function(a, b) {
+                if (a === b) return hasDuplicate = !0, 0;
+                var compare = !a.compareDocumentPosition - !b.compareDocumentPosition;
+                return compare ? compare : (compare = (a.ownerDocument || a) === (b.ownerDocument || b) ? a.compareDocumentPosition(b) : 1, 
+                1 & compare || !support.sortDetached && b.compareDocumentPosition(a) === compare ? a === doc || a.ownerDocument === preferredDoc && contains(preferredDoc, a) ? -1 : b === doc || b.ownerDocument === preferredDoc && contains(preferredDoc, b) ? 1 : sortInput ? indexOf(sortInput, a) - indexOf(sortInput, b) : 0 : 4 & compare ? -1 : 1);
             } : function(a, b) {
-                if (a === b) return E = !0, 0;
-                var c, e = 0, f = a.parentNode, h = b.parentNode, i = [ a ], j = [ b ];
-                if (!f || !h) return a === d ? -1 : b === d ? 1 : f ? -1 : h ? 1 : D ? aa(D, a) - aa(D, b) : 0;
-                if (f === h) return g(a, b);
-                for (c = a; c = c.parentNode; ) i.unshift(c);
-                for (c = b; c = c.parentNode; ) j.unshift(c);
-                for (;i[e] === j[e]; ) e++;
-                return e ? g(i[e], j[e]) : i[e] === O ? -1 : j[e] === O ? 1 : 0;
-            }, d) : G;
-        }, b.matches = function(a, c) {
-            return b(a, null, null, c);
-        }, b.matchesSelector = function(a, c) {
-            if ((a.ownerDocument || a) !== G && F(a), c = c.replace(la, "='$1']"), v.matchesSelector && I && (!K || !K.test(c)) && (!J || !J.test(c))) try {
-                var d = L.call(a, c);
-                if (d || v.disconnectedMatch || a.document && 11 !== a.document.nodeType) return d;
+                if (a === b) return hasDuplicate = !0, 0;
+                var cur, i = 0, aup = a.parentNode, bup = b.parentNode, ap = [ a ], bp = [ b ];
+                if (!aup || !bup) return a === doc ? -1 : b === doc ? 1 : aup ? -1 : bup ? 1 : sortInput ? indexOf(sortInput, a) - indexOf(sortInput, b) : 0;
+                if (aup === bup) return siblingCheck(a, b);
+                for (cur = a; cur = cur.parentNode; ) ap.unshift(cur);
+                for (cur = b; cur = cur.parentNode; ) bp.unshift(cur);
+                for (;ap[i] === bp[i]; ) i++;
+                return i ? siblingCheck(ap[i], bp[i]) : ap[i] === preferredDoc ? -1 : bp[i] === preferredDoc ? 1 : 0;
+            }, doc) : document;
+        }, Sizzle.matches = function(expr, elements) {
+            return Sizzle(expr, null, null, elements);
+        }, Sizzle.matchesSelector = function(elem, expr) {
+            if ((elem.ownerDocument || elem) !== document && setDocument(elem), expr = expr.replace(rattributeQuotes, "='$1']"), 
+            support.matchesSelector && documentIsHTML && (!rbuggyMatches || !rbuggyMatches.test(expr)) && (!rbuggyQSA || !rbuggyQSA.test(expr))) try {
+                var ret = matches.call(elem, expr);
+                if (ret || support.disconnectedMatch || elem.document && 11 !== elem.document.nodeType) return ret;
             } catch (e) {}
-            return b(c, G, null, [ a ]).length > 0;
-        }, b.contains = function(a, b) {
-            return (a.ownerDocument || a) !== G && F(a), M(a, b);
-        }, b.attr = function(a, b) {
-            (a.ownerDocument || a) !== G && F(a);
-            var c = w.attrHandle[b.toLowerCase()], d = c && W.call(w.attrHandle, b.toLowerCase()) ? c(a, b, !I) : void 0;
-            return void 0 !== d ? d : v.attributes || !I ? a.getAttribute(b) : (d = a.getAttributeNode(b)) && d.specified ? d.value : null;
-        }, b.error = function(a) {
-            throw new Error("Syntax error, unrecognized expression: " + a);
-        }, b.uniqueSort = function(a) {
-            var b, c = [], d = 0, e = 0;
-            if (E = !v.detectDuplicates, D = !v.sortStable && a.slice(0), a.sort(U), E) {
-                for (;b = a[e++]; ) b === a[e] && (d = c.push(e));
-                for (;d--; ) a.splice(c[d], 1);
+            return Sizzle(expr, document, null, [ elem ]).length > 0;
+        }, Sizzle.contains = function(context, elem) {
+            return (context.ownerDocument || context) !== document && setDocument(context), 
+            contains(context, elem);
+        }, Sizzle.attr = function(elem, name) {
+            (elem.ownerDocument || elem) !== document && setDocument(elem);
+            var fn = Expr.attrHandle[name.toLowerCase()], val = fn && hasOwn.call(Expr.attrHandle, name.toLowerCase()) ? fn(elem, name, !documentIsHTML) : void 0;
+            return void 0 !== val ? val : support.attributes || !documentIsHTML ? elem.getAttribute(name) : (val = elem.getAttributeNode(name)) && val.specified ? val.value : null;
+        }, Sizzle.error = function(msg) {
+            throw new Error("Syntax error, unrecognized expression: " + msg);
+        }, Sizzle.uniqueSort = function(results) {
+            var elem, duplicates = [], j = 0, i = 0;
+            if (hasDuplicate = !support.detectDuplicates, sortInput = !support.sortStable && results.slice(0), 
+            results.sort(sortOrder), hasDuplicate) {
+                for (;elem = results[i++]; ) elem === results[i] && (j = duplicates.push(i));
+                for (;j--; ) results.splice(duplicates[j], 1);
             }
-            return D = null, a;
-        }, x = b.getText = function(a) {
-            var b, c = "", d = 0, e = a.nodeType;
-            if (e) {
-                if (1 === e || 9 === e || 11 === e) {
-                    if ("string" == typeof a.textContent) return a.textContent;
-                    for (a = a.firstChild; a; a = a.nextSibling) c += x(a);
-                } else if (3 === e || 4 === e) return a.nodeValue;
-            } else for (;b = a[d++]; ) c += x(b);
-            return c;
-        }, w = b.selectors = {
+            return sortInput = null, results;
+        }, getText = Sizzle.getText = function(elem) {
+            var node, ret = "", i = 0, nodeType = elem.nodeType;
+            if (nodeType) {
+                if (1 === nodeType || 9 === nodeType || 11 === nodeType) {
+                    if ("string" == typeof elem.textContent) return elem.textContent;
+                    for (elem = elem.firstChild; elem; elem = elem.nextSibling) ret += getText(elem);
+                } else if (3 === nodeType || 4 === nodeType) return elem.nodeValue;
+            } else for (;node = elem[i++]; ) ret += getText(node);
+            return ret;
+        }, Expr = Sizzle.selectors = {
             cacheLength: 50,
-            createPseudo: d,
-            match: oa,
+            createPseudo: markFunction,
+            match: matchExpr,
             attrHandle: {},
             find: {},
             relative: {
@@ -915,791 +951,823 @@ function detectSidebar() {
                 }
             },
             preFilter: {
-                ATTR: function(a) {
-                    return a[1] = a[1].replace(va, wa), a[3] = (a[3] || a[4] || a[5] || "").replace(va, wa), 
-                    "~=" === a[2] && (a[3] = " " + a[3] + " "), a.slice(0, 4);
+                ATTR: function(match) {
+                    return match[1] = match[1].replace(runescape, funescape), match[3] = (match[3] || match[4] || match[5] || "").replace(runescape, funescape), 
+                    "~=" === match[2] && (match[3] = " " + match[3] + " "), match.slice(0, 4);
                 },
-                CHILD: function(a) {
-                    return a[1] = a[1].toLowerCase(), "nth" === a[1].slice(0, 3) ? (a[3] || b.error(a[0]), 
-                    a[4] = +(a[4] ? a[5] + (a[6] || 1) : 2 * ("even" === a[3] || "odd" === a[3])), a[5] = +(a[7] + a[8] || "odd" === a[3])) : a[3] && b.error(a[0]), 
-                    a;
+                CHILD: function(match) {
+                    return match[1] = match[1].toLowerCase(), "nth" === match[1].slice(0, 3) ? (match[3] || Sizzle.error(match[0]), 
+                    match[4] = +(match[4] ? match[5] + (match[6] || 1) : 2 * ("even" === match[3] || "odd" === match[3])), 
+                    match[5] = +(match[7] + match[8] || "odd" === match[3])) : match[3] && Sizzle.error(match[0]), 
+                    match;
                 },
-                PSEUDO: function(a) {
-                    var b, c = !a[6] && a[2];
-                    return oa.CHILD.test(a[0]) ? null : (a[3] ? a[2] = a[4] || a[5] || "" : c && ma.test(c) && (b = z(c, !0)) && (b = c.indexOf(")", c.length - b) - c.length) && (a[0] = a[0].slice(0, b), 
-                    a[2] = c.slice(0, b)), a.slice(0, 3));
+                PSEUDO: function(match) {
+                    var excess, unquoted = !match[6] && match[2];
+                    return matchExpr.CHILD.test(match[0]) ? null : (match[3] ? match[2] = match[4] || match[5] || "" : unquoted && rpseudo.test(unquoted) && (excess = tokenize(unquoted, !0)) && (excess = unquoted.indexOf(")", unquoted.length - excess) - unquoted.length) && (match[0] = match[0].slice(0, excess), 
+                    match[2] = unquoted.slice(0, excess)), match.slice(0, 3));
                 }
             },
             filter: {
-                TAG: function(a) {
-                    var b = a.replace(va, wa).toLowerCase();
-                    return "*" === a ? function() {
+                TAG: function(nodeNameSelector) {
+                    var nodeName = nodeNameSelector.replace(runescape, funescape).toLowerCase();
+                    return "*" === nodeNameSelector ? function() {
                         return !0;
-                    } : function(a) {
-                        return a.nodeName && a.nodeName.toLowerCase() === b;
+                    } : function(elem) {
+                        return elem.nodeName && elem.nodeName.toLowerCase() === nodeName;
                     };
                 },
-                CLASS: function(a) {
-                    var b = R[a + " "];
-                    return b || (b = new RegExp("(^|" + ca + ")" + a + "(" + ca + "|$)")) && R(a, function(a) {
-                        return b.test("string" == typeof a.className && a.className || "undefined" != typeof a.getAttribute && a.getAttribute("class") || "");
+                CLASS: function(className) {
+                    var pattern = classCache[className + " "];
+                    return pattern || (pattern = new RegExp("(^|" + whitespace + ")" + className + "(" + whitespace + "|$)")) && classCache(className, function(elem) {
+                        return pattern.test("string" == typeof elem.className && elem.className || "undefined" != typeof elem.getAttribute && elem.getAttribute("class") || "");
                     });
                 },
-                ATTR: function(a, c, d) {
-                    return function(e) {
-                        var f = b.attr(e, a);
-                        return null == f ? "!=" === c : c ? (f += "", "=" === c ? f === d : "!=" === c ? f !== d : "^=" === c ? d && 0 === f.indexOf(d) : "*=" === c ? d && f.indexOf(d) > -1 : "$=" === c ? d && f.slice(-d.length) === d : "~=" === c ? (" " + f.replace(ha, " ") + " ").indexOf(d) > -1 : "|=" === c ? f === d || f.slice(0, d.length + 1) === d + "-" : !1) : !0;
+                ATTR: function(name, operator, check) {
+                    return function(elem) {
+                        var result = Sizzle.attr(elem, name);
+                        return null == result ? "!=" === operator : operator ? (result += "", "=" === operator ? result === check : "!=" === operator ? result !== check : "^=" === operator ? check && 0 === result.indexOf(check) : "*=" === operator ? check && result.indexOf(check) > -1 : "$=" === operator ? check && result.slice(-check.length) === check : "~=" === operator ? (" " + result.replace(rwhitespace, " ") + " ").indexOf(check) > -1 : "|=" === operator ? result === check || result.slice(0, check.length + 1) === check + "-" : !1) : !0;
                     };
                 },
-                CHILD: function(a, b, c, d, e) {
-                    var f = "nth" !== a.slice(0, 3), g = "last" !== a.slice(-4), h = "of-type" === b;
-                    return 1 === d && 0 === e ? function(a) {
-                        return !!a.parentNode;
-                    } : function(b, c, i) {
-                        var j, k, l, m, n, o, p = f !== g ? "nextSibling" : "previousSibling", q = b.parentNode, r = h && b.nodeName.toLowerCase(), s = !i && !h;
-                        if (q) {
-                            if (f) {
-                                for (;p; ) {
-                                    for (l = b; l = l[p]; ) if (h ? l.nodeName.toLowerCase() === r : 1 === l.nodeType) return !1;
-                                    o = p = "only" === a && !o && "nextSibling";
+                CHILD: function(type, what, argument, first, last) {
+                    var simple = "nth" !== type.slice(0, 3), forward = "last" !== type.slice(-4), ofType = "of-type" === what;
+                    return 1 === first && 0 === last ? function(elem) {
+                        return !!elem.parentNode;
+                    } : function(elem, context, xml) {
+                        var cache, outerCache, node, diff, nodeIndex, start, dir = simple !== forward ? "nextSibling" : "previousSibling", parent = elem.parentNode, name = ofType && elem.nodeName.toLowerCase(), useCache = !xml && !ofType;
+                        if (parent) {
+                            if (simple) {
+                                for (;dir; ) {
+                                    for (node = elem; node = node[dir]; ) if (ofType ? node.nodeName.toLowerCase() === name : 1 === node.nodeType) return !1;
+                                    start = dir = "only" === type && !start && "nextSibling";
                                 }
                                 return !0;
                             }
-                            if (o = [ g ? q.firstChild : q.lastChild ], g && s) {
-                                for (k = q[N] || (q[N] = {}), j = k[a] || [], n = j[0] === P && j[1], m = j[0] === P && j[2], 
-                                l = n && q.childNodes[n]; l = ++n && l && l[p] || (m = n = 0) || o.pop(); ) if (1 === l.nodeType && ++m && l === b) {
-                                    k[a] = [ P, n, m ];
+                            if (start = [ forward ? parent.firstChild : parent.lastChild ], forward && useCache) {
+                                for (outerCache = parent[expando] || (parent[expando] = {}), cache = outerCache[type] || [], 
+                                nodeIndex = cache[0] === dirruns && cache[1], diff = cache[0] === dirruns && cache[2], 
+                                node = nodeIndex && parent.childNodes[nodeIndex]; node = ++nodeIndex && node && node[dir] || (diff = nodeIndex = 0) || start.pop(); ) if (1 === node.nodeType && ++diff && node === elem) {
+                                    outerCache[type] = [ dirruns, nodeIndex, diff ];
                                     break;
                                 }
-                            } else if (s && (j = (b[N] || (b[N] = {}))[a]) && j[0] === P) m = j[1]; else for (;(l = ++n && l && l[p] || (m = n = 0) || o.pop()) && ((h ? l.nodeName.toLowerCase() !== r : 1 !== l.nodeType) || !++m || (s && ((l[N] || (l[N] = {}))[a] = [ P, m ]), 
-                            l !== b)); ) ;
-                            return m -= e, m === d || m % d === 0 && m / d >= 0;
+                            } else if (useCache && (cache = (elem[expando] || (elem[expando] = {}))[type]) && cache[0] === dirruns) diff = cache[1]; else for (;(node = ++nodeIndex && node && node[dir] || (diff = nodeIndex = 0) || start.pop()) && ((ofType ? node.nodeName.toLowerCase() !== name : 1 !== node.nodeType) || !++diff || (useCache && ((node[expando] || (node[expando] = {}))[type] = [ dirruns, diff ]), 
+                            node !== elem)); ) ;
+                            return diff -= last, diff === first || diff % first === 0 && diff / first >= 0;
                         }
                     };
                 },
-                PSEUDO: function(a, c) {
-                    var e, f = w.pseudos[a] || w.setFilters[a.toLowerCase()] || b.error("unsupported pseudo: " + a);
-                    return f[N] ? f(c) : f.length > 1 ? (e = [ a, a, "", c ], w.setFilters.hasOwnProperty(a.toLowerCase()) ? d(function(a, b) {
-                        for (var d, e = f(a, c), g = e.length; g--; ) d = aa(a, e[g]), a[d] = !(b[d] = e[g]);
-                    }) : function(a) {
-                        return f(a, 0, e);
-                    }) : f;
+                PSEUDO: function(pseudo, argument) {
+                    var args, fn = Expr.pseudos[pseudo] || Expr.setFilters[pseudo.toLowerCase()] || Sizzle.error("unsupported pseudo: " + pseudo);
+                    return fn[expando] ? fn(argument) : fn.length > 1 ? (args = [ pseudo, pseudo, "", argument ], 
+                    Expr.setFilters.hasOwnProperty(pseudo.toLowerCase()) ? markFunction(function(seed, matches) {
+                        for (var idx, matched = fn(seed, argument), i = matched.length; i--; ) idx = indexOf(seed, matched[i]), 
+                        seed[idx] = !(matches[idx] = matched[i]);
+                    }) : function(elem) {
+                        return fn(elem, 0, args);
+                    }) : fn;
                 }
             },
             pseudos: {
-                not: d(function(a) {
-                    var b = [], c = [], e = A(a.replace(ia, "$1"));
-                    return e[N] ? d(function(a, b, c, d) {
-                        for (var f, g = e(a, null, d, []), h = a.length; h--; ) (f = g[h]) && (a[h] = !(b[h] = f));
-                    }) : function(a, d, f) {
-                        return b[0] = a, e(b, null, f, c), b[0] = null, !c.pop();
+                not: markFunction(function(selector) {
+                    var input = [], results = [], matcher = compile(selector.replace(rtrim, "$1"));
+                    return matcher[expando] ? markFunction(function(seed, matches, context, xml) {
+                        for (var elem, unmatched = matcher(seed, null, xml, []), i = seed.length; i--; ) (elem = unmatched[i]) && (seed[i] = !(matches[i] = elem));
+                    }) : function(elem, context, xml) {
+                        return input[0] = elem, matcher(input, null, xml, results), input[0] = null, !results.pop();
                     };
                 }),
-                has: d(function(a) {
-                    return function(c) {
-                        return b(a, c).length > 0;
+                has: markFunction(function(selector) {
+                    return function(elem) {
+                        return Sizzle(selector, elem).length > 0;
                     };
                 }),
-                contains: d(function(a) {
-                    return a = a.replace(va, wa), function(b) {
-                        return (b.textContent || b.innerText || x(b)).indexOf(a) > -1;
+                contains: markFunction(function(text) {
+                    return text = text.replace(runescape, funescape), function(elem) {
+                        return (elem.textContent || elem.innerText || getText(elem)).indexOf(text) > -1;
                     };
                 }),
-                lang: d(function(a) {
-                    return na.test(a || "") || b.error("unsupported lang: " + a), a = a.replace(va, wa).toLowerCase(), 
-                    function(b) {
-                        var c;
-                        do if (c = I ? b.lang : b.getAttribute("xml:lang") || b.getAttribute("lang")) return c = c.toLowerCase(), 
-                        c === a || 0 === c.indexOf(a + "-"); while ((b = b.parentNode) && 1 === b.nodeType);
+                lang: markFunction(function(lang) {
+                    return ridentifier.test(lang || "") || Sizzle.error("unsupported lang: " + lang), 
+                    lang = lang.replace(runescape, funescape).toLowerCase(), function(elem) {
+                        var elemLang;
+                        do if (elemLang = documentIsHTML ? elem.lang : elem.getAttribute("xml:lang") || elem.getAttribute("lang")) return elemLang = elemLang.toLowerCase(), 
+                        elemLang === lang || 0 === elemLang.indexOf(lang + "-"); while ((elem = elem.parentNode) && 1 === elem.nodeType);
                         return !1;
                     };
                 }),
-                target: function(b) {
-                    var c = a.location && a.location.hash;
-                    return c && c.slice(1) === b.id;
+                target: function(elem) {
+                    var hash = window.location && window.location.hash;
+                    return hash && hash.slice(1) === elem.id;
                 },
-                root: function(a) {
-                    return a === H;
+                root: function(elem) {
+                    return elem === docElem;
                 },
-                focus: function(a) {
-                    return a === G.activeElement && (!G.hasFocus || G.hasFocus()) && !!(a.type || a.href || ~a.tabIndex);
+                focus: function(elem) {
+                    return elem === document.activeElement && (!document.hasFocus || document.hasFocus()) && !!(elem.type || elem.href || ~elem.tabIndex);
                 },
-                enabled: function(a) {
-                    return a.disabled === !1;
+                enabled: function(elem) {
+                    return elem.disabled === !1;
                 },
-                disabled: function(a) {
-                    return a.disabled === !0;
+                disabled: function(elem) {
+                    return elem.disabled === !0;
                 },
-                checked: function(a) {
-                    var b = a.nodeName.toLowerCase();
-                    return "input" === b && !!a.checked || "option" === b && !!a.selected;
+                checked: function(elem) {
+                    var nodeName = elem.nodeName.toLowerCase();
+                    return "input" === nodeName && !!elem.checked || "option" === nodeName && !!elem.selected;
                 },
-                selected: function(a) {
-                    return a.parentNode && a.parentNode.selectedIndex, a.selected === !0;
+                selected: function(elem) {
+                    return elem.parentNode && elem.parentNode.selectedIndex, elem.selected === !0;
                 },
-                empty: function(a) {
-                    for (a = a.firstChild; a; a = a.nextSibling) if (a.nodeType < 6) return !1;
+                empty: function(elem) {
+                    for (elem = elem.firstChild; elem; elem = elem.nextSibling) if (elem.nodeType < 6) return !1;
                     return !0;
                 },
-                parent: function(a) {
-                    return !w.pseudos.empty(a);
+                parent: function(elem) {
+                    return !Expr.pseudos.empty(elem);
                 },
-                header: function(a) {
-                    return qa.test(a.nodeName);
+                header: function(elem) {
+                    return rheader.test(elem.nodeName);
                 },
-                input: function(a) {
-                    return pa.test(a.nodeName);
+                input: function(elem) {
+                    return rinputs.test(elem.nodeName);
                 },
-                button: function(a) {
-                    var b = a.nodeName.toLowerCase();
-                    return "input" === b && "button" === a.type || "button" === b;
+                button: function(elem) {
+                    var name = elem.nodeName.toLowerCase();
+                    return "input" === name && "button" === elem.type || "button" === name;
                 },
-                text: function(a) {
-                    var b;
-                    return "input" === a.nodeName.toLowerCase() && "text" === a.type && (null == (b = a.getAttribute("type")) || "text" === b.toLowerCase());
+                text: function(elem) {
+                    var attr;
+                    return "input" === elem.nodeName.toLowerCase() && "text" === elem.type && (null == (attr = elem.getAttribute("type")) || "text" === attr.toLowerCase());
                 },
-                first: j(function() {
+                first: createPositionalPseudo(function() {
                     return [ 0 ];
                 }),
-                last: j(function(a, b) {
-                    return [ b - 1 ];
+                last: createPositionalPseudo(function(matchIndexes, length) {
+                    return [ length - 1 ];
                 }),
-                eq: j(function(a, b, c) {
-                    return [ 0 > c ? c + b : c ];
+                eq: createPositionalPseudo(function(matchIndexes, length, argument) {
+                    return [ 0 > argument ? argument + length : argument ];
                 }),
-                even: j(function(a, b) {
-                    for (var c = 0; b > c; c += 2) a.push(c);
-                    return a;
+                even: createPositionalPseudo(function(matchIndexes, length) {
+                    for (var i = 0; length > i; i += 2) matchIndexes.push(i);
+                    return matchIndexes;
                 }),
-                odd: j(function(a, b) {
-                    for (var c = 1; b > c; c += 2) a.push(c);
-                    return a;
+                odd: createPositionalPseudo(function(matchIndexes, length) {
+                    for (var i = 1; length > i; i += 2) matchIndexes.push(i);
+                    return matchIndexes;
                 }),
-                lt: j(function(a, b, c) {
-                    for (var d = 0 > c ? c + b : c; --d >= 0; ) a.push(d);
-                    return a;
+                lt: createPositionalPseudo(function(matchIndexes, length, argument) {
+                    for (var i = 0 > argument ? argument + length : argument; --i >= 0; ) matchIndexes.push(i);
+                    return matchIndexes;
                 }),
-                gt: j(function(a, b, c) {
-                    for (var d = 0 > c ? c + b : c; ++d < b; ) a.push(d);
-                    return a;
+                gt: createPositionalPseudo(function(matchIndexes, length, argument) {
+                    for (var i = 0 > argument ? argument + length : argument; ++i < length; ) matchIndexes.push(i);
+                    return matchIndexes;
                 })
             }
-        }, w.pseudos.nth = w.pseudos.eq;
-        for (u in {
+        }, Expr.pseudos.nth = Expr.pseudos.eq;
+        for (i in {
             radio: !0,
             checkbox: !0,
             file: !0,
             password: !0,
             image: !0
-        }) w.pseudos[u] = h(u);
-        for (u in {
+        }) Expr.pseudos[i] = createInputPseudo(i);
+        for (i in {
             submit: !0,
             reset: !0
-        }) w.pseudos[u] = i(u);
-        return l.prototype = w.filters = w.pseudos, w.setFilters = new l(), z = b.tokenize = function(a, c) {
-            var d, e, f, g, h, i, j, k = S[a + " "];
-            if (k) return c ? 0 : k.slice(0);
-            for (h = a, i = [], j = w.preFilter; h; ) {
-                (!d || (e = ja.exec(h))) && (e && (h = h.slice(e[0].length) || h), i.push(f = [])), 
-                d = !1, (e = ka.exec(h)) && (d = e.shift(), f.push({
-                    value: d,
-                    type: e[0].replace(ia, " ")
-                }), h = h.slice(d.length));
-                for (g in w.filter) !(e = oa[g].exec(h)) || j[g] && !(e = j[g](e)) || (d = e.shift(), 
-                f.push({
-                    value: d,
-                    type: g,
-                    matches: e
-                }), h = h.slice(d.length));
-                if (!d) break;
+        }) Expr.pseudos[i] = createButtonPseudo(i);
+        return setFilters.prototype = Expr.filters = Expr.pseudos, Expr.setFilters = new setFilters(), 
+        tokenize = Sizzle.tokenize = function(selector, parseOnly) {
+            var matched, match, tokens, type, soFar, groups, preFilters, cached = tokenCache[selector + " "];
+            if (cached) return parseOnly ? 0 : cached.slice(0);
+            for (soFar = selector, groups = [], preFilters = Expr.preFilter; soFar; ) {
+                (!matched || (match = rcomma.exec(soFar))) && (match && (soFar = soFar.slice(match[0].length) || soFar), 
+                groups.push(tokens = [])), matched = !1, (match = rcombinators.exec(soFar)) && (matched = match.shift(), 
+                tokens.push({
+                    value: matched,
+                    type: match[0].replace(rtrim, " ")
+                }), soFar = soFar.slice(matched.length));
+                for (type in Expr.filter) !(match = matchExpr[type].exec(soFar)) || preFilters[type] && !(match = preFilters[type](match)) || (matched = match.shift(), 
+                tokens.push({
+                    value: matched,
+                    type: type,
+                    matches: match
+                }), soFar = soFar.slice(matched.length));
+                if (!matched) break;
             }
-            return c ? h.length : h ? b.error(a) : S(a, i).slice(0);
-        }, A = b.compile = function(a, b) {
-            var c, d = [], e = [], f = T[a + " "];
-            if (!f) {
-                for (b || (b = z(a)), c = b.length; c--; ) f = s(b[c]), f[N] ? d.push(f) : e.push(f);
-                f = T(a, t(e, d)), f.selector = a;
+            return parseOnly ? soFar.length : soFar ? Sizzle.error(selector) : tokenCache(selector, groups).slice(0);
+        }, compile = Sizzle.compile = function(selector, match) {
+            var i, setMatchers = [], elementMatchers = [], cached = compilerCache[selector + " "];
+            if (!cached) {
+                for (match || (match = tokenize(selector)), i = match.length; i--; ) cached = matcherFromTokens(match[i]), 
+                cached[expando] ? setMatchers.push(cached) : elementMatchers.push(cached);
+                cached = compilerCache(selector, matcherFromGroupMatchers(elementMatchers, setMatchers)), 
+                cached.selector = selector;
             }
-            return f;
-        }, B = b.select = function(a, b, c, d) {
-            var e, f, g, h, i, j = "function" == typeof a && a, l = !d && z(a = j.selector || a);
-            if (c = c || [], 1 === l.length) {
-                if (f = l[0] = l[0].slice(0), f.length > 2 && "ID" === (g = f[0]).type && v.getById && 9 === b.nodeType && I && w.relative[f[1].type]) {
-                    if (b = (w.find.ID(g.matches[0].replace(va, wa), b) || [])[0], !b) return c;
-                    j && (b = b.parentNode), a = a.slice(f.shift().value.length);
+            return cached;
+        }, select = Sizzle.select = function(selector, context, results, seed) {
+            var i, tokens, token, type, find, compiled = "function" == typeof selector && selector, match = !seed && tokenize(selector = compiled.selector || selector);
+            if (results = results || [], 1 === match.length) {
+                if (tokens = match[0] = match[0].slice(0), tokens.length > 2 && "ID" === (token = tokens[0]).type && support.getById && 9 === context.nodeType && documentIsHTML && Expr.relative[tokens[1].type]) {
+                    if (context = (Expr.find.ID(token.matches[0].replace(runescape, funescape), context) || [])[0], 
+                    !context) return results;
+                    compiled && (context = context.parentNode), selector = selector.slice(tokens.shift().value.length);
                 }
-                for (e = oa.needsContext.test(a) ? 0 : f.length; e-- && (g = f[e], !w.relative[h = g.type]); ) if ((i = w.find[h]) && (d = i(g.matches[0].replace(va, wa), ta.test(f[0].type) && k(b.parentNode) || b))) {
-                    if (f.splice(e, 1), a = d.length && m(f), !a) return $.apply(c, d), c;
+                for (i = matchExpr.needsContext.test(selector) ? 0 : tokens.length; i-- && (token = tokens[i], 
+                !Expr.relative[type = token.type]); ) if ((find = Expr.find[type]) && (seed = find(token.matches[0].replace(runescape, funescape), rsibling.test(tokens[0].type) && testContext(context.parentNode) || context))) {
+                    if (tokens.splice(i, 1), selector = seed.length && toSelector(tokens), !selector) return push.apply(results, seed), 
+                    results;
                     break;
                 }
             }
-            return (j || A(a, l))(d, b, !I, c, ta.test(a) && k(b.parentNode) || b), c;
-        }, v.sortStable = N.split("").sort(U).join("") === N, v.detectDuplicates = !!E, 
-        F(), v.sortDetached = e(function(a) {
-            return 1 & a.compareDocumentPosition(G.createElement("div"));
-        }), e(function(a) {
-            return a.innerHTML = "<a href='#'></a>", "#" === a.firstChild.getAttribute("href");
-        }) || f("type|href|height|width", function(a, b, c) {
-            return c ? void 0 : a.getAttribute(b, "type" === b.toLowerCase() ? 1 : 2);
-        }), v.attributes && e(function(a) {
-            return a.innerHTML = "<input/>", a.firstChild.setAttribute("value", ""), "" === a.firstChild.getAttribute("value");
-        }) || f("value", function(a, b, c) {
-            return c || "input" !== a.nodeName.toLowerCase() ? void 0 : a.defaultValue;
-        }), e(function(a) {
-            return null == a.getAttribute("disabled");
-        }) || f(ba, function(a, b, c) {
-            var d;
-            return c ? void 0 : a[b] === !0 ? b.toLowerCase() : (d = a.getAttributeNode(b)) && d.specified ? d.value : null;
-        }), b;
-    }(a);
-    ea.find = ja, ea.expr = ja.selectors, ea.expr[":"] = ea.expr.pseudos, ea.unique = ja.uniqueSort, 
-    ea.text = ja.getText, ea.isXMLDoc = ja.isXML, ea.contains = ja.contains;
-    var ka = ea.expr.match.needsContext, la = /^<(\w+)\s*\/?>(?:<\/\1>|)$/, ma = /^.[^:#\[\.,]*$/;
-    ea.filter = function(a, b, c) {
-        var d = b[0];
-        return c && (a = ":not(" + a + ")"), 1 === b.length && 1 === d.nodeType ? ea.find.matchesSelector(d, a) ? [ d ] : [] : ea.find.matches(a, ea.grep(b, function(a) {
-            return 1 === a.nodeType;
+            return (compiled || compile(selector, match))(seed, context, !documentIsHTML, results, rsibling.test(selector) && testContext(context.parentNode) || context), 
+            results;
+        }, support.sortStable = expando.split("").sort(sortOrder).join("") === expando, 
+        support.detectDuplicates = !!hasDuplicate, setDocument(), support.sortDetached = assert(function(div1) {
+            return 1 & div1.compareDocumentPosition(document.createElement("div"));
+        }), assert(function(div) {
+            return div.innerHTML = "<a href='#'></a>", "#" === div.firstChild.getAttribute("href");
+        }) || addHandle("type|href|height|width", function(elem, name, isXML) {
+            return isXML ? void 0 : elem.getAttribute(name, "type" === name.toLowerCase() ? 1 : 2);
+        }), support.attributes && assert(function(div) {
+            return div.innerHTML = "<input/>", div.firstChild.setAttribute("value", ""), "" === div.firstChild.getAttribute("value");
+        }) || addHandle("value", function(elem, name, isXML) {
+            return isXML || "input" !== elem.nodeName.toLowerCase() ? void 0 : elem.defaultValue;
+        }), assert(function(div) {
+            return null == div.getAttribute("disabled");
+        }) || addHandle(booleans, function(elem, name, isXML) {
+            var val;
+            return isXML ? void 0 : elem[name] === !0 ? name.toLowerCase() : (val = elem.getAttributeNode(name)) && val.specified ? val.value : null;
+        }), Sizzle;
+    }(window);
+    jQuery.find = Sizzle, jQuery.expr = Sizzle.selectors, jQuery.expr[":"] = jQuery.expr.pseudos, 
+    jQuery.unique = Sizzle.uniqueSort, jQuery.text = Sizzle.getText, jQuery.isXMLDoc = Sizzle.isXML, 
+    jQuery.contains = Sizzle.contains;
+    var rneedsContext = jQuery.expr.match.needsContext, rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>|)$/, risSimple = /^.[^:#\[\.,]*$/;
+    jQuery.filter = function(expr, elems, not) {
+        var elem = elems[0];
+        return not && (expr = ":not(" + expr + ")"), 1 === elems.length && 1 === elem.nodeType ? jQuery.find.matchesSelector(elem, expr) ? [ elem ] : [] : jQuery.find.matches(expr, jQuery.grep(elems, function(elem) {
+            return 1 === elem.nodeType;
         }));
-    }, ea.fn.extend({
-        find: function(a) {
-            var b, c = [], d = this, e = d.length;
-            if ("string" != typeof a) return this.pushStack(ea(a).filter(function() {
-                for (b = 0; e > b; b++) if (ea.contains(d[b], this)) return !0;
+    }, jQuery.fn.extend({
+        find: function(selector) {
+            var i, ret = [], self = this, len = self.length;
+            if ("string" != typeof selector) return this.pushStack(jQuery(selector).filter(function() {
+                for (i = 0; len > i; i++) if (jQuery.contains(self[i], this)) return !0;
             }));
-            for (b = 0; e > b; b++) ea.find(a, d[b], c);
-            return c = this.pushStack(e > 1 ? ea.unique(c) : c), c.selector = this.selector ? this.selector + " " + a : a, 
-            c;
+            for (i = 0; len > i; i++) jQuery.find(selector, self[i], ret);
+            return ret = this.pushStack(len > 1 ? jQuery.unique(ret) : ret), ret.selector = this.selector ? this.selector + " " + selector : selector, 
+            ret;
         },
-        filter: function(a) {
-            return this.pushStack(d(this, a || [], !1));
+        filter: function(selector) {
+            return this.pushStack(winnow(this, selector || [], !1));
         },
-        not: function(a) {
-            return this.pushStack(d(this, a || [], !0));
+        not: function(selector) {
+            return this.pushStack(winnow(this, selector || [], !0));
         },
-        is: function(a) {
-            return !!d(this, "string" == typeof a && ka.test(a) ? ea(a) : a || [], !1).length;
+        is: function(selector) {
+            return !!winnow(this, "string" == typeof selector && rneedsContext.test(selector) ? jQuery(selector) : selector || [], !1).length;
         }
     });
-    var na, oa = a.document, pa = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/, qa = ea.fn.init = function(a, b) {
-        var c, d;
-        if (!a) return this;
-        if ("string" == typeof a) {
-            if (c = "<" === a.charAt(0) && ">" === a.charAt(a.length - 1) && a.length >= 3 ? [ null, a, null ] : pa.exec(a), 
-            !c || !c[1] && b) return !b || b.jquery ? (b || na).find(a) : this.constructor(b).find(a);
-            if (c[1]) {
-                if (b = b instanceof ea ? b[0] : b, ea.merge(this, ea.parseHTML(c[1], b && b.nodeType ? b.ownerDocument || b : oa, !0)), 
-                la.test(c[1]) && ea.isPlainObject(b)) for (c in b) ea.isFunction(this[c]) ? this[c](b[c]) : this.attr(c, b[c]);
+    var rootjQuery, document = window.document, rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/, init = jQuery.fn.init = function(selector, context) {
+        var match, elem;
+        if (!selector) return this;
+        if ("string" == typeof selector) {
+            if (match = "<" === selector.charAt(0) && ">" === selector.charAt(selector.length - 1) && selector.length >= 3 ? [ null, selector, null ] : rquickExpr.exec(selector), 
+            !match || !match[1] && context) return !context || context.jquery ? (context || rootjQuery).find(selector) : this.constructor(context).find(selector);
+            if (match[1]) {
+                if (context = context instanceof jQuery ? context[0] : context, jQuery.merge(this, jQuery.parseHTML(match[1], context && context.nodeType ? context.ownerDocument || context : document, !0)), 
+                rsingleTag.test(match[1]) && jQuery.isPlainObject(context)) for (match in context) jQuery.isFunction(this[match]) ? this[match](context[match]) : this.attr(match, context[match]);
                 return this;
             }
-            if (d = oa.getElementById(c[2]), d && d.parentNode) {
-                if (d.id !== c[2]) return na.find(a);
-                this.length = 1, this[0] = d;
+            if (elem = document.getElementById(match[2]), elem && elem.parentNode) {
+                if (elem.id !== match[2]) return rootjQuery.find(selector);
+                this.length = 1, this[0] = elem;
             }
-            return this.context = oa, this.selector = a, this;
+            return this.context = document, this.selector = selector, this;
         }
-        return a.nodeType ? (this.context = this[0] = a, this.length = 1, this) : ea.isFunction(a) ? "undefined" != typeof na.ready ? na.ready(a) : a(ea) : (void 0 !== a.selector && (this.selector = a.selector, 
-        this.context = a.context), ea.makeArray(a, this));
+        return selector.nodeType ? (this.context = this[0] = selector, this.length = 1, 
+        this) : jQuery.isFunction(selector) ? "undefined" != typeof rootjQuery.ready ? rootjQuery.ready(selector) : selector(jQuery) : (void 0 !== selector.selector && (this.selector = selector.selector, 
+        this.context = selector.context), jQuery.makeArray(selector, this));
     };
-    qa.prototype = ea.fn, na = ea(oa);
-    var ra = /^(?:parents|prev(?:Until|All))/, sa = {
+    init.prototype = jQuery.fn, rootjQuery = jQuery(document);
+    var rparentsprev = /^(?:parents|prev(?:Until|All))/, guaranteedUnique = {
         children: !0,
         contents: !0,
         next: !0,
         prev: !0
     };
-    ea.extend({
-        dir: function(a, b, c) {
-            for (var d = [], e = a[b]; e && 9 !== e.nodeType && (void 0 === c || 1 !== e.nodeType || !ea(e).is(c)); ) 1 === e.nodeType && d.push(e), 
-            e = e[b];
-            return d;
+    jQuery.extend({
+        dir: function(elem, dir, until) {
+            for (var matched = [], cur = elem[dir]; cur && 9 !== cur.nodeType && (void 0 === until || 1 !== cur.nodeType || !jQuery(cur).is(until)); ) 1 === cur.nodeType && matched.push(cur), 
+            cur = cur[dir];
+            return matched;
         },
-        sibling: function(a, b) {
-            for (var c = []; a; a = a.nextSibling) 1 === a.nodeType && a !== b && c.push(a);
-            return c;
+        sibling: function(n, elem) {
+            for (var r = []; n; n = n.nextSibling) 1 === n.nodeType && n !== elem && r.push(n);
+            return r;
         }
-    }), ea.fn.extend({
-        has: function(a) {
-            var b, c = ea(a, this), d = c.length;
+    }), jQuery.fn.extend({
+        has: function(target) {
+            var i, targets = jQuery(target, this), len = targets.length;
             return this.filter(function() {
-                for (b = 0; d > b; b++) if (ea.contains(this, c[b])) return !0;
+                for (i = 0; len > i; i++) if (jQuery.contains(this, targets[i])) return !0;
             });
         },
-        closest: function(a, b) {
-            for (var c, d = 0, e = this.length, f = [], g = ka.test(a) || "string" != typeof a ? ea(a, b || this.context) : 0; e > d; d++) for (c = this[d]; c && c !== b; c = c.parentNode) if (c.nodeType < 11 && (g ? g.index(c) > -1 : 1 === c.nodeType && ea.find.matchesSelector(c, a))) {
-                f.push(c);
+        closest: function(selectors, context) {
+            for (var cur, i = 0, l = this.length, matched = [], pos = rneedsContext.test(selectors) || "string" != typeof selectors ? jQuery(selectors, context || this.context) : 0; l > i; i++) for (cur = this[i]; cur && cur !== context; cur = cur.parentNode) if (cur.nodeType < 11 && (pos ? pos.index(cur) > -1 : 1 === cur.nodeType && jQuery.find.matchesSelector(cur, selectors))) {
+                matched.push(cur);
                 break;
             }
-            return this.pushStack(f.length > 1 ? ea.unique(f) : f);
+            return this.pushStack(matched.length > 1 ? jQuery.unique(matched) : matched);
         },
-        index: function(a) {
-            return a ? "string" == typeof a ? ea.inArray(this[0], ea(a)) : ea.inArray(a.jquery ? a[0] : a, this) : this[0] && this[0].parentNode ? this.first().prevAll().length : -1;
+        index: function(elem) {
+            return elem ? "string" == typeof elem ? jQuery.inArray(this[0], jQuery(elem)) : jQuery.inArray(elem.jquery ? elem[0] : elem, this) : this[0] && this[0].parentNode ? this.first().prevAll().length : -1;
         },
-        add: function(a, b) {
-            return this.pushStack(ea.unique(ea.merge(this.get(), ea(a, b))));
+        add: function(selector, context) {
+            return this.pushStack(jQuery.unique(jQuery.merge(this.get(), jQuery(selector, context))));
         },
-        addBack: function(a) {
-            return this.add(null == a ? this.prevObject : this.prevObject.filter(a));
+        addBack: function(selector) {
+            return this.add(null == selector ? this.prevObject : this.prevObject.filter(selector));
         }
-    }), ea.each({
-        parent: function(a) {
-            var b = a.parentNode;
-            return b && 11 !== b.nodeType ? b : null;
+    }), jQuery.each({
+        parent: function(elem) {
+            var parent = elem.parentNode;
+            return parent && 11 !== parent.nodeType ? parent : null;
         },
-        parents: function(a) {
-            return ea.dir(a, "parentNode");
+        parents: function(elem) {
+            return jQuery.dir(elem, "parentNode");
         },
-        parentsUntil: function(a, b, c) {
-            return ea.dir(a, "parentNode", c);
+        parentsUntil: function(elem, i, until) {
+            return jQuery.dir(elem, "parentNode", until);
         },
-        next: function(a) {
-            return e(a, "nextSibling");
+        next: function(elem) {
+            return sibling(elem, "nextSibling");
         },
-        prev: function(a) {
-            return e(a, "previousSibling");
+        prev: function(elem) {
+            return sibling(elem, "previousSibling");
         },
-        nextAll: function(a) {
-            return ea.dir(a, "nextSibling");
+        nextAll: function(elem) {
+            return jQuery.dir(elem, "nextSibling");
         },
-        prevAll: function(a) {
-            return ea.dir(a, "previousSibling");
+        prevAll: function(elem) {
+            return jQuery.dir(elem, "previousSibling");
         },
-        nextUntil: function(a, b, c) {
-            return ea.dir(a, "nextSibling", c);
+        nextUntil: function(elem, i, until) {
+            return jQuery.dir(elem, "nextSibling", until);
         },
-        prevUntil: function(a, b, c) {
-            return ea.dir(a, "previousSibling", c);
+        prevUntil: function(elem, i, until) {
+            return jQuery.dir(elem, "previousSibling", until);
         },
-        siblings: function(a) {
-            return ea.sibling((a.parentNode || {}).firstChild, a);
+        siblings: function(elem) {
+            return jQuery.sibling((elem.parentNode || {}).firstChild, elem);
         },
-        children: function(a) {
-            return ea.sibling(a.firstChild);
+        children: function(elem) {
+            return jQuery.sibling(elem.firstChild);
         },
-        contents: function(a) {
-            return ea.nodeName(a, "iframe") ? a.contentDocument || a.contentWindow.document : ea.merge([], a.childNodes);
+        contents: function(elem) {
+            return jQuery.nodeName(elem, "iframe") ? elem.contentDocument || elem.contentWindow.document : jQuery.merge([], elem.childNodes);
         }
-    }, function(a, b) {
-        ea.fn[a] = function(c, d) {
-            var e = ea.map(this, b, c);
-            return "Until" !== a.slice(-5) && (d = c), d && "string" == typeof d && (e = ea.filter(d, e)), 
-            this.length > 1 && (sa[a] || (e = ea.unique(e)), ra.test(a) && (e = e.reverse())), 
-            this.pushStack(e);
+    }, function(name, fn) {
+        jQuery.fn[name] = function(until, selector) {
+            var ret = jQuery.map(this, fn, until);
+            return "Until" !== name.slice(-5) && (selector = until), selector && "string" == typeof selector && (ret = jQuery.filter(selector, ret)), 
+            this.length > 1 && (guaranteedUnique[name] || (ret = jQuery.unique(ret)), rparentsprev.test(name) && (ret = ret.reverse())), 
+            this.pushStack(ret);
         };
     });
-    var ta = /\S+/g, ua = {};
-    ea.Callbacks = function(a) {
-        a = "string" == typeof a ? ua[a] || f(a) : ea.extend({}, a);
-        var b, c, d, e, g, h, i = [], j = !a.once && [], k = function(f) {
-            for (c = a.memory && f, d = !0, g = h || 0, h = 0, e = i.length, b = !0; i && e > g; g++) if (i[g].apply(f[0], f[1]) === !1 && a.stopOnFalse) {
-                c = !1;
+    var rnotwhite = /\S+/g, optionsCache = {};
+    jQuery.Callbacks = function(options) {
+        options = "string" == typeof options ? optionsCache[options] || createOptions(options) : jQuery.extend({}, options);
+        var firing, memory, fired, firingLength, firingIndex, firingStart, list = [], stack = !options.once && [], fire = function(data) {
+            for (memory = options.memory && data, fired = !0, firingIndex = firingStart || 0, 
+            firingStart = 0, firingLength = list.length, firing = !0; list && firingLength > firingIndex; firingIndex++) if (list[firingIndex].apply(data[0], data[1]) === !1 && options.stopOnFalse) {
+                memory = !1;
                 break;
             }
-            b = !1, i && (j ? j.length && k(j.shift()) : c ? i = [] : l.disable());
-        }, l = {
+            firing = !1, list && (stack ? stack.length && fire(stack.shift()) : memory ? list = [] : self.disable());
+        }, self = {
             add: function() {
-                if (i) {
-                    var d = i.length;
-                    !function f(b) {
-                        ea.each(b, function(b, c) {
-                            var d = ea.type(c);
-                            "function" === d ? a.unique && l.has(c) || i.push(c) : c && c.length && "string" !== d && f(c);
+                if (list) {
+                    var start = list.length;
+                    !function add(args) {
+                        jQuery.each(args, function(_, arg) {
+                            var type = jQuery.type(arg);
+                            "function" === type ? options.unique && self.has(arg) || list.push(arg) : arg && arg.length && "string" !== type && add(arg);
                         });
-                    }(arguments), b ? e = i.length : c && (h = d, k(c));
+                    }(arguments), firing ? firingLength = list.length : memory && (firingStart = start, 
+                    fire(memory));
                 }
                 return this;
             },
             remove: function() {
-                return i && ea.each(arguments, function(a, c) {
-                    for (var d; (d = ea.inArray(c, i, d)) > -1; ) i.splice(d, 1), b && (e >= d && e--, 
-                    g >= d && g--);
+                return list && jQuery.each(arguments, function(_, arg) {
+                    for (var index; (index = jQuery.inArray(arg, list, index)) > -1; ) list.splice(index, 1), 
+                    firing && (firingLength >= index && firingLength--, firingIndex >= index && firingIndex--);
                 }), this;
             },
-            has: function(a) {
-                return a ? ea.inArray(a, i) > -1 : !(!i || !i.length);
+            has: function(fn) {
+                return fn ? jQuery.inArray(fn, list) > -1 : !(!list || !list.length);
             },
             empty: function() {
-                return i = [], e = 0, this;
+                return list = [], firingLength = 0, this;
             },
             disable: function() {
-                return i = j = c = void 0, this;
+                return list = stack = memory = void 0, this;
             },
             disabled: function() {
-                return !i;
+                return !list;
             },
             lock: function() {
-                return j = void 0, c || l.disable(), this;
+                return stack = void 0, memory || self.disable(), this;
             },
             locked: function() {
-                return !j;
+                return !stack;
             },
-            fireWith: function(a, c) {
-                return !i || d && !j || (c = c || [], c = [ a, c.slice ? c.slice() : c ], b ? j.push(c) : k(c)), 
-                this;
+            fireWith: function(context, args) {
+                return !list || fired && !stack || (args = args || [], args = [ context, args.slice ? args.slice() : args ], 
+                firing ? stack.push(args) : fire(args)), this;
             },
             fire: function() {
-                return l.fireWith(this, arguments), this;
+                return self.fireWith(this, arguments), this;
             },
             fired: function() {
-                return !!d;
+                return !!fired;
             }
         };
-        return l;
-    }, ea.extend({
-        Deferred: function(a) {
-            var b = [ [ "resolve", "done", ea.Callbacks("once memory"), "resolved" ], [ "reject", "fail", ea.Callbacks("once memory"), "rejected" ], [ "notify", "progress", ea.Callbacks("memory") ] ], c = "pending", d = {
+        return self;
+    }, jQuery.extend({
+        Deferred: function(func) {
+            var tuples = [ [ "resolve", "done", jQuery.Callbacks("once memory"), "resolved" ], [ "reject", "fail", jQuery.Callbacks("once memory"), "rejected" ], [ "notify", "progress", jQuery.Callbacks("memory") ] ], state = "pending", promise = {
                 state: function() {
-                    return c;
+                    return state;
                 },
                 always: function() {
-                    return e.done(arguments).fail(arguments), this;
+                    return deferred.done(arguments).fail(arguments), this;
                 },
                 then: function() {
-                    var a = arguments;
-                    return ea.Deferred(function(c) {
-                        ea.each(b, function(b, f) {
-                            var g = ea.isFunction(a[b]) && a[b];
-                            e[f[1]](function() {
-                                var a = g && g.apply(this, arguments);
-                                a && ea.isFunction(a.promise) ? a.promise().done(c.resolve).fail(c.reject).progress(c.notify) : c[f[0] + "With"](this === d ? c.promise() : this, g ? [ a ] : arguments);
+                    var fns = arguments;
+                    return jQuery.Deferred(function(newDefer) {
+                        jQuery.each(tuples, function(i, tuple) {
+                            var fn = jQuery.isFunction(fns[i]) && fns[i];
+                            deferred[tuple[1]](function() {
+                                var returned = fn && fn.apply(this, arguments);
+                                returned && jQuery.isFunction(returned.promise) ? returned.promise().done(newDefer.resolve).fail(newDefer.reject).progress(newDefer.notify) : newDefer[tuple[0] + "With"](this === promise ? newDefer.promise() : this, fn ? [ returned ] : arguments);
                             });
-                        }), a = null;
+                        }), fns = null;
                     }).promise();
                 },
-                promise: function(a) {
-                    return null != a ? ea.extend(a, d) : d;
+                promise: function(obj) {
+                    return null != obj ? jQuery.extend(obj, promise) : promise;
                 }
-            }, e = {};
-            return d.pipe = d.then, ea.each(b, function(a, f) {
-                var g = f[2], h = f[3];
-                d[f[1]] = g.add, h && g.add(function() {
-                    c = h;
-                }, b[1 ^ a][2].disable, b[2][2].lock), e[f[0]] = function() {
-                    return e[f[0] + "With"](this === e ? d : this, arguments), this;
-                }, e[f[0] + "With"] = g.fireWith;
-            }), d.promise(e), a && a.call(e, e), e;
+            }, deferred = {};
+            return promise.pipe = promise.then, jQuery.each(tuples, function(i, tuple) {
+                var list = tuple[2], stateString = tuple[3];
+                promise[tuple[1]] = list.add, stateString && list.add(function() {
+                    state = stateString;
+                }, tuples[1 ^ i][2].disable, tuples[2][2].lock), deferred[tuple[0]] = function() {
+                    return deferred[tuple[0] + "With"](this === deferred ? promise : this, arguments), 
+                    this;
+                }, deferred[tuple[0] + "With"] = list.fireWith;
+            }), promise.promise(deferred), func && func.call(deferred, deferred), deferred;
         },
-        when: function(a) {
-            var b, c, d, e = 0, f = X.call(arguments), g = f.length, h = 1 !== g || a && ea.isFunction(a.promise) ? g : 0, i = 1 === h ? a : ea.Deferred(), j = function(a, c, d) {
-                return function(e) {
-                    c[a] = this, d[a] = arguments.length > 1 ? X.call(arguments) : e, d === b ? i.notifyWith(c, d) : --h || i.resolveWith(c, d);
+        when: function(subordinate) {
+            var progressValues, progressContexts, resolveContexts, i = 0, resolveValues = slice.call(arguments), length = resolveValues.length, remaining = 1 !== length || subordinate && jQuery.isFunction(subordinate.promise) ? length : 0, deferred = 1 === remaining ? subordinate : jQuery.Deferred(), updateFunc = function(i, contexts, values) {
+                return function(value) {
+                    contexts[i] = this, values[i] = arguments.length > 1 ? slice.call(arguments) : value, 
+                    values === progressValues ? deferred.notifyWith(contexts, values) : --remaining || deferred.resolveWith(contexts, values);
                 };
             };
-            if (g > 1) for (b = new Array(g), c = new Array(g), d = new Array(g); g > e; e++) f[e] && ea.isFunction(f[e].promise) ? f[e].promise().done(j(e, d, f)).fail(i.reject).progress(j(e, c, b)) : --h;
-            return h || i.resolveWith(d, f), i.promise();
+            if (length > 1) for (progressValues = new Array(length), progressContexts = new Array(length), 
+            resolveContexts = new Array(length); length > i; i++) resolveValues[i] && jQuery.isFunction(resolveValues[i].promise) ? resolveValues[i].promise().done(updateFunc(i, resolveContexts, resolveValues)).fail(deferred.reject).progress(updateFunc(i, progressContexts, progressValues)) : --remaining;
+            return remaining || deferred.resolveWith(resolveContexts, resolveValues), deferred.promise();
         }
     });
-    var va;
-    ea.fn.ready = function(a) {
-        return ea.ready.promise().done(a), this;
-    }, ea.extend({
+    var readyList;
+    jQuery.fn.ready = function(fn) {
+        return jQuery.ready.promise().done(fn), this;
+    }, jQuery.extend({
         isReady: !1,
         readyWait: 1,
-        holdReady: function(a) {
-            a ? ea.readyWait++ : ea.ready(!0);
+        holdReady: function(hold) {
+            hold ? jQuery.readyWait++ : jQuery.ready(!0);
         },
-        ready: function(a) {
-            if (a === !0 ? !--ea.readyWait : !ea.isReady) {
-                if (!oa.body) return setTimeout(ea.ready);
-                ea.isReady = !0, a !== !0 && --ea.readyWait > 0 || (va.resolveWith(oa, [ ea ]), 
-                ea.fn.triggerHandler && (ea(oa).triggerHandler("ready"), ea(oa).off("ready")));
+        ready: function(wait) {
+            if (wait === !0 ? !--jQuery.readyWait : !jQuery.isReady) {
+                if (!document.body) return setTimeout(jQuery.ready);
+                jQuery.isReady = !0, wait !== !0 && --jQuery.readyWait > 0 || (readyList.resolveWith(document, [ jQuery ]), 
+                jQuery.fn.triggerHandler && (jQuery(document).triggerHandler("ready"), jQuery(document).off("ready")));
             }
         }
-    }), ea.ready.promise = function(b) {
-        if (!va) if (va = ea.Deferred(), "complete" === oa.readyState) setTimeout(ea.ready); else if (oa.addEventListener) oa.addEventListener("DOMContentLoaded", h, !1), 
-        a.addEventListener("load", h, !1); else {
-            oa.attachEvent("onreadystatechange", h), a.attachEvent("onload", h);
-            var c = !1;
+    }), jQuery.ready.promise = function(obj) {
+        if (!readyList) if (readyList = jQuery.Deferred(), "complete" === document.readyState) setTimeout(jQuery.ready); else if (document.addEventListener) document.addEventListener("DOMContentLoaded", completed, !1), 
+        window.addEventListener("load", completed, !1); else {
+            document.attachEvent("onreadystatechange", completed), window.attachEvent("onload", completed);
+            var top = !1;
             try {
-                c = null == a.frameElement && oa.documentElement;
-            } catch (d) {}
-            c && c.doScroll && !function e() {
-                if (!ea.isReady) {
+                top = null == window.frameElement && document.documentElement;
+            } catch (e) {}
+            top && top.doScroll && !function doScrollCheck() {
+                if (!jQuery.isReady) {
                     try {
-                        c.doScroll("left");
-                    } catch (a) {
-                        return setTimeout(e, 50);
+                        top.doScroll("left");
+                    } catch (e) {
+                        return setTimeout(doScrollCheck, 50);
                     }
-                    g(), ea.ready();
+                    detach(), jQuery.ready();
                 }
             }();
         }
-        return va.promise(b);
+        return readyList.promise(obj);
     };
-    var wa, xa = "undefined";
-    for (wa in ea(ca)) break;
-    ca.ownLast = "0" !== wa, ca.inlineBlockNeedsLayout = !1, ea(function() {
-        var a, b, c, d;
-        c = oa.getElementsByTagName("body")[0], c && c.style && (b = oa.createElement("div"), 
-        d = oa.createElement("div"), d.style.cssText = "position:absolute;border:0;width:0;height:0;top:0;left:-9999px", 
-        c.appendChild(d).appendChild(b), typeof b.style.zoom !== xa && (b.style.cssText = "display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1", 
-        ca.inlineBlockNeedsLayout = a = 3 === b.offsetWidth, a && (c.style.zoom = 1)), c.removeChild(d));
+    var i, strundefined = "undefined";
+    for (i in jQuery(support)) break;
+    support.ownLast = "0" !== i, support.inlineBlockNeedsLayout = !1, jQuery(function() {
+        var val, div, body, container;
+        body = document.getElementsByTagName("body")[0], body && body.style && (div = document.createElement("div"), 
+        container = document.createElement("div"), container.style.cssText = "position:absolute;border:0;width:0;height:0;top:0;left:-9999px", 
+        body.appendChild(container).appendChild(div), typeof div.style.zoom !== strundefined && (div.style.cssText = "display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1", 
+        support.inlineBlockNeedsLayout = val = 3 === div.offsetWidth, val && (body.style.zoom = 1)), 
+        body.removeChild(container));
     }), function() {
-        var a = oa.createElement("div");
-        if (null == ca.deleteExpando) {
-            ca.deleteExpando = !0;
+        var div = document.createElement("div");
+        if (null == support.deleteExpando) {
+            support.deleteExpando = !0;
             try {
-                delete a.test;
-            } catch (b) {
-                ca.deleteExpando = !1;
+                delete div.test;
+            } catch (e) {
+                support.deleteExpando = !1;
             }
         }
-        a = null;
-    }(), ea.acceptData = function(a) {
-        var b = ea.noData[(a.nodeName + " ").toLowerCase()], c = +a.nodeType || 1;
-        return 1 !== c && 9 !== c ? !1 : !b || b !== !0 && a.getAttribute("classid") === b;
+        div = null;
+    }(), jQuery.acceptData = function(elem) {
+        var noData = jQuery.noData[(elem.nodeName + " ").toLowerCase()], nodeType = +elem.nodeType || 1;
+        return 1 !== nodeType && 9 !== nodeType ? !1 : !noData || noData !== !0 && elem.getAttribute("classid") === noData;
     };
-    var ya = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/, za = /([A-Z])/g;
-    ea.extend({
+    var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/, rmultiDash = /([A-Z])/g;
+    jQuery.extend({
         cache: {},
         noData: {
             "applet ": !0,
             "embed ": !0,
             "object ": "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
         },
-        hasData: function(a) {
-            return a = a.nodeType ? ea.cache[a[ea.expando]] : a[ea.expando], !!a && !j(a);
+        hasData: function(elem) {
+            return elem = elem.nodeType ? jQuery.cache[elem[jQuery.expando]] : elem[jQuery.expando], 
+            !!elem && !isEmptyDataObject(elem);
         },
-        data: function(a, b, c) {
-            return k(a, b, c);
+        data: function(elem, name, data) {
+            return internalData(elem, name, data);
         },
-        removeData: function(a, b) {
-            return l(a, b);
+        removeData: function(elem, name) {
+            return internalRemoveData(elem, name);
         },
-        _data: function(a, b, c) {
-            return k(a, b, c, !0);
+        _data: function(elem, name, data) {
+            return internalData(elem, name, data, !0);
         },
-        _removeData: function(a, b) {
-            return l(a, b, !0);
+        _removeData: function(elem, name) {
+            return internalRemoveData(elem, name, !0);
         }
-    }), ea.fn.extend({
-        data: function(a, b) {
-            var c, d, e, f = this[0], g = f && f.attributes;
-            if (void 0 === a) {
-                if (this.length && (e = ea.data(f), 1 === f.nodeType && !ea._data(f, "parsedAttrs"))) {
-                    for (c = g.length; c--; ) g[c] && (d = g[c].name, 0 === d.indexOf("data-") && (d = ea.camelCase(d.slice(5)), 
-                    i(f, d, e[d])));
-                    ea._data(f, "parsedAttrs", !0);
+    }), jQuery.fn.extend({
+        data: function(key, value) {
+            var i, name, data, elem = this[0], attrs = elem && elem.attributes;
+            if (void 0 === key) {
+                if (this.length && (data = jQuery.data(elem), 1 === elem.nodeType && !jQuery._data(elem, "parsedAttrs"))) {
+                    for (i = attrs.length; i--; ) attrs[i] && (name = attrs[i].name, 0 === name.indexOf("data-") && (name = jQuery.camelCase(name.slice(5)), 
+                    dataAttr(elem, name, data[name])));
+                    jQuery._data(elem, "parsedAttrs", !0);
                 }
-                return e;
+                return data;
             }
-            return "object" == typeof a ? this.each(function() {
-                ea.data(this, a);
+            return "object" == typeof key ? this.each(function() {
+                jQuery.data(this, key);
             }) : arguments.length > 1 ? this.each(function() {
-                ea.data(this, a, b);
-            }) : f ? i(f, a, ea.data(f, a)) : void 0;
+                jQuery.data(this, key, value);
+            }) : elem ? dataAttr(elem, key, jQuery.data(elem, key)) : void 0;
         },
-        removeData: function(a) {
+        removeData: function(key) {
             return this.each(function() {
-                ea.removeData(this, a);
+                jQuery.removeData(this, key);
             });
         }
-    }), ea.extend({
-        queue: function(a, b, c) {
-            var d;
-            return a ? (b = (b || "fx") + "queue", d = ea._data(a, b), c && (!d || ea.isArray(c) ? d = ea._data(a, b, ea.makeArray(c)) : d.push(c)), 
-            d || []) : void 0;
+    }), jQuery.extend({
+        queue: function(elem, type, data) {
+            var queue;
+            return elem ? (type = (type || "fx") + "queue", queue = jQuery._data(elem, type), 
+            data && (!queue || jQuery.isArray(data) ? queue = jQuery._data(elem, type, jQuery.makeArray(data)) : queue.push(data)), 
+            queue || []) : void 0;
         },
-        dequeue: function(a, b) {
-            b = b || "fx";
-            var c = ea.queue(a, b), d = c.length, e = c.shift(), f = ea._queueHooks(a, b), g = function() {
-                ea.dequeue(a, b);
+        dequeue: function(elem, type) {
+            type = type || "fx";
+            var queue = jQuery.queue(elem, type), startLength = queue.length, fn = queue.shift(), hooks = jQuery._queueHooks(elem, type), next = function() {
+                jQuery.dequeue(elem, type);
             };
-            "inprogress" === e && (e = c.shift(), d--), e && ("fx" === b && c.unshift("inprogress"), 
-            delete f.stop, e.call(a, g, f)), !d && f && f.empty.fire();
+            "inprogress" === fn && (fn = queue.shift(), startLength--), fn && ("fx" === type && queue.unshift("inprogress"), 
+            delete hooks.stop, fn.call(elem, next, hooks)), !startLength && hooks && hooks.empty.fire();
         },
-        _queueHooks: function(a, b) {
-            var c = b + "queueHooks";
-            return ea._data(a, c) || ea._data(a, c, {
-                empty: ea.Callbacks("once memory").add(function() {
-                    ea._removeData(a, b + "queue"), ea._removeData(a, c);
+        _queueHooks: function(elem, type) {
+            var key = type + "queueHooks";
+            return jQuery._data(elem, key) || jQuery._data(elem, key, {
+                empty: jQuery.Callbacks("once memory").add(function() {
+                    jQuery._removeData(elem, type + "queue"), jQuery._removeData(elem, key);
                 })
             });
         }
-    }), ea.fn.extend({
-        queue: function(a, b) {
-            var c = 2;
-            return "string" != typeof a && (b = a, a = "fx", c--), arguments.length < c ? ea.queue(this[0], a) : void 0 === b ? this : this.each(function() {
-                var c = ea.queue(this, a, b);
-                ea._queueHooks(this, a), "fx" === a && "inprogress" !== c[0] && ea.dequeue(this, a);
+    }), jQuery.fn.extend({
+        queue: function(type, data) {
+            var setter = 2;
+            return "string" != typeof type && (data = type, type = "fx", setter--), arguments.length < setter ? jQuery.queue(this[0], type) : void 0 === data ? this : this.each(function() {
+                var queue = jQuery.queue(this, type, data);
+                jQuery._queueHooks(this, type), "fx" === type && "inprogress" !== queue[0] && jQuery.dequeue(this, type);
             });
         },
-        dequeue: function(a) {
+        dequeue: function(type) {
             return this.each(function() {
-                ea.dequeue(this, a);
+                jQuery.dequeue(this, type);
             });
         },
-        clearQueue: function(a) {
-            return this.queue(a || "fx", []);
+        clearQueue: function(type) {
+            return this.queue(type || "fx", []);
         },
-        promise: function(a, b) {
-            var c, d = 1, e = ea.Deferred(), f = this, g = this.length, h = function() {
-                --d || e.resolveWith(f, [ f ]);
+        promise: function(type, obj) {
+            var tmp, count = 1, defer = jQuery.Deferred(), elements = this, i = this.length, resolve = function() {
+                --count || defer.resolveWith(elements, [ elements ]);
             };
-            for ("string" != typeof a && (b = a, a = void 0), a = a || "fx"; g--; ) c = ea._data(f[g], a + "queueHooks"), 
-            c && c.empty && (d++, c.empty.add(h));
-            return h(), e.promise(b);
+            for ("string" != typeof type && (obj = type, type = void 0), type = type || "fx"; i--; ) tmp = jQuery._data(elements[i], type + "queueHooks"), 
+            tmp && tmp.empty && (count++, tmp.empty.add(resolve));
+            return resolve(), defer.promise(obj);
         }
     });
-    var Aa = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source, Ba = [ "Top", "Right", "Bottom", "Left" ], Ca = function(a, b) {
-        return a = b || a, "none" === ea.css(a, "display") || !ea.contains(a.ownerDocument, a);
-    }, Da = ea.access = function(a, b, c, d, e, f, g) {
-        var h = 0, i = a.length, j = null == c;
-        if ("object" === ea.type(c)) {
-            e = !0;
-            for (h in c) ea.access(a, b, h, c[h], !0, f, g);
-        } else if (void 0 !== d && (e = !0, ea.isFunction(d) || (g = !0), j && (g ? (b.call(a, d), 
-        b = null) : (j = b, b = function(a, b, c) {
-            return j.call(ea(a), c);
-        })), b)) for (;i > h; h++) b(a[h], c, g ? d : d.call(a[h], h, b(a[h], c)));
-        return e ? a : j ? b.call(a) : i ? b(a[0], c) : f;
-    }, Ea = /^(?:checkbox|radio)$/i;
+    var pnum = /[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)/.source, cssExpand = [ "Top", "Right", "Bottom", "Left" ], isHidden = function(elem, el) {
+        return elem = el || elem, "none" === jQuery.css(elem, "display") || !jQuery.contains(elem.ownerDocument, elem);
+    }, access = jQuery.access = function(elems, fn, key, value, chainable, emptyGet, raw) {
+        var i = 0, length = elems.length, bulk = null == key;
+        if ("object" === jQuery.type(key)) {
+            chainable = !0;
+            for (i in key) jQuery.access(elems, fn, i, key[i], !0, emptyGet, raw);
+        } else if (void 0 !== value && (chainable = !0, jQuery.isFunction(value) || (raw = !0), 
+        bulk && (raw ? (fn.call(elems, value), fn = null) : (bulk = fn, fn = function(elem, key, value) {
+            return bulk.call(jQuery(elem), value);
+        })), fn)) for (;length > i; i++) fn(elems[i], key, raw ? value : value.call(elems[i], i, fn(elems[i], key)));
+        return chainable ? elems : bulk ? fn.call(elems) : length ? fn(elems[0], key) : emptyGet;
+    }, rcheckableType = /^(?:checkbox|radio)$/i;
     !function() {
-        var a = oa.createElement("input"), b = oa.createElement("div"), c = oa.createDocumentFragment();
-        if (b.innerHTML = "  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>", 
-        ca.leadingWhitespace = 3 === b.firstChild.nodeType, ca.tbody = !b.getElementsByTagName("tbody").length, 
-        ca.htmlSerialize = !!b.getElementsByTagName("link").length, ca.html5Clone = "<:nav></:nav>" !== oa.createElement("nav").cloneNode(!0).outerHTML, 
-        a.type = "checkbox", a.checked = !0, c.appendChild(a), ca.appendChecked = a.checked, 
-        b.innerHTML = "<textarea>x</textarea>", ca.noCloneChecked = !!b.cloneNode(!0).lastChild.defaultValue, 
-        c.appendChild(b), b.innerHTML = "<input type='radio' checked='checked' name='t'/>", 
-        ca.checkClone = b.cloneNode(!0).cloneNode(!0).lastChild.checked, ca.noCloneEvent = !0, 
-        b.attachEvent && (b.attachEvent("onclick", function() {
-            ca.noCloneEvent = !1;
-        }), b.cloneNode(!0).click()), null == ca.deleteExpando) {
-            ca.deleteExpando = !0;
+        var input = document.createElement("input"), div = document.createElement("div"), fragment = document.createDocumentFragment();
+        if (div.innerHTML = "  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>", 
+        support.leadingWhitespace = 3 === div.firstChild.nodeType, support.tbody = !div.getElementsByTagName("tbody").length, 
+        support.htmlSerialize = !!div.getElementsByTagName("link").length, support.html5Clone = "<:nav></:nav>" !== document.createElement("nav").cloneNode(!0).outerHTML, 
+        input.type = "checkbox", input.checked = !0, fragment.appendChild(input), support.appendChecked = input.checked, 
+        div.innerHTML = "<textarea>x</textarea>", support.noCloneChecked = !!div.cloneNode(!0).lastChild.defaultValue, 
+        fragment.appendChild(div), div.innerHTML = "<input type='radio' checked='checked' name='t'/>", 
+        support.checkClone = div.cloneNode(!0).cloneNode(!0).lastChild.checked, support.noCloneEvent = !0, 
+        div.attachEvent && (div.attachEvent("onclick", function() {
+            support.noCloneEvent = !1;
+        }), div.cloneNode(!0).click()), null == support.deleteExpando) {
+            support.deleteExpando = !0;
             try {
-                delete b.test;
-            } catch (d) {
-                ca.deleteExpando = !1;
+                delete div.test;
+            } catch (e) {
+                support.deleteExpando = !1;
             }
         }
     }(), function() {
-        var b, c, d = oa.createElement("div");
-        for (b in {
+        var i, eventName, div = document.createElement("div");
+        for (i in {
             submit: !0,
             change: !0,
             focusin: !0
-        }) c = "on" + b, (ca[b + "Bubbles"] = c in a) || (d.setAttribute(c, "t"), ca[b + "Bubbles"] = d.attributes[c].expando === !1);
-        d = null;
+        }) eventName = "on" + i, (support[i + "Bubbles"] = eventName in window) || (div.setAttribute(eventName, "t"), 
+        support[i + "Bubbles"] = div.attributes[eventName].expando === !1);
+        div = null;
     }();
-    var Fa = /^(?:input|select|textarea)$/i, Ga = /^key/, Ha = /^(?:mouse|pointer|contextmenu)|click/, Ia = /^(?:focusinfocus|focusoutblur)$/, Ja = /^([^.]*)(?:\.(.+)|)$/;
-    ea.event = {
+    var rformElems = /^(?:input|select|textarea)$/i, rkeyEvent = /^key/, rmouseEvent = /^(?:mouse|pointer|contextmenu)|click/, rfocusMorph = /^(?:focusinfocus|focusoutblur)$/, rtypenamespace = /^([^.]*)(?:\.(.+)|)$/;
+    jQuery.event = {
         global: {},
-        add: function(a, b, c, d, e) {
-            var f, g, h, i, j, k, l, m, n, o, p, q = ea._data(a);
-            if (q) {
-                for (c.handler && (i = c, c = i.handler, e = i.selector), c.guid || (c.guid = ea.guid++), 
-                (g = q.events) || (g = q.events = {}), (k = q.handle) || (k = q.handle = function(a) {
-                    return typeof ea === xa || a && ea.event.triggered === a.type ? void 0 : ea.event.dispatch.apply(k.elem, arguments);
-                }, k.elem = a), b = (b || "").match(ta) || [ "" ], h = b.length; h--; ) f = Ja.exec(b[h]) || [], 
-                n = p = f[1], o = (f[2] || "").split(".").sort(), n && (j = ea.event.special[n] || {}, 
-                n = (e ? j.delegateType : j.bindType) || n, j = ea.event.special[n] || {}, l = ea.extend({
-                    type: n,
-                    origType: p,
-                    data: d,
-                    handler: c,
-                    guid: c.guid,
-                    selector: e,
-                    needsContext: e && ea.expr.match.needsContext.test(e),
-                    namespace: o.join(".")
-                }, i), (m = g[n]) || (m = g[n] = [], m.delegateCount = 0, j.setup && j.setup.call(a, d, o, k) !== !1 || (a.addEventListener ? a.addEventListener(n, k, !1) : a.attachEvent && a.attachEvent("on" + n, k))), 
-                j.add && (j.add.call(a, l), l.handler.guid || (l.handler.guid = c.guid)), e ? m.splice(m.delegateCount++, 0, l) : m.push(l), 
-                ea.event.global[n] = !0);
-                a = null;
+        add: function(elem, types, handler, data, selector) {
+            var tmp, events, t, handleObjIn, special, eventHandle, handleObj, handlers, type, namespaces, origType, elemData = jQuery._data(elem);
+            if (elemData) {
+                for (handler.handler && (handleObjIn = handler, handler = handleObjIn.handler, selector = handleObjIn.selector), 
+                handler.guid || (handler.guid = jQuery.guid++), (events = elemData.events) || (events = elemData.events = {}), 
+                (eventHandle = elemData.handle) || (eventHandle = elemData.handle = function(e) {
+                    return typeof jQuery === strundefined || e && jQuery.event.triggered === e.type ? void 0 : jQuery.event.dispatch.apply(eventHandle.elem, arguments);
+                }, eventHandle.elem = elem), types = (types || "").match(rnotwhite) || [ "" ], t = types.length; t--; ) tmp = rtypenamespace.exec(types[t]) || [], 
+                type = origType = tmp[1], namespaces = (tmp[2] || "").split(".").sort(), type && (special = jQuery.event.special[type] || {}, 
+                type = (selector ? special.delegateType : special.bindType) || type, special = jQuery.event.special[type] || {}, 
+                handleObj = jQuery.extend({
+                    type: type,
+                    origType: origType,
+                    data: data,
+                    handler: handler,
+                    guid: handler.guid,
+                    selector: selector,
+                    needsContext: selector && jQuery.expr.match.needsContext.test(selector),
+                    namespace: namespaces.join(".")
+                }, handleObjIn), (handlers = events[type]) || (handlers = events[type] = [], handlers.delegateCount = 0, 
+                special.setup && special.setup.call(elem, data, namespaces, eventHandle) !== !1 || (elem.addEventListener ? elem.addEventListener(type, eventHandle, !1) : elem.attachEvent && elem.attachEvent("on" + type, eventHandle))), 
+                special.add && (special.add.call(elem, handleObj), handleObj.handler.guid || (handleObj.handler.guid = handler.guid)), 
+                selector ? handlers.splice(handlers.delegateCount++, 0, handleObj) : handlers.push(handleObj), 
+                jQuery.event.global[type] = !0);
+                elem = null;
             }
         },
-        remove: function(a, b, c, d, e) {
-            var f, g, h, i, j, k, l, m, n, o, p, q = ea.hasData(a) && ea._data(a);
-            if (q && (k = q.events)) {
-                for (b = (b || "").match(ta) || [ "" ], j = b.length; j--; ) if (h = Ja.exec(b[j]) || [], 
-                n = p = h[1], o = (h[2] || "").split(".").sort(), n) {
-                    for (l = ea.event.special[n] || {}, n = (d ? l.delegateType : l.bindType) || n, 
-                    m = k[n] || [], h = h[2] && new RegExp("(^|\\.)" + o.join("\\.(?:.*\\.|)") + "(\\.|$)"), 
-                    i = f = m.length; f--; ) g = m[f], !e && p !== g.origType || c && c.guid !== g.guid || h && !h.test(g.namespace) || d && d !== g.selector && ("**" !== d || !g.selector) || (m.splice(f, 1), 
-                    g.selector && m.delegateCount--, l.remove && l.remove.call(a, g));
-                    i && !m.length && (l.teardown && l.teardown.call(a, o, q.handle) !== !1 || ea.removeEvent(a, n, q.handle), 
-                    delete k[n]);
-                } else for (n in k) ea.event.remove(a, n + b[j], c, d, !0);
-                ea.isEmptyObject(k) && (delete q.handle, ea._removeData(a, "events"));
+        remove: function(elem, types, handler, selector, mappedTypes) {
+            var j, handleObj, tmp, origCount, t, events, special, handlers, type, namespaces, origType, elemData = jQuery.hasData(elem) && jQuery._data(elem);
+            if (elemData && (events = elemData.events)) {
+                for (types = (types || "").match(rnotwhite) || [ "" ], t = types.length; t--; ) if (tmp = rtypenamespace.exec(types[t]) || [], 
+                type = origType = tmp[1], namespaces = (tmp[2] || "").split(".").sort(), type) {
+                    for (special = jQuery.event.special[type] || {}, type = (selector ? special.delegateType : special.bindType) || type, 
+                    handlers = events[type] || [], tmp = tmp[2] && new RegExp("(^|\\.)" + namespaces.join("\\.(?:.*\\.|)") + "(\\.|$)"), 
+                    origCount = j = handlers.length; j--; ) handleObj = handlers[j], !mappedTypes && origType !== handleObj.origType || handler && handler.guid !== handleObj.guid || tmp && !tmp.test(handleObj.namespace) || selector && selector !== handleObj.selector && ("**" !== selector || !handleObj.selector) || (handlers.splice(j, 1), 
+                    handleObj.selector && handlers.delegateCount--, special.remove && special.remove.call(elem, handleObj));
+                    origCount && !handlers.length && (special.teardown && special.teardown.call(elem, namespaces, elemData.handle) !== !1 || jQuery.removeEvent(elem, type, elemData.handle), 
+                    delete events[type]);
+                } else for (type in events) jQuery.event.remove(elem, type + types[t], handler, selector, !0);
+                jQuery.isEmptyObject(events) && (delete elemData.handle, jQuery._removeData(elem, "events"));
             }
         },
-        trigger: function(b, c, d, e) {
-            var f, g, h, i, j, k, l, m = [ d || oa ], n = ba.call(b, "type") ? b.type : b, o = ba.call(b, "namespace") ? b.namespace.split(".") : [];
-            if (h = k = d = d || oa, 3 !== d.nodeType && 8 !== d.nodeType && !Ia.test(n + ea.event.triggered) && (n.indexOf(".") >= 0 && (o = n.split("."), 
-            n = o.shift(), o.sort()), g = n.indexOf(":") < 0 && "on" + n, b = b[ea.expando] ? b : new ea.Event(n, "object" == typeof b && b), 
-            b.isTrigger = e ? 2 : 3, b.namespace = o.join("."), b.namespace_re = b.namespace ? new RegExp("(^|\\.)" + o.join("\\.(?:.*\\.|)") + "(\\.|$)") : null, 
-            b.result = void 0, b.target || (b.target = d), c = null == c ? [ b ] : ea.makeArray(c, [ b ]), 
-            j = ea.event.special[n] || {}, e || !j.trigger || j.trigger.apply(d, c) !== !1)) {
-                if (!e && !j.noBubble && !ea.isWindow(d)) {
-                    for (i = j.delegateType || n, Ia.test(i + n) || (h = h.parentNode); h; h = h.parentNode) m.push(h), 
-                    k = h;
-                    k === (d.ownerDocument || oa) && m.push(k.defaultView || k.parentWindow || a);
+        trigger: function(event, data, elem, onlyHandlers) {
+            var handle, ontype, cur, bubbleType, special, tmp, i, eventPath = [ elem || document ], type = hasOwn.call(event, "type") ? event.type : event, namespaces = hasOwn.call(event, "namespace") ? event.namespace.split(".") : [];
+            if (cur = tmp = elem = elem || document, 3 !== elem.nodeType && 8 !== elem.nodeType && !rfocusMorph.test(type + jQuery.event.triggered) && (type.indexOf(".") >= 0 && (namespaces = type.split("."), 
+            type = namespaces.shift(), namespaces.sort()), ontype = type.indexOf(":") < 0 && "on" + type, 
+            event = event[jQuery.expando] ? event : new jQuery.Event(type, "object" == typeof event && event), 
+            event.isTrigger = onlyHandlers ? 2 : 3, event.namespace = namespaces.join("."), 
+            event.namespace_re = event.namespace ? new RegExp("(^|\\.)" + namespaces.join("\\.(?:.*\\.|)") + "(\\.|$)") : null, 
+            event.result = void 0, event.target || (event.target = elem), data = null == data ? [ event ] : jQuery.makeArray(data, [ event ]), 
+            special = jQuery.event.special[type] || {}, onlyHandlers || !special.trigger || special.trigger.apply(elem, data) !== !1)) {
+                if (!onlyHandlers && !special.noBubble && !jQuery.isWindow(elem)) {
+                    for (bubbleType = special.delegateType || type, rfocusMorph.test(bubbleType + type) || (cur = cur.parentNode); cur; cur = cur.parentNode) eventPath.push(cur), 
+                    tmp = cur;
+                    tmp === (elem.ownerDocument || document) && eventPath.push(tmp.defaultView || tmp.parentWindow || window);
                 }
-                for (l = 0; (h = m[l++]) && !b.isPropagationStopped(); ) b.type = l > 1 ? i : j.bindType || n, 
-                f = (ea._data(h, "events") || {})[b.type] && ea._data(h, "handle"), f && f.apply(h, c), 
-                f = g && h[g], f && f.apply && ea.acceptData(h) && (b.result = f.apply(h, c), b.result === !1 && b.preventDefault());
-                if (b.type = n, !e && !b.isDefaultPrevented() && (!j._default || j._default.apply(m.pop(), c) === !1) && ea.acceptData(d) && g && d[n] && !ea.isWindow(d)) {
-                    k = d[g], k && (d[g] = null), ea.event.triggered = n;
+                for (i = 0; (cur = eventPath[i++]) && !event.isPropagationStopped(); ) event.type = i > 1 ? bubbleType : special.bindType || type, 
+                handle = (jQuery._data(cur, "events") || {})[event.type] && jQuery._data(cur, "handle"), 
+                handle && handle.apply(cur, data), handle = ontype && cur[ontype], handle && handle.apply && jQuery.acceptData(cur) && (event.result = handle.apply(cur, data), 
+                event.result === !1 && event.preventDefault());
+                if (event.type = type, !onlyHandlers && !event.isDefaultPrevented() && (!special._default || special._default.apply(eventPath.pop(), data) === !1) && jQuery.acceptData(elem) && ontype && elem[type] && !jQuery.isWindow(elem)) {
+                    tmp = elem[ontype], tmp && (elem[ontype] = null), jQuery.event.triggered = type;
                     try {
-                        d[n]();
-                    } catch (p) {}
-                    ea.event.triggered = void 0, k && (d[g] = k);
+                        elem[type]();
+                    } catch (e) {}
+                    jQuery.event.triggered = void 0, tmp && (elem[ontype] = tmp);
                 }
-                return b.result;
+                return event.result;
             }
         },
-        dispatch: function(a) {
-            a = ea.event.fix(a);
-            var b, c, d, e, f, g = [], h = X.call(arguments), i = (ea._data(this, "events") || {})[a.type] || [], j = ea.event.special[a.type] || {};
-            if (h[0] = a, a.delegateTarget = this, !j.preDispatch || j.preDispatch.call(this, a) !== !1) {
-                for (g = ea.event.handlers.call(this, a, i), b = 0; (e = g[b++]) && !a.isPropagationStopped(); ) for (a.currentTarget = e.elem, 
-                f = 0; (d = e.handlers[f++]) && !a.isImmediatePropagationStopped(); ) (!a.namespace_re || a.namespace_re.test(d.namespace)) && (a.handleObj = d, 
-                a.data = d.data, c = ((ea.event.special[d.origType] || {}).handle || d.handler).apply(e.elem, h), 
-                void 0 !== c && (a.result = c) === !1 && (a.preventDefault(), a.stopPropagation()));
-                return j.postDispatch && j.postDispatch.call(this, a), a.result;
+        dispatch: function(event) {
+            event = jQuery.event.fix(event);
+            var i, ret, handleObj, matched, j, handlerQueue = [], args = slice.call(arguments), handlers = (jQuery._data(this, "events") || {})[event.type] || [], special = jQuery.event.special[event.type] || {};
+            if (args[0] = event, event.delegateTarget = this, !special.preDispatch || special.preDispatch.call(this, event) !== !1) {
+                for (handlerQueue = jQuery.event.handlers.call(this, event, handlers), i = 0; (matched = handlerQueue[i++]) && !event.isPropagationStopped(); ) for (event.currentTarget = matched.elem, 
+                j = 0; (handleObj = matched.handlers[j++]) && !event.isImmediatePropagationStopped(); ) (!event.namespace_re || event.namespace_re.test(handleObj.namespace)) && (event.handleObj = handleObj, 
+                event.data = handleObj.data, ret = ((jQuery.event.special[handleObj.origType] || {}).handle || handleObj.handler).apply(matched.elem, args), 
+                void 0 !== ret && (event.result = ret) === !1 && (event.preventDefault(), event.stopPropagation()));
+                return special.postDispatch && special.postDispatch.call(this, event), event.result;
             }
         },
-        handlers: function(a, b) {
-            var c, d, e, f, g = [], h = b.delegateCount, i = a.target;
-            if (h && i.nodeType && (!a.button || "click" !== a.type)) for (;i != this; i = i.parentNode || this) if (1 === i.nodeType && (i.disabled !== !0 || "click" !== a.type)) {
-                for (e = [], f = 0; h > f; f++) d = b[f], c = d.selector + " ", void 0 === e[c] && (e[c] = d.needsContext ? ea(c, this).index(i) >= 0 : ea.find(c, this, null, [ i ]).length), 
-                e[c] && e.push(d);
-                e.length && g.push({
-                    elem: i,
-                    handlers: e
+        handlers: function(event, handlers) {
+            var sel, handleObj, matches, i, handlerQueue = [], delegateCount = handlers.delegateCount, cur = event.target;
+            if (delegateCount && cur.nodeType && (!event.button || "click" !== event.type)) for (;cur != this; cur = cur.parentNode || this) if (1 === cur.nodeType && (cur.disabled !== !0 || "click" !== event.type)) {
+                for (matches = [], i = 0; delegateCount > i; i++) handleObj = handlers[i], sel = handleObj.selector + " ", 
+                void 0 === matches[sel] && (matches[sel] = handleObj.needsContext ? jQuery(sel, this).index(cur) >= 0 : jQuery.find(sel, this, null, [ cur ]).length), 
+                matches[sel] && matches.push(handleObj);
+                matches.length && handlerQueue.push({
+                    elem: cur,
+                    handlers: matches
                 });
             }
-            return h < b.length && g.push({
+            return delegateCount < handlers.length && handlerQueue.push({
                 elem: this,
-                handlers: b.slice(h)
-            }), g;
+                handlers: handlers.slice(delegateCount)
+            }), handlerQueue;
         },
-        fix: function(a) {
-            if (a[ea.expando]) return a;
-            var b, c, d, e = a.type, f = a, g = this.fixHooks[e];
-            for (g || (this.fixHooks[e] = g = Ha.test(e) ? this.mouseHooks : Ga.test(e) ? this.keyHooks : {}), 
-            d = g.props ? this.props.concat(g.props) : this.props, a = new ea.Event(f), b = d.length; b--; ) c = d[b], 
-            a[c] = f[c];
-            return a.target || (a.target = f.srcElement || oa), 3 === a.target.nodeType && (a.target = a.target.parentNode), 
-            a.metaKey = !!a.metaKey, g.filter ? g.filter(a, f) : a;
+        fix: function(event) {
+            if (event[jQuery.expando]) return event;
+            var i, prop, copy, type = event.type, originalEvent = event, fixHook = this.fixHooks[type];
+            for (fixHook || (this.fixHooks[type] = fixHook = rmouseEvent.test(type) ? this.mouseHooks : rkeyEvent.test(type) ? this.keyHooks : {}), 
+            copy = fixHook.props ? this.props.concat(fixHook.props) : this.props, event = new jQuery.Event(originalEvent), 
+            i = copy.length; i--; ) prop = copy[i], event[prop] = originalEvent[prop];
+            return event.target || (event.target = originalEvent.srcElement || document), 3 === event.target.nodeType && (event.target = event.target.parentNode), 
+            event.metaKey = !!event.metaKey, fixHook.filter ? fixHook.filter(event, originalEvent) : event;
         },
         props: "altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey relatedTarget shiftKey target timeStamp view which".split(" "),
         fixHooks: {},
         keyHooks: {
             props: "char charCode key keyCode".split(" "),
-            filter: function(a, b) {
-                return null == a.which && (a.which = null != b.charCode ? b.charCode : b.keyCode), 
-                a;
+            filter: function(event, original) {
+                return null == event.which && (event.which = null != original.charCode ? original.charCode : original.keyCode), 
+                event;
             }
         },
         mouseHooks: {
             props: "button buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),
-            filter: function(a, b) {
-                var c, d, e, f = b.button, g = b.fromElement;
-                return null == a.pageX && null != b.clientX && (d = a.target.ownerDocument || oa, 
-                e = d.documentElement, c = d.body, a.pageX = b.clientX + (e && e.scrollLeft || c && c.scrollLeft || 0) - (e && e.clientLeft || c && c.clientLeft || 0), 
-                a.pageY = b.clientY + (e && e.scrollTop || c && c.scrollTop || 0) - (e && e.clientTop || c && c.clientTop || 0)), 
-                !a.relatedTarget && g && (a.relatedTarget = g === a.target ? b.toElement : g), a.which || void 0 === f || (a.which = 1 & f ? 1 : 2 & f ? 3 : 4 & f ? 2 : 0), 
-                a;
+            filter: function(event, original) {
+                var body, eventDoc, doc, button = original.button, fromElement = original.fromElement;
+                return null == event.pageX && null != original.clientX && (eventDoc = event.target.ownerDocument || document, 
+                doc = eventDoc.documentElement, body = eventDoc.body, event.pageX = original.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0), 
+                event.pageY = original.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc && doc.clientTop || body && body.clientTop || 0)), 
+                !event.relatedTarget && fromElement && (event.relatedTarget = fromElement === event.target ? original.toElement : fromElement), 
+                event.which || void 0 === button || (event.which = 1 & button ? 1 : 2 & button ? 3 : 4 & button ? 2 : 0), 
+                event;
             }
         },
         special: {
@@ -1708,177 +1776,183 @@ function detectSidebar() {
             },
             focus: {
                 trigger: function() {
-                    if (this !== o() && this.focus) try {
+                    if (this !== safeActiveElement() && this.focus) try {
                         return this.focus(), !1;
-                    } catch (a) {}
+                    } catch (e) {}
                 },
                 delegateType: "focusin"
             },
             blur: {
                 trigger: function() {
-                    return this === o() && this.blur ? (this.blur(), !1) : void 0;
+                    return this === safeActiveElement() && this.blur ? (this.blur(), !1) : void 0;
                 },
                 delegateType: "focusout"
             },
             click: {
                 trigger: function() {
-                    return ea.nodeName(this, "input") && "checkbox" === this.type && this.click ? (this.click(), 
+                    return jQuery.nodeName(this, "input") && "checkbox" === this.type && this.click ? (this.click(), 
                     !1) : void 0;
                 },
-                _default: function(a) {
-                    return ea.nodeName(a.target, "a");
+                _default: function(event) {
+                    return jQuery.nodeName(event.target, "a");
                 }
             },
             beforeunload: {
-                postDispatch: function(a) {
-                    void 0 !== a.result && a.originalEvent && (a.originalEvent.returnValue = a.result);
+                postDispatch: function(event) {
+                    void 0 !== event.result && event.originalEvent && (event.originalEvent.returnValue = event.result);
                 }
             }
         },
-        simulate: function(a, b, c, d) {
-            var e = ea.extend(new ea.Event(), c, {
-                type: a,
+        simulate: function(type, elem, event, bubble) {
+            var e = jQuery.extend(new jQuery.Event(), event, {
+                type: type,
                 isSimulated: !0,
                 originalEvent: {}
             });
-            d ? ea.event.trigger(e, null, b) : ea.event.dispatch.call(b, e), e.isDefaultPrevented() && c.preventDefault();
+            bubble ? jQuery.event.trigger(e, null, elem) : jQuery.event.dispatch.call(elem, e), 
+            e.isDefaultPrevented() && event.preventDefault();
         }
-    }, ea.removeEvent = oa.removeEventListener ? function(a, b, c) {
-        a.removeEventListener && a.removeEventListener(b, c, !1);
-    } : function(a, b, c) {
-        var d = "on" + b;
-        a.detachEvent && (typeof a[d] === xa && (a[d] = null), a.detachEvent(d, c));
-    }, ea.Event = function(a, b) {
-        return this instanceof ea.Event ? (a && a.type ? (this.originalEvent = a, this.type = a.type, 
-        this.isDefaultPrevented = a.defaultPrevented || void 0 === a.defaultPrevented && a.returnValue === !1 ? m : n) : this.type = a, 
-        b && ea.extend(this, b), this.timeStamp = a && a.timeStamp || ea.now(), void (this[ea.expando] = !0)) : new ea.Event(a, b);
-    }, ea.Event.prototype = {
-        isDefaultPrevented: n,
-        isPropagationStopped: n,
-        isImmediatePropagationStopped: n,
+    }, jQuery.removeEvent = document.removeEventListener ? function(elem, type, handle) {
+        elem.removeEventListener && elem.removeEventListener(type, handle, !1);
+    } : function(elem, type, handle) {
+        var name = "on" + type;
+        elem.detachEvent && (typeof elem[name] === strundefined && (elem[name] = null), 
+        elem.detachEvent(name, handle));
+    }, jQuery.Event = function(src, props) {
+        return this instanceof jQuery.Event ? (src && src.type ? (this.originalEvent = src, 
+        this.type = src.type, this.isDefaultPrevented = src.defaultPrevented || void 0 === src.defaultPrevented && src.returnValue === !1 ? returnTrue : returnFalse) : this.type = src, 
+        props && jQuery.extend(this, props), this.timeStamp = src && src.timeStamp || jQuery.now(), 
+        void (this[jQuery.expando] = !0)) : new jQuery.Event(src, props);
+    }, jQuery.Event.prototype = {
+        isDefaultPrevented: returnFalse,
+        isPropagationStopped: returnFalse,
+        isImmediatePropagationStopped: returnFalse,
         preventDefault: function() {
-            var a = this.originalEvent;
-            this.isDefaultPrevented = m, a && (a.preventDefault ? a.preventDefault() : a.returnValue = !1);
+            var e = this.originalEvent;
+            this.isDefaultPrevented = returnTrue, e && (e.preventDefault ? e.preventDefault() : e.returnValue = !1);
         },
         stopPropagation: function() {
-            var a = this.originalEvent;
-            this.isPropagationStopped = m, a && (a.stopPropagation && a.stopPropagation(), a.cancelBubble = !0);
+            var e = this.originalEvent;
+            this.isPropagationStopped = returnTrue, e && (e.stopPropagation && e.stopPropagation(), 
+            e.cancelBubble = !0);
         },
         stopImmediatePropagation: function() {
-            var a = this.originalEvent;
-            this.isImmediatePropagationStopped = m, a && a.stopImmediatePropagation && a.stopImmediatePropagation(), 
+            var e = this.originalEvent;
+            this.isImmediatePropagationStopped = returnTrue, e && e.stopImmediatePropagation && e.stopImmediatePropagation(), 
             this.stopPropagation();
         }
-    }, ea.each({
+    }, jQuery.each({
         mouseenter: "mouseover",
         mouseleave: "mouseout",
         pointerenter: "pointerover",
         pointerleave: "pointerout"
-    }, function(a, b) {
-        ea.event.special[a] = {
-            delegateType: b,
-            bindType: b,
-            handle: function(a) {
-                var c, d = this, e = a.relatedTarget, f = a.handleObj;
-                return (!e || e !== d && !ea.contains(d, e)) && (a.type = f.origType, c = f.handler.apply(this, arguments), 
-                a.type = b), c;
+    }, function(orig, fix) {
+        jQuery.event.special[orig] = {
+            delegateType: fix,
+            bindType: fix,
+            handle: function(event) {
+                var ret, target = this, related = event.relatedTarget, handleObj = event.handleObj;
+                return (!related || related !== target && !jQuery.contains(target, related)) && (event.type = handleObj.origType, 
+                ret = handleObj.handler.apply(this, arguments), event.type = fix), ret;
             }
         };
-    }), ca.submitBubbles || (ea.event.special.submit = {
+    }), support.submitBubbles || (jQuery.event.special.submit = {
         setup: function() {
-            return ea.nodeName(this, "form") ? !1 : void ea.event.add(this, "click._submit keypress._submit", function(a) {
-                var b = a.target, c = ea.nodeName(b, "input") || ea.nodeName(b, "button") ? b.form : void 0;
-                c && !ea._data(c, "submitBubbles") && (ea.event.add(c, "submit._submit", function(a) {
-                    a._submit_bubble = !0;
-                }), ea._data(c, "submitBubbles", !0));
+            return jQuery.nodeName(this, "form") ? !1 : void jQuery.event.add(this, "click._submit keypress._submit", function(e) {
+                var elem = e.target, form = jQuery.nodeName(elem, "input") || jQuery.nodeName(elem, "button") ? elem.form : void 0;
+                form && !jQuery._data(form, "submitBubbles") && (jQuery.event.add(form, "submit._submit", function(event) {
+                    event._submit_bubble = !0;
+                }), jQuery._data(form, "submitBubbles", !0));
             });
         },
-        postDispatch: function(a) {
-            a._submit_bubble && (delete a._submit_bubble, this.parentNode && !a.isTrigger && ea.event.simulate("submit", this.parentNode, a, !0));
+        postDispatch: function(event) {
+            event._submit_bubble && (delete event._submit_bubble, this.parentNode && !event.isTrigger && jQuery.event.simulate("submit", this.parentNode, event, !0));
         },
         teardown: function() {
-            return ea.nodeName(this, "form") ? !1 : void ea.event.remove(this, "._submit");
+            return jQuery.nodeName(this, "form") ? !1 : void jQuery.event.remove(this, "._submit");
         }
-    }), ca.changeBubbles || (ea.event.special.change = {
+    }), support.changeBubbles || (jQuery.event.special.change = {
         setup: function() {
-            return Fa.test(this.nodeName) ? (("checkbox" === this.type || "radio" === this.type) && (ea.event.add(this, "propertychange._change", function(a) {
-                "checked" === a.originalEvent.propertyName && (this._just_changed = !0);
-            }), ea.event.add(this, "click._change", function(a) {
-                this._just_changed && !a.isTrigger && (this._just_changed = !1), ea.event.simulate("change", this, a, !0);
-            })), !1) : void ea.event.add(this, "beforeactivate._change", function(a) {
-                var b = a.target;
-                Fa.test(b.nodeName) && !ea._data(b, "changeBubbles") && (ea.event.add(b, "change._change", function(a) {
-                    !this.parentNode || a.isSimulated || a.isTrigger || ea.event.simulate("change", this.parentNode, a, !0);
-                }), ea._data(b, "changeBubbles", !0));
+            return rformElems.test(this.nodeName) ? (("checkbox" === this.type || "radio" === this.type) && (jQuery.event.add(this, "propertychange._change", function(event) {
+                "checked" === event.originalEvent.propertyName && (this._just_changed = !0);
+            }), jQuery.event.add(this, "click._change", function(event) {
+                this._just_changed && !event.isTrigger && (this._just_changed = !1), jQuery.event.simulate("change", this, event, !0);
+            })), !1) : void jQuery.event.add(this, "beforeactivate._change", function(e) {
+                var elem = e.target;
+                rformElems.test(elem.nodeName) && !jQuery._data(elem, "changeBubbles") && (jQuery.event.add(elem, "change._change", function(event) {
+                    !this.parentNode || event.isSimulated || event.isTrigger || jQuery.event.simulate("change", this.parentNode, event, !0);
+                }), jQuery._data(elem, "changeBubbles", !0));
             });
         },
-        handle: function(a) {
-            var b = a.target;
-            return this !== b || a.isSimulated || a.isTrigger || "radio" !== b.type && "checkbox" !== b.type ? a.handleObj.handler.apply(this, arguments) : void 0;
+        handle: function(event) {
+            var elem = event.target;
+            return this !== elem || event.isSimulated || event.isTrigger || "radio" !== elem.type && "checkbox" !== elem.type ? event.handleObj.handler.apply(this, arguments) : void 0;
         },
         teardown: function() {
-            return ea.event.remove(this, "._change"), !Fa.test(this.nodeName);
+            return jQuery.event.remove(this, "._change"), !rformElems.test(this.nodeName);
         }
-    }), ca.focusinBubbles || ea.each({
+    }), support.focusinBubbles || jQuery.each({
         focus: "focusin",
         blur: "focusout"
-    }, function(a, b) {
-        var c = function(a) {
-            ea.event.simulate(b, a.target, ea.event.fix(a), !0);
+    }, function(orig, fix) {
+        var handler = function(event) {
+            jQuery.event.simulate(fix, event.target, jQuery.event.fix(event), !0);
         };
-        ea.event.special[b] = {
+        jQuery.event.special[fix] = {
             setup: function() {
-                var d = this.ownerDocument || this, e = ea._data(d, b);
-                e || d.addEventListener(a, c, !0), ea._data(d, b, (e || 0) + 1);
+                var doc = this.ownerDocument || this, attaches = jQuery._data(doc, fix);
+                attaches || doc.addEventListener(orig, handler, !0), jQuery._data(doc, fix, (attaches || 0) + 1);
             },
             teardown: function() {
-                var d = this.ownerDocument || this, e = ea._data(d, b) - 1;
-                e ? ea._data(d, b, e) : (d.removeEventListener(a, c, !0), ea._removeData(d, b));
+                var doc = this.ownerDocument || this, attaches = jQuery._data(doc, fix) - 1;
+                attaches ? jQuery._data(doc, fix, attaches) : (doc.removeEventListener(orig, handler, !0), 
+                jQuery._removeData(doc, fix));
             }
         };
-    }), ea.fn.extend({
-        on: function(a, b, c, d, e) {
-            var f, g;
-            if ("object" == typeof a) {
-                "string" != typeof b && (c = c || b, b = void 0);
-                for (f in a) this.on(f, b, c, a[f], e);
+    }), jQuery.fn.extend({
+        on: function(types, selector, data, fn, one) {
+            var type, origFn;
+            if ("object" == typeof types) {
+                "string" != typeof selector && (data = data || selector, selector = void 0);
+                for (type in types) this.on(type, selector, data, types[type], one);
                 return this;
             }
-            if (null == c && null == d ? (d = b, c = b = void 0) : null == d && ("string" == typeof b ? (d = c, 
-            c = void 0) : (d = c, c = b, b = void 0)), d === !1) d = n; else if (!d) return this;
-            return 1 === e && (g = d, d = function(a) {
-                return ea().off(a), g.apply(this, arguments);
-            }, d.guid = g.guid || (g.guid = ea.guid++)), this.each(function() {
-                ea.event.add(this, a, d, c, b);
+            if (null == data && null == fn ? (fn = selector, data = selector = void 0) : null == fn && ("string" == typeof selector ? (fn = data, 
+            data = void 0) : (fn = data, data = selector, selector = void 0)), fn === !1) fn = returnFalse; else if (!fn) return this;
+            return 1 === one && (origFn = fn, fn = function(event) {
+                return jQuery().off(event), origFn.apply(this, arguments);
+            }, fn.guid = origFn.guid || (origFn.guid = jQuery.guid++)), this.each(function() {
+                jQuery.event.add(this, types, fn, data, selector);
             });
         },
-        one: function(a, b, c, d) {
-            return this.on(a, b, c, d, 1);
+        one: function(types, selector, data, fn) {
+            return this.on(types, selector, data, fn, 1);
         },
-        off: function(a, b, c) {
-            var d, e;
-            if (a && a.preventDefault && a.handleObj) return d = a.handleObj, ea(a.delegateTarget).off(d.namespace ? d.origType + "." + d.namespace : d.origType, d.selector, d.handler), 
+        off: function(types, selector, fn) {
+            var handleObj, type;
+            if (types && types.preventDefault && types.handleObj) return handleObj = types.handleObj, 
+            jQuery(types.delegateTarget).off(handleObj.namespace ? handleObj.origType + "." + handleObj.namespace : handleObj.origType, handleObj.selector, handleObj.handler), 
             this;
-            if ("object" == typeof a) {
-                for (e in a) this.off(e, b, a[e]);
+            if ("object" == typeof types) {
+                for (type in types) this.off(type, selector, types[type]);
                 return this;
             }
-            return (b === !1 || "function" == typeof b) && (c = b, b = void 0), c === !1 && (c = n), 
-            this.each(function() {
-                ea.event.remove(this, a, c, b);
+            return (selector === !1 || "function" == typeof selector) && (fn = selector, selector = void 0), 
+            fn === !1 && (fn = returnFalse), this.each(function() {
+                jQuery.event.remove(this, types, fn, selector);
             });
         },
-        trigger: function(a, b) {
+        trigger: function(type, data) {
             return this.each(function() {
-                ea.event.trigger(a, b, this);
+                jQuery.event.trigger(type, data, this);
             });
         },
-        triggerHandler: function(a, b) {
-            var c = this[0];
-            return c ? ea.event.trigger(a, b, c, !0) : void 0;
+        triggerHandler: function(type, data) {
+            var elem = this[0];
+            return elem ? jQuery.event.trigger(type, data, elem, !0) : void 0;
         }
     });
-    var Ka = "abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video", La = / jQuery\d+="(?:null|\d+)"/g, Ma = new RegExp("<(?:" + Ka + ")[\\s/>]", "i"), Na = /^\s+/, Oa = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi, Pa = /<([\w:]+)/, Qa = /<tbody/i, Ra = /<|&#?\w+;/, Sa = /<(?:script|style|link)/i, Ta = /checked\s*(?:[^=]|=\s*.checked.)/i, Ua = /^$|\/(?:java|ecma)script/i, Va = /^true\/(.*)/, Wa = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g, Xa = {
+    var nodeNames = "abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video", rinlinejQuery = / jQuery\d+="(?:null|\d+)"/g, rnoshimcache = new RegExp("<(?:" + nodeNames + ")[\\s/>]", "i"), rleadingWhitespace = /^\s+/, rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi, rtagName = /<([\w:]+)/, rtbody = /<tbody/i, rhtml = /<|&#?\w+;/, rnoInnerhtml = /<(?:script|style|link)/i, rchecked = /checked\s*(?:[^=]|=\s*.checked.)/i, rscriptType = /^$|\/(?:java|ecma)script/i, rscriptTypeMasked = /^true\/(.*)/, rcleanScript = /^\s*<!(?:\[CDATA\[|--)|(?:\]\]|--)>\s*$/g, wrapMap = {
         option: [ 1, "<select multiple='multiple'>", "</select>" ],
         legend: [ 1, "<fieldset>", "</fieldset>" ],
         area: [ 1, "<map>", "</map>" ],
@@ -1887,234 +1961,247 @@ function detectSidebar() {
         tr: [ 2, "<table><tbody>", "</tbody></table>" ],
         col: [ 2, "<table><tbody></tbody><colgroup>", "</colgroup></table>" ],
         td: [ 3, "<table><tbody><tr>", "</tr></tbody></table>" ],
-        _default: ca.htmlSerialize ? [ 0, "", "" ] : [ 1, "X<div>", "</div>" ]
-    }, Ya = p(oa), Za = Ya.appendChild(oa.createElement("div"));
-    Xa.optgroup = Xa.option, Xa.tbody = Xa.tfoot = Xa.colgroup = Xa.caption = Xa.thead, 
-    Xa.th = Xa.td, ea.extend({
-        clone: function(a, b, c) {
-            var d, e, f, g, h, i = ea.contains(a.ownerDocument, a);
-            if (ca.html5Clone || ea.isXMLDoc(a) || !Ma.test("<" + a.nodeName + ">") ? f = a.cloneNode(!0) : (Za.innerHTML = a.outerHTML, 
-            Za.removeChild(f = Za.firstChild)), !(ca.noCloneEvent && ca.noCloneChecked || 1 !== a.nodeType && 11 !== a.nodeType || ea.isXMLDoc(a))) for (d = q(f), 
-            h = q(a), g = 0; null != (e = h[g]); ++g) d[g] && x(e, d[g]);
-            if (b) if (c) for (h = h || q(a), d = d || q(f), g = 0; null != (e = h[g]); g++) w(e, d[g]); else w(a, f);
-            return d = q(f, "script"), d.length > 0 && v(d, !i && q(a, "script")), d = h = e = null, 
-            f;
+        _default: support.htmlSerialize ? [ 0, "", "" ] : [ 1, "X<div>", "</div>" ]
+    }, safeFragment = createSafeFragment(document), fragmentDiv = safeFragment.appendChild(document.createElement("div"));
+    wrapMap.optgroup = wrapMap.option, wrapMap.tbody = wrapMap.tfoot = wrapMap.colgroup = wrapMap.caption = wrapMap.thead, 
+    wrapMap.th = wrapMap.td, jQuery.extend({
+        clone: function(elem, dataAndEvents, deepDataAndEvents) {
+            var destElements, node, clone, i, srcElements, inPage = jQuery.contains(elem.ownerDocument, elem);
+            if (support.html5Clone || jQuery.isXMLDoc(elem) || !rnoshimcache.test("<" + elem.nodeName + ">") ? clone = elem.cloneNode(!0) : (fragmentDiv.innerHTML = elem.outerHTML, 
+            fragmentDiv.removeChild(clone = fragmentDiv.firstChild)), !(support.noCloneEvent && support.noCloneChecked || 1 !== elem.nodeType && 11 !== elem.nodeType || jQuery.isXMLDoc(elem))) for (destElements = getAll(clone), 
+            srcElements = getAll(elem), i = 0; null != (node = srcElements[i]); ++i) destElements[i] && fixCloneNodeIssues(node, destElements[i]);
+            if (dataAndEvents) if (deepDataAndEvents) for (srcElements = srcElements || getAll(elem), 
+            destElements = destElements || getAll(clone), i = 0; null != (node = srcElements[i]); i++) cloneCopyEvent(node, destElements[i]); else cloneCopyEvent(elem, clone);
+            return destElements = getAll(clone, "script"), destElements.length > 0 && setGlobalEval(destElements, !inPage && getAll(elem, "script")), 
+            destElements = srcElements = node = null, clone;
         },
-        buildFragment: function(a, b, c, d) {
-            for (var e, f, g, h, i, j, k, l = a.length, m = p(b), n = [], o = 0; l > o; o++) if (f = a[o], 
-            f || 0 === f) if ("object" === ea.type(f)) ea.merge(n, f.nodeType ? [ f ] : f); else if (Ra.test(f)) {
-                for (h = h || m.appendChild(b.createElement("div")), i = (Pa.exec(f) || [ "", "" ])[1].toLowerCase(), 
-                k = Xa[i] || Xa._default, h.innerHTML = k[1] + f.replace(Oa, "<$1></$2>") + k[2], 
-                e = k[0]; e--; ) h = h.lastChild;
-                if (!ca.leadingWhitespace && Na.test(f) && n.push(b.createTextNode(Na.exec(f)[0])), 
-                !ca.tbody) for (f = "table" !== i || Qa.test(f) ? "<table>" !== k[1] || Qa.test(f) ? 0 : h : h.firstChild, 
-                e = f && f.childNodes.length; e--; ) ea.nodeName(j = f.childNodes[e], "tbody") && !j.childNodes.length && f.removeChild(j);
-                for (ea.merge(n, h.childNodes), h.textContent = ""; h.firstChild; ) h.removeChild(h.firstChild);
-                h = m.lastChild;
-            } else n.push(b.createTextNode(f));
-            for (h && m.removeChild(h), ca.appendChecked || ea.grep(q(n, "input"), r), o = 0; f = n[o++]; ) if ((!d || -1 === ea.inArray(f, d)) && (g = ea.contains(f.ownerDocument, f), 
-            h = q(m.appendChild(f), "script"), g && v(h), c)) for (e = 0; f = h[e++]; ) Ua.test(f.type || "") && c.push(f);
-            return h = null, m;
+        buildFragment: function(elems, context, scripts, selection) {
+            for (var j, elem, contains, tmp, tag, tbody, wrap, l = elems.length, safe = createSafeFragment(context), nodes = [], i = 0; l > i; i++) if (elem = elems[i], 
+            elem || 0 === elem) if ("object" === jQuery.type(elem)) jQuery.merge(nodes, elem.nodeType ? [ elem ] : elem); else if (rhtml.test(elem)) {
+                for (tmp = tmp || safe.appendChild(context.createElement("div")), tag = (rtagName.exec(elem) || [ "", "" ])[1].toLowerCase(), 
+                wrap = wrapMap[tag] || wrapMap._default, tmp.innerHTML = wrap[1] + elem.replace(rxhtmlTag, "<$1></$2>") + wrap[2], 
+                j = wrap[0]; j--; ) tmp = tmp.lastChild;
+                if (!support.leadingWhitespace && rleadingWhitespace.test(elem) && nodes.push(context.createTextNode(rleadingWhitespace.exec(elem)[0])), 
+                !support.tbody) for (elem = "table" !== tag || rtbody.test(elem) ? "<table>" !== wrap[1] || rtbody.test(elem) ? 0 : tmp : tmp.firstChild, 
+                j = elem && elem.childNodes.length; j--; ) jQuery.nodeName(tbody = elem.childNodes[j], "tbody") && !tbody.childNodes.length && elem.removeChild(tbody);
+                for (jQuery.merge(nodes, tmp.childNodes), tmp.textContent = ""; tmp.firstChild; ) tmp.removeChild(tmp.firstChild);
+                tmp = safe.lastChild;
+            } else nodes.push(context.createTextNode(elem));
+            for (tmp && safe.removeChild(tmp), support.appendChecked || jQuery.grep(getAll(nodes, "input"), fixDefaultChecked), 
+            i = 0; elem = nodes[i++]; ) if ((!selection || -1 === jQuery.inArray(elem, selection)) && (contains = jQuery.contains(elem.ownerDocument, elem), 
+            tmp = getAll(safe.appendChild(elem), "script"), contains && setGlobalEval(tmp), 
+            scripts)) for (j = 0; elem = tmp[j++]; ) rscriptType.test(elem.type || "") && scripts.push(elem);
+            return tmp = null, safe;
         },
-        cleanData: function(a, b) {
-            for (var c, d, e, f, g = 0, h = ea.expando, i = ea.cache, j = ca.deleteExpando, k = ea.event.special; null != (c = a[g]); g++) if ((b || ea.acceptData(c)) && (e = c[h], 
-            f = e && i[e])) {
-                if (f.events) for (d in f.events) k[d] ? ea.event.remove(c, d) : ea.removeEvent(c, d, f.handle);
-                i[e] && (delete i[e], j ? delete c[h] : typeof c.removeAttribute !== xa ? c.removeAttribute(h) : c[h] = null, 
-                W.push(e));
+        cleanData: function(elems, acceptData) {
+            for (var elem, type, id, data, i = 0, internalKey = jQuery.expando, cache = jQuery.cache, deleteExpando = support.deleteExpando, special = jQuery.event.special; null != (elem = elems[i]); i++) if ((acceptData || jQuery.acceptData(elem)) && (id = elem[internalKey], 
+            data = id && cache[id])) {
+                if (data.events) for (type in data.events) special[type] ? jQuery.event.remove(elem, type) : jQuery.removeEvent(elem, type, data.handle);
+                cache[id] && (delete cache[id], deleteExpando ? delete elem[internalKey] : typeof elem.removeAttribute !== strundefined ? elem.removeAttribute(internalKey) : elem[internalKey] = null, 
+                deletedIds.push(id));
             }
         }
-    }), ea.fn.extend({
-        text: function(a) {
-            return Da(this, function(a) {
-                return void 0 === a ? ea.text(this) : this.empty().append((this[0] && this[0].ownerDocument || oa).createTextNode(a));
-            }, null, a, arguments.length);
+    }), jQuery.fn.extend({
+        text: function(value) {
+            return access(this, function(value) {
+                return void 0 === value ? jQuery.text(this) : this.empty().append((this[0] && this[0].ownerDocument || document).createTextNode(value));
+            }, null, value, arguments.length);
         },
         append: function() {
-            return this.domManip(arguments, function(a) {
+            return this.domManip(arguments, function(elem) {
                 if (1 === this.nodeType || 11 === this.nodeType || 9 === this.nodeType) {
-                    var b = s(this, a);
-                    b.appendChild(a);
+                    var target = manipulationTarget(this, elem);
+                    target.appendChild(elem);
                 }
             });
         },
         prepend: function() {
-            return this.domManip(arguments, function(a) {
+            return this.domManip(arguments, function(elem) {
                 if (1 === this.nodeType || 11 === this.nodeType || 9 === this.nodeType) {
-                    var b = s(this, a);
-                    b.insertBefore(a, b.firstChild);
+                    var target = manipulationTarget(this, elem);
+                    target.insertBefore(elem, target.firstChild);
                 }
             });
         },
         before: function() {
-            return this.domManip(arguments, function(a) {
-                this.parentNode && this.parentNode.insertBefore(a, this);
+            return this.domManip(arguments, function(elem) {
+                this.parentNode && this.parentNode.insertBefore(elem, this);
             });
         },
         after: function() {
-            return this.domManip(arguments, function(a) {
-                this.parentNode && this.parentNode.insertBefore(a, this.nextSibling);
+            return this.domManip(arguments, function(elem) {
+                this.parentNode && this.parentNode.insertBefore(elem, this.nextSibling);
             });
         },
-        remove: function(a, b) {
-            for (var c, d = a ? ea.filter(a, this) : this, e = 0; null != (c = d[e]); e++) b || 1 !== c.nodeType || ea.cleanData(q(c)), 
-            c.parentNode && (b && ea.contains(c.ownerDocument, c) && v(q(c, "script")), c.parentNode.removeChild(c));
+        remove: function(selector, keepData) {
+            for (var elem, elems = selector ? jQuery.filter(selector, this) : this, i = 0; null != (elem = elems[i]); i++) keepData || 1 !== elem.nodeType || jQuery.cleanData(getAll(elem)), 
+            elem.parentNode && (keepData && jQuery.contains(elem.ownerDocument, elem) && setGlobalEval(getAll(elem, "script")), 
+            elem.parentNode.removeChild(elem));
             return this;
         },
         empty: function() {
-            for (var a, b = 0; null != (a = this[b]); b++) {
-                for (1 === a.nodeType && ea.cleanData(q(a, !1)); a.firstChild; ) a.removeChild(a.firstChild);
-                a.options && ea.nodeName(a, "select") && (a.options.length = 0);
+            for (var elem, i = 0; null != (elem = this[i]); i++) {
+                for (1 === elem.nodeType && jQuery.cleanData(getAll(elem, !1)); elem.firstChild; ) elem.removeChild(elem.firstChild);
+                elem.options && jQuery.nodeName(elem, "select") && (elem.options.length = 0);
             }
             return this;
         },
-        clone: function(a, b) {
-            return a = null == a ? !1 : a, b = null == b ? a : b, this.map(function() {
-                return ea.clone(this, a, b);
+        clone: function(dataAndEvents, deepDataAndEvents) {
+            return dataAndEvents = null == dataAndEvents ? !1 : dataAndEvents, deepDataAndEvents = null == deepDataAndEvents ? dataAndEvents : deepDataAndEvents, 
+            this.map(function() {
+                return jQuery.clone(this, dataAndEvents, deepDataAndEvents);
             });
         },
-        html: function(a) {
-            return Da(this, function(a) {
-                var b = this[0] || {}, c = 0, d = this.length;
-                if (void 0 === a) return 1 === b.nodeType ? b.innerHTML.replace(La, "") : void 0;
-                if ("string" == typeof a && !Sa.test(a) && (ca.htmlSerialize || !Ma.test(a)) && (ca.leadingWhitespace || !Na.test(a)) && !Xa[(Pa.exec(a) || [ "", "" ])[1].toLowerCase()]) {
-                    a = a.replace(Oa, "<$1></$2>");
+        html: function(value) {
+            return access(this, function(value) {
+                var elem = this[0] || {}, i = 0, l = this.length;
+                if (void 0 === value) return 1 === elem.nodeType ? elem.innerHTML.replace(rinlinejQuery, "") : void 0;
+                if ("string" == typeof value && !rnoInnerhtml.test(value) && (support.htmlSerialize || !rnoshimcache.test(value)) && (support.leadingWhitespace || !rleadingWhitespace.test(value)) && !wrapMap[(rtagName.exec(value) || [ "", "" ])[1].toLowerCase()]) {
+                    value = value.replace(rxhtmlTag, "<$1></$2>");
                     try {
-                        for (;d > c; c++) b = this[c] || {}, 1 === b.nodeType && (ea.cleanData(q(b, !1)), 
-                        b.innerHTML = a);
-                        b = 0;
+                        for (;l > i; i++) elem = this[i] || {}, 1 === elem.nodeType && (jQuery.cleanData(getAll(elem, !1)), 
+                        elem.innerHTML = value);
+                        elem = 0;
                     } catch (e) {}
                 }
-                b && this.empty().append(a);
-            }, null, a, arguments.length);
+                elem && this.empty().append(value);
+            }, null, value, arguments.length);
         },
         replaceWith: function() {
-            var a = arguments[0];
-            return this.domManip(arguments, function(b) {
-                a = this.parentNode, ea.cleanData(q(this)), a && a.replaceChild(b, this);
-            }), a && (a.length || a.nodeType) ? this : this.remove();
+            var arg = arguments[0];
+            return this.domManip(arguments, function(elem) {
+                arg = this.parentNode, jQuery.cleanData(getAll(this)), arg && arg.replaceChild(elem, this);
+            }), arg && (arg.length || arg.nodeType) ? this : this.remove();
         },
-        detach: function(a) {
-            return this.remove(a, !0);
+        detach: function(selector) {
+            return this.remove(selector, !0);
         },
-        domManip: function(a, b) {
-            a = Y.apply([], a);
-            var c, d, e, f, g, h, i = 0, j = this.length, k = this, l = j - 1, m = a[0], n = ea.isFunction(m);
-            if (n || j > 1 && "string" == typeof m && !ca.checkClone && Ta.test(m)) return this.each(function(c) {
-                var d = k.eq(c);
-                n && (a[0] = m.call(this, c, d.html())), d.domManip(a, b);
+        domManip: function(args, callback) {
+            args = concat.apply([], args);
+            var first, node, hasScripts, scripts, doc, fragment, i = 0, l = this.length, set = this, iNoClone = l - 1, value = args[0], isFunction = jQuery.isFunction(value);
+            if (isFunction || l > 1 && "string" == typeof value && !support.checkClone && rchecked.test(value)) return this.each(function(index) {
+                var self = set.eq(index);
+                isFunction && (args[0] = value.call(this, index, self.html())), self.domManip(args, callback);
             });
-            if (j && (h = ea.buildFragment(a, this[0].ownerDocument, !1, this), c = h.firstChild, 
-            1 === h.childNodes.length && (h = c), c)) {
-                for (f = ea.map(q(h, "script"), t), e = f.length; j > i; i++) d = h, i !== l && (d = ea.clone(d, !0, !0), 
-                e && ea.merge(f, q(d, "script"))), b.call(this[i], d, i);
-                if (e) for (g = f[f.length - 1].ownerDocument, ea.map(f, u), i = 0; e > i; i++) d = f[i], 
-                Ua.test(d.type || "") && !ea._data(d, "globalEval") && ea.contains(g, d) && (d.src ? ea._evalUrl && ea._evalUrl(d.src) : ea.globalEval((d.text || d.textContent || d.innerHTML || "").replace(Wa, "")));
-                h = c = null;
+            if (l && (fragment = jQuery.buildFragment(args, this[0].ownerDocument, !1, this), 
+            first = fragment.firstChild, 1 === fragment.childNodes.length && (fragment = first), 
+            first)) {
+                for (scripts = jQuery.map(getAll(fragment, "script"), disableScript), hasScripts = scripts.length; l > i; i++) node = fragment, 
+                i !== iNoClone && (node = jQuery.clone(node, !0, !0), hasScripts && jQuery.merge(scripts, getAll(node, "script"))), 
+                callback.call(this[i], node, i);
+                if (hasScripts) for (doc = scripts[scripts.length - 1].ownerDocument, jQuery.map(scripts, restoreScript), 
+                i = 0; hasScripts > i; i++) node = scripts[i], rscriptType.test(node.type || "") && !jQuery._data(node, "globalEval") && jQuery.contains(doc, node) && (node.src ? jQuery._evalUrl && jQuery._evalUrl(node.src) : jQuery.globalEval((node.text || node.textContent || node.innerHTML || "").replace(rcleanScript, "")));
+                fragment = first = null;
             }
             return this;
         }
-    }), ea.each({
+    }), jQuery.each({
         appendTo: "append",
         prependTo: "prepend",
         insertBefore: "before",
         insertAfter: "after",
         replaceAll: "replaceWith"
-    }, function(a, b) {
-        ea.fn[a] = function(a) {
-            for (var c, d = 0, e = [], f = ea(a), g = f.length - 1; g >= d; d++) c = d === g ? this : this.clone(!0), 
-            ea(f[d])[b](c), Z.apply(e, c.get());
-            return this.pushStack(e);
+    }, function(name, original) {
+        jQuery.fn[name] = function(selector) {
+            for (var elems, i = 0, ret = [], insert = jQuery(selector), last = insert.length - 1; last >= i; i++) elems = i === last ? this : this.clone(!0), 
+            jQuery(insert[i])[original](elems), push.apply(ret, elems.get());
+            return this.pushStack(ret);
         };
     });
-    var $a, _a = {};
+    var iframe, elemdisplay = {};
     !function() {
-        var a;
-        ca.shrinkWrapBlocks = function() {
-            if (null != a) return a;
-            a = !1;
-            var b, c, d;
-            return c = oa.getElementsByTagName("body")[0], c && c.style ? (b = oa.createElement("div"), 
-            d = oa.createElement("div"), d.style.cssText = "position:absolute;border:0;width:0;height:0;top:0;left:-9999px", 
-            c.appendChild(d).appendChild(b), typeof b.style.zoom !== xa && (b.style.cssText = "-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:1px;width:1px;zoom:1", 
-            b.appendChild(oa.createElement("div")).style.width = "5px", a = 3 !== b.offsetWidth), 
-            c.removeChild(d), a) : void 0;
+        var shrinkWrapBlocksVal;
+        support.shrinkWrapBlocks = function() {
+            if (null != shrinkWrapBlocksVal) return shrinkWrapBlocksVal;
+            shrinkWrapBlocksVal = !1;
+            var div, body, container;
+            return body = document.getElementsByTagName("body")[0], body && body.style ? (div = document.createElement("div"), 
+            container = document.createElement("div"), container.style.cssText = "position:absolute;border:0;width:0;height:0;top:0;left:-9999px", 
+            body.appendChild(container).appendChild(div), typeof div.style.zoom !== strundefined && (div.style.cssText = "-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:1px;width:1px;zoom:1", 
+            div.appendChild(document.createElement("div")).style.width = "5px", shrinkWrapBlocksVal = 3 !== div.offsetWidth), 
+            body.removeChild(container), shrinkWrapBlocksVal) : void 0;
         };
     }();
-    var ab, bb, cb = /^margin/, db = new RegExp("^(" + Aa + ")(?!px)[a-z%]+$", "i"), eb = /^(top|right|bottom|left)$/;
-    a.getComputedStyle ? (ab = function(b) {
-        return b.ownerDocument.defaultView.opener ? b.ownerDocument.defaultView.getComputedStyle(b, null) : a.getComputedStyle(b, null);
-    }, bb = function(a, b, c) {
-        var d, e, f, g, h = a.style;
-        return c = c || ab(a), g = c ? c.getPropertyValue(b) || c[b] : void 0, c && ("" !== g || ea.contains(a.ownerDocument, a) || (g = ea.style(a, b)), 
-        db.test(g) && cb.test(b) && (d = h.width, e = h.minWidth, f = h.maxWidth, h.minWidth = h.maxWidth = h.width = g, 
-        g = c.width, h.width = d, h.minWidth = e, h.maxWidth = f)), void 0 === g ? g : g + "";
-    }) : oa.documentElement.currentStyle && (ab = function(a) {
-        return a.currentStyle;
-    }, bb = function(a, b, c) {
-        var d, e, f, g, h = a.style;
-        return c = c || ab(a), g = c ? c[b] : void 0, null == g && h && h[b] && (g = h[b]), 
-        db.test(g) && !eb.test(b) && (d = h.left, e = a.runtimeStyle, f = e && e.left, f && (e.left = a.currentStyle.left), 
-        h.left = "fontSize" === b ? "1em" : g, g = h.pixelLeft + "px", h.left = d, f && (e.left = f)), 
-        void 0 === g ? g : g + "" || "auto";
+    var getStyles, curCSS, rmargin = /^margin/, rnumnonpx = new RegExp("^(" + pnum + ")(?!px)[a-z%]+$", "i"), rposition = /^(top|right|bottom|left)$/;
+    window.getComputedStyle ? (getStyles = function(elem) {
+        return elem.ownerDocument.defaultView.opener ? elem.ownerDocument.defaultView.getComputedStyle(elem, null) : window.getComputedStyle(elem, null);
+    }, curCSS = function(elem, name, computed) {
+        var width, minWidth, maxWidth, ret, style = elem.style;
+        return computed = computed || getStyles(elem), ret = computed ? computed.getPropertyValue(name) || computed[name] : void 0, 
+        computed && ("" !== ret || jQuery.contains(elem.ownerDocument, elem) || (ret = jQuery.style(elem, name)), 
+        rnumnonpx.test(ret) && rmargin.test(name) && (width = style.width, minWidth = style.minWidth, 
+        maxWidth = style.maxWidth, style.minWidth = style.maxWidth = style.width = ret, 
+        ret = computed.width, style.width = width, style.minWidth = minWidth, style.maxWidth = maxWidth)), 
+        void 0 === ret ? ret : ret + "";
+    }) : document.documentElement.currentStyle && (getStyles = function(elem) {
+        return elem.currentStyle;
+    }, curCSS = function(elem, name, computed) {
+        var left, rs, rsLeft, ret, style = elem.style;
+        return computed = computed || getStyles(elem), ret = computed ? computed[name] : void 0, 
+        null == ret && style && style[name] && (ret = style[name]), rnumnonpx.test(ret) && !rposition.test(name) && (left = style.left, 
+        rs = elem.runtimeStyle, rsLeft = rs && rs.left, rsLeft && (rs.left = elem.currentStyle.left), 
+        style.left = "fontSize" === name ? "1em" : ret, ret = style.pixelLeft + "px", style.left = left, 
+        rsLeft && (rs.left = rsLeft)), void 0 === ret ? ret : ret + "" || "auto";
     }), function() {
-        function b() {
-            var b, c, d, e;
-            c = oa.getElementsByTagName("body")[0], c && c.style && (b = oa.createElement("div"), 
-            d = oa.createElement("div"), d.style.cssText = "position:absolute;border:0;width:0;height:0;top:0;left:-9999px", 
-            c.appendChild(d).appendChild(b), b.style.cssText = "-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;display:block;margin-top:1%;top:1%;border:1px;padding:1px;width:4px;position:absolute", 
-            f = g = !1, i = !0, a.getComputedStyle && (f = "1%" !== (a.getComputedStyle(b, null) || {}).top, 
-            g = "4px" === (a.getComputedStyle(b, null) || {
+        function computeStyleTests() {
+            var div, body, container, contents;
+            body = document.getElementsByTagName("body")[0], body && body.style && (div = document.createElement("div"), 
+            container = document.createElement("div"), container.style.cssText = "position:absolute;border:0;width:0;height:0;top:0;left:-9999px", 
+            body.appendChild(container).appendChild(div), div.style.cssText = "-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;display:block;margin-top:1%;top:1%;border:1px;padding:1px;width:4px;position:absolute", 
+            pixelPositionVal = boxSizingReliableVal = !1, reliableMarginRightVal = !0, window.getComputedStyle && (pixelPositionVal = "1%" !== (window.getComputedStyle(div, null) || {}).top, 
+            boxSizingReliableVal = "4px" === (window.getComputedStyle(div, null) || {
                 width: "4px"
-            }).width, e = b.appendChild(oa.createElement("div")), e.style.cssText = b.style.cssText = "-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:0", 
-            e.style.marginRight = e.style.width = "0", b.style.width = "1px", i = !parseFloat((a.getComputedStyle(e, null) || {}).marginRight), 
-            b.removeChild(e)), b.innerHTML = "<table><tr><td></td><td>t</td></tr></table>", 
-            e = b.getElementsByTagName("td"), e[0].style.cssText = "margin:0;border:0;padding:0;display:none", 
-            h = 0 === e[0].offsetHeight, h && (e[0].style.display = "", e[1].style.display = "none", 
-            h = 0 === e[0].offsetHeight), c.removeChild(d));
+            }).width, contents = div.appendChild(document.createElement("div")), contents.style.cssText = div.style.cssText = "-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:0", 
+            contents.style.marginRight = contents.style.width = "0", div.style.width = "1px", 
+            reliableMarginRightVal = !parseFloat((window.getComputedStyle(contents, null) || {}).marginRight), 
+            div.removeChild(contents)), div.innerHTML = "<table><tr><td></td><td>t</td></tr></table>", 
+            contents = div.getElementsByTagName("td"), contents[0].style.cssText = "margin:0;border:0;padding:0;display:none", 
+            reliableHiddenOffsetsVal = 0 === contents[0].offsetHeight, reliableHiddenOffsetsVal && (contents[0].style.display = "", 
+            contents[1].style.display = "none", reliableHiddenOffsetsVal = 0 === contents[0].offsetHeight), 
+            body.removeChild(container));
         }
-        var c, d, e, f, g, h, i;
-        c = oa.createElement("div"), c.innerHTML = "  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>", 
-        e = c.getElementsByTagName("a")[0], d = e && e.style, d && (d.cssText = "float:left;opacity:.5", 
-        ca.opacity = "0.5" === d.opacity, ca.cssFloat = !!d.cssFloat, c.style.backgroundClip = "content-box", 
-        c.cloneNode(!0).style.backgroundClip = "", ca.clearCloneStyle = "content-box" === c.style.backgroundClip, 
-        ca.boxSizing = "" === d.boxSizing || "" === d.MozBoxSizing || "" === d.WebkitBoxSizing, 
-        ea.extend(ca, {
+        var div, style, a, pixelPositionVal, boxSizingReliableVal, reliableHiddenOffsetsVal, reliableMarginRightVal;
+        div = document.createElement("div"), div.innerHTML = "  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>", 
+        a = div.getElementsByTagName("a")[0], style = a && a.style, style && (style.cssText = "float:left;opacity:.5", 
+        support.opacity = "0.5" === style.opacity, support.cssFloat = !!style.cssFloat, 
+        div.style.backgroundClip = "content-box", div.cloneNode(!0).style.backgroundClip = "", 
+        support.clearCloneStyle = "content-box" === div.style.backgroundClip, support.boxSizing = "" === style.boxSizing || "" === style.MozBoxSizing || "" === style.WebkitBoxSizing, 
+        jQuery.extend(support, {
             reliableHiddenOffsets: function() {
-                return null == h && b(), h;
+                return null == reliableHiddenOffsetsVal && computeStyleTests(), reliableHiddenOffsetsVal;
             },
             boxSizingReliable: function() {
-                return null == g && b(), g;
+                return null == boxSizingReliableVal && computeStyleTests(), boxSizingReliableVal;
             },
             pixelPosition: function() {
-                return null == f && b(), f;
+                return null == pixelPositionVal && computeStyleTests(), pixelPositionVal;
             },
             reliableMarginRight: function() {
-                return null == i && b(), i;
+                return null == reliableMarginRightVal && computeStyleTests(), reliableMarginRightVal;
             }
         }));
-    }(), ea.swap = function(a, b, c, d) {
-        var e, f, g = {};
-        for (f in b) g[f] = a.style[f], a.style[f] = b[f];
-        e = c.apply(a, d || []);
-        for (f in b) a.style[f] = g[f];
-        return e;
+    }(), jQuery.swap = function(elem, options, callback, args) {
+        var ret, name, old = {};
+        for (name in options) old[name] = elem.style[name], elem.style[name] = options[name];
+        ret = callback.apply(elem, args || []);
+        for (name in options) elem.style[name] = old[name];
+        return ret;
     };
-    var fb = /alpha\([^)]*\)/i, gb = /opacity\s*=\s*([^)]*)/, hb = /^(none|table(?!-c[ea]).+)/, ib = new RegExp("^(" + Aa + ")(.*)$", "i"), jb = new RegExp("^([+-])=(" + Aa + ")", "i"), kb = {
+    var ralpha = /alpha\([^)]*\)/i, ropacity = /opacity\s*=\s*([^)]*)/, rdisplayswap = /^(none|table(?!-c[ea]).+)/, rnumsplit = new RegExp("^(" + pnum + ")(.*)$", "i"), rrelNum = new RegExp("^([+-])=(" + pnum + ")", "i"), cssShow = {
         position: "absolute",
         visibility: "hidden",
         display: "block"
-    }, lb = {
+    }, cssNormalTransform = {
         letterSpacing: "0",
         fontWeight: "400"
-    }, mb = [ "Webkit", "O", "Moz", "ms" ];
-    ea.extend({
+    }, cssPrefixes = [ "Webkit", "O", "Moz", "ms" ];
+    jQuery.extend({
         cssHooks: {
             opacity: {
-                get: function(a, b) {
-                    if (b) {
-                        var c = bb(a, "opacity");
-                        return "" === c ? "1" : c;
+                get: function(elem, computed) {
+                    if (computed) {
+                        var ret = curCSS(elem, "opacity");
+                        return "" === ret ? "1" : ret;
                     }
                 }
             }
@@ -2134,199 +2221,202 @@ function detectSidebar() {
             zoom: !0
         },
         cssProps: {
-            "float": ca.cssFloat ? "cssFloat" : "styleFloat"
+            "float": support.cssFloat ? "cssFloat" : "styleFloat"
         },
-        style: function(a, b, c, d) {
-            if (a && 3 !== a.nodeType && 8 !== a.nodeType && a.style) {
-                var e, f, g, h = ea.camelCase(b), i = a.style;
-                if (b = ea.cssProps[h] || (ea.cssProps[h] = B(i, h)), g = ea.cssHooks[b] || ea.cssHooks[h], 
-                void 0 === c) return g && "get" in g && void 0 !== (e = g.get(a, !1, d)) ? e : i[b];
-                if (f = typeof c, "string" === f && (e = jb.exec(c)) && (c = (e[1] + 1) * e[2] + parseFloat(ea.css(a, b)), 
-                f = "number"), null != c && c === c && ("number" !== f || ea.cssNumber[h] || (c += "px"), 
-                ca.clearCloneStyle || "" !== c || 0 !== b.indexOf("background") || (i[b] = "inherit"), 
-                !(g && "set" in g && void 0 === (c = g.set(a, c, d))))) try {
-                    i[b] = c;
-                } catch (j) {}
+        style: function(elem, name, value, extra) {
+            if (elem && 3 !== elem.nodeType && 8 !== elem.nodeType && elem.style) {
+                var ret, type, hooks, origName = jQuery.camelCase(name), style = elem.style;
+                if (name = jQuery.cssProps[origName] || (jQuery.cssProps[origName] = vendorPropName(style, origName)), 
+                hooks = jQuery.cssHooks[name] || jQuery.cssHooks[origName], void 0 === value) return hooks && "get" in hooks && void 0 !== (ret = hooks.get(elem, !1, extra)) ? ret : style[name];
+                if (type = typeof value, "string" === type && (ret = rrelNum.exec(value)) && (value = (ret[1] + 1) * ret[2] + parseFloat(jQuery.css(elem, name)), 
+                type = "number"), null != value && value === value && ("number" !== type || jQuery.cssNumber[origName] || (value += "px"), 
+                support.clearCloneStyle || "" !== value || 0 !== name.indexOf("background") || (style[name] = "inherit"), 
+                !(hooks && "set" in hooks && void 0 === (value = hooks.set(elem, value, extra))))) try {
+                    style[name] = value;
+                } catch (e) {}
             }
         },
-        css: function(a, b, c, d) {
-            var e, f, g, h = ea.camelCase(b);
-            return b = ea.cssProps[h] || (ea.cssProps[h] = B(a.style, h)), g = ea.cssHooks[b] || ea.cssHooks[h], 
-            g && "get" in g && (f = g.get(a, !0, c)), void 0 === f && (f = bb(a, b, d)), "normal" === f && b in lb && (f = lb[b]), 
-            "" === c || c ? (e = parseFloat(f), c === !0 || ea.isNumeric(e) ? e || 0 : f) : f;
+        css: function(elem, name, extra, styles) {
+            var num, val, hooks, origName = jQuery.camelCase(name);
+            return name = jQuery.cssProps[origName] || (jQuery.cssProps[origName] = vendorPropName(elem.style, origName)), 
+            hooks = jQuery.cssHooks[name] || jQuery.cssHooks[origName], hooks && "get" in hooks && (val = hooks.get(elem, !0, extra)), 
+            void 0 === val && (val = curCSS(elem, name, styles)), "normal" === val && name in cssNormalTransform && (val = cssNormalTransform[name]), 
+            "" === extra || extra ? (num = parseFloat(val), extra === !0 || jQuery.isNumeric(num) ? num || 0 : val) : val;
         }
-    }), ea.each([ "height", "width" ], function(a, b) {
-        ea.cssHooks[b] = {
-            get: function(a, c, d) {
-                return c ? hb.test(ea.css(a, "display")) && 0 === a.offsetWidth ? ea.swap(a, kb, function() {
-                    return F(a, b, d);
-                }) : F(a, b, d) : void 0;
+    }), jQuery.each([ "height", "width" ], function(i, name) {
+        jQuery.cssHooks[name] = {
+            get: function(elem, computed, extra) {
+                return computed ? rdisplayswap.test(jQuery.css(elem, "display")) && 0 === elem.offsetWidth ? jQuery.swap(elem, cssShow, function() {
+                    return getWidthOrHeight(elem, name, extra);
+                }) : getWidthOrHeight(elem, name, extra) : void 0;
             },
-            set: function(a, c, d) {
-                var e = d && ab(a);
-                return D(a, c, d ? E(a, b, d, ca.boxSizing && "border-box" === ea.css(a, "boxSizing", !1, e), e) : 0);
+            set: function(elem, value, extra) {
+                var styles = extra && getStyles(elem);
+                return setPositiveNumber(elem, value, extra ? augmentWidthOrHeight(elem, name, extra, support.boxSizing && "border-box" === jQuery.css(elem, "boxSizing", !1, styles), styles) : 0);
             }
         };
-    }), ca.opacity || (ea.cssHooks.opacity = {
-        get: function(a, b) {
-            return gb.test((b && a.currentStyle ? a.currentStyle.filter : a.style.filter) || "") ? .01 * parseFloat(RegExp.$1) + "" : b ? "1" : "";
+    }), support.opacity || (jQuery.cssHooks.opacity = {
+        get: function(elem, computed) {
+            return ropacity.test((computed && elem.currentStyle ? elem.currentStyle.filter : elem.style.filter) || "") ? .01 * parseFloat(RegExp.$1) + "" : computed ? "1" : "";
         },
-        set: function(a, b) {
-            var c = a.style, d = a.currentStyle, e = ea.isNumeric(b) ? "alpha(opacity=" + 100 * b + ")" : "", f = d && d.filter || c.filter || "";
-            c.zoom = 1, (b >= 1 || "" === b) && "" === ea.trim(f.replace(fb, "")) && c.removeAttribute && (c.removeAttribute("filter"), 
-            "" === b || d && !d.filter) || (c.filter = fb.test(f) ? f.replace(fb, e) : f + " " + e);
+        set: function(elem, value) {
+            var style = elem.style, currentStyle = elem.currentStyle, opacity = jQuery.isNumeric(value) ? "alpha(opacity=" + 100 * value + ")" : "", filter = currentStyle && currentStyle.filter || style.filter || "";
+            style.zoom = 1, (value >= 1 || "" === value) && "" === jQuery.trim(filter.replace(ralpha, "")) && style.removeAttribute && (style.removeAttribute("filter"), 
+            "" === value || currentStyle && !currentStyle.filter) || (style.filter = ralpha.test(filter) ? filter.replace(ralpha, opacity) : filter + " " + opacity);
         }
-    }), ea.cssHooks.marginRight = A(ca.reliableMarginRight, function(a, b) {
-        return b ? ea.swap(a, {
+    }), jQuery.cssHooks.marginRight = addGetHookIf(support.reliableMarginRight, function(elem, computed) {
+        return computed ? jQuery.swap(elem, {
             display: "inline-block"
-        }, bb, [ a, "marginRight" ]) : void 0;
-    }), ea.each({
+        }, curCSS, [ elem, "marginRight" ]) : void 0;
+    }), jQuery.each({
         margin: "",
         padding: "",
         border: "Width"
-    }, function(a, b) {
-        ea.cssHooks[a + b] = {
-            expand: function(c) {
-                for (var d = 0, e = {}, f = "string" == typeof c ? c.split(" ") : [ c ]; 4 > d; d++) e[a + Ba[d] + b] = f[d] || f[d - 2] || f[0];
-                return e;
+    }, function(prefix, suffix) {
+        jQuery.cssHooks[prefix + suffix] = {
+            expand: function(value) {
+                for (var i = 0, expanded = {}, parts = "string" == typeof value ? value.split(" ") : [ value ]; 4 > i; i++) expanded[prefix + cssExpand[i] + suffix] = parts[i] || parts[i - 2] || parts[0];
+                return expanded;
             }
-        }, cb.test(a) || (ea.cssHooks[a + b].set = D);
-    }), ea.fn.extend({
-        css: function(a, b) {
-            return Da(this, function(a, b, c) {
-                var d, e, f = {}, g = 0;
-                if (ea.isArray(b)) {
-                    for (d = ab(a), e = b.length; e > g; g++) f[b[g]] = ea.css(a, b[g], !1, d);
-                    return f;
+        }, rmargin.test(prefix) || (jQuery.cssHooks[prefix + suffix].set = setPositiveNumber);
+    }), jQuery.fn.extend({
+        css: function(name, value) {
+            return access(this, function(elem, name, value) {
+                var styles, len, map = {}, i = 0;
+                if (jQuery.isArray(name)) {
+                    for (styles = getStyles(elem), len = name.length; len > i; i++) map[name[i]] = jQuery.css(elem, name[i], !1, styles);
+                    return map;
                 }
-                return void 0 !== c ? ea.style(a, b, c) : ea.css(a, b);
-            }, a, b, arguments.length > 1);
+                return void 0 !== value ? jQuery.style(elem, name, value) : jQuery.css(elem, name);
+            }, name, value, arguments.length > 1);
         },
         show: function() {
-            return C(this, !0);
+            return showHide(this, !0);
         },
         hide: function() {
-            return C(this);
+            return showHide(this);
         },
-        toggle: function(a) {
-            return "boolean" == typeof a ? a ? this.show() : this.hide() : this.each(function() {
-                Ca(this) ? ea(this).show() : ea(this).hide();
+        toggle: function(state) {
+            return "boolean" == typeof state ? state ? this.show() : this.hide() : this.each(function() {
+                isHidden(this) ? jQuery(this).show() : jQuery(this).hide();
             });
         }
-    }), ea.Tween = G, G.prototype = {
-        constructor: G,
-        init: function(a, b, c, d, e, f) {
-            this.elem = a, this.prop = c, this.easing = e || "swing", this.options = b, this.start = this.now = this.cur(), 
-            this.end = d, this.unit = f || (ea.cssNumber[c] ? "" : "px");
+    }), jQuery.Tween = Tween, Tween.prototype = {
+        constructor: Tween,
+        init: function(elem, options, prop, end, easing, unit) {
+            this.elem = elem, this.prop = prop, this.easing = easing || "swing", this.options = options, 
+            this.start = this.now = this.cur(), this.end = end, this.unit = unit || (jQuery.cssNumber[prop] ? "" : "px");
         },
         cur: function() {
-            var a = G.propHooks[this.prop];
-            return a && a.get ? a.get(this) : G.propHooks._default.get(this);
+            var hooks = Tween.propHooks[this.prop];
+            return hooks && hooks.get ? hooks.get(this) : Tween.propHooks._default.get(this);
         },
-        run: function(a) {
-            var b, c = G.propHooks[this.prop];
-            return this.options.duration ? this.pos = b = ea.easing[this.easing](a, this.options.duration * a, 0, 1, this.options.duration) : this.pos = b = a, 
-            this.now = (this.end - this.start) * b + this.start, this.options.step && this.options.step.call(this.elem, this.now, this), 
-            c && c.set ? c.set(this) : G.propHooks._default.set(this), this;
+        run: function(percent) {
+            var eased, hooks = Tween.propHooks[this.prop];
+            return this.options.duration ? this.pos = eased = jQuery.easing[this.easing](percent, this.options.duration * percent, 0, 1, this.options.duration) : this.pos = eased = percent, 
+            this.now = (this.end - this.start) * eased + this.start, this.options.step && this.options.step.call(this.elem, this.now, this), 
+            hooks && hooks.set ? hooks.set(this) : Tween.propHooks._default.set(this), this;
         }
-    }, G.prototype.init.prototype = G.prototype, G.propHooks = {
+    }, Tween.prototype.init.prototype = Tween.prototype, Tween.propHooks = {
         _default: {
-            get: function(a) {
-                var b;
-                return null == a.elem[a.prop] || a.elem.style && null != a.elem.style[a.prop] ? (b = ea.css(a.elem, a.prop, ""), 
-                b && "auto" !== b ? b : 0) : a.elem[a.prop];
+            get: function(tween) {
+                var result;
+                return null == tween.elem[tween.prop] || tween.elem.style && null != tween.elem.style[tween.prop] ? (result = jQuery.css(tween.elem, tween.prop, ""), 
+                result && "auto" !== result ? result : 0) : tween.elem[tween.prop];
             },
-            set: function(a) {
-                ea.fx.step[a.prop] ? ea.fx.step[a.prop](a) : a.elem.style && (null != a.elem.style[ea.cssProps[a.prop]] || ea.cssHooks[a.prop]) ? ea.style(a.elem, a.prop, a.now + a.unit) : a.elem[a.prop] = a.now;
+            set: function(tween) {
+                jQuery.fx.step[tween.prop] ? jQuery.fx.step[tween.prop](tween) : tween.elem.style && (null != tween.elem.style[jQuery.cssProps[tween.prop]] || jQuery.cssHooks[tween.prop]) ? jQuery.style(tween.elem, tween.prop, tween.now + tween.unit) : tween.elem[tween.prop] = tween.now;
             }
         }
-    }, G.propHooks.scrollTop = G.propHooks.scrollLeft = {
-        set: function(a) {
-            a.elem.nodeType && a.elem.parentNode && (a.elem[a.prop] = a.now);
+    }, Tween.propHooks.scrollTop = Tween.propHooks.scrollLeft = {
+        set: function(tween) {
+            tween.elem.nodeType && tween.elem.parentNode && (tween.elem[tween.prop] = tween.now);
         }
-    }, ea.easing = {
-        linear: function(a) {
-            return a;
+    }, jQuery.easing = {
+        linear: function(p) {
+            return p;
         },
-        swing: function(a) {
-            return .5 - Math.cos(a * Math.PI) / 2;
+        swing: function(p) {
+            return .5 - Math.cos(p * Math.PI) / 2;
         }
-    }, ea.fx = G.prototype.init, ea.fx.step = {};
-    var nb, ob, pb = /^(?:toggle|show|hide)$/, qb = new RegExp("^(?:([+-])=|)(" + Aa + ")([a-z%]*)$", "i"), rb = /queueHooks$/, sb = [ K ], tb = {
-        "*": [ function(a, b) {
-            var c = this.createTween(a, b), d = c.cur(), e = qb.exec(b), f = e && e[3] || (ea.cssNumber[a] ? "" : "px"), g = (ea.cssNumber[a] || "px" !== f && +d) && qb.exec(ea.css(c.elem, a)), h = 1, i = 20;
-            if (g && g[3] !== f) {
-                f = f || g[3], e = e || [], g = +d || 1;
-                do h = h || ".5", g /= h, ea.style(c.elem, a, g + f); while (h !== (h = c.cur() / d) && 1 !== h && --i);
+    }, jQuery.fx = Tween.prototype.init, jQuery.fx.step = {};
+    var fxNow, timerId, rfxtypes = /^(?:toggle|show|hide)$/, rfxnum = new RegExp("^(?:([+-])=|)(" + pnum + ")([a-z%]*)$", "i"), rrun = /queueHooks$/, animationPrefilters = [ defaultPrefilter ], tweeners = {
+        "*": [ function(prop, value) {
+            var tween = this.createTween(prop, value), target = tween.cur(), parts = rfxnum.exec(value), unit = parts && parts[3] || (jQuery.cssNumber[prop] ? "" : "px"), start = (jQuery.cssNumber[prop] || "px" !== unit && +target) && rfxnum.exec(jQuery.css(tween.elem, prop)), scale = 1, maxIterations = 20;
+            if (start && start[3] !== unit) {
+                unit = unit || start[3], parts = parts || [], start = +target || 1;
+                do scale = scale || ".5", start /= scale, jQuery.style(tween.elem, prop, start + unit); while (scale !== (scale = tween.cur() / target) && 1 !== scale && --maxIterations);
             }
-            return e && (g = c.start = +g || +d || 0, c.unit = f, c.end = e[1] ? g + (e[1] + 1) * e[2] : +e[2]), 
-            c;
+            return parts && (start = tween.start = +start || +target || 0, tween.unit = unit, 
+            tween.end = parts[1] ? start + (parts[1] + 1) * parts[2] : +parts[2]), tween;
         } ]
     };
-    ea.Animation = ea.extend(M, {
-        tweener: function(a, b) {
-            ea.isFunction(a) ? (b = a, a = [ "*" ]) : a = a.split(" ");
-            for (var c, d = 0, e = a.length; e > d; d++) c = a[d], tb[c] = tb[c] || [], tb[c].unshift(b);
+    jQuery.Animation = jQuery.extend(Animation, {
+        tweener: function(props, callback) {
+            jQuery.isFunction(props) ? (callback = props, props = [ "*" ]) : props = props.split(" ");
+            for (var prop, index = 0, length = props.length; length > index; index++) prop = props[index], 
+            tweeners[prop] = tweeners[prop] || [], tweeners[prop].unshift(callback);
         },
-        prefilter: function(a, b) {
-            b ? sb.unshift(a) : sb.push(a);
+        prefilter: function(callback, prepend) {
+            prepend ? animationPrefilters.unshift(callback) : animationPrefilters.push(callback);
         }
-    }), ea.speed = function(a, b, c) {
-        var d = a && "object" == typeof a ? ea.extend({}, a) : {
-            complete: c || !c && b || ea.isFunction(a) && a,
-            duration: a,
-            easing: c && b || b && !ea.isFunction(b) && b
+    }), jQuery.speed = function(speed, easing, fn) {
+        var opt = speed && "object" == typeof speed ? jQuery.extend({}, speed) : {
+            complete: fn || !fn && easing || jQuery.isFunction(speed) && speed,
+            duration: speed,
+            easing: fn && easing || easing && !jQuery.isFunction(easing) && easing
         };
-        return d.duration = ea.fx.off ? 0 : "number" == typeof d.duration ? d.duration : d.duration in ea.fx.speeds ? ea.fx.speeds[d.duration] : ea.fx.speeds._default, 
-        (null == d.queue || d.queue === !0) && (d.queue = "fx"), d.old = d.complete, d.complete = function() {
-            ea.isFunction(d.old) && d.old.call(this), d.queue && ea.dequeue(this, d.queue);
-        }, d;
-    }, ea.fn.extend({
-        fadeTo: function(a, b, c, d) {
-            return this.filter(Ca).css("opacity", 0).show().end().animate({
-                opacity: b
-            }, a, c, d);
+        return opt.duration = jQuery.fx.off ? 0 : "number" == typeof opt.duration ? opt.duration : opt.duration in jQuery.fx.speeds ? jQuery.fx.speeds[opt.duration] : jQuery.fx.speeds._default, 
+        (null == opt.queue || opt.queue === !0) && (opt.queue = "fx"), opt.old = opt.complete, 
+        opt.complete = function() {
+            jQuery.isFunction(opt.old) && opt.old.call(this), opt.queue && jQuery.dequeue(this, opt.queue);
+        }, opt;
+    }, jQuery.fn.extend({
+        fadeTo: function(speed, to, easing, callback) {
+            return this.filter(isHidden).css("opacity", 0).show().end().animate({
+                opacity: to
+            }, speed, easing, callback);
         },
-        animate: function(a, b, c, d) {
-            var e = ea.isEmptyObject(a), f = ea.speed(b, c, d), g = function() {
-                var b = M(this, ea.extend({}, a), f);
-                (e || ea._data(this, "finish")) && b.stop(!0);
+        animate: function(prop, speed, easing, callback) {
+            var empty = jQuery.isEmptyObject(prop), optall = jQuery.speed(speed, easing, callback), doAnimation = function() {
+                var anim = Animation(this, jQuery.extend({}, prop), optall);
+                (empty || jQuery._data(this, "finish")) && anim.stop(!0);
             };
-            return g.finish = g, e || f.queue === !1 ? this.each(g) : this.queue(f.queue, g);
+            return doAnimation.finish = doAnimation, empty || optall.queue === !1 ? this.each(doAnimation) : this.queue(optall.queue, doAnimation);
         },
-        stop: function(a, b, c) {
-            var d = function(a) {
-                var b = a.stop;
-                delete a.stop, b(c);
+        stop: function(type, clearQueue, gotoEnd) {
+            var stopQueue = function(hooks) {
+                var stop = hooks.stop;
+                delete hooks.stop, stop(gotoEnd);
             };
-            return "string" != typeof a && (c = b, b = a, a = void 0), b && a !== !1 && this.queue(a || "fx", []), 
-            this.each(function() {
-                var b = !0, e = null != a && a + "queueHooks", f = ea.timers, g = ea._data(this);
-                if (e) g[e] && g[e].stop && d(g[e]); else for (e in g) g[e] && g[e].stop && rb.test(e) && d(g[e]);
-                for (e = f.length; e--; ) f[e].elem !== this || null != a && f[e].queue !== a || (f[e].anim.stop(c), 
-                b = !1, f.splice(e, 1));
-                (b || !c) && ea.dequeue(this, a);
+            return "string" != typeof type && (gotoEnd = clearQueue, clearQueue = type, type = void 0), 
+            clearQueue && type !== !1 && this.queue(type || "fx", []), this.each(function() {
+                var dequeue = !0, index = null != type && type + "queueHooks", timers = jQuery.timers, data = jQuery._data(this);
+                if (index) data[index] && data[index].stop && stopQueue(data[index]); else for (index in data) data[index] && data[index].stop && rrun.test(index) && stopQueue(data[index]);
+                for (index = timers.length; index--; ) timers[index].elem !== this || null != type && timers[index].queue !== type || (timers[index].anim.stop(gotoEnd), 
+                dequeue = !1, timers.splice(index, 1));
+                (dequeue || !gotoEnd) && jQuery.dequeue(this, type);
             });
         },
-        finish: function(a) {
-            return a !== !1 && (a = a || "fx"), this.each(function() {
-                var b, c = ea._data(this), d = c[a + "queue"], e = c[a + "queueHooks"], f = ea.timers, g = d ? d.length : 0;
-                for (c.finish = !0, ea.queue(this, a, []), e && e.stop && e.stop.call(this, !0), 
-                b = f.length; b--; ) f[b].elem === this && f[b].queue === a && (f[b].anim.stop(!0), 
-                f.splice(b, 1));
-                for (b = 0; g > b; b++) d[b] && d[b].finish && d[b].finish.call(this);
-                delete c.finish;
+        finish: function(type) {
+            return type !== !1 && (type = type || "fx"), this.each(function() {
+                var index, data = jQuery._data(this), queue = data[type + "queue"], hooks = data[type + "queueHooks"], timers = jQuery.timers, length = queue ? queue.length : 0;
+                for (data.finish = !0, jQuery.queue(this, type, []), hooks && hooks.stop && hooks.stop.call(this, !0), 
+                index = timers.length; index--; ) timers[index].elem === this && timers[index].queue === type && (timers[index].anim.stop(!0), 
+                timers.splice(index, 1));
+                for (index = 0; length > index; index++) queue[index] && queue[index].finish && queue[index].finish.call(this);
+                delete data.finish;
             });
         }
-    }), ea.each([ "toggle", "show", "hide" ], function(a, b) {
-        var c = ea.fn[b];
-        ea.fn[b] = function(a, d, e) {
-            return null == a || "boolean" == typeof a ? c.apply(this, arguments) : this.animate(I(b, !0), a, d, e);
+    }), jQuery.each([ "toggle", "show", "hide" ], function(i, name) {
+        var cssFn = jQuery.fn[name];
+        jQuery.fn[name] = function(speed, easing, callback) {
+            return null == speed || "boolean" == typeof speed ? cssFn.apply(this, arguments) : this.animate(genFx(name, !0), speed, easing, callback);
         };
-    }), ea.each({
-        slideDown: I("show"),
-        slideUp: I("hide"),
-        slideToggle: I("toggle"),
+    }), jQuery.each({
+        slideDown: genFx("show"),
+        slideUp: genFx("hide"),
+        slideToggle: genFx("toggle"),
         fadeIn: {
             opacity: "show"
         },
@@ -2336,319 +2426,331 @@ function detectSidebar() {
         fadeToggle: {
             opacity: "toggle"
         }
-    }, function(a, b) {
-        ea.fn[a] = function(a, c, d) {
-            return this.animate(b, a, c, d);
+    }, function(name, props) {
+        jQuery.fn[name] = function(speed, easing, callback) {
+            return this.animate(props, speed, easing, callback);
         };
-    }), ea.timers = [], ea.fx.tick = function() {
-        var a, b = ea.timers, c = 0;
-        for (nb = ea.now(); c < b.length; c++) a = b[c], a() || b[c] !== a || b.splice(c--, 1);
-        b.length || ea.fx.stop(), nb = void 0;
-    }, ea.fx.timer = function(a) {
-        ea.timers.push(a), a() ? ea.fx.start() : ea.timers.pop();
-    }, ea.fx.interval = 13, ea.fx.start = function() {
-        ob || (ob = setInterval(ea.fx.tick, ea.fx.interval));
-    }, ea.fx.stop = function() {
-        clearInterval(ob), ob = null;
-    }, ea.fx.speeds = {
+    }), jQuery.timers = [], jQuery.fx.tick = function() {
+        var timer, timers = jQuery.timers, i = 0;
+        for (fxNow = jQuery.now(); i < timers.length; i++) timer = timers[i], timer() || timers[i] !== timer || timers.splice(i--, 1);
+        timers.length || jQuery.fx.stop(), fxNow = void 0;
+    }, jQuery.fx.timer = function(timer) {
+        jQuery.timers.push(timer), timer() ? jQuery.fx.start() : jQuery.timers.pop();
+    }, jQuery.fx.interval = 13, jQuery.fx.start = function() {
+        timerId || (timerId = setInterval(jQuery.fx.tick, jQuery.fx.interval));
+    }, jQuery.fx.stop = function() {
+        clearInterval(timerId), timerId = null;
+    }, jQuery.fx.speeds = {
         slow: 600,
         fast: 200,
         _default: 400
-    }, ea.fn.delay = function(a, b) {
-        return a = ea.fx ? ea.fx.speeds[a] || a : a, b = b || "fx", this.queue(b, function(b, c) {
-            var d = setTimeout(b, a);
-            c.stop = function() {
-                clearTimeout(d);
+    }, jQuery.fn.delay = function(time, type) {
+        return time = jQuery.fx ? jQuery.fx.speeds[time] || time : time, type = type || "fx", 
+        this.queue(type, function(next, hooks) {
+            var timeout = setTimeout(next, time);
+            hooks.stop = function() {
+                clearTimeout(timeout);
             };
         });
     }, function() {
-        var a, b, c, d, e;
-        b = oa.createElement("div"), b.setAttribute("className", "t"), b.innerHTML = "  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>", 
-        d = b.getElementsByTagName("a")[0], c = oa.createElement("select"), e = c.appendChild(oa.createElement("option")), 
-        a = b.getElementsByTagName("input")[0], d.style.cssText = "top:1px", ca.getSetAttribute = "t" !== b.className, 
-        ca.style = /top/.test(d.getAttribute("style")), ca.hrefNormalized = "/a" === d.getAttribute("href"), 
-        ca.checkOn = !!a.value, ca.optSelected = e.selected, ca.enctype = !!oa.createElement("form").enctype, 
-        c.disabled = !0, ca.optDisabled = !e.disabled, a = oa.createElement("input"), a.setAttribute("value", ""), 
-        ca.input = "" === a.getAttribute("value"), a.value = "t", a.setAttribute("type", "radio"), 
-        ca.radioValue = "t" === a.value;
+        var input, div, select, a, opt;
+        div = document.createElement("div"), div.setAttribute("className", "t"), div.innerHTML = "  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>", 
+        a = div.getElementsByTagName("a")[0], select = document.createElement("select"), 
+        opt = select.appendChild(document.createElement("option")), input = div.getElementsByTagName("input")[0], 
+        a.style.cssText = "top:1px", support.getSetAttribute = "t" !== div.className, support.style = /top/.test(a.getAttribute("style")), 
+        support.hrefNormalized = "/a" === a.getAttribute("href"), support.checkOn = !!input.value, 
+        support.optSelected = opt.selected, support.enctype = !!document.createElement("form").enctype, 
+        select.disabled = !0, support.optDisabled = !opt.disabled, input = document.createElement("input"), 
+        input.setAttribute("value", ""), support.input = "" === input.getAttribute("value"), 
+        input.value = "t", input.setAttribute("type", "radio"), support.radioValue = "t" === input.value;
     }();
-    var ub = /\r/g;
-    ea.fn.extend({
-        val: function(a) {
-            var b, c, d, e = this[0];
+    var rreturn = /\r/g;
+    jQuery.fn.extend({
+        val: function(value) {
+            var hooks, ret, isFunction, elem = this[0];
             {
-                if (arguments.length) return d = ea.isFunction(a), this.each(function(c) {
-                    var e;
-                    1 === this.nodeType && (e = d ? a.call(this, c, ea(this).val()) : a, null == e ? e = "" : "number" == typeof e ? e += "" : ea.isArray(e) && (e = ea.map(e, function(a) {
-                        return null == a ? "" : a + "";
-                    })), b = ea.valHooks[this.type] || ea.valHooks[this.nodeName.toLowerCase()], b && "set" in b && void 0 !== b.set(this, e, "value") || (this.value = e));
+                if (arguments.length) return isFunction = jQuery.isFunction(value), this.each(function(i) {
+                    var val;
+                    1 === this.nodeType && (val = isFunction ? value.call(this, i, jQuery(this).val()) : value, 
+                    null == val ? val = "" : "number" == typeof val ? val += "" : jQuery.isArray(val) && (val = jQuery.map(val, function(value) {
+                        return null == value ? "" : value + "";
+                    })), hooks = jQuery.valHooks[this.type] || jQuery.valHooks[this.nodeName.toLowerCase()], 
+                    hooks && "set" in hooks && void 0 !== hooks.set(this, val, "value") || (this.value = val));
                 });
-                if (e) return b = ea.valHooks[e.type] || ea.valHooks[e.nodeName.toLowerCase()], 
-                b && "get" in b && void 0 !== (c = b.get(e, "value")) ? c : (c = e.value, "string" == typeof c ? c.replace(ub, "") : null == c ? "" : c);
+                if (elem) return hooks = jQuery.valHooks[elem.type] || jQuery.valHooks[elem.nodeName.toLowerCase()], 
+                hooks && "get" in hooks && void 0 !== (ret = hooks.get(elem, "value")) ? ret : (ret = elem.value, 
+                "string" == typeof ret ? ret.replace(rreturn, "") : null == ret ? "" : ret);
             }
         }
-    }), ea.extend({
+    }), jQuery.extend({
         valHooks: {
             option: {
-                get: function(a) {
-                    var b = ea.find.attr(a, "value");
-                    return null != b ? b : ea.trim(ea.text(a));
+                get: function(elem) {
+                    var val = jQuery.find.attr(elem, "value");
+                    return null != val ? val : jQuery.trim(jQuery.text(elem));
                 }
             },
             select: {
-                get: function(a) {
-                    for (var b, c, d = a.options, e = a.selectedIndex, f = "select-one" === a.type || 0 > e, g = f ? null : [], h = f ? e + 1 : d.length, i = 0 > e ? h : f ? e : 0; h > i; i++) if (c = d[i], 
-                    (c.selected || i === e) && (ca.optDisabled ? !c.disabled : null === c.getAttribute("disabled")) && (!c.parentNode.disabled || !ea.nodeName(c.parentNode, "optgroup"))) {
-                        if (b = ea(c).val(), f) return b;
-                        g.push(b);
+                get: function(elem) {
+                    for (var value, option, options = elem.options, index = elem.selectedIndex, one = "select-one" === elem.type || 0 > index, values = one ? null : [], max = one ? index + 1 : options.length, i = 0 > index ? max : one ? index : 0; max > i; i++) if (option = options[i], 
+                    (option.selected || i === index) && (support.optDisabled ? !option.disabled : null === option.getAttribute("disabled")) && (!option.parentNode.disabled || !jQuery.nodeName(option.parentNode, "optgroup"))) {
+                        if (value = jQuery(option).val(), one) return value;
+                        values.push(value);
                     }
-                    return g;
+                    return values;
                 },
-                set: function(a, b) {
-                    for (var c, d, e = a.options, f = ea.makeArray(b), g = e.length; g--; ) if (d = e[g], 
-                    ea.inArray(ea.valHooks.option.get(d), f) >= 0) try {
-                        d.selected = c = !0;
-                    } catch (h) {
-                        d.scrollHeight;
-                    } else d.selected = !1;
-                    return c || (a.selectedIndex = -1), e;
+                set: function(elem, value) {
+                    for (var optionSet, option, options = elem.options, values = jQuery.makeArray(value), i = options.length; i--; ) if (option = options[i], 
+                    jQuery.inArray(jQuery.valHooks.option.get(option), values) >= 0) try {
+                        option.selected = optionSet = !0;
+                    } catch (_) {
+                        option.scrollHeight;
+                    } else option.selected = !1;
+                    return optionSet || (elem.selectedIndex = -1), options;
                 }
             }
         }
-    }), ea.each([ "radio", "checkbox" ], function() {
-        ea.valHooks[this] = {
-            set: function(a, b) {
-                return ea.isArray(b) ? a.checked = ea.inArray(ea(a).val(), b) >= 0 : void 0;
+    }), jQuery.each([ "radio", "checkbox" ], function() {
+        jQuery.valHooks[this] = {
+            set: function(elem, value) {
+                return jQuery.isArray(value) ? elem.checked = jQuery.inArray(jQuery(elem).val(), value) >= 0 : void 0;
             }
-        }, ca.checkOn || (ea.valHooks[this].get = function(a) {
-            return null === a.getAttribute("value") ? "on" : a.value;
+        }, support.checkOn || (jQuery.valHooks[this].get = function(elem) {
+            return null === elem.getAttribute("value") ? "on" : elem.value;
         });
     });
-    var vb, wb, xb = ea.expr.attrHandle, yb = /^(?:checked|selected)$/i, zb = ca.getSetAttribute, Ab = ca.input;
-    ea.fn.extend({
-        attr: function(a, b) {
-            return Da(this, ea.attr, a, b, arguments.length > 1);
+    var nodeHook, boolHook, attrHandle = jQuery.expr.attrHandle, ruseDefault = /^(?:checked|selected)$/i, getSetAttribute = support.getSetAttribute, getSetInput = support.input;
+    jQuery.fn.extend({
+        attr: function(name, value) {
+            return access(this, jQuery.attr, name, value, arguments.length > 1);
         },
-        removeAttr: function(a) {
+        removeAttr: function(name) {
             return this.each(function() {
-                ea.removeAttr(this, a);
+                jQuery.removeAttr(this, name);
             });
         }
-    }), ea.extend({
-        attr: function(a, b, c) {
-            var d, e, f = a.nodeType;
-            if (a && 3 !== f && 8 !== f && 2 !== f) return typeof a.getAttribute === xa ? ea.prop(a, b, c) : (1 === f && ea.isXMLDoc(a) || (b = b.toLowerCase(), 
-            d = ea.attrHooks[b] || (ea.expr.match.bool.test(b) ? wb : vb)), void 0 === c ? d && "get" in d && null !== (e = d.get(a, b)) ? e : (e = ea.find.attr(a, b), 
-            null == e ? void 0 : e) : null !== c ? d && "set" in d && void 0 !== (e = d.set(a, c, b)) ? e : (a.setAttribute(b, c + ""), 
-            c) : void ea.removeAttr(a, b));
+    }), jQuery.extend({
+        attr: function(elem, name, value) {
+            var hooks, ret, nType = elem.nodeType;
+            if (elem && 3 !== nType && 8 !== nType && 2 !== nType) return typeof elem.getAttribute === strundefined ? jQuery.prop(elem, name, value) : (1 === nType && jQuery.isXMLDoc(elem) || (name = name.toLowerCase(), 
+            hooks = jQuery.attrHooks[name] || (jQuery.expr.match.bool.test(name) ? boolHook : nodeHook)), 
+            void 0 === value ? hooks && "get" in hooks && null !== (ret = hooks.get(elem, name)) ? ret : (ret = jQuery.find.attr(elem, name), 
+            null == ret ? void 0 : ret) : null !== value ? hooks && "set" in hooks && void 0 !== (ret = hooks.set(elem, value, name)) ? ret : (elem.setAttribute(name, value + ""), 
+            value) : void jQuery.removeAttr(elem, name));
         },
-        removeAttr: function(a, b) {
-            var c, d, e = 0, f = b && b.match(ta);
-            if (f && 1 === a.nodeType) for (;c = f[e++]; ) d = ea.propFix[c] || c, ea.expr.match.bool.test(c) ? Ab && zb || !yb.test(c) ? a[d] = !1 : a[ea.camelCase("default-" + c)] = a[d] = !1 : ea.attr(a, c, ""), 
-            a.removeAttribute(zb ? c : d);
+        removeAttr: function(elem, value) {
+            var name, propName, i = 0, attrNames = value && value.match(rnotwhite);
+            if (attrNames && 1 === elem.nodeType) for (;name = attrNames[i++]; ) propName = jQuery.propFix[name] || name, 
+            jQuery.expr.match.bool.test(name) ? getSetInput && getSetAttribute || !ruseDefault.test(name) ? elem[propName] = !1 : elem[jQuery.camelCase("default-" + name)] = elem[propName] = !1 : jQuery.attr(elem, name, ""), 
+            elem.removeAttribute(getSetAttribute ? name : propName);
         },
         attrHooks: {
             type: {
-                set: function(a, b) {
-                    if (!ca.radioValue && "radio" === b && ea.nodeName(a, "input")) {
-                        var c = a.value;
-                        return a.setAttribute("type", b), c && (a.value = c), b;
+                set: function(elem, value) {
+                    if (!support.radioValue && "radio" === value && jQuery.nodeName(elem, "input")) {
+                        var val = elem.value;
+                        return elem.setAttribute("type", value), val && (elem.value = val), value;
                     }
                 }
             }
         }
-    }), wb = {
-        set: function(a, b, c) {
-            return b === !1 ? ea.removeAttr(a, c) : Ab && zb || !yb.test(c) ? a.setAttribute(!zb && ea.propFix[c] || c, c) : a[ea.camelCase("default-" + c)] = a[c] = !0, 
-            c;
+    }), boolHook = {
+        set: function(elem, value, name) {
+            return value === !1 ? jQuery.removeAttr(elem, name) : getSetInput && getSetAttribute || !ruseDefault.test(name) ? elem.setAttribute(!getSetAttribute && jQuery.propFix[name] || name, name) : elem[jQuery.camelCase("default-" + name)] = elem[name] = !0, 
+            name;
         }
-    }, ea.each(ea.expr.match.bool.source.match(/\w+/g), function(a, b) {
-        var c = xb[b] || ea.find.attr;
-        xb[b] = Ab && zb || !yb.test(b) ? function(a, b, d) {
-            var e, f;
-            return d || (f = xb[b], xb[b] = e, e = null != c(a, b, d) ? b.toLowerCase() : null, 
-            xb[b] = f), e;
-        } : function(a, b, c) {
-            return c ? void 0 : a[ea.camelCase("default-" + b)] ? b.toLowerCase() : null;
+    }, jQuery.each(jQuery.expr.match.bool.source.match(/\w+/g), function(i, name) {
+        var getter = attrHandle[name] || jQuery.find.attr;
+        attrHandle[name] = getSetInput && getSetAttribute || !ruseDefault.test(name) ? function(elem, name, isXML) {
+            var ret, handle;
+            return isXML || (handle = attrHandle[name], attrHandle[name] = ret, ret = null != getter(elem, name, isXML) ? name.toLowerCase() : null, 
+            attrHandle[name] = handle), ret;
+        } : function(elem, name, isXML) {
+            return isXML ? void 0 : elem[jQuery.camelCase("default-" + name)] ? name.toLowerCase() : null;
         };
-    }), Ab && zb || (ea.attrHooks.value = {
-        set: function(a, b, c) {
-            return ea.nodeName(a, "input") ? void (a.defaultValue = b) : vb && vb.set(a, b, c);
+    }), getSetInput && getSetAttribute || (jQuery.attrHooks.value = {
+        set: function(elem, value, name) {
+            return jQuery.nodeName(elem, "input") ? void (elem.defaultValue = value) : nodeHook && nodeHook.set(elem, value, name);
         }
-    }), zb || (vb = {
-        set: function(a, b, c) {
-            var d = a.getAttributeNode(c);
-            return d || a.setAttributeNode(d = a.ownerDocument.createAttribute(c)), d.value = b += "", 
-            "value" === c || b === a.getAttribute(c) ? b : void 0;
+    }), getSetAttribute || (nodeHook = {
+        set: function(elem, value, name) {
+            var ret = elem.getAttributeNode(name);
+            return ret || elem.setAttributeNode(ret = elem.ownerDocument.createAttribute(name)), 
+            ret.value = value += "", "value" === name || value === elem.getAttribute(name) ? value : void 0;
         }
-    }, xb.id = xb.name = xb.coords = function(a, b, c) {
-        var d;
-        return c ? void 0 : (d = a.getAttributeNode(b)) && "" !== d.value ? d.value : null;
-    }, ea.valHooks.button = {
-        get: function(a, b) {
-            var c = a.getAttributeNode(b);
-            return c && c.specified ? c.value : void 0;
+    }, attrHandle.id = attrHandle.name = attrHandle.coords = function(elem, name, isXML) {
+        var ret;
+        return isXML ? void 0 : (ret = elem.getAttributeNode(name)) && "" !== ret.value ? ret.value : null;
+    }, jQuery.valHooks.button = {
+        get: function(elem, name) {
+            var ret = elem.getAttributeNode(name);
+            return ret && ret.specified ? ret.value : void 0;
         },
-        set: vb.set
-    }, ea.attrHooks.contenteditable = {
-        set: function(a, b, c) {
-            vb.set(a, "" === b ? !1 : b, c);
+        set: nodeHook.set
+    }, jQuery.attrHooks.contenteditable = {
+        set: function(elem, value, name) {
+            nodeHook.set(elem, "" === value ? !1 : value, name);
         }
-    }, ea.each([ "width", "height" ], function(a, b) {
-        ea.attrHooks[b] = {
-            set: function(a, c) {
-                return "" === c ? (a.setAttribute(b, "auto"), c) : void 0;
+    }, jQuery.each([ "width", "height" ], function(i, name) {
+        jQuery.attrHooks[name] = {
+            set: function(elem, value) {
+                return "" === value ? (elem.setAttribute(name, "auto"), value) : void 0;
             }
         };
-    })), ca.style || (ea.attrHooks.style = {
-        get: function(a) {
-            return a.style.cssText || void 0;
+    })), support.style || (jQuery.attrHooks.style = {
+        get: function(elem) {
+            return elem.style.cssText || void 0;
         },
-        set: function(a, b) {
-            return a.style.cssText = b + "";
+        set: function(elem, value) {
+            return elem.style.cssText = value + "";
         }
     });
-    var Bb = /^(?:input|select|textarea|button|object)$/i, Cb = /^(?:a|area)$/i;
-    ea.fn.extend({
-        prop: function(a, b) {
-            return Da(this, ea.prop, a, b, arguments.length > 1);
+    var rfocusable = /^(?:input|select|textarea|button|object)$/i, rclickable = /^(?:a|area)$/i;
+    jQuery.fn.extend({
+        prop: function(name, value) {
+            return access(this, jQuery.prop, name, value, arguments.length > 1);
         },
-        removeProp: function(a) {
-            return a = ea.propFix[a] || a, this.each(function() {
+        removeProp: function(name) {
+            return name = jQuery.propFix[name] || name, this.each(function() {
                 try {
-                    this[a] = void 0, delete this[a];
-                } catch (b) {}
+                    this[name] = void 0, delete this[name];
+                } catch (e) {}
             });
         }
-    }), ea.extend({
+    }), jQuery.extend({
         propFix: {
             "for": "htmlFor",
             "class": "className"
         },
-        prop: function(a, b, c) {
-            var d, e, f, g = a.nodeType;
-            if (a && 3 !== g && 8 !== g && 2 !== g) return f = 1 !== g || !ea.isXMLDoc(a), f && (b = ea.propFix[b] || b, 
-            e = ea.propHooks[b]), void 0 !== c ? e && "set" in e && void 0 !== (d = e.set(a, c, b)) ? d : a[b] = c : e && "get" in e && null !== (d = e.get(a, b)) ? d : a[b];
+        prop: function(elem, name, value) {
+            var ret, hooks, notxml, nType = elem.nodeType;
+            if (elem && 3 !== nType && 8 !== nType && 2 !== nType) return notxml = 1 !== nType || !jQuery.isXMLDoc(elem), 
+            notxml && (name = jQuery.propFix[name] || name, hooks = jQuery.propHooks[name]), 
+            void 0 !== value ? hooks && "set" in hooks && void 0 !== (ret = hooks.set(elem, value, name)) ? ret : elem[name] = value : hooks && "get" in hooks && null !== (ret = hooks.get(elem, name)) ? ret : elem[name];
         },
         propHooks: {
             tabIndex: {
-                get: function(a) {
-                    var b = ea.find.attr(a, "tabindex");
-                    return b ? parseInt(b, 10) : Bb.test(a.nodeName) || Cb.test(a.nodeName) && a.href ? 0 : -1;
+                get: function(elem) {
+                    var tabindex = jQuery.find.attr(elem, "tabindex");
+                    return tabindex ? parseInt(tabindex, 10) : rfocusable.test(elem.nodeName) || rclickable.test(elem.nodeName) && elem.href ? 0 : -1;
                 }
             }
         }
-    }), ca.hrefNormalized || ea.each([ "href", "src" ], function(a, b) {
-        ea.propHooks[b] = {
-            get: function(a) {
-                return a.getAttribute(b, 4);
+    }), support.hrefNormalized || jQuery.each([ "href", "src" ], function(i, name) {
+        jQuery.propHooks[name] = {
+            get: function(elem) {
+                return elem.getAttribute(name, 4);
             }
         };
-    }), ca.optSelected || (ea.propHooks.selected = {
-        get: function(a) {
-            var b = a.parentNode;
-            return b && (b.selectedIndex, b.parentNode && b.parentNode.selectedIndex), null;
+    }), support.optSelected || (jQuery.propHooks.selected = {
+        get: function(elem) {
+            var parent = elem.parentNode;
+            return parent && (parent.selectedIndex, parent.parentNode && parent.parentNode.selectedIndex), 
+            null;
         }
-    }), ea.each([ "tabIndex", "readOnly", "maxLength", "cellSpacing", "cellPadding", "rowSpan", "colSpan", "useMap", "frameBorder", "contentEditable" ], function() {
-        ea.propFix[this.toLowerCase()] = this;
-    }), ca.enctype || (ea.propFix.enctype = "encoding");
-    var Db = /[\t\r\n\f]/g;
-    ea.fn.extend({
-        addClass: function(a) {
-            var b, c, d, e, f, g, h = 0, i = this.length, j = "string" == typeof a && a;
-            if (ea.isFunction(a)) return this.each(function(b) {
-                ea(this).addClass(a.call(this, b, this.className));
+    }), jQuery.each([ "tabIndex", "readOnly", "maxLength", "cellSpacing", "cellPadding", "rowSpan", "colSpan", "useMap", "frameBorder", "contentEditable" ], function() {
+        jQuery.propFix[this.toLowerCase()] = this;
+    }), support.enctype || (jQuery.propFix.enctype = "encoding");
+    var rclass = /[\t\r\n\f]/g;
+    jQuery.fn.extend({
+        addClass: function(value) {
+            var classes, elem, cur, clazz, j, finalValue, i = 0, len = this.length, proceed = "string" == typeof value && value;
+            if (jQuery.isFunction(value)) return this.each(function(j) {
+                jQuery(this).addClass(value.call(this, j, this.className));
             });
-            if (j) for (b = (a || "").match(ta) || []; i > h; h++) if (c = this[h], d = 1 === c.nodeType && (c.className ? (" " + c.className + " ").replace(Db, " ") : " ")) {
-                for (f = 0; e = b[f++]; ) d.indexOf(" " + e + " ") < 0 && (d += e + " ");
-                g = ea.trim(d), c.className !== g && (c.className = g);
+            if (proceed) for (classes = (value || "").match(rnotwhite) || []; len > i; i++) if (elem = this[i], 
+            cur = 1 === elem.nodeType && (elem.className ? (" " + elem.className + " ").replace(rclass, " ") : " ")) {
+                for (j = 0; clazz = classes[j++]; ) cur.indexOf(" " + clazz + " ") < 0 && (cur += clazz + " ");
+                finalValue = jQuery.trim(cur), elem.className !== finalValue && (elem.className = finalValue);
             }
             return this;
         },
-        removeClass: function(a) {
-            var b, c, d, e, f, g, h = 0, i = this.length, j = 0 === arguments.length || "string" == typeof a && a;
-            if (ea.isFunction(a)) return this.each(function(b) {
-                ea(this).removeClass(a.call(this, b, this.className));
+        removeClass: function(value) {
+            var classes, elem, cur, clazz, j, finalValue, i = 0, len = this.length, proceed = 0 === arguments.length || "string" == typeof value && value;
+            if (jQuery.isFunction(value)) return this.each(function(j) {
+                jQuery(this).removeClass(value.call(this, j, this.className));
             });
-            if (j) for (b = (a || "").match(ta) || []; i > h; h++) if (c = this[h], d = 1 === c.nodeType && (c.className ? (" " + c.className + " ").replace(Db, " ") : "")) {
-                for (f = 0; e = b[f++]; ) for (;d.indexOf(" " + e + " ") >= 0; ) d = d.replace(" " + e + " ", " ");
-                g = a ? ea.trim(d) : "", c.className !== g && (c.className = g);
+            if (proceed) for (classes = (value || "").match(rnotwhite) || []; len > i; i++) if (elem = this[i], 
+            cur = 1 === elem.nodeType && (elem.className ? (" " + elem.className + " ").replace(rclass, " ") : "")) {
+                for (j = 0; clazz = classes[j++]; ) for (;cur.indexOf(" " + clazz + " ") >= 0; ) cur = cur.replace(" " + clazz + " ", " ");
+                finalValue = value ? jQuery.trim(cur) : "", elem.className !== finalValue && (elem.className = finalValue);
             }
             return this;
         },
-        toggleClass: function(a, b) {
-            var c = typeof a;
-            return "boolean" == typeof b && "string" === c ? b ? this.addClass(a) : this.removeClass(a) : ea.isFunction(a) ? this.each(function(c) {
-                ea(this).toggleClass(a.call(this, c, this.className, b), b);
+        toggleClass: function(value, stateVal) {
+            var type = typeof value;
+            return "boolean" == typeof stateVal && "string" === type ? stateVal ? this.addClass(value) : this.removeClass(value) : jQuery.isFunction(value) ? this.each(function(i) {
+                jQuery(this).toggleClass(value.call(this, i, this.className, stateVal), stateVal);
             }) : this.each(function() {
-                if ("string" === c) for (var b, d = 0, e = ea(this), f = a.match(ta) || []; b = f[d++]; ) e.hasClass(b) ? e.removeClass(b) : e.addClass(b); else (c === xa || "boolean" === c) && (this.className && ea._data(this, "__className__", this.className), 
-                this.className = this.className || a === !1 ? "" : ea._data(this, "__className__") || "");
+                if ("string" === type) for (var className, i = 0, self = jQuery(this), classNames = value.match(rnotwhite) || []; className = classNames[i++]; ) self.hasClass(className) ? self.removeClass(className) : self.addClass(className); else (type === strundefined || "boolean" === type) && (this.className && jQuery._data(this, "__className__", this.className), 
+                this.className = this.className || value === !1 ? "" : jQuery._data(this, "__className__") || "");
             });
         },
-        hasClass: function(a) {
-            for (var b = " " + a + " ", c = 0, d = this.length; d > c; c++) if (1 === this[c].nodeType && (" " + this[c].className + " ").replace(Db, " ").indexOf(b) >= 0) return !0;
+        hasClass: function(selector) {
+            for (var className = " " + selector + " ", i = 0, l = this.length; l > i; i++) if (1 === this[i].nodeType && (" " + this[i].className + " ").replace(rclass, " ").indexOf(className) >= 0) return !0;
             return !1;
         }
-    }), ea.each("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error contextmenu".split(" "), function(a, b) {
-        ea.fn[b] = function(a, c) {
-            return arguments.length > 0 ? this.on(b, null, a, c) : this.trigger(b);
+    }), jQuery.each("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error contextmenu".split(" "), function(i, name) {
+        jQuery.fn[name] = function(data, fn) {
+            return arguments.length > 0 ? this.on(name, null, data, fn) : this.trigger(name);
         };
-    }), ea.fn.extend({
-        hover: function(a, b) {
-            return this.mouseenter(a).mouseleave(b || a);
+    }), jQuery.fn.extend({
+        hover: function(fnOver, fnOut) {
+            return this.mouseenter(fnOver).mouseleave(fnOut || fnOver);
         },
-        bind: function(a, b, c) {
-            return this.on(a, null, b, c);
+        bind: function(types, data, fn) {
+            return this.on(types, null, data, fn);
         },
-        unbind: function(a, b) {
-            return this.off(a, null, b);
+        unbind: function(types, fn) {
+            return this.off(types, null, fn);
         },
-        delegate: function(a, b, c, d) {
-            return this.on(b, a, c, d);
+        delegate: function(selector, types, data, fn) {
+            return this.on(types, selector, data, fn);
         },
-        undelegate: function(a, b, c) {
-            return 1 === arguments.length ? this.off(a, "**") : this.off(b, a || "**", c);
+        undelegate: function(selector, types, fn) {
+            return 1 === arguments.length ? this.off(selector, "**") : this.off(types, selector || "**", fn);
         }
     });
-    var Eb = ea.now(), Fb = /\?/, Gb = /(,)|(\[|{)|(}|])|"(?:[^"\\\r\n]|\\["\\\/bfnrt]|\\u[\da-fA-F]{4})*"\s*:?|true|false|null|-?(?!0\d)\d+(?:\.\d+|)(?:[eE][+-]?\d+|)/g;
-    ea.parseJSON = function(b) {
-        if (a.JSON && a.JSON.parse) return a.JSON.parse(b + "");
-        var c, d = null, e = ea.trim(b + "");
-        return e && !ea.trim(e.replace(Gb, function(a, b, e, f) {
-            return c && b && (d = 0), 0 === d ? a : (c = e || b, d += !f - !e, "");
-        })) ? Function("return " + e)() : ea.error("Invalid JSON: " + b);
-    }, ea.parseXML = function(b) {
-        var c, d;
-        if (!b || "string" != typeof b) return null;
+    var nonce = jQuery.now(), rquery = /\?/, rvalidtokens = /(,)|(\[|{)|(}|])|"(?:[^"\\\r\n]|\\["\\\/bfnrt]|\\u[\da-fA-F]{4})*"\s*:?|true|false|null|-?(?!0\d)\d+(?:\.\d+|)(?:[eE][+-]?\d+|)/g;
+    jQuery.parseJSON = function(data) {
+        if (window.JSON && window.JSON.parse) return window.JSON.parse(data + "");
+        var requireNonComma, depth = null, str = jQuery.trim(data + "");
+        return str && !jQuery.trim(str.replace(rvalidtokens, function(token, comma, open, close) {
+            return requireNonComma && comma && (depth = 0), 0 === depth ? token : (requireNonComma = open || comma, 
+            depth += !close - !open, "");
+        })) ? Function("return " + str)() : jQuery.error("Invalid JSON: " + data);
+    }, jQuery.parseXML = function(data) {
+        var xml, tmp;
+        if (!data || "string" != typeof data) return null;
         try {
-            a.DOMParser ? (d = new DOMParser(), c = d.parseFromString(b, "text/xml")) : (c = new ActiveXObject("Microsoft.XMLDOM"), 
-            c.async = "false", c.loadXML(b));
+            window.DOMParser ? (tmp = new DOMParser(), xml = tmp.parseFromString(data, "text/xml")) : (xml = new ActiveXObject("Microsoft.XMLDOM"), 
+            xml.async = "false", xml.loadXML(data));
         } catch (e) {
-            c = void 0;
+            xml = void 0;
         }
-        return c && c.documentElement && !c.getElementsByTagName("parsererror").length || ea.error("Invalid XML: " + b), 
-        c;
+        return xml && xml.documentElement && !xml.getElementsByTagName("parsererror").length || jQuery.error("Invalid XML: " + data), 
+        xml;
     };
-    var Hb, Ib, Jb = /#.*$/, Kb = /([?&])_=[^&]*/, Lb = /^(.*?):[ \t]*([^\r\n]*)\r?$/gm, Mb = /^(?:about|app|app-storage|.+-extension|file|res|widget):$/, Nb = /^(?:GET|HEAD)$/, Ob = /^\/\//, Pb = /^([\w.+-]+:)(?:\/\/(?:[^\/?#]*@|)([^\/?#:]*)(?::(\d+)|)|)/, Qb = {}, Rb = {}, Sb = "*/".concat("*");
+    var ajaxLocParts, ajaxLocation, rhash = /#.*$/, rts = /([?&])_=[^&]*/, rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/gm, rlocalProtocol = /^(?:about|app|app-storage|.+-extension|file|res|widget):$/, rnoContent = /^(?:GET|HEAD)$/, rprotocol = /^\/\//, rurl = /^([\w.+-]+:)(?:\/\/(?:[^\/?#]*@|)([^\/?#:]*)(?::(\d+)|)|)/, prefilters = {}, transports = {}, allTypes = "*/".concat("*");
     try {
-        Ib = location.href;
-    } catch (Tb) {
-        Ib = oa.createElement("a"), Ib.href = "", Ib = Ib.href;
+        ajaxLocation = location.href;
+    } catch (e) {
+        ajaxLocation = document.createElement("a"), ajaxLocation.href = "", ajaxLocation = ajaxLocation.href;
     }
-    Hb = Pb.exec(Ib.toLowerCase()) || [], ea.extend({
+    ajaxLocParts = rurl.exec(ajaxLocation.toLowerCase()) || [], jQuery.extend({
         active: 0,
         lastModified: {},
         etag: {},
         ajaxSettings: {
-            url: Ib,
+            url: ajaxLocation,
             type: "GET",
-            isLocal: Mb.test(Hb[1]),
+            isLocal: rlocalProtocol.test(ajaxLocParts[1]),
             global: !0,
             processData: !0,
             async: !0,
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             accepts: {
-                "*": Sb,
+                "*": allTypes,
                 text: "text/plain",
                 html: "text/html",
                 xml: "application/xml, text/xml",
@@ -2667,226 +2769,241 @@ function detectSidebar() {
             converters: {
                 "* text": String,
                 "text html": !0,
-                "text json": ea.parseJSON,
-                "text xml": ea.parseXML
+                "text json": jQuery.parseJSON,
+                "text xml": jQuery.parseXML
             },
             flatOptions: {
                 url: !0,
                 context: !0
             }
         },
-        ajaxSetup: function(a, b) {
-            return b ? P(P(a, ea.ajaxSettings), b) : P(ea.ajaxSettings, a);
+        ajaxSetup: function(target, settings) {
+            return settings ? ajaxExtend(ajaxExtend(target, jQuery.ajaxSettings), settings) : ajaxExtend(jQuery.ajaxSettings, target);
         },
-        ajaxPrefilter: N(Qb),
-        ajaxTransport: N(Rb),
-        ajax: function(a, b) {
-            function c(a, b, c, d) {
-                var e, k, r, s, u, w = b;
-                2 !== t && (t = 2, h && clearTimeout(h), j = void 0, g = d || "", v.readyState = a > 0 ? 4 : 0, 
-                e = a >= 200 && 300 > a || 304 === a, c && (s = Q(l, v, c)), s = R(l, s, v, e), 
-                e ? (l.ifModified && (u = v.getResponseHeader("Last-Modified"), u && (ea.lastModified[f] = u), 
-                u = v.getResponseHeader("etag"), u && (ea.etag[f] = u)), 204 === a || "HEAD" === l.type ? w = "nocontent" : 304 === a ? w = "notmodified" : (w = s.state, 
-                k = s.data, r = s.error, e = !r)) : (r = w, (a || !w) && (w = "error", 0 > a && (a = 0))), 
-                v.status = a, v.statusText = (b || w) + "", e ? o.resolveWith(m, [ k, w, v ]) : o.rejectWith(m, [ v, w, r ]), 
-                v.statusCode(q), q = void 0, i && n.trigger(e ? "ajaxSuccess" : "ajaxError", [ v, l, e ? k : r ]), 
-                p.fireWith(m, [ v, w ]), i && (n.trigger("ajaxComplete", [ v, l ]), --ea.active || ea.event.trigger("ajaxStop")));
+        ajaxPrefilter: addToPrefiltersOrTransports(prefilters),
+        ajaxTransport: addToPrefiltersOrTransports(transports),
+        ajax: function(url, options) {
+            function done(status, nativeStatusText, responses, headers) {
+                var isSuccess, success, error, response, modified, statusText = nativeStatusText;
+                2 !== state && (state = 2, timeoutTimer && clearTimeout(timeoutTimer), transport = void 0, 
+                responseHeadersString = headers || "", jqXHR.readyState = status > 0 ? 4 : 0, isSuccess = status >= 200 && 300 > status || 304 === status, 
+                responses && (response = ajaxHandleResponses(s, jqXHR, responses)), response = ajaxConvert(s, response, jqXHR, isSuccess), 
+                isSuccess ? (s.ifModified && (modified = jqXHR.getResponseHeader("Last-Modified"), 
+                modified && (jQuery.lastModified[cacheURL] = modified), modified = jqXHR.getResponseHeader("etag"), 
+                modified && (jQuery.etag[cacheURL] = modified)), 204 === status || "HEAD" === s.type ? statusText = "nocontent" : 304 === status ? statusText = "notmodified" : (statusText = response.state, 
+                success = response.data, error = response.error, isSuccess = !error)) : (error = statusText, 
+                (status || !statusText) && (statusText = "error", 0 > status && (status = 0))), 
+                jqXHR.status = status, jqXHR.statusText = (nativeStatusText || statusText) + "", 
+                isSuccess ? deferred.resolveWith(callbackContext, [ success, statusText, jqXHR ]) : deferred.rejectWith(callbackContext, [ jqXHR, statusText, error ]), 
+                jqXHR.statusCode(statusCode), statusCode = void 0, fireGlobals && globalEventContext.trigger(isSuccess ? "ajaxSuccess" : "ajaxError", [ jqXHR, s, isSuccess ? success : error ]), 
+                completeDeferred.fireWith(callbackContext, [ jqXHR, statusText ]), fireGlobals && (globalEventContext.trigger("ajaxComplete", [ jqXHR, s ]), 
+                --jQuery.active || jQuery.event.trigger("ajaxStop")));
             }
-            "object" == typeof a && (b = a, a = void 0), b = b || {};
-            var d, e, f, g, h, i, j, k, l = ea.ajaxSetup({}, b), m = l.context || l, n = l.context && (m.nodeType || m.jquery) ? ea(m) : ea.event, o = ea.Deferred(), p = ea.Callbacks("once memory"), q = l.statusCode || {}, r = {}, s = {}, t = 0, u = "canceled", v = {
+            "object" == typeof url && (options = url, url = void 0), options = options || {};
+            var parts, i, cacheURL, responseHeadersString, timeoutTimer, fireGlobals, transport, responseHeaders, s = jQuery.ajaxSetup({}, options), callbackContext = s.context || s, globalEventContext = s.context && (callbackContext.nodeType || callbackContext.jquery) ? jQuery(callbackContext) : jQuery.event, deferred = jQuery.Deferred(), completeDeferred = jQuery.Callbacks("once memory"), statusCode = s.statusCode || {}, requestHeaders = {}, requestHeadersNames = {}, state = 0, strAbort = "canceled", jqXHR = {
                 readyState: 0,
-                getResponseHeader: function(a) {
-                    var b;
-                    if (2 === t) {
-                        if (!k) for (k = {}; b = Lb.exec(g); ) k[b[1].toLowerCase()] = b[2];
-                        b = k[a.toLowerCase()];
+                getResponseHeader: function(key) {
+                    var match;
+                    if (2 === state) {
+                        if (!responseHeaders) for (responseHeaders = {}; match = rheaders.exec(responseHeadersString); ) responseHeaders[match[1].toLowerCase()] = match[2];
+                        match = responseHeaders[key.toLowerCase()];
                     }
-                    return null == b ? null : b;
+                    return null == match ? null : match;
                 },
                 getAllResponseHeaders: function() {
-                    return 2 === t ? g : null;
+                    return 2 === state ? responseHeadersString : null;
                 },
-                setRequestHeader: function(a, b) {
-                    var c = a.toLowerCase();
-                    return t || (a = s[c] = s[c] || a, r[a] = b), this;
+                setRequestHeader: function(name, value) {
+                    var lname = name.toLowerCase();
+                    return state || (name = requestHeadersNames[lname] = requestHeadersNames[lname] || name, 
+                    requestHeaders[name] = value), this;
                 },
-                overrideMimeType: function(a) {
-                    return t || (l.mimeType = a), this;
+                overrideMimeType: function(type) {
+                    return state || (s.mimeType = type), this;
                 },
-                statusCode: function(a) {
-                    var b;
-                    if (a) if (2 > t) for (b in a) q[b] = [ q[b], a[b] ]; else v.always(a[v.status]);
+                statusCode: function(map) {
+                    var code;
+                    if (map) if (2 > state) for (code in map) statusCode[code] = [ statusCode[code], map[code] ]; else jqXHR.always(map[jqXHR.status]);
                     return this;
                 },
-                abort: function(a) {
-                    var b = a || u;
-                    return j && j.abort(b), c(0, b), this;
+                abort: function(statusText) {
+                    var finalText = statusText || strAbort;
+                    return transport && transport.abort(finalText), done(0, finalText), this;
                 }
             };
-            if (o.promise(v).complete = p.add, v.success = v.done, v.error = v.fail, l.url = ((a || l.url || Ib) + "").replace(Jb, "").replace(Ob, Hb[1] + "//"), 
-            l.type = b.method || b.type || l.method || l.type, l.dataTypes = ea.trim(l.dataType || "*").toLowerCase().match(ta) || [ "" ], 
-            null == l.crossDomain && (d = Pb.exec(l.url.toLowerCase()), l.crossDomain = !(!d || d[1] === Hb[1] && d[2] === Hb[2] && (d[3] || ("http:" === d[1] ? "80" : "443")) === (Hb[3] || ("http:" === Hb[1] ? "80" : "443")))), 
-            l.data && l.processData && "string" != typeof l.data && (l.data = ea.param(l.data, l.traditional)), 
-            O(Qb, l, b, v), 2 === t) return v;
-            i = ea.event && l.global, i && 0 === ea.active++ && ea.event.trigger("ajaxStart"), 
-            l.type = l.type.toUpperCase(), l.hasContent = !Nb.test(l.type), f = l.url, l.hasContent || (l.data && (f = l.url += (Fb.test(f) ? "&" : "?") + l.data, 
-            delete l.data), l.cache === !1 && (l.url = Kb.test(f) ? f.replace(Kb, "$1_=" + Eb++) : f + (Fb.test(f) ? "&" : "?") + "_=" + Eb++)), 
-            l.ifModified && (ea.lastModified[f] && v.setRequestHeader("If-Modified-Since", ea.lastModified[f]), 
-            ea.etag[f] && v.setRequestHeader("If-None-Match", ea.etag[f])), (l.data && l.hasContent && l.contentType !== !1 || b.contentType) && v.setRequestHeader("Content-Type", l.contentType), 
-            v.setRequestHeader("Accept", l.dataTypes[0] && l.accepts[l.dataTypes[0]] ? l.accepts[l.dataTypes[0]] + ("*" !== l.dataTypes[0] ? ", " + Sb + "; q=0.01" : "") : l.accepts["*"]);
-            for (e in l.headers) v.setRequestHeader(e, l.headers[e]);
-            if (l.beforeSend && (l.beforeSend.call(m, v, l) === !1 || 2 === t)) return v.abort();
-            u = "abort";
-            for (e in {
+            if (deferred.promise(jqXHR).complete = completeDeferred.add, jqXHR.success = jqXHR.done, 
+            jqXHR.error = jqXHR.fail, s.url = ((url || s.url || ajaxLocation) + "").replace(rhash, "").replace(rprotocol, ajaxLocParts[1] + "//"), 
+            s.type = options.method || options.type || s.method || s.type, s.dataTypes = jQuery.trim(s.dataType || "*").toLowerCase().match(rnotwhite) || [ "" ], 
+            null == s.crossDomain && (parts = rurl.exec(s.url.toLowerCase()), s.crossDomain = !(!parts || parts[1] === ajaxLocParts[1] && parts[2] === ajaxLocParts[2] && (parts[3] || ("http:" === parts[1] ? "80" : "443")) === (ajaxLocParts[3] || ("http:" === ajaxLocParts[1] ? "80" : "443")))), 
+            s.data && s.processData && "string" != typeof s.data && (s.data = jQuery.param(s.data, s.traditional)), 
+            inspectPrefiltersOrTransports(prefilters, s, options, jqXHR), 2 === state) return jqXHR;
+            fireGlobals = jQuery.event && s.global, fireGlobals && 0 === jQuery.active++ && jQuery.event.trigger("ajaxStart"), 
+            s.type = s.type.toUpperCase(), s.hasContent = !rnoContent.test(s.type), cacheURL = s.url, 
+            s.hasContent || (s.data && (cacheURL = s.url += (rquery.test(cacheURL) ? "&" : "?") + s.data, 
+            delete s.data), s.cache === !1 && (s.url = rts.test(cacheURL) ? cacheURL.replace(rts, "$1_=" + nonce++) : cacheURL + (rquery.test(cacheURL) ? "&" : "?") + "_=" + nonce++)), 
+            s.ifModified && (jQuery.lastModified[cacheURL] && jqXHR.setRequestHeader("If-Modified-Since", jQuery.lastModified[cacheURL]), 
+            jQuery.etag[cacheURL] && jqXHR.setRequestHeader("If-None-Match", jQuery.etag[cacheURL])), 
+            (s.data && s.hasContent && s.contentType !== !1 || options.contentType) && jqXHR.setRequestHeader("Content-Type", s.contentType), 
+            jqXHR.setRequestHeader("Accept", s.dataTypes[0] && s.accepts[s.dataTypes[0]] ? s.accepts[s.dataTypes[0]] + ("*" !== s.dataTypes[0] ? ", " + allTypes + "; q=0.01" : "") : s.accepts["*"]);
+            for (i in s.headers) jqXHR.setRequestHeader(i, s.headers[i]);
+            if (s.beforeSend && (s.beforeSend.call(callbackContext, jqXHR, s) === !1 || 2 === state)) return jqXHR.abort();
+            strAbort = "abort";
+            for (i in {
                 success: 1,
                 error: 1,
                 complete: 1
-            }) v[e](l[e]);
-            if (j = O(Rb, l, b, v)) {
-                v.readyState = 1, i && n.trigger("ajaxSend", [ v, l ]), l.async && l.timeout > 0 && (h = setTimeout(function() {
-                    v.abort("timeout");
-                }, l.timeout));
+            }) jqXHR[i](s[i]);
+            if (transport = inspectPrefiltersOrTransports(transports, s, options, jqXHR)) {
+                jqXHR.readyState = 1, fireGlobals && globalEventContext.trigger("ajaxSend", [ jqXHR, s ]), 
+                s.async && s.timeout > 0 && (timeoutTimer = setTimeout(function() {
+                    jqXHR.abort("timeout");
+                }, s.timeout));
                 try {
-                    t = 1, j.send(r, c);
-                } catch (w) {
-                    if (!(2 > t)) throw w;
-                    c(-1, w);
+                    state = 1, transport.send(requestHeaders, done);
+                } catch (e) {
+                    if (!(2 > state)) throw e;
+                    done(-1, e);
                 }
-            } else c(-1, "No Transport");
-            return v;
+            } else done(-1, "No Transport");
+            return jqXHR;
         },
-        getJSON: function(a, b, c) {
-            return ea.get(a, b, c, "json");
+        getJSON: function(url, data, callback) {
+            return jQuery.get(url, data, callback, "json");
         },
-        getScript: function(a, b) {
-            return ea.get(a, void 0, b, "script");
+        getScript: function(url, callback) {
+            return jQuery.get(url, void 0, callback, "script");
         }
-    }), ea.each([ "get", "post" ], function(a, b) {
-        ea[b] = function(a, c, d, e) {
-            return ea.isFunction(c) && (e = e || d, d = c, c = void 0), ea.ajax({
-                url: a,
-                type: b,
-                dataType: e,
-                data: c,
-                success: d
+    }), jQuery.each([ "get", "post" ], function(i, method) {
+        jQuery[method] = function(url, data, callback, type) {
+            return jQuery.isFunction(data) && (type = type || callback, callback = data, data = void 0), 
+            jQuery.ajax({
+                url: url,
+                type: method,
+                dataType: type,
+                data: data,
+                success: callback
             });
         };
-    }), ea._evalUrl = function(a) {
-        return ea.ajax({
-            url: a,
+    }), jQuery._evalUrl = function(url) {
+        return jQuery.ajax({
+            url: url,
             type: "GET",
             dataType: "script",
             async: !1,
             global: !1,
             "throws": !0
         });
-    }, ea.fn.extend({
-        wrapAll: function(a) {
-            if (ea.isFunction(a)) return this.each(function(b) {
-                ea(this).wrapAll(a.call(this, b));
+    }, jQuery.fn.extend({
+        wrapAll: function(html) {
+            if (jQuery.isFunction(html)) return this.each(function(i) {
+                jQuery(this).wrapAll(html.call(this, i));
             });
             if (this[0]) {
-                var b = ea(a, this[0].ownerDocument).eq(0).clone(!0);
-                this[0].parentNode && b.insertBefore(this[0]), b.map(function() {
-                    for (var a = this; a.firstChild && 1 === a.firstChild.nodeType; ) a = a.firstChild;
-                    return a;
+                var wrap = jQuery(html, this[0].ownerDocument).eq(0).clone(!0);
+                this[0].parentNode && wrap.insertBefore(this[0]), wrap.map(function() {
+                    for (var elem = this; elem.firstChild && 1 === elem.firstChild.nodeType; ) elem = elem.firstChild;
+                    return elem;
                 }).append(this);
             }
             return this;
         },
-        wrapInner: function(a) {
-            return ea.isFunction(a) ? this.each(function(b) {
-                ea(this).wrapInner(a.call(this, b));
+        wrapInner: function(html) {
+            return jQuery.isFunction(html) ? this.each(function(i) {
+                jQuery(this).wrapInner(html.call(this, i));
             }) : this.each(function() {
-                var b = ea(this), c = b.contents();
-                c.length ? c.wrapAll(a) : b.append(a);
+                var self = jQuery(this), contents = self.contents();
+                contents.length ? contents.wrapAll(html) : self.append(html);
             });
         },
-        wrap: function(a) {
-            var b = ea.isFunction(a);
-            return this.each(function(c) {
-                ea(this).wrapAll(b ? a.call(this, c) : a);
+        wrap: function(html) {
+            var isFunction = jQuery.isFunction(html);
+            return this.each(function(i) {
+                jQuery(this).wrapAll(isFunction ? html.call(this, i) : html);
             });
         },
         unwrap: function() {
             return this.parent().each(function() {
-                ea.nodeName(this, "body") || ea(this).replaceWith(this.childNodes);
+                jQuery.nodeName(this, "body") || jQuery(this).replaceWith(this.childNodes);
             }).end();
         }
-    }), ea.expr.filters.hidden = function(a) {
-        return a.offsetWidth <= 0 && a.offsetHeight <= 0 || !ca.reliableHiddenOffsets() && "none" === (a.style && a.style.display || ea.css(a, "display"));
-    }, ea.expr.filters.visible = function(a) {
-        return !ea.expr.filters.hidden(a);
+    }), jQuery.expr.filters.hidden = function(elem) {
+        return elem.offsetWidth <= 0 && elem.offsetHeight <= 0 || !support.reliableHiddenOffsets() && "none" === (elem.style && elem.style.display || jQuery.css(elem, "display"));
+    }, jQuery.expr.filters.visible = function(elem) {
+        return !jQuery.expr.filters.hidden(elem);
     };
-    var Ub = /%20/g, Vb = /\[\]$/, Wb = /\r?\n/g, Xb = /^(?:submit|button|image|reset|file)$/i, Yb = /^(?:input|select|textarea|keygen)/i;
-    ea.param = function(a, b) {
-        var c, d = [], e = function(a, b) {
-            b = ea.isFunction(b) ? b() : null == b ? "" : b, d[d.length] = encodeURIComponent(a) + "=" + encodeURIComponent(b);
+    var r20 = /%20/g, rbracket = /\[\]$/, rCRLF = /\r?\n/g, rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i, rsubmittable = /^(?:input|select|textarea|keygen)/i;
+    jQuery.param = function(a, traditional) {
+        var prefix, s = [], add = function(key, value) {
+            value = jQuery.isFunction(value) ? value() : null == value ? "" : value, s[s.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value);
         };
-        if (void 0 === b && (b = ea.ajaxSettings && ea.ajaxSettings.traditional), ea.isArray(a) || a.jquery && !ea.isPlainObject(a)) ea.each(a, function() {
-            e(this.name, this.value);
-        }); else for (c in a) S(c, a[c], b, e);
-        return d.join("&").replace(Ub, "+");
-    }, ea.fn.extend({
+        if (void 0 === traditional && (traditional = jQuery.ajaxSettings && jQuery.ajaxSettings.traditional), 
+        jQuery.isArray(a) || a.jquery && !jQuery.isPlainObject(a)) jQuery.each(a, function() {
+            add(this.name, this.value);
+        }); else for (prefix in a) buildParams(prefix, a[prefix], traditional, add);
+        return s.join("&").replace(r20, "+");
+    }, jQuery.fn.extend({
         serialize: function() {
-            return ea.param(this.serializeArray());
+            return jQuery.param(this.serializeArray());
         },
         serializeArray: function() {
             return this.map(function() {
-                var a = ea.prop(this, "elements");
-                return a ? ea.makeArray(a) : this;
+                var elements = jQuery.prop(this, "elements");
+                return elements ? jQuery.makeArray(elements) : this;
             }).filter(function() {
-                var a = this.type;
-                return this.name && !ea(this).is(":disabled") && Yb.test(this.nodeName) && !Xb.test(a) && (this.checked || !Ea.test(a));
-            }).map(function(a, b) {
-                var c = ea(this).val();
-                return null == c ? null : ea.isArray(c) ? ea.map(c, function(a) {
+                var type = this.type;
+                return this.name && !jQuery(this).is(":disabled") && rsubmittable.test(this.nodeName) && !rsubmitterTypes.test(type) && (this.checked || !rcheckableType.test(type));
+            }).map(function(i, elem) {
+                var val = jQuery(this).val();
+                return null == val ? null : jQuery.isArray(val) ? jQuery.map(val, function(val) {
                     return {
-                        name: b.name,
-                        value: a.replace(Wb, "\r\n")
+                        name: elem.name,
+                        value: val.replace(rCRLF, "\r\n")
                     };
                 }) : {
-                    name: b.name,
-                    value: c.replace(Wb, "\r\n")
+                    name: elem.name,
+                    value: val.replace(rCRLF, "\r\n")
                 };
             }).get();
         }
-    }), ea.ajaxSettings.xhr = void 0 !== a.ActiveXObject ? function() {
-        return !this.isLocal && /^(get|post|head|put|delete|options)$/i.test(this.type) && T() || U();
-    } : T;
-    var Zb = 0, $b = {}, _b = ea.ajaxSettings.xhr();
-    a.attachEvent && a.attachEvent("onunload", function() {
-        for (var a in $b) $b[a](void 0, !0);
-    }), ca.cors = !!_b && "withCredentials" in _b, _b = ca.ajax = !!_b, _b && ea.ajaxTransport(function(a) {
-        if (!a.crossDomain || ca.cors) {
-            var b;
+    }), jQuery.ajaxSettings.xhr = void 0 !== window.ActiveXObject ? function() {
+        return !this.isLocal && /^(get|post|head|put|delete|options)$/i.test(this.type) && createStandardXHR() || createActiveXHR();
+    } : createStandardXHR;
+    var xhrId = 0, xhrCallbacks = {}, xhrSupported = jQuery.ajaxSettings.xhr();
+    window.attachEvent && window.attachEvent("onunload", function() {
+        for (var key in xhrCallbacks) xhrCallbacks[key](void 0, !0);
+    }), support.cors = !!xhrSupported && "withCredentials" in xhrSupported, xhrSupported = support.ajax = !!xhrSupported, 
+    xhrSupported && jQuery.ajaxTransport(function(options) {
+        if (!options.crossDomain || support.cors) {
+            var callback;
             return {
-                send: function(c, d) {
-                    var e, f = a.xhr(), g = ++Zb;
-                    if (f.open(a.type, a.url, a.async, a.username, a.password), a.xhrFields) for (e in a.xhrFields) f[e] = a.xhrFields[e];
-                    a.mimeType && f.overrideMimeType && f.overrideMimeType(a.mimeType), a.crossDomain || c["X-Requested-With"] || (c["X-Requested-With"] = "XMLHttpRequest");
-                    for (e in c) void 0 !== c[e] && f.setRequestHeader(e, c[e] + "");
-                    f.send(a.hasContent && a.data || null), b = function(c, e) {
-                        var h, i, j;
-                        if (b && (e || 4 === f.readyState)) if (delete $b[g], b = void 0, f.onreadystatechange = ea.noop, 
-                        e) 4 !== f.readyState && f.abort(); else {
-                            j = {}, h = f.status, "string" == typeof f.responseText && (j.text = f.responseText);
+                send: function(headers, complete) {
+                    var i, xhr = options.xhr(), id = ++xhrId;
+                    if (xhr.open(options.type, options.url, options.async, options.username, options.password), 
+                    options.xhrFields) for (i in options.xhrFields) xhr[i] = options.xhrFields[i];
+                    options.mimeType && xhr.overrideMimeType && xhr.overrideMimeType(options.mimeType), 
+                    options.crossDomain || headers["X-Requested-With"] || (headers["X-Requested-With"] = "XMLHttpRequest");
+                    for (i in headers) void 0 !== headers[i] && xhr.setRequestHeader(i, headers[i] + "");
+                    xhr.send(options.hasContent && options.data || null), callback = function(_, isAbort) {
+                        var status, statusText, responses;
+                        if (callback && (isAbort || 4 === xhr.readyState)) if (delete xhrCallbacks[id], 
+                        callback = void 0, xhr.onreadystatechange = jQuery.noop, isAbort) 4 !== xhr.readyState && xhr.abort(); else {
+                            responses = {}, status = xhr.status, "string" == typeof xhr.responseText && (responses.text = xhr.responseText);
                             try {
-                                i = f.statusText;
-                            } catch (k) {
-                                i = "";
+                                statusText = xhr.statusText;
+                            } catch (e) {
+                                statusText = "";
                             }
-                            h || !a.isLocal || a.crossDomain ? 1223 === h && (h = 204) : h = j.text ? 200 : 404;
+                            status || !options.isLocal || options.crossDomain ? 1223 === status && (status = 204) : status = responses.text ? 200 : 404;
                         }
-                        j && d(h, i, j, f.getAllResponseHeaders());
-                    }, a.async ? 4 === f.readyState ? setTimeout(b) : f.onreadystatechange = $b[g] = b : b();
+                        responses && complete(status, statusText, responses, xhr.getAllResponseHeaders());
+                    }, options.async ? 4 === xhr.readyState ? setTimeout(callback) : xhr.onreadystatechange = xhrCallbacks[id] = callback : callback();
                 },
                 abort: function() {
-                    b && b(void 0, !0);
+                    callback && callback(void 0, !0);
                 }
             };
         }
-    }), ea.ajaxSetup({
+    }), jQuery.ajaxSetup({
         accepts: {
             script: "text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"
         },
@@ -2894,321 +3011,330 @@ function detectSidebar() {
             script: /(?:java|ecma)script/
         },
         converters: {
-            "text script": function(a) {
-                return ea.globalEval(a), a;
+            "text script": function(text) {
+                return jQuery.globalEval(text), text;
             }
         }
-    }), ea.ajaxPrefilter("script", function(a) {
-        void 0 === a.cache && (a.cache = !1), a.crossDomain && (a.type = "GET", a.global = !1);
-    }), ea.ajaxTransport("script", function(a) {
-        if (a.crossDomain) {
-            var b, c = oa.head || ea("head")[0] || oa.documentElement;
+    }), jQuery.ajaxPrefilter("script", function(s) {
+        void 0 === s.cache && (s.cache = !1), s.crossDomain && (s.type = "GET", s.global = !1);
+    }), jQuery.ajaxTransport("script", function(s) {
+        if (s.crossDomain) {
+            var script, head = document.head || jQuery("head")[0] || document.documentElement;
             return {
-                send: function(d, e) {
-                    b = oa.createElement("script"), b.async = !0, a.scriptCharset && (b.charset = a.scriptCharset), 
-                    b.src = a.url, b.onload = b.onreadystatechange = function(a, c) {
-                        (c || !b.readyState || /loaded|complete/.test(b.readyState)) && (b.onload = b.onreadystatechange = null, 
-                        b.parentNode && b.parentNode.removeChild(b), b = null, c || e(200, "success"));
-                    }, c.insertBefore(b, c.firstChild);
+                send: function(_, callback) {
+                    script = document.createElement("script"), script.async = !0, s.scriptCharset && (script.charset = s.scriptCharset), 
+                    script.src = s.url, script.onload = script.onreadystatechange = function(_, isAbort) {
+                        (isAbort || !script.readyState || /loaded|complete/.test(script.readyState)) && (script.onload = script.onreadystatechange = null, 
+                        script.parentNode && script.parentNode.removeChild(script), script = null, isAbort || callback(200, "success"));
+                    }, head.insertBefore(script, head.firstChild);
                 },
                 abort: function() {
-                    b && b.onload(void 0, !0);
+                    script && script.onload(void 0, !0);
                 }
             };
         }
     });
-    var ac = [], bc = /(=)\?(?=&|$)|\?\?/;
-    ea.ajaxSetup({
+    var oldCallbacks = [], rjsonp = /(=)\?(?=&|$)|\?\?/;
+    jQuery.ajaxSetup({
         jsonp: "callback",
         jsonpCallback: function() {
-            var a = ac.pop() || ea.expando + "_" + Eb++;
-            return this[a] = !0, a;
+            var callback = oldCallbacks.pop() || jQuery.expando + "_" + nonce++;
+            return this[callback] = !0, callback;
         }
-    }), ea.ajaxPrefilter("json jsonp", function(b, c, d) {
-        var e, f, g, h = b.jsonp !== !1 && (bc.test(b.url) ? "url" : "string" == typeof b.data && !(b.contentType || "").indexOf("application/x-www-form-urlencoded") && bc.test(b.data) && "data");
-        return h || "jsonp" === b.dataTypes[0] ? (e = b.jsonpCallback = ea.isFunction(b.jsonpCallback) ? b.jsonpCallback() : b.jsonpCallback, 
-        h ? b[h] = b[h].replace(bc, "$1" + e) : b.jsonp !== !1 && (b.url += (Fb.test(b.url) ? "&" : "?") + b.jsonp + "=" + e), 
-        b.converters["script json"] = function() {
-            return g || ea.error(e + " was not called"), g[0];
-        }, b.dataTypes[0] = "json", f = a[e], a[e] = function() {
-            g = arguments;
-        }, d.always(function() {
-            a[e] = f, b[e] && (b.jsonpCallback = c.jsonpCallback, ac.push(e)), g && ea.isFunction(f) && f(g[0]), 
-            g = f = void 0;
+    }), jQuery.ajaxPrefilter("json jsonp", function(s, originalSettings, jqXHR) {
+        var callbackName, overwritten, responseContainer, jsonProp = s.jsonp !== !1 && (rjsonp.test(s.url) ? "url" : "string" == typeof s.data && !(s.contentType || "").indexOf("application/x-www-form-urlencoded") && rjsonp.test(s.data) && "data");
+        return jsonProp || "jsonp" === s.dataTypes[0] ? (callbackName = s.jsonpCallback = jQuery.isFunction(s.jsonpCallback) ? s.jsonpCallback() : s.jsonpCallback, 
+        jsonProp ? s[jsonProp] = s[jsonProp].replace(rjsonp, "$1" + callbackName) : s.jsonp !== !1 && (s.url += (rquery.test(s.url) ? "&" : "?") + s.jsonp + "=" + callbackName), 
+        s.converters["script json"] = function() {
+            return responseContainer || jQuery.error(callbackName + " was not called"), responseContainer[0];
+        }, s.dataTypes[0] = "json", overwritten = window[callbackName], window[callbackName] = function() {
+            responseContainer = arguments;
+        }, jqXHR.always(function() {
+            window[callbackName] = overwritten, s[callbackName] && (s.jsonpCallback = originalSettings.jsonpCallback, 
+            oldCallbacks.push(callbackName)), responseContainer && jQuery.isFunction(overwritten) && overwritten(responseContainer[0]), 
+            responseContainer = overwritten = void 0;
         }), "script") : void 0;
-    }), ea.parseHTML = function(a, b, c) {
-        if (!a || "string" != typeof a) return null;
-        "boolean" == typeof b && (c = b, b = !1), b = b || oa;
-        var d = la.exec(a), e = !c && [];
-        return d ? [ b.createElement(d[1]) ] : (d = ea.buildFragment([ a ], b, e), e && e.length && ea(e).remove(), 
-        ea.merge([], d.childNodes));
+    }), jQuery.parseHTML = function(data, context, keepScripts) {
+        if (!data || "string" != typeof data) return null;
+        "boolean" == typeof context && (keepScripts = context, context = !1), context = context || document;
+        var parsed = rsingleTag.exec(data), scripts = !keepScripts && [];
+        return parsed ? [ context.createElement(parsed[1]) ] : (parsed = jQuery.buildFragment([ data ], context, scripts), 
+        scripts && scripts.length && jQuery(scripts).remove(), jQuery.merge([], parsed.childNodes));
     };
-    var cc = ea.fn.load;
-    ea.fn.load = function(a, b, c) {
-        if ("string" != typeof a && cc) return cc.apply(this, arguments);
-        var d, e, f, g = this, h = a.indexOf(" ");
-        return h >= 0 && (d = ea.trim(a.slice(h, a.length)), a = a.slice(0, h)), ea.isFunction(b) ? (c = b, 
-        b = void 0) : b && "object" == typeof b && (f = "POST"), g.length > 0 && ea.ajax({
-            url: a,
-            type: f,
+    var _load = jQuery.fn.load;
+    jQuery.fn.load = function(url, params, callback) {
+        if ("string" != typeof url && _load) return _load.apply(this, arguments);
+        var selector, response, type, self = this, off = url.indexOf(" ");
+        return off >= 0 && (selector = jQuery.trim(url.slice(off, url.length)), url = url.slice(0, off)), 
+        jQuery.isFunction(params) ? (callback = params, params = void 0) : params && "object" == typeof params && (type = "POST"), 
+        self.length > 0 && jQuery.ajax({
+            url: url,
+            type: type,
             dataType: "html",
-            data: b
-        }).done(function(a) {
-            e = arguments, g.html(d ? ea("<div>").append(ea.parseHTML(a)).find(d) : a);
-        }).complete(c && function(a, b) {
-            g.each(c, e || [ a.responseText, b, a ]);
+            data: params
+        }).done(function(responseText) {
+            response = arguments, self.html(selector ? jQuery("<div>").append(jQuery.parseHTML(responseText)).find(selector) : responseText);
+        }).complete(callback && function(jqXHR, status) {
+            self.each(callback, response || [ jqXHR.responseText, status, jqXHR ]);
         }), this;
-    }, ea.each([ "ajaxStart", "ajaxStop", "ajaxComplete", "ajaxError", "ajaxSuccess", "ajaxSend" ], function(a, b) {
-        ea.fn[b] = function(a) {
-            return this.on(b, a);
+    }, jQuery.each([ "ajaxStart", "ajaxStop", "ajaxComplete", "ajaxError", "ajaxSuccess", "ajaxSend" ], function(i, type) {
+        jQuery.fn[type] = function(fn) {
+            return this.on(type, fn);
         };
-    }), ea.expr.filters.animated = function(a) {
-        return ea.grep(ea.timers, function(b) {
-            return a === b.elem;
+    }), jQuery.expr.filters.animated = function(elem) {
+        return jQuery.grep(jQuery.timers, function(fn) {
+            return elem === fn.elem;
         }).length;
     };
-    var dc = a.document.documentElement;
-    ea.offset = {
-        setOffset: function(a, b, c) {
-            var d, e, f, g, h, i, j, k = ea.css(a, "position"), l = ea(a), m = {};
-            "static" === k && (a.style.position = "relative"), h = l.offset(), f = ea.css(a, "top"), 
-            i = ea.css(a, "left"), j = ("absolute" === k || "fixed" === k) && ea.inArray("auto", [ f, i ]) > -1, 
-            j ? (d = l.position(), g = d.top, e = d.left) : (g = parseFloat(f) || 0, e = parseFloat(i) || 0), 
-            ea.isFunction(b) && (b = b.call(a, c, h)), null != b.top && (m.top = b.top - h.top + g), 
-            null != b.left && (m.left = b.left - h.left + e), "using" in b ? b.using.call(a, m) : l.css(m);
+    var docElem = window.document.documentElement;
+    jQuery.offset = {
+        setOffset: function(elem, options, i) {
+            var curPosition, curLeft, curCSSTop, curTop, curOffset, curCSSLeft, calculatePosition, position = jQuery.css(elem, "position"), curElem = jQuery(elem), props = {};
+            "static" === position && (elem.style.position = "relative"), curOffset = curElem.offset(), 
+            curCSSTop = jQuery.css(elem, "top"), curCSSLeft = jQuery.css(elem, "left"), calculatePosition = ("absolute" === position || "fixed" === position) && jQuery.inArray("auto", [ curCSSTop, curCSSLeft ]) > -1, 
+            calculatePosition ? (curPosition = curElem.position(), curTop = curPosition.top, 
+            curLeft = curPosition.left) : (curTop = parseFloat(curCSSTop) || 0, curLeft = parseFloat(curCSSLeft) || 0), 
+            jQuery.isFunction(options) && (options = options.call(elem, i, curOffset)), null != options.top && (props.top = options.top - curOffset.top + curTop), 
+            null != options.left && (props.left = options.left - curOffset.left + curLeft), 
+            "using" in options ? options.using.call(elem, props) : curElem.css(props);
         }
-    }, ea.fn.extend({
-        offset: function(a) {
-            if (arguments.length) return void 0 === a ? this : this.each(function(b) {
-                ea.offset.setOffset(this, a, b);
+    }, jQuery.fn.extend({
+        offset: function(options) {
+            if (arguments.length) return void 0 === options ? this : this.each(function(i) {
+                jQuery.offset.setOffset(this, options, i);
             });
-            var b, c, d = {
+            var docElem, win, box = {
                 top: 0,
                 left: 0
-            }, e = this[0], f = e && e.ownerDocument;
-            if (f) return b = f.documentElement, ea.contains(b, e) ? (typeof e.getBoundingClientRect !== xa && (d = e.getBoundingClientRect()), 
-            c = V(f), {
-                top: d.top + (c.pageYOffset || b.scrollTop) - (b.clientTop || 0),
-                left: d.left + (c.pageXOffset || b.scrollLeft) - (b.clientLeft || 0)
-            }) : d;
+            }, elem = this[0], doc = elem && elem.ownerDocument;
+            if (doc) return docElem = doc.documentElement, jQuery.contains(docElem, elem) ? (typeof elem.getBoundingClientRect !== strundefined && (box = elem.getBoundingClientRect()), 
+            win = getWindow(doc), {
+                top: box.top + (win.pageYOffset || docElem.scrollTop) - (docElem.clientTop || 0),
+                left: box.left + (win.pageXOffset || docElem.scrollLeft) - (docElem.clientLeft || 0)
+            }) : box;
         },
         position: function() {
             if (this[0]) {
-                var a, b, c = {
+                var offsetParent, offset, parentOffset = {
                     top: 0,
                     left: 0
-                }, d = this[0];
-                return "fixed" === ea.css(d, "position") ? b = d.getBoundingClientRect() : (a = this.offsetParent(), 
-                b = this.offset(), ea.nodeName(a[0], "html") || (c = a.offset()), c.top += ea.css(a[0], "borderTopWidth", !0), 
-                c.left += ea.css(a[0], "borderLeftWidth", !0)), {
-                    top: b.top - c.top - ea.css(d, "marginTop", !0),
-                    left: b.left - c.left - ea.css(d, "marginLeft", !0)
+                }, elem = this[0];
+                return "fixed" === jQuery.css(elem, "position") ? offset = elem.getBoundingClientRect() : (offsetParent = this.offsetParent(), 
+                offset = this.offset(), jQuery.nodeName(offsetParent[0], "html") || (parentOffset = offsetParent.offset()), 
+                parentOffset.top += jQuery.css(offsetParent[0], "borderTopWidth", !0), parentOffset.left += jQuery.css(offsetParent[0], "borderLeftWidth", !0)), 
+                {
+                    top: offset.top - parentOffset.top - jQuery.css(elem, "marginTop", !0),
+                    left: offset.left - parentOffset.left - jQuery.css(elem, "marginLeft", !0)
                 };
             }
         },
         offsetParent: function() {
             return this.map(function() {
-                for (var a = this.offsetParent || dc; a && !ea.nodeName(a, "html") && "static" === ea.css(a, "position"); ) a = a.offsetParent;
-                return a || dc;
+                for (var offsetParent = this.offsetParent || docElem; offsetParent && !jQuery.nodeName(offsetParent, "html") && "static" === jQuery.css(offsetParent, "position"); ) offsetParent = offsetParent.offsetParent;
+                return offsetParent || docElem;
             });
         }
-    }), ea.each({
+    }), jQuery.each({
         scrollLeft: "pageXOffset",
         scrollTop: "pageYOffset"
-    }, function(a, b) {
-        var c = /Y/.test(b);
-        ea.fn[a] = function(d) {
-            return Da(this, function(a, d, e) {
-                var f = V(a);
-                return void 0 === e ? f ? b in f ? f[b] : f.document.documentElement[d] : a[d] : void (f ? f.scrollTo(c ? ea(f).scrollLeft() : e, c ? e : ea(f).scrollTop()) : a[d] = e);
-            }, a, d, arguments.length, null);
+    }, function(method, prop) {
+        var top = /Y/.test(prop);
+        jQuery.fn[method] = function(val) {
+            return access(this, function(elem, method, val) {
+                var win = getWindow(elem);
+                return void 0 === val ? win ? prop in win ? win[prop] : win.document.documentElement[method] : elem[method] : void (win ? win.scrollTo(top ? jQuery(win).scrollLeft() : val, top ? val : jQuery(win).scrollTop()) : elem[method] = val);
+            }, method, val, arguments.length, null);
         };
-    }), ea.each([ "top", "left" ], function(a, b) {
-        ea.cssHooks[b] = A(ca.pixelPosition, function(a, c) {
-            return c ? (c = bb(a, b), db.test(c) ? ea(a).position()[b] + "px" : c) : void 0;
+    }), jQuery.each([ "top", "left" ], function(i, prop) {
+        jQuery.cssHooks[prop] = addGetHookIf(support.pixelPosition, function(elem, computed) {
+            return computed ? (computed = curCSS(elem, prop), rnumnonpx.test(computed) ? jQuery(elem).position()[prop] + "px" : computed) : void 0;
         });
-    }), ea.each({
+    }), jQuery.each({
         Height: "height",
         Width: "width"
-    }, function(a, b) {
-        ea.each({
-            padding: "inner" + a,
-            content: b,
-            "": "outer" + a
-        }, function(c, d) {
-            ea.fn[d] = function(d, e) {
-                var f = arguments.length && (c || "boolean" != typeof d), g = c || (d === !0 || e === !0 ? "margin" : "border");
-                return Da(this, function(b, c, d) {
-                    var e;
-                    return ea.isWindow(b) ? b.document.documentElement["client" + a] : 9 === b.nodeType ? (e = b.documentElement, 
-                    Math.max(b.body["scroll" + a], e["scroll" + a], b.body["offset" + a], e["offset" + a], e["client" + a])) : void 0 === d ? ea.css(b, c, g) : ea.style(b, c, d, g);
-                }, b, f ? d : void 0, f, null);
+    }, function(name, type) {
+        jQuery.each({
+            padding: "inner" + name,
+            content: type,
+            "": "outer" + name
+        }, function(defaultExtra, funcName) {
+            jQuery.fn[funcName] = function(margin, value) {
+                var chainable = arguments.length && (defaultExtra || "boolean" != typeof margin), extra = defaultExtra || (margin === !0 || value === !0 ? "margin" : "border");
+                return access(this, function(elem, type, value) {
+                    var doc;
+                    return jQuery.isWindow(elem) ? elem.document.documentElement["client" + name] : 9 === elem.nodeType ? (doc = elem.documentElement, 
+                    Math.max(elem.body["scroll" + name], doc["scroll" + name], elem.body["offset" + name], doc["offset" + name], doc["client" + name])) : void 0 === value ? jQuery.css(elem, type, extra) : jQuery.style(elem, type, value, extra);
+                }, type, chainable ? margin : void 0, chainable, null);
             };
         });
-    }), ea.fn.size = function() {
+    }), jQuery.fn.size = function() {
         return this.length;
-    }, ea.fn.andSelf = ea.fn.addBack, "function" == typeof define && define.amd && define("jquery", [], function() {
-        return ea;
+    }, jQuery.fn.andSelf = jQuery.fn.addBack, "function" == typeof define && define.amd && define("jquery", [], function() {
+        return jQuery;
     });
-    var ec = a.jQuery, fc = a.$;
-    return ea.noConflict = function(b) {
-        return a.$ === ea && (a.$ = fc), b && a.jQuery === ea && (a.jQuery = ec), ea;
-    }, typeof b === xa && (a.jQuery = a.$ = ea), ea;
+    var _jQuery = window.jQuery, _$ = window.$;
+    return jQuery.noConflict = function(deep) {
+        return window.$ === jQuery && (window.$ = _$), deep && window.jQuery === jQuery && (window.jQuery = _jQuery), 
+        jQuery;
+    }, typeof noGlobal === strundefined && (window.jQuery = window.$ = jQuery), jQuery;
 }), function() {
     if (document.querySelectorAll && !$("html").hasClass("lt-ie9")) {
-        var a, b, c, d, e, f, g, h, i, j;
-        b = window.device, a = {}, window.device = a, d = window.document.documentElement, 
-        j = window.navigator.userAgent.toLowerCase(), a.ios = function() {
-            return a.iphone() || a.ipod() || a.ipad();
-        }, a.iphone = function() {
-            return e("iphone");
-        }, a.ipod = function() {
-            return e("ipod");
-        }, a.ipad = function() {
-            return e("ipad");
-        }, a.android = function() {
-            return e("android");
-        }, a.androidPhone = function() {
-            return a.android() && e("mobile");
-        }, a.androidTablet = function() {
-            return a.android() && !e("mobile");
-        }, a.blackberry = function() {
-            return e("blackberry") || e("bb10") || e("rim");
-        }, a.blackberryPhone = function() {
-            return a.blackberry() && !e("tablet");
-        }, a.blackberryTablet = function() {
-            return a.blackberry() && e("tablet");
-        }, a.windows = function() {
-            return e("windows");
-        }, a.windowsPhone = function() {
-            return a.windows() && e("phone");
-        }, a.windowsTablet = function() {
-            return a.windows() && e("touch") && !a.windowsPhone();
-        }, a.fxos = function() {
-            return (e("(mobile;") || e("(tablet;")) && e("; rv:");
-        }, a.fxosPhone = function() {
-            return a.fxos() && e("mobile");
-        }, a.fxosTablet = function() {
-            return a.fxos() && e("tablet");
-        }, a.meego = function() {
-            return e("meego");
-        }, a.cordova = function() {
+        var device, previousDevice, addClass, documentElement, find, handleOrientation, hasClass, orientationEvent, removeClass, userAgent;
+        previousDevice = window.device, device = {}, window.device = device, documentElement = window.document.documentElement, 
+        userAgent = window.navigator.userAgent.toLowerCase(), device.ios = function() {
+            return device.iphone() || device.ipod() || device.ipad();
+        }, device.iphone = function() {
+            return find("iphone");
+        }, device.ipod = function() {
+            return find("ipod");
+        }, device.ipad = function() {
+            return find("ipad");
+        }, device.android = function() {
+            return find("android");
+        }, device.androidPhone = function() {
+            return device.android() && find("mobile");
+        }, device.androidTablet = function() {
+            return device.android() && !find("mobile");
+        }, device.blackberry = function() {
+            return find("blackberry") || find("bb10") || find("rim");
+        }, device.blackberryPhone = function() {
+            return device.blackberry() && !find("tablet");
+        }, device.blackberryTablet = function() {
+            return device.blackberry() && find("tablet");
+        }, device.windows = function() {
+            return find("windows");
+        }, device.windowsPhone = function() {
+            return device.windows() && find("phone");
+        }, device.windowsTablet = function() {
+            return device.windows() && find("touch") && !device.windowsPhone();
+        }, device.fxos = function() {
+            return (find("(mobile;") || find("(tablet;")) && find("; rv:");
+        }, device.fxosPhone = function() {
+            return device.fxos() && find("mobile");
+        }, device.fxosTablet = function() {
+            return device.fxos() && find("tablet");
+        }, device.meego = function() {
+            return find("meego");
+        }, device.cordova = function() {
             return window.cordova && "file:" === location.protocol;
-        }, a.nodeWebkit = function() {
+        }, device.nodeWebkit = function() {
             return "object" == typeof window.process;
-        }, a.mobile = function() {
-            return a.androidPhone() || a.iphone() || a.ipod() || a.windowsPhone() || a.blackberryPhone() || a.fxosPhone() || a.meego();
-        }, a.tablet = function() {
-            return a.ipad() || a.androidTablet() || a.blackberryTablet() || a.windowsTablet() || a.fxosTablet();
-        }, a.desktop = function() {
-            return !a.tablet() && !a.mobile();
-        }, a.television = function() {
-            var a;
+        }, device.mobile = function() {
+            return device.androidPhone() || device.iphone() || device.ipod() || device.windowsPhone() || device.blackberryPhone() || device.fxosPhone() || device.meego();
+        }, device.tablet = function() {
+            return device.ipad() || device.androidTablet() || device.blackberryTablet() || device.windowsTablet() || device.fxosTablet();
+        }, device.desktop = function() {
+            return !device.tablet() && !device.mobile();
+        }, device.television = function() {
+            var i;
             for (television = [ "googletv", "viera", "smarttv", "internet.tv", "netcast", "nettv", "appletv", "boxee", "kylo", "roku", "dlnadoc", "roku", "pov_tv", "hbbtv", "ce-html" ], 
-            a = 0; a < television.length; ) {
-                if (e(television[a])) return !0;
-                a++;
+            i = 0; i < television.length; ) {
+                if (find(television[i])) return !0;
+                i++;
             }
             return !1;
-        }, a.portrait = function() {
+        }, device.portrait = function() {
             return window.innerHeight / window.innerWidth > 1;
-        }, a.landscape = function() {
+        }, device.landscape = function() {
             return window.innerHeight / window.innerWidth < 1;
-        }, a.noConflict = function() {
-            return window.device = b, this;
-        }, e = function(a) {
-            return -1 !== j.indexOf(a);
-        }, g = function(a) {
-            var b;
-            return b = new RegExp(a, "i"), d.className.match(b);
-        }, c = function(a) {
-            g(a) || (d.className = d.className.trim() + " " + a);
-        }, i = function(a) {
-            g(a) && (d.className = d.className.replace(" " + a, ""));
-        }, a.ios() ? a.ipad() ? c("ios ipad tablet") : a.iphone() ? c("ios iphone mobile") : a.ipod() && c("ios ipod mobile") : a.android() ? c(a.androidTablet() ? "android tablet" : "android mobile") : a.blackberry() ? c(a.blackberryTablet() ? "blackberry tablet" : "blackberry mobile") : a.windows() ? c(a.windowsTablet() ? "windows tablet" : a.windowsPhone() ? "windows mobile" : "desktop") : a.fxos() ? c(a.fxosTablet() ? "fxos tablet" : "fxos mobile") : a.meego() ? c("meego mobile") : a.nodeWebkit() ? c("node-webkit") : a.television() ? c("television") : a.desktop() && c("desktop"), 
-        a.cordova() && c("cordova"), f = function() {
-            a.landscape() ? (i("portrait"), c("landscape")) : (i("landscape"), c("portrait"));
-        }, h = window.hasOwnProperty("onorientationchange") ? "orientationchange" : "resize", 
-        window.addEventListener ? window.addEventListener(h, f, !1) : window.attachEvent ? window.attachEvent(h, f) : window[h] = f, 
-        f(), "function" == typeof define && "object" == typeof define.amd && define.amd ? define(function() {
-            return a;
-        }) : "undefined" != typeof module && module.exports ? module.exports = a : window.device = a;
+        }, device.noConflict = function() {
+            return window.device = previousDevice, this;
+        }, find = function(needle) {
+            return -1 !== userAgent.indexOf(needle);
+        }, hasClass = function(className) {
+            var regex;
+            return regex = new RegExp(className, "i"), documentElement.className.match(regex);
+        }, addClass = function(className) {
+            hasClass(className) || (documentElement.className = documentElement.className.trim() + " " + className);
+        }, removeClass = function(className) {
+            hasClass(className) && (documentElement.className = documentElement.className.replace(" " + className, ""));
+        }, device.ios() ? device.ipad() ? addClass("ios ipad tablet") : device.iphone() ? addClass("ios iphone mobile") : device.ipod() && addClass("ios ipod mobile") : device.android() ? addClass(device.androidTablet() ? "android tablet" : "android mobile") : device.blackberry() ? addClass(device.blackberryTablet() ? "blackberry tablet" : "blackberry mobile") : device.windows() ? addClass(device.windowsTablet() ? "windows tablet" : device.windowsPhone() ? "windows mobile" : "desktop") : device.fxos() ? addClass(device.fxosTablet() ? "fxos tablet" : "fxos mobile") : device.meego() ? addClass("meego mobile") : device.nodeWebkit() ? addClass("node-webkit") : device.television() ? addClass("television") : device.desktop() && addClass("desktop"), 
+        device.cordova() && addClass("cordova"), handleOrientation = function() {
+            device.landscape() ? (removeClass("portrait"), addClass("landscape")) : (removeClass("landscape"), 
+            addClass("portrait"));
+        }, orientationEvent = window.hasOwnProperty("onorientationchange") ? "orientationchange" : "resize", 
+        window.addEventListener ? window.addEventListener(orientationEvent, handleOrientation, !1) : window.attachEvent ? window.attachEvent(orientationEvent, handleOrientation) : window[orientationEvent] = handleOrientation, 
+        handleOrientation(), "function" == typeof define && "object" == typeof define.amd && define.amd ? define(function() {
+            return device;
+        }) : "undefined" != typeof module && module.exports ? module.exports = device : window.device = device;
     }
-}.call(this), window.Modernizr = function(a, b, c) {
-    function d(a) {
-        t.cssText = a;
+}.call(this), window.Modernizr = function(window, document, undefined) {
+    function setCss(str) {
+        mStyle.cssText = str;
     }
-    function e(a, b) {
-        return d(x.join(a + ";") + (b || ""));
+    function setCssAll(str1, str2) {
+        return setCss(prefixes.join(str1 + ";") + (str2 || ""));
     }
-    function f(a, b) {
-        return typeof a === b;
+    function is(obj, type) {
+        return typeof obj === type;
     }
-    function g(a, b) {
-        return !!~("" + a).indexOf(b);
+    function contains(str, substr) {
+        return !!~("" + str).indexOf(substr);
     }
-    function h(a, b) {
-        for (var d in a) {
-            var e = a[d];
-            if (!g(e, "-") && t[e] !== c) return "pfx" == b ? e : !0;
+    function testProps(props, prefixed) {
+        for (var i in props) {
+            var prop = props[i];
+            if (!contains(prop, "-") && mStyle[prop] !== undefined) return "pfx" == prefixed ? prop : !0;
         }
         return !1;
     }
-    function i(a, b, d) {
-        for (var e in a) {
-            var g = b[a[e]];
-            if (g !== c) return d === !1 ? a[e] : f(g, "function") ? g.bind(d || b) : g;
+    function testDOMProps(props, obj, elem) {
+        for (var i in props) {
+            var item = obj[props[i]];
+            if (item !== undefined) return elem === !1 ? props[i] : is(item, "function") ? item.bind(elem || obj) : item;
         }
         return !1;
     }
-    function j(a, b, c) {
-        var d = a.charAt(0).toUpperCase() + a.slice(1), e = (a + " " + z.join(d + " ") + d).split(" ");
-        return f(b, "string") || f(b, "undefined") ? h(e, b) : (e = (a + " " + A.join(d + " ") + d).split(" "), 
-        i(e, b, c));
+    function testPropsAll(prop, prefixed, elem) {
+        var ucProp = prop.charAt(0).toUpperCase() + prop.slice(1), props = (prop + " " + cssomPrefixes.join(ucProp + " ") + ucProp).split(" ");
+        return is(prefixed, "string") || is(prefixed, "undefined") ? testProps(props, prefixed) : (props = (prop + " " + domPrefixes.join(ucProp + " ") + ucProp).split(" "), 
+        testDOMProps(props, prefixed, elem));
     }
-    function k() {
-        o.input = function(c) {
-            for (var d = 0, e = c.length; e > d; d++) E[c[d]] = !!(c[d] in u);
-            return E.list && (E.list = !(!b.createElement("datalist") || !a.HTMLDataListElement)), 
-            E;
+    function webforms() {
+        Modernizr.input = function(props) {
+            for (var i = 0, len = props.length; len > i; i++) attrs[props[i]] = !!(props[i] in inputElem);
+            return attrs.list && (attrs.list = !(!document.createElement("datalist") || !window.HTMLDataListElement)), 
+            attrs;
         }("autocomplete autofocus list placeholder max min multiple pattern required step".split(" ")), 
-        o.inputtypes = function(a) {
-            for (var d, e, f, g = 0, h = a.length; h > g; g++) u.setAttribute("type", e = a[g]), 
-            d = "text" !== u.type, d && (u.value = v, u.style.cssText = "position:absolute;visibility:hidden;", 
-            /^range$/.test(e) && u.style.WebkitAppearance !== c ? (q.appendChild(u), f = b.defaultView, 
-            d = f.getComputedStyle && "textfield" !== f.getComputedStyle(u, null).WebkitAppearance && 0 !== u.offsetHeight, 
-            q.removeChild(u)) : /^(search|tel)$/.test(e) || (d = /^(url|email)$/.test(e) ? u.checkValidity && u.checkValidity() === !1 : u.value != v)), 
-            D[a[g]] = !!d;
-            return D;
+        Modernizr.inputtypes = function(props) {
+            for (var bool, inputElemType, defaultView, i = 0, len = props.length; len > i; i++) inputElem.setAttribute("type", inputElemType = props[i]), 
+            bool = "text" !== inputElem.type, bool && (inputElem.value = smile, inputElem.style.cssText = "position:absolute;visibility:hidden;", 
+            /^range$/.test(inputElemType) && inputElem.style.WebkitAppearance !== undefined ? (docElement.appendChild(inputElem), 
+            defaultView = document.defaultView, bool = defaultView.getComputedStyle && "textfield" !== defaultView.getComputedStyle(inputElem, null).WebkitAppearance && 0 !== inputElem.offsetHeight, 
+            docElement.removeChild(inputElem)) : /^(search|tel)$/.test(inputElemType) || (bool = /^(url|email)$/.test(inputElemType) ? inputElem.checkValidity && inputElem.checkValidity() === !1 : inputElem.value != smile)), 
+            inputs[props[i]] = !!bool;
+            return inputs;
         }("search tel url email datetime date month week time datetime-local number range color".split(" "));
     }
-    var l, m, n = "2.8.3", o = {}, p = !0, q = b.documentElement, r = "modernizr", s = b.createElement(r), t = s.style, u = b.createElement("input"), v = ":)", w = {}.toString, x = " -webkit- -moz- -o- -ms- ".split(" "), y = "Webkit Moz O ms", z = y.split(" "), A = y.toLowerCase().split(" "), B = {
+    var featureName, hasOwnProp, version = "2.8.3", Modernizr = {}, enableClasses = !0, docElement = document.documentElement, mod = "modernizr", modElem = document.createElement(mod), mStyle = modElem.style, inputElem = document.createElement("input"), smile = ":)", toString = {}.toString, prefixes = " -webkit- -moz- -o- -ms- ".split(" "), omPrefixes = "Webkit Moz O ms", cssomPrefixes = omPrefixes.split(" "), domPrefixes = omPrefixes.toLowerCase().split(" "), ns = {
         svg: "http://www.w3.org/2000/svg"
-    }, C = {}, D = {}, E = {}, F = [], G = F.slice, H = function(a, c, d, e) {
-        var f, g, h, i, j = b.createElement("div"), k = b.body, l = k || b.createElement("body");
-        if (parseInt(d, 10)) for (;d--; ) h = b.createElement("div"), h.id = e ? e[d] : r + (d + 1), 
-        j.appendChild(h);
-        return f = [ "&#173;", '<style id="s', r, '">', a, "</style>" ].join(""), j.id = r, 
-        (k ? j : l).innerHTML += f, l.appendChild(j), k || (l.style.background = "", l.style.overflow = "hidden", 
-        i = q.style.overflow, q.style.overflow = "hidden", q.appendChild(l)), g = c(j, a), 
-        k ? j.parentNode.removeChild(j) : (l.parentNode.removeChild(l), q.style.overflow = i), 
-        !!g;
-    }, I = function(b) {
-        var c = a.matchMedia || a.msMatchMedia;
-        if (c) return c(b) && c(b).matches || !1;
-        var d;
-        return H("@media " + b + " { #" + r + " { position: absolute; } }", function(b) {
-            d = "absolute" == (a.getComputedStyle ? getComputedStyle(b, null) : b.currentStyle).position;
-        }), d;
-    }, J = function() {
-        function a(a, e) {
-            e = e || b.createElement(d[a] || "div"), a = "on" + a;
-            var g = a in e;
-            return g || (e.setAttribute || (e = b.createElement("div")), e.setAttribute && e.removeAttribute && (e.setAttribute(a, ""), 
-            g = f(e[a], "function"), f(e[a], "undefined") || (e[a] = c), e.removeAttribute(a))), 
-            e = null, g;
+    }, tests = {}, inputs = {}, attrs = {}, classes = [], slice = classes.slice, injectElementWithStyles = function(rule, callback, nodes, testnames) {
+        var style, ret, node, docOverflow, div = document.createElement("div"), body = document.body, fakeBody = body || document.createElement("body");
+        if (parseInt(nodes, 10)) for (;nodes--; ) node = document.createElement("div"), 
+        node.id = testnames ? testnames[nodes] : mod + (nodes + 1), div.appendChild(node);
+        return style = [ "&#173;", '<style id="s', mod, '">', rule, "</style>" ].join(""), 
+        div.id = mod, (body ? div : fakeBody).innerHTML += style, fakeBody.appendChild(div), 
+        body || (fakeBody.style.background = "", fakeBody.style.overflow = "hidden", docOverflow = docElement.style.overflow, 
+        docElement.style.overflow = "hidden", docElement.appendChild(fakeBody)), ret = callback(div, rule), 
+        body ? div.parentNode.removeChild(div) : (fakeBody.parentNode.removeChild(fakeBody), 
+        docElement.style.overflow = docOverflow), !!ret;
+    }, testMediaQuery = function(mq) {
+        var matchMedia = window.matchMedia || window.msMatchMedia;
+        if (matchMedia) return matchMedia(mq) && matchMedia(mq).matches || !1;
+        var bool;
+        return injectElementWithStyles("@media " + mq + " { #" + mod + " { position: absolute; } }", function(node) {
+            bool = "absolute" == (window.getComputedStyle ? getComputedStyle(node, null) : node.currentStyle).position;
+        }), bool;
+    }, isEventSupported = function() {
+        function isEventSupported(eventName, element) {
+            element = element || document.createElement(TAGNAMES[eventName] || "div"), eventName = "on" + eventName;
+            var isSupported = eventName in element;
+            return isSupported || (element.setAttribute || (element = document.createElement("div")), 
+            element.setAttribute && element.removeAttribute && (element.setAttribute(eventName, ""), 
+            isSupported = is(element[eventName], "function"), is(element[eventName], "undefined") || (element[eventName] = undefined), 
+            element.removeAttribute(eventName))), element = null, isSupported;
         }
-        var d = {
+        var TAGNAMES = {
             select: "input",
             change: "input",
             submit: "form",
@@ -3217,333 +3343,339 @@ function detectSidebar() {
             load: "img",
             abort: "img"
         };
-        return a;
-    }(), K = {}.hasOwnProperty;
-    m = f(K, "undefined") || f(K.call, "undefined") ? function(a, b) {
-        return b in a && f(a.constructor.prototype[b], "undefined");
-    } : function(a, b) {
-        return K.call(a, b);
-    }, Function.prototype.bind || (Function.prototype.bind = function(a) {
-        var b = this;
-        if ("function" != typeof b) throw new TypeError();
-        var c = G.call(arguments, 1), d = function() {
-            if (this instanceof d) {
-                var e = function() {};
-                e.prototype = b.prototype;
-                var f = new e(), g = b.apply(f, c.concat(G.call(arguments)));
-                return Object(g) === g ? g : f;
+        return isEventSupported;
+    }(), _hasOwnProperty = {}.hasOwnProperty;
+    hasOwnProp = is(_hasOwnProperty, "undefined") || is(_hasOwnProperty.call, "undefined") ? function(object, property) {
+        return property in object && is(object.constructor.prototype[property], "undefined");
+    } : function(object, property) {
+        return _hasOwnProperty.call(object, property);
+    }, Function.prototype.bind || (Function.prototype.bind = function(that) {
+        var target = this;
+        if ("function" != typeof target) throw new TypeError();
+        var args = slice.call(arguments, 1), bound = function() {
+            if (this instanceof bound) {
+                var F = function() {};
+                F.prototype = target.prototype;
+                var self = new F(), result = target.apply(self, args.concat(slice.call(arguments)));
+                return Object(result) === result ? result : self;
             }
-            return b.apply(a, c.concat(G.call(arguments)));
+            return target.apply(that, args.concat(slice.call(arguments)));
         };
-        return d;
-    }), C.flexbox = function() {
-        return j("flexWrap");
-    }, C.flexboxlegacy = function() {
-        return j("boxDirection");
-    }, C.canvas = function() {
-        var a = b.createElement("canvas");
-        return !(!a.getContext || !a.getContext("2d"));
-    }, C.canvastext = function() {
-        return !(!o.canvas || !f(b.createElement("canvas").getContext("2d").fillText, "function"));
-    }, C.webgl = function() {
-        return !!a.WebGLRenderingContext;
-    }, C.touch = function() {
-        var c;
-        return "ontouchstart" in a || a.DocumentTouch && b instanceof DocumentTouch ? c = !0 : H([ "@media (", x.join("touch-enabled),("), r, ")", "{#modernizr{top:9px;position:absolute}}" ].join(""), function(a) {
-            c = 9 === a.offsetTop;
-        }), c;
-    }, C.geolocation = function() {
+        return bound;
+    }), tests.flexbox = function() {
+        return testPropsAll("flexWrap");
+    }, tests.flexboxlegacy = function() {
+        return testPropsAll("boxDirection");
+    }, tests.canvas = function() {
+        var elem = document.createElement("canvas");
+        return !(!elem.getContext || !elem.getContext("2d"));
+    }, tests.canvastext = function() {
+        return !(!Modernizr.canvas || !is(document.createElement("canvas").getContext("2d").fillText, "function"));
+    }, tests.webgl = function() {
+        return !!window.WebGLRenderingContext;
+    }, tests.touch = function() {
+        var bool;
+        return "ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch ? bool = !0 : injectElementWithStyles([ "@media (", prefixes.join("touch-enabled),("), mod, ")", "{#modernizr{top:9px;position:absolute}}" ].join(""), function(node) {
+            bool = 9 === node.offsetTop;
+        }), bool;
+    }, tests.geolocation = function() {
         return "geolocation" in navigator;
-    }, C.postmessage = function() {
-        return !!a.postMessage;
-    }, C.websqldatabase = function() {
-        return !!a.openDatabase;
-    }, C.indexedDB = function() {
-        return !!j("indexedDB", a);
-    }, C.hashchange = function() {
-        return J("hashchange", a) && (b.documentMode === c || b.documentMode > 7);
-    }, C.history = function() {
-        return !(!a.history || !history.pushState);
-    }, C.draganddrop = function() {
-        var a = b.createElement("div");
-        return "draggable" in a || "ondragstart" in a && "ondrop" in a;
-    }, C.websockets = function() {
-        return "WebSocket" in a || "MozWebSocket" in a;
-    }, C.rgba = function() {
-        return d("background-color:rgba(150,255,150,.5)"), g(t.backgroundColor, "rgba");
-    }, C.hsla = function() {
-        return d("background-color:hsla(120,40%,100%,.5)"), g(t.backgroundColor, "rgba") || g(t.backgroundColor, "hsla");
-    }, C.multiplebgs = function() {
-        return d("background:url(https://),url(https://),red url(https://)"), /(url\s*\(.*?){3}/.test(t.background);
-    }, C.backgroundsize = function() {
-        return j("backgroundSize");
-    }, C.borderimage = function() {
-        return j("borderImage");
-    }, C.borderradius = function() {
-        return j("borderRadius");
-    }, C.boxshadow = function() {
-        return j("boxShadow");
-    }, C.textshadow = function() {
-        return "" === b.createElement("div").style.textShadow;
-    }, C.opacity = function() {
-        return e("opacity:.55"), /^0.55$/.test(t.opacity);
-    }, C.cssanimations = function() {
-        return j("animationName");
-    }, C.csscolumns = function() {
-        return j("columnCount");
-    }, C.cssgradients = function() {
-        var a = "background-image:", b = "gradient(linear,left top,right bottom,from(#9f9),to(white));", c = "linear-gradient(left top,#9f9, white);";
-        return d((a + "-webkit- ".split(" ").join(b + a) + x.join(c + a)).slice(0, -a.length)), 
-        g(t.backgroundImage, "gradient");
-    }, C.cssreflections = function() {
-        return j("boxReflect");
-    }, C.csstransforms = function() {
-        return !!j("transform");
-    }, C.csstransforms3d = function() {
-        var a = !!j("perspective");
-        return a && "webkitPerspective" in q.style && H("@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}", function(b, c) {
-            a = 9 === b.offsetLeft && 3 === b.offsetHeight;
-        }), a;
-    }, C.csstransitions = function() {
-        return j("transition");
-    }, C.fontface = function() {
-        var a;
-        return H('@font-face {font-family:"font";src:url("https://")}', function(c, d) {
-            var e = b.getElementById("smodernizr"), f = e.sheet || e.styleSheet, g = f ? f.cssRules && f.cssRules[0] ? f.cssRules[0].cssText : f.cssText || "" : "";
-            a = /src/i.test(g) && 0 === g.indexOf(d.split(" ")[0]);
-        }), a;
-    }, C.generatedcontent = function() {
-        var a;
-        return H([ "#", r, "{font:0/0 a}#", r, ':after{content:"', v, '";visibility:hidden;font:3px/1 a}' ].join(""), function(b) {
-            a = b.offsetHeight >= 3;
-        }), a;
-    }, C.video = function() {
-        var a = b.createElement("video"), c = !1;
+    }, tests.postmessage = function() {
+        return !!window.postMessage;
+    }, tests.websqldatabase = function() {
+        return !!window.openDatabase;
+    }, tests.indexedDB = function() {
+        return !!testPropsAll("indexedDB", window);
+    }, tests.hashchange = function() {
+        return isEventSupported("hashchange", window) && (document.documentMode === undefined || document.documentMode > 7);
+    }, tests.history = function() {
+        return !(!window.history || !history.pushState);
+    }, tests.draganddrop = function() {
+        var div = document.createElement("div");
+        return "draggable" in div || "ondragstart" in div && "ondrop" in div;
+    }, tests.websockets = function() {
+        return "WebSocket" in window || "MozWebSocket" in window;
+    }, tests.rgba = function() {
+        return setCss("background-color:rgba(150,255,150,.5)"), contains(mStyle.backgroundColor, "rgba");
+    }, tests.hsla = function() {
+        return setCss("background-color:hsla(120,40%,100%,.5)"), contains(mStyle.backgroundColor, "rgba") || contains(mStyle.backgroundColor, "hsla");
+    }, tests.multiplebgs = function() {
+        return setCss("background:url(https://),url(https://),red url(https://)"), /(url\s*\(.*?){3}/.test(mStyle.background);
+    }, tests.backgroundsize = function() {
+        return testPropsAll("backgroundSize");
+    }, tests.borderimage = function() {
+        return testPropsAll("borderImage");
+    }, tests.borderradius = function() {
+        return testPropsAll("borderRadius");
+    }, tests.boxshadow = function() {
+        return testPropsAll("boxShadow");
+    }, tests.textshadow = function() {
+        return "" === document.createElement("div").style.textShadow;
+    }, tests.opacity = function() {
+        return setCssAll("opacity:.55"), /^0.55$/.test(mStyle.opacity);
+    }, tests.cssanimations = function() {
+        return testPropsAll("animationName");
+    }, tests.csscolumns = function() {
+        return testPropsAll("columnCount");
+    }, tests.cssgradients = function() {
+        var str1 = "background-image:", str2 = "gradient(linear,left top,right bottom,from(#9f9),to(white));", str3 = "linear-gradient(left top,#9f9, white);";
+        return setCss((str1 + "-webkit- ".split(" ").join(str2 + str1) + prefixes.join(str3 + str1)).slice(0, -str1.length)), 
+        contains(mStyle.backgroundImage, "gradient");
+    }, tests.cssreflections = function() {
+        return testPropsAll("boxReflect");
+    }, tests.csstransforms = function() {
+        return !!testPropsAll("transform");
+    }, tests.csstransforms3d = function() {
+        var ret = !!testPropsAll("perspective");
+        return ret && "webkitPerspective" in docElement.style && injectElementWithStyles("@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}", function(node, rule) {
+            ret = 9 === node.offsetLeft && 3 === node.offsetHeight;
+        }), ret;
+    }, tests.csstransitions = function() {
+        return testPropsAll("transition");
+    }, tests.fontface = function() {
+        var bool;
+        return injectElementWithStyles('@font-face {font-family:"font";src:url("https://")}', function(node, rule) {
+            var style = document.getElementById("smodernizr"), sheet = style.sheet || style.styleSheet, cssText = sheet ? sheet.cssRules && sheet.cssRules[0] ? sheet.cssRules[0].cssText : sheet.cssText || "" : "";
+            bool = /src/i.test(cssText) && 0 === cssText.indexOf(rule.split(" ")[0]);
+        }), bool;
+    }, tests.generatedcontent = function() {
+        var bool;
+        return injectElementWithStyles([ "#", mod, "{font:0/0 a}#", mod, ':after{content:"', smile, '";visibility:hidden;font:3px/1 a}' ].join(""), function(node) {
+            bool = node.offsetHeight >= 3;
+        }), bool;
+    }, tests.video = function() {
+        var elem = document.createElement("video"), bool = !1;
         try {
-            (c = !!a.canPlayType) && (c = new Boolean(c), c.ogg = a.canPlayType('video/ogg; codecs="theora"').replace(/^no$/, ""), 
-            c.h264 = a.canPlayType('video/mp4; codecs="avc1.42E01E"').replace(/^no$/, ""), c.webm = a.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/, ""));
-        } catch (d) {}
-        return c;
-    }, C.audio = function() {
-        var a = b.createElement("audio"), c = !1;
+            (bool = !!elem.canPlayType) && (bool = new Boolean(bool), bool.ogg = elem.canPlayType('video/ogg; codecs="theora"').replace(/^no$/, ""), 
+            bool.h264 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"').replace(/^no$/, ""), 
+            bool.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/, ""));
+        } catch (e) {}
+        return bool;
+    }, tests.audio = function() {
+        var elem = document.createElement("audio"), bool = !1;
         try {
-            (c = !!a.canPlayType) && (c = new Boolean(c), c.ogg = a.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ""), 
-            c.mp3 = a.canPlayType("audio/mpeg;").replace(/^no$/, ""), c.wav = a.canPlayType('audio/wav; codecs="1"').replace(/^no$/, ""), 
-            c.m4a = (a.canPlayType("audio/x-m4a;") || a.canPlayType("audio/aac;")).replace(/^no$/, ""));
-        } catch (d) {}
-        return c;
-    }, C.localstorage = function() {
+            (bool = !!elem.canPlayType) && (bool = new Boolean(bool), bool.ogg = elem.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ""), 
+            bool.mp3 = elem.canPlayType("audio/mpeg;").replace(/^no$/, ""), bool.wav = elem.canPlayType('audio/wav; codecs="1"').replace(/^no$/, ""), 
+            bool.m4a = (elem.canPlayType("audio/x-m4a;") || elem.canPlayType("audio/aac;")).replace(/^no$/, ""));
+        } catch (e) {}
+        return bool;
+    }, tests.localstorage = function() {
         try {
-            return localStorage.setItem(r, r), localStorage.removeItem(r), !0;
-        } catch (a) {
+            return localStorage.setItem(mod, mod), localStorage.removeItem(mod), !0;
+        } catch (e) {
             return !1;
         }
-    }, C.sessionstorage = function() {
+    }, tests.sessionstorage = function() {
         try {
-            return sessionStorage.setItem(r, r), sessionStorage.removeItem(r), !0;
-        } catch (a) {
+            return sessionStorage.setItem(mod, mod), sessionStorage.removeItem(mod), !0;
+        } catch (e) {
             return !1;
         }
-    }, C.webworkers = function() {
-        return !!a.Worker;
-    }, C.applicationcache = function() {
-        return !!a.applicationCache;
-    }, C.svg = function() {
-        return !!b.createElementNS && !!b.createElementNS(B.svg, "svg").createSVGRect;
-    }, C.inlinesvg = function() {
-        var a = b.createElement("div");
-        return a.innerHTML = "<svg/>", (a.firstChild && a.firstChild.namespaceURI) == B.svg;
-    }, C.smil = function() {
-        return !!b.createElementNS && /SVGAnimate/.test(w.call(b.createElementNS(B.svg, "animate")));
-    }, C.svgclippaths = function() {
-        return !!b.createElementNS && /SVGClipPath/.test(w.call(b.createElementNS(B.svg, "clipPath")));
+    }, tests.webworkers = function() {
+        return !!window.Worker;
+    }, tests.applicationcache = function() {
+        return !!window.applicationCache;
+    }, tests.svg = function() {
+        return !!document.createElementNS && !!document.createElementNS(ns.svg, "svg").createSVGRect;
+    }, tests.inlinesvg = function() {
+        var div = document.createElement("div");
+        return div.innerHTML = "<svg/>", (div.firstChild && div.firstChild.namespaceURI) == ns.svg;
+    }, tests.smil = function() {
+        return !!document.createElementNS && /SVGAnimate/.test(toString.call(document.createElementNS(ns.svg, "animate")));
+    }, tests.svgclippaths = function() {
+        return !!document.createElementNS && /SVGClipPath/.test(toString.call(document.createElementNS(ns.svg, "clipPath")));
     };
-    for (var L in C) m(C, L) && (l = L.toLowerCase(), o[l] = C[L](), F.push((o[l] ? "" : "no-") + l));
-    return o.input || k(), o.addTest = function(a, b) {
-        if ("object" == typeof a) for (var d in a) m(a, d) && o.addTest(d, a[d]); else {
-            if (a = a.toLowerCase(), o[a] !== c) return o;
-            b = "function" == typeof b ? b() : b, "undefined" != typeof p && p && (q.className += " " + (b ? "" : "no-") + a), 
-            o[a] = b;
+    for (var feature in tests) hasOwnProp(tests, feature) && (featureName = feature.toLowerCase(), 
+    Modernizr[featureName] = tests[feature](), classes.push((Modernizr[featureName] ? "" : "no-") + featureName));
+    return Modernizr.input || webforms(), Modernizr.addTest = function(feature, test) {
+        if ("object" == typeof feature) for (var key in feature) hasOwnProp(feature, key) && Modernizr.addTest(key, feature[key]); else {
+            if (feature = feature.toLowerCase(), Modernizr[feature] !== undefined) return Modernizr;
+            test = "function" == typeof test ? test() : test, "undefined" != typeof enableClasses && enableClasses && (docElement.className += " " + (test ? "" : "no-") + feature), 
+            Modernizr[feature] = test;
         }
-        return o;
-    }, d(""), s = u = null, function(a, b) {
-        function c(a, b) {
-            var c = a.createElement("p"), d = a.getElementsByTagName("head")[0] || a.documentElement;
-            return c.innerHTML = "x<style>" + b + "</style>", d.insertBefore(c.lastChild, d.firstChild);
+        return Modernizr;
+    }, setCss(""), modElem = inputElem = null, function(window, document) {
+        function addStyleSheet(ownerDocument, cssText) {
+            var p = ownerDocument.createElement("p"), parent = ownerDocument.getElementsByTagName("head")[0] || ownerDocument.documentElement;
+            return p.innerHTML = "x<style>" + cssText + "</style>", parent.insertBefore(p.lastChild, parent.firstChild);
         }
-        function d() {
-            var a = s.elements;
-            return "string" == typeof a ? a.split(" ") : a;
+        function getElements() {
+            var elements = html5.elements;
+            return "string" == typeof elements ? elements.split(" ") : elements;
         }
-        function e(a) {
-            var b = r[a[p]];
-            return b || (b = {}, q++, a[p] = q, r[q] = b), b;
+        function getExpandoData(ownerDocument) {
+            var data = expandoData[ownerDocument[expando]];
+            return data || (data = {}, expanID++, ownerDocument[expando] = expanID, expandoData[expanID] = data), 
+            data;
         }
-        function f(a, c, d) {
-            if (c || (c = b), k) return c.createElement(a);
-            d || (d = e(c));
-            var f;
-            return f = d.cache[a] ? d.cache[a].cloneNode() : o.test(a) ? (d.cache[a] = d.createElem(a)).cloneNode() : d.createElem(a), 
-            !f.canHaveChildren || n.test(a) || f.tagUrn ? f : d.frag.appendChild(f);
+        function createElement(nodeName, ownerDocument, data) {
+            if (ownerDocument || (ownerDocument = document), supportsUnknownElements) return ownerDocument.createElement(nodeName);
+            data || (data = getExpandoData(ownerDocument));
+            var node;
+            return node = data.cache[nodeName] ? data.cache[nodeName].cloneNode() : saveClones.test(nodeName) ? (data.cache[nodeName] = data.createElem(nodeName)).cloneNode() : data.createElem(nodeName), 
+            !node.canHaveChildren || reSkip.test(nodeName) || node.tagUrn ? node : data.frag.appendChild(node);
         }
-        function g(a, c) {
-            if (a || (a = b), k) return a.createDocumentFragment();
-            c = c || e(a);
-            for (var f = c.frag.cloneNode(), g = 0, h = d(), i = h.length; i > g; g++) f.createElement(h[g]);
-            return f;
+        function createDocumentFragment(ownerDocument, data) {
+            if (ownerDocument || (ownerDocument = document), supportsUnknownElements) return ownerDocument.createDocumentFragment();
+            data = data || getExpandoData(ownerDocument);
+            for (var clone = data.frag.cloneNode(), i = 0, elems = getElements(), l = elems.length; l > i; i++) clone.createElement(elems[i]);
+            return clone;
         }
-        function h(a, b) {
-            b.cache || (b.cache = {}, b.createElem = a.createElement, b.createFrag = a.createDocumentFragment, 
-            b.frag = b.createFrag()), a.createElement = function(c) {
-                return s.shivMethods ? f(c, a, b) : b.createElem(c);
-            }, a.createDocumentFragment = Function("h,f", "return function(){var n=f.cloneNode(),c=n.createElement;h.shivMethods&&(" + d().join().replace(/[\w\-]+/g, function(a) {
-                return b.createElem(a), b.frag.createElement(a), 'c("' + a + '")';
-            }) + ");return n}")(s, b.frag);
+        function shivMethods(ownerDocument, data) {
+            data.cache || (data.cache = {}, data.createElem = ownerDocument.createElement, data.createFrag = ownerDocument.createDocumentFragment, 
+            data.frag = data.createFrag()), ownerDocument.createElement = function(nodeName) {
+                return html5.shivMethods ? createElement(nodeName, ownerDocument, data) : data.createElem(nodeName);
+            }, ownerDocument.createDocumentFragment = Function("h,f", "return function(){var n=f.cloneNode(),c=n.createElement;h.shivMethods&&(" + getElements().join().replace(/[\w\-]+/g, function(nodeName) {
+                return data.createElem(nodeName), data.frag.createElement(nodeName), 'c("' + nodeName + '")';
+            }) + ");return n}")(html5, data.frag);
         }
-        function i(a) {
-            a || (a = b);
-            var d = e(a);
-            return !s.shivCSS || j || d.hasCSS || (d.hasCSS = !!c(a, "article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}template{display:none}")), 
-            k || h(a, d), a;
+        function shivDocument(ownerDocument) {
+            ownerDocument || (ownerDocument = document);
+            var data = getExpandoData(ownerDocument);
+            return !html5.shivCSS || supportsHtml5Styles || data.hasCSS || (data.hasCSS = !!addStyleSheet(ownerDocument, "article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}template{display:none}")), 
+            supportsUnknownElements || shivMethods(ownerDocument, data), ownerDocument;
         }
-        var j, k, l = "3.7.0", m = a.html5 || {}, n = /^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i, o = /^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i, p = "_html5shiv", q = 0, r = {};
+        var supportsHtml5Styles, supportsUnknownElements, version = "3.7.0", options = window.html5 || {}, reSkip = /^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i, saveClones = /^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i, expando = "_html5shiv", expanID = 0, expandoData = {};
         !function() {
             try {
-                var a = b.createElement("a");
-                a.innerHTML = "<xyz></xyz>", j = "hidden" in a, k = 1 == a.childNodes.length || function() {
-                    b.createElement("a");
-                    var a = b.createDocumentFragment();
-                    return "undefined" == typeof a.cloneNode || "undefined" == typeof a.createDocumentFragment || "undefined" == typeof a.createElement;
+                var a = document.createElement("a");
+                a.innerHTML = "<xyz></xyz>", supportsHtml5Styles = "hidden" in a, supportsUnknownElements = 1 == a.childNodes.length || function() {
+                    document.createElement("a");
+                    var frag = document.createDocumentFragment();
+                    return "undefined" == typeof frag.cloneNode || "undefined" == typeof frag.createDocumentFragment || "undefined" == typeof frag.createElement;
                 }();
-            } catch (c) {
-                j = !0, k = !0;
+            } catch (e) {
+                supportsHtml5Styles = !0, supportsUnknownElements = !0;
             }
         }();
-        var s = {
-            elements: m.elements || "abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video",
-            version: l,
-            shivCSS: m.shivCSS !== !1,
-            supportsUnknownElements: k,
-            shivMethods: m.shivMethods !== !1,
+        var html5 = {
+            elements: options.elements || "abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video",
+            version: version,
+            shivCSS: options.shivCSS !== !1,
+            supportsUnknownElements: supportsUnknownElements,
+            shivMethods: options.shivMethods !== !1,
             type: "default",
-            shivDocument: i,
-            createElement: f,
-            createDocumentFragment: g
+            shivDocument: shivDocument,
+            createElement: createElement,
+            createDocumentFragment: createDocumentFragment
         };
-        a.html5 = s, i(b);
-    }(this, b), o._version = n, o._prefixes = x, o._domPrefixes = A, o._cssomPrefixes = z, 
-    o.mq = I, o.hasEvent = J, o.testProp = function(a) {
-        return h([ a ]);
-    }, o.testAllProps = j, o.testStyles = H, o.prefixed = function(a, b, c) {
-        return b ? j(a, b, c) : j(a, "pfx");
-    }, q.className = q.className.replace(/(^|\s)no-js(\s|$)/, "$1$2") + (p ? " js " + F.join(" ") : ""), 
-    o;
-}(this, this.document), !function(a) {
-    if ("object" == typeof exports && "undefined" != typeof module) module.exports = a(); else if ("function" == typeof define && define.amd) define([], a); else {
-        var b;
-        "undefined" != typeof window ? b = window : "undefined" != typeof global ? b = global : "undefined" != typeof self && (b = self), 
-        b.AnimationFrame = a();
+        window.html5 = html5, shivDocument(document);
+    }(this, document), Modernizr._version = version, Modernizr._prefixes = prefixes, 
+    Modernizr._domPrefixes = domPrefixes, Modernizr._cssomPrefixes = cssomPrefixes, 
+    Modernizr.mq = testMediaQuery, Modernizr.hasEvent = isEventSupported, Modernizr.testProp = function(prop) {
+        return testProps([ prop ]);
+    }, Modernizr.testAllProps = testPropsAll, Modernizr.testStyles = injectElementWithStyles, 
+    Modernizr.prefixed = function(prop, obj, elem) {
+        return obj ? testPropsAll(prop, obj, elem) : testPropsAll(prop, "pfx");
+    }, docElement.className = docElement.className.replace(/(^|\s)no-js(\s|$)/, "$1$2") + (enableClasses ? " js " + classes.join(" ") : ""), 
+    Modernizr;
+}(this, this.document), !function(e) {
+    if ("object" == typeof exports && "undefined" != typeof module) module.exports = e(); else if ("function" == typeof define && define.amd) define([], e); else {
+        var n;
+        "undefined" != typeof window ? n = window : "undefined" != typeof global ? n = global : "undefined" != typeof self && (n = self), 
+        n.AnimationFrame = e();
     }
 }(function() {
-    return function a(b, c, d) {
-        function e(g, h) {
-            if (!c[g]) {
-                if (!b[g]) {
-                    var i = "function" == typeof require && require;
-                    if (!h && i) return i(g, !0);
-                    if (f) return f(g, !0);
-                    var j = new Error("Cannot find module '" + g + "'");
-                    throw j.code = "MODULE_NOT_FOUND", j;
+    return function e(t, n, r) {
+        function s(o, u) {
+            if (!n[o]) {
+                if (!t[o]) {
+                    var a = "function" == typeof require && require;
+                    if (!u && a) return a(o, !0);
+                    if (i) return i(o, !0);
+                    var f = new Error("Cannot find module '" + o + "'");
+                    throw f.code = "MODULE_NOT_FOUND", f;
                 }
-                var k = c[g] = {
+                var l = n[o] = {
                     exports: {}
                 };
-                b[g][0].call(k.exports, function(a) {
-                    var c = b[g][1][a];
-                    return e(c ? c : a);
-                }, k, k.exports, a, b, c, d);
+                t[o][0].call(l.exports, function(e) {
+                    var n = t[o][1][e];
+                    return s(n ? n : e);
+                }, l, l.exports, e, t, n, r);
             }
-            return c[g].exports;
+            return n[o].exports;
         }
-        for (var f = "function" == typeof require && require, g = 0; g < d.length; g++) e(d[g]);
-        return e;
+        for (var i = "function" == typeof require && require, o = 0; o < r.length; o++) s(r[o]);
+        return s;
     }({
-        1: [ function(a, b, c) {
-            b.exports = a("./lib/animation-frame");
+        1: [ function(require, module, exports) {
+            module.exports = require("./lib/animation-frame");
         }, {
             "./lib/animation-frame": 2
         } ],
-        2: [ function(a, b, c) {
+        2: [ function(require, module, exports) {
             "use strict";
-            function d(a) {
-                return this instanceof d ? (a || (a = {}), "number" == typeof a && (a = {
-                    frameRate: a
-                }), null != a.useNative || (a.useNative = !0), this.options = a, this.frameRate = a.frameRate || d.FRAME_RATE, 
-                this._frameLength = 1e3 / this.frameRate, this._isCustomFrameRate = this.frameRate !== d.FRAME_RATE, 
-                this._timeoutId = null, this._callbacks = {}, this._lastTickTime = 0, void (this._tickCounter = 0)) : new d(a);
+            function AnimationFrame(options) {
+                return this instanceof AnimationFrame ? (options || (options = {}), "number" == typeof options && (options = {
+                    frameRate: options
+                }), null != options.useNative || (options.useNative = !0), this.options = options, 
+                this.frameRate = options.frameRate || AnimationFrame.FRAME_RATE, this._frameLength = 1e3 / this.frameRate, 
+                this._isCustomFrameRate = this.frameRate !== AnimationFrame.FRAME_RATE, this._timeoutId = null, 
+                this._callbacks = {}, this._lastTickTime = 0, void (this._tickCounter = 0)) : new AnimationFrame(options);
             }
-            var e = a("./native"), f = a("./now"), g = a("./performance"), h = e.request, i = e.cancel;
-            b.exports = d, d.FRAME_RATE = 60, d.shim = function(a) {
-                var b = new d(a);
-                return window.requestAnimationFrame = function(a) {
-                    return b.request(a);
-                }, window.cancelAnimationFrame = function(a) {
-                    return b.cancel(a);
-                }, b;
-            }, d.prototype.request = function(a) {
-                var b = this;
-                if (++this._tickCounter, e.supported && this.options.useNative && !this._isCustomFrameRate) return h(a);
-                if (!a) throw new TypeError("Not enough arguments");
+            var nativeImpl = require("./native"), now = require("./now"), performance = require("./performance"), nativeRequest = nativeImpl.request, nativeCancel = nativeImpl.cancel;
+            module.exports = AnimationFrame, AnimationFrame.FRAME_RATE = 60, AnimationFrame.shim = function(options) {
+                var animationFrame = new AnimationFrame(options);
+                return window.requestAnimationFrame = function(callback) {
+                    return animationFrame.request(callback);
+                }, window.cancelAnimationFrame = function(id) {
+                    return animationFrame.cancel(id);
+                }, animationFrame;
+            }, AnimationFrame.prototype.request = function(callback) {
+                var self = this;
+                if (++this._tickCounter, nativeImpl.supported && this.options.useNative && !this._isCustomFrameRate) return nativeRequest(callback);
+                if (!callback) throw new TypeError("Not enough arguments");
                 if (null == this._timeoutId) {
-                    var c = this._frameLength + this._lastTickTime - f();
-                    0 > c && (c = 0), this._timeoutId = setTimeout(function() {
-                        b._lastTickTime = f(), b._timeoutId = null, ++b._tickCounter;
-                        var a = b._callbacks;
-                        b._callbacks = {};
-                        for (var c in a) a[c] && (e.supported && b.options.useNative ? h(a[c]) : a[c](g.now()));
-                    }, c);
+                    var delay = this._frameLength + this._lastTickTime - now();
+                    0 > delay && (delay = 0), this._timeoutId = setTimeout(function() {
+                        self._lastTickTime = now(), self._timeoutId = null, ++self._tickCounter;
+                        var callbacks = self._callbacks;
+                        self._callbacks = {};
+                        for (var id in callbacks) callbacks[id] && (nativeImpl.supported && self.options.useNative ? nativeRequest(callbacks[id]) : callbacks[id](performance.now()));
+                    }, delay);
                 }
-                return this._callbacks[this._tickCounter] = a, this._tickCounter;
-            }, d.prototype.cancel = function(a) {
-                e.supported && this.options.useNative && i(a), delete this._callbacks[a];
+                return this._callbacks[this._tickCounter] = callback, this._tickCounter;
+            }, AnimationFrame.prototype.cancel = function(id) {
+                nativeImpl.supported && this.options.useNative && nativeCancel(id), delete this._callbacks[id];
             };
         }, {
             "./native": 3,
             "./now": 4,
             "./performance": 6
         } ],
-        3: [ function(a, b, c) {
+        3: [ function(require, module, exports) {
             "use strict";
-            var d = window;
+            var global = window;
             try {
-                d.top.name, d = d.top;
+                global.top.name, global = global.top;
             } catch (e) {}
-            c.request = d.requestAnimationFrame, c.cancel = d.cancelAnimationFrame || d.cancelRequestAnimationFrame, 
-            c.supported = !1;
-            for (var f = [ "Webkit", "Moz", "ms", "O" ], g = 0; g < f.length && !c.request; g++) c.request = d[f[g] + "RequestAnimationFrame"], 
-            c.cancel = d[f[g] + "CancelAnimationFrame"] || d[f[g] + "CancelRequestAnimationFrame"];
-            c.request && c.request.call(null, function() {
-                c.supported = !0;
+            exports.request = global.requestAnimationFrame, exports.cancel = global.cancelAnimationFrame || global.cancelRequestAnimationFrame, 
+            exports.supported = !1;
+            for (var vendors = [ "Webkit", "Moz", "ms", "O" ], i = 0; i < vendors.length && !exports.request; i++) exports.request = global[vendors[i] + "RequestAnimationFrame"], 
+            exports.cancel = global[vendors[i] + "CancelAnimationFrame"] || global[vendors[i] + "CancelRequestAnimationFrame"];
+            exports.request && exports.request.call(null, function() {
+                exports.supported = !0;
             });
         }, {} ],
-        4: [ function(a, b, c) {
+        4: [ function(require, module, exports) {
             "use strict";
-            b.exports = Date.now || function() {
+            module.exports = Date.now || function() {
                 return new Date().getTime();
             };
         }, {} ],
-        5: [ function(a, b, c) {
+        5: [ function(require, module, exports) {
             "use strict";
-            var d = a("./now");
-            c.navigationStart = d();
+            var now = require("./now");
+            exports.navigationStart = now();
         }, {
             "./now": 4
         } ],
-        6: [ function(a, b, c) {
+        6: [ function(require, module, exports) {
             "use strict";
-            var d = a("./now"), e = a("./performance-timing");
-            c.now = function() {
-                return window.performance && window.performance.now ? window.performance.now() : d() - e.navigationStart;
+            var now = require("./now"), PerformanceTiming = require("./performance-timing");
+            exports.now = function() {
+                return window.performance && window.performance.now ? window.performance.now() : now() - PerformanceTiming.navigationStart;
             };
         }, {
             "./now": 4,
@@ -3553,46 +3685,46 @@ function detectSidebar() {
 });
 
 var dateFormat = function() {
-    var a = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g, b = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g, c = /[^-+\dA-Z]/g, d = function(a, b) {
-        for (a = String(a), b = b || 2; a.length < b; ) a = "0" + a;
-        return a;
+    var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g, timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g, timezoneClip = /[^-+\dA-Z]/g, pad = function(val, len) {
+        for (val = String(val), len = len || 2; val.length < len; ) val = "0" + val;
+        return val;
     };
-    return function(e, f, g) {
-        var h = dateFormat;
-        1 != arguments.length || "[object String]" != Object.prototype.toString.call(e) || /\d/.test(e) || (f = e, 
-        e = void 0), e = e ? new Date(e) : new Date(), f = String(h.masks[f] || f || h.masks["default"]), 
-        "UTC:" == f.slice(0, 4) && (f = f.slice(4), g = !0);
-        var i = g ? "getUTC" : "get", j = e[i + "Date"](), k = e[i + "Day"](), l = e[i + "Month"](), m = e[i + "FullYear"](), n = e[i + "Hours"](), o = e[i + "Minutes"](), p = e[i + "Seconds"](), q = e[i + "Milliseconds"](), r = g ? 0 : e.getTimezoneOffset(), s = {
-            d: j,
-            dd: d(j),
-            ddd: h.i18n.dayNames[k],
-            dddd: h.i18n.dayNames[k + 7],
-            m: l + 1,
-            mm: d(l + 1),
-            mmm: h.i18n.monthNames[l],
-            mmmm: h.i18n.monthNames[l + 12],
-            yy: String(m).slice(2),
-            yyyy: m,
-            h: n % 12 || 12,
-            hh: d(n % 12 || 12),
-            H: n,
-            HH: d(n),
-            M: o,
-            MM: d(o),
-            s: p,
-            ss: d(p),
-            l: d(q, 3),
-            L: d(q > 99 ? Math.round(q / 10) : q),
-            t: 12 > n ? "a" : "p",
-            tt: 12 > n ? "am" : "pm",
-            T: 12 > n ? "A" : "P",
-            TT: 12 > n ? "AM" : "PM",
-            Z: g ? "UTC" : (String(e).match(b) || [ "" ]).pop().replace(c, ""),
-            o: (r > 0 ? "-" : "+") + d(100 * Math.floor(Math.abs(r) / 60) + Math.abs(r) % 60, 4),
-            S: [ "th", "st", "nd", "rd" ][j % 10 > 3 ? 0 : (j % 100 - j % 10 != 10) * j % 10]
+    return function(date, mask, utc) {
+        var dF = dateFormat;
+        1 != arguments.length || "[object String]" != Object.prototype.toString.call(date) || /\d/.test(date) || (mask = date, 
+        date = void 0), date = date ? new Date(date) : new Date(), mask = String(dF.masks[mask] || mask || dF.masks["default"]), 
+        "UTC:" == mask.slice(0, 4) && (mask = mask.slice(4), utc = !0);
+        var _ = utc ? "getUTC" : "get", d = date[_ + "Date"](), D = date[_ + "Day"](), m = date[_ + "Month"](), y = date[_ + "FullYear"](), H = date[_ + "Hours"](), M = date[_ + "Minutes"](), s = date[_ + "Seconds"](), L = date[_ + "Milliseconds"](), o = utc ? 0 : date.getTimezoneOffset(), flags = {
+            d: d,
+            dd: pad(d),
+            ddd: dF.i18n.dayNames[D],
+            dddd: dF.i18n.dayNames[D + 7],
+            m: m + 1,
+            mm: pad(m + 1),
+            mmm: dF.i18n.monthNames[m],
+            mmmm: dF.i18n.monthNames[m + 12],
+            yy: String(y).slice(2),
+            yyyy: y,
+            h: H % 12 || 12,
+            hh: pad(H % 12 || 12),
+            H: H,
+            HH: pad(H),
+            M: M,
+            MM: pad(M),
+            s: s,
+            ss: pad(s),
+            l: pad(L, 3),
+            L: pad(L > 99 ? Math.round(L / 10) : L),
+            t: 12 > H ? "a" : "p",
+            tt: 12 > H ? "am" : "pm",
+            T: 12 > H ? "A" : "P",
+            TT: 12 > H ? "AM" : "PM",
+            Z: utc ? "UTC" : (String(date).match(timezone) || [ "" ]).pop().replace(timezoneClip, ""),
+            o: (o > 0 ? "-" : "+") + pad(100 * Math.floor(Math.abs(o) / 60) + Math.abs(o) % 60, 4),
+            S: [ "th", "st", "nd", "rd" ][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
         };
-        return f.replace(a, function(a) {
-            return a in s ? s[a] : a.slice(1, a.length - 1);
+        return mask.replace(token, function($0) {
+            return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
         });
     };
 }();
@@ -3613,155 +3745,160 @@ dateFormat.masks = {
 }, dateFormat.i18n = {
     dayNames: [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ],
     monthNames: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
-}, Date.prototype.format = function(a, b) {
-    return dateFormat(this, a, b);
+}, Date.prototype.format = function(mask, utc) {
+    return dateFormat(this, mask, utc);
 };
 
 var cookieSystem, initCookies = function() {
     cookieSystem = {
-        get: function(a) {
-            return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(a).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+        get: function(sKey) {
+            return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
         },
-        set: function(a, b, c, d, e, f) {
-            if (!a || /^(?:expires|max\-age|path|domain|secure)$/i.test(a)) return !1;
-            var g = "";
-            if (c) switch (c.constructor) {
+        set: function(sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+            if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) return !1;
+            var sExpires = "";
+            if (vEnd) switch (vEnd.constructor) {
               case Number:
-                var h = new Date(), i = new Date(h.getTime() + 864e5 * c);
-                g = c === 1 / 0 ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; expires=" + i.toGMTString();
+                var currentDate = new Date(), expiryDate = new Date(currentDate.getTime() + 864e5 * vEnd);
+                sExpires = vEnd === 1 / 0 ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; expires=" + expiryDate.toGMTString();
                 break;
 
               case String:
-                g = "; expires=" + c;
+                sExpires = "; expires=" + vEnd;
                 break;
 
               case Date:
-                g = "; expires=" + c.toGMTString();
+                sExpires = "; expires=" + vEnd.toGMTString();
             }
-            return document.cookie = encodeURIComponent(a) + "=" + encodeURIComponent(b) + g + (e ? "; domain=" + e : "") + (d ? "; path=" + d : "") + (f ? "; secure" : ""), 
+            return document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : ""), 
             !0;
         },
-        remove: function(a, b, c) {
-            return a && this.hasItem(a) ? (document.cookie = encodeURIComponent(a) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (c ? "; domain=" + c : "") + (b ? "; path=" + b : ""), 
+        remove: function(sKey, sPath, sDomain) {
+            return sKey && this.hasItem(sKey) ? (document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : ""), 
             !0) : !1;
         },
-        has: function(a) {
-            return new RegExp("(?:^|;\\s*)" + encodeURIComponent(a).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=").test(document.cookie);
+        has: function(sKey) {
+            return new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=").test(document.cookie);
         }
     }, config.application.debug && console.log("System :: Cookie System");
 }, initAnimationFrame = function() {
-    for (var a = 0, b = [ "webkit", "moz", "ms", "o" ], c = 0; c < b.length && !window.requestAnimationFrame; c++) window.requestAnimationFrame = window[b[c] + "RequestAnimationFrame"], 
-    window.cancelAnimationFrame = window[b[c] + "CancelAnimationFrame"] || window[b[c] + "CancelRequestAnimationFrame"];
-    window.requestAnimationFrame || (window.requestAnimationFrame = function(b, c) {
-        var d = new Date().getTime(), e = Math.max(0, 16 - (d - a)), f = window.setTimeout(function() {
-            b(d + e);
-        }, e);
-        return a = d + e, f;
-    }), window.cancelAnimationFrame || (window.cancelAnimationFrame = function(a) {
-        clearTimeout(a);
+    for (var lastTime = 0, vendors = [ "webkit", "moz", "ms", "o" ], x = 0; x < vendors.length && !window.requestAnimationFrame; x++) window.requestAnimationFrame = window[vendors[x] + "RequestAnimationFrame"], 
+    window.cancelAnimationFrame = window[vendors[x] + "CancelAnimationFrame"] || window[vendors[x] + "CancelRequestAnimationFrame"];
+    window.requestAnimationFrame || (window.requestAnimationFrame = function(callback, element) {
+        var currTime = new Date().getTime(), timeToCall = Math.max(0, 16 - (currTime - lastTime)), id = window.setTimeout(function() {
+            callback(currTime + timeToCall);
+        }, timeToCall);
+        return lastTime = currTime + timeToCall, id;
+    }), window.cancelAnimationFrame || (window.cancelAnimationFrame = function(id) {
+        clearTimeout(id);
     });
 }, initSVGs = function() {
     if ($("img[src$='.svg']").length) {
-        var a = 0;
-        $("img[src$='.svg']").each(function(b) {
-            var c = $(this), d = c.attr("id"), e = c.attr("class"), f = c.attr("src");
-            a = b, Modernizr.svg ? $.get(f, function(a) {
-                var b = $(a).find("svg");
-                "undefined" != typeof d && (b = b.attr("id", d)), "undefined" != typeof e && (b = b.attr("class", e + " replaced-svg")), 
-                c.hasClass("icon") && b.find("*").removeAttr("style"), b = b.removeAttr("xmlns:a"), 
-                c.after(b).remove();
+        var svgCount = 0;
+        $("img[src$='.svg']").each(function(i) {
+            var img = $(this), imgID = img.attr("id"), imgClass = img.attr("class"), imgURL = img.attr("src");
+            svgCount = i, Modernizr.svg ? $.get(imgURL, function(data) {
+                var svg = $(data).find("svg");
+                "undefined" != typeof imgID && (svg = svg.attr("id", imgID)), "undefined" != typeof imgClass && (svg = svg.attr("class", imgClass + " replaced-svg")), 
+                img.hasClass("icon") && svg.find("*").removeAttr("style"), svg = svg.removeAttr("xmlns:a"), 
+                img.after(svg).remove();
             }, "xml").fail(function() {
-                c.removeClass("svg");
-            }) : (f = f.replace(".svg", ".png"), c.attr("src", f));
-        }), config.application.debug && console.log("System :: SVG Injection @ " + a + " images");
+                img.removeClass("svg");
+            }) : (imgURL = imgURL.replace(".svg", ".png"), img.attr("src", imgURL));
+        }), config.application.debug && console.log("System :: SVG Injection @ " + svgCount + " images");
     }
-}, randomizeInteger = function(a, b) {
-    return Math.floor(Math.random() * (b - a)) + a;
-}, popupWindow = function(a, b, c, d) {
-    var e = screen.width / 2 - c / 2, f = screen.height / 2 - d / 2;
-    return window.open(a, b, "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=" + c + ", height=" + d + ", top=" + f + ", left=" + e);
-}, highlight = function(a, b) {
-    var c = RegExp(b, "gi");
-    a.each(function() {
+}, randomizeInteger = function(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}, popupWindow = function(url, title, w, h) {
+    var left = screen.width / 2 - w / 2, top = screen.height / 2 - h / 2;
+    return window.open(url, title, "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=" + w + ", height=" + h + ", top=" + top + ", left=" + left);
+}, highlight = function(el, val) {
+    var match = RegExp(val, "gi");
+    el.each(function() {
         $(this).filter(function() {
-            return c.test($(this).text());
+            return match.test($(this).text());
         }).html(function() {
-            return b ? $(this).text().replace(c, '<span class="highlight">$&</span>') : $(this).text();
+            return val ? $(this).text().replace(match, '<span class="highlight">$&</span>') : $(this).text();
         });
     });
-}, unhighlight = function(a) {
-    a.find("span.highlight").replaceWith(function() {
+}, unhighlight = function(el) {
+    el.find("span.highlight").replaceWith(function() {
         return $(this).text();
     });
-}, resizeText = function(a) {
-    var b = $(a), c = b.children("span"), d = config.typography.autoresize.characters, e = config.typography.autoresize.rows, f = config.typography.autoresize.minFontSize, g = config.typography.autoresize.maxFontSize, h = f;
+}, resizeText = function(elem) {
+    var el = $(elem), span = el.children("span"), charLimit = config.typography.autoresize.characters, rowLimit = config.typography.autoresize.rows, minFontSize = config.typography.autoresize.minFontSize, maxFontSize = config.typography.autoresize.maxFontSize, fontSize = minFontSize;
     (function() {
-        if (!b.hasClass("rebuilt")) {
-            var a = b.html();
-            b.children("span").length || b.empty().append("<span>" + a + "</span>"), c = b.children("span");
-            var f = c.text().trim(), g = f.length, h = "", i = Math.round(g / 2), j = !1;
-            if (g > d && e > 1) {
-                for (var k = 0; g > k; k++) !j && k > i && /\s/.test(f[k]) ? (h += "<br />", j = !0) : h += f[k];
-                c.html(h);
+        if (!el.hasClass("rebuilt")) {
+            var string = el.html();
+            el.children("span").length || el.empty().append("<span>" + string + "</span>"), 
+            span = el.children("span");
+            var stringContent = span.text().trim(), stringLength = stringContent.length, stringFinal = "", stringHalf = Math.round(stringLength / 2), spaceFound = !1;
+            if (stringLength > charLimit && rowLimit > 1) {
+                for (var i = 0; stringLength > i; i++) !spaceFound && i > stringHalf && /\s/.test(stringContent[i]) ? (stringFinal += "<br />", 
+                spaceFound = !0) : stringFinal += stringContent[i];
+                span.html(stringFinal);
             }
-            b.addClass("rebuilt");
+            el.addClass("rebuilt");
         }
     })(), function() {
-        do h--, c.css({
-            "font-size": h.toString() + "px",
-            "font-size": (h / 10).toString() + "rem"
-        }); while (c.width() > b.width() && h > f);
-        do h++, c.css({
-            "font-size": h.toString() + "px",
-            "font-size": (h / 10).toString() + "rem"
-        }); while (c.width() < b.width() && g > h);
-        b.hasClass("resized") || b.addClass("resized");
+        do fontSize--, span.css({
+            "font-size": fontSize.toString() + "px",
+            "font-size": (fontSize / 10).toString() + "rem"
+        }); while (span.width() > el.width() && fontSize > minFontSize);
+        do fontSize++, span.css({
+            "font-size": fontSize.toString() + "px",
+            "font-size": (fontSize / 10).toString() + "rem"
+        }); while (span.width() < el.width() && maxFontSize > fontSize);
+        el.hasClass("resized") || el.addClass("resized");
     }();
-}, getQueryParameters = function(a) {
-    return (a || document.location.search).replace(/(^\?)/, "").split("&").map(function(a) {
-        return a = a.split("="), this[a[0]] = a[1], this;
+}, getQueryParameters = function(str) {
+    return (str || document.location.search).replace(/(^\?)/, "").split("&").map(function(n) {
+        return n = n.split("="), this[n[0]] = n[1], this;
     }.bind({}))[0];
 }, URLQueryObject = function() {
-    var a = "";
+    var urlParams = "";
     return window.onpopstate = function() {
-        var b, c = /\+/g, d = /([^&=]+)=?([^&]*)/g, e = function(a) {
-            return decodeURIComponent(a.replace(c, " "));
-        }, f = window.location.search.substring(1);
-        for (a = {}; b == d.exec(f); ) a[e(b[1])] = e(b[2]);
-    }, a;
-}, returnedData, dataObject = "", requestData = function(a, b, c) {
-    config.application.debug && console.log("AJAX ~~ Request (" + a + ")"), request = $.ajax({
-        url: a,
-        type: b,
-        data: "POST" == b ? dataObject : "",
+        var match, pl = /\+/g, search = /([^&=]+)=?([^&]*)/g, decode = function(s) {
+            return decodeURIComponent(s.replace(pl, " "));
+        }, query = window.location.search.substring(1);
+        for (urlParams = {}; match == search.exec(query); ) urlParams[decode(match[1])] = decode(match[2]);
+    }, urlParams;
+}, returnedData, dataObject = "", requestData = function(url, type, successFunction) {
+    config.application.debug && console.log("AJAX ~~ Request (" + url + ")"), request = $.ajax({
+        url: url,
+        type: type,
+        data: "POST" == type ? dataObject : "",
         dataType: "JSON",
-        success: function(b) {
-            config.application.debug && console.log("AJAX ~~ Success (" + a + ")"), "undefined" != typeof c && c(b);
+        success: function(data) {
+            config.application.debug && console.log("AJAX ~~ Success (" + url + ")"), "undefined" != typeof successFunction && successFunction(data);
         },
-        error: function(b, c, d) {
-            config.application.debug && console.log("AJAX ~~ Error (" + a + ")");
+        error: function(request, status, error) {
+            config.application.debug && console.log("AJAX ~~ Error (" + url + ")");
         }
     });
-}, loadScript = function(a, b) {
-    var c = document.createElement("script");
-    c.type = "text/javascript", c.src = a, b && (c.onload = b), document.body.appendChild(c);
-}, anchorClicked, initLinks = function() {
-    $(document).on("click", "a[href^='#']", function(a) {
-        var b = $.attr(this, "href");
-        if (a.preventDefault(), "#" === b) config.application.debug && console.log("System :: Link blocked"); else if ($(b).length) return anchorClicked = !0, 
-        $("html, body").animate({
-            scrollTop: $(b).offset().top - 40
-        }, {
-            duration: 1e3,
-            queue: !1,
-            complete: function() {
-                anchorClicked = !1;
-            }
-        }), !1;
+}, loadScript = function(src, callback) {
+    var script = document.createElement("script");
+    script.type = "text/javascript", script.src = src, callback && (script.onload = callback), 
+    document.body.appendChild(script);
+}, anchorClicked, scrollTo = function(anchor) {
+    if ("#" === anchor) config.application.debug && console.log("System :: Link blocked"); else if ($(anchor).length) return anchorClicked = !0, 
+    $("html, body").animate({
+        scrollTop: $(anchor).offset().top - 86
+    }, {
+        duration: 1e3,
+        queue: !1,
+        complete: function() {
+            anchorClicked = !1;
+        }
+    }), !1;
+}, initLinks = function() {
+    $(document).on("click", "a[href^='#']", function(event) {
+        var link = $.attr(this, "href");
+        event.preventDefault(), scrollTo(link);
     }), config.application.debug && console.log("System :: Links");
 }, scrollProgress = function() {
-    var a = 100 * pageTop / ($(document).height() - $(window).height());
-    $(".scroll-progress").width(a + "%");
+    var scrollPercentage = 100 * pageTop / ($(document).height() - $(window).height());
+    $(".scroll-progress").width(scrollPercentage + "%");
 }, ms = new Date().getTime(), matterReady = function() {
     isWideScreen = $(window).width() > 768, config.application.touch && (FastClick.attach(document.body), 
     $(".map-canvas").addClass("map-mobile")), config.application.debug && (console.log(":: is DOM.ready"), 
@@ -3780,134 +3917,141 @@ $(document).on("ready", matterReady), $(window).on("load", matterDeferred), $(wi
     pageTop = $(document).scrollTop(), pageBottom = pageTop + $(this).height(), scrollProgress();
 });
 
-var initBreakpointDebug = function(a, b) {
-    var c = document.createElement("script");
-    c.type = "text/javascript", c.readyState ? c.onreadystatechange = function() {
-        ("loaded" == c.readyState || "complete" == c.readyState) && (c.onreadystatechange = null, 
-        b());
-    } : c.onload = function() {
-        b();
-    }, c.src = a, document.getElementsByTagName("head")[0].appendChild(c);
+var initBreakpointDebug = function(url, callback) {
+    var script = document.createElement("script");
+    script.type = "text/javascript", script.readyState ? script.onreadystatechange = function() {
+        ("loaded" == script.readyState || "complete" == script.readyState) && (script.onreadystatechange = null, 
+        callback());
+    } : script.onload = function() {
+        callback();
+    }, script.src = url, document.getElementsByTagName("head")[0].appendChild(script);
 };
 
 $(document).ready(function() {
     config.application.debug && !config.application.touch && $(".debug-trigger").removeClass("hidden").on("click", function() {
         initBreakpointDebug("scripts/debug/breakpoint.js", function() {
-            var a = document;
-            a.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Breakpoint Test - ' + a.title + '</title><link rel="stylesheet" href="styles/debug/bookmark.css"><script src="scripts/debug/bookmark.js"></script></head><body data-url="' + a.URL + '"><header id="topHeader" class="clearfix"><a href="#"></a></section><section id="bpCount"><div id="count">00</div><div id="countText"><span>BREAKPOINTS FOUND</span></div></section>' + mqUniqueBP + '</header><section id="qcWWW"><ul id="qcWW"></ul></section></body></html>');
+            var doc = document;
+            doc.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Breakpoint Test - ' + doc.title + '</title><link rel="stylesheet" href="styles/debug/bookmark.css"><script src="scripts/debug/bookmark.js"></script></head><body data-url="' + doc.URL + '"><header id="topHeader" class="clearfix"><a href="#"></a></section><section id="bpCount"><div id="count">00</div><div id="countText"><span>BREAKPOINTS FOUND</span></div></section>' + mqUniqueBP + '</header><section id="qcWWW"><ul id="qcWW"></ul></section></body></html>');
         });
     });
 });
 
 var initForm = function() {
     $("select[data-countries]").length && ($("select[data-countries]").each(function() {
-        var a = $(this), b = a.data("countries"), c = function(b) {
-            for (var c = 0; c < b.length; c++) {
-                var d = b[c].Name, e = b[c].Code, f = "<option value='" + e + "'>" + d + "</option>";
-                a.append(f);
+        var el = $(this), url = el.data("countries"), buildCountries = function(data) {
+            for (var i = 0; i < data.length; i++) {
+                var name = data[i].Name, code = data[i].Code, option = "<option value='" + code + "'>" + name + "</option>";
+                el.append(option);
             }
             initDropdowns();
         };
-        requestData(b, "GET", c);
+        requestData(url, "GET", buildCountries);
     }), config.application.debug && console.log("Form :: Country Dropdowns"));
-    var a = '<div class="file-wrapper mobile-hide"></div>', b = '<div class="fakefile">							<div class="button primary fake-upload">Choose File</div>							<div class="file-result">No file chosen</div>						</div>', c = '<div class="multifile-info form-info">							You\'ve got <strong class="emphasis multi-limit font-medium">0</strong> remaining upload<span class="plural">s</span>.						</div>', d = '<div class="multifile-wrapper mobile-hide last"></div>', e = '<div class="fakefile">							<div class="button primary fake-upload">Choose File</div>							<div class="file-result">No file chosen</div>							<div class="button primary fake-close">								<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">							</div>						</div>';
+    var singleFileWrapper = '<div class="file-wrapper mobile-hide"></div>', singleFileFake = '<div class="fakefile">							<div class="button primary fake-upload">Choose File</div>							<div class="file-result">No file chosen</div>						</div>', multiFileIntro = '<div class="multifile-info form-info">							You\'ve got <strong class="emphasis multi-limit font-medium">0</strong> remaining upload<span class="plural">s</span>.						</div>', multiFileWrapper = '<div class="multifile-wrapper mobile-hide last"></div>', multiFileFake = '<div class="fakefile">							<div class="button primary fake-upload">Choose File</div>							<div class="file-result">No file chosen</div>							<div class="button primary fake-close">								<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">							</div>						</div>';
     if ($("input[type='file']").each(function() {
-        $(this).data("multi") ? $(this).before(c).wrap(d).after(e) : $(this).wrap(a).after(b);
+        $(this).data("multi") ? $(this).before(multiFileIntro).wrap(multiFileWrapper).after(multiFileFake) : $(this).wrap(singleFileWrapper).after(singleFileFake);
     }), $(".file-wrapper").length && ($(".file-wrapper:not('.last')").each(function() {
-        var a = $(this), b = a.find("input"), c = a.find(".fake-upload"), d = a.find(".file-result");
-        c.on("click", function() {
-            b.trigger("click");
-        }), b.on("change", function() {
-            var a = $(this).val().replace("C:\\fakepath\\", "");
-            d.html(a).addClass("loaded");
+        var el = $(this), input = el.find("input"), button = el.find(".fake-upload"), result = el.find(".file-result");
+        button.on("click", function() {
+            input.trigger("click");
+        }), input.on("change", function() {
+            var text = $(this).val().replace("C:\\fakepath\\", "");
+            result.html(text).addClass("loaded");
         });
     }), config.application.debug && console.log("Form :: File Upload")), $(".multifile-wrapper").length) {
-        var f = function() {
-            var a = $(".multifile-wrapper"), b = a.length, c = config.forms.multiUploadlimit, g = $(".multi-limit"), h = c - a.find(".loaded").length, i = (1 == h ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(), 
-            '<input type="file" id="file[' + b + ']" name="file[' + b + ']" />');
-            $(i).wrap(d).after(e), g.html(h), a.each(function(a) {
-                var g = $(this), h = g.find(".file-result");
-                g.find("input").attr("id", "file[" + a + "]").attr("name", "file[" + a + "]"), g.off().on("click", ".fake-upload", function() {
-                    g.find("input").trigger("click");
+        var initFileInputs = function() {
+            var file = $(".multifile-wrapper"), inputCount = file.length, inputLimit = config.forms.multiUploadlimit, limitElement = $(".multi-limit"), currentCount = inputLimit - file.find(".loaded").length, newInput = (1 == currentCount ? $(".multifile-info").find(".plural").hide() : $(".multifile-info").find(".plural").show(), 
+            '<input type="file" id="file[' + inputCount + ']" name="file[' + inputCount + ']" />');
+            $(newInput).wrap(multiFileWrapper).after(multiFileFake), limitElement.html(currentCount), 
+            file.each(function(i) {
+                var el = $(this), resultElement = el.find(".file-result");
+                el.find("input").attr("id", "file[" + i + "]").attr("name", "file[" + i + "]"), 
+                el.off().on("click", ".fake-upload", function() {
+                    el.find("input").trigger("click");
                 }).on("click", ".fake-close", function() {
-                    b != c || $(".multifile-wrapper.last").length || $(i).insertAfter($(".multifile-wrapper").eq(b - 1)), 
-                    g.remove(), f();
+                    inputCount != inputLimit || $(".multifile-wrapper.last").length || $(newInput).insertAfter($(".multifile-wrapper").eq(inputCount - 1)), 
+                    el.remove(), initFileInputs();
                 }).on("change", "input", function() {
-                    var j = $(this).val().replace("C:\\fakepath\\", "");
-                    h.html(j).addClass("loaded"), c >= b && $(i).insertAfter(g).wrap(d).after(e), b > a && g.removeClass("last"), 
-                    f();
+                    var text = $(this).val().replace("C:\\fakepath\\", "");
+                    resultElement.html(text).addClass("loaded"), inputLimit >= inputCount && $(newInput).insertAfter(el).wrap(multiFileWrapper).after(multiFileFake), 
+                    inputCount > i && el.removeClass("last"), initFileInputs();
                 });
             }), initSVGs();
         };
-        f(), config.application.debug && console.log("Form :: Multiple File Upload");
+        initFileInputs(), config.application.debug && console.log("Form :: Multiple File Upload");
     }
-    var g = '<span class="toggle-body">					  <span class="toggle-switch"></span>					  <span class="toggle-track">					  <span class="toggle-background"></span>						  <span class="toggle-background toggle-background-negative"></span>					  </span>				  </span>';
+    var toggle = '<span class="toggle-body">					  <span class="toggle-switch"></span>					  <span class="toggle-track">					  <span class="toggle-background"></span>						  <span class="toggle-background toggle-background-negative"></span>					  </span>				  </span>';
     if ($("input[type='checkbox'], input[type='radio']").length && $("input[type='checkbox'], input[type='radio']").each(function() {
-        var a = $(this), b = a.attr("type"), c = "";
-        "true" === a.attr("data-toggle") ? (a.wrap("<div class='controller toggle'></div>"), 
-        c = a.parents(".controller"), c.next("label").prepend(g).appendTo(c), config.application.debug && console.log("Form :: Toggle " + b.toCamelCase())) : (a.wrap("<div class='controller " + b + "'></div>"), 
-        c = a.parents(".controller"), c.next("label").appendTo(c), config.application.debug && console.log("Form :: " + b.toCamelCase()));
-    }), $(document).on("click", "input[type='checkbox'][readonly], input[type='radio'][readonly]", function(a) {
-        a.preventDefault();
+        var el = $(this), type = el.attr("type"), parent = "";
+        "true" === el.attr("data-toggle") ? (el.wrap("<div class='controller toggle'></div>"), 
+        parent = el.parents(".controller"), parent.next("label").prepend(toggle).appendTo(parent), 
+        config.application.debug && console.log("Form :: Toggle " + type.toCamelCase())) : (el.wrap("<div class='controller " + type + "'></div>"), 
+        parent = el.parents(".controller"), parent.next("label").appendTo(parent), config.application.debug && console.log("Form :: " + type.toCamelCase()));
+    }), $(document).on("click", "input[type='checkbox'][readonly], input[type='radio'][readonly]", function(event) {
+        event.preventDefault();
     }), $("input[type='password']").length) {
-        var h = '<div class="password-wrapper"></div>', i = '<div class="password-meter-mask"><div class="password-meter"></div></div>';
+        var wrapper = '<div class="password-wrapper"></div>', meter = '<div class="password-meter-mask"><div class="password-meter"></div></div>';
         $("input[type='password']").each(function() {
-            var a = $(this);
-            "match" !== a.data("validation") && (a.wrap(h), $(i).insertAfter(a));
+            var el = $(this);
+            "match" !== el.data("validation") && (el.wrap(wrapper), $(meter).insertAfter(el));
         }), config.application.debug && console.log("Form :: Password Meters");
     }
     if ($("progress").length) {
-        var j = function(a) {
-            var b = $("progress"), c = b.prev("label"), d = b.find(".progress-bar span");
-            d.width(a + "%").html(a + "%"), c.removeClass("active").width(a + "%").attr("data-progress", a), 
-            b.removeClass("valid").attr("value", a), a >= 8 && c.addClass("active"), a >= 100 && b.addClass("valid");
+        var triggerProgress = function(progress) {
+            var el = $("progress"), label = el.prev("label"), bar = el.find(".progress-bar span");
+            bar.width(progress + "%").html(progress + "%"), label.removeClass("active").width(progress + "%").attr("data-progress", progress), 
+            el.removeClass("valid").attr("value", progress), progress >= 8 && label.addClass("active"), 
+            progress >= 100 && el.addClass("valid");
         };
-        $("[data-progress]").on("click", function(a) {
-            var b = 0;
-            clearInterval(c);
-            var c = setInterval(function() {
-                100 > b ? (b++, j(b)) : ($(".progress").addClass("valid"), clearInterval(c));
+        $("[data-progress]").on("click", function(event) {
+            var progress = 0;
+            clearInterval(progressInterval);
+            var progressInterval = setInterval(function() {
+                100 > progress ? (progress++, triggerProgress(progress)) : ($(".progress").addClass("valid"), 
+                clearInterval(progressInterval));
             }, 300);
         }), config.application.debug && console.log("Form :: Progress Bar");
     }
 }, initDropdowns = function() {
     if ($("select").length) {
-        var a = function() {
+        var buildDropdowns = function() {
             $("select").each(function() {
-                var a = $(this), b = "undefined" == b || "" === b ? 1 : parseInt(a.attr("size"), 10), c = "undefined" != typeof b && "" !== b && b > 1 ? "list" : "drop", d = a.children("option").not("[default]"), e = a.children("option:selected"), f = '<div class="dropdown-wrapper ' + c + '" data-size="' + b + '"></div>', g = '<div class="dropdown-current" data-value="' + e.val() + '">' + e.html() + "</div>", h = ' <div class="dropdown-arrow valign-middle">									<img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-down.png\'">								</div>', i = '<div class="dropdown default"></div>';
-                a.parents(".dropdown-wrapper").length || (a.wrap(f), $(i).insertAfter(a), $(h).insertAfter(a), 
-                $(g).insertAfter(a));
-                var j = a.parents(".dropdown-wrapper"), k = j.children(".dropdown-arrow"), l = j.children(".dropdown-current"), m = j.children(".dropdown");
-                m.html(""), l.val(e.val()).html(e.html());
-                for (var n = 0; n < d.length; n++) {
-                    var o = d.eq(n), p = o.is(":selected") ? "active" : "", q = '<div class="dropdown-item ' + p + '" data-value="' + o.val() + '">' + o.html() + "</div>";
-                    m.append(q);
+                var select = $(this), size = "undefined" == size || "" === size ? 1 : parseInt(select.attr("size"), 10), type = "undefined" != typeof size && "" !== size && size > 1 ? "list" : "drop", options = select.children("option").not("[default]"), selected = select.children("option:selected"), wrapperEl = '<div class="dropdown-wrapper ' + type + '" data-size="' + size + '"></div>', currentEl = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + "</div>", arrowEl = ' <div class="dropdown-arrow valign-middle">									<img class="svg icon icon-caret-down" src="img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src=\'img/icons/icon-caret-down.png\'">								</div>', dropEl = '<div class="dropdown default"></div>';
+                select.parents(".dropdown-wrapper").length || (select.wrap(wrapperEl), $(dropEl).insertAfter(select), 
+                $(arrowEl).insertAfter(select), $(currentEl).insertAfter(select));
+                var dropWrapper = select.parents(".dropdown-wrapper"), arrow = dropWrapper.children(".dropdown-arrow"), current = dropWrapper.children(".dropdown-current"), dropdown = dropWrapper.children(".dropdown");
+                dropdown.html(""), current.val(selected.val()).html(selected.html());
+                for (var i = 0; i < options.length; i++) {
+                    var option = options.eq(i), isSelected = option.is(":selected") ? "active" : "", item = '<div class="dropdown-item ' + isSelected + '" data-value="' + option.val() + '">' + option.html() + "</div>";
+                    dropdown.append(item);
                 }
-                var r = m.children(".dropdown-item");
-                "list" == c && m.height((j.find(".dropdown-item").outerHeight() + 1) * b - 1);
+                var dropItem = dropdown.children(".dropdown-item");
+                "list" == type && dropdown.height((dropWrapper.find(".dropdown-item").outerHeight() + 1) * size - 1);
                 $(this);
-                l.attr("class", "dropdown-current " + a.attr("class")), a.is("[readonly]") ? (j.addClass("readonly"), 
-                l.attr("readonly", !0)) : a.is("[disabled]") ? (j.addClass("disabled"), l.attr("disabled", !0)) : (l.off().on("click", function() {
-                    a.focus();
-                }), k.off().on("click", function() {
-                    a.focus();
-                }), r.off().on("click", function() {
-                    var b = $(this).attr("data-value").trim();
-                    a.val(b).trigger("change");
-                }), a.on("focus", function() {
-                    $(".dropdown-wrapper").removeClass("active"), j.addClass("active");
+                current.attr("class", "dropdown-current " + select.attr("class")), select.is("[readonly]") ? (dropWrapper.addClass("readonly"), 
+                current.attr("readonly", !0)) : select.is("[disabled]") ? (dropWrapper.addClass("disabled"), 
+                current.attr("disabled", !0)) : (current.off().on("click", function() {
+                    select.focus();
+                }), arrow.off().on("click", function() {
+                    select.focus();
+                }), dropItem.off().on("click", function() {
+                    var value = $(this).attr("data-value").trim();
+                    select.val(value).trigger("change");
+                }), select.on("focus", function() {
+                    $(".dropdown-wrapper").removeClass("active"), dropWrapper.addClass("active");
                 }).on("change", function() {
-                    var b = $(this).children("option:selected");
-                    a.blur(), j.removeClass("active"), a.hasClass("keep") || l.text(b.text()).attr("data-value", b.val()), 
-                    r.removeClass("active");
-                    for (var c = 0; c < r.length; c++) r.eq(c).text() === b.text() && (r.eq(c).addClass("active"), 
-                    a.parents("form").hasClass("auto-send") && a.parents("form").submit());
-                })), $("html, body").off().on("click", function(a) {
-                    $(a.target).closest(".dropdown").length || $(a.target).closest(".dropdown-wrapper.active").length || $(".dropdown-wrapper").removeClass("active");
+                    var selected = $(this).children("option:selected");
+                    select.blur(), dropWrapper.removeClass("active"), select.hasClass("keep") || current.text(selected.text()).attr("data-value", selected.val()), 
+                    dropItem.removeClass("active");
+                    for (var i = 0; i < dropItem.length; i++) dropItem.eq(i).text() === selected.text() && (dropItem.eq(i).addClass("active"), 
+                    select.parents("form").hasClass("auto-send") && select.parents("form").submit());
+                })), $("html, body").off().on("click", function(event) {
+                    $(event.target).closest(".dropdown").length || $(event.target).closest(".dropdown-wrapper.active").length || $(".dropdown-wrapper").removeClass("active");
                 });
             });
         };
-        a(), config.application.debug && console.log("Form :: Dropdowns"), initSVGs();
+        buildDropdowns(), config.application.debug && console.log("Form :: Dropdowns"), 
+        initSVGs();
     }
 };
 
@@ -3919,101 +4063,107 @@ window.console || (console = {
 }), Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
 }, NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for (var a = 0, b = this.length; b > a; a++) this[a] && this[a].parentElement && this[a].parentElement.removeChild(this[a]);
-}, Array.prototype.indexOf || (Array.prototype.indexOf = function(a) {
+    for (var i = 0, len = this.length; len > i; i++) this[i] && this[i].parentElement && this[i].parentElement.removeChild(this[i]);
+}, Array.prototype.indexOf || (Array.prototype.indexOf = function(searchElement) {
     "use strict";
     if (null == this) throw new TypeError();
-    var b = Object(this), c = b.length >>> 0;
-    if (0 === c) return -1;
-    var d = 0;
-    if (arguments.length > 1 && (d = Number(arguments[1]), d != d ? d = 0 : 0 !== d && d != 1 / 0 && d != -(1 / 0) && (d = (d > 0 || -1) * Math.floor(Math.abs(d)))), 
-    d >= c) return -1;
-    for (var e = d >= 0 ? d : Math.max(c - Math.abs(d), 0); c > e; e++) if (e in b && b[e] === a) return e;
+    var t = Object(this), len = t.length >>> 0;
+    if (0 === len) return -1;
+    var n = 0;
+    if (arguments.length > 1 && (n = Number(arguments[1]), n != n ? n = 0 : 0 !== n && n != 1 / 0 && n != -(1 / 0) && (n = (n > 0 || -1) * Math.floor(Math.abs(n)))), 
+    n >= len) return -1;
+    for (var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0); len > k; k++) if (k in t && t[k] === searchElement) return k;
     return -1;
-}), Array.prototype.forEach || (Array.prototype.forEach = function(a, b) {
-    var c, d, e, f, g, h = Object(this), i = h.length, j = i >>> 0;
-    if ("function" != typeof a) throw new TypeError();
-    for (c = b ? b : void 0, d = 0; j > d; ) e = d.toString(), f = h.hasOwnProperty(e), 
-    f && (g = h[e], a.call(c, g, d, h)), d += 1;
-}), Array.prototype.clean = function(a) {
-    for (var b = 0; b < this.length; b++) this[b] == a && (this.splice(b, 1), b--);
+}), Array.prototype.forEach || (Array.prototype.forEach = function(callbackfn, thisArg) {
+    var T, k, Pk, kPresent, kValue, O = Object(this), lenValue = O.length, len = lenValue >>> 0;
+    if ("function" != typeof callbackfn) throw new TypeError();
+    for (T = thisArg ? thisArg : void 0, k = 0; len > k; ) Pk = k.toString(), kPresent = O.hasOwnProperty(Pk), 
+    kPresent && (kValue = O[Pk], callbackfn.call(T, kValue, k, O)), k += 1;
+}), Array.prototype.clean = function(deleteValue) {
+    for (var i = 0; i < this.length; i++) this[i] == deleteValue && (this.splice(i, 1), 
+    i--);
     return this;
 }, Array.prototype.uniques = function() {
     return this.reduce(function(a, b) {
         return a.indexOf(b) < 0 && a.push(b), a;
     }, []);
-}, Array.prototype.contains = function(a) {
-    for (var b = 0; b < this.length; b++) if (this[b] === a) return !0;
+}, Array.prototype.contains = function(v) {
+    for (var i = 0; i < this.length; i++) if (this[i] === v) return !0;
     return !1;
 }, Array.prototype.duplicates = function() {
-    var a, b, c = this.length, d = [];
-    for (a = 0; c > a; a++) for (b = 0; c > b; b++) this[a] != this[b] || a == b || d.contains(this[a]) || d.push(this[a]);
-    return d;
+    var i, j, arrayLength = this.length, result = [];
+    for (i = 0; arrayLength > i; i++) for (j = 0; arrayLength > j; j++) this[i] != this[j] || i == j || result.contains(this[i]) || result.push(this[i]);
+    return result;
 }, Array.prototype.reduce = function() {
-    for (var a = [], b = 0; b < this.length; b++) for (var c = 0; c < this[b].length; c++) a.push(this[b][c]);
+    for (var a = [], i = 0; i < this.length; i++) for (var j = 0; j < this[i].length; j++) a.push(this[i][j]);
     return a;
 };
 
-var serialize = function(a) {
-    var b = [];
-    for (var c in a) a.hasOwnProperty(c) && b.push(encodeURIComponent(c) + "=" + encodeURIComponent(a[c]));
-    return b.join("&");
+var serialize = function(obj) {
+    var str = [];
+    for (var p in obj) obj.hasOwnProperty(p) && str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    return str.join("&");
 };
 
 String.prototype.trim || (String.prototype.trim = function() {
     return this.replace(/^\s+|\s+$/g, "");
 }), String.prototype.toCamelCase = function() {
-    return this.replace(/(\-[a-z])/g, function(a) {
-        return a.toUpperCase().replace("-", "");
+    return this.replace(/(\-[a-z])/g, function($1) {
+        return $1.toUpperCase().replace("-", "");
     });
 }, String.prototype.bool = function() {
     return /^true$/i.test(this);
 }, String.prototype.friendly = function() {
     return this.toLowerCase().replace(/&amp;/g, "&").replace(/[^\w\-\!\$\'\(\)\=\@\d_]+/g, "-").replace(/\-{2,}/g, "-").replace(/\-$/g, "");
+}, String.prototype.truncate = function(n, useWordBoundary) {
+    var isTooLong = this.length > n, $s = isTooLong ? this.substr(0, n - 1) : this;
+    return $s = useWordBoundary && isTooLong ? $s.substr(0, $s.lastIndexOf(" ")) : $s, 
+    isTooLong ? $s + "..." : $s;
 };
 
 var sessionSystem, initSession = function() {
     if (JSON && JSON.stringify && JSON.parse) {
-        var a = window.top || window, b = a.name ? JSON.parse(a.name) : {}, c = function() {
-            a.name = JSON.stringify(b);
+        var win = window.top || window, store = win.name ? JSON.parse(win.name) : {}, sessionSave = function() {
+            win.name = JSON.stringify(store);
         };
-        window.addEventListener ? window.addEventListener("unload", c, !1) : window.attachEvent ? window.attachEvent("onunload", c) : window.onunload = c, 
+        window.addEventListener ? window.addEventListener("unload", sessionSave, !1) : window.attachEvent ? window.attachEvent("onunload", sessionSave) : window.onunload = sessionSave, 
         sessionSystem = {
-            set: function(a, d) {
-                b[a] = d, c();
+            set: function(name, value) {
+                store[name] = value, sessionSave();
             },
-            get: function(a) {
-                return b[a];
+            get: function(name) {
+                return store[name];
             },
-            remove: function(a) {
-                delete b[a], c();
+            remove: function(name) {
+                delete store[name], sessionSave();
             },
             clear: function() {
-                b = {}, c();
+                store = {}, sessionSave();
             },
             dump: function() {
-                return b;
+                return store;
             }
         };
     }
     config.application.debug && console.log("System :: Session System");
 }, initValidation = function() {
     if (config.forms.validation && $("[data-validation]").length) {
-        var a = function(a) {
-            var b = 0;
-            if (!a) return b;
-            for (var c = {}, d = 0; d < a.length; d++) c[a[d]] = (c[a[d]] || 0) + 1, b += 5 / c[a[d]];
-            var e = {
-                digits: /\d/.test(a),
-                lower: /[a-z]/.test(a),
-                upper: /[A-Z]/.test(a),
-                nonWords: /\W/.test(a)
+        var scorePassword = function(pwd) {
+            var score = 0;
+            if (!pwd) return score;
+            for (var letters = {}, i = 0; i < pwd.length; i++) letters[pwd[i]] = (letters[pwd[i]] || 0) + 1, 
+            score += 5 / letters[pwd[i]];
+            var variations = {
+                digits: /\d/.test(pwd),
+                lower: /[a-z]/.test(pwd),
+                upper: /[A-Z]/.test(pwd),
+                nonWords: /\W/.test(pwd)
             };
             variationCount = 0;
-            for (var f in e) variationCount += e[f] === !0 ? 1 : 0;
-            return b += 10 * (variationCount - 1), parseInt(b, 10);
-        }, b = function(a) {
-            var b = {
+            for (var check in variations) variationCount += variations[check] === !0 ? 1 : 0;
+            return score += 10 * (variationCount - 1), parseInt(score, 10);
+        }, detectCard = function(number) {
+            var regex = {
                 amex: /^3[47][0-9]{13}$/,
                 dankort: /^(5019)\d+$/,
                 diners: /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/,
@@ -4026,147 +4176,148 @@ var sessionSystem, initSession = function() {
                 unionpay: /^(62|88)\d+$/,
                 visa: /^4[0-9]{12}(?:[0-9]{3})?$/
             };
-            return b.amex.test(a) ? "american-express" : b.dankort.test(a) ? "dankort" : b.diners.test(a) ? "diners" : b.discover.test(a) ? "discover" : b.electron.test(a) ? "visa-electron" : b.interpayment.test(a) ? "interpayment" : b.jcb.test(a) ? "jcb" : b.maestro.test(a) ? "maestro" : b.mastercard.test(a) ? "mastercard" : b.unionpay.test(a) ? "unionpay" : b.visa.test(a) ? "visa" : "generic";
-        }, c = function(c, d, e) {
-            switch (config.application.debug && console.log("Validation :: " + d), c.removeClass("invalid").removeClass("valid"), 
-            d) {
+            return regex.amex.test(number) ? "american-express" : regex.dankort.test(number) ? "dankort" : regex.diners.test(number) ? "diners" : regex.discover.test(number) ? "discover" : regex.electron.test(number) ? "visa-electron" : regex.interpayment.test(number) ? "interpayment" : regex.jcb.test(number) ? "jcb" : regex.maestro.test(number) ? "maestro" : regex.mastercard.test(number) ? "mastercard" : regex.unionpay.test(number) ? "unionpay" : regex.visa.test(number) ? "visa" : "generic";
+        }, validateField = function(el, type, value) {
+            switch (config.application.debug && console.log("Validation :: " + type), el.removeClass("invalid").removeClass("valid"), 
+            type) {
               case "text":
-                "" !== e ? c.addClass("valid") : c.addClass("invalid");
+                "" !== value ? el.addClass("valid") : el.addClass("invalid");
                 break;
 
               case "number":
-                check = /\D+/, "" !== e && e.length == e.replace(check, "").length ? c.addClass("valid") : c.addClass("invalid");
+                check = /\D+/, "" !== value && value.length == value.replace(check, "").length ? el.addClass("valid") : el.addClass("invalid");
                 break;
 
               case "email":
-                check = /^\S+@\S+\.\S+$/, "" !== e && check.test(e) ? c.addClass("valid") : c.addClass("invalid");
+                check = /^\S+@\S+\.\S+$/, "" !== value && check.test(value) ? el.addClass("valid") : el.addClass("invalid");
                 break;
 
               case "password":
-                a(e) >= 30 ? c.addClass("valid") : c.addClass("invalid");
+                scorePassword(value) >= 30 ? el.addClass("valid") : el.addClass("invalid");
                 break;
 
               case "match":
-                d = c.attr("type");
-                var f = c.parents().find("input[type='" + d + "']");
-                check = f.val(), f.hasClass("valid") && e === check ? c.addClass("valid") : c.addClass("invalid");
+                type = el.attr("type");
+                var mirror = el.parents().find("input[type='" + type + "']");
+                check = mirror.val(), mirror.hasClass("valid") && value === check ? el.addClass("valid") : el.addClass("invalid");
                 break;
 
               case "card":
-                "" !== e ? c.addClass("valid") : c.addClass("invalid"), $(".card-wrapper .card").attr("src", "img/icons/payment/cards/" + b(e) + ".png");
+                "" !== value ? el.addClass("valid") : el.addClass("invalid"), $(".card-wrapper .card").attr("src", "img/icons/payment/cards/" + detectCard(value) + ".png");
                 break;
 
               case "date":
-                check = /^\d{2}\/\d{2}\/\d{4}$/, "" !== e && check.test(e) ? c.addClass("valid") : c.addClass("invalid");
+                check = /^\d{2}\/\d{2}\/\d{4}$/, "" !== value && check.test(value) ? el.addClass("valid") : el.addClass("invalid");
                 break;
 
               case "select":
-                "" !== e ? c.addClass("valid") : c.addClass("invalid"), c.parents(".dropdown-wrapper").children(".dropdown-current").attr("class", "dropdown-current " + c.attr("class"));
+                "" !== value ? el.addClass("valid") : el.addClass("invalid"), el.parents(".dropdown-wrapper").children(".dropdown-current").attr("class", "dropdown-current " + el.attr("class"));
                 break;
 
               case "selectgroup":
-                group = c.data("validation-group");
-                var g = $("select[data-validation-group='" + group + "']"), h = {};
-                h[group] = [], g.removeClass("invalid").each(function() {
-                    var a = "" !== e;
-                    h[group].push(a);
-                }), -1 != h[group].indexOf(!0) ? g.addClass("valid") : g.addClass("invalid"), g.parents(".dropdown-wrapper").children(".dropdown-current").attr("class", "dropdown-current " + c.attr("class"));
+                group = el.data("validation-group");
+                var selects = $("select[data-validation-group='" + group + "']"), selectGroup = {};
+                selectGroup[group] = [], selects.removeClass("invalid").each(function() {
+                    var checked = "" !== value;
+                    selectGroup[group].push(checked);
+                }), -1 != selectGroup[group].indexOf(!0) ? selects.addClass("valid") : selects.addClass("invalid"), 
+                selects.parents(".dropdown-wrapper").children(".dropdown-current").attr("class", "dropdown-current " + el.attr("class"));
                 break;
 
               case "checkbox":
-                c.prop("checked") ? c.addClass("valid") : c.addClass("invalid");
+                el.prop("checked") ? el.addClass("valid") : el.addClass("invalid");
                 break;
 
               case "radio":
-                group = c.attr("name");
-                var i = $("input[type='radio'][name='" + group + "']"), j = {};
-                j[group] = [], i.removeClass("invalid").each(function() {
-                    var a = $(this).prop("checked");
-                    j[group].push(a);
-                }), -1 != j[group].indexOf(!0) ? i.addClass("valid") : i.addClass("invalid");
+                group = el.attr("name");
+                var radios = $("input[type='radio'][name='" + group + "']"), radioGroup = {};
+                radioGroup[group] = [], radios.removeClass("invalid").each(function() {
+                    var checked = $(this).prop("checked");
+                    radioGroup[group].push(checked);
+                }), -1 != radioGroup[group].indexOf(!0) ? radios.addClass("valid") : radios.addClass("invalid");
                 break;
 
               case "file":
-                "" !== e ? c.addClass("valid") : c.addClass("invalid"), c.parents(".file-wrapper").children(".fakefile").attr("class", "fakefile " + c.attr("class"));
+                "" !== value ? el.addClass("valid") : el.addClass("invalid"), el.parents(".file-wrapper").children(".fakefile").attr("class", "fakefile " + el.attr("class"));
                 break;
 
               default:
-                var k = [];
-                c.find("[required]").each(function() {
-                    $(this).hasClass("valid") ? k.push(!0) : k.push(!1);
-                }), k.indexOf(!1) < 0 ? (c.addClass("submitted").addClass("valid"), c.find("[data-validation='date']").datepicker("remove"), 
-                c.find("input, select, textarea").attr("readonly", "readonly"), c.find("button, input[type='submit']").attr("readonly", "readonly"), 
-                initDropdowns(), c.find(".form-loader").hide(), c.find(".form-done").show(), notify("Form submitted successfully.", "success", 3e3)) : (c.removeClass("valid"), 
-                c.find("[required]:not('.valid')").addClass("invalid"), c.find(".form-loader").hide(), 
-                c.find("button, input[type='submit']").show(), notify("Form not submitted. Please review.", "failure", 3e3));
+                var validArray = [];
+                el.find("[required]").each(function() {
+                    $(this).hasClass("valid") ? validArray.push(!0) : validArray.push(!1);
+                }), validArray.indexOf(!1) < 0 ? (el.addClass("submitted").addClass("valid"), el.find("[data-validation='date']").datepicker("remove"), 
+                el.find("input, select, textarea").attr("readonly", "readonly"), el.find("button, input[type='submit']").attr("readonly", "readonly"), 
+                initDropdowns(), el.find(".form-loader").hide(), el.find(".form-done").show(), notify("Form submitted successfully.", "success", 3e3)) : (el.removeClass("valid"), 
+                el.find("[required]:not('.valid')").addClass("invalid"), el.find(".form-loader").hide(), 
+                el.find("button, input[type='submit']").show(), notify("Form not submitted. Please review.", "failure", 3e3));
             }
-        }, d = function(c, d, e) {
-            switch (console.log("Validating keypress for " + d), d) {
+        }, validateRealtime = function(el, type, value) {
+            switch (console.log("Validating keypress for " + type), type) {
               case "password":
-                c.next(".password-meter-mask").width(a(e) + "%").find(".password-meter").width(c.outerWidth());
+                el.next(".password-meter-mask").width(scorePassword(value) + "%").find(".password-meter").width(el.outerWidth());
                 break;
 
               case "card":
-                $(".card-wrapper .card").attr("src", "img/icons/payment/cards/" + b(e) + ".png");
+                $(".card-wrapper .card").attr("src", "img/icons/payment/cards/" + detectCard(value) + ".png");
             }
         };
         $("input[data-validate-key]").on("keyup", function() {
-            var a = $(this), b = a.attr("data-validation"), c = a.val();
-            d(a, b, c);
+            var el = $(this), type = el.attr("data-validation"), value = el.val();
+            validateRealtime(el, type, value);
         }), $("form[data-validation]").each(function() {
-            var a = $(this);
-            a.find("[required]").each(function() {
-                var a = $(this);
-                "checkbox" === a.attr("type") || "radio" === a.attr("type") ? a.on("change", function() {
-                    var b = a.attr("data-validation"), d = a.val();
-                    c(a, b, d);
-                }).next("label").append("<span class='indicator-required'></span>") : a.on("keyup", function() {
-                    a.removeClass("valid").removeClass("invalid");
+            var form = $(this);
+            form.find("[required]").each(function() {
+                var el = $(this);
+                "checkbox" === el.attr("type") || "radio" === el.attr("type") ? el.on("change", function() {
+                    var type = el.attr("data-validation"), value = el.val();
+                    validateField(el, type, value);
+                }).next("label").append("<span class='indicator-required'></span>") : el.on("keyup", function() {
+                    el.removeClass("valid").removeClass("invalid");
                 }).on("focus", function() {
-                    var b = a.attr("data-validation"), d = a.val();
-                    "select" == b && a.next(".dropdown-current").removeClass("valid").removeClass("invalid"), 
-                    $(this).hasClass("invalid") && c(a, b, d);
+                    var type = el.attr("data-validation"), value = el.val();
+                    "select" == type && el.next(".dropdown-current").removeClass("valid").removeClass("invalid"), 
+                    $(this).hasClass("invalid") && validateField(el, type, value);
                 }).on("blur", function() {
                     setTimeout(function() {
-                        var b = a.attr("data-validation"), d = a.val();
-                        c(a, b, d);
+                        var type = el.attr("data-validation"), value = el.val();
+                        validateField(el, type, value);
                     }, 200);
                 }).prev("label").append("<span class='indicator-required'></span>");
-            }), a.on("submit", function(b) {
-                if (a.find("[required]").each(function() {
-                    var a = $(this), b = a.attr("data-validation"), d = a.val();
-                    c(a, b, d);
-                }), !a.hasClass("submitted")) {
-                    var d = a.attr("data-validation"), e = "";
-                    a.find("button, input[type='submit']").hide(), a.find(".form-loader").show(), b.preventDefault(), 
-                    c(a, d, e);
+            }), form.on("submit", function(event) {
+                if (form.find("[required]").each(function() {
+                    var elem = $(this), type = elem.attr("data-validation"), value = elem.val();
+                    validateField(elem, type, value);
+                }), !form.hasClass("submitted")) {
+                    var type = form.attr("data-validation"), value = "";
+                    form.find("button, input[type='submit']").hide(), form.find(".form-loader").show(), 
+                    event.preventDefault(), validateField(form, type, value);
                 }
             });
         }), config.application.debug && console.log("Form :: Validation");
     }
 }, deviceIsAndroid = navigator.userAgent.indexOf("Android") > 0, deviceIsIOS = /iP(ad|hone|od)/.test(navigator.userAgent), deviceIsIOS4 = deviceIsIOS && /OS 4_\d(_\d)?/.test(navigator.userAgent), deviceIsIOSWithBadTarget = deviceIsIOS && /OS ([6-9]|\d{2})_\d/.test(navigator.userAgent);
 
-FastClick.prototype.needsClick = function(a) {
+FastClick.prototype.needsClick = function(target) {
     "use strict";
-    switch (a.nodeName.toLowerCase()) {
+    switch (target.nodeName.toLowerCase()) {
       case "button":
       case "select":
       case "textarea":
-        if (a.disabled) return !0;
+        if (target.disabled) return !0;
         break;
 
       case "input":
-        if (deviceIsIOS && "file" === a.type || a.disabled) return !0;
+        if (deviceIsIOS && "file" === target.type || target.disabled) return !0;
         break;
 
       case "label":
       case "video":
         return !0;
     }
-    return /\bneedsclick\b/.test(a.className);
-}, FastClick.prototype.needsFocus = function(a) {
+    return /\bneedsclick\b/.test(target.className);
+}, FastClick.prototype.needsFocus = function(target) {
     "use strict";
-    switch (a.nodeName.toLowerCase()) {
+    switch (target.nodeName.toLowerCase()) {
       case "textarea":
         return !0;
 
@@ -4174,7 +4325,7 @@ FastClick.prototype.needsClick = function(a) {
         return !deviceIsAndroid;
 
       case "input":
-        switch (a.type) {
+        switch (target.type) {
           case "button":
           case "checkbox":
           case "file":
@@ -4183,628 +4334,650 @@ FastClick.prototype.needsClick = function(a) {
           case "submit":
             return !1;
         }
-        return !a.disabled && !a.readOnly;
+        return !target.disabled && !target.readOnly;
 
       default:
-        return /\bneedsfocus\b/.test(a.className);
+        return /\bneedsfocus\b/.test(target.className);
     }
-}, FastClick.prototype.sendClick = function(a, b) {
+}, FastClick.prototype.sendClick = function(targetElement, event) {
     "use strict";
-    var c, d;
-    document.activeElement && document.activeElement !== a && document.activeElement.blur(), 
-    d = b.changedTouches[0], c = document.createEvent("MouseEvents"), c.initMouseEvent(this.determineEventType(a), !0, !0, window, 1, d.screenX, d.screenY, d.clientX, d.clientY, !1, !1, !1, !1, 0, null), 
-    c.forwardedTouchEvent = !0, a.dispatchEvent(c);
-}, FastClick.prototype.determineEventType = function(a) {
+    var clickEvent, touch;
+    document.activeElement && document.activeElement !== targetElement && document.activeElement.blur(), 
+    touch = event.changedTouches[0], clickEvent = document.createEvent("MouseEvents"), 
+    clickEvent.initMouseEvent(this.determineEventType(targetElement), !0, !0, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, !1, !1, !1, !1, 0, null), 
+    clickEvent.forwardedTouchEvent = !0, targetElement.dispatchEvent(clickEvent);
+}, FastClick.prototype.determineEventType = function(targetElement) {
     "use strict";
-    return deviceIsAndroid && "select" === a.tagName.toLowerCase() ? "mousedown" : "click";
-}, FastClick.prototype.focus = function(a) {
+    return deviceIsAndroid && "select" === targetElement.tagName.toLowerCase() ? "mousedown" : "click";
+}, FastClick.prototype.focus = function(targetElement) {
     "use strict";
-    var b;
-    deviceIsIOS && a.setSelectionRange && 0 !== a.type.indexOf("date") && "time" !== a.type ? (b = a.value.length, 
-    a.setSelectionRange(b, b)) : a.focus();
-}, FastClick.prototype.updateScrollParent = function(a) {
+    var length;
+    deviceIsIOS && targetElement.setSelectionRange && 0 !== targetElement.type.indexOf("date") && "time" !== targetElement.type ? (length = targetElement.value.length, 
+    targetElement.setSelectionRange(length, length)) : targetElement.focus();
+}, FastClick.prototype.updateScrollParent = function(targetElement) {
     "use strict";
-    var b, c;
-    if (b = a.fastClickScrollParent, !b || !b.contains(a)) {
-        c = a;
+    var scrollParent, parentElement;
+    if (scrollParent = targetElement.fastClickScrollParent, !scrollParent || !scrollParent.contains(targetElement)) {
+        parentElement = targetElement;
         do {
-            if (c.scrollHeight > c.offsetHeight) {
-                b = c, a.fastClickScrollParent = c;
+            if (parentElement.scrollHeight > parentElement.offsetHeight) {
+                scrollParent = parentElement, targetElement.fastClickScrollParent = parentElement;
                 break;
             }
-            c = c.parentElement;
-        } while (c);
+            parentElement = parentElement.parentElement;
+        } while (parentElement);
     }
-    b && (b.fastClickLastScrollTop = b.scrollTop);
-}, FastClick.prototype.getTargetElementFromEventTarget = function(a) {
+    scrollParent && (scrollParent.fastClickLastScrollTop = scrollParent.scrollTop);
+}, FastClick.prototype.getTargetElementFromEventTarget = function(eventTarget) {
     "use strict";
-    return a.nodeType === Node.TEXT_NODE ? a.parentNode : a;
-}, FastClick.prototype.onTouchStart = function(a) {
+    return eventTarget.nodeType === Node.TEXT_NODE ? eventTarget.parentNode : eventTarget;
+}, FastClick.prototype.onTouchStart = function(event) {
     "use strict";
-    var b, c, d;
-    if (a.targetTouches.length > 1) return !0;
-    if (b = this.getTargetElementFromEventTarget(a.target), c = a.targetTouches[0], 
+    var targetElement, touch, selection;
+    if (event.targetTouches.length > 1) return !0;
+    if (targetElement = this.getTargetElementFromEventTarget(event.target), touch = event.targetTouches[0], 
     deviceIsIOS) {
-        if (d = window.getSelection(), d.rangeCount && !d.isCollapsed) return !0;
+        if (selection = window.getSelection(), selection.rangeCount && !selection.isCollapsed) return !0;
         if (!deviceIsIOS4) {
-            if (c.identifier === this.lastTouchIdentifier) return a.preventDefault(), !1;
-            this.lastTouchIdentifier = c.identifier, this.updateScrollParent(b);
+            if (touch.identifier === this.lastTouchIdentifier) return event.preventDefault(), 
+            !1;
+            this.lastTouchIdentifier = touch.identifier, this.updateScrollParent(targetElement);
         }
     }
-    return this.trackingClick = !0, this.trackingClickStart = a.timeStamp, this.targetElement = b, 
-    this.touchStartX = c.pageX, this.touchStartY = c.pageY, a.timeStamp - this.lastClickTime < 200 && a.preventDefault(), 
+    return this.trackingClick = !0, this.trackingClickStart = event.timeStamp, this.targetElement = targetElement, 
+    this.touchStartX = touch.pageX, this.touchStartY = touch.pageY, event.timeStamp - this.lastClickTime < 200 && event.preventDefault(), 
     !0;
-}, FastClick.prototype.touchHasMoved = function(a) {
+}, FastClick.prototype.touchHasMoved = function(event) {
     "use strict";
-    var b = a.changedTouches[0], c = this.touchBoundary;
-    return Math.abs(b.pageX - this.touchStartX) > c || Math.abs(b.pageY - this.touchStartY) > c ? !0 : !1;
-}, FastClick.prototype.onTouchMove = function(a) {
+    var touch = event.changedTouches[0], boundary = this.touchBoundary;
+    return Math.abs(touch.pageX - this.touchStartX) > boundary || Math.abs(touch.pageY - this.touchStartY) > boundary ? !0 : !1;
+}, FastClick.prototype.onTouchMove = function(event) {
     "use strict";
-    return this.trackingClick ? ((this.targetElement !== this.getTargetElementFromEventTarget(a.target) || this.touchHasMoved(a)) && (this.trackingClick = !1, 
+    return this.trackingClick ? ((this.targetElement !== this.getTargetElementFromEventTarget(event.target) || this.touchHasMoved(event)) && (this.trackingClick = !1, 
     this.targetElement = null), !0) : !0;
-}, FastClick.prototype.findControl = function(a) {
+}, FastClick.prototype.findControl = function(labelElement) {
     "use strict";
-    return void 0 !== a.control ? a.control : a.htmlFor ? document.getElementById(a.htmlFor) : a.querySelector("button, input:not([type=hidden]), keygen, meter, output, progress, select, textarea");
-}, FastClick.prototype.onTouchEnd = function(a) {
+    return void 0 !== labelElement.control ? labelElement.control : labelElement.htmlFor ? document.getElementById(labelElement.htmlFor) : labelElement.querySelector("button, input:not([type=hidden]), keygen, meter, output, progress, select, textarea");
+}, FastClick.prototype.onTouchEnd = function(event) {
     "use strict";
-    var b, c, d, e, f, g = this.targetElement;
+    var forElement, trackingClickStart, targetTagName, scrollParent, touch, targetElement = this.targetElement;
     if (!this.trackingClick) return !0;
-    if (a.timeStamp - this.lastClickTime < 200) return this.cancelNextClick = !0, !0;
-    if (this.cancelNextClick = !1, this.lastClickTime = a.timeStamp, c = this.trackingClickStart, 
-    this.trackingClick = !1, this.trackingClickStart = 0, deviceIsIOSWithBadTarget && (f = a.changedTouches[0], 
-    g = document.elementFromPoint(f.pageX - window.pageXOffset, f.pageY - window.pageYOffset) || g, 
-    g.fastClickScrollParent = this.targetElement.fastClickScrollParent), d = g.tagName.toLowerCase(), 
-    "label" === d) {
-        if (b = this.findControl(g)) {
-            if (this.focus(g), deviceIsAndroid) return !1;
-            g = b;
+    if (event.timeStamp - this.lastClickTime < 200) return this.cancelNextClick = !0, 
+    !0;
+    if (this.cancelNextClick = !1, this.lastClickTime = event.timeStamp, trackingClickStart = this.trackingClickStart, 
+    this.trackingClick = !1, this.trackingClickStart = 0, deviceIsIOSWithBadTarget && (touch = event.changedTouches[0], 
+    targetElement = document.elementFromPoint(touch.pageX - window.pageXOffset, touch.pageY - window.pageYOffset) || targetElement, 
+    targetElement.fastClickScrollParent = this.targetElement.fastClickScrollParent), 
+    targetTagName = targetElement.tagName.toLowerCase(), "label" === targetTagName) {
+        if (forElement = this.findControl(targetElement)) {
+            if (this.focus(targetElement), deviceIsAndroid) return !1;
+            targetElement = forElement;
         }
-    } else if (this.needsFocus(g)) return a.timeStamp - c > 100 || deviceIsIOS && window.top !== window && "input" === d ? (this.targetElement = null, 
-    !1) : (this.focus(g), this.sendClick(g, a), deviceIsIOS4 && "select" === d || (this.targetElement = null, 
-    a.preventDefault()), !1);
-    return deviceIsIOS && !deviceIsIOS4 && (e = g.fastClickScrollParent, e && e.fastClickLastScrollTop !== e.scrollTop) ? !0 : (this.needsClick(g) || (a.preventDefault(), 
-    this.sendClick(g, a)), !1);
+    } else if (this.needsFocus(targetElement)) return event.timeStamp - trackingClickStart > 100 || deviceIsIOS && window.top !== window && "input" === targetTagName ? (this.targetElement = null, 
+    !1) : (this.focus(targetElement), this.sendClick(targetElement, event), deviceIsIOS4 && "select" === targetTagName || (this.targetElement = null, 
+    event.preventDefault()), !1);
+    return deviceIsIOS && !deviceIsIOS4 && (scrollParent = targetElement.fastClickScrollParent, 
+    scrollParent && scrollParent.fastClickLastScrollTop !== scrollParent.scrollTop) ? !0 : (this.needsClick(targetElement) || (event.preventDefault(), 
+    this.sendClick(targetElement, event)), !1);
 }, FastClick.prototype.onTouchCancel = function() {
     "use strict";
     this.trackingClick = !1, this.targetElement = null;
-}, FastClick.prototype.onMouse = function(a) {
+}, FastClick.prototype.onMouse = function(event) {
     "use strict";
-    return this.targetElement ? a.forwardedTouchEvent ? !0 : a.cancelable && (!this.needsClick(this.targetElement) || this.cancelNextClick) ? (a.stopImmediatePropagation ? a.stopImmediatePropagation() : a.propagationStopped = !0, 
-    a.stopPropagation(), a.preventDefault(), !1) : !0 : !0;
-}, FastClick.prototype.onClick = function(a) {
+    return this.targetElement ? event.forwardedTouchEvent ? !0 : event.cancelable && (!this.needsClick(this.targetElement) || this.cancelNextClick) ? (event.stopImmediatePropagation ? event.stopImmediatePropagation() : event.propagationStopped = !0, 
+    event.stopPropagation(), event.preventDefault(), !1) : !0 : !0;
+}, FastClick.prototype.onClick = function(event) {
     "use strict";
-    var b;
+    var permitted;
     return this.trackingClick ? (this.targetElement = null, this.trackingClick = !1, 
-    !0) : "submit" === a.target.type && 0 === a.detail ? !0 : (b = this.onMouse(a), 
-    b || (this.targetElement = null), b);
+    !0) : "submit" === event.target.type && 0 === event.detail ? !0 : (permitted = this.onMouse(event), 
+    permitted || (this.targetElement = null), permitted);
 }, FastClick.prototype.destroy = function() {
     "use strict";
-    var a = this.layer;
-    deviceIsAndroid && (a.removeEventListener("mouseover", this.onMouse, !0), a.removeEventListener("mousedown", this.onMouse, !0), 
-    a.removeEventListener("mouseup", this.onMouse, !0)), a.removeEventListener("click", this.onClick, !0), 
-    a.removeEventListener("touchstart", this.onTouchStart, !1), a.removeEventListener("touchmove", this.onTouchMove, !1), 
-    a.removeEventListener("touchend", this.onTouchEnd, !1), a.removeEventListener("touchcancel", this.onTouchCancel, !1);
-}, FastClick.notNeeded = function(a) {
+    var layer = this.layer;
+    deviceIsAndroid && (layer.removeEventListener("mouseover", this.onMouse, !0), layer.removeEventListener("mousedown", this.onMouse, !0), 
+    layer.removeEventListener("mouseup", this.onMouse, !0)), layer.removeEventListener("click", this.onClick, !0), 
+    layer.removeEventListener("touchstart", this.onTouchStart, !1), layer.removeEventListener("touchmove", this.onTouchMove, !1), 
+    layer.removeEventListener("touchend", this.onTouchEnd, !1), layer.removeEventListener("touchcancel", this.onTouchCancel, !1);
+}, FastClick.notNeeded = function(layer) {
     "use strict";
-    var b, c;
+    var metaViewport, chromeVersion;
     if ("undefined" == typeof window.ontouchstart) return !0;
-    if (c = +(/Chrome\/([0-9]+)/.exec(navigator.userAgent) || [ , 0 ])[1]) {
+    if (chromeVersion = +(/Chrome\/([0-9]+)/.exec(navigator.userAgent) || [ , 0 ])[1]) {
         if (!deviceIsAndroid) return !0;
-        if (b = document.querySelector("meta[name=viewport]")) {
-            if (-1 !== b.content.indexOf("user-scalable=no")) return !0;
-            if (c > 31 && window.innerWidth <= window.screen.width) return !0;
+        if (metaViewport = document.querySelector("meta[name=viewport]")) {
+            if (-1 !== metaViewport.content.indexOf("user-scalable=no")) return !0;
+            if (chromeVersion > 31 && window.innerWidth <= window.screen.width) return !0;
         }
     }
-    return "none" === a.style.msTouchAction ? !0 : !1;
-}, FastClick.attach = function(a) {
+    return "none" === layer.style.msTouchAction ? !0 : !1;
+}, FastClick.attach = function(layer) {
     "use strict";
-    return new FastClick(a);
+    return new FastClick(layer);
 }, "undefined" != typeof define && define.amd ? define(function() {
     "use strict";
     return FastClick;
 }) : "undefined" != typeof module && module.exports ? (module.exports = FastClick.attach, 
-module.exports.FastClick = FastClick) : window.FastClick = FastClick, function(a, b) {
-    var c = {
+module.exports.FastClick = FastClick) : window.FastClick = FastClick, function($, window) {
+    var vimeoJqueryAPI = {
         catchMethods: {
             methodreturn: [],
             count: 0
         },
-        init: function(b) {
-            var c, d, e;
-            b.originalEvent.origin.match(/vimeo/g) && "data" in b.originalEvent && (e = "string" === a.type(b.originalEvent.data) ? a.parseJSON(b.originalEvent.data) : b.originalEvent.data, 
-            e && (c = this.setPlayerID(e), c.length && (d = this.setVimeoAPIurl(c), e.hasOwnProperty("event") && this.handleEvent(e, c, d), 
-            e.hasOwnProperty("method") && this.handleMethod(e, c, d))));
+        init: function(d) {
+            var vimeoVideo, vimeoAPIurl, data;
+            d.originalEvent.origin.match(/vimeo/g) && "data" in d.originalEvent && (data = "string" === $.type(d.originalEvent.data) ? $.parseJSON(d.originalEvent.data) : d.originalEvent.data, 
+            data && (vimeoVideo = this.setPlayerID(data), vimeoVideo.length && (vimeoAPIurl = this.setVimeoAPIurl(vimeoVideo), 
+            data.hasOwnProperty("event") && this.handleEvent(data, vimeoVideo, vimeoAPIurl), 
+            data.hasOwnProperty("method") && this.handleMethod(data, vimeoVideo, vimeoAPIurl))));
         },
-        setPlayerID: function(b) {
-            return a("iframe[src*=" + b.player_id + "]");
+        setPlayerID: function(d) {
+            return $("iframe[src*=" + d.player_id + "]");
         },
-        setVimeoAPIurl: function(a) {
-            return "http" !== a.attr("src").substr(0, 4) ? "https:" + a.attr("src").split("?")[0] : a.attr("src").split("?")[0];
+        setVimeoAPIurl: function(d) {
+            return "http" !== d.attr("src").substr(0, 4) ? "https:" + d.attr("src").split("?")[0] : d.attr("src").split("?")[0];
         },
-        handleMethod: function(a, b, c) {
-            this.catchMethods.methodreturn.push(a.value);
+        handleMethod: function(d, vid, api) {
+            this.catchMethods.methodreturn.push(d.value);
         },
-        handleEvent: function(b, c, d) {
-            switch (b.event.toLowerCase()) {
+        handleEvent: function(d, vid, api) {
+            switch (d.event.toLowerCase()) {
               case "ready":
-                for (var e in a._data(c[0], "events")) e.match(/loadProgress|playProgress|play|pause|finish|seek|cuechange/) && c[0].contentWindow.postMessage(JSON.stringify({
+                for (var prop in $._data(vid[0], "events")) prop.match(/loadProgress|playProgress|play|pause|finish|seek|cuechange/) && vid[0].contentWindow.postMessage(JSON.stringify({
                     method: "addEventListener",
-                    value: e
-                }), d);
-                if (c.data("vimeoAPICall")) {
-                    for (var f = c.data("vimeoAPICall"), g = 0; g < f.length; g++) c[0].contentWindow.postMessage(JSON.stringify(f[g].message), f[g].api);
-                    c.removeData("vimeoAPICall");
+                    value: prop
+                }), api);
+                if (vid.data("vimeoAPICall")) {
+                    for (var vdata = vid.data("vimeoAPICall"), i = 0; i < vdata.length; i++) vid[0].contentWindow.postMessage(JSON.stringify(vdata[i].message), vdata[i].api);
+                    vid.removeData("vimeoAPICall");
                 }
-                c.data("vimeoReady", !0), c.triggerHandler("ready");
+                vid.data("vimeoReady", !0), vid.triggerHandler("ready");
                 break;
 
               case "seek":
-                c.triggerHandler("seek", [ b.data ]);
+                vid.triggerHandler("seek", [ d.data ]);
                 break;
 
               case "loadprogress":
-                c.triggerHandler("loadProgress", [ b.data ]);
+                vid.triggerHandler("loadProgress", [ d.data ]);
                 break;
 
               case "playprogress":
-                c.triggerHandler("playProgress", [ b.data ]);
+                vid.triggerHandler("playProgress", [ d.data ]);
                 break;
 
               case "pause":
-                c.triggerHandler("pause");
+                vid.triggerHandler("pause");
                 break;
 
               case "finish":
-                c.triggerHandler("finish");
+                vid.triggerHandler("finish");
                 break;
 
               case "play":
-                c.triggerHandler("play");
+                vid.triggerHandler("play");
                 break;
 
               case "cuechange":
-                c.triggerHandler("cuechange");
+                vid.triggerHandler("cuechange");
             }
         }
     };
     jQuery(document).ready(function() {
-        a("iframe[src*='vimeo.com']").each(function(b) {
-            var c = a(this).attr("src");
-            if (null === c.match(/player_id/g)) {
-                var d = -1 === c.indexOf("?") ? "?" : "&", e = a.param({
+        $("iframe[src*='vimeo.com']").each(function(index) {
+            var url = $(this).attr("src");
+            if (null === url.match(/player_id/g)) {
+                var firstSeperator = -1 === url.indexOf("?") ? "?" : "&", param = $.param({
                     api: 1,
-                    player_id: "vvvvimeoVideo-" + b
+                    player_id: "vvvvimeoVideo-" + index
                 });
-                a(this).attr("src", c + d + e);
+                $(this).attr("src", url + firstSeperator + param);
             }
         });
-    }), a(b).on("message", function(a) {
-        c.init(a);
-    }), a.vimeo = function(a, d, e) {
-        var f = {}, g = c.catchMethods.methodreturn.length;
-        if ("string" == typeof d && (f.method = d), void 0 !== typeof e && "function" != typeof e && (f.value = e), 
-        "iframe" === a.prop("tagName").toLowerCase() && f.hasOwnProperty("method")) if (a.data("vimeoReady")) a[0].contentWindow.postMessage(JSON.stringify(f), c.setVimeoAPIurl(a)); else {
-            var h = a.data("vimeoAPICall") ? a.data("vimeoAPICall") : [];
-            h.push({
-                message: f,
-                api: c.setVimeoAPIurl(a)
-            }), a.data("vimeoAPICall", h);
+    }), $(window).on("message", function(e) {
+        vimeoJqueryAPI.init(e);
+    }), $.vimeo = function(element, option1, option2) {
+        var message = {}, catchMethodLength = vimeoJqueryAPI.catchMethods.methodreturn.length;
+        if ("string" == typeof option1 && (message.method = option1), void 0 !== typeof option2 && "function" != typeof option2 && (message.value = option2), 
+        "iframe" === element.prop("tagName").toLowerCase() && message.hasOwnProperty("method")) if (element.data("vimeoReady")) element[0].contentWindow.postMessage(JSON.stringify(message), vimeoJqueryAPI.setVimeoAPIurl(element)); else {
+            var _data = element.data("vimeoAPICall") ? element.data("vimeoAPICall") : [];
+            _data.push({
+                message: message,
+                api: vimeoJqueryAPI.setVimeoAPIurl(element)
+            }), element.data("vimeoAPICall", _data);
         }
-        return "get" !== d.toString().substr(0, 3) && "paused" !== d.toString() || "function" != typeof e || (!function(a, d, e) {
-            var f = b.setInterval(function() {
-                c.catchMethods.methodreturn.length != a && (b.clearInterval(f), d(c.catchMethods.methodreturn[e]));
+        return "get" !== option1.toString().substr(0, 3) && "paused" !== option1.toString() || "function" != typeof option2 || (!function(cml, func, i) {
+            var interval = window.setInterval(function() {
+                vimeoJqueryAPI.catchMethods.methodreturn.length != cml && (window.clearInterval(interval), 
+                func(vimeoJqueryAPI.catchMethods.methodreturn[i]));
             }, 10);
-        }(g, e, c.catchMethods.count), c.catchMethods.count++), a;
-    }, a.fn.vimeo = function(b, c) {
-        return a.vimeo(this, b, c);
+        }(catchMethodLength, option2, vimeoJqueryAPI.catchMethods.count), vimeoJqueryAPI.catchMethods.count++), 
+        element;
+    }, $.fn.vimeo = function(option1, option2) {
+        return $.vimeo(this, option1, option2);
     };
-}(jQuery, window), function(a, b) {
+}(jQuery, window), function(w, doc) {
     "use strict";
-    function c(a) {
-        var b, c, d, f, g, h = a || {};
-        b = h.elements || e.getAllElements();
-        for (var i = 0, j = b.length; j > i; i++) if (c = b[i], d = c.parentNode, f = void 0, 
-        g = void 0, c[e.ns] || (c[e.ns] = {}), h.reevaluate || !c[e.ns].evaluated) {
-            if ("PICTURE" === d.nodeName.toUpperCase()) {
-                if (e.removeVideoShim(d), f = e.getMatch(c, d), f === !1) continue;
-            } else f = void 0;
-            ("PICTURE" === d.nodeName.toUpperCase() || c.srcset && !e.srcsetSupported || !e.sizesSupported && c.srcset && c.srcset.indexOf("w") > -1) && e.dodgeSrcset(c), 
-            f ? (g = e.processSourceSet(f), e.applyBestCandidate(g, c)) : (g = e.processSourceSet(c), 
-            (void 0 === c.srcset || c[e.ns].srcset) && e.applyBestCandidate(g, c)), c[e.ns].evaluated = !0;
+    function picturefill(opt) {
+        var elements, element, parent, firstMatch, candidates, options = opt || {};
+        elements = options.elements || pf.getAllElements();
+        for (var i = 0, plen = elements.length; plen > i; i++) if (element = elements[i], 
+        parent = element.parentNode, firstMatch = void 0, candidates = void 0, element[pf.ns] || (element[pf.ns] = {}), 
+        options.reevaluate || !element[pf.ns].evaluated) {
+            if ("PICTURE" === parent.nodeName.toUpperCase()) {
+                if (pf.removeVideoShim(parent), firstMatch = pf.getMatch(element, parent), firstMatch === !1) continue;
+            } else firstMatch = void 0;
+            ("PICTURE" === parent.nodeName.toUpperCase() || element.srcset && !pf.srcsetSupported || !pf.sizesSupported && element.srcset && element.srcset.indexOf("w") > -1) && pf.dodgeSrcset(element), 
+            firstMatch ? (candidates = pf.processSourceSet(firstMatch), pf.applyBestCandidate(candidates, element)) : (candidates = pf.processSourceSet(element), 
+            (void 0 === element.srcset || element[pf.ns].srcset) && pf.applyBestCandidate(candidates, element)), 
+            element[pf.ns].evaluated = !0;
         }
     }
-    function d() {
-        function d() {
-            var b;
-            a._picturefillWorking || (a._picturefillWorking = !0, a.clearTimeout(b), b = a.setTimeout(function() {
-                c({
+    function runPicturefill() {
+        function checkResize() {
+            var resizeThrottle;
+            w._picturefillWorking || (w._picturefillWorking = !0, w.clearTimeout(resizeThrottle), 
+            resizeThrottle = w.setTimeout(function() {
+                picturefill({
                     reevaluate: !0
-                }), a._picturefillWorking = !1;
+                }), w._picturefillWorking = !1;
             }, 60));
         }
-        c();
-        var e = setInterval(function() {
-            return c(), /^loaded|^i|^c/.test(b.readyState) ? void clearInterval(e) : void 0;
+        picturefill();
+        var intervalId = setInterval(function() {
+            return picturefill(), /^loaded|^i|^c/.test(doc.readyState) ? void clearInterval(intervalId) : void 0;
         }, 250);
-        a.addEventListener ? a.addEventListener("resize", d, !1) : a.attachEvent && a.attachEvent("onresize", d);
+        w.addEventListener ? w.addEventListener("resize", checkResize, !1) : w.attachEvent && w.attachEvent("onresize", checkResize);
     }
-    if (a.HTMLPictureElement) return void (a.picturefill = function() {});
-    b.createElement("picture");
-    var e = {};
-    e.ns = "picturefill", function() {
-        var a = b.createElement("img");
-        e.srcsetSupported = "srcset" in a, e.sizesSupported = "sizes" in a;
-    }(), e.trim = function(a) {
-        return a.trim ? a.trim() : a.replace(/^\s+|\s+$/g, "");
-    }, e.endsWith = function(a, b) {
-        return a.endsWith ? a.endsWith(b) : -1 !== a.indexOf(b, a.length - b.length);
-    }, e.restrictsMixedContent = function() {
-        return "https:" === a.location.protocol;
-    }, e.matchesMedia = function(b) {
-        return a.matchMedia && a.matchMedia(b).matches;
-    }, e.getDpr = function() {
-        return a.devicePixelRatio || 1;
-    }, e.getWidthFromLength = function(a) {
-        return a = a && a.indexOf("%") > -1 == !1 && (parseFloat(a) > 0 || a.indexOf("calc(") > -1) ? a : "100vw", 
-        a = a.replace("vw", "%"), e.lengthEl || (e.lengthEl = b.createElement("div"), b.documentElement.insertBefore(e.lengthEl, b.documentElement.firstChild)), 
-        e.lengthEl.style.cssText = "position: absolute; left: 0; width: " + a + ";", e.lengthEl.className = "helper-from-picturefill-js", 
-        e.lengthEl.offsetWidth <= 0 && (e.lengthEl.style.cssText = "width: 100%;"), e.lengthEl.offsetWidth;
-    }, e.types = {}, e.types["image/jpeg"] = !0, e.types["image/gif"] = !0, e.types["image/png"] = !0, 
-    e.types["image/svg+xml"] = b.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1"), 
-    e.types["image/webp"] = function() {
-        var b = new a.Image(), d = "image/webp";
-        b.onerror = function() {
-            e.types[d] = !1, c();
-        }, b.onload = function() {
-            e.types[d] = 1 === b.width, c();
-        }, b.src = "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
-    }, e.verifyTypeSupport = function(a) {
-        var b = a.getAttribute("type");
-        return null === b || "" === b ? !0 : "function" == typeof e.types[b] ? (e.types[b](), 
-        "pending") : e.types[b];
-    }, e.parseSize = function(a) {
-        var b = /(\([^)]+\))?\s*(.+)/g.exec(a);
+    if (w.HTMLPictureElement) return void (w.picturefill = function() {});
+    doc.createElement("picture");
+    var pf = {};
+    pf.ns = "picturefill", function() {
+        var img = doc.createElement("img");
+        pf.srcsetSupported = "srcset" in img, pf.sizesSupported = "sizes" in img;
+    }(), pf.trim = function(str) {
+        return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g, "");
+    }, pf.endsWith = function(str, suffix) {
+        return str.endsWith ? str.endsWith(suffix) : -1 !== str.indexOf(suffix, str.length - suffix.length);
+    }, pf.restrictsMixedContent = function() {
+        return "https:" === w.location.protocol;
+    }, pf.matchesMedia = function(media) {
+        return w.matchMedia && w.matchMedia(media).matches;
+    }, pf.getDpr = function() {
+        return w.devicePixelRatio || 1;
+    }, pf.getWidthFromLength = function(length) {
+        return length = length && length.indexOf("%") > -1 == !1 && (parseFloat(length) > 0 || length.indexOf("calc(") > -1) ? length : "100vw", 
+        length = length.replace("vw", "%"), pf.lengthEl || (pf.lengthEl = doc.createElement("div"), 
+        doc.documentElement.insertBefore(pf.lengthEl, doc.documentElement.firstChild)), 
+        pf.lengthEl.style.cssText = "position: absolute; left: 0; width: " + length + ";", 
+        pf.lengthEl.className = "helper-from-picturefill-js", pf.lengthEl.offsetWidth <= 0 && (pf.lengthEl.style.cssText = "width: 100%;"), 
+        pf.lengthEl.offsetWidth;
+    }, pf.types = {}, pf.types["image/jpeg"] = !0, pf.types["image/gif"] = !0, pf.types["image/png"] = !0, 
+    pf.types["image/svg+xml"] = doc.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1"), 
+    pf.types["image/webp"] = function() {
+        var img = new w.Image(), type = "image/webp";
+        img.onerror = function() {
+            pf.types[type] = !1, picturefill();
+        }, img.onload = function() {
+            pf.types[type] = 1 === img.width, picturefill();
+        }, img.src = "data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=";
+    }, pf.verifyTypeSupport = function(source) {
+        var type = source.getAttribute("type");
+        return null === type || "" === type ? !0 : "function" == typeof pf.types[type] ? (pf.types[type](), 
+        "pending") : pf.types[type];
+    }, pf.parseSize = function(sourceSizeStr) {
+        var match = /(\([^)]+\))?\s*(.+)/g.exec(sourceSizeStr);
         return {
-            media: b && b[1],
-            length: b && b[2]
+            media: match && match[1],
+            length: match && match[2]
         };
-    }, e.findWidthFromSourceSize = function(a) {
-        for (var b, c = e.trim(a).split(/\s*,\s*/), d = 0, f = c.length; f > d; d++) {
-            var g = c[d], h = e.parseSize(g), i = h.length, j = h.media;
-            if (i && (!j || e.matchesMedia(j))) {
-                b = i;
+    }, pf.findWidthFromSourceSize = function(sourceSizeListStr) {
+        for (var winningLength, sourceSizeList = pf.trim(sourceSizeListStr).split(/\s*,\s*/), i = 0, len = sourceSizeList.length; len > i; i++) {
+            var sourceSize = sourceSizeList[i], parsedSize = pf.parseSize(sourceSize), length = parsedSize.length, media = parsedSize.media;
+            if (length && (!media || pf.matchesMedia(media))) {
+                winningLength = length;
                 break;
             }
         }
-        return e.getWidthFromLength(b);
-    }, e.parseSrcset = function(a) {
-        for (var b = []; "" !== a; ) {
-            a = a.replace(/^\s+/g, "");
-            var c, d = a.search(/\s/g), e = null;
-            if (-1 !== d) {
-                c = a.slice(0, d);
-                var f = c[c.length - 1];
-                if (("," === f || "" === c) && (c = c.replace(/,+$/, ""), e = ""), a = a.slice(d + 1), 
-                null === e) {
-                    var g = a.indexOf(",");
-                    -1 !== g ? (e = a.slice(0, g), a = a.slice(g + 1)) : (e = a, a = "");
+        return pf.getWidthFromLength(winningLength);
+    }, pf.parseSrcset = function(srcset) {
+        for (var candidates = []; "" !== srcset; ) {
+            srcset = srcset.replace(/^\s+/g, "");
+            var url, pos = srcset.search(/\s/g), descriptor = null;
+            if (-1 !== pos) {
+                url = srcset.slice(0, pos);
+                var last = url[url.length - 1];
+                if (("," === last || "" === url) && (url = url.replace(/,+$/, ""), descriptor = ""), 
+                srcset = srcset.slice(pos + 1), null === descriptor) {
+                    var descpos = srcset.indexOf(",");
+                    -1 !== descpos ? (descriptor = srcset.slice(0, descpos), srcset = srcset.slice(descpos + 1)) : (descriptor = srcset, 
+                    srcset = "");
                 }
-            } else c = a, a = "";
-            (c || e) && b.push({
-                url: c,
-                descriptor: e
+            } else url = srcset, srcset = "";
+            (url || descriptor) && candidates.push({
+                url: url,
+                descriptor: descriptor
             });
         }
-        return b;
-    }, e.parseDescriptor = function(a, b) {
-        var c, d = b || "100vw", f = a && a.replace(/(^\s+|\s+$)/g, ""), g = e.findWidthFromSourceSize(d);
-        if (f) for (var h = f.split(" "), i = h.length + 1; i >= 0; i--) if (void 0 !== h[i]) {
-            var j = h[i], k = j && j.slice(j.length - 1);
-            if ("h" !== k && "w" !== k || e.sizesSupported) {
-                if ("x" === k) {
-                    var l = j && parseFloat(j, 10);
-                    c = l && !isNaN(l) ? l : 1;
+        return candidates;
+    }, pf.parseDescriptor = function(descriptor, sizesattr) {
+        var resCandidate, sizes = sizesattr || "100vw", sizeDescriptor = descriptor && descriptor.replace(/(^\s+|\s+$)/g, ""), widthInCssPixels = pf.findWidthFromSourceSize(sizes);
+        if (sizeDescriptor) for (var splitDescriptor = sizeDescriptor.split(" "), i = splitDescriptor.length + 1; i >= 0; i--) if (void 0 !== splitDescriptor[i]) {
+            var curr = splitDescriptor[i], lastchar = curr && curr.slice(curr.length - 1);
+            if ("h" !== lastchar && "w" !== lastchar || pf.sizesSupported) {
+                if ("x" === lastchar) {
+                    var res = curr && parseFloat(curr, 10);
+                    resCandidate = res && !isNaN(res) ? res : 1;
                 }
-            } else c = parseFloat(parseInt(j, 10) / g), c === 1 / 0 && (c = 0);
+            } else resCandidate = parseFloat(parseInt(curr, 10) / widthInCssPixels), resCandidate === 1 / 0 && (resCandidate = 0);
         }
-        return c || 1;
-    }, e.getCandidatesFromSourceSet = function(a, b) {
-        for (var c = e.parseSrcset(a), d = [], f = 0, g = c.length; g > f; f++) {
-            var h = c[f];
-            d.push({
-                url: h.url,
-                resolution: e.parseDescriptor(h.descriptor, b)
+        return resCandidate || 1;
+    }, pf.getCandidatesFromSourceSet = function(srcset, sizes) {
+        for (var candidates = pf.parseSrcset(srcset), formattedCandidates = [], i = 0, len = candidates.length; len > i; i++) {
+            var candidate = candidates[i];
+            formattedCandidates.push({
+                url: candidate.url,
+                resolution: pf.parseDescriptor(candidate.descriptor, sizes)
             });
         }
-        return d;
-    }, e.dodgeSrcset = function(a) {
-        a.srcset && (a[e.ns].srcset = a.srcset, a.removeAttribute("srcset"));
-    }, e.processSourceSet = function(a) {
-        var b = a.getAttribute("srcset"), c = a.getAttribute("sizes"), d = [];
-        return "IMG" === a.nodeName.toUpperCase() && a[e.ns] && a[e.ns].srcset && (b = a[e.ns].srcset), 
-        b && (d = e.getCandidatesFromSourceSet(b, c)), d;
-    }, e.applyBestCandidate = function(a, b) {
-        var c, d, f;
-        a.sort(e.ascendingSort), d = a.length, f = a[d - 1];
-        for (var g = 0; d > g; g++) if (c = a[g], c.resolution >= e.getDpr()) {
-            f = c;
+        return formattedCandidates;
+    }, pf.dodgeSrcset = function(img) {
+        img.srcset && (img[pf.ns].srcset = img.srcset, img.removeAttribute("srcset"));
+    }, pf.processSourceSet = function(el) {
+        var srcset = el.getAttribute("srcset"), sizes = el.getAttribute("sizes"), candidates = [];
+        return "IMG" === el.nodeName.toUpperCase() && el[pf.ns] && el[pf.ns].srcset && (srcset = el[pf.ns].srcset), 
+        srcset && (candidates = pf.getCandidatesFromSourceSet(srcset, sizes)), candidates;
+    }, pf.applyBestCandidate = function(candidates, picImg) {
+        var candidate, length, bestCandidate;
+        candidates.sort(pf.ascendingSort), length = candidates.length, bestCandidate = candidates[length - 1];
+        for (var i = 0; length > i; i++) if (candidate = candidates[i], candidate.resolution >= pf.getDpr()) {
+            bestCandidate = candidate;
             break;
         }
-        f && !e.endsWith(b.src, f.url) && (e.restrictsMixedContent() && "http:" === f.url.substr(0, "http:".length).toLowerCase() ? void 0 !== typeof console && console.warn("Blocked mixed content image " + f.url) : (b.src = f.url, 
-        b.currentSrc = b.src));
-    }, e.ascendingSort = function(a, b) {
+        bestCandidate && !pf.endsWith(picImg.src, bestCandidate.url) && (pf.restrictsMixedContent() && "http:" === bestCandidate.url.substr(0, "http:".length).toLowerCase() ? void 0 !== typeof console && console.warn("Blocked mixed content image " + bestCandidate.url) : (picImg.src = bestCandidate.url, 
+        picImg.currentSrc = picImg.src));
+    }, pf.ascendingSort = function(a, b) {
         return a.resolution - b.resolution;
-    }, e.removeVideoShim = function(a) {
-        var b = a.getElementsByTagName("video");
-        if (b.length) {
-            for (var c = b[0], d = c.getElementsByTagName("source"); d.length; ) a.insertBefore(d[0], c);
-            c.parentNode.removeChild(c);
+    }, pf.removeVideoShim = function(picture) {
+        var videos = picture.getElementsByTagName("video");
+        if (videos.length) {
+            for (var video = videos[0], vsources = video.getElementsByTagName("source"); vsources.length; ) picture.insertBefore(vsources[0], video);
+            video.parentNode.removeChild(video);
         }
-    }, e.getAllElements = function() {
-        for (var a = [], c = b.getElementsByTagName("img"), d = 0, f = c.length; f > d; d++) {
-            var g = c[d];
-            ("PICTURE" === g.parentNode.nodeName.toUpperCase() || null !== g.getAttribute("srcset") || g[e.ns] && null !== g[e.ns].srcset) && a.push(g);
+    }, pf.getAllElements = function() {
+        for (var elems = [], imgs = doc.getElementsByTagName("img"), h = 0, len = imgs.length; len > h; h++) {
+            var currImg = imgs[h];
+            ("PICTURE" === currImg.parentNode.nodeName.toUpperCase() || null !== currImg.getAttribute("srcset") || currImg[pf.ns] && null !== currImg[pf.ns].srcset) && elems.push(currImg);
         }
-        return a;
-    }, e.getMatch = function(a, b) {
-        for (var c, d = b.childNodes, f = 0, g = d.length; g > f; f++) {
-            var h = d[f];
-            if (1 === h.nodeType) {
-                if (h === a) return c;
-                if ("SOURCE" === h.nodeName.toUpperCase()) {
-                    null !== h.getAttribute("src") && void 0 !== typeof console && console.warn("The `src` attribute is invalid on `picture` `source` element; instead, use `srcset`.");
-                    var i = h.getAttribute("media");
-                    if (h.getAttribute("srcset") && (!i || e.matchesMedia(i))) {
-                        var j = e.verifyTypeSupport(h);
-                        if (j === !0) {
-                            c = h;
+        return elems;
+    }, pf.getMatch = function(img, picture) {
+        for (var match, sources = picture.childNodes, j = 0, slen = sources.length; slen > j; j++) {
+            var source = sources[j];
+            if (1 === source.nodeType) {
+                if (source === img) return match;
+                if ("SOURCE" === source.nodeName.toUpperCase()) {
+                    null !== source.getAttribute("src") && void 0 !== typeof console && console.warn("The `src` attribute is invalid on `picture` `source` element; instead, use `srcset`.");
+                    var media = source.getAttribute("media");
+                    if (source.getAttribute("srcset") && (!media || pf.matchesMedia(media))) {
+                        var typeSupported = pf.verifyTypeSupport(source);
+                        if (typeSupported === !0) {
+                            match = source;
                             break;
                         }
-                        if ("pending" === j) return !1;
+                        if ("pending" === typeSupported) return !1;
                     }
                 }
             }
         }
-        return c;
-    }, d(), c._ = e, "object" == typeof module && "object" == typeof module.exports ? module.exports = c : "function" == typeof define && define.amd ? define(function() {
-        return c;
-    }) : "object" == typeof a && (a.picturefill = c);
-}(this, this.document), function(a) {
+        return match;
+    }, runPicturefill(), picturefill._ = pf, "object" == typeof module && "object" == typeof module.exports ? module.exports = picturefill : "function" == typeof define && define.amd ? define(function() {
+        return picturefill;
+    }) : "object" == typeof w && (w.picturefill = picturefill);
+}(this, this.document), function(global) {
     "use strict";
-    function b() {}
-    function c() {
+    function noop() {}
+    function safeActiveElement() {
         try {
             return document.activeElement;
-        } catch (a) {}
+        } catch (err) {}
     }
-    function d(a, b) {
-        for (var c = 0, d = a.length; d > c; c++) if (a[c] === b) return !0;
+    function inArray(arr, item) {
+        for (var i = 0, len = arr.length; len > i; i++) if (arr[i] === item) return !0;
         return !1;
     }
-    function e(a, b, c) {
-        return a.addEventListener ? a.addEventListener(b, c, !1) : a.attachEvent ? a.attachEvent("on" + b, c) : void 0;
+    function addEventListener(elem, event, fn) {
+        return elem.addEventListener ? elem.addEventListener(event, fn, !1) : elem.attachEvent ? elem.attachEvent("on" + event, fn) : void 0;
     }
-    function f(a, b) {
-        var c;
-        a.createTextRange ? (c = a.createTextRange(), c.move("character", b), c.select()) : a.selectionStart && (a.focus(), 
-        a.setSelectionRange(b, b));
+    function moveCaret(elem, index) {
+        var range;
+        elem.createTextRange ? (range = elem.createTextRange(), range.move("character", index), 
+        range.select()) : elem.selectionStart && (elem.focus(), elem.setSelectionRange(index, index));
     }
-    function g(a, b) {
+    function changeType(elem, type) {
         try {
-            return a.type = b, !0;
-        } catch (c) {
+            return elem.type = type, !0;
+        } catch (e) {
             return !1;
         }
     }
-    function h(a, b) {
-        if (a && a.getAttribute(B)) b(a); else for (var c, d = a ? a.getElementsByTagName("input") : N, e = a ? a.getElementsByTagName("textarea") : O, f = d ? d.length : 0, g = e ? e.length : 0, h = f + g, i = 0; h > i; i++) c = f > i ? d[i] : e[i - f], 
-        b(c);
+    function handleElem(node, callback) {
+        if (node && node.getAttribute(ATTR_CURRENT_VAL)) callback(node); else for (var elem, handleInputs = node ? node.getElementsByTagName("input") : inputs, handleTextareas = node ? node.getElementsByTagName("textarea") : textareas, handleInputsLength = handleInputs ? handleInputs.length : 0, handleTextareasLength = handleTextareas ? handleTextareas.length : 0, len = handleInputsLength + handleTextareasLength, i = 0; len > i; i++) elem = handleInputsLength > i ? handleInputs[i] : handleTextareas[i - handleInputsLength], 
+        callback(elem);
     }
-    function i(a) {
-        h(a, k);
+    function disablePlaceholders(node) {
+        handleElem(node, hidePlaceholder);
     }
-    function j(a) {
-        h(a, l);
+    function enablePlaceholders(node) {
+        handleElem(node, showPlaceholder);
     }
-    function k(a, b) {
-        var c = !!b && a.value !== b, d = a.value === a.getAttribute(B);
-        if ((c || d) && "true" === a.getAttribute(C)) {
-            a.removeAttribute(C), a.value = a.value.replace(a.getAttribute(B), ""), a.className = a.className.replace(A, "");
-            var e = a.getAttribute(I);
-            parseInt(e, 10) >= 0 && (a.setAttribute("maxLength", e), a.removeAttribute(I));
-            var f = a.getAttribute(D);
-            return f && (a.type = f), !0;
+    function hidePlaceholder(elem, keydownValue) {
+        var valueChanged = !!keydownValue && elem.value !== keydownValue, isPlaceholderValue = elem.value === elem.getAttribute(ATTR_CURRENT_VAL);
+        if ((valueChanged || isPlaceholderValue) && "true" === elem.getAttribute(ATTR_ACTIVE)) {
+            elem.removeAttribute(ATTR_ACTIVE), elem.value = elem.value.replace(elem.getAttribute(ATTR_CURRENT_VAL), ""), 
+            elem.className = elem.className.replace(classNameRegExp, "");
+            var maxLength = elem.getAttribute(ATTR_MAXLENGTH);
+            parseInt(maxLength, 10) >= 0 && (elem.setAttribute("maxLength", maxLength), elem.removeAttribute(ATTR_MAXLENGTH));
+            var type = elem.getAttribute(ATTR_INPUT_TYPE);
+            return type && (elem.type = type), !0;
         }
         return !1;
     }
-    function l(a) {
-        var b = a.getAttribute(B);
-        if ("" === a.value && b) {
-            a.setAttribute(C, "true"), a.value = b, a.className += " " + z;
-            var c = a.getAttribute(I);
-            c || (a.setAttribute(I, a.maxLength), a.removeAttribute("maxLength"));
-            var d = a.getAttribute(D);
-            return d ? a.type = "text" : "password" === a.type && g(a, "text") && a.setAttribute(D, "password"), 
+    function showPlaceholder(elem) {
+        var val = elem.getAttribute(ATTR_CURRENT_VAL);
+        if ("" === elem.value && val) {
+            elem.setAttribute(ATTR_ACTIVE, "true"), elem.value = val, elem.className += " " + placeholderClassName;
+            var maxLength = elem.getAttribute(ATTR_MAXLENGTH);
+            maxLength || (elem.setAttribute(ATTR_MAXLENGTH, elem.maxLength), elem.removeAttribute("maxLength"));
+            var type = elem.getAttribute(ATTR_INPUT_TYPE);
+            return type ? elem.type = "text" : "password" === elem.type && changeType(elem, "text") && elem.setAttribute(ATTR_INPUT_TYPE, "password"), 
             !0;
         }
         return !1;
     }
-    function m(a) {
+    function makeFocusHandler(elem) {
         return function() {
-            P && a.value === a.getAttribute(B) && "true" === a.getAttribute(C) ? f(a, 0) : k(a);
+            hideOnInput && elem.value === elem.getAttribute(ATTR_CURRENT_VAL) && "true" === elem.getAttribute(ATTR_ACTIVE) ? moveCaret(elem, 0) : hidePlaceholder(elem);
         };
     }
-    function n(a) {
+    function makeBlurHandler(elem) {
         return function() {
-            l(a);
+            showPlaceholder(elem);
         };
     }
-    function o(a) {
+    function makeSubmitHandler(form) {
         return function() {
-            i(a);
+            disablePlaceholders(form);
         };
     }
-    function p(a) {
-        return function(b) {
-            return v = a.value, "true" === a.getAttribute(C) && v === a.getAttribute(B) && d(x, b.keyCode) ? (b.preventDefault && b.preventDefault(), 
+    function makeKeydownHandler(elem) {
+        return function(e) {
+            return keydownVal = elem.value, "true" === elem.getAttribute(ATTR_ACTIVE) && keydownVal === elem.getAttribute(ATTR_CURRENT_VAL) && inArray(badKeys, e.keyCode) ? (e.preventDefault && e.preventDefault(), 
             !1) : void 0;
         };
     }
-    function q(a) {
+    function makeKeyupHandler(elem) {
         return function() {
-            k(a, v), "" === a.value && (a.blur(), f(a, 0));
+            hidePlaceholder(elem, keydownVal), "" === elem.value && (elem.blur(), moveCaret(elem, 0));
         };
     }
-    function r(a) {
+    function makeClickHandler(elem) {
         return function() {
-            a === c() && a.value === a.getAttribute(B) && "true" === a.getAttribute(C) && f(a, 0);
+            elem === safeActiveElement() && elem.value === elem.getAttribute(ATTR_CURRENT_VAL) && "true" === elem.getAttribute(ATTR_ACTIVE) && moveCaret(elem, 0);
         };
     }
-    function s(a) {
-        var b = a.form;
-        b && "string" == typeof b && (b = document.getElementById(b), b.getAttribute(E) || (e(b, "submit", o(b)), 
-        b.setAttribute(E, "true"))), e(a, "focus", m(a)), e(a, "blur", n(a)), P && (e(a, "keydown", p(a)), 
-        e(a, "keyup", q(a)), e(a, "click", r(a))), a.setAttribute(F, "true"), a.setAttribute(B, T), 
-        (P || a !== c()) && l(a);
+    function newElement(elem) {
+        var form = elem.form;
+        form && "string" == typeof form && (form = document.getElementById(form), form.getAttribute(ATTR_FORM_HANDLED) || (addEventListener(form, "submit", makeSubmitHandler(form)), 
+        form.setAttribute(ATTR_FORM_HANDLED, "true"))), addEventListener(elem, "focus", makeFocusHandler(elem)), 
+        addEventListener(elem, "blur", makeBlurHandler(elem)), hideOnInput && (addEventListener(elem, "keydown", makeKeydownHandler(elem)), 
+        addEventListener(elem, "keyup", makeKeyupHandler(elem)), addEventListener(elem, "click", makeClickHandler(elem))), 
+        elem.setAttribute(ATTR_EVENTS_BOUND, "true"), elem.setAttribute(ATTR_CURRENT_VAL, placeholder), 
+        (hideOnInput || elem !== safeActiveElement()) && showPlaceholder(elem);
     }
-    var t = document.createElement("input"), u = void 0 !== t.placeholder;
-    if (a.Placeholders = {
-        nativeSupport: u,
-        disable: u ? b : i,
-        enable: u ? b : j
-    }, !u) {
-        var v, w = [ "text", "search", "url", "tel", "email", "password", "number", "textarea" ], x = [ 27, 33, 34, 35, 36, 37, 38, 39, 40, 8, 46 ], y = "#ccc", z = "placeholdersjs", A = new RegExp("(?:^|\\s)" + z + "(?!\\S)"), B = "data-placeholder-value", C = "data-placeholder-active", D = "data-placeholder-type", E = "data-placeholder-submit", F = "data-placeholder-bound", G = "data-placeholder-focus", H = "data-placeholder-live", I = "data-placeholder-maxlength", J = 100, K = document.getElementsByTagName("head")[0], L = document.documentElement, M = a.Placeholders, N = document.getElementsByTagName("input"), O = document.getElementsByTagName("textarea"), P = "false" === L.getAttribute(G), Q = "false" !== L.getAttribute(H), R = document.createElement("style");
-        R.type = "text/css";
-        var S = document.createTextNode("." + z + " {color:" + y + ";}");
-        R.styleSheet ? R.styleSheet.cssText = S.nodeValue : R.appendChild(S), K.insertBefore(R, K.firstChild);
-        for (var T, U, V = 0, W = N.length + O.length; W > V; V++) U = V < N.length ? N[V] : O[V - N.length], 
-        T = U.attributes.placeholder, T && (T = T.nodeValue, T && d(w, U.type) && s(U));
-        var X = setInterval(function() {
-            for (var a = 0, b = N.length + O.length; b > a; a++) U = a < N.length ? N[a] : O[a - N.length], 
-            T = U.attributes.placeholder, T ? (T = T.nodeValue, T && d(w, U.type) && (U.getAttribute(F) || s(U), 
-            (T !== U.getAttribute(B) || "password" === U.type && !U.getAttribute(D)) && ("password" === U.type && !U.getAttribute(D) && g(U, "text") && U.setAttribute(D, "password"), 
-            U.value === U.getAttribute(B) && (U.value = T), U.setAttribute(B, T)))) : U.getAttribute(C) && (k(U), 
-            U.removeAttribute(B));
-            Q || clearInterval(X);
-        }, J);
-        e(a, "beforeunload", function() {
-            M.disable();
+    var test = document.createElement("input"), nativeSupport = void 0 !== test.placeholder;
+    if (global.Placeholders = {
+        nativeSupport: nativeSupport,
+        disable: nativeSupport ? noop : disablePlaceholders,
+        enable: nativeSupport ? noop : enablePlaceholders
+    }, !nativeSupport) {
+        var keydownVal, validTypes = [ "text", "search", "url", "tel", "email", "password", "number", "textarea" ], badKeys = [ 27, 33, 34, 35, 36, 37, 38, 39, 40, 8, 46 ], placeholderStyleColor = "#ccc", placeholderClassName = "placeholdersjs", classNameRegExp = new RegExp("(?:^|\\s)" + placeholderClassName + "(?!\\S)"), ATTR_CURRENT_VAL = "data-placeholder-value", ATTR_ACTIVE = "data-placeholder-active", ATTR_INPUT_TYPE = "data-placeholder-type", ATTR_FORM_HANDLED = "data-placeholder-submit", ATTR_EVENTS_BOUND = "data-placeholder-bound", ATTR_OPTION_FOCUS = "data-placeholder-focus", ATTR_OPTION_LIVE = "data-placeholder-live", ATTR_MAXLENGTH = "data-placeholder-maxlength", UPDATE_INTERVAL = 100, head = document.getElementsByTagName("head")[0], root = document.documentElement, Placeholders = global.Placeholders, inputs = document.getElementsByTagName("input"), textareas = document.getElementsByTagName("textarea"), hideOnInput = "false" === root.getAttribute(ATTR_OPTION_FOCUS), liveUpdates = "false" !== root.getAttribute(ATTR_OPTION_LIVE), styleElem = document.createElement("style");
+        styleElem.type = "text/css";
+        var styleRules = document.createTextNode("." + placeholderClassName + " {color:" + placeholderStyleColor + ";}");
+        styleElem.styleSheet ? styleElem.styleSheet.cssText = styleRules.nodeValue : styleElem.appendChild(styleRules), 
+        head.insertBefore(styleElem, head.firstChild);
+        for (var placeholder, elem, i = 0, len = inputs.length + textareas.length; len > i; i++) elem = i < inputs.length ? inputs[i] : textareas[i - inputs.length], 
+        placeholder = elem.attributes.placeholder, placeholder && (placeholder = placeholder.nodeValue, 
+        placeholder && inArray(validTypes, elem.type) && newElement(elem));
+        var timer = setInterval(function() {
+            for (var i = 0, len = inputs.length + textareas.length; len > i; i++) elem = i < inputs.length ? inputs[i] : textareas[i - inputs.length], 
+            placeholder = elem.attributes.placeholder, placeholder ? (placeholder = placeholder.nodeValue, 
+            placeholder && inArray(validTypes, elem.type) && (elem.getAttribute(ATTR_EVENTS_BOUND) || newElement(elem), 
+            (placeholder !== elem.getAttribute(ATTR_CURRENT_VAL) || "password" === elem.type && !elem.getAttribute(ATTR_INPUT_TYPE)) && ("password" === elem.type && !elem.getAttribute(ATTR_INPUT_TYPE) && changeType(elem, "text") && elem.setAttribute(ATTR_INPUT_TYPE, "password"), 
+            elem.value === elem.getAttribute(ATTR_CURRENT_VAL) && (elem.value = placeholder), 
+            elem.setAttribute(ATTR_CURRENT_VAL, placeholder)))) : elem.getAttribute(ATTR_ACTIVE) && (hidePlaceholder(elem), 
+            elem.removeAttribute(ATTR_CURRENT_VAL));
+            liveUpdates || clearInterval(timer);
+        }, UPDATE_INTERVAL);
+        addEventListener(global, "beforeunload", function() {
+            Placeholders.disable();
         });
     }
 }(this);
 
 var initAutocomplete = function() {
     $("[data-autocomplete]").length && ($("[data-autocomplete]").each(function() {
-        var a = $(this), b = a.data("autocomplete-feed"), c = a.children("input"), d = a.children(".loader"), e = c.data("autocomplete-parameter"), f = 0, g = 10, h = $(window).width() > 480 ? 7 : 5, i = !1;
-        a.append("<div class='autocomplete-list'></div>");
-        var j = a.children(".autocomplete-list"), k = function(a) {
-            j.children(".loader").hide(), j.append("<ul class='no-results'><li>No matches found. Press Enter to search globally.</li></ul>");
-            var b = j.children("ul.no-results");
-            b.hide(), j.append("<ul class='autocomplete-results'></ul>");
-            var k = j.children("ul.autocomplete-results");
-            k.append("<li class='divider'><span class='match-count'>0</span>Match<span class='plural'>es</span></li>"), 
-            j.append("<ul class='autocomplete-suggestions'></ul>");
-            var l = j.children("ul.autocomplete-suggestions");
-            l.prepend("<li class='divider'>Suggested Items</li>"), j.append("<ul class='autocomplete-key-contacts'></ul>");
-            var m = j.children("ul.autocomplete-key-contacts");
-            m.append("<li class='divider'>Key Contacts</li>");
-            for (var n = a.Results, o = [], p = 0; p < n.length; p++) {
-                var q = n[p], r = q[e];
-                if (r instanceof Array) for (var s = 0; s < r.length; s++) $.inArray(r[s], o) < 0 && o.push(q); else $.inArray(r, o) < 0 && o.push(q);
+        var el = $(this), url = el.data("autocomplete-feed"), input = el.children("input"), loader = el.children(".loader"), parameter = input.data("autocomplete-parameter"), listIndex = 0, listMax = 10, listShow = $(window).width() > 480 ? 7 : 5, selecting = !1;
+        el.append("<div class='autocomplete-list'></div>");
+        var list = el.children(".autocomplete-list"), build = function(data) {
+            list.children(".loader").hide(), list.append("<ul class='no-results'><li>No matches found. Press Enter to search globally.</li></ul>");
+            var noResults = list.children("ul.no-results");
+            noResults.hide(), list.append("<ul class='autocomplete-results'></ul>");
+            var results = list.children("ul.autocomplete-results");
+            results.append("<li class='divider'><span class='match-count'>0</span>Match<span class='plural'>es</span></li>"), 
+            list.append("<ul class='autocomplete-suggestions'></ul>");
+            var suggestions = list.children("ul.autocomplete-suggestions");
+            suggestions.prepend("<li class='divider'>Suggested Items</li>"), list.append("<ul class='autocomplete-key-contacts'></ul>");
+            var keyContacts = list.children("ul.autocomplete-key-contacts");
+            keyContacts.append("<li class='divider'>Key Contacts</li>");
+            for (var JSONobjects = data.Results, tempArray = [], i = 0; i < JSONobjects.length; i++) {
+                var object = JSONobjects[i], property = object[parameter];
+                if (property instanceof Array) for (var j = 0; j < property.length; j++) $.inArray(property[j], tempArray) < 0 && tempArray.push(object); else $.inArray(property, tempArray) < 0 && tempArray.push(object);
             }
-            for (var t = o.sort(), u = 0; u < t.length; u++) k.append("<li data-keywords='" + t[u].Keywords.join() + "'>							<a href='" + t[u].Url + "'>" + t[u].Title + "</a>						</li>");
-            var v = function() {
-                var a = function() {
-                    var a = j.find("ul:not(.no-results) li:not(.divider)"), e = c.val(), f = new RegExp(e, "i");
-                    a.each(function() {
-                        $(this).text().search(f) >= 0 ? $(this).appendTo(k) : $(this).data("keywords").search(f) >= 0 && ($(this).appendTo(l), 
-                        $(this).children("a").attr("href").indexOf("key-person") > -1 && $(this).appendTo(m));
+            for (var itemsArray = tempArray.sort(), k = 0; k < itemsArray.length; k++) results.append("<li data-keywords='" + itemsArray[k].Keywords.join() + "'>							<a href='" + itemsArray[k].Url + "'>" + itemsArray[k].Title + "</a>						</li>");
+            var init = function() {
+                var show = function() {
+                    var item = list.find("ul:not(.no-results) li:not(.divider)"), term = input.val(), filter = new RegExp(term, "i");
+                    item.each(function() {
+                        $(this).text().search(filter) >= 0 ? $(this).appendTo(results) : $(this).data("keywords").search(filter) >= 0 && ($(this).appendTo(suggestions), 
+                        $(this).children("a").attr("href").indexOf("key-person") > -1 && $(this).appendTo(keyContacts));
                     });
-                    var i = k.children("li:not(.divider)");
-                    d.show(), k.show(), i.each(function() {
-                        $(this).text().search(f) >= 0 ? k.children(".selected").length < g && $(this).addClass("selected") : $(this).removeClass("selected"), 
-                        k.find(".divider .match-count").text(k.find(".selected").length + " "), 1 == k.children(".selected").length ? k.find(".divider .plural").hide() : k.find(".divider .plural").show();
+                    var result = results.children("li:not(.divider)");
+                    loader.show(), results.show(), result.each(function() {
+                        $(this).text().search(filter) >= 0 ? results.children(".selected").length < listMax && $(this).addClass("selected") : $(this).removeClass("selected"), 
+                        results.find(".divider .match-count").text(results.find(".selected").length + " "), 
+                        1 == results.children(".selected").length ? results.find(".divider .plural").hide() : results.find(".divider .plural").show();
                     }).on("click", function() {
-                        var a = $(this).text().trim();
-                        c.val(a).trigger({
+                        var value = $(this).text().trim();
+                        input.val(value).trigger({
                             type: "keydown",
                             which: 13
-                        }), j.removeClass("active"), unhighlight(k.children("li.selected"));
-                    }), 0 === k.children(".selected").length && k.hide().find(".divider .match-count").text("No "), 
-                    e.length > 0 ? j.addClass("active") : j.removeClass("active");
-                    var n = l.children("li:not(.divider)");
-                    l.show(), n.each(function() {
-                        $(this).data("keywords").search(f) < 0 ? $(this).removeClass("selected") : $(this).addClass("selected"), 
-                        0 === l.children(".selected").length && l.hide();
+                        }), list.removeClass("active"), unhighlight(results.children("li.selected"));
+                    }), 0 === results.children(".selected").length && results.hide().find(".divider .match-count").text("No "), 
+                    term.length > 0 ? list.addClass("active") : list.removeClass("active");
+                    var suggestion = suggestions.children("li:not(.divider)");
+                    suggestions.show(), suggestion.each(function() {
+                        $(this).data("keywords").search(filter) < 0 ? $(this).removeClass("selected") : $(this).addClass("selected"), 
+                        0 === suggestions.children(".selected").length && suggestions.hide();
                     });
-                    var o = m.children("li:not(.divider)");
-                    m.show(), o.each(function() {
-                        $(this).data("keywords").search(f) < 0 ? $(this).removeClass("selected") : $(this).addClass("selected"), 
-                        0 === m.children(".selected").length && m.hide();
+                    var keyContact = keyContacts.children("li:not(.divider)");
+                    keyContacts.show(), keyContact.each(function() {
+                        $(this).data("keywords").search(filter) < 0 ? $(this).removeClass("selected") : $(this).addClass("selected"), 
+                        0 === keyContacts.children(".selected").length && keyContacts.hide();
                     });
-                    var p = j.find("li.divider:visible").length + j.find("li.selected").length;
-                    p >= h ? j.css("height", j.find("li.selected").outerHeight() * h) : j.css("height", "auto"), 
-                    j.find(".selected").length > 0 ? (b.hide(), highlight(k.children("li.selected"), e)) : (b.show(), 
-                    unhighlight(k.children("li.selected"))), d.hide();
+                    var totalShowing = list.find("li.divider:visible").length + list.find("li.selected").length;
+                    totalShowing >= listShow ? list.css("height", list.find("li.selected").outerHeight() * listShow) : list.css("height", "auto"), 
+                    list.find(".selected").length > 0 ? (noResults.hide(), highlight(results.children("li.selected"), term)) : (noResults.show(), 
+                    unhighlight(results.children("li.selected"))), loader.hide();
                 };
-                j.on("mouseenter", function() {
-                    i = !0;
+                list.on("mouseenter", function() {
+                    selecting = !0;
                 }).on("mouseleave", function() {
-                    i = !1;
-                }), c.on("keydown", function(a) {
-                    if (j.hasClass("active")) {
-                        var b, d, e = k.children("li.selected"), g = j.scrollTop(), h = g + j.height();
-                        k.children("li:not(.divider)").removeClass("active"), 38 === a.keyCode && f > 0 && (f--, 
-                        e.eq(f).addClass("active"), b = e.eq(f).position().top, d = b + e.eq(f).outerHeight(), 
-                        g > b && j.scrollTop(d - j.height())), 40 === a.keyCode && f < e.length - 1 && (f++, 
-                        e.eq(f).addClass("active"), b = e.eq(f).position().top, d = b + e.eq(f).outerHeight(), 
-                        d > h && j.scrollTop(b)), (9 === a.keyCode || 13 === a.keyCode) && c.val(k.children("li.active").text()), 
-                        (8 === a.keyCode || 46 === a.keyCode) && (f = -1), 27 === a.keyCode && c.blur();
+                    selecting = !1;
+                }), input.on("keydown", function(event) {
+                    if (list.hasClass("active")) {
+                        var resultTop, resultBottom, selectedResult = results.children("li.selected"), listTop = list.scrollTop(), listBottom = listTop + list.height();
+                        results.children("li:not(.divider)").removeClass("active"), 38 === event.keyCode && listIndex > 0 && (listIndex--, 
+                        selectedResult.eq(listIndex).addClass("active"), resultTop = selectedResult.eq(listIndex).position().top, 
+                        resultBottom = resultTop + selectedResult.eq(listIndex).outerHeight(), listTop > resultTop && list.scrollTop(resultBottom - list.height())), 
+                        40 === event.keyCode && listIndex < selectedResult.length - 1 && (listIndex++, selectedResult.eq(listIndex).addClass("active"), 
+                        resultTop = selectedResult.eq(listIndex).position().top, resultBottom = resultTop + selectedResult.eq(listIndex).outerHeight(), 
+                        resultBottom > listBottom && list.scrollTop(resultTop)), (9 === event.keyCode || 13 === event.keyCode) && input.val(results.children("li.active").text()), 
+                        (8 === event.keyCode || 46 === event.keyCode) && (listIndex = -1), 27 === event.keyCode && input.blur();
                     }
-                }).on("keyup", function(b) {
-                    a();
+                }).on("keyup", function(event) {
+                    show();
                 }).on("focus", function() {
-                    f = j.find("li.active").length ? f : -1, a();
+                    listIndex = list.find("li.active").length ? listIndex : -1, show();
                 }).on("blur", function() {
-                    i === !1 && (j.removeClass("active"), unhighlight(j.find("li")));
+                    selecting === !1 && (list.removeClass("active"), unhighlight(list.find("li")));
                 });
             };
-            v();
+            init();
         };
-        requestData(b, "GET", k);
+        requestData(url, "GET", build);
     }), config.application.debug && console.log("Search :: Autocomplete"));
-}, textResize = function(a) {
-    var b = $(a), c = config.typography.autoresize.characters, d = config.typography.autoresize.rows, e = config.typography.autoresize.minFontSize, f = config.typography.autoresize.maxFontSize, g = e;
+}, textResize = function(elem) {
+    var el = $(elem), charLimit = config.typography.autoresize.characters, rowLimit = config.typography.autoresize.rows, minFontSize = config.typography.autoresize.minFontSize, maxFontSize = config.typography.autoresize.maxFontSize, fontSize = minFontSize;
     (function() {
-        if (!b.hasClass("rebuilt")) {
-            var a = b.text();
-            b.children("span").length || b.empty().append("<span>" + a + "</span>");
-            var e = b.children("span"), f = e.text().trim(), g = f.length, h = "", i = Math.round(g / 2), j = !1;
-            if (g > c && d > 1) {
-                for (var k = 0; g > k; k++) !j && k > i && /\s/.test(f[k]) ? (h += "<span>&#32;</span>", 
-                j = !0) : h += f[k];
-                e.html(h);
+        if (!el.hasClass("rebuilt")) {
+            var string = el.text();
+            el.children("span").length || el.empty().append("<span>" + string + "</span>");
+            var span = el.children("span"), stringContent = span.text().trim(), stringLength = stringContent.length, stringFinal = "", stringHalf = Math.round(stringLength / 2), spaceFound = !1;
+            if (stringLength > charLimit && rowLimit > 1) {
+                for (var i = 0; stringLength > i; i++) !spaceFound && i > stringHalf && /\s/.test(stringContent[i]) ? (stringFinal += "<span>&#32;</span>", 
+                spaceFound = !0) : stringFinal += stringContent[i];
+                span.html(stringFinal);
             }
-            b.addClass("rebuilt");
+            el.addClass("rebuilt");
         }
     })(), function() {
-        do g--, b.css("font-size", g.toString() + "px"); while (b.children("span").width() > b.width() && g >= e);
-        do g++, b.css("font-size", g.toString() + "px"); while (b.children("span").width() < b.width() && f >= g);
-        b.hasClass("resized") || b.addClass("resized");
+        do fontSize--, el.css("font-size", fontSize.toString() + "px"); while (el.children("span").width() > el.width() && fontSize >= minFontSize);
+        do fontSize++, el.css("font-size", fontSize.toString() + "px"); while (el.children("span").width() < el.width() && maxFontSize >= fontSize);
+        el.hasClass("resized") || el.addClass("resized");
     }();
-}, initKonami = function(a) {
-    var b = [], c = "", d = !1, e = function() {
-        var a = '<img class="konami" style="width: 100%;" src="img/konami/contra.gif">';
-        $(".main").prepend(a);
-    }, f = function() {
-        b = [], c = "", d = !1, $(".konami").remove();
-    }, g = function(a) {
-        var g = [ 38, 38, 40, 40, 37, 39, 37, 39, 66, 65 ], h = g.join(", ");
-        38 == a.keyCode && (d = !0), d && c.length <= h.length ? (-1 == c.indexOf(h) && (b.push(a.keyCode), 
-        c = b.join(", ")), -1 != c.indexOf(h) && (console.log("Easter Egg :: Konami!"), 
-        f(), e(), 27 == a.keyCode && f())) : f();
+}, initKonami = function(callback) {
+    var userCode = [], userString = "", konamiCoding = !1, buildKonami = function() {
+        var img = '<img class="konami" style="width: 100%;" src="img/konami/contra.gif">';
+        $(".main").prepend(img);
+    }, resetKonami = function() {
+        userCode = [], userString = "", konamiCoding = !1, $(".konami").remove();
+    }, callKonami = function(event) {
+        var konamiCode = [ 38, 38, 40, 40, 37, 39, 37, 39, 66, 65 ], konamiString = konamiCode.join(", ");
+        38 == event.keyCode && (konamiCoding = !0), konamiCoding && userString.length <= konamiString.length ? (-1 == userString.indexOf(konamiString) && (userCode.push(event.keyCode), 
+        userString = userCode.join(", ")), -1 != userString.indexOf(konamiString) && (console.log("Easter Egg :: Konami!"), 
+        resetKonami(), buildKonami(), 27 == event.keyCode && resetKonami())) : resetKonami();
     };
-    $(document).on("keyup", g), config.application.debug && console.log("Widget :: Konami");
+    $(document).on("keyup", callKonami), config.application.debug && console.log("Widget :: Konami");
 }, map, themes = {
     Bentley: [ {
         featureType: "landscape",
@@ -5115,13 +5288,13 @@ var initAutocomplete = function() {
         } ]
     } ]
 }, testHiRes = function() {
-    var a = window.devicePixelRatio || window.screen.deviceXDPI / window.screen.logicalXDPI || 1;
-    return a ? a > 1 : void 0;
+    var dpr = window.devicePixelRatio || window.screen.deviceXDPI / window.screen.logicalXDPI || 1;
+    return dpr ? dpr > 1 : void 0;
 }, buildMap = function() {
-    var a = function(a) {
-        var b = {
-            center: new google.maps.LatLng(a.Options[0].CenterLat, a.Options[0].CenterLng),
-            zoom: a.Options[0].Zoom,
+    var init = function(data) {
+        var mapOptions = {
+            center: new google.maps.LatLng(data.Options[0].CenterLat, data.Options[0].CenterLng),
+            zoom: data.Options[0].Zoom,
             zoomControl: !0,
             zoomControlOptions: {
                 style: google.maps.ZoomControlStyle.LARGE
@@ -5143,242 +5316,247 @@ var initAutocomplete = function() {
             },
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             styles: themes.MapBox
-        }, c = document.getElementById("map-canvas");
-        map = new google.maps.Map(c, b);
-        var d = function(a, b, c, d, e, f, g) {
-            "http://" != g.substring(0, 7) ? link = "http://" + g : link = g;
-            var h = function() {
-                var a = !1;
-                return function(b) {
-                    return void 0 !== b && (a = b), a;
+        }, mapElement = document.getElementById("map-canvas");
+        map = new google.maps.Map(mapElement, mapOptions);
+        var bindInfoWindow = function(marker, map, title, desc, telephone, email, web) {
+            "http://" != web.substring(0, 7) ? link = "http://" + web : link = web;
+            var infoWindowVisible = function() {
+                var currentlyVisible = !1;
+                return function(visible) {
+                    return void 0 !== visible && (currentlyVisible = visible), currentlyVisible;
                 };
             }();
-            iw = new google.maps.InfoWindow(), google.maps.event.addListener(a, "click", function() {
-                iw.close(), h(!1);
-                var i = "<div class='gm-info'><h4>" + c + "</h4><p>" + d + "<p><p>" + e + "<p><a href='mailto:" + f + "' >" + f + "<a><a href='" + link + "'' >" + g + "<a></div>";
+            iw = new google.maps.InfoWindow(), google.maps.event.addListener(marker, "click", function() {
+                iw.close(), infoWindowVisible(!1);
+                var html = "<div class='gm-info'><h4>" + title + "</h4><p>" + desc + "<p><p>" + telephone + "<p><a href='mailto:" + email + "' >" + email + "<a><a href='" + link + "'' >" + web + "<a></div>";
                 iw = new google.maps.InfoWindow({
-                    content: i
-                }), iw.open(b, a), h(!0);
+                    content: html
+                }), iw.open(map, marker), infoWindowVisible(!0);
             }), google.maps.event.addListener(iw, "closeclick", function() {
-                h(!1);
+                infoWindowVisible(!1);
             });
         };
-        for (i = 0; i < a.Markers.length; i++) marker = new google.maps.Marker({
-            icon: a.Markers[i].Marker,
-            position: new google.maps.LatLng(a.Markers[i].Lat, a.Markers[i].Lng),
+        for (i = 0; i < data.Markers.length; i++) marker = new google.maps.Marker({
+            icon: data.Markers[i].Marker,
+            position: new google.maps.LatLng(data.Markers[i].Lat, data.Markers[i].Lng),
             map: map,
-            title: a.Markers[i].Title,
-            desc: a.Markers[i].Desc,
-            tel: a.Markers[i].Tel,
-            email: a.Markers[i].Email,
-            web: a.Markers[i].Url
-        }), d(marker, map, a.Markers[i].Title, a.Markers[i].Desc, a.Markers[i].Tel, a.Markers[i].Email, a.Markers[i].Url);
+            title: data.Markers[i].Title,
+            desc: data.Markers[i].Desc,
+            tel: data.Markers[i].Tel,
+            email: data.Markers[i].Email,
+            web: data.Markers[i].Url
+        }), bindInfoWindow(marker, map, data.Markers[i].Title, data.Markers[i].Desc, data.Markers[i].Tel, data.Markers[i].Email, data.Markers[i].Url);
     };
     window.google && google.maps && ($(".map-canvas").each(function() {
-        requestData($(this).data("feed"), "GET", a), google.maps.event.addDomListener(window, "resize", function() {
-            var a = map.getCenter();
-            google.maps.event.trigger(map, "resize"), map.setCenter(a);
+        requestData($(this).data("feed"), "GET", init), google.maps.event.addDomListener(window, "resize", function() {
+            var center = map.getCenter();
+            google.maps.event.trigger(map, "resize"), map.setCenter(center);
         });
     }), config.application.debug && console.log("Widget ~~ Map"));
 }, initMap = function() {
     $(".map-wrapper").length && loadScript("//maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js&callback=buildMap");
-}, notificationCount = 0, cookieNotify = !1, Timer = function(a, b) {
-    var c, d, e = b;
+}, notificationCount = 0, cookieNotify = !1, Timer = function(callback, delay) {
+    var timerId, start, remaining = delay;
     this.stop = function() {
-        window.clearTimeout(c), e = b;
+        window.clearTimeout(timerId), remaining = delay;
     }, this.pause = function() {
-        window.clearTimeout(c), e -= new Date() - d;
+        window.clearTimeout(timerId), remaining -= new Date() - start;
     }, this.resume = function() {
-        d = new Date(), window.clearTimeout(c), c = window.setTimeout(a, e);
+        start = new Date(), window.clearTimeout(timerId), timerId = window.setTimeout(callback, remaining);
     }, this.resume();
-}, notify = function(a, b, c) {
-    b = "undefined" == typeof b || isNaN(b) || "" === b ? config.notification.delay : b, 
-    c = "undefined" == typeof c || "" === c ? config.notification.tone : c;
-    var d = function() {
-        var d = '<div class="notification notification-' + notificationCount + '" data-type="' + c + '">								<span class="notification-message">' + a + '</span>								<div class="notification-close">									<img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">								</div>							</div>';
-        $(".notification-wrapper").append(d);
-        var e = $(".notification-" + notificationCount), f = function() {
-            e.removeClass("active"), setTimeout(function() {
-                e.remove();
+}, notify = function(message, delay, tone) {
+    delay = "undefined" == typeof delay || isNaN(delay) || "" === delay ? config.notification.delay : delay, 
+    tone = "undefined" == typeof tone || "" === tone ? config.notification.tone : tone;
+    var notifyShow = function() {
+        var notification = '<div class="notification notification-' + notificationCount + '" data-type="' + tone + '">								<span class="notification-message">' + message + '</span>								<div class="notification-close">									<img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">								</div>							</div>';
+        $(".notification-wrapper").append(notification);
+        var el = $(".notification-" + notificationCount), clear = function() {
+            el.removeClass("active"), setTimeout(function() {
+                el.remove();
             }, 300);
         };
-        0 !== b && (timer = new Timer(f, b)), e.addClass(c).off("mouseenter").on("mouseenter", function() {
-            0 !== b && timer.pause();
+        0 !== delay && (timer = new Timer(clear, delay)), el.addClass(tone).off("mouseenter").on("mouseenter", function() {
+            0 !== delay && timer.pause();
         }).off("mouseleave").on("mouseleave", function() {
-            0 !== b && timer.resume();
-        }).on("click", f), cookieNotify && (e.addClass("cookie"), cookieNotify = !1), setTimeout(function() {
-            e.addClass("active");
-        }, 10), notificationCount++, config.application.debug && console.log("Trigger :: Notification | Delay: " + b);
+            0 !== delay && timer.resume();
+        }).on("click", clear), cookieNotify && (el.addClass("cookie"), cookieNotify = !1), 
+        setTimeout(function() {
+            el.addClass("active");
+        }, 10), notificationCount++, config.application.debug && console.log("Trigger :: Notification | Delay: " + delay);
     };
-    config.notification.active ? d() : config.cookie.active && d();
+    config.notification.active ? notifyShow() : config.cookie.active && notifyShow();
 }, initNotifications = function() {
     $("[data-notification]").length && ($("[data-notification]").on("click", function() {
-        var a = $(this).attr("data-message"), b = parseInt($(this).attr("data-delay")), c = $(this).attr("data-tone");
-        notify(a, b, c);
+        var message = $(this).attr("data-message"), delay = parseInt($(this).attr("data-delay")), tone = $(this).attr("data-tone");
+        notify(message, delay, tone);
     }), config.application.debug && console.log("Widget :: Notifications"));
 }, initOverlays = function() {
     $("[data-overlay]").length && ($("[data-overlay]").each(function() {
-        var a = $(this), b = $("#" + a.data("overlay"));
-        a.on("click", function() {
-            b.hasClass("active") ? b.removeClass("active") : b.addClass("active");
-        }), b.on("click", function() {
-            b.removeClass("active");
-        }), b.children(".overlay-close").on("click", function() {
-            b.removeClass("active");
-        }), b.children(".modal").on("click", function(a) {
-            $(a.target).closest(".overlay-close").length || a.stopPropagation();
+        var el = $(this), target = $("#" + el.data("overlay"));
+        el.on("click", function() {
+            target.hasClass("active") ? target.removeClass("active") : target.addClass("active");
+        }), target.on("click", function() {
+            target.removeClass("active");
+        }), target.children(".overlay-close").on("click", function() {
+            target.removeClass("active");
+        }), target.children(".modal").on("click", function(event) {
+            $(event.target).closest(".overlay-close").length || event.stopPropagation();
         });
     }), config.application.debug && console.log("Widget :: Overlays"));
 }, initSearch = function() {
-    $("[data-search]").length && ($("[data-search]").each(function(a) {
-        var b = $(this), c = b.data("search"), d = (b.find(".search-icon"), b.find("input[data-search-parameter]")), e = b.find("select[data-search-parameter]"), f = [], g = '<ul class="tagcloud"></ul>', h = '<img class="svg icon icon-close" src="' + config.application.root + 'img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-close.png'\">", i = b.data("search-view") ? b.data("search-view") : config.search.view, j = b.data("search-display") ? b.data("search-display") : config.search.display, k = '<div class="search-controls"></div>', l = '<div class="search-count"></div>', m = '<div class="search-views">											<div class="search-view" data-view="grid">												<img class="svg icon icon-grid" src="' + config.application.root + 'img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-grid.png\'">											</div>											<div class="search-view" data-view="list">												<img class="svg icon icon-list" src="' + config.application.root + 'img/icons/icon-list.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-list.png'\">											</div>										</div>", n = '<div class="search-pagination"></div>', o = '<div class="search-results loading ' + j + '" data-view="' + i + '"></div>', p = '<button class="primary center search-load">Load More</button>';
-        $(".search-results").length ? $(".search-results").addClass("loading").addClass(j).attr("data-view", i) : $(".search-container").append(o);
-        var q = $(".search-results");
-        $(g).insertBefore(q), $(k).insertBefore(q), $(p).insertAfter(q);
-        var r = $(".tagcloud"), s = $(".search-controls"), t = $(".search-load");
-        s.append(m).append(l);
-        var u = s.find(".search-views"), v = s.find(".search-count");
-        initSVGs(), u.children(".search-view[data-view='" + i + "']").addClass("active"), 
-        u.on("click", ".search-view", function() {
-            var a = $(this), b = a.data("view");
-            a.addClass("active").siblings().removeClass("active"), q.attr("data-view", b);
+    $("[data-search]").length && ($("[data-search]").each(function(i) {
+        var el = $(this), url = el.data("search"), input = (el.find(".search-icon"), el.find("input[data-search-parameter]")), select = el.find("select[data-search-parameter]"), outputArray = [], tagcloudElement = '<ul class="tagcloud"></ul>', tagclose = '<img class="svg icon icon-close" src="' + config.application.root + 'img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-close.png'\">", searchView = el.data("search-view") ? el.data("search-view") : config.search.view, searchDisplay = el.data("search-display") ? el.data("search-display") : config.search.display, resultsControlsElement = '<div class="search-controls"></div>', resultsCountElement = '<div class="search-count"></div>', resultsViewsElement = '<div class="search-views">											<div class="search-view" data-view="grid">												<img class="svg icon icon-grid" src="' + config.application.root + 'img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-grid.png\'">											</div>											<div class="search-view" data-view="list">												<img class="svg icon icon-list" src="' + config.application.root + 'img/icons/icon-list.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-list.png'\">											</div>										</div>", resultsPaginationElement = '<div class="search-pagination"></div>', resultsElement = '<div class="search-results loading ' + searchDisplay + '" data-view="' + searchView + '"></div>', loadElement = '<button class="primary center search-load">Load More</button>';
+        $(".search-results").length ? $(".search-results").addClass("loading").addClass(searchDisplay).attr("data-view", searchView) : $(".search-container").append(resultsElement);
+        var results = $(".search-results");
+        $(tagcloudElement).insertBefore(results), $(resultsControlsElement).insertBefore(results), 
+        $(loadElement).insertAfter(results);
+        var tagcloud = $(".tagcloud"), controls = $(".search-controls"), load = $(".search-load");
+        controls.append(resultsViewsElement).append(resultsCountElement);
+        var views = controls.find(".search-views"), count = controls.find(".search-count");
+        initSVGs(), views.children(".search-view[data-view='" + searchView + "']").addClass("active"), 
+        views.on("click", ".search-view", function() {
+            var el = $(this), view = el.data("view");
+            el.addClass("active").siblings().removeClass("active"), results.attr("data-view", view);
         });
-        var w = function(a) {
-            var c = a.Results, g = [], i = [], j = function(a) {
-                var d = b.find("select[data-search-parameter='" + a + "']"), e = [];
-                f[a] = [], i[a] = [];
-                for (var g = 0; g < c.length; g++) {
-                    var h = c[g], j = h[a];
-                    if (j instanceof Array) for (var k = 0; k < j.length; k++) $.inArray(j[k], e) < 0 && e.push(j[k]); else $.inArray(j, e) < 0 && e.push(j);
+        var buildSystem = function(data) {
+            var JSONobjects = data.Results, parameterArray = [], resultArray = [], populateSelects = function(parameter) {
+                var target = el.find("select[data-search-parameter='" + parameter + "']"), tempArray = [];
+                outputArray[parameter] = [], resultArray[parameter] = [];
+                for (var i = 0; i < JSONobjects.length; i++) {
+                    var object = JSONobjects[i], property = object[parameter];
+                    if (property instanceof Array) for (var k = 0; k < property.length; k++) $.inArray(property[k], tempArray) < 0 && tempArray.push(property[k]); else $.inArray(property, tempArray) < 0 && tempArray.push(property);
                 }
-                var l = '<option value="" default selected>Select ' + a + "...</option>";
-                d.append(l), e.sort();
-                for (var m = 0; m < e.length; m++) {
-                    var n = '<option value="' + e[m] + '">' + e[m] + "</option>";
-                    d.append(n);
+                var placeholder = '<option value="" default selected>Select ' + parameter + "...</option>";
+                target.append(placeholder), tempArray.sort();
+                for (var j = 0; j < tempArray.length; j++) {
+                    var option = '<option value="' + tempArray[j] + '">' + tempArray[j] + "</option>";
+                    target.append(option);
                 }
-            }, k = function() {
-                var a = d.data("search-parameter");
-                g.push(a), f[a] = [], d.length && d.each(function() {
-                    $(this).on("keyup", function(a) {
-                        var b = $(this).val().toLowerCase(), c = $(this).data("search-parameter"), d = (c.replace(/\s/g, "").split(","), 
-                        a.keyCode), e = 32 == d || 13 === d || 8 == d || d > 47 && 58 > d || d > 64 && 91 > d || d > 95 && 112 > d || d > 185 && 193 > d || d > 218 && 223 > d;
-                        return e ? (b.length <= 1 && unhighlight(q), f[c] = b, m(), !1) : void 0;
+            }, inputInit = function() {
+                var parameter = input.data("search-parameter");
+                parameterArray.push(parameter), outputArray[parameter] = [], input.length && input.each(function() {
+                    $(this).on("keyup", function(event) {
+                        var value = $(this).val().toLowerCase(), parameter = $(this).data("search-parameter"), keycode = (parameter.replace(/\s/g, "").split(","), 
+                        event.keyCode), validKeys = 32 == keycode || 13 === keycode || 8 == keycode || keycode > 47 && 58 > keycode || keycode > 64 && 91 > keycode || keycode > 95 && 112 > keycode || keycode > 185 && 193 > keycode || keycode > 218 && 223 > keycode;
+                        return validKeys ? (value.length <= 1 && unhighlight(results), outputArray[parameter] = value, 
+                        updateResults(), !1) : void 0;
                     });
-                }), e.length && e.each(function(a) {
-                    var b = ($(this).val(), $(this).data("search-parameter"));
-                    j(b), g.push(b), f[b] = [], $(this).on("change", function(c) {
-                        c.preventDefault();
-                        var d = $(this).val(), e = '<li class="tag" data-tag-group="' + a + '" data-tag-parameter="' + b + '" data-tag="' + d + '">' + d + h + "</li>";
-                        if ("" !== d) {
-                            if (!($.inArray(d, f[b]) < 0)) return notify("This tag already exists.", "failure"), 
+                }), select.length && select.each(function(i) {
+                    var parameter = ($(this).val(), $(this).data("search-parameter"));
+                    populateSelects(parameter), parameterArray.push(parameter), outputArray[parameter] = [], 
+                    $(this).on("change", function(event) {
+                        event.preventDefault();
+                        var value = $(this).val(), tag = '<li class="tag" data-tag-group="' + i + '" data-tag-parameter="' + parameter + '" data-tag="' + value + '">' + value + tagclose + "</li>";
+                        if ("" !== value) {
+                            if (!($.inArray(value, outputArray[parameter]) < 0)) return notify("This tag already exists.", "failure"), 
                             !1;
-                            r.addClass("active").append(e);
+                            tagcloud.addClass("active").append(tag);
                         }
-                        l(b), initSVGs();
+                        updateTags(parameter), initSVGs();
                     });
-                }), r.on("click", ".tag", function() {
-                    var a = $(this).data("tag-parameter");
-                    $(this).remove(), r.children(".tag").length > 0 ? r.addClass("active") : r.removeClass("active"), 
-                    l(a);
+                }), tagcloud.on("click", ".tag", function() {
+                    var parameter = $(this).data("tag-parameter");
+                    $(this).remove(), tagcloud.children(".tag").length > 0 ? tagcloud.addClass("active") : tagcloud.removeClass("active"), 
+                    updateTags(parameter);
                 });
-            }, l = function(a) {
-                for (var b = r.children(".tag[data-tag-parameter='" + a + "']"), c = [], d = 0; d < b.length; d++) {
-                    var e = b.eq(d).data("tag");
-                    c.push(e);
+            }, updateTags = function(parameter) {
+                for (var target = tagcloud.children(".tag[data-tag-parameter='" + parameter + "']"), tempArray = [], n = 0; n < target.length; n++) {
+                    var value = target.eq(n).data("tag");
+                    tempArray.push(value);
                 }
-                f[a] = c, m();
+                outputArray[parameter] = tempArray, updateResults();
             };
-            k();
-            var m = function() {
-                for (var a = [], b = [], e = [], h = [], i = [], j = 0; j < c.length; j++) {
-                    var k = c[j], l = k.Id;
-                    a.push(l);
+            inputInit();
+            var updateResults = function() {
+                for (var allArray = [], resultArray = [], existsArray = [], totalArray = [], finalArray = [], i = 0; i < JSONobjects.length; i++) {
+                    var object = JSONobjects[i], id = object.Id;
+                    allArray.push(id);
                 }
-                for (var m = 0; m < g.length; m++) b[g[m]] = [];
-                var o = 1, p = function() {
-                    if (d.length) {
-                        for (var a = d.data("search-parameter"), e = a.replace(/\s/g, "").split(","), g = [], h = 0; h < c.length; h++) for (var i = c[h], j = i.Id, k = f[a], l = 0; l < e.length; l++) {
-                            var m = i[e[l]];
-                            if (m instanceof Array) for (var n = 0; n < m.length; n++) {
-                                var o = m[n].toLowerCase();
-                                o.indexOf(k) > -1 && "" !== d.val() && $.inArray(j, g) < 0 && g.push(j);
+                for (var j = 0; j < parameterArray.length; j++) resultArray[parameterArray[j]] = [];
+                var currentPage = 1, inputAnalysis = function() {
+                    if (input.length) {
+                        for (var parameter = input.data("search-parameter"), criteria = parameter.replace(/\s/g, "").split(","), tempArray = [], i = 0; i < JSONobjects.length; i++) for (var object = JSONobjects[i], id = object.Id, compare = outputArray[parameter], j = 0; j < criteria.length; j++) {
+                            var retrieved = object[criteria[j]];
+                            if (retrieved instanceof Array) for (var k = 0; k < retrieved.length; k++) {
+                                var analyseArray = retrieved[k].toLowerCase();
+                                analyseArray.indexOf(compare) > -1 && "" !== input.val() && $.inArray(id, tempArray) < 0 && tempArray.push(id);
                             } else {
-                                var p = m.toLowerCase();
-                                p.indexOf(k) > -1 && "" !== d.val() && $.inArray(j, g) < 0 && g.push(j);
+                                var analyseString = retrieved.toLowerCase();
+                                analyseString.indexOf(compare) > -1 && "" !== input.val() && $.inArray(id, tempArray) < 0 && tempArray.push(id);
                             }
                         }
-                        b[a] = g;
+                        resultArray[parameter] = tempArray;
                     }
-                }, s = function() {
-                    for (var a = 0; a < r.children(".tag").length; a++) {
-                        for (var d = r.children(".tag").eq(a).data("tag-parameter"), e = d, g = f[d], h = [], i = 0; i < c.length; i++) {
-                            var j = c[i], k = j.Id, l = j[e];
-                            if (l instanceof Array) {
-                                var m = l.concat(g);
-                                m.duplicates().length > 0 && $.inArray(k, h) < 0 && h.push(k);
-                            } else $.inArray(l, g) > -1 && $.inArray(k, h) < 0 && h.push(k);
+                }, tagAnalysis = function() {
+                    for (var n = 0; n < tagcloud.children(".tag").length; n++) {
+                        for (var parameter = tagcloud.children(".tag").eq(n).data("tag-parameter"), criteria = parameter, compare = outputArray[parameter], tempArray = [], i = 0; i < JSONobjects.length; i++) {
+                            var object = JSONobjects[i], id = object.Id, analyse = object[criteria];
+                            if (analyse instanceof Array) {
+                                var joined = analyse.concat(compare);
+                                joined.duplicates().length > 0 && $.inArray(id, tempArray) < 0 && tempArray.push(id);
+                            } else $.inArray(analyse, compare) > -1 && $.inArray(id, tempArray) < 0 && tempArray.push(id);
                         }
-                        b[d] = h;
+                        resultArray[parameter] = tempArray;
                     }
                 };
-                p(), s();
-                for (var u = 0; u < g.length; u++) {
-                    var w = f[g[u]], x = b[g[u]];
-                    if (e.push(w.length > 0), w.length > 0) {
-                        var y = x.concat(a).duplicates();
-                        h.push(y);
+                inputAnalysis(), tagAnalysis();
+                for (var k = 0; k < parameterArray.length; k++) {
+                    var outputSet = outputArray[parameterArray[k]], resultSet = resultArray[parameterArray[k]];
+                    if (existsArray.push(outputSet.length > 0), outputSet.length > 0) {
+                        var joined = resultSet.concat(allArray).duplicates();
+                        totalArray.push(joined);
                     }
                 }
-                for (var z = 0, A = 0; A < e.length; A++) e[A] === !0 && z++;
-                var B = z >= 1, C = h.reduce().sort(), D = function(a) {
-                    for (var b = {}, c = 0; c < a.length; c++) {
-                        var d = a[c];
-                        b[d] = b[d] ? b[d] + 1 : 1;
+                for (var outputCount = 0, l = 0; l < existsArray.length; l++) existsArray[l] === !0 && outputCount++;
+                var hasOutput = outputCount >= 1, cleanArray = totalArray.reduce().sort(), countRepeated = function(arr) {
+                    for (var counts = {}, i = 0; i < arr.length; i++) {
+                        var num = arr[i];
+                        counts[num] = counts[num] ? counts[num] + 1 : 1;
                     }
-                    return b;
-                }, E = D(C);
-                if (B) for (var F = 0; F < C.length; F++) E[C[F]] === z && $.inArray(C[F], i) < 0 && i.push(C[F]); else i = a;
-                config.application.debug && console.log("Search == " + i.length + " items");
-                var G, H = !0, I = function() {
-                    var a = function() {
-                        q.append(n);
-                        for (var a = 0; a < c.length; a++) {
-                            var b = c[a], e = b.Id, f = b.Image, g = b.Title, h = b.Date, j = h.replace("Z", ""), k = j.split("T"), l = k[0].split("-"), m = k[1].split(":"), o = new Date(l[0], l[1] - 1, l[2], m[0], m[1], m[2]), p = o.getHours(), r = 10 > p ? "0" + p : p, s = o.getMinutes(), t = 10 > s ? "0" + s : s, u = o.getDate(), v = 10 > u ? "0" + u : u, w = o.getMonth(), x = 10 > w + 1 ? "0" + (w + 1) : w + 1, y = o.getFullYear(), z = 10 > y ? "0" + y : y, A = r + ":" + t + " @ " + v + "/" + x + "/" + z, B = b.Url, C = b.Summary, D = b.Type, E = b.Categories.length > 0 ? b.Categories.toString().replace(/,/g, ", ") : "None", F = b.Tags.length > 0 ? b.Tags.toString().replace(/,/g, ", ") : "None", G = '<div class="search-item loading">												  <a class="img" href="' + B + '" style="background: url(' + f + ') no-repeat center center;"></a>												  <a class="title" href="' + B + '">' + g + '</a>												  <div class="date">' + A + '</div>												  <div class="type">' + D + '</div>												  <div class="summary">' + C + '</div>												  <div class="info">													  <div class="categories" data-tooltip="' + E + '">Categories</div>													  <div class="tags" data-tooltip="' + F + '">Tags</div>												  </div>											  </div>';
-                            $.inArray(e, i) > -1 && q.append(G);
+                    return counts;
+                }, analysis = countRepeated(cleanArray);
+                if (hasOutput) for (var m = 0; m < cleanArray.length; m++) analysis[cleanArray[m]] === outputCount && $.inArray(cleanArray[m], finalArray) < 0 && finalArray.push(cleanArray[m]); else finalArray = allArray;
+                config.application.debug && console.log("Search == " + finalArray.length + " items");
+                var pagination, firstLoad = !0, rebuildSystem = function() {
+                    var loadItems = function() {
+                        results.append(resultsPaginationElement);
+                        for (var i = 0; i < JSONobjects.length; i++) {
+                            var object = JSONobjects[i], id = object.Id, image = object.Image, title = object.Title, dateStr = object.Date, z = dateStr.replace("Z", ""), a = z.split("T"), d = a[0].split("-"), t = a[1].split(":"), date = new Date(d[0], d[1] - 1, d[2], t[0], t[1], t[2]), hour = date.getHours(), hours = 10 > hour ? "0" + hour : hour, minute = date.getMinutes(), minutes = 10 > minute ? "0" + minute : minute, day = date.getDate(), days = 10 > day ? "0" + day : day, month = date.getMonth(), months = 10 > month + 1 ? "0" + (month + 1) : month + 1, year = date.getFullYear(), years = 10 > year ? "0" + year : year, fulldate = hours + ":" + minutes + " @ " + days + "/" + months + "/" + years, url = object.Url, summary = object.Summary, type = object.Type, categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g, ", ") : "None", tags = object.Tags.length > 0 ? object.Tags.toString().replace(/,/g, ", ") : "None", result = '<div class="search-item loading">												  <a class="img" href="' + url + '" style="background: url(' + image + ') no-repeat center center;"></a>												  <a class="title" href="' + url + '">' + title + '</a>												  <div class="date">' + fulldate + '</div>												  <div class="type">' + type + '</div>												  <div class="summary">' + summary + '</div>												  <div class="info">													  <div class="categories" data-tooltip="' + categories + '">Categories</div>													  <div class="tags" data-tooltip="' + tags + '">Tags</div>												  </div>											  </div>';
+                            $.inArray(id, finalArray) > -1 && results.append(result);
                         }
-                        initTooltips(), d.each(function() {
-                            var a = $(this).val().toLowerCase(), b = $(this).data("search-parameter"), c = b.replace(/\s/g, "").split(",");
-                            if (a.length > 1) for (var d = 0; d < c.length; d++) {
-                                var e = q.find("[class='" + c[d].toLowerCase() + "']");
-                                highlight(e, a);
+                        initTooltips(), input.each(function() {
+                            var value = $(this).val().toLowerCase(), parameter = $(this).data("search-parameter"), criteria = parameter.replace(/\s/g, "").split(",");
+                            if (value.length > 1) for (var i = 0; i < criteria.length; i++) {
+                                var target = results.find("[class='" + criteria[i].toLowerCase() + "']");
+                                highlight(target, value);
                             }
-                        }), q.append(n), H = !1;
+                        }), results.append(resultsPaginationElement), firstLoad = !1;
                     };
-                    H && a();
-                    var b = function(a, b) {
-                        b < config.search.count * o && (config.search.pagination ? a.eq(b).removeClass("loading") : setTimeout(function() {
-                            a.eq(b).removeClass("loading");
-                        }, 100 * (b % config.search.count)));
-                    }, e = q.children(".search-item"), f = e.length;
-                    if (v.css({
+                    firstLoad && loadItems();
+                    var showItem = function(el, i) {
+                        i < config.search.count * currentPage && (config.search.pagination ? el.eq(i).removeClass("loading") : setTimeout(function() {
+                            el.eq(i).removeClass("loading");
+                        }, 100 * (i % config.search.count)));
+                    }, items = results.children(".search-item"), resultsCount = items.length;
+                    if (count.css({
                         display: "inline-block"
-                    }).html((0 === f ? "No" : f) + " result" + (1 === f ? " " : "s ") + "found"), f) {
-                        q.removeClass("loading").removeClass("no-results"), config.search.pagination && e.addClass("loading");
-                        for (var g = config.search.count * (o - 1); f > g; g++) b(e, g);
-                    } else B ? q.removeClass("loading").addClass("no-results") : q.removeClass("no-results").addClass("loading");
-                    G = $(".search-pagination"), config.search.pagination ? f > config.search.count ? G.show() : G.hide() : f > config.search.count * o ? t.show() : t.hide();
+                    }).html((0 === resultsCount ? "No" : resultsCount) + " result" + (1 === resultsCount ? " " : "s ") + "found"), 
+                    resultsCount) {
+                        results.removeClass("loading").removeClass("no-results"), config.search.pagination && items.addClass("loading");
+                        for (var i = config.search.count * (currentPage - 1); resultsCount > i; i++) showItem(items, i);
+                    } else hasOutput ? results.removeClass("loading").addClass("no-results") : results.removeClass("no-results").addClass("loading");
+                    pagination = $(".search-pagination"), config.search.pagination ? resultsCount > config.search.count ? pagination.show() : pagination.hide() : resultsCount > config.search.count * currentPage ? load.show() : load.hide();
                 };
-                q.html(""), I();
-                var J = q.children(".search-item"), K = J.length;
+                results.html(""), rebuildSystem();
+                var items = results.children(".search-item"), resultsCount = items.length;
                 if (config.search.pagination) {
-                    for (var L = 0, M = 0; K > M; M++) if (M % config.search.count === 0) {
-                        L++;
-                        var N = "<button data-page='" + L + "'>" + L + "</button>";
-                        G.append(N);
+                    for (var pages = 0, n = 0; resultsCount > n; n++) if (n % config.search.count === 0) {
+                        pages++;
+                        var page = "<button data-page='" + pages + "'>" + pages + "</button>";
+                        pagination.append(page);
                     }
-                    $("[data-page='" + o + "']").addClass("primary"), $("[data-page]").off().on("click", function() {
-                        o = $(this).data("page"), $("[data-page]").removeClass("primary"), $("[data-page='" + o + "']").addClass("primary"), 
+                    $("[data-page='" + currentPage + "']").addClass("primary"), $("[data-page]").off().on("click", function() {
+                        currentPage = $(this).data("page"), $("[data-page]").removeClass("primary"), $("[data-page='" + currentPage + "']").addClass("primary"), 
                         $("html, body").animate({
                             scrollTop: $(".search-wrapper").offset().top - 90
                         }, {
@@ -5387,267 +5565,282 @@ var initAutocomplete = function() {
                             complete: function() {
                                 anchorClicked = !1;
                             }
-                        }), I();
+                        }), rebuildSystem();
                     });
-                } else t.on("click", function() {
-                    o++, I();
+                } else load.on("click", function() {
+                    currentPage++, rebuildSystem();
                 });
             };
-            initDropdowns(), m();
-            var o = getQueryParameters();
-            for (var p in o) if (o.hasOwnProperty(p)) {
-                var s = p, u = o[p];
-                $("select[data-search-parameter='" + s + "']").val(u).trigger("change");
+            initDropdowns(), updateResults();
+            var queryObj = getQueryParameters();
+            for (var prop in queryObj) if (queryObj.hasOwnProperty(prop)) {
+                var assignedDrop = prop, assignedVal = queryObj[prop];
+                $("select[data-search-parameter='" + assignedDrop + "']").val(assignedVal).trigger("change");
             }
         };
-        requestData(c, "GET", w);
+        requestData(url, "GET", buildSystem);
     }), config.application.debug && console.log("Search :: Unified Search"));
-}, sliderInit = function(a) {
-    var b = $("#" + a), c = '<div class="slider-container"></div>', d = '<div class="slider-movable"></div>';
-    b.append(c);
-    var e = b.find(".slider-container");
-    e.append(d);
-    var f = b.find(".slider-movable"), g = b.find(".slide");
-    g.each(function() {
+}, sliderInit = function(sliderId) {
+    var sliderActive = $("#" + sliderId), slideContainerEl = '<div class="slider-container"></div>', slideMovableEl = '<div class="slider-movable"></div>';
+    sliderActive.append(slideContainerEl);
+    var slideContainer = sliderActive.find(".slider-container");
+    slideContainer.append(slideMovableEl);
+    var slideMovable = sliderActive.find(".slider-movable"), slide = sliderActive.find(".slide");
+    slide.each(function() {
         $(this).attr("data-index", $(this).index());
-    }).appendTo(f);
-    var h, i = b.attr("data-nav") ? b.data("nav") : config.slider.nav, j = b.attr("data-arrows") ? b.data("arrows") : config.slider.arrows, k = b.attr("data-thumbnails") ? b.data("thumbnails") : config.slider.thumbnails, l = b.attr("data-animation") ? b.data("animation") : config.slider.animation, m = b.attr("data-slideshow") ? b.data("slideshow") : config.slider.slideshow, n = config.slider.duration, o = config.slider.interval, p = !1, q = g.length, r = 0, s = 0, t = 0, u = q - 1, v = g.eq(r).outerWidth(!0), w = g.eq(r).outerHeight(!0), x = q > 1, y = v, z = v / 4, A = 50, B = '<div class="slider-arrow slider-arrow-prev valign-middle">							<img class="svg icon icon-caret-left" src="' + config.application.root + 'img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-caret-left.png'\">					    </div>", C = '<div class="slider-arrow slider-arrow-next valign-middle">							<img class="svg icon icon-caret-right" src="' + config.application.root + 'img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-caret-right.png'\">					    </div>";
-    e.prepend(B), e.prepend(C), initSVGs();
-    var D = e.children(".slider-arrow"), E = e.children(".slider-arrow-prev"), F = e.children(".slider-arrow-next");
-    j === !0 && x && D.show();
-    var G;
-    if (i === !0 && x) {
-        var H = '<div class="slider-nav"></div>';
-        b.append(H);
-        for (var I = b.children(".slider-nav"), J = 0; q > J; J++) {
-            var K = "", L = g.eq(J), M = L.data("thumb");
-            g.eq(J).hasClass("thumb") && L.css({
-                "background-image": "url('img/pictures/slider/" + M + "')"
-            }), k ? (K = '<div class="slider-bullet" style="background: url(\'img/pictures/slider/thumbs/' + M + "') no-repeat center center;\">&nbsp;</div>", 
-            I.addClass("thumbs")) : K = '<div class="slider-bullet">&bull;</div>', I.append(K);
+    }).appendTo(slideMovable);
+    var slideDirection, hasNav = sliderActive.attr("data-nav") ? sliderActive.data("nav") : config.slider.nav, hasArrows = sliderActive.attr("data-arrows") ? sliderActive.data("arrows") : config.slider.arrows, hasThumbnails = sliderActive.attr("data-thumbnails") ? sliderActive.data("thumbnails") : config.slider.thumbnails, slideAnimation = sliderActive.attr("data-animation") ? sliderActive.data("animation") : config.slider.animation, slideShow = sliderActive.attr("data-slideshow") ? sliderActive.data("slideshow") : config.slider.slideshow, animDuration = config.slider.duration, animInterval = config.slider.interval, animating = !1, slideCount = slide.length, slideCurrent = 0, slideBefore = 0, minCount = 0, maxCount = slideCount - 1, sliderWidth = slide.eq(slideCurrent).outerWidth(!0), sliderHeight = slide.eq(slideCurrent).outerHeight(!0), isMultiSlide = slideCount > 1, slideStep = sliderWidth, slideTrigger = sliderWidth / 4, slideTolerance = 50, arrowPrevEl = '<div class="slider-arrow slider-arrow-prev valign-middle">							<img class="svg icon icon-caret-left" src="' + config.application.root + 'img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-caret-left.png'\">					    </div>", arrowNextEl = '<div class="slider-arrow slider-arrow-next valign-middle">							<img class="svg icon icon-caret-right" src="' + config.application.root + 'img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-caret-right.png'\">					    </div>";
+    slideContainer.prepend(arrowPrevEl), slideContainer.prepend(arrowNextEl), initSVGs();
+    var arrows = slideContainer.children(".slider-arrow"), arrowPrev = slideContainer.children(".slider-arrow-prev"), arrowNext = slideContainer.children(".slider-arrow-next");
+    hasArrows === !0 && isMultiSlide && arrows.show();
+    var navBullet;
+    if (hasNav === !0 && isMultiSlide) {
+        var navWrapperEl = '<div class="slider-nav"></div>';
+        sliderActive.append(navWrapperEl);
+        for (var navWrapper = sliderActive.children(".slider-nav"), i = 0; slideCount > i; i++) {
+            var navBulletEl = "", slideThumb = slide.eq(i), slideImg = slideThumb.data("thumb");
+            slide.eq(i).hasClass("thumb") && slideThumb.css({
+                "background-image": "url('img/pictures/slider/" + slideImg + "')"
+            }), hasThumbnails ? (navBulletEl = '<div class="slider-bullet" style="background: url(\'img/pictures/slider/thumbs/' + slideImg + "') no-repeat center center;\">&nbsp;</div>", 
+            navWrapper.addClass("thumbs")) : navBulletEl = '<div class="slider-bullet">&bull;</div>', 
+            navWrapper.append(navBulletEl);
         }
-        G = b.find(".slider-bullet");
-    } else G = b.find(".bullet");
-    G.removeClass("active"), G.eq(r).addClass("active");
-    var N = function() {
-        f.css({
+        navBullet = sliderActive.find(".slider-bullet");
+    } else navBullet = sliderActive.find(".bullet");
+    navBullet.removeClass("active"), navBullet.eq(slideCurrent).addClass("active");
+    var containerPos = function() {
+        slideMovable.css({
             "margin-left": 0,
             left: 0,
-            height: w
-        }), da = b.offset().top + A / 2, ea = b.offset().top + b.height() - A / 2, fa = b.offset().left + A, 
-        ga = b.offset().left + b.width() - A, z = v / 4;
+            height: sliderHeight
+        }), sliderTop = sliderActive.offset().top + slideTolerance / 2, sliderBottom = sliderActive.offset().top + sliderActive.height() - slideTolerance / 2, 
+        sliderLeft = sliderActive.offset().left + slideTolerance, sliderRight = sliderActive.offset().left + sliderActive.width() - slideTolerance, 
+        slideTrigger = sliderWidth / 4;
     };
-    N();
-    var O = !0, P = function() {
-        if (O && !ba) {
-            if ("prev" == h) for (var a = u; a >= r; a--) f.prepend(g.eq(a));
-            if ("next" == h) {
-                g.each(function() {});
-                for (var b = t; r >= b; b++) f.append(g.eq(b - 1));
+    containerPos();
+    var clone = !0, slideClone = function() {
+        if (clone && !cloned) {
+            if ("prev" == slideDirection) for (var i = maxCount; i >= slideCurrent; i--) slideMovable.prepend(slide.eq(i));
+            if ("next" == slideDirection) {
+                slide.each(function() {});
+                for (var j = minCount; slideCurrent >= j; j++) slideMovable.append(slide.eq(j - 1));
             }
-            f.css({
-                "margin-left": y
-            }), O = !1;
+            slideMovable.css({
+                "margin-left": slideStep
+            }), clone = !1;
         }
-    }, Q = function() {
-        p || (h = "prev", t >= r ? r = u : r--, U(-1), s = r);
-    }, R = function() {
-        p || (h = "next", r >= u ? r = t : r++, U(1), s = r);
-    }, S = function(a) {
-        p || (r = a, s > r && (h = "prev"), r > s && (h = "next"), U(r - s), s = r);
-    }, T = function() {
-        O = !0, ba = !1, p = !1, n = config.slider.duration, "next" == h && P(), N();
-    }, U = function(a) {
-        p = !0, y = v * a, v = g.eq(r).outerWidth(!0), w = g.eq(r).outerHeight(!0), "prev" == h && P(), 
-        "slide" === l && f.stop(!0, !1).animate({
-            height: w,
-            left: -y
+    }, slidePrev = function() {
+        animating || (slideDirection = "prev", minCount >= slideCurrent ? slideCurrent = maxCount : slideCurrent--, 
+        slideAction(-1), slideBefore = slideCurrent);
+    }, slideNext = function() {
+        animating || (slideDirection = "next", slideCurrent >= maxCount ? slideCurrent = minCount : slideCurrent++, 
+        slideAction(1), slideBefore = slideCurrent);
+    }, slideAny = function(i) {
+        animating || (slideCurrent = i, slideBefore > slideCurrent && (slideDirection = "prev"), 
+        slideCurrent > slideBefore && (slideDirection = "next"), slideAction(slideCurrent - slideBefore), 
+        slideBefore = slideCurrent);
+    }, slideEnd = function() {
+        clone = !0, cloned = !1, animating = !1, animDuration = config.slider.duration, 
+        "next" == slideDirection && slideClone(), containerPos();
+    }, slideAction = function(i) {
+        animating = !0, slideStep = sliderWidth * i, sliderWidth = slide.eq(slideCurrent).outerWidth(!0), 
+        sliderHeight = slide.eq(slideCurrent).outerHeight(!0), "prev" == slideDirection && slideClone(), 
+        "slide" === slideAnimation && slideMovable.stop(!0, !1).animate({
+            height: sliderHeight,
+            left: -slideStep
         }, {
-            duration: n,
-            complete: T
-        }), "fade" === l && f.hide().css({
-            left: y
-        }).fadeIn(1.5 * n).stop(!0, !1).animate({
-            height: w
+            duration: animDuration,
+            complete: slideEnd
+        }), "fade" === slideAnimation && slideMovable.hide().css({
+            left: slideStep
+        }).fadeIn(1.5 * animDuration).stop(!0, !1).animate({
+            height: sliderHeight
         }, {
-            duration: n,
-            complete: T
-        }), G.removeClass("active"), G.eq(r).addClass("active");
+            duration: animDuration,
+            complete: slideEnd
+        }), navBullet.removeClass("active"), navBullet.eq(slideCurrent).addClass("active");
     };
-    U(0), $(window).on("resize", function() {
-        U(0);
-    }), F.on("click", function() {
-        O = !0, R();
-    }), E.on("click", function() {
-        O = !0, Q();
-    }), G.on("click", function() {
-        O = !0, S($(this).index());
-    }), document.onkeydown = function(a) {
-        switch (a = a || window.event, a.which || a.keyCode) {
+    slideAction(0), $(window).on("resize", function() {
+        slideAction(0);
+    }), arrowNext.on("click", function() {
+        clone = !0, slideNext();
+    }), arrowPrev.on("click", function() {
+        clone = !0, slidePrev();
+    }), navBullet.on("click", function() {
+        clone = !0, slideAny($(this).index());
+    }), document.onkeydown = function(e) {
+        switch (e = e || window.event, e.which || e.keyCode) {
           case 39:
-            R();
+            slideNext();
             break;
 
           case 37:
-            Q();
+            slidePrev();
             break;
 
           default:
             return;
         }
-        a.preventDefault();
+        e.preventDefault();
     };
-    var V, W = function() {
-        f.removeClass("stopped"), V = setInterval(R, o);
-    }, X = function() {
-        f.addClass("stopped"), clearInterval(V);
+    var slideTimer, sliderStart = function() {
+        slideMovable.removeClass("stopped"), slideTimer = setInterval(slideNext, animInterval);
+    }, sliderStop = function() {
+        slideMovable.addClass("stopped"), clearInterval(slideTimer);
     };
-    if (x && m !== !1 && (W(), config.application.touch ? (f.on("click touchstart", function() {
-        X();
-    }), $("html").on("click touchstart", function(a) {
-        !$(a.target).closest(".slider").length && f.hasClass("stopped") && W();
-    })) : (b.on("mouseenter", function() {
-        X();
-    }), b.on("mouseleave", function() {
-        W();
-    }))), "slide" === l) {
-        var Y, Z, _, aa = !1, ba = !1, ca = !1, da = b.offset().top + A / 2, ea = b.offset().top + b.height() - A / 2, fa = b.offset().left + A, ga = b.offset().left + b.width() - A, ha = function() {
-            n = 250, setTimeout(function() {
-                ba && (h = "prev", b.find(".slide:first-child").appendTo(f), f.css({
+    if (isMultiSlide && slideShow !== !1 && (sliderStart(), config.application.touch ? (slideMovable.on("click touchstart", function() {
+        sliderStop();
+    }), $("html").on("click touchstart", function(event) {
+        !$(event.target).closest(".slider").length && slideMovable.hasClass("stopped") && sliderStart();
+    })) : (sliderActive.on("mouseenter", function() {
+        sliderStop();
+    }), sliderActive.on("mouseleave", function() {
+        sliderStart();
+    }))), "slide" === slideAnimation) {
+        var dragStart, dragX, dragEnd, down = !1, cloned = !1, dragging = !1, sliderTop = sliderActive.offset().top + slideTolerance / 2, sliderBottom = sliderActive.offset().top + sliderActive.height() - slideTolerance / 2, sliderLeft = sliderActive.offset().left + slideTolerance, sliderRight = sliderActive.offset().left + sliderActive.width() - slideTolerance, slideKickback = function() {
+            animDuration = 250, setTimeout(function() {
+                cloned && (slideDirection = "prev", sliderActive.find(".slide:first-child").appendTo(slideMovable), 
+                slideMovable.css({
                     "margin-left": 0
-                }), ba = !1);
-            }, n);
+                }), cloned = !1);
+            }, animDuration);
         };
-        b.on("mousedown touchstart", function(a) {
-            config.application.touch || a.preventDefault(), Y = a.pageX || a.originalEvent.touches[0].pageX, 
-            Z = a.pageX || a.originalEvent.touches[0].pageX, x && (aa = !0);
-        }).on("mousemove touchmove", function(a) {
-            Z = a.pageX || a.originalEvent.touches[0].pageX, dragY = a.pageY || a.originalEvent.touches[0].pageY;
-            var c = Y - Z, d = Z - Y;
-            if (initDrag = d > config.slider.threshold || c > config.slider.threshold, aa && initDrag && !p) {
-                config.application.touch || a.preventDefault(), ca = !0, Z > Y ? ba || (h = "prev", 
-                b.find(".slide:last-child").prependTo(f), f.css({
-                    "margin-left": -v
-                }), ba = !0) : (O = !0, ba && (h = "prev", b.find(".slide:first-child").appendTo(f), 
-                f.css({
+        sliderActive.on("mousedown touchstart", function(e) {
+            config.application.touch || e.preventDefault(), dragStart = e.pageX || e.originalEvent.touches[0].pageX, 
+            dragX = e.pageX || e.originalEvent.touches[0].pageX, isMultiSlide && (down = !0);
+        }).on("mousemove touchmove", function(e) {
+            dragX = e.pageX || e.originalEvent.touches[0].pageX, dragY = e.pageY || e.originalEvent.touches[0].pageY;
+            var dragNext = dragStart - dragX, dragPrev = dragX - dragStart;
+            if (initDrag = dragPrev > config.slider.threshold || dragNext > config.slider.threshold, 
+            down && initDrag && !animating) {
+                config.application.touch || e.preventDefault(), dragging = !0, dragX > dragStart ? cloned || (slideDirection = "prev", 
+                sliderActive.find(".slide:last-child").prependTo(slideMovable), slideMovable.css({
+                    "margin-left": -sliderWidth
+                }), cloned = !0) : (clone = !0, cloned && (slideDirection = "prev", sliderActive.find(".slide:first-child").appendTo(slideMovable), 
+                slideMovable.css({
                     "margin-left": 0
-                }), ba = !1)), f.css({
-                    left: -(Y - Z)
+                }), cloned = !1)), slideMovable.css({
+                    left: -(dragStart - dragX)
                 });
-                var e = fa >= Z || Z >= ga || dragY <= da || dragY >= ea || c >= v || d >= v;
-                e && (aa = !1, ca = !1, Y - Z > z ? R() : Z - Y > z ? Q() : (ha(), U(0)));
+                var inBounds = sliderLeft >= dragX || dragX >= sliderRight || dragY <= sliderTop || dragY >= sliderBottom || dragNext >= sliderWidth || dragPrev >= sliderWidth;
+                inBounds && (down = !1, dragging = !1, dragStart - dragX > slideTrigger ? slideNext() : dragX - dragStart > slideTrigger ? slidePrev() : (slideKickback(), 
+                slideAction(0)));
             }
-        }).on("mouseleave mouseup touchend", function(a) {
-            config.application.touch || a.preventDefault(), aa = !1, ca && !p && (ca = !1, _ = Z, 
-            Y - _ > z ? R() : -z > Y - _ ? Q() : (ha(), U(0)));
+        }).on("mouseleave mouseup touchend", function(e) {
+            config.application.touch || e.preventDefault(), down = !1, dragging && !animating && (dragging = !1, 
+            dragEnd = dragX, dragStart - dragEnd > slideTrigger ? slideNext() : -slideTrigger > dragStart - dragEnd ? slidePrev() : (slideKickback(), 
+            slideAction(0)));
         });
     }
 }, initSliders = function() {
-    var a = $("[data-slider='true']");
-    a.length && (a.each(function(a, b) {
+    var slider = $("[data-slider='true']");
+    slider.length && (slider.each(function(i, slider) {
         setTimeout(function() {
-            sliderInit(b.id = "slider-" + a);
-        }, 250 * a);
+            sliderInit(slider.id = "slider-" + i);
+        }, 250 * i);
     }).find(".slide").css({
         visibility: "visible"
     }), config.application.debug && console.log("Widget :: Sliders"));
 }, initTables = function() {
-    config.tables.responsive && $("table").length && ($("table").addClass("table-original").each(function(a) {
-        for (var b = $(this), c = b.children("caption"), d = this, e = [], f = [], g = 0, h = d.rows.length; h > g; g++) {
-            for (var i = {}, j = 0, k = d.rows[g].cells.length; k > j; j++) {
-                var l = d.rows[g].cells[j].innerHTML;
-                g > 0 ? i[f[j]] = l : f[j] = l;
+    config.tables.responsive && $("table").length && ($("table").addClass("table-original").each(function(index) {
+        for (var el = $(this), caption = el.children("caption"), table = this, data = [], headers = [], i = 0, rlen = table.rows.length; rlen > i; i++) {
+            for (var rowData = {}, j = 0, clen = table.rows[i].cells.length; clen > j; j++) {
+                var cellData = table.rows[i].cells[j].innerHTML;
+                i > 0 ? rowData[headers[j]] = cellData : headers[j] = cellData;
             }
-            g > 0 && e.push(i);
+            i > 0 && data.push(rowData);
         }
-        for (var m = e.length - 1; m >= 0; m--) {
-            var n = e[m], o = $("<tbody/>");
-            for (var p in n) {
-                var q = '<tr>								   <th scope="row">' + p + "</th>								   <td>" + n[p] + "</td>							   </tr>";
-                o.append(q);
+        for (var l = data.length - 1; l >= 0; l--) {
+            var rowGroup = data[l], tbody = $("<tbody/>");
+            for (var key in rowGroup) {
+                var row = '<tr>								   <th scope="row">' + key + "</th>								   <td>" + rowGroup[key] + "</td>							   </tr>";
+                tbody.append(row);
             }
-            var r = $("<table/>").addClass("table-mirror");
-            c.length && $("<caption/>").text("Row of " + c.text()).prependTo(r), r.append(o).insertAfter(b);
+            var mobileTable = $("<table/>").addClass("table-mirror");
+            caption.length && $("<caption/>").text("Row of " + caption.text()).prependTo(mobileTable), 
+            mobileTable.append(tbody).insertAfter(el);
         }
     }), config.application.debug && console.log("System :: Tables"));
 }, initTagClouds = function() {
-    $("[data-tagcloud]").length && ($("[data-tagcloud]").each(function(a) {
-        var b = $(this), c = a, d = [], e = '<ul class="tagcloud" data-tag="tagcloud-' + c + '"></ul>', f = '<input type="hidden" class="tagcloud-result" data-tag="tagcloud-' + c + '">', g = '<img class="svg icon icon-close" src="' + config.application.root + 'img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-close.png'\">";
-        $(f).insertAfter(b), $(e).insertAfter(b);
-        var h = $(".tagcloud[data-tag='tagcloud-" + c + "']"), i = $("input[data-tag='tagcloud-" + c + "']"), j = function() {
-            d = [];
-            for (var a = 0; a < h.children(".tag").length; a++) d.push(h.children(".tag").eq(a).data("tag"));
-            i.val(d), initSVGs();
+    $("[data-tagcloud]").length && ($("[data-tagcloud]").each(function(i) {
+        var el = $(this), index = i, tagArray = [], tagCloud = '<ul class="tagcloud" data-tag="tagcloud-' + index + '"></ul>', tagHidden = '<input type="hidden" class="tagcloud-result" data-tag="tagcloud-' + index + '">', tagClose = '<img class="svg icon icon-close" src="' + config.application.root + 'img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + "img/icons/icon-close.png'\">";
+        $(tagHidden).insertAfter(el), $(tagCloud).insertAfter(el);
+        var target = $(".tagcloud[data-tag='tagcloud-" + index + "']"), hidden = $("input[data-tag='tagcloud-" + index + "']"), updateArray = function() {
+            tagArray = [];
+            for (var i = 0; i < target.children(".tag").length; i++) tagArray.push(target.children(".tag").eq(i).data("tag"));
+            hidden.val(tagArray), initSVGs();
         };
-        b.on("keydown", function(a) {
-            if (9 === a.keyCode || 13 === a.keyCode) {
-                var c = b.val(), e = '<li class="tag" data-tag="' + c + '">' + c + g + "</li>";
-                return "" !== c && $.inArray(c, d) < 0 && h.addClass("active").append(e), $.inArray(c, d) >= 0 && notify("This tag already exists.", "failure"), 
-                j(), b.val("").focus(), !1;
+        el.on("keydown", function(event) {
+            if (9 === event.keyCode || 13 === event.keyCode) {
+                var value = el.val(), tag = '<li class="tag" data-tag="' + value + '">' + value + tagClose + "</li>";
+                return "" !== value && $.inArray(value, tagArray) < 0 && target.addClass("active").append(tag), 
+                $.inArray(value, tagArray) >= 0 && notify("This tag already exists.", "failure"), 
+                updateArray(), el.val("").focus(), !1;
             }
         }).on("change", function() {
-            var a = b.val(), c = '<li class="tag" data-tag="' + a + '">' + a + g + "</li>";
-            return "" !== a && $.inArray(a, d) < 0 && h.addClass("active").append(c), $.inArray(a, d) >= 0 && notify("This tag already exists.", "failure"), 
-            j(), !1;
-        }), h.on("click", ".tag", function() {
-            $(this).remove(), h.children(".tag").length > 0 ? h.addClass("active") : h.removeClass("active"), 
-            j();
+            var value = el.val(), tag = '<li class="tag" data-tag="' + value + '">' + value + tagClose + "</li>";
+            return "" !== value && $.inArray(value, tagArray) < 0 && target.addClass("active").append(tag), 
+            $.inArray(value, tagArray) >= 0 && notify("This tag already exists.", "failure"), 
+            updateArray(), !1;
+        }), target.on("click", ".tag", function() {
+            $(this).remove(), target.children(".tag").length > 0 ? target.addClass("active") : target.removeClass("active"), 
+            updateArray();
         });
     }), config.application.debug && console.log("Search :: Tag Cloud"));
 }, initTooltips = function() {
     if ($("[data-tooltip]").length) {
-        var a = function(a, b) {
-            var c = $(".tooltip"), d = a.pageX || a.originalEvent.touches[0].pageX, e = a.pageY || a.originalEvent.touches[0].pageY;
-            switch (c.html(b).addClass("active"), config.tooltip.position) {
+        var tooltipPosition = function(evt, content) {
+            var container = $(".tooltip"), cursorX = evt.pageX || evt.originalEvent.touches[0].pageX, cursorY = evt.pageY || evt.originalEvent.touches[0].pageY;
+            switch (container.html(content).addClass("active"), config.tooltip.position) {
               case "left":
-                c.css({
-                    top: e - c.outerHeight() - 10,
-                    left: d - c.outerWidth()
+                container.css({
+                    top: cursorY - container.outerHeight() - 10,
+                    left: cursorX - container.outerWidth()
                 });
                 break;
 
               case "center":
-                c.css({
-                    top: e - c.outerHeight() - 10,
-                    left: d - c.outerWidth() / 2 - 5
+                container.css({
+                    top: cursorY - container.outerHeight() - 10,
+                    left: cursorX - container.outerWidth() / 2 - 5
                 });
                 break;
 
               case "right":
-                c.css({
-                    top: e - c.outerHeight() - 10,
-                    left: d
+                container.css({
+                    top: cursorY - container.outerHeight() - 10,
+                    left: cursorX
                 });
                 break;
 
               default:
-                c.css({
-                    top: e - c.outerHeight() - 10,
-                    left: d - c.outerWidth() / 2 - 5
+                container.css({
+                    top: cursorY - container.outerHeight() - 10,
+                    left: cursorX - container.outerWidth() / 2 - 5
                 });
             }
-            var f = {
-                left: c.offset().left,
-                right: c.offset().left + c.outerWidth()
-            }, g = {
+            var tooltip = {
+                left: container.offset().left,
+                right: container.offset().left + container.outerWidth()
+            }, boundaries = {
                 left: $(".wrapper").offset().left + 20,
                 right: $(".wrapper").offset().left + $(".wrapper").outerWidth() - 20
             };
-            config.tooltip.bound && (f.left <= g.left && c.css({
-                left: g.left
-            }), f.right >= g.right && c.css({
-                left: g.right - c.outerWidth()
+            config.tooltip.bound && (tooltip.left <= boundaries.left && container.css({
+                left: boundaries.left
+            }), tooltip.right >= boundaries.right && container.css({
+                left: boundaries.right - container.outerWidth()
             }));
         };
         $("[data-tooltip]").each(function() {
-            var b = $(this), c = b.data("tooltip");
-            config.application.touch ? (b.on("click", function(b) {
-                $(".tooltip").remove(), $("body").prepend('<div class="tooltip"></div>'), a(b, c);
-            }), $("html, body").on("click", function(a) {
-                $(a.target).closest("[data-tooltip]").length || $(".tooltip").remove();
-            })) : b.on("mouseenter", function(b) {
-                $("body").prepend('<div class="tooltip"></div>'), $(this).on("mousemove", function(b) {
-                    a(b, c);
+            var el = $(this), tooltipData = el.data("tooltip");
+            config.application.touch ? (el.on("click", function(event) {
+                $(".tooltip").remove(), $("body").prepend('<div class="tooltip"></div>'), tooltipPosition(event, tooltipData);
+            }), $("html, body").on("click", function(event) {
+                $(event.target).closest("[data-tooltip]").length || $(".tooltip").remove();
+            })) : el.on("mouseenter", function(event) {
+                $("body").prepend('<div class="tooltip"></div>'), $(this).on("mousemove", function(event) {
+                    tooltipPosition(event, tooltipData);
                 });
             }).on("mouseleave", function() {
                 $(".tooltip").remove();
@@ -5655,29 +5848,30 @@ var initAutocomplete = function() {
         }), config.application.debug && console.log("Widget :: Tooltips");
     }
 }, initVideo = function() {
-    var a = !1, b = !1, c = function() {
+    var ytAPIVideoReady = !1, ytAPIFrameReady = !1, ytFramePlayers = function() {
         if ($("iframe[src*='youtube']").length) {
-            var a = function(a) {
-                function b() {
-                    e.addClass("loaded"), g.off().on("click", function() {
-                        e.hasClass("playing") ? d.pauseVideo() : (e.addClass("playing"), config.application.touch || d.playVideo());
-                    }), f.off().on("click", function() {
-                        e.addClass("playing"), config.application.touch || d.playVideo();
+            var ytFrameBuild = function(name) {
+                function onPlayerReady() {
+                    wrapper.addClass("loaded"), button.off().on("click", function() {
+                        wrapper.hasClass("playing") ? currentPlayer.pauseVideo() : (wrapper.addClass("playing"), 
+                        config.application.touch || currentPlayer.playVideo());
+                    }), preview.off().on("click", function() {
+                        wrapper.addClass("playing"), config.application.touch || currentPlayer.playVideo();
                     });
                 }
-                function c(a) {
-                    (a.data === YT.PlayerState.ENDED || a.data === YT.PlayerState.PAUSED) && e.removeClass("playing");
+                function onPlayerStateChange(event) {
+                    (event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED) && wrapper.removeClass("playing");
                 }
-                var d = new YT.Player(a, {
+                var currentPlayer = new YT.Player(name, {
                     events: {
-                        onReady: b,
-                        onStateChange: c
+                        onReady: onPlayerReady,
+                        onStateChange: onPlayerStateChange
                     }
-                }), e = $("." + a), f = e.children(".video-thumb"), g = e.children(".video-button");
+                }), wrapper = $("." + name), preview = wrapper.children(".video-thumb"), button = wrapper.children(".video-button");
             };
-            $("iframe[src*='youtube']").each(function(b) {
+            $("iframe[src*='youtube']").each(function(i) {
                 if (!$(this).parents(".video-frame").length) {
-                    var c = $(this), d = "ytFramePlayer-" + b, e = c.attr("src").split("/"), f = e[e.length - 1].split("?")[0], g = c.attr("data-video-thumb") && "" !== c.attr("data-video-thumb") ? c.data("video-thumb") : "https://img.youtube.com/vi/" + f + "/hqdefault.jpg", h = {
+                    var el = $(this), name = "ytFramePlayer-" + i, videoSRC = el.attr("src").split("/"), videoID = videoSRC[videoSRC.length - 1].split("?")[0], videoThumb = el.attr("data-video-thumb") && "" !== el.attr("data-video-thumb") ? el.data("video-thumb") : "https://img.youtube.com/vi/" + videoID + "/hqdefault.jpg", playerVars = {
                         rel: 0,
                         wmode: "transparent",
                         modestbranding: 1,
@@ -5686,26 +5880,27 @@ var initAutocomplete = function() {
                         showinfo: 0,
                         controls: 1,
                         autohide: 1
-                    }, i = '<div class="video-frame ' + d + '">									<div class="video-overlay"></div>									<img class="video-loader" src="' + config.application.root + 'img/loader.gif" alt="Video loader">									<div class="video-thumb" style="background: url(' + g + ');">&nbsp;</div>									<div class="video-button">										<img class="svg icon icon-play" src="' + config.application.root + 'img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-play.png\'">										<img class="svg icon icon-pause" src="' + config.application.root + 'img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-pause.png\'">									</div>									<iframe id="' + d + '" src="' + c.attr("src") + "?" + serialize(h) + '" frameborder="0" allowfullscreen></iframe>								</div>';
-                    c.replaceWith(i), initSVGs(), a(d);
+                    }, widget = '<div class="video-frame ' + name + '">									<div class="video-overlay"></div>									<img class="video-loader" src="' + config.application.root + 'img/loader.gif" alt="Video loader">									<div class="video-thumb" style="background: url(' + videoThumb + ');">&nbsp;</div>									<div class="video-button">										<img class="svg icon icon-play" src="' + config.application.root + 'img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-play.png\'">										<img class="svg icon icon-pause" src="' + config.application.root + 'img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-pause.png\'">									</div>									<iframe id="' + name + '" src="' + el.attr("src") + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>								</div>';
+                    el.replaceWith(widget), initSVGs(), ytFrameBuild(name);
                 }
             });
         }
-    }, d = function() {
+    }, ytVideoPlayers = function() {
         if ($(".video-frame[data-video-service='youtube']").length) {
-            var a = function(a, b) {
-                function c() {
-                    f.addClass("loaded"), h.off().on("click", function() {
-                        f.hasClass("playing") ? e.pauseVideo() : (f.addClass("playing"), config.application.touch || e.playVideo());
-                    }), g.off().on("click", function() {
-                        f.addClass("playing"), config.application.touch || e.playVideo();
+            var ytVideoBuild = function(name, videoID) {
+                function onPlayerReady() {
+                    wrapper.addClass("loaded"), button.off().on("click", function() {
+                        wrapper.hasClass("playing") ? currentPlayer.pauseVideo() : (wrapper.addClass("playing"), 
+                        config.application.touch || currentPlayer.playVideo());
+                    }), preview.off().on("click", function() {
+                        wrapper.addClass("playing"), config.application.touch || currentPlayer.playVideo();
                     });
                 }
-                function d(a) {
-                    (a.data === YT.PlayerState.ENDED || a.data === YT.PlayerState.PAUSED) && f.removeClass("playing");
+                function onPlayerStateChange(event) {
+                    (event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED) && wrapper.removeClass("playing");
                 }
-                var e = new YT.Player(a, {
-                    videoId: b,
+                var currentPlayer = new YT.Player(name, {
+                    videoId: videoID,
                     width: "1280",
                     height: "600",
                     playerVars: {
@@ -5719,100 +5914,102 @@ var initAutocomplete = function() {
                         autohide: 1
                     },
                     events: {
-                        onReady: c,
-                        onStateChange: d
+                        onReady: onPlayerReady,
+                        onStateChange: onPlayerStateChange
                     }
-                }), f = $("." + a), g = f.children(".video-thumb"), h = f.children(".video-button");
+                }), wrapper = $("." + name), preview = wrapper.children(".video-thumb"), button = wrapper.children(".video-button");
             };
-            $(".video-frame[data-video-service='youtube']").each(function(b) {
-                var c = $(this), d = "ytVideoPlayer-" + b, e = c.data("video-id"), f = c.attr("data-video-thumb") && "" !== c.attr("data-video-thumb") ? c.data("video-thumb") : "https://img.youtube.com/vi/" + e + "/hqdefault.jpg", g = '<div class="video-overlay"></div>								<img class="video-loader" src="' + config.application.root + 'img/loader.gif" alt="Video loader">								<div class="video-thumb" style="background: url(' + f + ');">&nbsp;</div>								<div class="video-button">									<img class="svg icon icon-play" src="' + config.application.root + 'img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-play.png\'">									<img class="svg icon icon-pause" src="' + config.application.root + 'img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-pause.png\'">								</div>								<div id="' + d + '"></div>';
-                c.html("").addClass(d).append(g), c.children(".video-thumb").css({
-                    background: "url(" + f + ")"
-                }), initSVGs(), a(d, e);
+            $(".video-frame[data-video-service='youtube']").each(function(i) {
+                var el = $(this), name = "ytVideoPlayer-" + i, videoID = el.data("video-id"), videoThumb = el.attr("data-video-thumb") && "" !== el.attr("data-video-thumb") ? el.data("video-thumb") : "https://img.youtube.com/vi/" + videoID + "/hqdefault.jpg", widget = '<div class="video-overlay"></div>								<img class="video-loader" src="' + config.application.root + 'img/loader.gif" alt="Video loader">								<div class="video-thumb" style="background: url(' + videoThumb + ');">&nbsp;</div>								<div class="video-button">									<img class="svg icon icon-play" src="' + config.application.root + 'img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-play.png\'">									<img class="svg icon icon-pause" src="' + config.application.root + 'img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-pause.png\'">								</div>								<div id="' + name + '"></div>';
+                el.html("").addClass(name).append(widget), el.children(".video-thumb").css({
+                    background: "url(" + videoThumb + ")"
+                }), initSVGs(), ytVideoBuild(name, videoID);
             });
         }
     };
-    ("undefined" == typeof YT || "undefined" == typeof YT.Player) && (b ? c() : (window.onYouTubeIframeAPIReady = function() {
-        b = !0, c();
-    }, $.getScript("https://www.youtube.com/iframe_api")), a ? d() : (window.onYouTubePlayerAPIReady = function() {
-        a = !0, d();
+    ("undefined" == typeof YT || "undefined" == typeof YT.Player) && (ytAPIFrameReady ? ytFramePlayers() : (window.onYouTubeIframeAPIReady = function() {
+        ytAPIFrameReady = !0, ytFramePlayers();
+    }, $.getScript("https://www.youtube.com/iframe_api")), ytAPIVideoReady ? ytVideoPlayers() : (window.onYouTubePlayerAPIReady = function() {
+        ytAPIVideoReady = !0, ytVideoPlayers();
     }, $.getScript("https://www.youtube.com/player_api")));
-    var e = function() {
+    var vimFramePlayers = function() {
         if ($("iframe[src*='vimeo']").length) {
-            var a = function(a) {
-                var b = $("#" + a), c = $("." + a), d = c.children(".video-thumb"), e = c.children(".video-button"), f = function() {
-                    c.addClass("loaded"), e.off().on("click", function() {
-                        c.hasClass("playing") ? b.vimeo("pause") : (c.addClass("playing"), config.application.touch || b.vimeo("play"));
-                    }), d.off().on("click", function() {
-                        c.addClass("playing"), config.application.touch || b.vimeo("play");
+            var vimFrameBuild = function(name) {
+                var currentPlayer = $("#" + name), wrapper = $("." + name), preview = wrapper.children(".video-thumb"), button = wrapper.children(".video-button"), onPlayerReady = function() {
+                    wrapper.addClass("loaded"), button.off().on("click", function() {
+                        wrapper.hasClass("playing") ? currentPlayer.vimeo("pause") : (wrapper.addClass("playing"), 
+                        config.application.touch || currentPlayer.vimeo("play"));
+                    }), preview.off().on("click", function() {
+                        wrapper.addClass("playing"), config.application.touch || currentPlayer.vimeo("play");
                     });
-                }, g = function() {
-                    c.removeClass("playing");
+                }, onPlayerStop = function() {
+                    wrapper.removeClass("playing");
                 };
-                b.on("load", f).on("pause finish", g);
+                currentPlayer.on("load", onPlayerReady).on("pause finish", onPlayerStop);
             };
-            $("iframe[src*='vimeo']").each(function(b) {
+            $("iframe[src*='vimeo']").each(function(i) {
                 if (!$(this).parents(".video-frame").length) {
-                    var c = $(this), d = "vimFramePlayer-" + b, e = c.attr("src").split("/"), f = e[e.length - 1].split("?")[0], g = {
+                    var el = $(this), name = "vimFramePlayer-" + i, videoSRC = el.attr("src").split("/"), videoID = videoSRC[videoSRC.length - 1].split("?")[0], playerVars = {
                         api: 1,
-                        player_id: d
-                    }, h = '<div class="video-frame ' + d + '">										<div class="video-overlay"></div>										<img class="video-loader" src="' + config.application.root + 'img/loader.gif" alt="Video loader">										<div class="video-thumb">&nbsp;</div>										<div class="video-button">											<img class="svg icon icon-play" src="' + config.application.root + 'img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-play.png\'">											<img class="svg icon icon-pause" src="' + config.application.root + 'img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-pause.png\'">										</div>										<iframe id="' + d + '" src="https://player.vimeo.com/video/' + f + "?" + serialize(g) + '" frameborder="0" allowfullscreen></iframe>									</div>';
-                    if (c.wrap(h), initSVGs(), c.attr("data-video-thumb") && "" !== c.attr("data-video-thumb")) {
-                        var i = c.data("video-thumb");
-                        c.parents(".video-frame").children(".video-thumb").css({
-                            background: "url(" + i + ")"
-                        }), c.remove();
+                        player_id: name
+                    }, widget = '<div class="video-frame ' + name + '">										<div class="video-overlay"></div>										<img class="video-loader" src="' + config.application.root + 'img/loader.gif" alt="Video loader">										<div class="video-thumb">&nbsp;</div>										<div class="video-button">											<img class="svg icon icon-play" src="' + config.application.root + 'img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-play.png\'">											<img class="svg icon icon-pause" src="' + config.application.root + 'img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-pause.png\'">										</div>										<iframe id="' + name + '" src="https://player.vimeo.com/video/' + videoID + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>									</div>';
+                    if (el.wrap(widget), initSVGs(), el.attr("data-video-thumb") && "" !== el.attr("data-video-thumb")) {
+                        var videoThumb = el.data("video-thumb");
+                        el.parents(".video-frame").children(".video-thumb").css({
+                            background: "url(" + videoThumb + ")"
+                        }), el.remove();
                     } else {
-                        var j = function(a) {
-                            var b = a[0].thumbnail_large;
-                            c.parents(".video-frame").children(".video-thumb").css({
-                                background: "url(" + b + ")"
-                            }), c.remove();
+                        var build = function(data) {
+                            var videoThumb = data[0].thumbnail_large;
+                            el.parents(".video-frame").children(".video-thumb").css({
+                                background: "url(" + videoThumb + ")"
+                            }), el.remove();
                         };
-                        requestData("https://vimeo.com/api/v2/video/" + f + ".json", "GET", j);
+                        requestData("https://vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
                     }
-                    a(d);
+                    vimFrameBuild(name);
                 }
             });
         }
-    }, f = function() {
+    }, vimVideoPlayers = function() {
         if ($(".video-frame[data-video-service='vimeo']").length) {
-            var a = function(a) {
-                var b = $("#" + a), c = $("." + a), d = c.children(".video-thumb"), e = c.children(".video-button"), f = function() {
-                    c.addClass("loaded"), e.off().on("click", function() {
-                        c.hasClass("playing") ? b.vimeo("pause") : (c.addClass("playing"), config.application.touch || b.vimeo("play"));
-                    }), d.off().on("click", function() {
-                        c.addClass("playing"), config.application.touch || b.vimeo("play");
+            var vimVideoBuild = function(name) {
+                var currentPlayer = $("#" + name), wrapper = $("." + name), preview = wrapper.children(".video-thumb"), button = wrapper.children(".video-button"), onPlayerReady = function() {
+                    wrapper.addClass("loaded"), button.off().on("click", function() {
+                        wrapper.hasClass("playing") ? currentPlayer.vimeo("pause") : (wrapper.addClass("playing"), 
+                        config.application.touch || currentPlayer.vimeo("play"));
+                    }), preview.off().on("click", function() {
+                        wrapper.addClass("playing"), config.application.touch || currentPlayer.vimeo("play");
                     });
-                }, g = function() {
-                    c.removeClass("playing");
+                }, onPlayerStop = function() {
+                    wrapper.removeClass("playing");
                 };
-                b.on("load", f).on("pause finish", g);
+                currentPlayer.on("load", onPlayerReady).on("pause finish", onPlayerStop);
             };
-            $(".video-frame[data-video-service='vimeo']").each(function(b) {
-                var c = $(this), d = "vimVideoPlayer-" + b, e = c.data("video-id"), f = {
+            $(".video-frame[data-video-service='vimeo']").each(function(i) {
+                var el = $(this), name = "vimVideoPlayer-" + i, videoID = el.data("video-id"), playerVars = {
                     api: 1,
-                    player_id: d
-                }, g = '<div class="video-overlay"></div>								<img class="video-loader" src="' + config.application.root + 'img/loader.gif" alt="Video loader">								<div class="video-thumb">&nbsp;</div>								<div class="video-button">									<img class="svg icon icon-play" src="' + config.application.root + 'img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-play.png\'">									<img class="svg icon icon-pause" src="' + config.application.root + 'img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-pause.png\'">								</div>								<iframe id="' + d + '" src="https://player.vimeo.com/video/' + e + "?" + serialize(f) + '" frameborder="0" allowfullscreen></iframe>';
-                if (c.html("").addClass(d).append(g), initSVGs(), c.attr("data-video-thumb") && "" !== c.attr("data-video-thumb")) {
-                    var h = c.data("video-thumb");
-                    c.children(".video-thumb").css({
-                        background: "url(" + h + ")"
+                    player_id: name
+                }, widget = '<div class="video-overlay"></div>								<img class="video-loader" src="' + config.application.root + 'img/loader.gif" alt="Video loader">								<div class="video-thumb">&nbsp;</div>								<div class="video-button">									<img class="svg icon icon-play" src="' + config.application.root + 'img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-play.png\'">									<img class="svg icon icon-pause" src="' + config.application.root + 'img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-pause.png\'">								</div>								<iframe id="' + name + '" src="https://player.vimeo.com/video/' + videoID + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>';
+                if (el.html("").addClass(name).append(widget), initSVGs(), el.attr("data-video-thumb") && "" !== el.attr("data-video-thumb")) {
+                    var videoThumb = el.data("video-thumb");
+                    el.children(".video-thumb").css({
+                        background: "url(" + videoThumb + ")"
                     });
                 } else {
-                    var i = function(a) {
-                        var b = a[0].thumbnail_large;
-                        c.children(".video-thumb").css({
-                            background: "url(" + b + ")"
+                    var build = function(data) {
+                        var videoThumb = data[0].thumbnail_large;
+                        el.children(".video-thumb").css({
+                            background: "url(" + videoThumb + ")"
                         });
                     };
-                    requestData("https://vimeo.com/api/v2/video/" + e + ".json", "GET", i);
+                    requestData("https://vimeo.com/api/v2/video/" + videoID + ".json", "GET", build);
                 }
-                a(d);
+                vimVideoBuild(name);
             });
         }
     };
-    e(), f(), config.application.debug && console.log("Widget :: Videos");
+    vimFramePlayers(), vimVideoPlayers(), config.application.debug && console.log("Widget :: Videos");
 }, config = {
     application: {
         touch: Modernizr.touch && !device.desktop(),
@@ -5884,34 +6081,35 @@ var initAutocomplete = function() {
         showInteraction: !1
     }
 }, initGlobal = function() {
-    var a = cookieSystem.get("firstVisit");
-    null === a && (cookieNotify = !0, cookieSystem.set("firstVisit", "yes", 365), notify(config.cookie.message, config.cookie.delay));
-    for (var b, c = this.location.href, d = c.split("/"), e = $("nav"), f = 0; f < d.length; f++) b = d[d.length - 1].split(".")[0];
-    e.children("a").removeClass("active");
-    b.length ? e.children("a[href*=" + b + "]").addClass("active") : e.children("a").eq(0).addClass("active");
+    var firstVisitCookie = cookieSystem.get("firstVisit");
+    null === firstVisitCookie && (cookieNotify = !0, cookieSystem.set("firstVisit", "yes", 365), 
+    notify(config.cookie.message, config.cookie.delay));
+    for (var page, url = this.location.href, section = url.split("/"), nav = $("nav"), i = 0; i < section.length; i++) page = section[section.length - 1].split(".")[0];
+    nav.children("a").removeClass("active");
+    page.length ? nav.children("a[href*=" + page + "]").addClass("active") : nav.children("a").eq(0).addClass("active");
     if ($(".nav-trigger").on("click", function() {
         $("header").toggleClass("active");
     }), $(".nav-close").on("click", function() {
         $("header").removeClass("active");
-    }), $("html, body").on("click", function(a) {
-        $(a.target).closest("header").length || $("header").removeClass("active");
+    }), $("html, body").on("click", function(event) {
+        $(event.target).closest("header").length || $("header").removeClass("active");
     }), $(".main a.anchor").length > 1) {
         $(".sidebar").append("<nav></nav>").show();
-        var g;
-        $(".main a.anchor").each(function(a) {
-            var b = $(this), c = b.attr("id"), d = b.next(), e = d.html(), f = "H2" == d.prop("nodeName") ? "core" : "sub";
-            "core" == f && (g = c, $(".sidebar nav").append('<div class="container" data-type="' + g + '"></div>')), 
-            $(".sidebar .container[data-type=" + g + "]").append('<a href="#' + c + '" class="' + f + '" data-container="' + g + '">' + e + "</a>");
+        var container;
+        $(".main a.anchor").each(function(i) {
+            var el = $(this), id = el.attr("id"), target = el.next(), name = target.html(), type = "H2" == target.prop("nodeName") ? "core" : "sub";
+            "core" == type && (container = id, $(".sidebar nav").append('<div class="container" data-type="' + container + '"></div>')), 
+            $(".sidebar .container[data-type=" + container + "]").append('<a href="#' + id + '" class="' + type + '" data-container="' + container + '">' + name + "</a>");
         });
     }
     $(".sidebar-trigger").on("click", function() {
         $(".main").hasClass("sidebar-on") ? $(".main").removeClass("sidebar-on") : $(".main").addClass("sidebar-on");
-    }), $("html, body").on("click", function(a) {
-        !$(a.target).closest(".sidebar").length && $(".main").hasClass("sidebar-on") && $(".main").removeClass("sidebar-on");
-    }), $(".sidebar a").on("click", function(a) {
+    }), $("html, body").on("click", function(event) {
+        !$(event.target).closest(".sidebar").length && $(".main").hasClass("sidebar-on") && $(".main").removeClass("sidebar-on");
+    }), $(".sidebar a").on("click", function(i) {
         if ($(this).hasClass("core")) {
-            var b = $(this).data("container");
-            $(".sidebar .container").removeClass("selected"), $(".sidebar .container[data-type=" + b + "]").addClass("selected");
+            var container = $(this).data("container");
+            $(".sidebar .container").removeClass("selected"), $(".sidebar .container[data-type=" + container + "]").addClass("selected");
         }
         $(".sidebar a").removeClass("active"), $(this).addClass("active"), $(".main").removeClass("sidebar-on");
     });

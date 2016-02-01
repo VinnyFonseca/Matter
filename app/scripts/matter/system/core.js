@@ -252,29 +252,31 @@ var loadScript = function(src, callback) {
 
 var anchorClicked;
 
+var scrollTo = function(anchor) {
+	if ( anchor === "#") {
+		if ( config.application.debug ) console.log("System :: Link blocked");
+	} else {
+		if ( $(anchor).length ) {
+			anchorClicked = true;
+
+			$("html, body").animate({
+				scrollTop: $(anchor).offset().top - 86
+			}, {
+				duration: 1000,
+				queue: false,
+				complete: function() { anchorClicked = false; }
+			});
+
+			return false;
+		}
+	}
+}
+
 var initLinks = function() {
 	$(document).on("click", "a[href^='#']", function(event) {
 		var link = $.attr(this, "href");
-
 		event.preventDefault();
-
-		if ( link === "#") {
-			if ( config.application.debug ) console.log("System :: Link blocked");
-		} else {
-			if ( $(link).length ) {
-				anchorClicked = true;
-
-				$("html, body").animate({
-					scrollTop: $(link).offset().top - 40
-				}, {
-					duration: 1000,
-					queue: false,
-					complete: function() { anchorClicked = false; }
-				});
-
-				return false;
-			}
-		}
+		scrollTo(link);
 	});
 
 	if ( config.application.debug ) console.log("System :: Links");

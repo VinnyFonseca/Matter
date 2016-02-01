@@ -79,7 +79,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: 'app/markup',
-					src: ['*.html'],
+					src: ['**/*.html', '!include/**/*.html'],
 					dest: 'www'
 				}]
 			}
@@ -159,6 +159,7 @@ module.exports = function(grunt) {
 
 		uglify: {
 			options: {
+				mangle: false,
 				beautify: true,
 				sourceMap: true,
 				sourceMapIncludeSources: true,
