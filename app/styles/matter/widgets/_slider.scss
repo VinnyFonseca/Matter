@@ -9,6 +9,21 @@
 	width: 100%;
 
 
+	$maxSlides: 10;
+	@for $i from 1 through $maxSlides {
+		&[data-display="#{$i}"] {
+			width: auto;
+			margin-left: floor(- $spacing / 2);
+			margin-right: floor(- $spacing / 2);
+
+			.slide {
+				padding: 0 floor($spacing / 2);
+				width: 100% / $i;
+			}
+		}
+	}
+
+
 	.slider-container {
 		display: block;
 		position: relative;

@@ -5426,8 +5426,11 @@ var initAutocomplete = function() {
                     var object = JSONobjects[i], property = object[parameter];
                     if (property instanceof Array) for (var k = 0; k < property.length; k++) $.inArray(property[k], tempArray) < 0 && tempArray.push(property[k]); else $.inArray(property, tempArray) < 0 && tempArray.push(property);
                 }
-                var placeholder = '<option value="" default selected>Select ' + parameter + "...</option>";
-                target.append(placeholder), tempArray.sort();
+                if (!target.find("option[default]").length) {
+                    var placeholder = '<option value="" default selected>' + parameter + "</option>";
+                    target.append(placeholder);
+                }
+                tempArray.sort();
                 for (var j = 0; j < tempArray.length; j++) {
                     var option = '<option value="' + tempArray[j] + '">' + tempArray[j] + "</option>";
                     target.append(option);

@@ -24,13 +24,11 @@
 
 	.main {
 		&.docs {
-			padding-left: 0;
+			margin-left: 0;
 		}
 
 		.sidebar {
-			left: auto;
-			right: 0;
-			transform: translateX($sidebarWidth);
+			transform: translateX(-$sidebarWidth);
 
 			.sidebar-trigger {
 				display: block !important;

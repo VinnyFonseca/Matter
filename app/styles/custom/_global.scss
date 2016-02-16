@@ -113,7 +113,7 @@ $sidebarWidth: 300px;
 	}
 
 	&.sidebar-on {
-		left: - $sidebarWidth / 4;
+		left: $sidebarWidth / 2;
 
 		.wrapper {
 			opacity: 0.15;
@@ -123,13 +123,12 @@ $sidebarWidth: 300px;
 			transform: translateX(0);
 
 			.sidebar-trigger {
-				transform: translateX(46px);
 				border-left-width: 0;
 				border-right-width: 1px;
 				border-radius: 0 $radius $radius 0;
 
 				&:before {
-					content: "\00BB" !important;
+					content: "\00AB" !important;
 				}
 			}
 		}
@@ -163,7 +162,7 @@ $sidebarWidth: 300px;
 		margin-top: -23px;
 		width: 46px;
 		height: 46px;
-		left: -46px;
+		right: -46px;
 		top: 50%;
 		color: $cf;
 		font-size: $fontSize * 2 + rem;
@@ -184,7 +183,7 @@ $sidebarWidth: 300px;
 			background-color: $color2;
 		}
 		&:before {
-			content: "\00AB";
+			content: "\00BB";
 		}
 	}
 
@@ -254,16 +253,6 @@ $sidebarWidth: 300px;
 			border-radius: $radius;
 			background-color: $c4;
 
-			&:hover,
-			&.active {
-				border-top: 1px solid $color1;
-				background-color: $color1;
-			}
-			&:active {
-				border-top: 1px solid $color2;
-				background-color: $color2;
-			}
-
 			&.core {
 				font-size: $fontSize + rem;
 			}
@@ -272,10 +261,21 @@ $sidebarWidth: 300px;
 				margin-left: 22px;
 				padding: 5px 10px;
 				font-size: $fontSize / 1.1 + rem;
+				background-color: $c5;
 
 				&.visible {
 					display: block;
 				}
+			}
+
+			&:hover,
+			&.active {
+				border-top: 1px solid $color1;
+				background-color: $color1;
+			}
+			&:active {
+				border-top: 1px solid $color2;
+				background-color: $color2;
 			}
 		}
 	}
@@ -297,7 +297,12 @@ pre {
 	.file { font-style: italic; }
 	.system { color: #FF6666; }
 	.emphasis { color: #CCAAEE; }
-	i { color: $c6; }
+	i {
+		margin-right: 3px;
+		color: $c5;
+		font-style: normal;
+		font-size: $fontSize / 1.35 + rem;
+	}
 }
 
 
@@ -400,28 +405,6 @@ pre {
 			width: 100%;
 			height: 100%;
 			@include svgColor($color1);
-		}
-	}
-}
-
-
-
-.slider {
-	&.full {
-		.slide {
-			width: 100%;
-		}
-	}
-	&.third {
-		.slide {
-			margin: 0 1%;
-			width: 31.333%;
-		}
-	}
-	&.fifth {
-		.slide {
-			margin: 0 0.5%;
-			width: 19%;
 		}
 	}
 }

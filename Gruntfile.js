@@ -148,7 +148,7 @@ module.exports = function(grunt) {
 			sites: {
 				"styles": {
 					"glob": "www/styles/build.css",
-					"dest": "app/styles/styleguide"
+					"dest": "www/styles/styleguide"
 				}
 			}
 		},

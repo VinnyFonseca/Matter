@@ -100,8 +100,10 @@ var initSearch = function() {
 						}
 					}
 
-					var placeholder = '<option value="" default selected>Select ' + parameter + '...</option>';
-					target.append(placeholder);
+					if ( !target.find("option[default]").length ) {
+						var placeholder = '<option value="" default selected>' + parameter + '</option>';
+						target.append(placeholder);
+					}
 
 					tempArray.sort();
 
