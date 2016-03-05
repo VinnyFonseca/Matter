@@ -22,24 +22,28 @@ var Timer = function(callback, delay) {
 	this.resume();
 }
 
-var notify = function(message, delay, tone) {
-	delay = typeof delay === "undefined" || isNaN(delay) || delay === "" ? config.notification.delay : delay;
-	tone = typeof tone === "undefined" || tone === "" ? config.notification.tone : tone;
+var notify = function(title, message, delay, tone) {
+	title = typeof title === "undefined" || title === "undefined" || title === "" ? matter.config.notification.title : title;
+	delay = typeof delay === "undefined" || delay === "undefined" || isNaN(delay) || delay === "" ? matter.config.notification.delay : delay;
+	tone = typeof tone === "undefined" || tone === "undefined" || tone === "" ? matter.config.notification.tone : tone;
 
 	var notifyShow = function() {
 		var notification = '<div class="notification notification-' + notificationCount + '" data-type="' + tone + '">\
-								<span class="notification-message">' + message + '</span>\
-								<div class="notification-close">\
-									<img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" onerror="this.onerror=null;this.src=\'img/icons/icon-close.png\'">\
-								</div>\
+								<img class="svg icon icon-' + tone + '" src="/img/icons/icon-' + tone + '.svg" width="24" height="24" onerror="this.onerror=null;this.src=\'/img/icons/icon-' + tone + '.png\'">\
+								<span class="notification-title">' + title + '</span>\
+								<span class="notification-message">\
+									' + message + '\
+								</span>\
 							</div>';
 
 		$(".notification-wrapper").append(notification);
+		matter.svg.init();
 		var el = $(".notification-" + notificationCount);
 
 		var clear = function() {
 			el.removeClass("active");
 			setTimeout(function() {
+				$(".notification-wrapper").removeClass("cookie");
 				el.remove();
 			}, 300);
 		}
@@ -47,7 +51,6 @@ var notify = function(message, delay, tone) {
 		if ( delay !== 0 ) timer = new Timer(clear, delay);
 
 		el
-			.addClass(tone)
 			.off("mouseenter")
 			.on("mouseenter", function() {
 				if ( delay !== 0 ) timer.pause();
@@ -59,7 +62,7 @@ var notify = function(message, delay, tone) {
 			.on("click", clear);
 
 		if ( cookieNotify ) {
-			el.addClass("cookie");
+			$(".notification-wrapper").addClass("cookie");
 			cookieNotify = false;
 		}
 
@@ -69,26 +72,27 @@ var notify = function(message, delay, tone) {
 
 		notificationCount++;
 
-		if ( config.application.debug ) console.log("Trigger :: Notification | Delay: " + delay);
+		if ( matter.config.application.debug ) console.log("Trigger :: Notification | Delay: " + delay);
 	}
 
-	if ( config.notification.active ) {
+	if ( matter.config.notification.active ) {
 		notifyShow();
 	} else {
-		if ( config.cookie.active ) notifyShow();
+		if ( matter.config.cookie.active ) notifyShow();
 	}
 }
 
 var initNotifications = function() {
 	if ( $("[data-notification]").length ) {
 		$("[data-notification]").on("click", function() {
-			var message = $(this).attr("data-message"),
+			var title = $(this).attr("data-title"),
+				message = $(this).attr("data-message"),
 				delay = parseInt($(this).attr("data-delay")),
 				tone = $(this).attr("data-tone");
 
-			notify(message, delay, tone);
+			notify(title, message, delay, tone);
 		});
 
-		if ( config.application.debug ) console.log("Widget :: Notifications");
+		if ( matter.config.application.debug ) console.log("Widget :: Notifications");
 	}
 }

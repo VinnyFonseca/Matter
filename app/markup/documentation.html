@@ -1,12 +1,17 @@
-<!--#include virtual="include/head.html" -->
-<!--#include virtual="include/header.html" -->
+<!-- #include virtual="include/head.html" -->
+<!-- #include virtual="include/header.html" -->
 
 
 <div class="main docs">
 	<div class="sidebar">
-		<div class="sidebar-trigger"></div>
+		<div class="sidebar-trigger">
+			<img class="svg icon icon-caret-right" src="/img/icons/icon-caret-right.svg" width="16" height="16" onerror="this.onerror=null;this.src='/img/icons/icon-caret-right.png'" alt="CTA icon">
+		</div>
 
-		<a href="/"><div class="logo"><img src="img/logo.png"></div> <h2>Matter</h2></a>
+		<a href="/">
+			<div class="logo"><img src="img/logo.png"></div>
+			<h2>Matter</h2>
+		</a>
 
 		<h4>Table of Contents</h4>
 	</div>
@@ -458,13 +463,13 @@
 		</p>
 
 		<div class="icon-wrapper">
-			<div class='icon-container' data-icon='Arrow Up' data-tooltip='Arrow Up'>
+			<div class='icon-wrapper-item' data-icon='Arrow Up' data-tooltip='Arrow Up'>
 				<img class='svg icon icon-arrow-up' src='/img/icons/icon-arrow-up.svg' width='16' height='16' onerror='this.onerror=null;this.src=\'/img/icons/icon-arrow-up.png\'' alt='CTA icon'>
 			</div>
 		</div>
 
 <pre>
-&lt;img class="svg icon icon-<span class="emphasis">name</span>" src="img/icons/icon-<span class="emphasis">name</span>.svg" onerror="this.onerror=null;this.src='img/icons/icon-<span class="emphasis">name</span>.png'"&gt;
+&lt;img class="svg icon icon-<span class="emphasis">name</span>" src="/img/icons/icon-<span class="emphasis">name</span>.svg" onerror="this.onerror=null;this.src='/img/icons/icon-<span class="emphasis">name</span>.png'"&gt;
 </pre>
 
 
@@ -750,9 +755,8 @@
 
 		<dl>
 			<dt>
-				<strong>ul</strong>
+				<strong>ul</strong> <small>(Unordered List)</small>
 			</dt>
-			<p>Unordered list. General purpose.</p>
 			<dd>
 				<ul>
 					<li>List item.</li>
@@ -762,7 +766,7 @@
 				</ul>
 			</dd>
 			<dt>
-				<strong>ol</strong>
+				<strong>ol</strong> <small>(Unordered List)</small>
 			</dt>
 			<dd>
 				<ol>
@@ -784,7 +788,7 @@
 				</menu>
 			</dd>
 			<dt>
-				<strong>dir</strong>
+				<strong>dir</strong> <small>(Directory List)</small>
 			</dt>
 			<dd>
 				<dir>
@@ -1134,8 +1138,8 @@
 			<input type="file" data-multi="true" data-upload="5" required />
 
 			<button class="primary" type="submit">Validate and Send</button>
-			<img class="form-loader" src="img/loader.gif" height="32" width="32" alt="">
-			<img class="svg icon icon-tick form-done" src="img/icons/icon-tick.svg" onerror="this.onerror=null;this.src='img/icons/icon-tick.png'">
+			<img class="form-loader" src="/img/loader.gif" height="32" width="32" alt="">
+			<img class="svg icon icon-tick form-done" src="/img/icons/icon-tick.svg" onerror="this.onerror=null;this.src='/img/icons/icon-tick.png'">
 		</form>
 
 		<hr>
@@ -1384,8 +1388,6 @@
 &lt;/fieldset&gt;
 </pre>
 
-		<br>
-
 		<h4>Radio Buttons</h4>
 
 		<fieldset>
@@ -1406,8 +1408,6 @@
 <i>----</i>&lt;label <span class="emphasis">for="f102"</span>&gt;Radio&lt;/label&gt;
 &lt;/fieldset&gt;
 </pre>
-
-		<br>
 
 		<h4>Toggles</h4>
 
@@ -1440,16 +1440,11 @@
 
 		<h3>File Upload</h3>
 
-		<br>
-
 		<h4>Single Upload</h4>
 
 		<p class="emphasis mobile-show">File uploads are not available on mobile devices.</p>
 
 		<input type="file" />
-
-
-		<br>
 
 		<h4>Multiple Upload</h4>
 
@@ -1465,12 +1460,10 @@
 
 		<h3>Progress Bar</h3>
 
-		<label data-progress="0">Progress Bar</label>
-		<progress max="100" value="0">
-			<div class="progress-bar">
-				<span>0%</span>
-			</div>
-		</progress>
+		<label>Progress Bar</label>
+
+		<div class="progress-bar"></div>
+
 		<button class="primary" data-progress="100">Trigger Progress</button>
 
 		<hr>
@@ -1484,129 +1477,123 @@
 				<div class="row payment">
 					<div class="column" data-span="3">
 						<a href="#">
-							<img src="img/icons/payment/button-paypal.png" alt="Checkout with PayPal">
+							<img src="/img/icons/payment/button-paypal.png" alt="Checkout with PayPal">
 						</a>
 					</div>
 					<div class="column" data-span="3">
 						<a href="#">
-							<img src="img/icons/payment/button-google.png" alt="Checkout with Google">
+							<img src="/img/icons/payment/button-google.png" alt="Checkout with Google">
 						</a>
 					</div>
 					<div class="column" data-span="3">
 						<a href="#">
-							<img src="img/icons/payment/button-amazon.png" alt="Checkout with Amazon">
+							<img src="/img/icons/payment/button-amazon.png" alt="Checkout with Amazon">
 						</a>
 					</div>
 					<div class="column" data-span="3">
 						<a href="#">
-							<img src="img/icons/payment/button-card.png" alt="Pay by Card">
+							<img src="/img/icons/payment/button-card.png" alt="Pay by Card">
 						</a>
 					</div>
 				</div>
 			</div>
 
-			<div class="card-wrapper framed">
-				<div class="row">
-					<div class="column">
-						<div class="card-type valign-middle">
-							<img class="card" src="img/icons/payment/cards/generic.png">
-							<span class="font-medium">Payment Details</span>
+			<div class="card-wrapper">
+				<h4>Your payment details</h4>
+
+				<form action="#">
+					<label>Name</label>
+					<input type="text" name="card-name" placeholder="As shown on card" data-validation="text" required>
+
+					<div class="row">
+						<div class="column" data-span="8">
+							<label>Card number</label>
+							<input type="number" id="card" name="card" placeholder="16 digits long number" data-validation="card" data-validate-key="true" required>
+						</div>
+						<div class="column" data-span="1">
+							<div class="card-type">
+								<img src="/img/icons/payment/cards/generic.png">
+							</div>
+						</div>
+						<div class="column" data-span="3">
+							<label for="ccv">CCV</label>
+							<input type="number" id="ccv" name="ccv" placeholder="3 digit security code" data-tooltip="<img src='img/icons/payment/ccv.png'>" data-validation="number" required>
 						</div>
 					</div>
-				</div>
 
-				<div class="row">
-					<div class="column" data-span="6">
-						<label>Name</label>
-						<input type="text" name="card-name" placeholder="As shown on card" data-validation="text" required>
+					<div class="row">
+						<div class="column" data-span="3">
+							<label>Start Date</label>
+							<select name="card-expiry-month" data-validation="select">
+								<option value="" default selected>Month</option>
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</div>
+						<div class="column" data-span="3">
+							<select name="card-expiry-year" data-validation="select">
+								<option value="" default selected>Year</option>
+								<option value="2015">2015</option>
+								<option value="2016">2016</option>
+								<option value="2017">2017</option>
+								<option value="2018">2018</option>
+								<option value="2019">2019</option>
+								<option value="2020">2020</option>
+								<option value="2021">2021</option>
+								<option value="2022">2022</option>
+								<option value="2023">2023</option>
+								<option value="2024">2024</option>
+								<option value="2025">2025</option>
+							</select>
+						</div>
+						<div class="column" data-span="3">
+							<label>Expiry Date</label>
+							<select name="card-expiry-month" data-validation="select" required>
+								<option value="" default selected>Month</option>
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</div>
+						<div class="column" data-span="3">
+							<select name="card-expiry-year" data-validation="select" required>
+								<option value="" default selected>Year</option>
+								<option value="2015">2015</option>
+								<option value="2016">2016</option>
+								<option value="2017">2017</option>
+								<option value="2018">2018</option>
+								<option value="2019">2019</option>
+								<option value="2020">2020</option>
+								<option value="2021">2021</option>
+								<option value="2022">2022</option>
+								<option value="2023">2023</option>
+								<option value="2024">2024</option>
+								<option value="2025">2025</option>
+							</select>
+						</div>
 					</div>
-					<div class="column" data-span="6">
-						<label>Card number</label>
-						<input type="number" name="card" placeholder="16 digits long number" data-validation="card" data-validate-key="true" required>
-					</div>
-				</div>
 
-				<div class="row">
-					<div class="column" data-span="3">
-						<label>Start Date</label>
-						<select name="card-expiry-month" data-validation="select">
-							<option value="" default selected>Month</option>
-							<option value="01">01</option>
-							<option value="02">02</option>
-							<option value="03">03</option>
-							<option value="04">04</option>
-							<option value="05">05</option>
-							<option value="06">06</option>
-							<option value="07">07</option>
-							<option value="08">08</option>
-							<option value="09">09</option>
-							<option value="10">10</option>
-							<option value="11">11</option>
-							<option value="12">12</option>
-						</select>
-					</div>
-					<div class="column" data-span="3">
-						<select name="card-expiry-year" data-validation="select">
-							<option value="" default selected>Year</option>
-							<option value="2015">2015</option>
-							<option value="2016">2016</option>
-							<option value="2017">2017</option>
-							<option value="2018">2018</option>
-							<option value="2019">2019</option>
-							<option value="2020">2020</option>
-							<option value="2021">2021</option>
-							<option value="2022">2022</option>
-							<option value="2023">2023</option>
-							<option value="2024">2024</option>
-							<option value="2025">2025</option>
-						</select>
-					</div>
-					<div class="column" data-span="3">
-						<label>Expiry Date</label>
-						<select name="card-expiry-month" data-validation="select" required>
-							<option value="" default selected>Month</option>
-							<option value="01">01</option>
-							<option value="02">02</option>
-							<option value="03">03</option>
-							<option value="04">04</option>
-							<option value="05">05</option>
-							<option value="06">06</option>
-							<option value="07">07</option>
-							<option value="08">08</option>
-							<option value="09">09</option>
-							<option value="10">10</option>
-							<option value="11">11</option>
-							<option value="12">12</option>
-						</select>
-					</div>
-					<div class="column" data-span="3">
-						<select name="card-expiry-year" data-validation="select" required>
-							<option value="" default selected>Year</option>
-							<option value="2015">2015</option>
-							<option value="2016">2016</option>
-							<option value="2017">2017</option>
-							<option value="2018">2018</option>
-							<option value="2019">2019</option>
-							<option value="2020">2020</option>
-							<option value="2021">2021</option>
-							<option value="2022">2022</option>
-							<option value="2023">2023</option>
-							<option value="2024">2024</option>
-							<option value="2025">2025</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="column" data-span="3">
-						<label>CCV</label>
-						<input type="number" name="ccv" placeholder="3 digit security code" data-tooltip="<img src='img/icons/payment/ccv.png'>" data-validation="number" required>
-					</div>
-					<div class="column" data-span="6">&nbsp;</div>
-					<div class="column" data-span="3">
-						<button class="primary fullwidth" type="submit">Pay now</button>
-					</div>
-				</div>
+					<button class="primary fullwidth" type="submit">Pay now</button>
+				</form>
 			</div>
 		</form>
 
@@ -1645,30 +1632,26 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="button primary" data-notification="true" data-message="Undeclared delay (default 5000ms)">
-			Undeclared delay
-		</div>
-		<div class="button primary" data-notification="true" data-message="Delay 0 seconds (persistent)" data-delay="0">
-			Declared 0 delay
-		</div>
-		<div class="button primary" data-notification="true" data-message="Delay 3 seconds (3000ms)" data-delay="3000">
-			Declared 3(s) delay
+		<div class="button notify" data-notification="true" data-message="Undeclared delay (default 5000ms)">?</div>
+		<div class="button notify" data-notification="true" data-message="Delay 0 seconds (persistent)" data-delay="0">0</div>
+		<div class="button notify" data-notification="true" data-message="Delay 3 seconds (3000ms)" data-delay="3000">
+			<img class="svg icon icon-tick" src="/img/icons/icon-tick.svg" width="16" height="16" onerror="this.onerror=null;this.src='/img/icons/icon-tick.png'" alt="CTA icon">
 		</div>
 		<br>
-		<div class="button primary" data-notification="true" data-message="Success message." data-delay="0" data-tone="success">
-			Success tone
-		</div>
-		<div class="button primary" data-notification="true" data-message="Warning message." data-delay="0" data-tone="warning">
-			Warning tone
-		</div>
-		<div class="button primary" data-notification="true" data-message="Failure message." data-delay="0" data-tone="failure">
-			Failure tone
-		</div>
+		<div class="button notify success" data-notification="true" data-message="Success message." data-delay="0" data-tone="success"></div>
+		<div class="button notify warning" data-notification="true" data-message="Warning message." data-delay="0" data-tone="warning"></div>
+		<div class="button notify failure" data-notification="true" data-message="Failure message." data-delay="0" data-tone="failure"></div>
 
 
 		<dl>
 			<dt>
 				<strong>Defaults:</strong>
+			</dt>
+			<dd>
+				<code>active: true</code>
+			</dt>
+			<dd>
+				<code>title: "System notification"</code>
 			</dt>
 			<dd>
 				<code>delay: 5000</code>
@@ -1708,96 +1691,108 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="slider" data-slider="true" data-slideshow="false" data-thumbnails="true">
-			<div class="slide thumb" data-thumb="1.jpg"></div>
-			<div class="slide thumb" data-thumb="2.jpg"></div>
-			<div class="slide thumb" data-thumb="3.jpg"></div>
-			<div class="slide thumb" data-thumb="4.jpg"></div>
-			<div class="slide thumb" data-thumb="5.jpg"></div>
-			<div class="slide thumb" data-thumb="6.jpg"></div>
-			<div class="slide thumb" data-thumb="7.jpg"></div>
-			<div class="slide thumb" data-thumb="8.jpg"></div>
-			<div class="slide thumb" data-thumb="9.jpg"></div>
-			<div class="slide thumb" data-thumb="10.jpg"></div>
-		</div>
-
-		<div class="slider" data-slider="true" data-display="5">
-			<div class="slide">
-				<div class="cell">
-					<h3 class="emphasis">Test 1</h2>
-					<p>This is a text slide</p>
-					<strong>Supports any type of data</strong>
-				</div>
-			</div>
-			<div class="slide">
-				<div class="cell">
-					<h3 class="emphasis">Test 2</h2>
-					<p>This is a text slide</p>
-					<strong>Supports any type of data</strong>
-				</div>
-			</div>
-			<div class="slide">
-				<div class="cell">
-					<h3 class="emphasis">Test 3</h2>
-					<p>This is a text slide</p>
-					<strong>Supports any type of data</strong>
-				</div>
-			</div>
-			<div class="slide">
-				<div class="cell">
-					<h3 class="emphasis">Test 4</h2>
-					<p>This is a text slide</p>
-					<strong>Supports any type of data</strong>
-				</div>
-			</div>
-			<div class="slide">
-				<div class="cell">
-					<h3 class="emphasis">Test 5</h2>
-					<p>This is a text slide</p>
-					<strong>Supports any type of data</strong>
-				</div>
-			</div>
-			<div class="slide">
-				<div class="cell">
-					<h3 class="emphasis">Test 6</h2>
-					<p>This is a text slide</p>
-					<strong>Supports any type of data</strong>
-				</div>
-			</div>
-			<div class="slide">
-				<div class="cell">
-					<h3 class="emphasis">Test 7</h2>
-					<p>This is a text slide</p>
-					<strong>Supports any type of data</strong>
-				</div>
-			</div>
-			<div class="slide">
-				<div class="cell">
-					<h3 class="emphasis">Test 8</h2>
-					<p>This is a text slide</p>
-					<strong>Supports any type of data</strong>
-				</div>
-			</div>
-			<div class="slide">
-				<div class="cell">
-					<h3 class="emphasis">Test 9</h2>
-					<p>This is a text slide</p>
-					<strong>Supports any type of data</strong>
+		<div class="row">
+			<div class="column">
+				<div class="slider" data-slider="true" data-slideshow="false" data-thumbnails="true">
+					<div class="slide thumb" data-thumb="/img/pictures/slider/1.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/2.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/3.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/4.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/5.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/6.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/7.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/8.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/9.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/10.jpg"></div>
 				</div>
 			</div>
 		</div>
 
-		<div class="slider" data-slider="true" data-display="3">
-			<div class="slide thumb" data-thumb="1.jpg"></div>
-			<div class="slide thumb" data-thumb="2.jpg"></div>
-			<div class="slide thumb" data-thumb="3.jpg"></div>
-			<div class="slide thumb" data-thumb="4.jpg"></div>
-			<div class="slide thumb" data-thumb="5.jpg"></div>
-			<div class="slide thumb" data-thumb="6.jpg"></div>
-			<div class="slide thumb" data-thumb="7.jpg"></div>
-			<div class="slide thumb" data-thumb="8.jpg"></div>
-			<div class="slide thumb" data-thumb="9.jpg"></div>
-			<div class="slide thumb" data-thumb="10.jpg"></div>
+		<div class="row">
+			<div class="column">
+				<div class="slider" data-slider="true" data-display="5">
+					<div class="slide">
+						<div class="cell">
+							<h3 class="emphasis">Test 1</h2>
+							<p>This is a text slide</p>
+							<strong>Supports any type of data</strong>
+						</div>
+					</div>
+					<div class="slide">
+						<div class="cell">
+							<h3 class="emphasis">Test 2</h2>
+							<p>This is a text slide</p>
+							<strong>Supports any type of data</strong>
+						</div>
+					</div>
+					<div class="slide">
+						<div class="cell">
+							<h3 class="emphasis">Test 3</h2>
+							<p>This is a text slide</p>
+							<strong>Supports any type of data</strong>
+						</div>
+					</div>
+					<div class="slide">
+						<div class="cell">
+							<h3 class="emphasis">Test 4</h2>
+							<p>This is a text slide</p>
+							<strong>Supports any type of data</strong>
+						</div>
+					</div>
+					<div class="slide">
+						<div class="cell">
+							<h3 class="emphasis">Test 5</h2>
+							<p>This is a text slide</p>
+							<strong>Supports any type of data</strong>
+						</div>
+					</div>
+					<div class="slide">
+						<div class="cell">
+							<h3 class="emphasis">Test 6</h2>
+							<p>This is a text slide</p>
+							<strong>Supports any type of data</strong>
+						</div>
+					</div>
+					<div class="slide">
+						<div class="cell">
+							<h3 class="emphasis">Test 7</h2>
+							<p>This is a text slide</p>
+							<strong>Supports any type of data</strong>
+						</div>
+					</div>
+					<div class="slide">
+						<div class="cell">
+							<h3 class="emphasis">Test 8</h2>
+							<p>This is a text slide</p>
+							<strong>Supports any type of data</strong>
+						</div>
+					</div>
+					<div class="slide">
+						<div class="cell">
+							<h3 class="emphasis">Test 9</h2>
+							<p>This is a text slide</p>
+							<strong>Supports any type of data</strong>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="column">
+				<div class="slider" data-slider="true" data-display="3">
+					<div class="slide thumb" data-thumb="/img/pictures/slider/1.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/2.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/3.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/4.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/5.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/6.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/7.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/8.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/9.jpg"></div>
+					<div class="slide thumb" data-thumb="/img/pictures/slider/10.jpg"></div>
+				</div>
+			</div>
 		</div>
 
 
@@ -1838,7 +1833,7 @@
 		</p>
 
 <pre>
-&lt;div class="slider" <span class="emphasis">data-slider="true" data-{{nav|arrows|thumbnails|slideshow|animation}}="{{value}}"</span>&gt;
+&lt;div class="slider" <span class="emphasis">data-slider="true" data-{{nav|arrows|thumbnails|display|slideshow|animation}}="{{value}}"</span>&gt;
 <i>----</i>&lt;div class="slide"&gt;
 <i>----</i><i>----</i>&lt;img src="http://placehold.it/959x350" /&gt;
 <i>----</i>&lt;/div&gt;
@@ -1893,7 +1888,7 @@
 
 &lt;div class="overlay" <span class="emphasis">id="example"</span>&gt;
 <i>----</i>&lt;div class="modal"&gt;
-<i>----</i><i>----</i>&lt;img class="svg icon icon-close" src="img/icons/icon-close.svg" width="16" height="16" /&gt;
+<i>----</i><i>----</i>&lt;img class="svg icon icon-close" src="/img/icons/icon-close.svg" width="16" height="16" /&gt;
 <i>----</i>&lt;/div&gt;
 &lt;/div&gt;
 </pre>
@@ -2104,7 +2099,7 @@
 		</p>
 
 		<div class="autocomplete-wrapper" data-autocomplete="true" data-autocomplete-feed="data/search.json">
-			<img class="loader" src="img/loader.gif" height="16" width="16" alt="">
+			<img class="loader" src="/img/loader.gif" height="16" width="16" alt="">
 			<input type="text" placeholder="Type to search..." data-autocomplete-parameter="Title">
 		</div>
 
@@ -2129,17 +2124,17 @@
 		</p>
 
 		<p>
-			Apply <code>data-tagcloud="true"</code> to an <code>input</code> or <code>select</code> element.
+			Apply <code>data-tagcloud="true"</code> to an <code>input</code> <!-- or <code>select</code> --> element.
 		</p>
 
 		<p>
 			<strong>Demo:</strong>
 		</p>
 
-		<input type="text" placeholder="Type and press Enter to add to the tag cloud" data-tagcloud="true">
+		<input type="text" placeholder="Type and press Tab or Enter to add to the tag cloud" data-tagcloud="true">
 
-		<select data-tagcloud="true">
-			<option class="placeholder">Please select any option to add to the tag cloud</option>
+		<!-- <select data-tagcloud="true">
+			<option default selected value="">Please select any option to add to the tag cloud</option>
 			<option>one</option>
 			<option>two</option>
 			<option>three</option>
@@ -2150,7 +2145,7 @@
 			<option>eight</option>
 			<option>nine</option>
 			<option>ten</option>
-		</select>
+		</select> -->
 
 		<p>
 			<strong>Example:</strong>
@@ -2158,7 +2153,7 @@
 
 <pre>
 &lt;input type="text" placeholder="Type and press Enter to add to the tag cloud" <span class="emphasis">data-tagcloud="true"</span>&gt;
-&lt;select <span class="emphasis">data-tagcloud="true"</span>&gt;&lt;/select&gt;
+<!-- &lt;select <span class="emphasis">data-tagcloud="true"</span>&gt;&lt;/select&gt; -->
 </pre>
 
 		<hr>
@@ -2182,11 +2177,11 @@
 		<div class="search-wrapper" data-search="data/search.json">
 			<div class="row">
 				<div class="column">
-					<!--
-					<div class="autocomplete-wrapper" data-autocomplete="data/search.json">
-						<input type="text" placeholder="Search..." data-search-parameter="Title, Summary" data-autocomplete-parameter="Title">
-					</div>
-					-->
+					<!-- <div class="autocomplete-wrapper" data-autocomplete="true" data-autocomplete-feed="data/search.json">
+						<img class="loader" src="/img/loader.gif" height="16" width="16" alt="">
+						<input type="text" placeholder="Type to search..." data-autocomplete-parameter="Title, Summary" data-search-parameter="Title, Summary">
+					</div> -->
+
 					<input type="text" placeholder="Search..." data-search-parameter="Title, Summary">
 				</div>
 			</div>
@@ -2247,5 +2242,5 @@
 </div>
 
 
-<!--#include virtual="include/footer.html" -->
-<!--#include virtual="include/foot.html" -->
+<!-- #include virtual="include/footer.html" -->
+<!-- #include virtual="include/foot.html" -->

@@ -12,18 +12,18 @@ var initSearch = function() {
 				outputArray = [],
 
 				tagcloudElement = '<ul class="tagcloud"></ul>',
-				tagclose = '<img class="svg icon icon-close" src="' + config.application.root + 'img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-close.png\'">',
+				tagclose = '<img class="svg icon icon-close" src="/img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-close.png\'">',
 
-				searchView = !!el.data("search-view") ? el.data("search-view") : config.search.view,
-				searchDisplay = !!el.data("search-display") ? el.data("search-display") : config.search.display,
+				searchView = !!el.data("search-view") ? el.data("search-view") : matter.config.search.view,
+				searchDisplay = !!el.data("search-display") ? el.data("search-display") : matter.config.search.display,
 				resultsControlsElement = '<div class="search-controls"></div>',
 				resultsCountElement = '<div class="search-count"></div>',
 				resultsViewsElement = '<div class="search-views">\
 											<div class="search-view" data-view="grid">\
-												<img class="svg icon icon-grid" src="' + config.application.root + 'img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-grid.png\'">\
+												<img class="svg icon icon-grid" src="/img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-grid.png\'">\
 											</div>\
 											<div class="search-view" data-view="list">\
-												<img class="svg icon icon-list" src="' + config.application.root + 'img/icons/icon-list.svg" onerror="this.onerror=null;this.src=\'' + config.application.root + 'img/icons/icon-list.png\'">\
+												<img class="svg icon icon-list" src="/img/icons/icon-list.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-list.png\'">\
 											</div>\
 										</div>',
 
@@ -54,7 +54,7 @@ var initSearch = function() {
 			var views = controls.find(".search-views"),
 				count = controls.find(".search-count");
 
-			initSVGs();
+			matter.svg.init();
 
 
 			// View change
@@ -100,10 +100,8 @@ var initSearch = function() {
 						}
 					}
 
-					if ( !target.find("option[default]").length ) {
-						var placeholder = '<option value="" default selected>' + parameter + '</option>';
-						target.append(placeholder);
-					}
+					var placeholder = '<option value="" default selected>Select ' + parameter + '...</option>';
+					target.append(placeholder);
 
 					tempArray.sort();
 
@@ -141,7 +139,7 @@ var initSearch = function() {
 									(keycode > 218 && keycode < 223);		// [\]' (in order)
 
 								if ( validKeys ) {
-									if ( value.length <= 1 ) unhighlight(results);
+									if ( value.length <= 1 ) matter.text.unhighlight(results);
 									outputArray[parameter] = value;
 									updateResults();
 									return false;
@@ -173,13 +171,13 @@ var initSearch = function() {
 									if ( $.inArray(value, outputArray[parameter]) < 0 ) {
 										tagcloud.addClass("active").append(tag);
 									} else {
-										notify("This tag already exists.", "failure");
+										notify("Failure", "This tag already exists.", matter.config.notification.delay, "failure");
 										return false;
 									}
 								}
 
 								updateTags(parameter);
-								initSVGs();
+								matter.svg().load();
 							});
 						});
 					}
@@ -373,7 +371,7 @@ var initSearch = function() {
 						finalArray = allArray;
 					}
 
-					if ( config.application.debug ) console.log("Search == " + finalArray.length + " items");
+					if ( matter.config.application.debug ) console.log("Search == " + finalArray.length + " items");
 
 
 					// Rebuild results
@@ -433,7 +431,7 @@ var initSearch = function() {
 
 							// Tooltips
 
-							initTooltips();
+							matter.tooltip.init();
 
 
 							// Highlight
@@ -446,7 +444,7 @@ var initSearch = function() {
 								if ( value.length > 1 ) {
 									for ( var i = 0; i < criteria.length; i++ ) {
 										var target = results.find("[class='" + criteria[i].toLowerCase() + "']");
-										highlight(target, value);
+										matter.text.highlight(target, value);
 									}
 								}
 							});
@@ -464,13 +462,13 @@ var initSearch = function() {
 						// Post build
 
 						var showItem = function(el, i) {
-							if ( i < (config.search.count * currentPage) ) {
-								if ( config.search.pagination ) {
+							if ( i < (matter.config.search.count * currentPage) ) {
+								if ( matter.config.search.pagination ) {
 									el.eq(i).removeClass("loading");
 								} else {
 									setTimeout(function() {
 										el.eq(i).removeClass("loading");
-									}, 100 * (i % config.search.count));
+									}, 100 * (i % matter.config.search.count));
 								}
 							}
 						}
@@ -485,8 +483,8 @@ var initSearch = function() {
 						if ( resultsCount ) {
 							results.removeClass("loading").removeClass("no-results");
 
-							if ( config.search.pagination ) items.addClass("loading");
-							for ( var i = (config.search.count * (currentPage - 1)); i < resultsCount; i++ ) {
+							if ( matter.config.search.pagination ) items.addClass("loading");
+							for ( var i = (matter.config.search.count * (currentPage - 1)); i < resultsCount; i++ ) {
 								showItem(items, i);
 							}
 						} else {
@@ -502,14 +500,14 @@ var initSearch = function() {
 
 						pagination = $(".search-pagination");
 
-						if ( config.search.pagination ) {
-							if ( resultsCount > config.search.count ) {
+						if ( matter.config.search.pagination ) {
+							if ( resultsCount > matter.config.search.count ) {
 								pagination.show();
 							} else {
 								pagination.hide();
 							}
 						} else {
-							if ( resultsCount > config.search.count * currentPage ) {
+							if ( resultsCount > matter.config.search.count * currentPage ) {
 								load.show();
 							} else {
 								load.hide();
@@ -526,11 +524,11 @@ var initSearch = function() {
 					var items = results.children(".search-item");
 					var resultsCount = items.length;
 
-					if ( config.search.pagination ) {
+					if ( matter.config.search.pagination ) {
 						var pages = 0;
 
 						for ( var n = 0; n < resultsCount; n++ ) {
-							if ( n % config.search.count === 0 ) {
+							if ( n % matter.config.search.count === 0 ) {
 								pages++;
 
 								var page = "<button data-page='" + pages + "'>" + pages + "</button>";
@@ -551,7 +549,9 @@ var initSearch = function() {
 							}, {
 								duration: 1000,
 								queue: false,
-								complete: function() { anchorClicked = false; }
+								complete: function() {
+									matter.anchor.clicked = false;
+								}
 							});
 
 							rebuildSystem();
@@ -575,7 +575,7 @@ var initSearch = function() {
 
 				// Query String Auto selecting
 
-				var queryObj = getQueryParameters();
+				var queryObj = matter.query.get();
 
 				for ( var prop in queryObj ) {
 					if( queryObj.hasOwnProperty(prop) ) {
@@ -587,9 +587,9 @@ var initSearch = function() {
 				}
 			}
 
-			requestData(url, "GET", buildSystem);
+			matter.data.get(url, buildSystem);
 		});
 
-		if ( config.application.debug ) console.log("Search :: Unified Search");
+		if ( matter.config.application.debug ) console.log("Search :: Unified Search");
 	}
 }

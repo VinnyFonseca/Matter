@@ -1,8 +1,9 @@
-var config = {
+var matter = matter || {};
+
+matter.config = {
 	application: {
 		touch: Modernizr.touch && !device.desktop(), // bool: Modernizr check returns true or false.
-		debug: true, // bool: use if (debug) console.log(); instead of console.log; for permanent debugging messages.
-		root: typeof rootPath === "undefined" ? "" : rootPath // Path variable for javascript server side image loading.
+		debug: true // bool: use if (debug) console.log(); instead of console.log; for permanent debugging messages.
 	},
 	typography: {
 		resize: {
@@ -22,12 +23,13 @@ var config = {
 	},
 	notification: {
 		active: true, // bool: on or off
+		title: "System notification", // str: default title for notifications
 		delay: 5000, // int: miliseconds for disappearance.
 		tone: "default" // str: "default", "success", "warning", "failure".
 	},
 	cookie: {
 		active: true, // bool: on or off
-		message: "We use cookies to give you a better experience. By continuing to browse you are accepting our <a href='#' target='_blank'>Terms &amp; Conditions</a>.", // str: First visit cookie message.
+		message: "Our website uses cookies. They help us understand how customers use our website so we can give you the best experience possible and also keep our online adverts relevant. By continuing to browse this site or choosing to close this message, you give consent for cookies to be used.<br><a href='#' target='_blank'>Read more about our cookies.</a><br><button class='primary margin-top'>Don't show me this again</button>", // str: First visit cookie message.
 		delay: 0 // int: First visit cookie delay on screen. 0 is permanent.
 	},
 	brochure: {
@@ -36,16 +38,14 @@ var config = {
 	search: {
 		view: "grid", // str: "grid", "list".
 		display: "full", // str: "full", "mini".
-		count: 10, // int: Number of items to show per page.
-		pagination: true // bool: Toggle pagination controls and loading of page elements only.
+		count: 8, // int: Number of items to show per page.
+		pagination: false // bool: Toggle pagination controls and loading of page elements only.
 	},
 	slider: {
 		nav: true, // bool: Show bullets.
 		arrows: true, // bool: Show arrows.
 		thumbnails: false, // bool: Show thumbnails.
-		show: 1, // bool: Automatic slide change.
 		slideshow: true, // bool: Automatic slide change.
-		animation: "slide", // str: "slide", "fade".
 		duration: 750, // int: miliseconds for slide change.
 		interval: 7500, // int: miliseconds for slide interval.
 		threshold: 20 // int: px distance on X axis from touchstart to current touch position.
@@ -54,18 +54,10 @@ var config = {
 		responsive: true // bool: Converts every row into a separate table on mobiles.
 	},
 	tooltip: {
-		bound: true, // bool: Sets boundaries to .wrapper (content container).
+		bound: {
+			element: ".wrapper", // str: Element selector you wish to bind the tooltip.
+			active: true // bool: Sets boundaries to element (content container).
+		},
 		position: "center" // str: "left", "center", "right".
-	},
-	twitter: {
-		widgetId: '492660537293938688', // Generated via Twitter.com. See the matterframework.net/widgets..
-		startAt: 0, // int: Starting tweet index.
-		maxTweets: 3, // int: Maximum number of tweets shown at any time.
-		enableLinks: true, // bool: Turns URLs and hashtags into links.
-		showUser: true, // bool: Show User's avatar.
-		showTime: true, // bool: Show posted time.
-		showRetweet: false, // bool: Show retweets that you posted.
-		showFollow: false, // bool: Show Follow button.
-		showInteraction: false // bool: Show Reply, Retweet and Favorite.
 	}
 };

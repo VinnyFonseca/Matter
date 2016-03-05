@@ -2,14 +2,61 @@ form {
 	display: block;
 	position: relative;
 
-	.column {
-		vertical-align: bottom !important;
+	h1, h2, h3, h4, h5, h6 {
+		padding-top: 0;
+	}
+
+	small {
+		display: block;
+		margin: 0 floor($spacing / 4);
+		margin-bottom: floor($spacing / 2);
+		font-weight: normal;
+	}
+
+	.row {
+		margin-top: 0;
+		margin-bottom: 0;
 	}
 }
 
 
 
 // Form Elements
+
+label {
+	display: block;
+	position: relative;
+	margin: 0 floor($spacing / 4);
+	padding: 0;
+	padding-bottom: floor($spacing / 4);
+	color: $bodyTextColor;
+	font-family: $bodyFont;
+	font-size: $fontSize / 1.1 + rem;
+	font-weight: bold;
+
+	&.control {
+		display: inline-block;
+		margin-top: 0;
+		padding: 0;
+	}
+
+	&.required {
+		&:after {
+			display: inline-block;
+			position: relative;
+			margin-left: floor($spacing / 4);
+			padding: 0;
+			width: 4px;
+			height: 4px;
+			top: 5px;
+			border-radius: 100px;
+			background: #e44;
+			vertical-align: top;
+			content: "";
+		}
+	}
+}
+
 
 fieldset {
 	display: block;
@@ -18,35 +65,13 @@ fieldset {
 	padding: floor($spacing / 1.5) $spacing;
 	border: 1px solid $cd;
 	border-radius: $radius;
-	box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.05);
+	box-shadow: 3px 3px 0px rgba($c0, 0.05);
 
 	legend {
-		display: block;
-		position: relative;
-		margin: 0;
+		@extend label;
 		margin-left: -3px;
 		padding: 0 7px;
-		top: -1px;
-		color: $c8;
-		font-size: $fontSize / 1.1 + rem;
 		background: $cf;
-	}
-}
-
-
-label {
-	display: block;
-	position: relative;
-	margin: 0 3px;
-	padding: 10px 0 3px;
-	color: $c8;
-	font-family: $bodyFont;
-	font-size: $fontSize / 1.1 + rem;
-
-	&.control {
-		display: inline-block;
-		margin-top: 0;
-		padding: 0;
 	}
 }
 
@@ -54,44 +79,33 @@ label {
 .field {
 	display: block;
 	position: relative;
-	color: $c3;
+	color: $bodyTextColor;
 	margin: 0;
-	margin-bottom: floor($spacing / 2);
-	padding: floor($spacing / 2) floor($spacing / 1.5);
+	margin-bottom: floor($spacing / 1.5);
+	padding: floor($spacing / 2.5) floor($spacing / 1.5);
 	width: 100%;
 	font-family: $bodyFont;
 	font-size: $fontSize + rem;
 	font-weight: 300;
 	text-align: left;
-	border: 1px solid $cc;
+	border: 1px solid $borderColor;
 	border-radius: $radius;
-	background: #fafafa;
+	background: $cf;
 	background-clip: padding-box;
 	outline: 0;
 	vertical-align: bottom;
 
-
-	&::-webkit-input-placeholder {
-		color: $c3;
+	&::placeholder {
+		color: $ca;
 	}
-	&::-moz-placeholder {
-		color: $c3;
-	}
-	&:-moz-placeholder {
-		color: $c3;
-	}
-	&:-ms-input-placeholder {
-		color: $c3;
-	}
-	&.placeholder-text,
-	&.placeholder_text {
-		color: $c3;
-	}
-
 
 	&:focus {
-		// border-color: $focusColor !important;
-		box-shadow: 0 0 10px $focusColor !important;
+		border-color: $focusColor !important;
+		box-shadow: 0 0 3px $focusColor !important;
+
+		&::placeholder {
+			color: $ca;
+		}
 	}
 	&:invalid {
 		box-shadow: none;
@@ -116,9 +130,13 @@ label {
 	&[type="time"],
 	&[type="url"],
 	&[type="week"] {
-		-webkit-appearance: none;
-		-moz-appearance: none;
 		appearance: none;
+	}
+}
+
+.column {
+	.field {
+		margin-bottom: 0;
 	}
 }
 
@@ -138,18 +156,17 @@ textarea {
 .button {
 	display: inline-block;
 	position: relative;
-	margin: 2px auto;
-	padding: floor($spacing / 2) floor($spacing / 1.5);
+	margin: $spacing auto 2px;
+	padding: floor($spacing / 2.5) floor($spacing / 1.5);
 	min-width: 42px;
 	color: $bodyTextColor;
 	font-family: $bodyFont;
 	font-size: $fontSize + rem;
 	text-align: center;
 	text-decoration: none !important;
-	border: 0;
+	border: none;
 	border-radius: $radius;
-	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
-	background: $ce;
+	background-color: $cd;
 	cursor: pointer !important;
 	appearance: none;
 	background-clip: padding-box;
@@ -159,14 +176,14 @@ textarea {
 	vertical-align: middle;
 
 	&:hover {
-		background-color: $cd;
+		color: $cf;
+		background-color: $color1 !important;
 	}
-	&:active,
-	&:visited {
-		background-color: $ce;
+	&:active {
+		color: $cf;
+		background-color: $color2 !important;
 	}
 	&:focus {
-		// border-color: $focusColor !important;
 		box-shadow: 0 0 10px $focusColor !important;
 	}
 
@@ -183,40 +200,37 @@ textarea {
 
 	&.primary {
 		color: $cf;
-		background-color: $color1;
+		background-color: $btnPrimaryColor;
 
 		&:hover {
-			background-color: $color2;
+			background-color: $btnPrimaryColorHover !important;
 		}
-		&:active,
-		&:visited {
-			background-color: $color1;
+		&:active {
+			background-color: $btnPrimaryColor !important;
 		}
 	}
 
 	&.secondary {
 		color: $cf;
-		background-color: $color2;
+		background-color: $btnSecondaryColor;
 
 		&:hover {
-			background-color: $color1;
+			background-color: $btnSecondaryColorHover !important;
 		}
-		&:active,
-		&:visited {
-			background-color: $color2;
+		&:active {
+			background-color: $btnSecondaryColor !important;
 		}
 	}
 
 	&.tertiary {
 		color: $cf;
-		background-color: $color3;
+		background-color: $btnTertiaryColor;
 
 		&:hover {
-			background-color: $color2;
+			background-color: $btnTertiaryColorHover !important;
 		}
-		&:active,
-		&:visited {
-			background-color: $color3;
+		&:active {
+			background-color: $btnTertiaryColor !important;
 		}
 	}
 }
@@ -235,27 +249,27 @@ input[type="checkbox"] {
 	position: absolute;
 	margin: 0;
 	padding: 0;
-	width: 16px !important;
-	height: 16px !important;
+	width: 12px !important;
+	height: 12px !important;
 	top: 9px;
 	left: 7px;
 	border: 0;
 	background: transparent;
 	vertical-align: middle;
+	opacity: 0;
 }
 
 
 .controller {
 	display: block;
 	position: relative;
-	margin: 0;
-	margin-top: 2px;
+	margin: 4px 0;
 	text-align: left;
 
 	&:active {
 		label {
 			&:before {
-				box-shadow: inset 0px -3px 3px 0 rgba(255, 255, 255, 0.5), inset 0px 1px 1px 0 rgba(0, 0, 0, 0.3) !important;
+				box-shadow: inset 0px -3px 3px 0 rgba($cf, 0.5), inset 0px 1px 1px 0 rgba($c0, 0.3) !important;
 			}
 		}
 	}
@@ -268,53 +282,54 @@ input[type="checkbox"] {
 	label {
 		display: inline-block;
 		position: relative;
-		margin: 4px 0;
+		margin: 5px 0;
 		padding: 0;
+		line-height: $controllerWidth - 6;
 		cursor: pointer;
 		user-select: none;
+		vertical-align: middle;
 
-		&:before,
-		&:after {
+		&:before {
 			display: inline-block;
-			position: relative;
-			content: "";
+			position: absolute;
 			margin: 0;
-			margin-right: 10px;
+			margin-right: floor($spacing / 2);
 			padding: 0;
-			width: 32px;
-			height: 32px;
-			top: -2px;
+			width: $controllerWidth;
+			height: $controllerWidth;
+			top: -3px;
+			left: 0;
+			font-size: 0;
 			text-align: center;
-			line-height: 1.9 !important;
-			border: 1px solid $ca;
-			border-radius: 3px;
-			background-color: $ce;
-			box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, 0.7), inset 0px -1px 1px 0 rgba(0, 0, 0, 0.15);
+			border: $borderWidth solid $borderColor;
+			border-radius: $radius;
+			background-color: $cf;
+			background-size: 14px !important;
+			background-position: center center;
+			background-repeat: no-repeat;
+			box-shadow: inset 0px 3px 3px 0 rgba($cf, 0.7), inset 0px -1px 1px 0 rgba($c0, 0.15);
 			overflow: hidden;
 			vertical-align: middle;
-		}
-		&:after {
-			display: none;
-			float: right;
-			margin-left: 10px;
-			margin-right: 0;
+			content: "";
 		}
 	}
 
 	&.checkbox {
 		label {
-			&:before,
-			&:after {
-				border-radius: $radius;
+			padding-left: $controllerWidth + floor($spacing / 3);
+
+			&:before {
+				border-radius: 1000px;
+				// border-radius: $radius;
 			}
 		}
 
 		input[type="checkbox"] {
 			&:checked {
-				+ label:before,
-				+ label:after {
-					font-size: $fontSize * 1.09 + rem;
-					content: url('../img/icons/icon-control-checkbox.png');
+				+ label {
+					&:before {
+						background-image: url('../img/icons/icon-control-radio.png');
+					}
 				}
 			}
 		}
@@ -322,6 +337,8 @@ input[type="checkbox"] {
 
 	&.radio {
 		label {
+			padding-left: $controllerWidth + floor($spacing / 2);
+
 			&:before {
 				border-radius: 1000px;
 			}
@@ -329,28 +346,24 @@ input[type="checkbox"] {
 
 		input[type="radio"] {
 			&:checked {
-				+ label:before,
-				+ label:after {
-					font-size: $fontSize * 1.09 + rem;
-					content: url('../img/icons/icon-control-radio.png');
+				+ label {
+					&:before {
+						background-image: url('../img/icons/icon-control-radio.png');
+					}
 				}
 			}
 		}
 	}
 
 	&.toggle {
-		$tglW: 60px;
-		$tglH: 30px;
-		$swtSz: $tglH + 2;
-
 		input:not(:checked) + label {
 			.toggle-body {
 				.toggle-switch {
-					left: ($tglW - $swtSz) + 1;
+					left: ($toggleWidth - $switchSize) + 1;
 				}
 
 				.toggle-background {
-					right: -($tglW - ($swtSz / 2));
+					right: -($toggleWidth - ($switchSize / 2));
 
 					&.toggle-background-negative {
 						right: auto;
@@ -361,26 +374,27 @@ input[type="checkbox"] {
 		}
 
 		label {
+			padding-left: $toggleWidth + floor($spacing / 2);
+
 			&:active {
 				.toggle-switch {
-					box-shadow: inset 0px -3px 3px 0 rgba(255, 255, 255, 0.5), inset 0px 1px 1px 0 rgba(0, 0, 0, 0.3) !important;
-					// transform: scale(.95);
+					box-shadow: inset 0px -3px 3px 0 rgba($cf, 0.5), inset 0px 1px 1px 0 rgba($c0, 0.3) !important;
 				}
 			}
 
-			&:before,
-			&:after {
+			&:before {
 				display: none;
 			}
 
 
 			.toggle-body {
 				display: inline-block;
-				position: relative;
+				position: absolute;
 				margin-right: 8px;
-				width: $tglW;
-				height: $tglH;
+				width: $toggleWidth;
+				height: $toggleHeight;
 				top: -2px;
+				left: 0;
 				border-radius: 1000px;
 				background: $cf;
 				vertical-align: middle;
@@ -391,18 +405,20 @@ input[type="checkbox"] {
 				position: absolute;
 				margin: 0;
 				padding: 0;
-				width: $swtSz;
-				height: $swtSz;
+				width: $switchSize;
+				height: $switchSize;
 				top: -1px;
 				left: -1px;
 				border: 1px solid $ca;
 				border-radius: 1000px;
-				background-color: $ce;
-				box-shadow: inset 0px 3px 3px 0 rgba(255, 255, 255, 0.7), inset 0px -1px 1px 0 rgba(0, 0, 0, 0.15);
+				background-color: $cf;
+				box-shadow: inset 0px 3px 3px 0 rgba($cf, 0.7), inset 0px -1px 1px 0 rgba($c0, 0.15);
 				z-index: 1;
 				overflow: hidden;
 				vertical-align: middle;
-				transition: left $animEasing $animDuration;
+				transition-property: left;
+				transition-duration: $duration / 2;
+				transition-timing-function: $easing;
 			}
 
 			.toggle-track {
@@ -412,23 +428,27 @@ input[type="checkbox"] {
 				bottom: 0;
 				left: 0;
 				border-radius: 1000px;
-				box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.25) !important;
+				box-shadow: inset 0 0 3px 0 rgba($c0, 0.25) !important;
 				overflow: hidden;
 			}
 
 			.toggle-background {
 				position: absolute;
-				width: $tglW - ($swtSz / 2) + 10;
+				width: $toggleWidth - ($switchSize / 2) + ($spacing / 1.5);
 				top: 0;
 				right: -10px;
 				bottom: 0;
-				background: $notifySuccessBgColor url('../img/icons/icon-toggle-tick.png') center center no-repeat;
-				transition: left $animEasing $animDuration, right $animEasing $animDuration;
+				background: $successBgColor url('../img/icons/icon-toggle-tick.png') center center no-repeat;
+				background-size: floor($switchSize / 2.5);
+				transition-property: left, right;
+				transition-duration: $duration / 2;
+				transition-timing-function: $easing;
 			}
 			.toggle-background-negative {
-				left: -($tglW - ($swtSz / 2));
+				left: -($toggleWidth - ($switchSize / 2));
 				right: auto;
-				background: $notifyFailureBgColor url('../img/icons/icon-toggle-close.png') center center no-repeat;
+				background: $failureBgColor url('../img/icons/icon-toggle-close.png') center center no-repeat;
+				background-size: floor($switchSize / 2.5);
 			}
 		}
 	}
@@ -441,13 +461,13 @@ select[multiple] {
 	height: auto;
 
 	option {
-		padding: floor($spacing / 2) floor($spacing / 1.5);
+		padding: floor($spacing / 2.5) floor($spacing / 1.5);
 	}
 }
 
 select[size="0"],
 select[size="1"] {
-	padding: floor($spacing / 2) floor($spacing / 1.5);
+	padding: floor($spacing / 2.5) floor($spacing / 1.5);
 	height: auto;
 
 	option {
@@ -519,7 +539,7 @@ optgroup {
 	.input-addon {
 		display: inline-block;
 		margin: 0;
-		padding: floor($spacing / 2) floor($spacing / 1.5);
+		padding: floor($spacing / 2.5) floor($spacing / 1.5);
 		width: 10%;
 		color: $c8;
 		font-family: $bodyFont;
@@ -541,19 +561,6 @@ optgroup {
 	font-size: $fontSize / 1.1 + rem;
 }
 
-.indicator-required {
-	display: inline-block;
-	position: relative;
-	margin: 0 6px;
-	padding: 0;
-	width: 4px;
-	height: 4px;
-	top: -2px;
-	border-radius: 100px;
-	background: #e44;
-	vertical-align: middle;
-}
-
 
 // Loader
 
@@ -561,8 +568,8 @@ optgroup {
 .icon.form-done {
 	display: none;
 	position: relative;
-	margin: 2px 5px;
-	padding: 5px;
+	margin: $spacing auto 2px;
+	padding: 0;
 	width: 42px;
 	height: 42px;
 	@include svgColor($color1);
@@ -573,19 +580,30 @@ optgroup {
 // Credit Cards
 
 .card-wrapper {
+	@extend .framed;
 	margin: $spacing 0;
-	padding: floor($spacing / 1.5);
+	border-radius: $radius;
 
-	.column > * {
-		margin-bottom: 0 !important;
+	label {
+		white-space: nowrap;
+	}
+
+	.column {
+		vertical-align: bottom;
 	}
 
 	.card-type {
-		margin-bottom: floor($spacing / 2);
+		display: inline-block;
+		position: relative;
+		@extend .card;
+		margin: 0 auto;
+		padding: floor($spacing / 4);
+		vertical-align: bottom;
 
-		.card {
-			margin-right: floor($spacing / 2);
-			height: 45px;
+		> * {
+			margin: 0 auto;
+			height: 36px;
+			border-radius: $radius;
 		}
 	}
 
@@ -605,9 +623,9 @@ optgroup {
 // Password Meter
 
 .password-wrapper {
-	display: inline-block;
+	display: block;
 	position: relative;
-	margin-bottom: $spacing / 2;
+	margin-bottom: floor($spacing / 1.5);
 	width: 100%;
 	vertical-align: top;
 	border-radius: $radius;
@@ -625,7 +643,7 @@ optgroup {
 		margin: 0 auto;
 		width: 0;
 		height: 2px;
-		bottom: 0;
+		bottom: $borderWidth;
 		overflow: hidden;
 		z-index: 10;
 	}
@@ -641,7 +659,8 @@ optgroup {
 		$pwdGreen: #66cc22;
 
 		background: $pwdRed;
-		@include linear-gradient($pwdRed, 0%, $pwdYellow, 100%)
+		background: linear-gradient(to right, $pwdRed 0%, $pwdYellow 50%, $pwdGreen 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ee4444', endColorstr='#66cc22',GradientType=1 ); /* IE6-8 */
 	}
 }
 
@@ -653,7 +672,6 @@ optgroup {
 	position: relative;
 	color: $c2;
 	margin: 0;
-	margin-bottom: $spacing / 2;
 	padding: 0;
 	width: 100%;
 	font-family: $bodyFont;
@@ -675,20 +693,21 @@ optgroup {
 			}
 		}
 	}
+
 	&.active {
 		overflow: visible;
 		z-index: 90;
 
 		select {
 			+ .dropdown-current {
-				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+				box-shadow: 0 1px 2px rgba($c0, 0.1);
 			}
 
 			&:focus {
 				box-shadow: none !important;
 
 				+ .dropdown-current {
-					// border-color: $focusColor !important;
+					border-color: $focusColor !important;
 					box-shadow: 0 0 10px $focusColor !important;
 				}
 			}
@@ -698,7 +717,7 @@ optgroup {
 	&:active {
 		.dropdown-arrow {
 			background: $c3;
-			box-shadow: inset 0px 1px 1px 0 rgba(0, 0, 0, .15) !important;
+			box-shadow: inset 0px 1px 1px 0 rgba($c0, .15) !important;
 
 			.icon {
 				@include svgColor($cf);
@@ -717,17 +736,7 @@ optgroup {
 	}
 
 	.dropdown-current {
-		display: block;
-		position: relative;
-		padding: floor($spacing / 2) floor($spacing / 1.5);
-		border: 1px solid $cd;
-		border-radius: $radius;
-		background: #fafafa;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-		cursor: pointer;
-		z-index: 30;
+		@extend .field;
 	}
 
 	.dropdown-arrow {
@@ -740,7 +749,7 @@ optgroup {
 		right: 0;
 		bottom: 0;
 		text-align: center;
-		border: 0 solid rgba(0, 0, 0, 0.4);
+		border: 0 solid rgba($c0, 0.4);
 		border-radius: 0 $radius $radius 0 !important;
 		background: $color1;
 		z-index: 50;
@@ -752,10 +761,6 @@ optgroup {
 		}
 	}
 
-
-	$cdropdownItemHeight: 53;
-	$cdropdownItemCount: 5;
-
 	.dropdown {
 		display: block;
 		margin: 0;
@@ -764,13 +769,12 @@ optgroup {
 		width: 100%;
 		overflow: auto;
 		overflow-x: hidden;
-		z-index: 15;
 
 		.dropdown-item {
 			display: block;
 			position: relative;
 			padding: floor($spacing / 1.5) !important;
-			background: $ce;
+			background: $cf;
 			white-space: nowrap;
 			text-overflow: ellipsis;
 			overflow: hidden;
@@ -778,13 +782,16 @@ optgroup {
 
 			&:hover {
 				color: $cf;
-				background: $color2 !important;
+				background: $btnPrimaryColor !important;
 			}
 
-			&:active,
+			&:active{
+				color: $cf;
+				background: $btnPrimaryColorHover !important;
+			}
 			&.active {
 				color: $cf;
-				background: $color1 !important;
+				background: $btnPrimaryColor !important;
 			}
 		}
 	}
@@ -797,22 +804,27 @@ optgroup {
 
 		.dropdown-current {
 			padding-right: 54px;
-			color: $color1;
+			color: $bodyTextColor;
+
+			&[data-value=""] {
+				color: $ca;
+			}
 		}
 
 		.dropdown {
 			position: absolute;
 			width: auto;
 			height: 0;
-			max-height: ($cdropdownItemHeight * $cdropdownItemCount) + px;
+			max-height: ($dropdownItemHeight * $dropdownItemCount) + px;
 			left: 5px;
 			right: 5px;
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+			box-shadow: 0 0 5px rgba($c0, 0.25);
 			opacity: 0;
+			z-index: -1;
 			transition: {
 				property: opacity transform;
-				duration: $animDuration;
-				timing-function: $animEasing;
+				duration: $duration / 2;
+				timing-function: $easing;
 			}
 			transform: translateY(0px) translateZ(0px);
 
@@ -860,13 +872,13 @@ optgroup {
 			position: relative;
 			border: 1px solid $cd;
 			border-radius: $radius;
-			background: $cf;
+			background: $ce;
 			overflow: auto;
+			z-index: 15;
 
 			.dropdown-item {
 				margin-top: 0;
 				border-top: 1px solid $cd;
-				background: #fafafa;
 
 				&:first-child {
 					border-top: 0;
@@ -896,7 +908,7 @@ optgroup {
 	input[type="file"] {
 		position: relative;
 		margin: 0;
-		padding: floor($spacing / 2) floor($spacing / 1.5);
+		padding: floor($spacing / 2.5) floor($spacing / 1.5);
 		text-align: right;
 		z-index: 5;
 		opacity: 0;
@@ -905,6 +917,7 @@ optgroup {
 	.fakefile {
 		display: block;
 		position: absolute;
+		padding: 3px;
 		width: 100%;
 		height: 100%;
 		top: 0;
@@ -912,37 +925,30 @@ optgroup {
 		border: 0;
 		z-index: 10;
 
-		$cbuttonWidth: 120px;
+		$buttonWidth: 120px;
 
 		.fake-upload {
 			position: absolute;
-			margin: 3px;
-			width: $cbuttonWidth;
-			height: auto;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			line-height: 1.2;
+			margin: 0;
+			width: $buttonWidth;
+			top: 3px;
+			left: 3px;
+			bottom: 3px;
 			text-align: center;
+			line-height: $lineHeight - 0.2;
 			z-index: 1;
 		}
 
 		.file-result {
-			display: block;
+			@extend .field;
 			position: absolute;
-			padding: floor($spacing / 2) floor($spacing / 1.5);
-			padding-left: $cbuttonWidth + 15;
+			padding-left: $buttonWidth + 15;
 			padding-right: 44px;
-			width: 100%;
+			height: 100%;
 			top: 0px;
 			left: 0px;
-			color: $color1;
-			border: 1px solid $cd;
-			border-radius: $radius;
-			background: $cf;
 			overflow: hidden;
 			text-overflow: ellipsis;
-			vertical-align: middle;
 
 			&.loaded {
 				color: $c2;
@@ -958,7 +964,7 @@ optgroup {
 			top: 0;
 			right: 0;
 			bottom: 0;
-			border: 0 solid rgba(0, 0, 0, 0.4);
+			border: 0 solid rgba($c0, 0.4);
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
 			border-top-right-radius: $radius;
@@ -982,60 +988,22 @@ optgroup {
 // Validation
 
 .input-validation-error {
-	border: 2px solid $cfailureBorderColor;
+	border: 2px solid $failureBorderColor;
 }
 .field-validation-error {
 	display: block;
 	margin-top: 5px;
-	color: $cfailureTextColor;
+	color: $failureTextColor;
 	font-size: $fontSize / 1.1 + rem;
 }
 
 .dropdown-current,
 [required] {
 	&.valid {
-		color: $successTextColor !important;
 		border-color: $successBorderColor;
-		background-color: $successBgColor !important;
-
-		&::-webkit-input-placeholder {
-			color: $successTextColor !important;
-		}
-		&::-moz-placeholder {
-			color: $successTextColor !important;
-		}
-		&:-moz-placeholder {
-			color: $successTextColor !important;
-		}
-		&:-ms-input-placeholder {
-			color: $successTextColor !important;
-		}
-		&.placeholder-text,
-		&.placeholder_text {
-			color: $successTextColor !important;
-		}
 	}
 	&.invalid {
-		color: $cfailureTextColor !important;
-		border-color: $cfailureBorderColor;
-		background-color: $cfailureBgColor !important;
-
-		&::-webkit-input-placeholder {
-			color: $cfailureTextColor !important;
-		}
-		&::-moz-placeholder {
-			color: $cfailureTextColor !important;
-		}
-		&:-moz-placeholder {
-			color: $cfailureTextColor !important;
-		}
-		&:-ms-input-placeholder {
-			color: $cfailureTextColor !important;
-		}
-		&.placeholder-text,
-		&.placeholder_text {
-			color: $cfailureTextColor !important;
-		}
+		border-color: $failureBorderColor;
 	}
 }
 
@@ -1048,27 +1016,14 @@ optgroup {
 .invalid[readonly],
 .invalid[disabled] {
 	color: $ca !important;
-	border-color: $ca !important;
+	border-color: $c9 !important;
 	border-style: dotted !important;
-	background-color: $ce !important;
+	background-color: $cc !important;
 	box-shadow: none !important;
 	user-select: none;
 	cursor: no-drop !important;
 
-	&::-webkit-input-placeholder {
-		color: $ca !important;
-	}
-	&::-moz-placeholder {
-		color: $ca !important;
-	}
-	&:-moz-placeholder {
-		color: $ca !important;
-	}
-	&:-ms-input-placeholder {
-		color: $ca !important;
-	}
-	&.placeholder-text,
-	&.placeholder_text {
+	&::placeholder {
 		color: $ca !important;
 	}
 }
@@ -1078,36 +1033,33 @@ optgroup {
 		&:focus {
 			+ label {
 				.toggle-switch,
-				&:before,
-				&:after {
-					// border-color: $focusColor !important;
-					box-shadow: 0 0 10px $focusColor !important;
+				&:before {
+					border-color: $focusColor !important;
+					box-shadow: 0 0 3px $focusColor !important;
 				}
 			}
 		}
 		&.valid {
 			+ label {
-				color: $successTextColor !important;
+				// color: $successTextColor !important;
 
 				.toggle-switch,
-				&:before,
-				&:after {
-					color: $successTextColor !important;
+				&:before {
+					// color: $successTextColor !important;
 					border-color: $successBorderColor;
-					background-color: $successBgColor !important;
+					// background-color: $successBgColor !important;
 				}
 			}
 		}
 		&.invalid {
 			+ label {
-				color: $cfailureTextColor !important;
+				// color: $failureTextColor !important;
 
 				.toggle-switch,
-				&:before,
-				&:after {
-					color: $cfailureTextColor !important;
-					border-color: $cfailureBorderColor;
-					background-color: $cfailureBgColor !important;
+				&:before {
+					// color: $failureTextColor !important;
+					border-color: $failureBorderColor;
+					// background-color: $failureBgColor !important;
 				}
 			}
 		}
@@ -1118,8 +1070,7 @@ optgroup {
 				cursor: no-drop !important;
 
 				.toggle-switch,
-				&:before,
-				&:after {
+				&:before {
 					color: $c8 !important;
 					border-color: $cb !important;
 					border-style: dotted !important;
@@ -1130,154 +1081,6 @@ optgroup {
 				}
 			}
 		}
-	}
-}
-
-
-
-// Progress Bar
-
-$progressHeight: 42px;
-
-progress {
-	display: block;
-	position: relative;
-	margin: floor($spacing / 2) 0;
-	padding: 0;
-	width: 100%;
-	height: $progressHeight;
-	overflow: hidden;
-	appearance: none;
-}
-
-@include keyframes(animate-stripes) {
-	0%  {
-		background-position: 0 0;
-	}
-	100% {
-		background-position: 500px 0;
-	}
-}
-
-progress[value] {
-	display: block;
-	position: relative;
-	margin: 0 0 floor($spacing / 2);
-	padding: 0;
-	width: 100%;
-	height: $progressHeight;
-	color: $color1;
-	border: none;
-	border-radius: $radius;
-	background-color: $ce;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) inset;
-	appearance: none;
-
-	&::-webkit-progress-bar {
-		border-radius: $radius;
-		background-color: $ce;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) inset;
-	}
-	&::-webkit-progress-value {
-		position: relative;
-		border-radius: $radius;
-		background-image:
-			-webkit-linear-gradient( 135deg, transparent, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
-			-webkit-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-			-webkit-linear-gradient( to right, $color1, $color1);
-		background-size:
-			($progressHeight * 2) $progressHeight,
-			100% 100%,
-			100% 100%;
-		animation: animate-stripes 5s linear infinite;
-		transition: width $animDuration $animEasing;
-
-		&:after {
-			position: absolute;
-			margin-top: -5px;
-			width: 10px;
-			height: 10px;
-			top: 50%;
-			right: 14px;
-			border-radius: 100px;
-			background-color: $ce;
-			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.75) inset;
-			content: '';
-		}
-	}
-	&::-moz-progress-bar {
-		border-radius: $radius;
-		background-image:
-			-moz-linear-gradient( 135deg, transparent, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
-			-moz-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-			-moz-linear-gradient( to right, $notifySuccessBgColor, $notifySuccessBgColor);
-		background-size:
-			($progressHeight * 2) $progressHeight,
-			100% 100%,
-			100% 100%;
-	}
-
-	&.valid {
-		&::-webkit-progress-value {
-			background-image:
-				-webkit-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-				-webkit-linear-gradient( to right, $notifySuccessBgColor, $notifySuccessBgColor);
-			background-size:
-				100% 100%,
-				100% 100%;
-		}
-		&::-moz-progress-bar {
-			background-image:
-				-moz-linear-gradient( to bottom, rgba(255, 255, 255, .25), rgba(0, 0, 0, 0.2)),
-				-moz-linear-gradient( to right, $notifySuccessBgColor, $notifySuccessBgColor);
-			background-size:
-				100% 100%,
-				100% 100%;
-		}
-
-	}
-}
-
-.progress-bar {
-	width: 100%;
-	height: $progressHeight;
-	border-radius: $radius;
-	background-color: $ce;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) inset;
-
-	span {
-		display: block;
-		height: $progressHeight;
-		text-indent: -9999px;
-		border-radius: $radius;
-		background-color: $color1;
-	}
-}
-
-label[data-progress] {
-	white-space: nowrap;
-	transition: width $animDuration $animEasing;
-
-	&.active {
-		&:after {
-			opacity: 1;
-		}
-	}
-
-	&:after {
-		position: absolute;
-		padding: 2px 5px;
-		top: 46px;
-		right: 36px;
-		font-size: $fontSize / 1.2 + rem;
-		color: $color1;
-		text-align: center;
-		border-radius: $radius;
-		background-color: $ce;
-		content: attr(data-progress) '%';
-		z-index: 20;
-		opacity: 0;
-		transition: opacity $animDuration $animEasing;
 	}
 }
 

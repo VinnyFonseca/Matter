@@ -1,13 +1,10 @@
-var initGlobal = function() {
-
+$(document).ready(function() {
 	// First Visit Cookie
 
-	var firstVisitCookie = cookieSystem.get("firstVisit");
-
-	if ( firstVisitCookie === null ) {
+	if ( matter.cookie.get("firstVisit") === null ) {
 		cookieNotify = true;
-		cookieSystem.set("firstVisit", "yes", 365);
-		notify(config.cookie.message, config.cookie.delay);
+		matter.cookie.set("firstVisit", "yes", 365);
+		notify("Cookie Disclaimer", matter.config.cookie.message, 0);
 	}
 
 
@@ -15,14 +12,14 @@ var initGlobal = function() {
 	// Nav
 
 	var page,
-		url = this.location.href,
+		url = location.href.split('?')[0],
 		section = url.split("/"),
 		nav = $("nav"),
 		scrolling = false;
 
-	for ( var i = 0; i < section.length; i++ ) page = section[section.length - 1].split(".")[0];
-
 	nav.children("a").removeClass("active");
+
+	for ( var i = 0; i < section.length; i++ ) page = section[section.length - 1].split(".")[0];
 	var navActive = page.length ? nav.children("a[href*=" + page + "]").addClass("active") : nav.children("a").eq(0).addClass("active");
 
 	$(".nav-trigger").on("click", function() {
@@ -61,15 +58,15 @@ var initGlobal = function() {
 	}
 
 	$(".sidebar-trigger").on("click", function() {
-		if ( !$(".main").hasClass("sidebar-on") ) {
-			$(".main").addClass("sidebar-on");
+		if ( !$("body").hasClass("sidebar-on") ) {
+			$("body").addClass("sidebar-on");
 		} else {
-			$(".main").removeClass("sidebar-on");
+			$("body").removeClass("sidebar-on");
 		}
 	});
-	$("html, body").on("click", function(event) {
-		if ( !$(event.target).closest(".sidebar").length && $(".main").hasClass("sidebar-on") ) {
-			$(".main").removeClass("sidebar-on");
+	$(".main").on("click", function(event) {
+		if ( !$(event.target).closest(".sidebar").length && $("body").hasClass("sidebar-on") ) {
+			$("body").removeClass("sidebar-on");
 		}
 	});
 
@@ -83,9 +80,59 @@ var initGlobal = function() {
 		$(".sidebar a").removeClass("active");
 		$(this).addClass("active");
 
-		$(".main").removeClass("sidebar-on");
+		// $("body").removeClass("sidebar-on");
 	});
-}
+
+
+
+
+	// Progress Bars Test
+
+	$("[data-progress]").on("click", function(event) {
+		var progress = 0;
+		clearInterval(progressInterval);
+
+		var progressInterval = setInterval(function() {
+			if ( progress < 100 ) {
+				progress++;
+				matter.progress.trigger(".progress-bar", progress);
+			} else {
+				clearInterval(progressInterval);
+			}
+		}, 300);
+	});
+
+
+
+
+	// Sharing
+
+	$(".share-twitter").on('click', function(event) {
+		var shareURL = "http://www.twitter.com/intent/tweet?"
+			text     = "text=Test tweet here",
+			hashtags = "&hashtags=Test",
+			mentions = "&via=VirginMoney",
+			finalURL = shareURL + text + hashtags + mentions;
+
+	    matter.popup(finalURL, "Virgin Money - One in a million", 640, 320);
+	});
+
+	$(".share-facebook").on('click', function(event) {
+	    var shareURL = "http://www.facebook.com/sharer/sharer.php?"
+	        finalURL = shareURL + "u=" + location.href;
+
+	    matter.popup(finalURL, "Virgin Money - One in a million", 640, 320);
+	});
+
+	$(".share-linkedin").on('click', function(event) {
+	    var shareURL = "http://www.linkedin.com/shareArticle?mini=true&"
+	        title    = "title=Test tweet here",
+	        summary  = "summary=Test tweet here",
+	        finalURL = shareURL + "url=" + location.href + "&" + title + "&" + summary;
+
+	    matter.popup(finalURL, "Virgin Money - One in a million", 640, 480);
+	});
+});
 
 
 
@@ -93,22 +140,19 @@ var initGlobal = function() {
 
 var introParallax = function() {
 	$(".intro .parallax").css({
-		"-webkit-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
-		"-moz-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
-		"-ms-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
-		"-o-transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
-		"transform": "translate3d(0, " + pageTop / 2 + "px, 0)",
-		"opacity": 1 - (pageTop / 500)
+		"-webkit-transform": "translate3d(0, " + matter.doc().top / 2 + "px, 0)",
+		"-moz-transform": "translate3d(0, " + matter.doc().top / 2 + "px, 0)",
+		"-ms-transform": "translate3d(0, " + matter.doc().top / 2 + "px, 0)",
+		"-o-transform": "translate3d(0, " + matter.doc().top / 2 + "px, 0)",
+		"transform": "translate3d(0, " + matter.doc().top / 2 + "px, 0)",
+		"opacity": 1 - (matter.doc().top / 500)
 	});
 }
 
-function detectSidebar() {
-	if ( !anchorClicked && $("a.anchor").length ) {
+var sidebarUpdate = function() {
+	if ( !matter.anchor.clicked && $("a.anchor").length ) {
 		$("a.anchor").each(function(i) {
-			var top = $(this).offset().top - 40;
-			var length = $(".sidebar a").length;
-
-			if ( pageTop >= top ) {
+			if ( matter.viewport().top >= $(this).offset().top - 40 ) {
 				$(".sidebar a").removeClass("active")
 				$(".sidebar a").eq(i).addClass("active");
 
@@ -120,14 +164,25 @@ function detectSidebar() {
 					$(".sidebar .container[data-type=" + container + "]").addClass("selected");
 				}
 			}
-			if ( pageTop + $(window).height() >= $(document).height() ) {
-				$(".sidebar a").removeClass("active").eq(length - 1).addClass("active");
+			if ( matter.viewport().top + matter.viewport().height >= matter.doc().height ) {
+				$(".sidebar a").removeClass("active").eq($(".sidebar a").length - 1).addClass("active");
 			}
 		});
 	}
 }
 
+var controls = matter.dimensions(".controls");
+
+var controlsPosition = function() {
+	if ( matter.viewport().top > controls.top ) {
+		$(".controls").addClass("scrolling");
+	} else {
+		$(".controls").removeClass("scrolling");
+	}
+}
+
 $(window).on("scroll", function() {
 	requestAnimationFrame(introParallax);
-	detectSidebar();
+	sidebarUpdate();
+	controlsPosition();
 });

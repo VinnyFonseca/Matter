@@ -4,25 +4,8 @@
 	display: block;
 	position: relative;
 	margin: 0 auto;
-	margin-bottom: floor($spacing * 2);
 	padding: 0;
-	width: 100%;
-
-
-	$maxSlides: 10;
-	@for $i from 1 through $maxSlides {
-		&[data-display="#{$i}"] {
-			width: auto;
-			margin-left: floor(- $spacing / 2);
-			margin-right: floor(- $spacing / 2);
-
-			.slide {
-				padding: 0 floor($spacing / 2);
-				width: 100% / $i;
-			}
-		}
-	}
-
+	overflow: hidden;
 
 	.slider-container {
 		display: block;
@@ -30,15 +13,16 @@
 		width: 100%;
 		overflow: hidden;
 
+		&.active,
 		&:hover {
 			.slider-arrow {
 				opacity: 1;
 
 				&:hover {
-					background-color: rgba($color2, 0.75);
+					background-color: rgba($color1, 0.75);
 				}
 				&:active {
-					background-color: rgba($c2, 0.75);
+					background-color: rgba($color3, 0.75);
 				}
 
 				&.slider-arrow-prev {
@@ -49,7 +33,129 @@
 				}
 			}
 		}
+
+		&:after {
+			display: none;
+			position: absolute;
+			width: 16px;
+			height: 16px;
+			top: floor($spacing / 2);
+			left: floor($spacing / 2);
+			background: transparent url("/img/icons/icon-swipe.png") center center no-repeat;
+			background-size: 100%;
+			opacity: 0.5;
+			content: "";
+		}
 	}
+
+
+
+	// Arrow Navigation
+
+	.slider-arrow {
+		display: block;
+		position: absolute;
+		padding: 0;
+		width: $arrowDiameter;
+		height: 100%;
+		text-align: center;
+		background-color: rgba($c3, 0.75);
+		opacity: 0;
+		vertical-align: middle;
+		user-select: none;
+		cursor: pointer;
+		z-index: 50;
+		transition: {
+			property: margin background opacity;
+			duration: $duration;
+			timing-function: $easing;
+		}
+
+		&.slider-arrow-prev {
+			float: left;
+			margin-left: floor(-$spacing * 2);
+			left: 0;
+		}
+		&.slider-arrow-next {
+			float: right;
+			margin-right: floor(-$spacing * 2);
+			right: 0;
+		}
+
+		.icon {
+			width: 22px;
+			height: 22px;
+			@include svgColor($cf);
+		}
+	}
+
+
+
+
+	// Bullet Navigation (if navContainer is not defined)
+
+	$bulletDiameter: 16px;
+
+	.slider-nav {
+		display: block;
+		position: relative;
+		margin: 0.5% -0.5% 0;
+		padding: 0;
+		text-align: center;
+		font-size: 0;
+		cursor: default;
+
+		.slider-bullet {
+			display: inline-block;
+			position: relative;
+			margin: floor($spacing / 1.5) floor($spacing / 2.5);
+			width: $bulletDiameter;
+			height: $bulletDiameter;
+			background-color: $color2;
+			border-radius: $bulletDiameter;
+			opacity: 0.5;
+			user-select: none;
+			cursor: pointer;
+			transition: {
+				property: transform opacity;
+				duration: 0.1s;
+				timing-function: $easing;
+			}
+
+			&:hover {
+				opacity: 1;
+			}
+
+			&:active,
+			&.active,
+			&:focus {
+				background-color: $color1;
+				opacity: 1;
+			}
+		}
+
+		&.thumbnails {
+			text-align: left;
+
+			.slider-bullet {
+				margin: 0.5%;
+				padding-bottom: 5.25%;
+				width: 5.25%;
+				height: auto;
+				border-radius: $radius;
+				background-size: cover !important;
+
+				&:hover {
+					// transform: scale(1.1);
+					z-index: 10;
+				}
+			}
+		}
+	}
+
+
+
+	// Moving Container
 
 	.slider-movable {
 		display: block;
@@ -59,7 +165,6 @@
 		width: 100%;
 		white-space: nowrap !important;
 		overflow: visible !important;
-		cursor: -webkit-grab;
 
 		@extend .valign-middle;
 
@@ -72,8 +177,9 @@
 		display: inline-block;
 		position: absolute;
 		margin: 0;
-		padding: 0;
+		padding: floor($spacing / 2);
 		width: 100%;
+		height: 100%;
 		top: 0;
 		left: 0;
 		background-color: $ce;
@@ -81,11 +187,6 @@
 		overflow: hidden;
 		white-space: normal;
 		visibility: hidden;
-
-		&:first-child {
-			position: relative;
-			visibility: visible;
-		}
 
 		> img {
 			display: block;
@@ -104,7 +205,7 @@
 				display: block;
 				position: relative;
 				width: 100%;
-				padding-bottom: 52.5%;
+				padding-bottom: 40%;
 				content: "";
 			}
 		}
@@ -112,107 +213,44 @@
 
 
 
-	// Arrow Navigation
+	// Multi slides
 
-	$carrowDiameter: 56px;
+	@for $i from 1 through 20 {
+		&[data-display="#{$i}"] {
+			.slide {
+				width: (100 / $i) + %;
 
-	.slider-arrow {
-		display: none;
-		position: absolute;
-		padding: 0;
-		width: $carrowDiameter;
-		top: 0;
-		bottom: 0;
-		text-align: center;
-		cursor: pointer;
-		z-index: 50;
-		background-color: rgba($color1, 0.75);
-		opacity: 0;
-		vertical-align: middle;
-		user-select: none;
-		transition: {
-			property: margin background opacity;
-			duration: $animDuration / 3;
-			timing-function: $animEasing;
-		}
-
-		&.slider-arrow-prev {
-			float: left;
-			margin-left: -5%;
-			left: 0;
-		}
-		&.slider-arrow-next {
-			float: right;
-			margin-right: -5%;
-			right: 0;
-		}
-
-		.icon {
-			width: 22px;
-			height: 22px;
-			@include svgColor($cf);
-		}
-	}
-
-
-
-
-	// Bullet Navigation (if navContainer is not defined)
-
-	$cbulletDiameter: 16px;
-
-	.slider-nav {
-		display: block;
-		position: relative;
-		margin: 0.5% -0.5% 0;
-		padding: 0;
-		text-align: center;
-		font-size: 0;
-		cursor: default;
-
-		.slider-bullet {
-			display: inline-block;
-			position: relative;
-			margin: floor($spacing / 1.5) floor($spacing / 2.5);
-			width: $cbulletDiameter;
-			height: $cbulletDiameter;
-			background-color: $color2;
-			border-radius: $cbulletDiameter;
-			opacity: 0.5;
-			user-select: none;
-			cursor: pointer;
-			transition: {
-				property: transform opacity;
-				duration: 0.1s;
-				timing-function: $animEasing;
+				&.thumb {
+					&:after {
+						padding-bottom: 52.5%;
+					}
+				}
 			}
 
-			&:hover {
-				opacity: 1;
+			.slider-arrow {
+				padding: 0 floor($spacing / 1.5);
+				width: floor($arrowDiameter * 1.25);
+
+				&.slider-arrow-prev {
+					margin-left: -$arrowDiameter;
+					text-align: right;
+				}
+				&.slider-arrow-next {
+					margin-right: -$arrowDiameter;
+					text-align: left;
+				}
 			}
 
-			&:active,
-			&.active,
-			&:focus {
-				background-color: $color1;
-				opacity: 1;
-			}
-		}
-
-		&.thumbs {
-			text-align: left;
-
-			.slider-bullet {
-				margin: 0.5%;
-				padding-bottom: 5.25%;
-				width: 5.25%;
-				height: auto;
-				border-radius: $radius;
-				background-size: cover !important;
-
+			.slider-container {
 				&:hover {
-					// transform: scale(1.1);
-					z-index: 10;
+					.slider-arrow {
+						&.slider-arrow-prev {
+							margin-left: floor(-$arrowDiameter / 2);
+						}
+						&.slider-arrow-next {
+							margin-right: floor(-$arrowDiameter / 2);
+						}
+					}
 				}
 			}
 		}

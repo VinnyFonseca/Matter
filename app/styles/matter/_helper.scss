@@ -1,5 +1,13 @@
 // Box Model
 
+.static {
+	overflow: hidden !important;
+}
+
+
+
+// Box Model
+
 .inline {
 	display: inline !important;
 }
@@ -9,83 +17,66 @@
 .inline-block {
 	display: inline-block !important;
 }
-.block-reset {
-	font-size: 0;
 
-	> * {
-		font-size: $fontSize + rem;
-	}
-}
-
-.fullwidth {
-	width: 100% !important;
-}
-.halfwidth {
-	width: 50% !important;
-}
-
-
-.nomargin {
+.margin-none {
 	margin: 0 !important;
 }
-.margin-ver {
-	margin-top: $spacing !important;
-	margin-bottom: $spacing !important;
+.margin-full {
+	margin: $spacing !important;
 }
 .margin-top {
 	margin-top: $spacing !important;
 }
+.margin-right {
+	margin-right: $spacing !important;
+}
 .margin-bottom {
 	margin-bottom: $spacing !important;
+}
+.margin-left {
+	margin-left: $spacing !important;
 }
 .margin-hor {
 	margin-left: $spacing !important;
 	margin-right: $spacing !important;
 }
-.margin-left {
-	margin-left: $spacing !important;
-}
-.margin-right {
-	margin-right: $spacing !important;
-}
-.fullmargin {
-	margin: $spacing !important;
+.margin-ver {
+	margin-top: $spacing !important;
+	margin-bottom: $spacing !important;
 }
 
-
-.nopadding {
+.padding-none {
 	padding: 0 !important;
 }
-.padding-ver {
-	padding-top: $spacing !important;
-	padding-bottom: $spacing !important;
+.padding-full {
+	padding: $spacing !important;
 }
 .padding-top {
 	padding-top: $spacing !important;
 }
+.padding-right {
+	padding-right: $spacing !important;
+}
 .padding-bottom {
 	padding-bottom: $spacing !important;
+}
+.padding-left {
+	padding-left: $spacing !important;
 }
 .padding-hor {
 	padding-left: $spacing !important;
 	padding-right: $spacing !important;
 }
-.padding-left {
-	padding-left: $spacing !important;
-}
-.padding-right {
-	padding-right: $spacing !important;
-}
-.fullpadding {
-	padding: $spacing !important;
+.padding-ver {
+	padding-top: $spacing !important;
+	padding-bottom: $spacing !important;
 }
 
-
-.noborder {
+.border-none {
 	border: none !important;
 }
 .border {
-	border: 2px dotted $cfailureBorderColor !important;
+	border: 2px dotted $failureBorderColor !important;
 }
 .dotted {
 	border-style: dotted !important;
@@ -94,37 +85,36 @@
 	border-style: dashed !important;
 }
 
-
-.round {
+.rounded {
 	border-radius: $radius !important;
 }
-.top-round {
+.top-rounded {
 	border-radius: 0 !important;
 	border-top-left-radius: $radius !important;
 	border-top-right-radius: $radius !important;
 }
-.right-round {
+.right-rounded {
 	border-radius: 0 !important;
 	border-top-right-radius: $radius !important;
 	border-bottom-right-radius: $radius !important;
 }
-.bottom-round {
+.bottom-rounded {
 	border-radius: 0 !important;
 	border-bottom-left-radius: $radius !important;
 	border-bottom-right-radius: $radius !important;
 }
-.left-round {
+.left-rounded {
 	border-radius: 0 !important;
 	border-top-left-radius: $radius !important;
 	border-bottom-left-radius: $radius !important;
 }
+.radius-none {
+	border-radius: 0 !important;
+}
+
 .circle {
 	border-radius: 1000px !important;
 }
-.noradius {
-	border-radius: 0 !important;
-}
-
 .square {
 	&:after {
 		display: inline-block;
@@ -134,7 +124,19 @@
 	}
 }
 
-
+.framed {
+	margin-left: 0;
+	margin-right: 0;
+	padding: $spacing;
+	color: $bodyTextColor;
+	background: $ce;
+}
+.card {
+	@extend .framed;
+	border: 0;
+	background-color: $cf;
+	box-shadow: 0 2px 1px 0 rgba($c0, .14), 0 3px 1px -3px rgba($c0, .2), 0 1px 5px 0 rgba($c0, .12);
+}
 .clean {
 	margin-left: 0;
 	margin-right: 0;
@@ -149,21 +151,16 @@
 	}
 }
 
-.framed {
-	margin-left: 0;
-	margin-right: 0;
-	padding: floor($spacing / 2);
-	color: $bodyTextColor;
-	border: 1px solid $cd;
-	border-radius: $radius;
-	background: $ce;
-}
 
-.card {
-	@extend .framed;
-	border: 0;
-	background-color: $cf;
-	box-shadow: 0 2px 1px 0 rgba(0, 0, 0, .14), 0 3px 1px -3px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+
+// Fixes
+
+.block-reset {
+	font-size: 0 !important;
+
+	> * {
+		font-size: $fontSize + rem ;
+	}
 }
 
 
@@ -225,7 +222,7 @@
 }
 
 
-.nofloat {
+.float-none {
 	float: none !important;
 }
 .float-left {
@@ -236,6 +233,55 @@
 }
 
 
+.ltr {
+	direction: ltr;
+}
+.rtl {
+	direction: rtl;
+
+	> * {
+		@extend .ltr;
+	}
+}
+
+
+
+// Widths
+
+.width-full {
+	width: 100% !important;
+}
+.width-half {
+	width: 50% !important;
+}
+
+
+
+// Clears
+
+.clearfix {
+    &:after,
+    &:before {
+        content: '\0020';
+        display: block;
+        overflow: hidden;
+        visibility: hidden;
+        width: 0;
+        height: 0;
+    }
+
+    &:after {
+    	clear: both;
+    }
+}
+.clear {
+    clear: both;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
 .clear-left {
 	clear: left !important;
 }
@@ -247,13 +293,11 @@
 }
 
 
+
+// Visibility
+
 .hidden {
 	display: none !important;
-}
-.highlight {
-	display: inline !important;
-	border-radius: $radius !important;
-	background: rgba(0, 0, 0, 0.1) !important;
 }
 .disappear {
 	display: none !important;
@@ -266,18 +310,29 @@
 	visibility: hidden !important;
 	overflow: hidden !important;
 }
+.highlight {
+	display: inline !important;
+	border-radius: $radius !important;
+	background: rgba($c0, 0.1) !important;
+}
 
 
-.noscroll {
+
+// Overflow
+
+.scroll-none {
 	overflow: hidden !important;
 }
-.noscroll-x {
+.scroll-x-none {
 	overflow-x: hidden !important;
 }
-.noscroll-y {
+.scroll-y-none {
 	overflow-y: hidden !important;
 }
 
+
+
+// Cursor
 
 .pointer {
 	cursor: pointer !important;
@@ -386,10 +441,10 @@
 }
 
 
-.normalwrap {
+.wrap-normal {
 	white-space: normal !important;
 }
-.nowrap {
+.wrap-none {
 	white-space: nowrap !important;
 }
 
@@ -427,8 +482,8 @@
 
 .animate {
 	transition-property: all;
-	transition-duration: $animDuration;
-	transition-timing-function: $animEasing;
+	transition-duration: $duration;
+	transition-timing-function: $easing;
 }
 
 .hardware-accel {

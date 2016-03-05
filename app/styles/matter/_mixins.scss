@@ -1,33 +1,24 @@
-@mixin fontface($cfamily, $cfilename) {
-	@font-face {
-		font-family: $cfamily;
-		src: url("../fonts/" + $cfilename + ".eot");
-		src: url("../fonts/" + $cfilename + ".eot#iefix") format("embedded-opentype"),
-			 url("../fonts/" + $cfilename + ".woff") format("woff"),
-			 url("../fonts/" + $cfilename + ".ttf") format("truetype"),
-			 url("../fonts/" + $cfilename + ".svg#" + $cfilename) format("svg");
-		font: {
-			style: normal;
-			weight: normal;
-		};
-	}
-}
-
-@mixin font-size($fontSize) {
-	font-size: $fontSize + px;
-	font-size: ($fontSize / 10) + rem;
-}
-
-
-@mixin linear-gradient($start: #f1f1f1, $cfrom: 0%, $stop: #d9d9d9, $to: 100%) {
+@mixin gradient-vertical($start: #f1f1f1, $from: 0%, $stop: #d9d9d9, $to: 100%) {
 	background: $start;
 	background: -webkit-gradient(linear, to right bottom, to left bottom, from($start), to($stop));
-	background: -moz-gradient(to right, $start $cfrom, $stop $to);
-	background: -webkit-linear-gradient(to right, $start $cfrom, $stop $to);
-	background: -moz-linear-gradient(to right, $start $cfrom, $stop $to);
-	background: -ms-linear-gradient(to right, $start $cfrom, $stop $to);
-	background: -o-linear-gradient(to right, $start $cfrom, $stop $to);
-	background: linear-gradient(to right, $start $cfrom, $stop $to);
+	background: -moz-gradient(to right, $start $from, $stop $to);
+	background: -webkit-linear-gradient(to right, $start $from, $stop $to);
+	background: -moz-linear-gradient(to right, $start $from, $stop $to);
+	background: -ms-linear-gradient(to right, $start $from, $stop $to);
+	background: -o-linear-gradient(to right, $start $from, $stop $to);
+	background: linear-gradient(to right, $start $from, $stop $to);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start)}', endColorstr='#{ie-hex-str($stop)}', GradientType=1);
+}
+
+@mixin gradient-horizontal($start: #f1f1f1, $from: 0%, $stop: #d9d9d9, $to: 100%) {
+	background: $start;
+	background: -webkit-gradient(linear, to left top, to left bottom, from($start), to($stop));
+	background: -moz-gradient(to bottom, $start $from, $stop $to);
+	background: -webkit-linear-gradient(to bottom, $start $from, $stop $to);
+	background: -moz-linear-gradient(to bottom, $start $from, $stop $to);
+	background: -ms-linear-gradient(to bottom, $start $from, $stop $to);
+	background: -o-linear-gradient(to bottom, $start $from, $stop $to);
+	background: linear-gradient(to bottom, $start $from, $stop $to);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start)}', endColorstr='#{ie-hex-str($stop)}', GradientType=1);
 }
 
@@ -38,9 +29,7 @@
 	line: $color;
 	stroke: none !important;
 
-	path,
-	polygon,
-	rect {
+	* {
 		fill: $color;
 		path: $color;
 		line: $color;

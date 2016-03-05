@@ -118,7 +118,7 @@ var initAutocomplete = function() {
 							var value = $(this).text().trim();
 							input.val(value).trigger({type: "keydown", which: 13});
 							list.removeClass("active");
-							unhighlight(results.children("li.selected"));
+							matter.text.unhighlight(results.children("li.selected"));
 						});
 
 						if ( results.children(".selected").length === 0 ) {
@@ -174,10 +174,10 @@ var initAutocomplete = function() {
 
 						if ( list.find(".selected").length > 0 ) {
 							noResults.hide();
-							highlight(results.children("li.selected"), term);
+							matter.text.highlight(results.children("li.selected"), term);
 						} else {
 							noResults.show();
-							unhighlight(results.children("li.selected"));
+							matter.text.unhighlight(results.children("li.selected"));
 						}
 
 						loader.hide();
@@ -248,7 +248,7 @@ var initAutocomplete = function() {
 					.on("blur", function() {
 						if ( selecting === false ) {
 							list.removeClass("active");
-							unhighlight(list.find("li"));
+							matter.text.unhighlight(list.find("li"));
 						}
 					});
 				}
@@ -316,12 +316,12 @@ var initAutocomplete = function() {
 				// suggest();
 				// init();
 
-				// requestData(urlSuggestions, "GET", suggest);
+				// matter.data.get(urlSuggestions, suggest);
 			}
 
-			requestData(url, "GET", build);
+			matter.data.get(url, build);
 		});
 
-		if ( config.application.debug ) console.log("Search :: Autocomplete");
+		if ( matter.config.application.debug ) console.log("Search :: Autocomplete");
 	}
 }

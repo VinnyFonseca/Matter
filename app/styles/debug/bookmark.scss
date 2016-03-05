@@ -1,0 +1,213 @@
+// Global
+
+@import "../custom/config";
+@import "../matter/mixins";
+@import "../matter/helper";
+
+
+
+// Core
+
+@import "../matter/core";
+@import "../matter/grid";
+
+
+
+// Code
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background: $ce;
+    min-width: 960px;
+    overflow: hidden;
+    tap-highlight-color: $highlightColor;
+}
+
+:selection {
+    background: $highlightColor;
+}
+
+img:selection {
+    background: 0 0;
+}
+
+.qcContainer:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+
+
+// Header
+
+header {
+    position: relative;
+
+    &.frameTitle {
+        margin-top: 7px;
+        color: $cf;
+        font: 600 72px/68px Helvetica, Helvetica, sans-serif;
+        z-index: 99;
+        text-transform: uppercase;
+    }
+
+    &#topHeader {
+        background: $cf;
+    }
+}
+
+
+// Breakpoin Counter
+
+#bpCount {
+    float: left;
+    position: relative;
+    width: 192px;
+    height: 70px;
+    color: $cf;
+    background: $color2;
+}
+
+#count {
+    position: absolute;
+    width: 65px;
+    height: 70px;
+    color: $cf;
+    font: 100 36px/70px Arial, Helvetica, sans-serif;
+    text-align: center;
+    background: $color1;
+    text-indent: 5px;
+
+    &:after {
+        content: "";
+        position: absolute;
+        margin-left: 10px;
+        width: 0;
+        height: 0;
+        border-top: 35px solid transparent;
+        border-bottom: 35px solid transparent;
+        border-left: 12px solid $color1;
+        z-index: 9;
+    }
+}
+
+#countText {
+    position: absolute;
+    left: 73px;
+    height: 70px;
+    padding-left: 18px;
+
+    span {
+        display: block;
+        margin-top: 18px;
+        font: 100 11px/18px Helvetica, Helvetica, sans-serif;
+        letter-spacing: 1px;
+    }
+}
+
+#bpList {
+    position: relative;
+    float: left;
+    margin: 0;
+    width: 700px;
+    height: 70px;
+    list-style: none;
+
+    > li {
+        position: relative;
+        float: left;
+        margin: 2px;
+        border-radius: $radius;
+        background-color: $ce;
+        overflow: hidden;
+
+        > a {
+            display: block;
+            width: 70px;
+            height: 35px;
+            color: #555;
+            font: 600 13px/35px Helvetica, Arial, sans-serif;
+            text-align: center;
+            text-decoration: none;
+
+            &:hover {
+                color: $cf;
+                background-color: $color2;
+            }
+
+            > span {
+                margin-left: 1px;
+                color: $c9;
+                font-weight: 100;
+            }
+
+            > input {
+                display: none;
+            }
+        }
+
+        &.active {
+            > a,
+            > a:hover {
+                color: $cf;
+                background-color: $color1;
+                box-shadow: none;
+            }
+        }
+
+        &:hover,
+        &.active {
+            > a > span {
+                color: $cf;
+            }
+        }
+    }
+}
+
+
+// Viewer
+
+#qcWWW {
+    display: block;
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+#qcWW {
+    display: block;
+    position: relative;
+    white-space: nowrap;
+
+    .breakpoint-item {
+        display: inline-block;
+        position: relative;
+        margin: 0;
+        padding: 0 $spacing $spacing;
+        top: 6px;
+        border-right: 1px $cf solid;
+        overflow: hidden;
+        box-sizing: content-box;
+    }
+}
+
+.frameWrapper {
+    position: relative;
+    width: 100%;
+    background: $cf url(../img/loader.gif) center center no-repeat;
+    border-radius: $radius;
+    overflow: hidden;
+
+    iframe {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: $radius;
+    }
+}

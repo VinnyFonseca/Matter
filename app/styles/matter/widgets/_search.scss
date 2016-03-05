@@ -132,8 +132,8 @@
 		opacity: 1;
 		transform: scale(1) translateY(0);
 		transition-property: transform, opacity;
-		transition-duration: $animDuration;
-		transition-timing-function: $animEasing;
+		transition-duration: $duration;
+		transition-timing-function: $easing;
 
 		&.loading {
 			position: absolute !important;

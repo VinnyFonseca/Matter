@@ -1,94 +1,89 @@
 // Tooltips
 
-var initTooltips = function() {
-	if ( $("[data-tooltip]").length ) {
-		var tooltipPosition = function(evt, content) {
-			var container = $(".tooltip"),
-				cursorX = evt.pageX || evt.originalEvent.touches[0].pageX,
-				cursorY = evt.pageY || evt.originalEvent.touches[0].pageY;
+matter.tooltip = {
+	init: function() {
+		if ( $("[data-tooltip]").length ) {
+			$("[data-tooltip]").each(function() {
+				var el = $(this),
+					data = el.data("tooltip");
 
-			container.html(content).addClass("active");
+				if ( !matter.config.application.touch ) {
+					el.on("mouseenter", function(event) {
+						$("body").prepend('<div class="tooltip"></div>');
+						$(".tooltip").html(data).addClass("active");
 
-			switch(config.tooltip.position) {
-				case "left":
-					container.css({
-						top: cursorY - container.outerHeight() - 10,
-						left: cursorX - container.outerWidth()
+						$(this).on("mousemove", function(event) {
+							matter.tooltip.position(event);
+						});
+					}).on("mouseleave", function() {
+						$(".tooltip").remove();
 					});
-					break;
+				} else {
+					el.on("click", function(event) {
+						$(".tooltip").remove();
+						$("body").prepend('<div class="tooltip"></div>');
 
-				case "center":
-					container.css({
-						top: cursorY - container.outerHeight() - 10,
-						left: cursorX - (container.outerWidth() / 2) - 5
+						matter.tooltip.position(event);
 					});
-					break;
 
-				case "right":
-					container.css({
-						top: cursorY - container.outerHeight() - 10,
-						left: cursorX
+					$("html, body").on("click", function(event) {
+						if ( !$(event.target).closest("[data-tooltip]").length ) {
+							$(".tooltip").remove();
+						}
 					});
-					break;
+				}
+			});
 
-				default:
-					container.css({
-						top: cursorY - container.outerHeight() - 10,
-						left: cursorX - (container.outerWidth() / 2) - 5
-					});
+			if ( matter.config.application.debug ) console.log("Widget :: Tooltips");
+		}
+	},
+	bind: function() {
+		var element = matter.dimensions(".tooltip");
+		var target = matter.dimensions(matter.config.tooltip.bound.element);
+
+		if ( matter.config.tooltip.bound.active ) {
+			if ( element.left <= target.left ) {
+				element.selector.css({ left: target.left });
 			}
-
-			var tooltip = {
-				left: container.offset().left,
-				right: container.offset().left + container.outerWidth()
-			};
-			var boundaries = {
-				left: $(".wrapper").offset().left + 20,
-				right: $(".wrapper").offset().left + $(".wrapper").outerWidth() - 20
-			};
-
-			if ( config.tooltip.bound ) {
-				if ( tooltip.left <= boundaries.left ) {
-					container.css({ left: boundaries.left });
-				}
-				if ( tooltip.right >= boundaries.right ) {
-					container.css({ left: boundaries.right - container.outerWidth() });
-				}
+			if ( element.right >= target.right ) {
+				element.selector.css({ left: target.right - element.width });
 			}
 		}
+	},
+	position: function(event) {
+		var element = matter.dimensions(".tooltip");
+		matter.tooltip.bind();
 
-		$("[data-tooltip]").each(function() {
-			var el = $(this),
-				tooltipData = el.data("tooltip");
+		var cursorX = event.pageX || event.originalEvent.touches[0].pageX,
+		    cursorY = event.pageY || event.originalEvent.touches[0].pageY;
 
-			if ( !config.application.touch ) {
-				el.on("mouseenter", function(event) {
-					$("body").prepend('<div class="tooltip"></div>');
-
-					$(this).on("mousemove", function(event) {
-						tooltipPosition(event, tooltipData);
-					});
-				}).on("mouseleave", function() {
-					$(".tooltip").remove();
+		switch(matter.config.tooltip.position) {
+			case "left":
+				element.selector.css({
+					top: cursorY - element.height - 20,
+					left: cursorX - element.width
 				});
-			} else {
-				el.on("click", function(event) {
-					$(".tooltip").remove();
+				break;
 
-					$("body").prepend('<div class="tooltip"></div>');
-
-					tooltipPosition(event, tooltipData);
+			case "center":
+				element.selector.css({
+					top: cursorY - element.height - 20,
+					left: cursorX - (element.width / 2) - 5
 				});
+				break;
 
-				$("html, body").on("click", function(event) {
-					if ( !$(event.target).closest("[data-tooltip]").length ) {
-						$(".tooltip").remove();
-					}
+			case "right":
+				element.selector.css({
+					top: cursorY - element.height - 20,
+					left: cursorX
 				});
+				break;
 
-			}
-		});
-
-		if ( config.application.debug ) console.log("Widget :: Tooltips");
+			default:
+				element.selector.css({
+					top: cursorY - element.height - 20,
+					left: cursorX - (element.width / 2) - 5
+				});
+		}
 	}
 }

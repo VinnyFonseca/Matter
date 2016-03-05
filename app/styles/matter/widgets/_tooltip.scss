@@ -18,7 +18,7 @@ $animBounce: cubic-bezier(.15,.7,.6,1.7);
 	opacity: 0;
 	transform: scale(0.6);
 	transition-property: opacity, transform;
-	transition-duration: $animDuration / 2;
+	transition-duration: $duration / 2;
 	transition-timing-function: $animBounce;
 
 	&.active {

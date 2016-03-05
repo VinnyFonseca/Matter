@@ -1,13 +1,3 @@
-@media screen and (max-width: $scrDeskL + $sidebarWidth) {
-
-	.wrapper {
-		width: 100%;
-	}
-
-}
-
-
-
 @media screen and (max-width: $scrDeskL) {
 
 	header,
@@ -32,10 +22,6 @@
 
 			.sidebar-trigger {
 				display: block !important;
-			}
-
-			h1, h2, h3, h4, h5, h6 {
-				text-align: right;
 			}
 		}
 	}
@@ -72,7 +58,6 @@
 
 @media screen and (max-width: $scrTablL) {
 
-
 	// Nav
 
 	header,
@@ -95,9 +80,9 @@
 			bottom: 0;
 			width: 100%;
 			height: auto;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+			box-shadow: 0 0 10px rgba($c0, 0.15);
 			transform: translateY(0);
-			transition: transform $animDuration $animEasing;
+			transition: transform $duration $easing;
 
 			.nav-item {
 				display: block;
@@ -114,35 +99,18 @@
 	}
 
 
+	// Controls
+
 	.controls > * {
 		width: 44px !important;
 	}
 
 
+	// Widgets
+
 	.icon-wrapper {
 		.icon-container {
 			width: 6.666%;
-		}
-	}
-
-
-	.slider {
-		&.full {
-			.slide {
-				width: 100%;
-			}
-		}
-		&.third {
-			.slide {
-				margin: 0 1%;
-				width: 48%;
-			}
-		}
-		&.fifth {
-			.slide {
-				margin: 0 0.5%;
-				width: 49%;
-			}
 		}
 	}
 
@@ -160,6 +128,10 @@
 
 @media screen and (max-width: $scrTablS) {
 
+	html {
+		background-color: $bodyBgColor;
+	}
+
 }
 
 
@@ -172,28 +144,6 @@
 		}
 	}
 
-
-	.slider {
-		&.full {
-			.slide {
-				width: 100%;
-			}
-		}
-		&.third {
-			.slide {
-				margin: 0;
-				width: 100%;
-			}
-		}
-		&.fifth {
-			.slide {
-				margin: 0;
-				width: 100%;
-			}
-		}
-	}
-
-
 	footer {
 		.author {
 			display: none;
@@ -205,5 +155,9 @@
 
 
 @media screen and (max-width: $scrMoblS) {
+
+	html {
+		background-color: $bodyBgColor;
+	}
 
 }

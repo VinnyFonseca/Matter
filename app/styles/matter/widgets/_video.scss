@@ -66,7 +66,7 @@ iframe[src*="vimeo"] {
 		background-position: center center !important;
 		background-size: cover !important;
 		z-index: 15;
-		transition: opacity $animDuration $animEasing;
+		transition: opacity $duration $easing;
 
 		&:hover {
 			+ .video-button {
@@ -85,7 +85,7 @@ iframe[src*="vimeo"] {
 		height: 100%;
 		background: $cf;
 		z-index: 10;
-		transition: opacity $animDuration $animEasing;
+		transition: opacity $duration $easing;
 	}
 
 
@@ -103,7 +103,7 @@ iframe[src*="vimeo"] {
 		background: $cf;
 		z-index: 20;
 		opacity: 1;
-		transition: opacity $animDuration $animEasing;
+		transition: opacity $duration $easing;
 	}
 
 	.video-button {
@@ -120,7 +120,7 @@ iframe[src*="vimeo"] {
 		background: $c3;
 		z-index: 25;
 		opacity: 0;
-		transition: all ($animDuration) $animEasing;
+		transition: all ($duration) $easing;
 
 		@extend .valign-middle;
 
@@ -137,10 +137,10 @@ iframe[src*="vimeo"] {
 			height: 45%;
 			left: 3px;
 			@include svgColor($color1);
-			transition: all ($animDuration) $animEasing;
+			transition: all ($duration) $easing;
 
 			* {
-				transition: all ($animDuration) $animEasing;
+				transition: all ($duration) $easing;
 			}
 
 			&.icon-pause {

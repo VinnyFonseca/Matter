@@ -43,7 +43,7 @@
 		left: 1%;
 		right: 1%;
 		list-style: none;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+		box-shadow: 0 4px 8px rgba($c0, 0.25);
 		overflow: auto;
 		overflow-x: hidden;
 		visibility: hidden;
@@ -51,8 +51,8 @@
 		opacity: 0;
 		transform: translateY(-10px);
 		transition-property: opacity, transform;
-		transition-duration: $animDuration;
-		transition-timing-function: $animEasing;
+		transition-duration: $duration;
+		transition-timing-function: $easing;
 
 		&.active {
 			opacity: 1;

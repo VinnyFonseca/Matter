@@ -533,7 +533,8 @@ var buildMap = function() {
 
 	if ( window.google && google.maps ) {
 		$('.map-canvas').each(function() {
-			requestData($(this).data("feed"), "GET", init);
+			matter.data.get($(this).data("feed"), init);
+
 			google.maps.event.addDomListener(window, "resize", function() {
 				var center = map.getCenter();
 				google.maps.event.trigger(map, "resize");
@@ -541,12 +542,12 @@ var buildMap = function() {
 			});
 		})
 
-		if ( config.application.debug ) console.log("Widget ~~ Map");
+		if ( matter.config.application.debug ) console.log("Widget ~~ Map");
 	}
 }
 
 var initMap = function() {
 	if ( $('.map-wrapper').length ) {
-		loadScript("//maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js&callback=buildMap");
+		matter.script.load("//maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js&callback=buildMap");
 	}
 }

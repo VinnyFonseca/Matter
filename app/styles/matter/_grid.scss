@@ -3,15 +3,16 @@
 .row {
 	display: block;
 	position: relative;
-	margin: 0 (- $gut / 2);
+	margin: 0 floor(- $gut / 2);
 	@extend .block-reset;
+	@extend .clearfix;
 }
 
 .column {
 	display: inline-block;
 	position: relative;
 	margin: 0;
-	padding: $gut / 2;
+	padding: floor($gut / 2);
 	width: 100%;
 	vertical-align: top;
 
@@ -54,6 +55,7 @@
 
 		.cell {
 			@extend .framed;
+			padding: floor($spacing / 2);
 		}
 	}
 

@@ -1,30 +1,38 @@
 // Overlays
 
-var initOverlays = function() {
-	if ( $("[data-overlay]").length ) {
-		$("[data-overlay]").each(function() {
-			var el = $(this),
-				target = $("#" + el.data("overlay"));
+matter.overlay = {
+	init: function() {
+		if ( $(".overlay").length ) {
+			$(document).on("click", "[data-overlay]", function() {
+				var el = $(this);
+				var target = $("#" + el.data("overlay"));
 
-			el.on("click", function() {
 				if ( target.hasClass("active") ) {
-					target.removeClass("active");
+					matter.overlay.close(target);
 				} else {
-					target.addClass("active");
+					matter.overlay.open(target);
 				}
+
+				target.on('click', function(event) {
+					if ( !$(event.target).closest(target.find(".modal")).length ) {
+						matter.overlay.close(target);
+					}
+				});
+
+				target.find(".overlay-close").on('click', function() {
+					matter.overlay.close(target);
+				});
 			});
 
-			target.on('click', function() {
-				target.removeClass("active");
-			});
-			target.children(".overlay-close").on('click', function() {
-				target.removeClass("active");
-			});
-			target.children(".modal").on("click", function(event) {
-				if ( !$(event.target).closest(".overlay-close").length ) event.stopPropagation();
-			});
-		});
-
-		if ( config.application.debug ) console.log("Widget :: Overlays");
+			if ( matter.config.application.debug ) console.log("Widget :: Overlays");
+		}
+	},
+	open: function(element) {
+		$("html, body").addClass("static");
+		$(element).addClass("active");
+	},
+	close: function(element) {
+		$("html, body").removeClass("static");
+		$(element).removeClass("active");
 	}
 }

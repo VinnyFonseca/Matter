@@ -1,7 +1,7 @@
 // Validation
 
 var initValidation = function() {
-	if ( config.forms.validation && $("[data-validation]").length ) {
+	if ( matter.config.forms.validation && $("[data-validation]").length ) {
 
 		// Password Check
 
@@ -86,7 +86,7 @@ var initValidation = function() {
 		// Validation function called on keyup
 
 		var validateField = function(el, type, value) {
-			if ( config.application.debug ) console.log("Validation :: " + type);
+			if ( matter.config.application.debug ) console.log("Validation :: " + type);
 
 			el.removeClass("invalid").removeClass("valid");
 
@@ -133,8 +133,8 @@ var initValidation = function() {
 				break;
 
 				case "match":
-					type = el.attr("type");
-					var mirror = el.parents().find("input[type='" + type + "']");
+					name = el.attr("name");
+					var mirror = el.parents().find("[name='" + name + "']");
 					check = mirror.val();
 
 					if ( mirror.hasClass("valid") && value === check ) {
@@ -153,7 +153,7 @@ var initValidation = function() {
 						el.addClass("invalid");
 					}
 
-					$(".card-wrapper .card").attr("src", "img/icons/payment/cards/" + detectCard(value) + ".png");
+					$(".card-type img").attr("src", "/img/icons/payment/cards/" + detectCard(value) + ".png");
 
 				break;
 
@@ -262,7 +262,6 @@ var initValidation = function() {
 					if ( validArray.indexOf(false) < 0 ) {
 						el.addClass("submitted").addClass("valid");
 
-						el.find("[data-validation='date']").datepicker("remove");
 						el.find("input, select, textarea").attr("readonly", "readonly");
 						el.find("button, input[type='submit']").attr("readonly", "readonly");
 
@@ -271,8 +270,8 @@ var initValidation = function() {
 						el.find(".form-loader").hide();
 						el.find(".form-done").show();
 
-						// el.submit();
-						notify("Form submitted successfully.", "success", 3000);
+						el.submit();
+						notify("Success", "Form submitted successfully.", matter.config.notification.delay, "success");
 					} else {
 						el.removeClass("valid");
 
@@ -281,7 +280,7 @@ var initValidation = function() {
 						el.find(".form-loader").hide();
 						el.find("button, input[type='submit']").show();
 
-						notify("Form not submitted. Please review.", "failure", 3000);
+						notify("Failure", "Form not submitted. Please review.", matter.config.notification.delay, "failure");
 					}
 			}
 		}
@@ -295,7 +294,7 @@ var initValidation = function() {
 				break;
 
 				case "card":
-					$(".card-wrapper .card").attr("src", "img/icons/payment/cards/" + detectCard(value) + ".png");
+					$(".card-type img").attr("src", "/img/icons/payment/cards/" + detectCard(value) + ".png");
 				break;
 			}
 		}
@@ -318,13 +317,17 @@ var initValidation = function() {
 				var el = $(this);
 
 				if ( el.attr("type") === "checkbox" || el.attr("type") === "radio" ) {
+
 					el.on("change", function() {
 						var type = el.attr("data-validation"),
 							value = el.val();
 
 						validateField(el, type, value);
-					}).next("label").append("<span class='indicator-required'></span>");
+					});
+					$("label[for='" + el.attr("id") + "']").addClass("required");
+
 				} else {
+
 					el.on("keyup", function() {
 						el.removeClass("valid").removeClass("invalid");
 					})
@@ -341,7 +344,9 @@ var initValidation = function() {
 
 							validateField(el, type, value);
 						}, 200);
-					}).prev("label").append("<span class='indicator-required'></span>");
+					});
+					$("label[for='" + el.attr("id") + "']").addClass("required");
+
 				}
 			});
 
@@ -367,6 +372,6 @@ var initValidation = function() {
 			});
 		});
 
-		if ( config.application.debug ) console.log("Form :: Validation");
+		if ( matter.config.application.debug ) console.log("Form :: Validation");
 	}
 }

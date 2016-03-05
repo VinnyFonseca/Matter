@@ -26,28 +26,22 @@ module.exports = function(grunt) {
 					message: 'Postprocessing completed'
 				}
 			},
-			uncss: {
+			styledocco: {
 				options: {
-					title: 'UnCSS',
-					message: 'Cleaning completed'
-				}
-			},
-			documentjs: {
-				options: {
-					title: 'Document JS',
+					title: 'Style Docco',
 					message: 'Styleguide created'
-				}
-			},
-			uglify: {
-				options: {
-					title: 'Scripts',
-					message: 'Uglification completed'
 				}
 			},
 			jshint: {
 				options: {
-					title: 'Scripts',
+					title: 'JS Hint',
 					message: 'Hinting completed'
+				}
+			},
+			uglify: {
+				options: {
+					title: 'JS Uglify',
+					message: 'Uglification completed'
 				}
 			},
 			browserSync: {
@@ -71,8 +65,6 @@ module.exports = function(grunt) {
 		ssi: {
 			options: {
 				cache: 'all',
-				ext: '.html',
-				encoding: 'utf8',
 				baseDir: 'app/markup'
 			},
 			main: {
@@ -92,17 +84,22 @@ module.exports = function(grunt) {
 		sass: {
 			options: {
 				sourceMap: true,
-				outputStyle: 'compressed'
+				outputStyle: 'expanded'
 			},
 			main: {
-				files: {
-					'www/styles/build.css': 'app/styles/build.scss'
-				}
+				files: [{
+			        expand: true,
+			        cwd: 'app/styles',
+			        src: ['**/*.{scss,sass}', '!**/_*.{scss,sass}'],
+			        dest: 'www/styles',
+			        filter: 'isFile',
+			        ext: '.css'
+			    }]
 			}
 		},
 
 
-		// Config for grunt-postcss (multiple css post processors, minification, autoprefixing)
+		// Config for grunt-postcss (multiple sass post processors, minification, autoprefixing)
 
 		postcss: {
 			options: {
@@ -112,7 +109,7 @@ module.exports = function(grunt) {
 					require('rucksack-css')({
 						fallbacks: true
 					}),
-					require('pixrem')(16, { // Value is the same as on _config.scss $fsz variable multiplied by 10.
+					require('pixrem')(16, { // Value is the same as on _config.scss $fontSize variable multiplied by 10.
 						html: true,
 						replace: false,
 						atrules: true,
@@ -129,51 +126,21 @@ module.exports = function(grunt) {
 		},
 
 
+		// Config for styledocco (CSS style guides automatic generation)
 
-		// Config for uncss (Unused CSS removal by scanning html files)
-
-		uncss: {
+		styledocco: {
 			main: {
+				options: {
+					name: 'Matter',
+					cmd: './node_modules/.bin/styledocco',
+					preprocessor: 'sass'
+				},
 				files: {
-					'www/styles/build.css': ['www/*.html']
+					'styleguide': 'app/styles'
 				}
 			}
 		},
 
-
-
-		// Config for documentjs (CSS style guides automatic generation)
-
-		documentjs: {
-			sites: {
-				"styles": {
-					"glob": "www/styles/build.css",
-					"dest": "www/styles/styleguide"
-				}
-			}
-		},
-
-
-
-		// Config for grunt-contrib-uglify (javascript concatenation)
-
-		uglify: {
-			options: {
-				mangle: false,
-				beautify: true,
-				sourceMap: true,
-				sourceMapIncludeSources: true,
-				sourceMapName: 'www/scripts/build.js.map'
-			},
-			main: {
-				files: {
-					'www/scripts/build.js': [
-						'app/scripts/matter/**/*.js',
-						'app/scripts/custom/**/*.js'
-					]
-				}
-			}
-		},
 
 
 		// Config for grunt-contrib-jshint (javascript lint)
@@ -185,13 +152,13 @@ module.exports = function(grunt) {
 				ignores: [
 					'app/scripts/matter/base/**/*.js',
 					'app/scripts/matter/engine/**/*.js',
-					'app/scripts/matter/polyfills/**/*.js',
-					'app/scripts/matter/vendor/**/*.js'
+					'app/scripts/matter/polyfills/**/*.js'
 				],
 				'-W001': false,
 
 				// Enforcing
 				notypeof: true,
+				nonbsp: true,
 				funcscope: true,
 				unused: false,
 				globals: {
@@ -212,6 +179,33 @@ module.exports = function(grunt) {
 				scripturl: true
 			},
 			files: ['app/scripts/**/*.js']
+		},
+
+
+		// Config for grunt-contrib-uglify (javascript concatenation)
+
+		uglify: {
+			options: {
+				mangle: true,
+				beautify: false,
+				sourceMap: true,
+				sourceMapIncludeSources: true,
+				sourceMapName: 'www/scripts/build.js.map'
+			},
+			main: {
+				files: {
+					'www/scripts/build.js': [
+						'app/scripts/matter/base/**/*.js',
+						'app/scripts/matter/engine/**/*.js',
+						'app/scripts/matter/polyfills/**/*.js',
+						'app/scripts/matter/config/**/*.js',
+						'app/scripts/matter/widgets/**/*.js',
+						'app/scripts/matter/system/**/*.js',
+						'app/scripts/matter/core/**/*.js',
+						'app/scripts/custom/**/*.js'
+					]
+				}
+			}
 		},
 
 
@@ -267,7 +261,7 @@ module.exports = function(grunt) {
 			sass: {
 				options: { livereload: false },
 				files: ['app/styles/**/*.{scss,sass}'],
-				tasks: ['sass', 'notify:sass', 'postcss', 'notify:postcss', 'documentjs:styles', 'notify:documentjs']
+				tasks: ['sass', 'notify:sass', 'postcss', 'notify:postcss']
 			},
 			js: {
 				options: { livereload: 31337 },
@@ -284,8 +278,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-ssi');
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-postcss');
-	grunt.loadNpmTasks('grunt-uncss');
-	grunt.loadNpmTasks('documentjs');
+	grunt.loadNpmTasks('grunt-styledocco');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-watch');
@@ -301,12 +294,12 @@ module.exports = function(grunt) {
 		'notify:sass',
 		'postcss',
 		'notify:postcss',
-		'documentjs',
-		'notify:documentjs',
-		'uglify',
-		'notify:uglify',
+		'styledocco',
+		'notify:styledocco',
 		'jshint',
 		'notify:jshint',
+		'uglify',
+		'notify:uglify',
 		'browserSync',
 		'notify:browserSync',
 		'watch',
