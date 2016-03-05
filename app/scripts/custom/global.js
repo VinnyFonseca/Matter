@@ -80,7 +80,7 @@ $(document).ready(function() {
 		$(".sidebar a").removeClass("active");
 		$(this).addClass("active");
 
-		// $("body").removeClass("sidebar-on");
+		if ( $(this).hasClass("sub") ) $("body").removeClass("sidebar-on");
 	});
 
 
