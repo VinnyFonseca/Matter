@@ -65,6 +65,7 @@ matter.tagcloud = {
 			if ( event.keyCode === 9 || event.keyCode === 13 ) { // Tab or Enter
 				var value = el.val();
 				new tag(value);
+				event.preventDefault();
 			}
 		})
 		.on("change", function() {
