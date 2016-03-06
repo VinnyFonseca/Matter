@@ -35,7 +35,7 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 	.parallax {
 		display: block;
 		position: relative;
-		padding: $spacing  0;
+		padding: floor($spacing * 2)  0;
 		color: $cf;
 		background: $color1 url($introBg) no-repeat center bottom;
 		background-size: cover;
@@ -206,7 +206,8 @@ body.sidebar-on {
 		transition: left $duration $easing;
 
 		.wrapper {
-			padding: floor($spacing / 2) floor($spacing * 4);
+			padding-left: floor($spacing * 4);
+			padding-right: floor($spacing * 4);
 			transition: opacity $duration $easing;
 		}
 
