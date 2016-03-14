@@ -1,7 +1,29 @@
 // Forms
 
 var initForm = function() {
-	// Country Dropdowns
+	// JSON Dropdowns
+
+	if ( $("select[data-titles]").length ) {
+		$("select[data-titles]").each(function() {
+			var el = $(this),
+				url = el.data("titles");
+
+			var buildTitles = function(data) {
+				for (var i = 0; i < data.length; i++ ) {
+					var name = data[i].Name,
+						option = "<option value='" + name + "'>" + name + "</option>";
+
+					el.append(option);
+				}
+
+				initDropdowns();
+			}
+
+			matter.data.get(url, buildTitles);
+		});
+
+		if ( matter.config.application.debug ) console.log("Form :: Title Dropdowns");
+	}
 
 	if ( $("select[data-countries]").length ) {
 		$("select[data-countries]").each(function() {

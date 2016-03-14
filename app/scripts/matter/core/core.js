@@ -125,7 +125,6 @@ matter.data = {
 			url: url,
 			type: "GET",
 			data: "",
-			dataType: "JSON",
 			success: function(data) {
 				if ( matter.config.application.debug ) console.log("AJAX ~~ GET Success (" + url + ")", data);
 				if ( typeof callback !== "undefined" ) callback(data);
@@ -138,14 +137,20 @@ matter.data = {
 	post: function(url, obj, callback) {
 		if ( matter.config.application.debug ) console.log('AJAX ~~ POST (' + url + ')');
 
+		console.log(obj);
+
 		var request = $.ajax({
 			url: url,
 			type: "POST",
 			data: obj,
-			dataType: "JSON",
 			success: function(data) {
 				if ( matter.config.application.debug ) console.log("AJAX ~~ POST Success (" + url + ")", data);
-				if ( typeof callback !== "undefined" ) callback(data);
+
+				if ( typeof callback !== "undefined" ) {
+					callback(data);
+				} else {
+					return true;
+				}
 			},
 			error: function(request, status, error) {
 				if ( matter.config.application.debug ) console.log("AJAX ~~ POST Error (" + url + ")", request, status, error, request.statusText);

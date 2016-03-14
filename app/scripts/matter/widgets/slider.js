@@ -40,43 +40,6 @@ matter.slider.prototype.init = function(id) {
 	this.element = {};
 	this.element.slider = $('#' + this.id);
 
-	var containerEl = '<div class="slider-container"></div>';
-	this.element.slider.append(containerEl);
-	this.element.container = this.element.slider.find('.slider-container');
-
-	var movableEl = '<div class="slider-movable"></div>';
-	this.element.container.append(movableEl);
-	this.element.movable = this.element.slider.find('.slider-movable');
-
-	this.element.slide = this.element.slider.find('.slide');
-	this.element.slide.each(function() { $(this).attr("data-index", $(this).index()) }).appendTo(this.element.movable);
-
-	this.count = this.element.slide.length;
-	this.multi = this.count > 1;
-	this.min = 0;
-	this.max = this.count  - 1;
-	this.before = 0;
-	this.current = 0;
-
-	this.width = this.element.slide.eq(this.current).outerWidth(true);
-	this.height = {
-		value: 0,
-		calculate: function() {
-			for (var i = 0; i < $this.element.slide.length; i++) {
-				if ( $this.element.slide.eq(i).outerHeight(true) > $this.height.value ) {
-					$this.height.value = $this.element.slide.eq(i).outerHeight(true);
-				}
-			}
-		}
-	};
-	this.height.calculate();
-
-	this.direction = "none";
-	this.step = this.width;
-
-	this.clone = true;
-	this.cloned = false;
-
 	this.has = {
 		arrows: function() {
 			if ( !!$this.element.slider.attr("data-arrows") ) {
@@ -99,6 +62,13 @@ matter.slider.prototype.init = function(id) {
 				return matter.config.slider.thumbnails; // already a boolean
 			}
 		},
+		multiple: function() {
+			if ( !!$this.element.slider.attr("data-display") ) {
+				return $this.element.slider.data("display"); // .data() returns boolean
+			} else {
+				return matter.config.slider.display; // already a boolean
+			}
+		},
 		slideshow: function() {
 			if ( !!$this.element.slider.attr("data-slideshow") ) {
 				return $this.element.slider.data("slideshow"); // .data() returns boolean
@@ -107,6 +77,42 @@ matter.slider.prototype.init = function(id) {
 			}
 		}
 	}
+
+	var containerEl = '<div class="slider-container"></div>';
+	this.element.slider.append(containerEl);
+	this.element.container = this.element.slider.find('.slider-container');
+
+	var movableEl = '<div class="slider-movable"></div>';
+	this.element.container.append(movableEl);
+	this.element.movable = this.element.slider.find('.slider-movable');
+
+	this.element.slide = this.element.slider.find('.slide');
+	this.element.slide.each(function() { $(this).attr("data-index", $(this).index()) }).appendTo(this.element.movable);
+
+	this.count = this.element.slide.length;
+	this.multi = this.count > this.has.multiple();
+	this.min = 0;
+	this.max = this.count  - 1;
+	this.before = 0;
+	this.current = 0;
+
+	this.width = this.element.slide.eq(this.current).outerWidth(true);
+	this.height = {
+		value: 0,
+		calculate: function() {
+			for (var i = 0; i < $this.element.slide.length; i++) {
+				if ( $this.element.slide.eq(i).outerHeight(true) > $this.height.value ) {
+					$this.height.value = $this.element.slide.eq(i).outerHeight(true);
+				}
+			}
+		}
+	};
+	this.height.calculate();
+
+	this.direction = "none";
+
+	this.clone = true;
+	this.cloned = false;
 
 	this.touch = {};
 	this.controls();
@@ -141,6 +147,7 @@ matter.slider.prototype.position = function() {
 		right: this.element.slider.offset().left + this.element.slider.width() - this.touch.tolerance
 	}
 
+	this.step = this.width;
 	this.touch.trigger = this.width / 4;
 }
 
@@ -318,26 +325,28 @@ matter.slider.prototype.controls = function() {
 matter.slider.prototype.arrows = function() {
 	var $this = this;
 
+	var prev = '<div class="slider-arrow slider-arrow-prev valign-middle">\
+					<img class="svg icon icon-caret-left" src="' + matter.config.application.base + 'img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'' + matter.config.application.base + 'img/icons/icon-caret-left.png\'">\
+				</div>';
+	var next = '<div class="slider-arrow slider-arrow-next valign-middle">\
+					<img class="svg icon icon-caret-right" src="' + matter.config.application.base + 'img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'' + matter.config.application.base + 'img/icons/icon-caret-right.png\'">\
+				</div>';
+
+	this.element.slider.prepend(prev);
+	this.element.slider.prepend(next);
+	matter.svg.init();
+
+	this.element.slider.children('.slider-arrow-prev').on('click', function() {
+		$this.clone = true;
+		$this.prev();
+	});
+	this.element.slider.children('.slider-arrow-next').on('click', function() {
+		$this.clone = true;
+		$this.next();
+	});
+
 	if ( this.has.arrows() && this.multi ) {
-		var prev = '<div class="slider-arrow slider-arrow-prev valign-middle">\
-						<img class="svg icon icon-caret-left" src="/img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-caret-left.png\'">\
-					</div>';
-		var next = '<div class="slider-arrow slider-arrow-next valign-middle">\
-						<img class="svg icon icon-caret-right" src="/img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-caret-right.png\'">\
-					</div>';
-
-		this.element.container.prepend(prev);
-		this.element.container.prepend(next);
-		matter.svg.init();
-
-		this.element.container.children('.slider-arrow-prev').on('click', function() {
-			$this.clone = true;
-			$this.prev();
-		});
-		this.element.container.children('.slider-arrow-next').on('click', function() {
-			$this.clone = true;
-			$this.next();
-		});
+		this.element.slider.addClass("arrows");
 	}
 }
 
@@ -452,9 +461,9 @@ matter.slider.prototype.drag = function() {
 				$this.touch.down = false;
 				$this.touch.drag.active = false;
 
-				if ( $this.touch.first.x - $this.touch.current.x > $this.touch.trigger ) {
+				if ( $this.touch.drag.left > $this.touch.trigger ) {
 					$this.next();
-				} else if ( $this.touch.current.x - $this.touch.first.x > $this.touch.trigger ) {
+				} else if ( $this.touch.drag.right > $this.touch.trigger ) {
 					$this.prev();
 				} else {
 					$this.kickback();
@@ -499,13 +508,6 @@ matter.slider.prototype.drag = function() {
 				$this.touch.drag.right > $this.touch.threshold
 			);
 
-			$this.touch.drag.limit = (
-				$this.touch.current.y <= $this.touch.boundaries.top ||
-				$this.touch.current.y >= $this.touch.boundaries.bottom ||
-				$this.touch.current.x <= $this.touch.boundaries.left ||
-				$this.touch.current.x >= $this.touch.boundaries.right
-			);
-
 			if ( !$this.animating && $this.touch.down && $this.touch.drag.start ) {
 				if ( !matter.config.application.touch ) event.preventDefault();
 				$this.touch.drag.active = true;
@@ -533,7 +535,17 @@ matter.slider.prototype.drag = function() {
 					'left': - ($this.touch.first.x - $this.touch.current.x)
 				});
 
+				$this.touch.drag.limit = (
+					$this.touch.current.y <= $this.touch.boundaries.top ||
+					$this.touch.current.y >= $this.touch.boundaries.bottom ||
+					$this.touch.current.x <= $this.touch.boundaries.left ||
+					$this.touch.current.x >= $this.touch.boundaries.right ||
+					$this.touch.drag.left >= $this.step + $this.touch.tolerance ||
+					$this.touch.drag.right >= $this.step + $this.touch.tolerance
+				);
+
 				if ( $this.touch.drag.limit ) {
+					$this.duration = $this.duration / 4;
 					$this.touch.end();
 				}
 			}

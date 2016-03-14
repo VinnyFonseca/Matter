@@ -116,6 +116,12 @@
 	border-radius: 1000px !important;
 }
 .square {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: auto;
+	font-size: 0;
+
 	&:after {
 		display: inline-block;
 		padding-top: 100%; 	/* initial ratio of 1:1 */

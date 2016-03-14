@@ -128,8 +128,13 @@
 
 @media screen and (max-width: $scrTablS) {
 
-	html {
-		background-color: $bodyBgColor;
+	.main {
+		&.docs {
+			.wrapper {
+				padding-left: $spacing;
+				padding-right: $spacing;
+			}
+		}
 	}
 
 }

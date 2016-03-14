@@ -65,6 +65,7 @@ module.exports = function(grunt) {
 		ssi: {
 			options: {
 				cache: 'all',
+				cacheDir: '.ssi',
 				baseDir: 'app/markup'
 			},
 			main: {

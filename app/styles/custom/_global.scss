@@ -5,17 +5,6 @@ header {
 	position: relative;
 }
 
-.scroll-progress {
-	display: block;
-	position: fixed;
-	width: 0;
-	height: 3px;
-	top: 0;
-	font-size: 0;
-	background: $color3;
-	z-index: 150;
-}
-
 
 
 
@@ -86,6 +75,17 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 
 // Controls
 
+.scroll-progress {
+	display: block;
+	position: fixed;
+	width: 0;
+	height: 3px;
+	top: 0;
+	font-size: 0;
+	background: $color3;
+	z-index: 150;
+}
+
 .controls {
 	display: block;
 	position: fixed;
@@ -114,14 +114,12 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 		> .icon {
 			display: block;
 			position: absolute;
-			margin-top: -9px;
-			margin-left: -9px;
-			width: 18px;
-			height: 18px;
+			margin-top: -10px;
+			margin-left: -10px;
+			width: 20px;
+			height: 20px;
 			top: 50%;
 			left: 50%;
-			font-size: 16px !important;
-			font-weight: bold;
 			line-height: 1;
 		}
 	}
@@ -165,282 +163,6 @@ $introBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHh
 
 
 
-// Sidebar
-
-$sidebarWidth: 300px;
-
-body.sidebar-on {
-	overflow-x: hidden;
-
-	.main {
-		&.docs {
-			left: $sidebarWidth / 2;
-
-			.wrapper {
-				opacity: 0.15;
-			}
-
-			.sidebar {
-				transform: translateX(0);
-
-				.sidebar-trigger {
-					background-color: $c1;
-					transform: rotate(-180deg);
-				}
-			}
-		}
-	}
-}
-
-.main {
-	display: block;
-	position: relative;
-	margin: 0;
-	padding: $spacing 0;
-	background-color: $bodyBgColor;
-	z-index: 2;
-
-	&.docs {
-		margin-left: $sidebarWidth;
-		left: 0;
-		transition: left $duration $easing;
-
-		.wrapper {
-			padding-left: floor($spacing * 4);
-			padding-right: floor($spacing * 4);
-			transition: opacity $duration $easing;
-		}
-
-		h1 {
-			padding: 0;
-		}
-	}
-}
-
-.sidebar {
-	display: block;
-	position: fixed;
-	margin: 0;
-	padding: floor($spacing * 1.5) 0;
-	width: $sidebarWidth;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	background-color: $c3;
-	z-index: 70;
-	transition: transform $duration $easing;
-
-	> * {
-		padding: 0 $spacing;
-	}
-
-
-	.sidebar-trigger {
-		display: none;
-		position: absolute;
-		padding: 0;
-		margin-top: -23px;
-		margin-left: floor($spacing / 2);
-		width: 46px;
-		height: 46px;
-		left: 100%;
-		top: 50%;
-		color: $cf;
-		font-size: $fontSize * 1.5 + rem;
-		text-align: center;
-		@extend .circle;
-		background-color: $color1;
-		cursor: pointer;
-		z-index: 10;
-		opacity: 0.85;
-		transition: all $duration $easing;
-
-		&:hover,
-		&:active {
-			border-color: $color2;
-			background-color: $color2;
-		}
-
-		.icon {
-			display: block;
-			position: absolute;
-			margin-top: -10px;
-			margin-left: -10px;
-			width: 20px;
-			height: 20px;
-			top: 50%;
-			left: 50%;
-		}
-	}
-
-
-	a {
-		display: block;
-		margin-bottom: $spacing;
-		padding: 0 $spacing;
-	}
-
-	.logo {
-		display: inline-block;
-		margin: 0;
-		margin-right: floor($spacing / 2);
-		padding: floor($spacing / 2);
-		width: 64px;
-		height: 64px;
-		background-color: $cf;
-		vertical-align: middle;
-
-		+ h2 {
-			display: inline-block;
-			vertical-align: middle;
-		}
-	}
-
-
-	h1, h2, h3, h4, h5, h6 {
-		padding: 0;
-		color: $cd !important;
-	}
-
-	h4 {
-		padding: 0 $spacing;
-	}
-
-
-	nav {
-		display: block;
-		position: absolute;
-		margin: 0;
-		padding: 0 floor($spacing / 1.5) floor($spacing / 1.5);
-		top: 164px;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		list-style: none;
-		border-top: 1px solid $c3;
-		overflow: auto;
-
-		.selected {
-			a {
-				&.core {
-					background-color: $color1 !important;
-				}
-				&.sub {
-					display: block;
-				}
-			}
-		}
-
-		a {
-			display: block;
-			text-align: left;
-			@extend .button;
-			@extend .secondary;
-			background-color: $c4;
-			margin-top: 0;
-			margin-bottom: floor($spacing / 4);
-
-			&.core {
-				font-size: $fontSize + rem;
-			}
-			&.sub {
-				display: none;
-				margin-left: 22px;
-				padding: 5px 10px;
-				font-size: $fontSize / 1.1 + rem;
-				background-color: $c5;
-
-				&.visible {
-					display: block;
-				}
-			}
-
-			&:hover,
-			&.active {
-				background-color: $color1 !important;
-			}
-			&:active {
-				background-color: $color2 !important;
-			}
-			&:focus {
-				box-shadow: none !important;
-			}
-		}
-	}
-}
-
-.separator {
-	display: block;
-	position: relative;
-	margin: floor($spacing * 2) 0 floor($spacing * 1.5);
-	width: 50%;
-	height: 0;
-	border-top: 5px solid $color1;
-}
-
-pre {
-	color: $cd;
-
-	.folder { color: #CCAAEE; }
-	.file { font-style: italic; }
-	.system { color: #FF6666; }
-	.emphasis { color: #CCAAEE; }
-	i {
-		margin-right: 3px;
-		color: $c5;
-		font-style: normal;
-		font-size: $fontSize / 1.35 + rem;
-		letter-spacing: -2px !important;
-
-		&:before {
-			display: inline;
-			position: relative;
-			margin: 0;
-			margin-right: -2px;
-			padding: 0;
-			font-size: $fontSize * 1.1 + rem;
-			content: "|";
-		}
-	}
-}
-
-
-
-
-
-// Form
-
-.button {
-	&.notify {
-		@extend .primary;
-		@extend .circle;
-
-		width: 42px;
-		height: 42px;
-		padding: floor($spacing / 2);
-		font-size: $fontSize + rem !important;
-		font-weight: bold;
-
-		.icon {
-			top: 2px;
-		}
-
-		&.success {
-			background-color: $successBgColor;
-		}
-		&.warning {
-			background-color: $warningBgColor;
-		}
-		&.failure {
-			background-color: $failureBgColor;
-		}
-	}
-}
-
-
-
-
-
 // Widgets
 
 .icon-wrapper {
@@ -463,6 +185,21 @@ pre {
 			@include svgColor($color1);
 		}
 	}
+}
+
+
+
+
+
+// Structural
+
+.main {
+	display: block;
+	position: relative;
+	margin: 0;
+	padding: $spacing 0;
+	background-color: $bodyBgColor;
+	z-index: 2;
 }
 
 
