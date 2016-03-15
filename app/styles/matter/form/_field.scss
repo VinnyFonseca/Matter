@@ -1,0 +1,105 @@
+// Field
+
+.field {
+	display: block;
+	position: relative;
+	color: $bodyTextColor;
+	margin: 0;
+	margin-bottom: floor($spacing / 1.5);
+	padding: floor($spacing / 2.5) floor($spacing / 1.5);
+	width: 100%;
+	font-family: $bodyFont;
+	font-size: $fontSize + rem;
+	font-weight: 300;
+	text-align: left;
+	border: 1px solid $borderColor;
+	border-radius: $radius;
+	background: $cf;
+	background-clip: padding-box;
+	outline: 0;
+	vertical-align: bottom;
+
+	&::placeholder {
+		color: $ca;
+	}
+
+	&:focus {
+		border-color: $focusColor !important;
+		box-shadow: 0 0 3px $focusColor !important;
+
+		&::placeholder {
+			color: $ca;
+		}
+	}
+	&:invalid {
+		box-shadow: none;
+	}
+
+
+	&[type="hidden"],
+	&[type="search"]::-webkit-search-decoration { // UI Consistency
+		display: none;
+	}
+
+	&[type="date"],
+	&[type="datetime"],
+	&[type="datetime-local"],
+	&[type="email"],
+	&[type="month"],
+	&[type="number"],
+	&[type="password"],
+	&[type="search"],
+	&[type="tel"],
+	&[type="text"],
+	&[type="time"],
+	&[type="url"],
+	&[type="week"] {
+		appearance: none;
+	}
+}
+
+input,
+select,
+textarea {
+	@extend .field;
+}
+
+textarea {
+	min-height: 150px;
+	overflow: auto;
+	resize: vertical;
+}
+
+
+
+// Responsive
+
+@media screen and (max-width: $scrTablL) {
+
+	.field {
+		width: 100% !important;
+	}
+
+}
+
+
+
+// Conditional
+
+.lt-ie9 {
+
+	.field {
+		padding: 10px 12px 14px;
+	}
+
+}
+
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { // IE10
+
+	.field {
+		padding: 11px 12px;
+		line-height: 1 !important;
+	}
+
+}

@@ -1,0 +1,31 @@
+// Iconography
+
+.icon {
+	display: inline-block;
+	position: relative;
+	width: $iconSize;
+	height: $iconSize;
+	@include svgColor($cf);
+	text-decoration: none !important;
+	overflow: visible;
+}
+
+.icon-wrapper {
+	display: block;
+	position: relative;
+
+	.icon-wrapper-item {
+		display: inline-block;
+		position: relative;
+		padding: floor($spacing / 2);
+		@extend .framed;
+		@extend .block-reset;
+
+		.icon {
+			margin-bottom: 0;
+			width: 32px;
+			height: 32px;
+			@include svgColor($color1);
+		}
+	}
+}

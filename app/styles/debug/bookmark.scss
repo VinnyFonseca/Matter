@@ -1,6 +1,6 @@
 // Global
 
-@import "../custom/config";
+@import "../matter/config";
 @import "../matter/mixins";
 @import "../matter/helper";
 
@@ -8,7 +8,13 @@
 
 // Core
 
-@import "../matter/core";
+@import "../matter/reset";
+@import "../matter/default";
+@import "../matter/typography";
+@import "../matter/iconography";
+@import "../matter/hyperlinks";
+@import "../matter/imagery";
+@import "../matter/lists";
 @import "../matter/grid";
 
 

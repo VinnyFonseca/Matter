@@ -34,3 +34,15 @@ $animBounce: cubic-bezier(.15,.7,.6,1.7);
 *[data-tooltip] {
 	cursor: help;
 }
+
+
+
+// Responsive
+
+@media screen and (max-width: $scrTablL) {
+
+	.tooltip {
+		cursor: default;
+	}
+
+}

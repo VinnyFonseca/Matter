@@ -64,3 +64,27 @@
 .gm-wsv {
 	display: block;
 }
+
+
+
+// Responsive
+
+@media screen and (max-width: $scrDeskS) {
+
+	.map-wrapper {
+		height: 60vw;
+	}
+
+}
+
+
+
+// Conditional
+
+.lt-ie9 {
+
+	.map-wrapper {
+		height: 600px;
+	}
+
+}

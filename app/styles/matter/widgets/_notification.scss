@@ -153,3 +153,33 @@
 		}
 	}
 }
+
+
+
+// Responsive
+
+@media screen and (max-width: $scrTablL) {
+
+	.notification-wrapper {
+		margin: 3%;
+		width: 94%;
+		font-size: $fontSize + rem;
+	}
+
+}
+
+
+
+// Conditional
+
+.lt-ie9 {
+
+	.notification {
+		display: none;
+
+		&.active {
+			display: block;
+		}
+	}
+
+}

@@ -1,0 +1,83 @@
+// Typography
+
+h1, h2, h3, h4, h5, h6 {
+	display: block;
+	position: relative;
+	margin: 0;
+	padding: $spacing 0;
+	color: $headingTextColor;
+	font-family: $headingFont;
+	font-weight: normal;
+	line-height: 1.2;
+}
+
+h1 {
+	padding-top: 0;
+	font-size: $fontSize * 2.8 + rem !important;
+}
+h2 {
+	padding-top: 0;
+	font-size: $fontSize * 2.3 + rem !important;
+}
+h3 {
+	padding-top: 0;
+	font-size: $fontSize * 1.9 + rem !important;
+}
+h4 {
+	font-size: $fontSize * 1.6 + rem !important;
+}
+h5 {
+	font-size: $fontSize * 1.4 + rem !important;
+}
+h6 {
+	font-size: $fontSize * 1.3 + rem !important;
+}
+
+
+p {
+	margin: 0 0 $spacing;
+
+	&.lead {
+		font-size: $fontSize * 1.2 + rem;
+	}
+}
+
+
+.emphasis {
+	color: $color3;
+}
+
+
+sup {
+	font-size: $fontSize / 1.3 + rem;
+	vertical-align: top;
+}
+small {
+	font-size: $fontSize / 1.3 + rem;
+}
+sub {
+	font-size: $fontSize / 1.5 + rem;
+}
+
+
+
+// Responsive
+
+@media screen and (max-width: $scrTablL) {
+
+	html {
+		font-size: 50%;
+	}
+
+	p.lead {
+		font-size: $fontSize;
+		font-weight: bold;
+	}
+
+	.structure{
+		.clean {
+			font-size: $fontSize / 1.1 + rem;
+		}
+	}
+
+}
