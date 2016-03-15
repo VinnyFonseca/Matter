@@ -1,0 +1,261 @@
+// Radios, Checkboxes & Toggles
+
+input[type="radio"],
+input[type="checkbox"] {
+	display: inline-block;
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	width: 12px !important;
+	height: 12px !important;
+	top: 9px;
+	left: 7px;
+	border: 0;
+	background: transparent;
+	vertical-align: middle;
+	opacity: 0;
+}
+
+.controller {
+	display: block;
+	position: relative;
+	margin: 4px 0;
+	text-align: left;
+
+	&:active {
+		label {
+			&:before {
+				box-shadow: inset 0px -3px 3px 0 rgba($cf, 0.5), inset 0px 1px 1px 0 rgba($c0, 0.3) !important;
+			}
+		}
+	}
+
+	> * {
+		display: inline-block;
+		vertical-align: middle !important;
+	}
+
+	label {
+		display: inline-block;
+		position: relative;
+		margin: 5px 0;
+		padding: 0;
+		line-height: $controllerWidth - 6;
+		cursor: pointer;
+		user-select: none;
+		vertical-align: middle;
+
+		&:before {
+			display: inline-block;
+			position: absolute;
+			margin: 0;
+			margin-right: floor($spacing / 2);
+			padding: 0;
+			width: $controllerWidth;
+			height: $controllerWidth;
+			top: -3px;
+			left: 0;
+			font-size: 0;
+			text-align: center;
+			border: $borderWidth solid $borderColor;
+			border-radius: $radius;
+			background-color: $cf;
+			background-size: 14px !important;
+			background-position: center center;
+			background-repeat: no-repeat;
+			box-shadow: inset 0px 3px 3px 0 rgba($cf, 0.7), inset 0px -1px 1px 0 rgba($c0, 0.15);
+			overflow: hidden;
+			vertical-align: middle;
+			content: "";
+		}
+	}
+
+	&.checkbox {
+		label {
+			padding-left: $controllerWidth + floor($spacing / 3);
+
+			&:before {
+				border-radius: 1000px;
+				// border-radius: $radius;
+			}
+		}
+
+		input[type="checkbox"] {
+			&:checked {
+				+ label {
+					&:before {
+						background-image: url('../img/icons/icon-control-radio.png');
+					}
+				}
+			}
+		}
+	}
+
+	&.radio {
+		label {
+			padding-left: $controllerWidth + floor($spacing / 2);
+
+			&:before {
+				border-radius: 1000px;
+			}
+		}
+
+		input[type="radio"] {
+			&:checked {
+				+ label {
+					&:before {
+						background-image: url('../img/icons/icon-control-radio.png');
+					}
+				}
+			}
+		}
+	}
+
+	&.toggle {
+		input:not(:checked) + label {
+			.toggle-body {
+				.toggle-switch {
+					left: ($toggleWidth - $switchSize) + 1;
+				}
+
+				.toggle-background {
+					right: -($toggleWidth - ($switchSize / 2));
+
+					&.toggle-background-negative {
+						right: auto;
+						left: -10px;
+					}
+				}
+			}
+		}
+
+		label {
+			padding-left: $toggleWidth + floor($spacing / 2);
+
+			&:active {
+				.toggle-switch {
+					box-shadow: inset 0px -3px 3px 0 rgba($cf, 0.5), inset 0px 1px 1px 0 rgba($c0, 0.3) !important;
+				}
+			}
+
+			&:before {
+				display: none;
+			}
+
+
+			.toggle-body {
+				display: inline-block;
+				position: absolute;
+				margin-right: 8px;
+				width: $toggleWidth;
+				height: $toggleHeight;
+				top: -2px;
+				left: 0;
+				border-radius: 1000px;
+				background: $cf;
+				vertical-align: middle;
+			}
+
+			.toggle-switch {
+				display: inline-block;
+				position: absolute;
+				margin: 0;
+				padding: 0;
+				width: $switchSize;
+				height: $switchSize;
+				top: -1px;
+				left: -1px;
+				border: 1px solid $ca;
+				border-radius: 1000px;
+				background-color: $cf;
+				box-shadow: inset 0px 3px 3px 0 rgba($cf, 0.7), inset 0px -1px 1px 0 rgba($c0, 0.15);
+				z-index: 1;
+				overflow: hidden;
+				vertical-align: middle;
+				transition-property: left;
+				transition-duration: $duration / 2;
+				transition-timing-function: $easing;
+			}
+
+			.toggle-track {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				border-radius: 1000px;
+				box-shadow: inset 0 0 3px 0 rgba($c0, 0.25) !important;
+				overflow: hidden;
+			}
+
+			.toggle-background {
+				position: absolute;
+				width: $toggleWidth - ($switchSize / 2) + ($spacing / 1.5);
+				top: 0;
+				right: -10px;
+				bottom: 0;
+				background: $successBgColor url('../img/icons/icon-toggle-tick.png') center center no-repeat;
+				background-size: floor($switchSize / 2.5);
+				transition-property: left, right;
+				transition-duration: $duration / 2;
+				transition-timing-function: $easing;
+			}
+			.toggle-background-negative {
+				left: -($toggleWidth - ($switchSize / 2));
+				right: auto;
+				background: $failureBgColor url('../img/icons/icon-toggle-close.png') center center no-repeat;
+				background-size: floor($switchSize / 2.5);
+			}
+		}
+	}
+}
+
+
+// Conditional
+
+.lt-ie9 {
+
+	input[type="radio"],
+	input[type="checkbox"] {
+		display: block;
+		position: relative;
+		margin-right: 5px;
+		padding: 0;
+		top: 1px;
+		left: 0;
+	}
+
+	.controller {
+		label {
+			&:before {
+				display: none;
+			}
+
+			> * {
+				display: none !important;
+			}
+		}
+
+		.field {
+			display: inline-block;
+		}
+	}
+
+}
+
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { // IE10
+
+	.controller {
+		&.radio {
+			input[type="radio"] {
+				&:checked + label:before {
+					content: "\25cf";
+					font-size: 24px;
+					line-height: 19px !important;
+				}
+			}
+		}
+	}
+
+}

@@ -1,0 +1,101 @@
+// Button
+
+.button {
+	display: inline-block;
+	position: relative;
+	margin: $spacing auto 2px;
+	padding: floor($spacing / 2.5) floor($spacing / 1.5);
+	min-width: 42px;
+	color: $bodyTextColor;
+	font-family: $bodyFont;
+	font-size: $fontSize + rem;
+	text-align: center;
+	text-decoration: none !important;
+	border: none;
+	border-radius: $radius;
+	background-color: $cd;
+	cursor: pointer !important;
+	appearance: none;
+	background-clip: padding-box;
+	user-select: none;
+	white-space: nowrap;
+	outline: 0;
+	vertical-align: middle;
+
+	&:hover {
+		color: $cf;
+		background-color: $color1 !important;
+	}
+	&:active {
+		color: $cf;
+		background-color: $color2 !important;
+	}
+	&:focus {
+		box-shadow: 0 0 10px $focusColor !important;
+	}
+
+
+	&::-moz-focus-inner {
+		border: 0;
+		padding: 0;
+	}
+
+	&:invalid {
+		box-shadow: none;
+	}
+
+
+	&.primary {
+		color: $cf;
+		background-color: $btnPrimaryColor;
+
+		&:hover {
+			background-color: $btnPrimaryColorHover !important;
+		}
+		&:active {
+			background-color: $btnPrimaryColor !important;
+		}
+	}
+
+	&.secondary {
+		color: $cf;
+		background-color: $btnSecondaryColor;
+
+		&:hover {
+			background-color: $btnSecondaryColorHover !important;
+		}
+		&:active {
+			background-color: $btnSecondaryColor !important;
+		}
+	}
+
+	&.tertiary {
+		color: $cf;
+		background-color: $btnTertiaryColor;
+
+		&:hover {
+			background-color: $btnTertiaryColorHover !important;
+		}
+		&:active {
+			background-color: $btnTertiaryColor !important;
+		}
+	}
+}
+
+button,
+input[type="reset"],
+input[type="submit"],
+input[type="button"] {
+	@extend .button;
+}
+
+
+// Responsive
+
+@media screen and (max-width: $scrTablL) {
+
+	.button {
+		margin-bottom: 4px;
+	}
+
+}

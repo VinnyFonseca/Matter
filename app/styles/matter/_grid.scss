@@ -1,4 +1,4 @@
-// Grid System
+// Grid
 
 .row {
 	display: block;
@@ -6,6 +6,44 @@
 	margin: 0 floor(- $gut / 2);
 	@extend .block-reset;
 	@extend .clearfix;
+
+	&.debug {
+		.column {
+			&:before,
+			&:after {
+				display: none;
+				position: absolute;
+				top: -5px;
+				color: $color1;
+				font-size: $fontSize / 1.8 + rem;
+				opacity: 0.75;
+				z-index: 5;
+			}
+
+			&:before {
+				display: block;
+				left: floor($spacing / 2) + 4;
+				color: $color1;
+				content: "span " attr(data-span);
+			}
+
+			.cell {
+				@extend .framed;
+				padding: floor($spacing / 2);
+			}
+		}
+
+		&.show-push {
+			.column {
+				&:after {
+					display: block;
+					right: floor($spacing / 2) + 4;
+					color: $color3;
+					content: "push " attr(data-push);
+				}
+			}
+		}
+	}
 }
 
 .column {
@@ -24,49 +62,72 @@
 			margin-left: percentage($i / $columns);
 		}
 	}
-}
 
-.cell {
-	display: block;
-	position: relative;
-	padding: floor($spacing / 2);
-	font-size: $fontSize / 1.3 + rem;
-}
-
-.debug {
-	.column {
-		&:before,
-		&:after {
-			display: none;
-			position: absolute;
-			top: -5px;
-			color: $color1;
-			font-size: $fontSize / 1.8 + rem;
-			opacity: 0.75;
-			z-index: 5;
-		}
-
-		&:before {
-			display: block;
-			left: floor($spacing / 2) + 4;
-			color: $color1;
-			content: "span " attr(data-span);
-		}
-
-		.cell {
-			@extend .framed;
-			padding: floor($spacing / 2);
-		}
+	.cell {
+		display: block;
+		position: relative;
+		padding: floor($spacing / 2);
+		font-size: $fontSize / 1.3 + rem;
 	}
+}
 
-	&.show-push {
-		.column {
-			&:after {
-				display: block;
-				right: floor($spacing / 2) + 4;
-				color: $color3;
-				content: "push " attr(data-push);
+
+
+// Responsive
+
+@media screen and (max-width: $scrTablL) {
+
+	.column {
+		width: 100% !important;
+
+		&[data-push] {
+			margin-left: 0;
+		}
+
+		@for $i from 1 through ($columns / 4) {
+			&[data-span="#{$i}"] {
+				width: 50% !important;
+			}
+		}
+
+		@for $i from 1 through ($columns / 6) {
+			&[data-span="#{$i}"] {
+				width: 33.333% !important;
 			}
 		}
 	}
+
+}
+
+
+@media screen and (max-width: $scrMoblL) {
+
+	.column {
+		width: 100% !important;
+
+		@for $i from 1 through ($columns / 4) {
+			&[data-span="#{$i}"] {
+				width: 100% !important;
+			}
+		}
+
+		@for $i from 1 through ($columns / 6) {
+			&[data-span="#{$i}"] {
+				width: 50% !important;
+			}
+		}
+	}
+
+}
+
+
+
+// Conditional
+
+.lt-ie8 {
+
+	.column {
+		float: left;
+	}
+
 }

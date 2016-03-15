@@ -93,3 +93,49 @@ table {
 .table-mirror {
 	display: none !important;
 }
+
+
+
+// Responsive
+
+@media screen and (max-width: $scrTablL) {
+
+	.table-original {
+		display: none;
+	}
+
+	.table-mirror {
+		display: table !important;
+	}
+
+	table {
+		caption {
+			font-size: $fontSize + rem;
+			text-align: center;
+		}
+
+		tr {
+			th,
+			td {
+				&:last-child {
+					font-weight: normal;
+					text-align: left;
+					background: none;
+				}
+			}
+		}
+	}
+
+}
+
+
+
+// Conditional
+
+.lt-ie9 {
+
+	table {
+		border-collapse: collapse;
+	}
+
+}

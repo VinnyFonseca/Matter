@@ -1,4 +1,4 @@
-// Sidebar
+// Documentation
 
 $sidebarWidth: 300px;
 
@@ -47,9 +47,9 @@ body.sidebar-on {
 	display: block;
 	position: fixed;
 	margin: 0;
-	padding: floor($spacing * 1.5) 0;
+	padding: $spacing 0;
 	width: $sidebarWidth;
-	top: 0;
+	top: $headerHeight;
 	left: 0;
 	bottom: 0;
 	background-color: $c3;
@@ -60,6 +60,31 @@ body.sidebar-on {
 		padding: 0 $spacing;
 	}
 
+	.logo {
+		display: inline-block;
+		position: relative;
+		margin: 0 auto;
+		margin-right: floor($spacing / 2);
+		padding: floor($spacing / 2);
+		width: 64px;
+		height: 64px;
+		background-color: rgba($cf, 0.75);
+		overflow: visible;
+		@extend .circle;
+
+		img {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	> a {
+		@extend .valign-middle;
+	}
+
+	h2 {
+		display: inline-block;
+	}
 
 	.sidebar-trigger {
 		display: none;
@@ -106,22 +131,6 @@ body.sidebar-on {
 		padding: 0 $spacing;
 	}
 
-	.logo {
-		display: inline-block;
-		margin: 0;
-		margin-right: floor($spacing / 2);
-		padding: floor($spacing / 2);
-		width: 64px;
-		height: 64px;
-		background-color: $cf;
-		vertical-align: middle;
-
-		+ h2 {
-			display: inline-block;
-			vertical-align: middle;
-		}
-	}
-
 
 	h1, h2, h3, h4, h5, h6 {
 		padding: 0;
@@ -135,13 +144,9 @@ body.sidebar-on {
 
 	nav {
 		display: block;
-		position: absolute;
-		margin: 0;
+		position: relative;
+		margin: $spacing 0;
 		padding: 0 floor($spacing / 1.5) floor($spacing / 1.5);
-		top: 164px;
-		right: 0;
-		bottom: 0;
-		left: 0;
 		list-style: none;
 		border-top: 1px solid $c3;
 		overflow: auto;
@@ -159,9 +164,11 @@ body.sidebar-on {
 
 		a {
 			display: block;
-			text-align: left;
 			@extend .button;
 			@extend .secondary;
+			padding-left: floor($spacing / 2);
+			padding-right: floor($spacing / 2);
+			text-align: left;
 			background-color: $c4;
 			margin-top: 0;
 			margin-bottom: floor($spacing / 4);
@@ -232,6 +239,30 @@ pre {
 
 
 
+// Widgets
+
+.icon-wrapper {
+	font-size: 0;
+
+	.icon-container {
+		display: inline-block;
+		position: relative;
+		margin: 0.5%;
+		padding: 10px;
+		width: 5.666%;
+		border: 1px solid $cd;
+		border-radius: $radius;
+		background-color: $ce;
+
+		.icon {
+			margin: 0;
+			width: 100%;
+			height: 100%;
+			@include svgColor($color1);
+		}
+	}
+}
+
 
 
 // Form
@@ -261,4 +292,115 @@ pre {
 			background-color: $failureBgColor;
 		}
 	}
+}
+
+.card-wrapper {
+	@extend .framed;
+	margin: $spacing 0;
+	border-radius: $radius;
+
+	label {
+		white-space: nowrap;
+	}
+
+	.column {
+		vertical-align: bottom;
+	}
+
+	.card-type {
+		display: inline-block;
+		position: relative;
+		@extend .card;
+		margin: 0 auto;
+		padding: floor($spacing / 4);
+		vertical-align: bottom;
+
+		> * {
+			margin: 0 auto;
+			height: 36px;
+			border-radius: $radius;
+		}
+	}
+
+	.payment {
+		.column {
+			text-align: center;
+
+			img {
+				margin: 0 auto;
+				width: 100%;
+			}
+		}
+	}
+}
+
+.form-info {
+	margin-bottom: floor($spacing / 2);
+	color: $c2;
+	font-size: $fontSize / 1.1 + rem;
+}
+
+.form-loader,
+.icon.form-done {
+	display: none;
+	position: relative;
+	margin: $spacing auto 2px;
+	padding: 0;
+	width: 42px;
+	height: 42px;
+	@include svgColor($color1);
+	vertical-align: middle;
+}
+
+
+
+// Responsive
+
+@media screen and (max-width: $scrDeskL) {
+
+	// Structural
+
+	.main {
+		&.docs {
+			margin-left: 0;
+		}
+
+		.sidebar {
+			transform: translateX(-$sidebarWidth);
+
+			.sidebar-trigger {
+				display: block !important;
+			}
+		}
+	}
+
+}
+
+
+@media screen and (max-width: $scrTablL) {
+
+	// Widgets
+
+	.icon-wrapper {
+		.icon-container {
+			width: 6.666%;
+		}
+	}
+
+}
+
+
+@media screen and (max-width: $scrMoblL) {
+
+	// Structural
+
+	.main {
+		&.docs {
+			.wrapper {
+				padding-left: $spacing;
+				padding-right: $spacing;
+			}
+		}
+	}
+
 }

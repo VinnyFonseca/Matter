@@ -1,0 +1,126 @@
+// Group
+
+fieldset {
+	display: block;
+	position: relative;
+	margin: $spacing 0;
+	padding: floor($spacing / 1.5) $spacing;
+	border: 1px solid $cd;
+	border-radius: $radius;
+	box-shadow: 3px 3px 0px rgba($c0, 0.05);
+
+	legend {
+		@extend label;
+		margin-left: -3px;
+		padding: 0 7px;
+		background: $cf;
+	}
+}
+
+.input-group {
+	display: block;
+	position: relative;
+	margin-bottom: floor($spacing / 2);
+	font-size: 0;
+
+	> * {
+		font-size: $fontSize + rem;
+	}
+
+	.password-wrapper {
+		display: inline-block;
+		margin: 0;
+		width: 45%;
+		border-top-left-radius: $radius;
+		border-bottom-left-radius: $radius;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+
+		input {
+			width: 100%;
+		}
+	}
+
+	label {
+		font-size: $fontSize / 1.1 + rem;
+	}
+
+	.field {
+		display: inline-block;
+		margin: 0;
+		width: 45%;
+		border-top-left-radius: $radius;
+		border-bottom-left-radius: $radius;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+
+		&[data-validation="match"] {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			border-top-right-radius: $radius;
+			border-bottom-right-radius: $radius;
+		}
+	}
+
+	.input-addon {
+		display: inline-block;
+		margin: 0;
+		padding: floor($spacing / 2.5) floor($spacing / 1.5);
+		width: 10%;
+		color: $c8;
+		font-family: $bodyFont;
+		font-size: $fontSize + rem;
+		text-align: center;
+		border: 1px solid $cc;
+		border-left: 0;
+		border-right: 0;
+		background: $ce;
+	}
+}
+
+
+// Responsive
+
+@media screen and (max-width: $scrTablL) {
+
+	.input-addon {
+		width: 100% !important;
+	}
+
+	.input-group {
+		.field {
+			text-align: left;
+
+			&:first-child {
+				border-top-radius: $radius;
+				border-bottom-radius: 0;
+			}
+			&:last-child {
+				border-top-radius: 0;
+				border-bottom-radius: $radius;
+			}
+		}
+
+		.input-addon {
+			text-align: left;
+			border: 1px solid $cd;
+			border-top: 0;
+			border-bottom: 0;
+		}
+	}
+
+}
+
+
+
+// Conditional
+
+.lt-ie9 {
+
+	fieldset {
+		legend {
+			margin-bottom: floor($spacing / 2);
+		}
+	}
+
+}

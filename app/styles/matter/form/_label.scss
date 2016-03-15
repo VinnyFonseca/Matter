@@ -1,0 +1,35 @@
+// Label
+
+label {
+	display: block;
+	position: relative;
+	margin: 0 floor($spacing / 4);
+	padding: 0;
+	padding-bottom: floor($spacing / 4);
+	color: $bodyTextColor;
+	font-family: $bodyFont;
+	font-size: $fontSize / 1.1 + rem;
+	font-weight: bold;
+
+	&.control {
+		display: inline-block;
+		margin-top: 0;
+		padding: 0;
+	}
+
+	&.required {
+		&:after {
+			display: inline-block;
+			position: relative;
+			margin-left: floor($spacing / 4);
+			padding: 0;
+			width: 4px;
+			height: 4px;
+			top: 5px;
+			border-radius: 100px;
+			background: #e44;
+			vertical-align: top;
+			content: "";
+		}
+	}
+}

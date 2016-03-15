@@ -1,0 +1,104 @@
+// File
+
+.file-wrapper,
+.multifile-wrapper {
+	position: relative;
+	margin-bottom: $spacing / 2;
+	width: 100%;
+	border: 0;
+	white-space: nowrap;
+
+	&.last {
+		.fake-close {
+			display: none !important;
+		}
+	}
+
+	input[type="file"] {
+		position: relative;
+		margin: 0;
+		padding: floor($spacing / 2.5) floor($spacing / 1.5);
+		text-align: right;
+		z-index: 5;
+		opacity: 0;
+	}
+
+	.fakefile {
+		display: block;
+		position: absolute;
+		padding: 3px;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		border: 0;
+		z-index: 10;
+
+		$buttonWidth: 120px;
+
+		.fake-upload {
+			position: absolute;
+			margin: 0;
+			width: $buttonWidth;
+			top: 3px;
+			left: 3px;
+			bottom: 3px;
+			text-align: center;
+			line-height: $lineHeight - 0.2;
+			z-index: 1;
+		}
+
+		.file-result {
+			@extend .field;
+			position: absolute;
+			padding-left: $buttonWidth + 15;
+			padding-right: 44px;
+			height: 100%;
+			top: 0px;
+			left: 0px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+
+			&.loaded {
+				color: $c2;
+			}
+		}
+
+		.fake-close {
+			display: block;
+			position: absolute;
+			margin: 3px;
+			padding: 0;
+			width: 42px;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			border: 0 solid rgba($c0, 0.4);
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+			border-top-right-radius: $radius;
+			border-bottom-right-radius: $radius;
+			background: $color1;
+			z-index: 50;
+
+			@extend .valign-middle;
+
+			.icon {
+				width: 16px;
+				height: 16px;
+				top: 1px;
+			}
+		}
+	}
+}
+
+
+// Responsive
+
+@media screen and (max-width: $scrTablL) {
+
+	.file-wrapper  {
+		width: 100% !important;
+	}
+
+}

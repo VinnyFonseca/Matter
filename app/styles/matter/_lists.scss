@@ -1,0 +1,48 @@
+// Lists
+
+ul,
+menu,
+dir {
+	list-style-type: disc;
+}
+
+ul,
+ol,
+menu,
+dir {
+	display: block;
+	position: relative;
+	margin: 0 $spacing $spacing;
+	padding: 0;
+	list-style-position: outside;
+
+	li {
+		margin: floor($spacing / 4) 0;
+		padding: 0;
+	}
+}
+menu,
+dir {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+dl {
+	display: block;
+	margin: $spacing 0;
+
+	dt {
+		display: block;
+		position: relative;
+		margin: $spacing 0 floor($spacing / 4);
+		padding: 0;
+		font-weight: bold;
+	}
+	dd {
+		display: block;
+		position: relative;
+		margin: floor($spacing / 2.5) 0;
+		padding: 0;
+		padding-left: $spacing;
+	}
+}

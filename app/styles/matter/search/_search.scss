@@ -1,3 +1,5 @@
+// Search
+
 .search-wrapper {
 	display: block;
 	position: relative;
@@ -362,4 +364,76 @@
 			}
 		}
 	}
+}
+
+
+
+// Responsive
+
+@media screen and (max-width: $scrDeskL) {
+
+	.search-results {
+		&[data-view="grid"] {
+			.search-item {
+				width: percentage(3 / 12) - 2;
+			}
+		}
+	}
+
+}
+
+
+@media screen and (max-width: $scrDeskS) {
+
+	.search-results {
+		&[data-view="grid"] {
+			.search-item {
+				width: percentage(4 / 12) - 2;
+			}
+		}
+	}
+
+}
+
+
+@media screen and (max-width: $scrTablL) {
+
+	.search-results {
+		&[data-view="grid"] {
+			.search-item {
+				width: percentage(6 / 12) - 2;
+			}
+		}
+	}
+
+}
+
+
+@media screen and (max-width: $scrMoblL) {
+
+	.search-results {
+		&[data-view="grid"] {
+			.search-item {
+				width: auto;
+			}
+		}
+	}
+
+}
+
+
+
+// Conditional
+
+.lt-ie9 {
+
+	.search-results {
+		.search-item {
+			.img {
+				background-size: 100% 100%;
+				-ms-behavior: url("scripts/core/vendor/backgroundsize.htc");
+			}
+		}
+	}
+
 }

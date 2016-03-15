@@ -1,17 +1,32 @@
 // Global
 
-@import "custom/config";
+@import "matter/config";
 @import "matter/mixins";
 @import "matter/helper";
 
-
-
 // Core
 
-@import "matter/core";
+@import "matter/reset";
+@import "matter/default";
+@import "matter/typography";
+@import "matter/iconography";
+@import "matter/hyperlinks";
+@import "matter/imagery";
+@import "matter/lists";
 @import "matter/grid";
-@import "matter/form";
 @import "matter/table";
+
+// Form
+
+@import "matter/form/label";
+@import "matter/form/group";
+@import "matter/form/field";
+@import "matter/form/password";
+@import "matter/form/button";
+@import "matter/form/checkbox";
+@import "matter/form/dropdown";
+@import "matter/form/file";
+@import "matter/form/validation";
 
 // Widgets
 
@@ -19,33 +34,25 @@
 @import "matter/widgets/tooltip";
 @import "matter/widgets/overlay";
 @import "matter/widgets/slider";
-
 @import "matter/widgets/map";
 @import "matter/widgets/video";
 
-@import "matter/widgets/search";
-@import "matter/widgets/autocomplete";
-@import "matter/widgets/tagcloud";
+// Search
+
+@import "matter/search/search";
+@import "matter/search/autocomplete";
+@import "matter/search/tagcloud";
 
 
 
 // Third Party
 
-// Third party partials here
+// Put your external plugins' .scss here, so you can override them with a custom stylesheet, as below
 
 
 
 // Dev
 
 @import "custom/global";
+@import "custom/index";
 @import "custom/documentation";
-
-
-
-// Cross browser/platform
-
-@import "matter/responsive";
-@import "matter/conditional";
-
-@import "custom/conditional";
-@import "custom/responsive";

@@ -1,0 +1,98 @@
+// Validation
+
+.input-validation-error {
+	border: 2px solid $failureBorderColor;
+}
+.field-validation-error {
+	display: block;
+	margin-top: 5px;
+	color: $failureTextColor;
+	font-size: $fontSize / 1.1 + rem;
+}
+
+.dropdown-current,
+[required] {
+	&.valid {
+		border-color: $successBorderColor;
+	}
+	&.invalid {
+		border-color: $failureBorderColor;
+	}
+}
+
+[readonly],
+[disabled],
+[readonly]:focus,
+[disabled]:focus,
+.valid[readonly],
+.valid[disabled],
+.invalid[readonly],
+.invalid[disabled] {
+	color: $ca !important;
+	border-color: $c9 !important;
+	border-style: dotted !important;
+	background-color: $cc !important;
+	box-shadow: none !important;
+	user-select: none;
+	cursor: no-drop !important;
+
+	&::placeholder {
+		color: $ca !important;
+	}
+}
+
+.controller {
+	input {
+		&:focus {
+			+ label {
+				.toggle-switch,
+				&:before {
+					border-color: $focusColor !important;
+					box-shadow: 0 0 3px $focusColor !important;
+				}
+			}
+		}
+		&.valid {
+			+ label {
+				// color: $successTextColor !important;
+
+				.toggle-switch,
+				&:before {
+					// color: $successTextColor !important;
+					border-color: $successBorderColor;
+					// background-color: $successBgColor !important;
+				}
+			}
+		}
+		&.invalid {
+			+ label {
+				// color: $failureTextColor !important;
+
+				.toggle-switch,
+				&:before {
+					// color: $failureTextColor !important;
+					border-color: $failureBorderColor;
+					// background-color: $failureBgColor !important;
+				}
+			}
+		}
+		&[readonly],
+		&[disabled] {
+			+ label {
+				color: $ca !important;
+				cursor: no-drop !important;
+
+				.toggle-switch,
+				&:before {
+					color: $c8 !important;
+					border-color: $cb !important;
+					border-style: dotted !important;
+					background-color: $ce !important;
+					box-shadow: none !important;
+					user-select: none;
+					cursor: no-drop !important;
+				}
+			}
+		}
+	}
+}
