@@ -207,7 +207,7 @@ header {
 .frameWrapper {
     position: relative;
     width: 100%;
-    background: $cf url(../img/loader.gif) center center no-repeat;
+    background: $cf url($base + "img/loader.gif") center center no-repeat;
     border-radius: $radius;
     overflow: hidden;
 

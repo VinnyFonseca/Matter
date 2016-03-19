@@ -148,13 +148,6 @@ matter.slider.prototype.position = function() {
 		'left': 0
 	});
 
-	this.touch.boundaries = {
-		top: this.element.slider.offset().top + (this.touch.tolerance / 2),
-		bottom: this.element.slider.offset().top + this.element.slider.height() - (this.touch.tolerance / 2),
-		left: this.element.slider.offset().left + this.touch.tolerance,
-		right: this.element.slider.offset().left + this.element.slider.width() - this.touch.tolerance
-	}
-
 	this.width.calculate();
 	this.step = this.width.value;
 	this.touch.trigger = this.width.value / 4;
@@ -173,6 +166,7 @@ matter.slider.prototype.move = function(i) {
 	if ( this.direction == "prev" ) this.cloning();
 
 	this.height.calculate();
+	this.element.slider.children('.slider-arrow').height(this.height.value);
 	this.element.movable
 		.stop(true, false)
 		.animate({
@@ -256,6 +250,8 @@ matter.slider.prototype.kickback = function() {
 			$this.cloned = false;
 		}
 	}, this.duration);
+
+	this.move(0);
 }
 
 matter.slider.prototype.cloning = function() {
@@ -286,19 +282,19 @@ matter.slider.prototype.slideshow = function() {
 		this.start();
 
 		if ( !matter.config.application.touch ) {
-			this.element.slider.on('mouseenter', function() {
+			this.element.container.on('mouseenter touchstart touchenter', function() {
 				$this.stop();
 			});
-			this.element.slider.on('mouseleave', function() {
+			this.element.container.on('mouseleave touchend touchleave touchcancel', function() {
 				$this.start();
 			});
 		} else {
-			this.element.movable.on('click touchstart', function() {
+			this.element.movable.on('click', function() {
 				$this.stop();
 			});
 
-			$("html").on('click touchstart', function(event) {
-				if ( !$(event.target).closest(".slider").length && $this.element.movable.hasClass("stopped") ) {
+			$("html").on('click', function(event) {
+				if ( !$(event.target).closest(this.element.container).length && $this.element.movable.hasClass("stopped") ) {
 					$this.start();
 				}
 			});
@@ -333,26 +329,25 @@ matter.slider.prototype.controls = function() {
 matter.slider.prototype.arrows = function() {
 	var $this = this;
 
-	console.log(this.has.arrows());
-
 	if ( this.has.arrows() ) {
 		var prev = '<div class="slider-arrow slider-arrow-prev valign-middle">\
-						<img class="svg icon icon-caret-left" src="' + matter.config.application.base + 'img/icons/icon-caret-left.svg" onerror="this.onerror=null;this.src=\'' + matter.config.application.base + 'img/icons/icon-caret-left.png\'">\
+						<img class="svg icon icon-caret-left" src="' + matter.config.application.base + 'img/icons/icon-caret-left.svg">\
 					</div>';
 		var next = '<div class="slider-arrow slider-arrow-next valign-middle">\
-						<img class="svg icon icon-caret-right" src="' + matter.config.application.base + 'img/icons/icon-caret-right.svg" onerror="this.onerror=null;this.src=\'' + matter.config.application.base + 'img/icons/icon-caret-right.png\'">\
+						<img class="svg icon icon-caret-right" src="' + matter.config.application.base + 'img/icons/icon-caret-right.svg">\
 					</div>';
 
 		this.element.slider.prepend(prev);
 		this.element.slider.prepend(next);
 		matter.svg.init();
 
-		this.element.slider.children('.slider-arrow-prev').on('click', function() {
+		this.element.slider.children('.slider-arrow').height(this.height.value).on('click', function() {
 			$this.clone = true;
+		});
+		this.element.slider.children('.slider-arrow-prev').on('click', function() {
 			$this.prev();
 		});
 		this.element.slider.children('.slider-arrow-next').on('click', function() {
-			$this.clone = true;
 			$this.next();
 		});
 
@@ -372,7 +367,7 @@ matter.slider.prototype.bullets = function() {
 		var slide = this.element.slide.eq(i);
 		var thumb = slide.data("thumb");
 
-		if ( slide.hasClass("thumb") ) slide.css({ "background-image": "url('" + thumb + "')" });
+		if ( this.has.thumbnails() ) slide.css({ "background-image": "url('" + thumb + "')" });
 
 		if ( this.has.nav() ) {
 			var bulletEl;
@@ -396,8 +391,11 @@ matter.slider.prototype.bullets = function() {
 			return $this.element.slider.find('.bullet');
 		}
 	}
-	this.element.bullet().removeClass('active');
-	this.element.bullet().eq(this.current).addClass('active');
+
+	if ( !this.animating ) {
+		this.element.bullet().removeClass('active');
+		this.element.bullet().eq(this.current).addClass('active');
+	}
 
 	this.element.bullet().on('click', function() {
 		$this.clone = true;
@@ -434,97 +432,98 @@ matter.slider.prototype.drag = function() {
 		var $this = this;
 		this.cloned = false;
 
-		this.width.calculate();
 		this.touch = {
 			down: false,
-			trigger: this.width.value / 4,
-			drag: {
-				start: false,
-				active: false,
-				up: 0,
-				down: 0,
-				left: 0,
-				right: 0
-			},
-			threshold: matter.config.slider.threshold,
-			tolerance: 50,
 			first: {
 				x: 0,
 				y: 0
 			},
-			current: {
+			drag: {
 				x: 0,
-				y: 0
-			},
-			last: {
-				x: 0,
-				y: 0
-			}
-		}
-		this.touch.boundaries = {
-			top: this.element.slider.offset().top + (this.touch.tolerance / 2),
-			bottom: this.element.slider.offset().top + this.element.slider.height() - (this.touch.tolerance / 2),
-			left: this.element.slider.offset().left + this.touch.tolerance,
-			right: this.element.slider.offset().left + this.element.slider.width() - this.touch.tolerance
-		}
-		this.touch.end = function() {
-			if ( $this.touch.drag.active ) {
-				$this.touch.down = false;
-				$this.touch.drag.active = false;
+				y: 0,
+				threshold: matter.config.slider.threshold,
+				tolerance: this.width.value / 20,
+				trigger: this.width.value / 4,
+				distance: function() {
+					return {
+						up: $this.touch.first.y - this.y,
+						down: this.y - $this.touch.first.y,
+						left: $this.touch.first.x - this.x,
+						right: this.x - $this.touch.first.x
+					}
+				},
+				active: function() {
+					return (
+						this.distance().up > this.threshold ||
+						this.distance().down > this.threshold ||
+						this.distance().left > this.threshold ||
+						this.distance().right > this.threshold
+					);
+				},
+				boundaries: function() {
+					var container = matter.dimensions($this.element.container);
 
-				if ( $this.touch.drag.left > $this.touch.trigger ) {
-					$this.next();
-				} else if ( $this.touch.drag.right > $this.touch.trigger ) {
-					$this.prev();
-				} else {
-					$this.kickback();
-					$this.move(0);
+					return {
+						top: container.top + this.tolerance,
+						bottom: container.bottom - this.tolerance,
+						left: container.left + this.tolerance,
+						right: container.right - this.tolerance
+					}
+				},
+				limit: function() {
+					return (
+						this.y <= this.boundaries().top ||
+						this.y >= this.boundaries().bottom ||
+						this.x <= this.boundaries().left ||
+						this.x >= this.boundaries().right ||
+						this.distance().left >= $this.step + this.tolerance ||
+						this.distance().right >= $this.step + this.tolerance
+					);
+				},
+				end: function() {
+					if ( this.active() ) {
+						if ( this.distance().left > this.trigger ) {
+							$this.next();
+						} else if ( this.distance().right > this.trigger ) {
+							$this.prev();
+						} else {
+							$this.kickback();
+						}
+					}
+
+					$this.touch.down = false;
+					$this.touch.first.x = 0;
+					$this.touch.first.y = 0;
+					this.x = 0;
+					this.y = 0;
+					this.distance();
 				}
-
-				$this.touch.first.x = 0;
-				$this.touch.first.y = 0;
-				$this.touch.last.x = $this.touch.current.x;
-				$this.touch.last.y = $this.touch.current.y;
-				$this.touch.current.x = 0;
-				$this.touch.current.y = 0;
 			}
 		}
 
+		this.element.container.on("mousedown touchstart", function(event) {
+			// if ( !matter.config.application.touch ) event.preventDefault();
 
-		this.element.slide.on("mousedown touchstart", function(event) {
-			if ( !matter.config.application.touch ) event.preventDefault();
+			console.log(event, event.touches);
 
-			$this.touch.first.x = event.pageX || event.touches[0].pageX;
-			$this.touch.first.y = event.pageY || event.touches[0].pageY;
-			$this.touch.current.x = event.pageX || event.touches[0].pageX;
-			$this.touch.current.y = event.pageY || event.touches[0].pageY;
+			if ( !$this.animating && $this.multi ) {
+				$this.touch.first.x = event.pageX || event.originalEvent.touches[0].pageX;
+				$this.touch.first.y = event.pageY || event.originalEvent.touches[0].pageY;
+				$this.touch.drag.x = $this.touch.first.x;
+				$this.touch.drag.y = $this.touch.first.y;
 
-			if ( $this.multi ) $this.touch.down = true;
+				$this.touch.down = true;
+			}
 		})
 		.on("mousemove touchmove", function(event) {
-			if ( $this.touch.down ) {
-				$this.touch.current.x = event.pageX || event.touches[0].pageX;
-				$this.touch.current.y = event.pageY || event.touches[0].pageY;
+			if ( !$this.animating && $this.touch.down ) {
+				$this.touch.drag.x = event.pageX || event.originalEvent.touches[0].pageX;
+				$this.touch.drag.y = event.pageY || event.originalEvent.touches[0].pageY;
 
-				$this.touch.drag = {
-					up: $this.touch.first.y - $this.touch.current.y,
-					down: $this.touch.current.y - $this.touch.first.y,
-					left: $this.touch.first.x - $this.touch.current.x,
-					right: $this.touch.current.x - $this.touch.first.x
-				};
+				if ( $this.touch.drag.active() ) {
+					// if ( !matter.config.application.touch ) event.preventDefault();
 
-				$this.touch.drag.start = (
-					// $this.touch.drag.up > $this.touch.threshold ||
-					// $this.touch.drag.down > $this.touch.threshold ||
-					$this.touch.drag.left > $this.touch.threshold ||
-					$this.touch.drag.right > $this.touch.threshold
-				);
-
-				if ( !$this.animating && $this.touch.drag.start ) {
-					if ( !matter.config.application.touch ) event.preventDefault();
-					$this.touch.drag.active = true;
-
-					if ( $this.touch.current.x > $this.touch.first.x ) {
+					if ( $this.touch.drag.x > $this.touch.first.x ) {
 						if ( !$this.cloned ) {
 							$this.direction = "prev";
 							$this.element.slider.find('.slide:last-child').prependTo($this.element.movable);
@@ -532,7 +531,7 @@ matter.slider.prototype.drag = function() {
 							$this.cloned = true;
 						}
 					}
-					if ( $this.touch.current.x < $this.touch.first.x ) {
+					if ( $this.touch.drag.x < $this.touch.first.x ) {
 						$this.clone = true;
 
 						if ( $this.cloned ) {
@@ -544,30 +543,20 @@ matter.slider.prototype.drag = function() {
 					}
 
 					$this.element.movable.css({
-						'left': - ($this.touch.first.x - $this.touch.current.x)
+						'left': - $this.touch.drag.distance().left
 					});
 
-					$this.touch.drag.limit = (
-						$this.touch.current.y <= $this.touch.boundaries.top ||
-						$this.touch.current.y >= $this.touch.boundaries.bottom ||
-						$this.touch.current.x <= $this.touch.boundaries.left ||
-						$this.touch.current.x >= $this.touch.boundaries.right ||
-						$this.touch.drag.left >= $this.step + $this.touch.tolerance ||
-						$this.touch.drag.right >= $this.step + $this.touch.tolerance
-					);
-
-					if ( $this.touch.drag.limit ) {
+					if ( $this.touch.drag.limit() ) {
 						$this.duration = $this.kick;
-						$this.touch.end();
+						$this.touch.drag.end();
 					}
 				}
 			}
 		})
 		.on("mouseup mouseleave touchend touchcancel", function(event) {
-			if ( !matter.config.application.touch ) event.preventDefault();
+			// if ( !matter.config.application.touch ) event.preventDefault();
 
-			$this.touch.down = false;
-			$this.touch.end();
+			$this.touch.drag.end();
 		});
 	// }
 }

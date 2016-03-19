@@ -63,11 +63,11 @@ var initVideo = function() {
 						},
 						widget = '<div class="video-frame ' + name + '">\
 									<div class="video-overlay"></div>\
-									<img class="video-loader" src="/img/loader.gif" alt="Video loader">\
+									<img class="video-loader" src="' + matter.config.application.base + 'img/loader.gif" alt="Video loader">\
 									<div class="video-thumb" style="background: url(' + videoThumb + ');">&nbsp;</div>\
 									<div class="video-button">\
-										<img class="svg icon icon-play" src="/img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-play.png\'">\
-										<img class="svg icon icon-pause" src="/img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-pause.png\'">\
+										<img class="svg icon icon-play" src="' + matter.config.application.base + 'img/icons/icon-play.svg">\
+										<img class="svg icon icon-pause" src="' + matter.config.application.base + 'img/icons/icon-pause.svg">\
 									</div>\
 									<iframe id="' + name + '" src="' + el.attr("src") + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>\
 								</div>';
@@ -140,11 +140,11 @@ var initVideo = function() {
 					videoID = el.data("video-id"),
 					videoThumb = !!el.attr('data-video-thumb') && el.attr('data-video-thumb') !== "" ? el.data("video-thumb") : "//img.youtube.com/vi/" + videoID + "/hqdefault.jpg",
 					widget =   '<div class="video-overlay"></div>\
-								<img class="video-loader" src="/img/loader.gif" alt="Video loader">\
+								<img class="video-loader" src="' + matter.config.application.base + 'img/loader.gif" alt="Video loader">\
 								<div class="video-thumb" style="background: url(' + videoThumb + ');">&nbsp;</div>\
 								<div class="video-button">\
-									<img class="svg icon icon-play" src="/img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-play.png\'">\
-									<img class="svg icon icon-pause" src="/img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-pause.png\'">\
+									<img class="svg icon icon-play" src="' + matter.config.application.base + 'img/icons/icon-play.svg">\
+									<img class="svg icon icon-pause" src="' + matter.config.application.base + 'img/icons/icon-pause.svg">\
 								</div>\
 								<div id="' + name + '"></div>';
 
@@ -232,11 +232,11 @@ var initVideo = function() {
 						},
 						widget =   '<div class="video-frame ' + name + '">\
 										<div class="video-overlay"></div>\
-										<img class="video-loader" src="/img/loader.gif" alt="Video loader">\
+										<img class="video-loader" src="' + matter.config.application.base + 'img/loader.gif" alt="Video loader">\
 										<div class="video-thumb">&nbsp;</div>\
 										<div class="video-button">\
-											<img class="svg icon icon-play" src="/img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-play.png\'">\
-											<img class="svg icon icon-pause" src="/img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-pause.png\'">\
+											<img class="svg icon icon-play" src="' + matter.config.application.base + 'img/icons/icon-play.svg">\
+											<img class="svg icon icon-pause" src="' + matter.config.application.base + 'img/icons/icon-pause.svg">\
 										</div>\
 										<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>\
 									</div>';
@@ -310,11 +310,11 @@ var initVideo = function() {
 						player_id: name
 					},
 					widget =   '<div class="video-overlay"></div>\
-								<img class="video-loader" src="/img/loader.gif" alt="Video loader">\
+								<img class="video-loader" src="' + matter.config.application.base + 'img/loader.gif" alt="Video loader">\
 								<div class="video-thumb">&nbsp;</div>\
 								<div class="video-button">\
-									<img class="svg icon icon-play" src="/img/icons/icon-play.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-play.png\'">\
-									<img class="svg icon icon-pause" src="/img/icons/icon-pause.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-pause.png\'">\
+									<img class="svg icon icon-play" src="' + matter.config.application.base + 'img/icons/icon-play.svg">\
+									<img class="svg icon icon-pause" src="' + matter.config.application.base + 'img/icons/icon-pause.svg">\
 								</div>\
 								<iframe id="' + name + '" src="//player.vimeo.com/video/' + videoID + "?" + serialize(playerVars) + '" frameborder="0" allowfullscreen></iframe>';
 

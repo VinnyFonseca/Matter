@@ -3,45 +3,45 @@
 .slider {
 	display: block;
 	position: relative;
-	margin: 0 auto;
+	margin: $spacing auto;
 	padding: 0;
+	user-select: none;
 	overflow: hidden;
+
+	* {
+		user-select: none;
+	}
+
+	&.active,
+	&:hover {
+		.slider-arrow {
+			opacity: 1;
+
+			&.slider-arrow-prev {
+				margin-left: 0;
+			}
+			&.slider-arrow-next {
+				margin-right: 0;
+			}
+		}
+	}
 
 	.slider-container {
 		display: block;
 		position: relative;
+		margin: 0;
+		padding: 0;
 		width: 100%;
 		overflow: hidden;
-
-		&.active,
-		&:hover {
-			.slider-arrow {
-				opacity: 1;
-
-				&:hover {
-					background-color: rgba($color1, 0.75);
-				}
-				&:active {
-					background-color: rgba($color3, 0.75);
-				}
-
-				&.slider-arrow-prev {
-					margin-left: 0;
-				}
-				&.slider-arrow-next {
-					margin-right: 0;
-				}
-			}
-		}
 
 		&:after {
 			display: none;
 			position: absolute;
-			width: 16px;
-			height: 16px;
-			top: floor($spacing / 2);
-			left: floor($spacing / 2);
-			background: transparent url("/img/icons/icon-swipe.png") center center no-repeat;
+			width: 20px;
+			height: 20px;
+			top: floor($spacing / 4);
+			left: floor($spacing / 4);
+			background: transparent url($base + "img/icons/icon-swipe.svg") center center no-repeat;
 			background-size: 100%;
 			opacity: 0.5;
 			content: "";
@@ -52,8 +52,16 @@
 
 	// Arrow Navigation
 
+	&.arrows {
+		// padding: 0 $arrowDiameter;
+
+		.slider-arrow {
+			display: block;
+		}
+	}
+
 	.slider-arrow {
-		display: block;
+		display: none;
 		position: absolute;
 		padding: 0;
 		width: $arrowDiameter;
@@ -71,18 +79,24 @@
 			timing-function: $easing;
 		}
 
+		&:hover {
+			background-color: rgba($color1, 0.75);
+		}
+		&:active {
+			background-color: rgba($color3, 0.75);
+		}
+
 		&.slider-arrow-prev {
-			float: left;
 			margin-left: floor(-$spacing * 2);
 			left: 0;
 		}
 		&.slider-arrow-next {
-			float: right;
 			margin-right: floor(-$spacing * 2);
 			right: 0;
 		}
 
 		.icon {
+			margin: 0 auto;
 			width: 22px;
 			height: 22px;
 			@include svgColor($cf);
@@ -94,12 +108,20 @@
 
 	// Bullet Navigation (if navContainer is not defined)
 
-	$bulletDiameter: 16px;
+	&.bullets {
+		margin-bottom: floor($spacing * 2) + $bulletDiameter;
+		text-align: center;
+
+		.slider-nav {
+			display: block;
+		}
+	}
 
 	.slider-nav {
-		display: block;
+		display: none;
 		position: relative;
-		margin: 0.5% -0.5% 0;
+		margin: 0;
+		margin-top: floor($spacing / 1.5);
 		padding: 0;
 		text-align: center;
 		font-size: 0;
@@ -108,8 +130,9 @@
 		.slider-bullet {
 			display: inline-block;
 			position: relative;
-			margin: 0;
-			padding: $bulletDiameter / 2;
+			margin: floor($spacing / 4);
+			padding: floor($bulletDiameter / 2);
+			opacity: 0.5;
 			user-select: none;
 			cursor: pointer;
 
@@ -117,44 +140,35 @@
 				display: block;
 				position: relative;
 				content: "";
-				width: $bulletDiameter / 2;
-				height: $bulletDiameter / 2;
+				width: floor($bulletDiameter / 2);
+				height: floor($bulletDiameter / 2);
 				background-color: $color2;
 				border-radius: $bulletDiameter;
-				opacity: 0.5;
 			}
 
 			&:hover {
-				&:after {
-					opacity: 1;
-				}
+				opacity: 1;
 			}
 
 			&:active,
 			&.active,
 			&:focus {
+				opacity: 1;
+
 				&:after {
 					background-color: $color1;
-					opacity: 1;
 				}
 			}
 		}
 
 		&.thumbnails {
-			text-align: left;
-
 			.slider-bullet {
-				margin: 0.5%;
-				padding-bottom: 5.25%;
-				width: 5.25%;
-				height: auto;
+				padding: 0;
+				padding-bottom: $thumbDiameter;
+				width: $thumbDiameter;
+				height: 0;
 				border-radius: $radius;
 				background-size: cover !important;
-
-				&:hover {
-					// transform: scale(1.1);
-					z-index: 10;
-				}
 
 				&:after {
 					display: none;
@@ -175,8 +189,8 @@
 		width: 100%;
 		white-space: nowrap !important;
 		overflow: visible !important;
-
 		@extend .valign-middle;
+		transform: translate3d(0, 0, 0);
 
 		.slide {
 			position: relative;
@@ -191,7 +205,6 @@
 		width: 100%;
 		top: 0;
 		left: 0;
-		background-color: $ce;
 		vertical-align: top;
 		overflow: hidden;
 		white-space: normal;
@@ -205,7 +218,7 @@
 			top: 0;
 		}
 
-		&.thumb {
+		&[data-thumb] {
 			background-repeat: no-repeat;
 			background-position: center center;
 			background-size: cover;
@@ -214,7 +227,7 @@
 				display: block;
 				position: relative;
 				width: 100%;
-				padding-bottom: 50%;
+				padding-bottom: 55%;
 				content: "";
 			}
 		}
@@ -226,39 +239,33 @@
 
 	@for $i from 1 through 20 {
 		&[data-display="#{$i}"] {
+			&.active,
+			&:hover {
+				.slider-arrow {
+					&.slider-arrow-prev {
+						margin-left: 0;
+					}
+					&.slider-arrow-next {
+						margin-right: 0;
+					}
+				}
+			}
+
+			.slider-arrow {
+				&.slider-arrow-prev {
+					margin-left: -$arrowDiameter;
+				}
+				&.slider-arrow-next {
+					margin-right: -$arrowDiameter;
+				}
+			}
+
 			.slide {
 				width: (100 / $i) + %;
 
 				&.thumb {
 					&:after {
 						padding-bottom: 62.5%;
-					}
-				}
-			}
-
-			.slider-arrow {
-				padding: 0 floor($spacing / 1.5);
-				width: floor($arrowDiameter * 1.25);
-
-				&.slider-arrow-prev {
-					margin-left: -$arrowDiameter;
-					text-align: right;
-				}
-				&.slider-arrow-next {
-					margin-right: -$arrowDiameter;
-					text-align: left;
-				}
-			}
-
-			.slider-container {
-				&:hover {
-					.slider-arrow {
-						&.slider-arrow-prev {
-							margin-left: floor(-$arrowDiameter / 2);
-						}
-						&.slider-arrow-next {
-							margin-right: floor(-$arrowDiameter / 2);
-						}
 					}
 				}
 			}
@@ -384,7 +391,7 @@
 .lt-ie9 {
 
 	.slider-arrow {
-		background: transparent url('../img/pixel-white.png') repeat left top;
+		background: transparent url('..$base + "img/pixel-white.png') repeat left top;
 	}
 
 }

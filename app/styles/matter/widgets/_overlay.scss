@@ -96,7 +96,7 @@
 .lt-ie9 {
 
 	.overlay {
-		background: transparent url("../img/pixel-black.png") repeat left top;
+		background: transparent url($base + "img/pixel-black.png") repeat left top;
 	}
 
 }

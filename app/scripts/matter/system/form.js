@@ -66,7 +66,7 @@ var initForm = function() {
 							<div class="button primary fake-upload">Choose File</div>\
 							<div class="file-result">No file chosen</div>\
 							<div class="button primary fake-close">\
-								<img class="svg icon icon-close" src="/img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-close.png\'">\
+								<img class="svg icon icon-close" src="' + matter.config.application.base + 'img/icons/icon-close.svg">\
 							</div>\
 						</div>';
 
@@ -223,7 +223,7 @@ var initDropdowns = function() {
 				wrapperEl = '<div class="dropdown-wrapper ' + type + '" data-size="' + size + '"></div>',
 				currentEl = '<div class="dropdown-current" data-value="' + selected.val() + '">' + selected.html() + '</div>',
 				arrowEl = ' <div class="dropdown-arrow valign-middle">\
-								<img class="svg icon icon-caret-down" src="/img/icons/icon-caret-down.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-caret-down.png\'">\
+								<img class="svg icon icon-caret-down" src="' + matter.config.application.base + 'img/icons/icon-caret-down.svg">\
 							</div>',
 				dropEl = '<div class="dropdown default"></div>';
 

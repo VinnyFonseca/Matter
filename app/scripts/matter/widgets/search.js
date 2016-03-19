@@ -12,7 +12,7 @@ var initSearch = function() {
 				outputArray = [],
 
 				tagcloudElement = '<ul class="tagcloud"></ul>',
-				tagclose = '<img class="svg icon icon-close" src="/img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-close.png\'">',
+				tagclose = '<img class="svg icon icon-close" src="' + matter.config.application.base + 'img/icons/icon-close.svg">',
 
 				searchView = !!el.data("search-view") ? el.data("search-view") : matter.config.search.view,
 				searchDisplay = !!el.data("search-display") ? el.data("search-display") : matter.config.search.display,
@@ -20,10 +20,10 @@ var initSearch = function() {
 				resultsCountElement = '<div class="search-count"></div>',
 				resultsViewsElement = '<div class="search-views">\
 											<div class="search-view" data-view="grid">\
-												<img class="svg icon icon-grid" src="/img/icons/icon-grid.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-grid.png\'">\
+												<img class="svg icon icon-grid" src="' + matter.config.application.base + 'img/icons/icon-grid.svg">\
 											</div>\
 											<div class="search-view" data-view="list">\
-												<img class="svg icon icon-list" src="/img/icons/icon-list.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-list.png\'">\
+												<img class="svg icon icon-list" src="' + matter.config.application.base + 'img/icons/icon-list.svg">\
 											</div>\
 										</div>',
 

@@ -22,7 +22,7 @@ $heroBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHht
 		background-size: cover;
 
 		&.parallax-noes {
-			background: $color1 url("../img/pictures/black-hole.jpg") no-repeat center center;
+			background: $color1 url($base + "img/pictures/black-hole.jpg") no-repeat center center;
 			background-size: cover;
 
 			p.lead {

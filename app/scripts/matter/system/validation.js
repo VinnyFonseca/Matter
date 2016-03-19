@@ -153,7 +153,7 @@ var initValidation = function() {
 						el.addClass("invalid");
 					}
 
-					$(".card-type img").attr("src", "/img/icons/payment/cards/" + detectCard(value) + ".png");
+					$(".card-type img").attr("src", matter.config.application.base + "img/icons/payment/cards/" + detectCard(value) + ".png");
 
 				break;
 
@@ -294,7 +294,7 @@ var initValidation = function() {
 				break;
 
 				case "card":
-					$(".card-type img").attr("src", "/img/icons/payment/cards/" + detectCard(value) + ".png");
+					$(".card-type img").attr("src", matter.config.application.base + "img/icons/payment/cards/" + detectCard(value) + ".png");
 				break;
 			}
 		}

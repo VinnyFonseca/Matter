@@ -2,6 +2,7 @@ var matter = matter || {};
 
 matter.config = {
 	application: {
+		base: typeof basePath !== "undefined" ? basePath : "/", // str: path that should be appended to all img src attribute, ending in /
 		touch: Modernizr.touch && !device.desktop(), // bool: Modernizr check returns true or false.
 		debug: true // bool: use if (debug) console.log(); instead of console.log; for permanent debugging messages.
 	},

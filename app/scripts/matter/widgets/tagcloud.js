@@ -2,7 +2,7 @@
 
 matter.tagcloud = {
 	tags: [],
-	close: '<img class="svg icon icon-close" src="/img/icons/icon-close.svg" onerror="this.onerror=null;this.src=\'/img/icons/icon-close.png\'">',
+	close: '<img class="svg icon icon-close" src="' + matter.config.application.base + 'img/icons/icon-close.svg">',
 	init: function() {
 		if ( $("[data-tagcloud]").length ) {
 			var $this = this;

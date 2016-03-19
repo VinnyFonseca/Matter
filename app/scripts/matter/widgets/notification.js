@@ -29,7 +29,7 @@ var notify = function(title, message, delay, tone) {
 
 	var notifyShow = function() {
 		var notification = '<div class="notification notification-' + notificationCount + '" data-type="' + tone + '">\
-								<img class="svg icon icon-' + tone + '" src="/img/icons/icon-' + tone + '.svg" width="24" height="24" onerror="this.onerror=null;this.src=\'/img/icons/icon-' + tone + '.png\'">\
+								<img class="svg icon icon-' + tone + '" src="' + matter.config.application.base + 'img/icons/icon-' + tone + '.svg" width="24" height="24">\
 								<span class="notification-title">' + title + '</span>\
 								<span class="notification-message">\
 									' + message + '\

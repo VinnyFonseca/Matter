@@ -84,7 +84,7 @@ input[type="checkbox"] {
 			&:checked {
 				+ label {
 					&:before {
-						background-image: url('../img/icons/icon-control-radio.png');
+						background-image: url($base + "img/icons/icon-control-radio.png");
 					}
 				}
 			}
@@ -104,7 +104,7 @@ input[type="checkbox"] {
 			&:checked {
 				+ label {
 					&:before {
-						background-image: url('../img/icons/icon-control-radio.png');
+						background-image: url($base + "img/icons/icon-control-radio.png");
 					}
 				}
 			}
@@ -194,7 +194,7 @@ input[type="checkbox"] {
 				top: 0;
 				right: -10px;
 				bottom: 0;
-				background: $successBgColor url('../img/icons/icon-toggle-tick.png') center center no-repeat;
+				background: $successBgColor url($base + "img/icons/icon-toggle-tick.png") center center no-repeat;
 				background-size: floor($switchSize / 2.5);
 				transition-property: left, right;
 				transition-duration: $duration / 2;
@@ -203,7 +203,7 @@ input[type="checkbox"] {
 			.toggle-background-negative {
 				left: -($toggleWidth - ($switchSize / 2));
 				right: auto;
-				background: $failureBgColor url('../img/icons/icon-toggle-close.png') center center no-repeat;
+				background: $failureBgColor url($base + "img/icons/icon-toggle-close.png") center center no-repeat;
 				background-size: floor($switchSize / 2.5);
 			}
 		}

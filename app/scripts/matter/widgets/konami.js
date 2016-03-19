@@ -7,7 +7,7 @@ matter.konami = {
 			konamiCoding = false;
 
 		var buildKonami = function() {
-			var img = '<img class="konami" style="width: 100%;" src="/img/konami/contra.gif">';
+			var img = '<img class="konami" style="width: 100%;" src="' + matter.config.application.base + 'img/konami/contra.gif">';
 			$(".main").prepend(img);
 		}
 

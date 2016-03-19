@@ -1528,7 +1528,7 @@ header#topHeader {
 .frameWrapper {
   position: relative;
   width: 100%;
-  background: #ffffff url(../img/loader.gif) center center no-repeat;
+  background: #ffffff url("/img/loader.gif") center center no-repeat;
   border-radius: 4px;
   overflow: hidden;
 }

@@ -1,5 +1,7 @@
 // General
 
+$base: "/"; // Base path for images, ending in /
+
 $spacing: 20px; // Spacing variable user throughout
 $radius: 4px; // Radius value
 
@@ -104,6 +106,8 @@ $iconSize: 18px;
 // Slider
 
 $arrowDiameter: 56px;
+$bulletDiameter: 16px;
+$thumbDiameter: percentage(1 / 13);
 
 
 
