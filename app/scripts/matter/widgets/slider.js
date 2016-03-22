@@ -461,7 +461,7 @@ matter.slider.prototype.drag = function() {
 					);
 				},
 				boundaries: function() {
-					var container = matter.dimensions($this.element.container);
+					var container = matter.measure($this.element.container);
 
 					return {
 						top: container.top + this.tolerance,
