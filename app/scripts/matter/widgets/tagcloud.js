@@ -5,26 +5,26 @@ matter.tagcloud = {
 	close: '<img class="svg icon icon-close" src="' + matter.config.application.base + 'img/icons/icon-close.svg">',
 	init: function() {
 		if ( $("[data-tagcloud]").length ) {
-			var $this = this;
+			var self = this;
 
 			$("[data-tagcloud]").each(function(i) {
 				var el = $(this);
 
-				$this.element = {
+				self.element = {
 					cloud: $(".tagcloud[data-tag='tagcloud-" + i + "']"),
 					hidden: $("input[data-tag='tagcloud-" + i + "']")
 				}
 
-				if ( !$this.element.cloud.length ) {
+				if ( !self.element.cloud.length ) {
 					$('<ul class="tagcloud" data-tag="tagcloud-' + i + '"></ul>').insertAfter(el);
-					$this.element.cloud = $(".tagcloud[data-tag='tagcloud-" + i + "']");
+					self.element.cloud = $(".tagcloud[data-tag='tagcloud-" + i + "']");
 				}
-				if ( !$this.element.hidden.length ) {
+				if ( !self.element.hidden.length ) {
 					$('<input type="hidden" class="tagcloud-result" data-tag="tagcloud-' + i + '">').insertAfter(el);
-					$this.element.hidden = $("input[data-tag='tagcloud-" + i + "']");
+					self.element.hidden = $("input[data-tag='tagcloud-" + i + "']");
 				}
 
-				$this.controls(el);
+				self.controls(el);
 			});
 
 			if ( matter.config.application.debug ) console.log("Search :: Tag Cloud");
@@ -49,16 +49,16 @@ matter.tagcloud = {
 		el.val("").focus();
 	},
 	controls: function(el) {
-		var $this = this;
+		var self = this;
 
 		var tag = function(value) {
-			var tagEl = '<li class="tag" data-tag="' + value + '">' + value + $this.close + '</li>';
+			var tagEl = '<li class="tag" data-tag="' + value + '">' + value + self.close + '</li>';
 
-			if ( value !== "" && $.inArray(value, $this.tags) < 0 ) $this.element.cloud.addClass("active").append(tagEl);
-			if ( $.inArray(value, $this.tags) >= 0 ) notify("Failure", "This tag already exists.", "failure");
+			if ( value !== "" && $.inArray(value, self.tags) < 0 ) self.element.cloud.addClass("active").append(tagEl);
+			if ( $.inArray(value, self.tags) >= 0 ) notify("Failure", "This tag already exists.", "failure");
 
 			matter.svg.init();
-			$this.update(el);
+			self.update(el);
 		}
 
 		el.on("keydown", function(event) {
@@ -73,9 +73,9 @@ matter.tagcloud = {
 			new tag(value);
 		});
 
-		$this.element.cloud.on("click", ".tag", function() {
+		self.element.cloud.on("click", ".tag", function() {
 			$(this).remove();
-			$this.update(el);
+			self.update(el);
 		});
 	}
 }

@@ -30,7 +30,6 @@ body.sidebar-on {
 		margin-left: $sidebarWidth;
 		left: 0;
 		transition: all $duration $easing;
-		transform: translate3d(0, 0, 0);
 
 		.wrapper {
 			padding-left: floor($spacing * 4);
