@@ -7,20 +7,20 @@ body.sidebar-on {
 
 	.main {
 		&.docs {
-			left: $sidebarWidth / 2;
+			transform: translate3d(0, 0, 0) translateX($sidebarWidth / 2);
 
 			.wrapper {
-				opacity: 0.15;
+				opacity: 0.35;
 			}
+		}
+	}
 
-			.sidebar {
-				transform: translateX(0);
+	.sidebar {
+		transform: translate3d(0, 0, 0) translateX(0);
 
-				.sidebar-trigger {
-					background-color: $c1;
-					transform: rotate(-180deg);
-				}
-			}
+		.sidebar-trigger {
+			background-color: $c1;
+			transform: rotate(-180deg);
 		}
 	}
 }
@@ -28,7 +28,7 @@ body.sidebar-on {
 .main {
 	&.docs {
 		margin-left: $sidebarWidth;
-		left: 0;
+		transform: translate3d(0, 0, 0) translateX(0);
 		transition: all $duration $easing;
 
 		.wrapper {
@@ -49,12 +49,14 @@ body.sidebar-on {
 	margin: 0;
 	padding: $spacing 0;
 	width: $sidebarWidth;
+	height: 100%;
 	top: $headerHeight;
 	left: 0;
 	bottom: 0;
 	background-color: $c3;
 	z-index: 70;
-	transition: transform $duration $easing;
+	transition: all $duration $easing;
+	transform: translate3d(0, 0, 0) translateX(-100%);
 
 	> * {
 		padding: 0 $spacing;
@@ -87,7 +89,7 @@ body.sidebar-on {
 	}
 
 	.sidebar-trigger {
-		display: none;
+		display: block;
 		position: absolute;
 		padding: 0;
 		margin-top: -23px;
