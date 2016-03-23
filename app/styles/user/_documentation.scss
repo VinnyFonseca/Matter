@@ -1,6 +1,6 @@
 // Documentation
 
-$sidebarWidth: 300px;
+$sidebarWidth: 250px;
 
 body.sidebar-on {
 	overflow-x: hidden;
@@ -29,7 +29,8 @@ body.sidebar-on {
 	&.docs {
 		margin-left: $sidebarWidth;
 		left: 0;
-		transition: left $duration $easing;
+		transition: all $duration $easing;
+		transform: translate3d(0, 0, 0);
 
 		.wrapper {
 			padding-left: floor($spacing * 4);

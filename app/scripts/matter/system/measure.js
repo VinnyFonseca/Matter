@@ -34,23 +34,21 @@ matter.viewport = function() {
 	return object;
 }
 
-matter.measure = {
-	get: function(element) {
-		var object = {};
+matter.measure = function(element) {
+	var object = {};
 
-		object.selector = $(element);
+	object.selector = $(element);
 
-		if ( object.selector.length ) {
-			object.width = object.selector.outerWidth();
-			object.height = object.selector.outerHeight();
-			object.top = object.selector.offset().top;
-			object.bottom = object.top + object.height;
-			object.left = object.selector.offset().left;
-			object.right = object.left + object.width;
+	if ( object.selector.length ) {
+		object.width = object.selector.outerWidth();
+		object.height = object.selector.outerHeight();
+		object.top = object.selector.offset().top;
+		object.bottom = object.top + object.height;
+		object.left = object.selector.offset().left;
+		object.right = object.left + object.width;
 
-			return object;
-		} else {
-			console.log("System :: " + element + " does not exist (yet)");
-		}
+		return object;
+	} else {
+		console.log("System :: " + element + " does not exist (yet)");
 	}
 }

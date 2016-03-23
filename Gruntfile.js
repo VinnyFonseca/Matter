@@ -92,6 +92,7 @@ module.exports = function(grunt) {
 			main: {
 				files: [{
 					expand: true,
+					dot: true,
 					cwd: 'app',
 					src: [
 						'**',
@@ -318,6 +319,18 @@ module.exports = function(grunt) {
 				options: { reload: true },
 				files: ['Gruntfile.js']
 			},
+			files: {
+				options: { livereload: true },
+				files: [
+					'app/**',
+					'!app/**/_partials/**',
+					'!app/**/scripts/**',
+					'!app/**/styles/**',
+					'!app/img/**/*.{jpg,png,gif}',
+					'!app/**/*.html'
+				],
+				tasks: ['copy', 'notify:copy']
+			},
 			html: {
 				options: { livereload: true },
 				files: ['app/**/*.html'],
@@ -325,7 +338,7 @@ module.exports = function(grunt) {
 			},
 			php: {
 				options: { livereload: true },
-				files: ['dist/**/*.php']
+				files: ['app/**/*.php']
 			},
 			css: {
 				options: { livereload: true },
@@ -334,7 +347,7 @@ module.exports = function(grunt) {
 			sass: {
 				options: { livereload: false },
 				files: ['app/styles/**/*.{scss,sass}'],
-				tasks: ['sass', 'notify:sass', 'postcss', 'notify:postcss', 'styledocco', 'notify:styledocco']
+				tasks: ['sass', 'notify:sass', 'postcss', 'notify:postcss']
 			},
 			js: {
 				options: { livereload: true },
