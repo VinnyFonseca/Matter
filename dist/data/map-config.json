@@ -1,0 +1,51 @@
+{
+	"Options" : [
+		{
+			"Zoom" : 10,
+			"CenterLat" : 51.5071911,
+			"CenterLng" : -0.1076299
+		}
+	],
+	"Markers": [
+		{
+			"Title" : "Purestone TFM",
+			"Desc" : "Award winning digital communications agency.",
+			"Tel" : "0203735546dwadwdaw02222",
+			"Email" : "info@purestone.co.uk",
+			"Url" : "http://www.purestone.co.uk",
+			"Lat" : 51.5071911,
+			"Lng" : -0.1076299,
+			"Marker" : "img/markers/default.png"
+		},
+		{
+			"Title" : "Purestone TFM",
+			"Desc" : "Award winning digital communications agency.",
+			"Tel" : "0203735dddddd54602222",
+			"Email" : "info@purestone.co.uk",
+			"Url" : "http://www.purestone.co.uk",
+			"Lat" : 53.5071922,
+			"Lng" : -0.1076299,
+			"Marker" : "img/markers/default.png"
+		},
+		{
+			"Title" : "Purestone TFM",
+			"Desc" : "Award winning digital communications agency.",
+			"Tel" : "0203735dddddd54602222",
+			"Email" : "info@purestone.co.uk",
+			"Url" : "http://www.purestone.co.uk",
+			"Lat" : 53.5071922,
+			"Lng" : -2.1076299,
+			"Marker" : "img/markers/default.png"
+		},
+		{
+			"Title" : "Purestone TFM",
+			"Desc" : "Award winning digital communications agency.",
+			"Tel" : "0203735dddddd54602222",
+			"Email" : "info@purestone.co.uk",
+			"Url" : "http://www.purestone.co.uk",
+			"Lat" : 53.5071922,
+			"Lng" : -6.1076299,
+			"Marker" : "img/markers/default.png"
+		}
+	]
+}

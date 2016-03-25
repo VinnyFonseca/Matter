@@ -47,12 +47,12 @@
 
 // Third Party
 
-// Put your external plugins' .scss here, so you can override them with a custom stylesheet, as below
+// Put your external plugins' .scss here, so you can override them with a user stylesheet, as below
 
 
 
 // Dev
 
-@import "custom/global";
-@import "custom/index";
-@import "custom/documentation";
+@import "user/global";
+@import "user/index";
+@import "user/documentation";

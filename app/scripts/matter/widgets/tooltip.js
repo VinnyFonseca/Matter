@@ -38,8 +38,8 @@ matter.tooltip = {
 		}
 	},
 	bind: function() {
-		var element = matter.dimensions(".tooltip");
-		var target = matter.dimensions(matter.config.tooltip.bound.element);
+		var element = matter.measure(".tooltip");
+		var target = matter.measure(matter.config.tooltip.bound.element);
 
 		if ( matter.config.tooltip.bound.active ) {
 			if ( element.left <= target.left ) {
@@ -51,7 +51,7 @@ matter.tooltip = {
 		}
 	},
 	position: function(event) {
-		var element = matter.dimensions(".tooltip");
+		var element = matter.measure(".tooltip");
 		matter.tooltip.bind();
 
 		var cursorX = event.pageX || event.originalEvent.touches[0].pageX,

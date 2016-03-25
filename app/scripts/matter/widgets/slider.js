@@ -34,7 +34,7 @@ matter.slider = function(id) {
 }
 
 matter.slider.prototype.init = function(id) {
-	var $this = this;
+	var self = this;
 
 	this.id = id;
 	this.element = {};
@@ -42,36 +42,36 @@ matter.slider.prototype.init = function(id) {
 
 	this.has = {
 		arrows: function() {
-			if ( !!$this.element.slider.attr("data-arrows") ) {
-				return $this.element.slider.data("arrows"); // .data() returns boolean
+			if ( !!self.element.slider.attr("data-arrows") ) {
+				return self.element.slider.data("arrows"); // .data() returns boolean
 			} else {
 				return matter.config.slider.arrows; // already a boolean
 			}
 		},
 		nav: function() {
-			if ( !!$this.element.slider.attr("data-nav") ) {
-				return $this.element.slider.data("nav"); // .data() returns boolean
+			if ( !!self.element.slider.attr("data-nav") ) {
+				return self.element.slider.data("nav"); // .data() returns boolean
 			} else {
 				return matter.config.slider.nav; // already a boolean
 			}
 		},
 		thumbnails: function() {
-			if ( !!$this.element.slider.attr("data-thumbnails") ) {
-				return $this.element.slider.data("thumbnails"); // .data() returns boolean
+			if ( !!self.element.slider.attr("data-thumbnails") ) {
+				return self.element.slider.data("thumbnails"); // .data() returns boolean
 			} else {
 				return matter.config.slider.thumbnails; // already a boolean
 			}
 		},
 		multiple: function() {
-			if ( !!$this.element.slider.attr("data-display") ) {
-				return $this.element.slider.data("display"); // .data() returns integer
+			if ( !!self.element.slider.attr("data-display") ) {
+				return self.element.slider.data("display"); // .data() returns integer
 			} else {
 				return matter.config.slider.display; // already an integer
 			}
 		},
 		slideshow: function() {
-			if ( !!$this.element.slider.attr("data-slideshow") ) {
-				return $this.element.slider.data("slideshow"); // .data() returns boolean
+			if ( !!self.element.slider.attr("data-slideshow") ) {
+				return self.element.slider.data("slideshow"); // .data() returns boolean
 			} else {
 				return matter.config.slider.slideshow; // already a boolean
 			}
@@ -99,16 +99,16 @@ matter.slider.prototype.init = function(id) {
 	this.width = {
 		value: 0,
 		calculate: function() {
-			this.value = $this.element.slide.eq($this.current).outerWidth(true);
+			this.value = self.element.slide.eq(self.current).outerWidth(true);
 		}
 	};
 	this.height = {
 		value: 0,
 		calculate: function() {
 			this.value = 0;
-			for (var i = 0; i < $this.count; i++) {
-				if ( $this.element.slide.eq(i).outerHeight(true) > this.value ) {
-					this.value = $this.element.slide.eq(i).outerHeight(true);
+			for (var i = 0; i < self.count; i++) {
+				if ( self.element.slide.eq(i).outerHeight(true) > this.value ) {
+					this.value = self.element.slide.eq(i).outerHeight(true);
 				}
 			}
 		}
@@ -127,17 +127,17 @@ matter.slider.prototype.init = function(id) {
 	this.position();
 
 	$(window).on("resize", function() {
-		$this.move(0);
+		self.move(0);
 	});
 	this.move(0);
 
-	this.speed = !!$this.element.slider.attr("data-duration") ? $this.element.slider.data("duration") : matter.config.slider.duration;
+	this.speed = !!self.element.slider.attr("data-duration") ? self.element.slider.data("duration") : matter.config.slider.duration;
 	this.duration = this.speed;
 	this.kick = this.duration / 4;
 
 	this.stopped = false;
 	this.animating = false;
-	this.interval = !!$this.element.slider.attr("data-interval") ? $this.element.slider.data("interval") : matter.config.slider.interval;
+	this.interval = !!self.element.slider.attr("data-interval") ? self.element.slider.data("interval") : matter.config.slider.interval;
 
 	this.slideshow();
 }
@@ -157,7 +157,7 @@ matter.slider.prototype.position = function() {
 // Actions
 
 matter.slider.prototype.move = function(i) {
-	var $this = this;
+	var self = this;
 
 	this.animating = true;
 	this.width.calculate();
@@ -175,7 +175,7 @@ matter.slider.prototype.move = function(i) {
 		}, {
 			duration: this.duration,
 			complete: function() {
-				$this.end();
+				self.end();
 			}
 		});
 
@@ -236,18 +236,18 @@ matter.slider.prototype.end = function() {
 }
 
 matter.slider.prototype.kickback = function() {
-	var $this = this;
+	var self = this;
 
 	this.duration = this.kick;
 
 	setTimeout(function() {
-		if ( $this.cloned ) {
-			$this.direction = "prev";
+		if ( self.cloned ) {
+			self.direction = "prev";
 
-			$this.element.slider.find('.slide:first-child').appendTo($this.element.movable);
-			$this.element.movable.css({ 'margin-left': 0 });
+			self.element.slider.find('.slide:first-child').appendTo(self.element.movable);
+			self.element.movable.css({ 'margin-left': 0 });
 
-			$this.cloned = false;
+			self.cloned = false;
 		}
 	}, this.duration);
 
@@ -276,26 +276,26 @@ matter.slider.prototype.cloning = function() {
 // Slideshow
 
 matter.slider.prototype.slideshow = function() {
-	var $this = this;
+	var self = this;
 
 	if ( this.multi && this.has.slideshow() ) {
 		this.start();
 
 		if ( !matter.config.application.touch ) {
 			this.element.container.on('mouseenter touchstart touchenter', function() {
-				$this.stop();
+				self.stop();
 			});
 			this.element.container.on('mouseleave touchend touchleave touchcancel', function() {
-				$this.start();
+				self.start();
 			});
 		} else {
 			this.element.movable.on('click', function() {
-				$this.stop();
+				self.stop();
 			});
 
 			$("html").on('click', function(event) {
-				if ( !$(event.target).closest(this.element.container).length && $this.element.movable.hasClass("stopped") ) {
-					$this.start();
+				if ( !$(event.target).closest(this.element.container).length && self.element.movable.hasClass("stopped") ) {
+					self.start();
 				}
 			});
 		}
@@ -303,11 +303,11 @@ matter.slider.prototype.slideshow = function() {
 }
 
 matter.slider.prototype.start = function() {
-	var $this = this;
+	var self = this;
 
 	this.element.movable.removeClass("stopped");
 	this.timer = setInterval(function() {
-		$this.next();
+		self.next();
 	}, this.interval);
 }
 
@@ -327,7 +327,7 @@ matter.slider.prototype.controls = function() {
 }
 
 matter.slider.prototype.arrows = function() {
-	var $this = this;
+	var self = this;
 
 	if ( this.has.arrows() ) {
 		var prev = '<div class="slider-arrow slider-arrow-prev valign-middle">\
@@ -342,13 +342,13 @@ matter.slider.prototype.arrows = function() {
 		matter.svg.init();
 
 		this.element.slider.children('.slider-arrow').height(this.height.value).on('click', function() {
-			$this.clone = true;
+			self.clone = true;
 		});
 		this.element.slider.children('.slider-arrow-prev').on('click', function() {
-			$this.prev();
+			self.prev();
 		});
 		this.element.slider.children('.slider-arrow-next').on('click', function() {
-			$this.next();
+			self.next();
 		});
 
 		if ( this.multi ) this.element.slider.addClass("arrows");
@@ -356,7 +356,7 @@ matter.slider.prototype.arrows = function() {
 }
 
 matter.slider.prototype.bullets = function() {
-	var $this = this;
+	var self = this;
 
 	if ( this.has.nav() ) {
 		var navEl = '<div class="slider-nav"></div>';
@@ -385,10 +385,10 @@ matter.slider.prototype.bullets = function() {
 	}
 
 	this.element.bullet = function() {
-		if ( $this.has.nav() ) {
-			return $this.element.slider.find('.slider-bullet');
+		if ( self.has.nav() ) {
+			return self.element.slider.find('.slider-bullet');
 		} else {
-			return $this.element.slider.find('.bullet');
+			return self.element.slider.find('.bullet');
 		}
 	}
 
@@ -398,15 +398,15 @@ matter.slider.prototype.bullets = function() {
 	}
 
 	this.element.bullet().on('click', function() {
-		$this.clone = true;
-		$this.any($(this).index());
+		self.clone = true;
+		self.any($(this).index());
 	});
 
 	if ( this.multi ) this.element.slider.addClass("bullets");
 }
 
 matter.slider.prototype.keyboard = function() {
-	var $this = this;
+	var self = this;
 
 	document.onkeydown = function(event) {
 		if ( this.multi ) {
@@ -414,11 +414,11 @@ matter.slider.prototype.keyboard = function() {
 
 			switch(event.which || event.keyCode) {
 				case 39: // right
-					$this.next();
+					self.next();
 					break;
 
 				case 37: // left
-					$this.prev();
+					self.prev();
 					break;
 
 				default: return; // exit this handler for other keys
@@ -429,7 +429,7 @@ matter.slider.prototype.keyboard = function() {
 
 matter.slider.prototype.drag = function() {
 	// if ( matter.config.application.touch ) {
-		var $this = this;
+		var self = this;
 		this.cloned = false;
 
 		this.touch = {
@@ -446,10 +446,10 @@ matter.slider.prototype.drag = function() {
 				trigger: this.width.value / 4,
 				distance: function() {
 					return {
-						up: $this.touch.first.y - this.y,
-						down: this.y - $this.touch.first.y,
-						left: $this.touch.first.x - this.x,
-						right: this.x - $this.touch.first.x
+						up: self.touch.first.y - this.y,
+						down: this.y - self.touch.first.y,
+						left: self.touch.first.x - this.x,
+						right: this.x - self.touch.first.x
 					}
 				},
 				active: function() {
@@ -461,7 +461,7 @@ matter.slider.prototype.drag = function() {
 					);
 				},
 				boundaries: function() {
-					var container = matter.dimensions($this.element.container);
+					var container = matter.measure(self.element.container);
 
 					return {
 						top: container.top + this.tolerance,
@@ -476,24 +476,24 @@ matter.slider.prototype.drag = function() {
 						this.y >= this.boundaries().bottom ||
 						this.x <= this.boundaries().left ||
 						this.x >= this.boundaries().right ||
-						this.distance().left >= $this.step + this.tolerance ||
-						this.distance().right >= $this.step + this.tolerance
+						this.distance().left >= self.step + this.tolerance ||
+						this.distance().right >= self.step + this.tolerance
 					);
 				},
 				end: function() {
 					if ( this.active() ) {
 						if ( this.distance().left > this.trigger ) {
-							$this.next();
+							self.next();
 						} else if ( this.distance().right > this.trigger ) {
-							$this.prev();
+							self.prev();
 						} else {
-							$this.kickback();
+							self.kickback();
 						}
 					}
 
-					$this.touch.down = false;
-					$this.touch.first.x = 0;
-					$this.touch.first.y = 0;
+					self.touch.down = false;
+					self.touch.first.x = 0;
+					self.touch.first.y = 0;
 					this.x = 0;
 					this.y = 0;
 					this.distance();
@@ -506,49 +506,49 @@ matter.slider.prototype.drag = function() {
 
 			console.log(event, event.touches);
 
-			if ( !$this.animating && $this.multi ) {
-				$this.touch.first.x = event.pageX || event.originalEvent.touches[0].pageX;
-				$this.touch.first.y = event.pageY || event.originalEvent.touches[0].pageY;
-				$this.touch.drag.x = $this.touch.first.x;
-				$this.touch.drag.y = $this.touch.first.y;
+			if ( !self.animating && self.multi ) {
+				self.touch.first.x = event.pageX || event.originalEvent.touches[0].pageX;
+				self.touch.first.y = event.pageY || event.originalEvent.touches[0].pageY;
+				self.touch.drag.x = self.touch.first.x;
+				self.touch.drag.y = self.touch.first.y;
 
-				$this.touch.down = true;
+				self.touch.down = true;
 			}
 		})
 		.on("mousemove touchmove", function(event) {
-			if ( !$this.animating && $this.touch.down ) {
-				$this.touch.drag.x = event.pageX || event.originalEvent.touches[0].pageX;
-				$this.touch.drag.y = event.pageY || event.originalEvent.touches[0].pageY;
+			if ( !self.animating && self.touch.down ) {
+				self.touch.drag.x = event.pageX || event.originalEvent.touches[0].pageX;
+				self.touch.drag.y = event.pageY || event.originalEvent.touches[0].pageY;
 
-				if ( $this.touch.drag.active() ) {
+				if ( self.touch.drag.active() ) {
 					// if ( !matter.config.application.touch ) event.preventDefault();
 
-					if ( $this.touch.drag.x > $this.touch.first.x ) {
-						if ( !$this.cloned ) {
-							$this.direction = "prev";
-							$this.element.slider.find('.slide:last-child').prependTo($this.element.movable);
-							$this.element.movable.css({ 'margin-left': - $this.width.value });
-							$this.cloned = true;
+					if ( self.touch.drag.x > self.touch.first.x ) {
+						if ( !self.cloned ) {
+							self.direction = "prev";
+							self.element.slider.find('.slide:last-child').prependTo(self.element.movable);
+							self.element.movable.css({ 'margin-left': - self.width.value });
+							self.cloned = true;
 						}
 					}
-					if ( $this.touch.drag.x < $this.touch.first.x ) {
-						$this.clone = true;
+					if ( self.touch.drag.x < self.touch.first.x ) {
+						self.clone = true;
 
-						if ( $this.cloned ) {
-							$this.direction = "next";
-							$this.element.slider.find('.slide:first-child').appendTo($this.element.movable);
-							$this.element.movable.css({ 'margin-left': 0 });
-							$this.cloned = false;
+						if ( self.cloned ) {
+							self.direction = "next";
+							self.element.slider.find('.slide:first-child').appendTo(self.element.movable);
+							self.element.movable.css({ 'margin-left': 0 });
+							self.cloned = false;
 						}
 					}
 
-					$this.element.movable.css({
-						'left': - $this.touch.drag.distance().left
+					self.element.movable.css({
+						'left': - self.touch.drag.distance().left
 					});
 
-					if ( $this.touch.drag.limit() ) {
-						$this.duration = $this.kick;
-						$this.touch.drag.end();
+					if ( self.touch.drag.limit() ) {
+						self.duration = self.kick;
+						self.touch.drag.end();
 					}
 				}
 			}
@@ -556,7 +556,7 @@ matter.slider.prototype.drag = function() {
 		.on("mouseup mouseleave touchend touchcancel", function(event) {
 			// if ( !matter.config.application.touch ) event.preventDefault();
 
-			$this.touch.drag.end();
+			self.touch.drag.end();
 		});
 	// }
 }

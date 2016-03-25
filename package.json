@@ -13,6 +13,8 @@
   "devDependencies": {
     "grunt": "*",
     "grunt-cli": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-copy": "*",
     "grunt-notify": "*",
     "grunt-ssi": "*",
     "grunt-sass": "*",
@@ -23,6 +25,7 @@
     "grunt-styledocco": "*",
     "grunt-contrib-jshint": "*",
     "jshint-stylish": "*",
+    "grunt-contrib-imagemin": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
     "grunt-browser-sync": "*"
