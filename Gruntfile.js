@@ -375,6 +375,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
+	grunt.loadNpmTasks('grunt-openport');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-browser-sync');
 
@@ -402,6 +403,7 @@ module.exports = function(grunt) {
 		'notify:imagemin',
 		'browserSync',
 		'notify:browserSync',
+		'openport:watch.options.livereload:35729:40000',
 		'watch',
 		'notify:watch'
 	]);
