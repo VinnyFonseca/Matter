@@ -428,7 +428,7 @@ matter.slider.prototype.keyboard = function() {
 }
 
 matter.slider.prototype.drag = function() {
-	// if ( matter.config.application.touch ) {
+	if ( matter.config.application.touch ) {
 		var self = this;
 		this.cloned = false;
 
@@ -558,5 +558,5 @@ matter.slider.prototype.drag = function() {
 
 			self.touch.drag.end();
 		});
-	// }
+	}
 }

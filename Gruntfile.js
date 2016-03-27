@@ -96,7 +96,7 @@ module.exports = function(grunt) {
 					cwd: 'app',
 					src: [
 						'**',
-						'!**/_partials/**',
+						'!**/markup/**',
 						'!**/scripts/**',
 						'!**/styles/**',
 						'!img/**/*.{jpg,png,gif}',
@@ -115,12 +115,12 @@ module.exports = function(grunt) {
 			options: {
 				cache: 'all',
 				cacheDir: '.ssi',
-				baseDir: 'app'
+				baseDir: 'app/markup'
 			},
 			main: {
 				files: [{
 					expand: true,
-					cwd: 'app',
+					cwd: 'app/markup',
 					src: [
 						'**/*.html',
 						'!_partials/**/*.html'
