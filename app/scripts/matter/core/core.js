@@ -65,7 +65,7 @@ matter.defer = function() {
 	initMap();
 	initVideo();
 
-	if ( matter.config.application.debug ) console.log("Done •• Matter in " + (new Date().getTime() - ms) + " milliseconds");
+	if ( config.application.debug ) console.log("•• Matter in " + (new Date().getTime() - ms) + " milliseconds");
 }
 
 

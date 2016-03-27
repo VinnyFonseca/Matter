@@ -22,7 +22,7 @@ var initForm = function() {
 			matter.data.get(url, buildTitles);
 		});
 
-		if ( matter.config.application.debug ) console.log("Form :: Title Dropdowns");
+		if ( config.application.debug ) console.log(":: Title Dropdowns");
 	}
 
 	if ( $("select[data-countries]").length ) {
@@ -45,7 +45,7 @@ var initForm = function() {
 			matter.data.get(url, buildCountries);
 		});
 
-		if ( matter.config.application.debug ) console.log("Form :: Country Dropdowns");
+		if ( config.application.debug ) console.log(":: Country Dropdowns");
 	}
 
 
@@ -95,7 +95,7 @@ var initForm = function() {
 			});
 		});
 
-		if ( matter.config.application.debug ) console.log("Form :: File Upload");
+		if ( config.application.debug ) console.log(":: File Upload");
 	}
 
 	// Multiple Upload
@@ -149,7 +149,7 @@ var initForm = function() {
 		}
 		initFileInputs();
 
-		if ( matter.config.application.debug ) console.log("Form :: Multiple File Upload");
+		if ( config.application.debug ) console.log(":: Multiple File Upload");
 	}
 
 
@@ -179,13 +179,13 @@ var initForm = function() {
 				parent = el.parents(".controller");
 				parent.next("label").prepend(toggle).appendTo(parent);
 
-				if ( matter.config.application.debug ) console.log("Form :: Toggle " + type.toCamelCase());
+				if ( config.application.debug ) console.log(":: Toggle " + type.toCamelCase());
 			} else {
 				el.wrap("<div class='controller " + type + "'></div>");
 				parent = el.parents(".controller");
 				parent.next("label").appendTo(parent);
 
-				if ( matter.config.application.debug ) console.log("Form :: " + type.toCamelCase());
+				if ( config.application.debug ) console.log(":: " + type.toCamelCase());
 			}
 		});
 	}
@@ -207,7 +207,7 @@ var initForm = function() {
 			}
 		});
 
-		if ( matter.config.application.debug ) console.log("Form :: Password Meters");
+		if ( config.application.debug ) console.log(":: Password Meters");
 	}
 }
 
@@ -319,7 +319,7 @@ var initDropdowns = function() {
 			});
 		});
 
-		if ( matter.config.application.debug ) console.log("Form :: Dropdowns");
+		if ( config.application.debug ) console.log(":: Dropdowns");
 
 		matter.svg.init();
 	}

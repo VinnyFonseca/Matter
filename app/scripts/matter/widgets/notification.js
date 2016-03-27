@@ -72,7 +72,7 @@ var notify = function(title, message, delay, tone) {
 
 		notificationCount++;
 
-		if ( matter.config.application.debug ) console.log("Trigger :: Notification | Delay: " + delay);
+		if ( config.application.debug ) console.log(":: Notification | Delay: " + delay);
 	}
 
 	if ( matter.config.notification.active ) {
@@ -93,6 +93,6 @@ var initNotifications = function() {
 			notify(title, message, delay, tone);
 		});
 
-		if ( matter.config.application.debug ) console.log("Widget :: Notifications");
+		if ( config.application.debug ) console.log(":: Notifications");
 	}
 }

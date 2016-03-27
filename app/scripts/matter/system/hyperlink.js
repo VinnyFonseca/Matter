@@ -10,7 +10,7 @@ matter.anchor = {
 			var link = $.attr(this, "href");
 
 			if ( link === "#" ) {
-				if ( matter.config.application.debug ) console.log("System :: Link blocked");
+				if ( config.application.debug ) console.log(":: Link blocked");
 			} else {
 				if ( !!link && !el.hasClass("step-trigger") ) {
 					matter.anchor.clicked = true;
@@ -30,6 +30,6 @@ matter.anchor = {
 			}
 		});
 
-		if ( matter.config.application.debug ) console.log("System :: Anchors");
+		if ( config.application.debug ) console.log(":: Anchors");
 	}
 }

@@ -32,7 +32,7 @@ matter.konami = {
 				}
 
 				if ( userString.indexOf(konamiString) != -1 ) {
-					console.log("Easter Egg :: Konami!");
+					if ( config.application.debug ) console.log(":: Konami!");
 					resetKonami();
 					buildKonami();
 
@@ -47,6 +47,6 @@ matter.konami = {
 
 		$(document).on("keyup", callKonami);
 
-		if ( matter.config.application.debug ) console.log("Widget :: Konami");
+		if ( config.application.debug ) console.log(":: Konami");
 	}
 }

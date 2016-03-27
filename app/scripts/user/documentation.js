@@ -65,7 +65,7 @@ $(document).ready(function() {
 
 		if ( percentage >= 7 ) counter.addClass("active");
 
-		if ( matter.config.application.debug ) console.log("Progress :: " + percentage + "%");
+		if ( config.application.debug ) console.log(":: " + percentage + "%");
 	}
 
 	$("[data-progress]").on("click", function(event) {

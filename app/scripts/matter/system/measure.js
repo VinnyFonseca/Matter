@@ -49,6 +49,6 @@ matter.measure = function(element) {
 
 		return object;
 	} else {
-		console.log("System :: " + element + " does not exist (yet)");
+		if ( config.application.debug ) console.log(":: " + element + " does not exist (yet)");
 	}
 }

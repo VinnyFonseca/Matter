@@ -27,7 +27,7 @@ matter.tagcloud = {
 				self.controls(el);
 			});
 
-			if ( matter.config.application.debug ) console.log("Search :: Tag Cloud");
+			if ( config.application.debug ) console.log(":: Tag Cloud");
 		}
 	},
 	update: function(el) {

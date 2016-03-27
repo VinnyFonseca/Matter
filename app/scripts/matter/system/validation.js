@@ -86,7 +86,7 @@ var initValidation = function() {
 		// Validation function called on keyup
 
 		var validateField = function(el, type, value) {
-			if ( matter.config.application.debug ) console.log("Validation :: " + type);
+			if ( config.application.debug ) console.log(":: " + type);
 
 			el.removeClass("invalid").removeClass("valid");
 
@@ -286,7 +286,7 @@ var initValidation = function() {
 		}
 
 		var validateRealtime = function(el, type, value) {
-			console.log("Validating keypress for " + type);
+			if ( matter.config.application.debug ) console.log("Validating keypress for " + type);
 
 			switch(type) {
 				case "password":
@@ -367,11 +367,12 @@ var initValidation = function() {
 					form.find(".form-loader").show();
 
 					event.preventDefault();
+					event.stopImmediatePropagation();
 					validateField(form, type, value);
 				}
 			});
 		});
 
-		if ( matter.config.application.debug ) console.log("Form :: Validation");
+		if ( config.application.debug ) console.log(":: Validation");
 	}
 }

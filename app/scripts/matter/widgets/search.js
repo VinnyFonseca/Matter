@@ -371,7 +371,7 @@ var initSearch = function() {
 						finalArray = allArray;
 					}
 
-					if ( matter.config.application.debug ) console.log("Search == " + finalArray.length + " items");
+					if ( config.application.debug ) console.log("== " + finalArray.length + " items");
 
 
 					// Rebuild results
@@ -590,6 +590,6 @@ var initSearch = function() {
 			matter.data.get(url, buildSystem);
 		});
 
-		if ( matter.config.application.debug ) console.log("Search :: Unified Search");
+		if ( config.application.debug ) console.log(":: Unified Search");
 	}
 }

@@ -2,7 +2,7 @@
 
 matter.cookie = {
 	init: function() {
-		if ( matter.config.application.debug ) console.log("System :: Cookie System");
+		if ( config.application.debug ) console.log(":: Cookie System");
 	},
 	has: function(sKey) {
 		return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);

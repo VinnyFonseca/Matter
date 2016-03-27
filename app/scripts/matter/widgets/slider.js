@@ -21,7 +21,7 @@ matter.sliders = {
 			}, 250 * i);
 
 			$(this).find('.slide').css({ 'visibility': 'visible' });
-			if ( matter.config.application.debug ) console.log("Widget :: Slider Init: " + id);
+			if ( config.application.debug ) console.log(":: Slider Init: " + id);
 		});
 	}
 }
@@ -504,7 +504,7 @@ matter.slider.prototype.drag = function() {
 		this.element.container.on("mousedown touchstart", function(event) {
 			// if ( !matter.config.application.touch ) event.preventDefault();
 
-			console.log(event, event.touches);
+			if ( matter.config.application.debug ) console.log(event, event.touches);
 
 			if ( !self.animating && self.multi ) {
 				self.touch.first.x = event.pageX || event.originalEvent.touches[0].pageX;

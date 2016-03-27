@@ -21,7 +21,7 @@ matter.session = {
 		else if (window.attachEvent) window.attachEvent("onunload", matter.session.save);
 		else window.onunload = matter.session.save;
 
-		if ( matter.config.application.debug ) console.log("System :: Session System");
+		if ( config.application.debug ) console.log(":: Session System");
 	},
 	set: function(name, value) {
 		store[name] = value;

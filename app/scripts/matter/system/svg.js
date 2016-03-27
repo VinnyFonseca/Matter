@@ -30,7 +30,7 @@ matter.svg = {
 				}
 			});
 
-			if ( matter.config.application.debug ) console.log("System :: SVG Injection @ " + svgCount + " images");
+			if ( config.application.debug ) console.log(":: SVG Injection @ " + svgCount + " images");
 		}
 	}
 }
