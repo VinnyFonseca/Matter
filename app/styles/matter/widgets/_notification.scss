@@ -7,7 +7,7 @@
 	width: 300px;
 	top: 0;
 	right: 0;
-	z-index: 140;
+	z-index: 1000;
 
 	&.cookie {
 		position: relative;
@@ -62,9 +62,9 @@
 
 .notification {
 	display: block;
-	position: relative;
+	position: absolute;
 	margin: 0 0 5px 0;
-	padding: floor($spacing / 1.5) floor($spacing / 1.5);
+	padding: $spacing;
 	padding-left: floor($spacing * 1.25) + 16;
 	width: 100%;
 	top: 0;

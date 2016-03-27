@@ -11,21 +11,10 @@ $(document).ready(function() {
 
 	// Nav
 
-	var page,
-		url = location.href.split('?')[0],
-		section = url.split("/"),
-		nav = $("nav"),
-		scrolling = false;
-
-	nav.children("a").removeClass("active");
-
-	for ( var i = 0; i < section.length; i++ ) page = section[section.length - 1].split(".")[0];
-	var navActive = page.length ? nav.children("a[href*=" + page + "]").addClass("active") : nav.children("a").eq(0).addClass("active");
-
 	$(".nav-trigger").on("click", function() {
 		$("header").toggleClass("active");
 	});
-	$(".nav-close").on("click", function() {
+	$(".nav-item").on("click", function() {
 		$("header").removeClass("active");
 	});
 	$("html, body").on("click", function(event) {
