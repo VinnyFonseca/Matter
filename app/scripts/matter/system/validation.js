@@ -262,8 +262,8 @@ var initValidation = function() {
 					if ( validArray.indexOf(false) < 0 ) {
 						el.addClass("submitted").addClass("valid");
 
-						el.find("input, select, textarea").attr("readonly", "readonly");
-						el.find("button, input[type='submit']").attr("readonly", "readonly");
+						el.find("input, select, textarea").prop("readonly", true);
+						el.find("button, input[type='submit']").prop("readonly", true);
 
 						initDropdowns();
 
