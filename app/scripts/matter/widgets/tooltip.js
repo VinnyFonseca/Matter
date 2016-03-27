@@ -34,7 +34,7 @@ matter.tooltip = {
 				}
 			});
 
-			if ( config.application.debug ) console.log(":: Tooltips");
+			if ( matter.config.application.debug ) console.log(":: Tooltips");
 		}
 	},
 	bind: function() {

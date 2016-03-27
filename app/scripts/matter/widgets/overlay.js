@@ -24,7 +24,7 @@ matter.overlay = {
 				});
 			});
 
-			if ( config.application.debug ) console.log(":: Overlays");
+			if ( matter.config.application.debug ) console.log(":: Overlays");
 		}
 	},
 	open: function(element) {

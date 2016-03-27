@@ -86,7 +86,7 @@ var initValidation = function() {
 		// Validation function called on keyup
 
 		var validateField = function(el, type, value) {
-			if ( config.application.debug ) console.log(":: " + type);
+			if ( matter.config.application.debug ) console.log(":: " + type);
 
 			el.removeClass("invalid").removeClass("valid");
 
@@ -373,6 +373,6 @@ var initValidation = function() {
 			});
 		});
 
-		if ( config.application.debug ) console.log(":: Validation");
+		if ( matter.config.application.debug ) console.log(":: Validation");
 	}
 }

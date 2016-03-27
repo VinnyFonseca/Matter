@@ -342,5 +342,5 @@ var initVideo = function() {
 	vimFramePlayers();
 	vimVideoPlayers();
 
-	if ( config.application.debug ) console.log(":: Videos");
+	if ( matter.config.application.debug ) console.log(":: Videos");
 }

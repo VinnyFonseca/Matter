@@ -21,7 +21,7 @@ matter.sliders = {
 			}, 250 * i);
 
 			$(this).find('.slide').css({ 'visibility': 'visible' });
-			if ( config.application.debug ) console.log(":: Slider Init: " + id);
+			if ( matter.config.application.debug ) console.log(":: Slider Init: " + id);
 		});
 	}
 }

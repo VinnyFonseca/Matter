@@ -322,6 +322,6 @@ var initAutocomplete = function() {
 			matter.data.get(url, build);
 		});
 
-		if ( config.application.debug ) console.log(":: Autocomplete");
+		if ( matter.config.application.debug ) console.log(":: Autocomplete");
 	}
 }
