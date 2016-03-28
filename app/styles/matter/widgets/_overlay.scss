@@ -25,7 +25,7 @@
 		}
 	}
 
-	$closeSize: 36px;
+	$closeSize: 42px;
 
 	.modal {
 		position: relative;
@@ -40,15 +40,19 @@
 		z-index: 9100;
 		transition: opacity 0.5s $easing;
 
+		h1, h2, h3, h4, h5, h6 {
+			padding-top: 0;
+		}
+
 		.close {
 			display: block;
 			position: absolute;
 			margin: 0;
 			padding: 0;
-			width: $closeSize;
-			height: $closeSize;
-			top: floor(-$closeSize / 2);
-			right: floor(-$closeSize / 2);
+			width: ($closeSize - 10);
+			height: ($closeSize - 10);
+			top: floor(-($closeSize - 10) / 2);
+			right: floor(-($closeSize - 10) / 2);
 			border-radius: 1000px;
 			background-color: $color1;
 			cursor: pointer;

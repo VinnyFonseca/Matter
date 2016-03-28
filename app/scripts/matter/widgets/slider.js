@@ -361,6 +361,7 @@ matter.slider.prototype.bullets = function() {
 	if ( this.has.nav() ) {
 		var navEl = '<div class="slider-nav"></div>';
 		this.element.slider.append(navEl);
+		if ( this.multi ) this.element.slider.addClass("bullets");
 	}
 
 	for ( var i = 0; i < this.count; i++ ) {
@@ -401,8 +402,6 @@ matter.slider.prototype.bullets = function() {
 		self.clone = true;
 		self.any($(this).index());
 	});
-
-	if ( this.multi ) this.element.slider.addClass("bullets");
 }
 
 matter.slider.prototype.keyboard = function() {

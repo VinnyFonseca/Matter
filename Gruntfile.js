@@ -260,10 +260,24 @@ module.exports = function(grunt) {
 						'app/scripts/matter/system/**/*.js',
 						'app/scripts/matter/core/**/*.js',
 						'app/scripts/user/**/*.js'
-					],
-					'dist/scripts/debug/bookmark.js': 'app/scripts/debug/bookmark.js',
-					'dist/scripts/debug/breakpoint.js': 'app/scripts/debug/breakpoint.js'
+					]
 				}
+			},
+			debug: {
+				files: [{
+					expand: true,
+					cwd: 'app/scripts/debug',
+					src: '**/*.js',
+					dest: 'dist/scripts/debug'
+				}]
+			},
+			standalone: {
+				files: [{
+					expand: true,
+					cwd: 'app/scripts',
+					src: '*.js',
+					dest: 'dist/scripts'
+				}]
 			}
 		},
 

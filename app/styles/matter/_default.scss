@@ -200,20 +200,7 @@ $progressHeight: 42px;
 
 // Responsive
 
-@media screen and (min-width: $scrTablL + 1) { // Greater than Tablet Large
-
-	body:before {
-		content: "desktop";
-	}
-
-	.desktop-hide {
-		display: none !important;
-	}
-
-}
-
-
-@media screen and (max-width: $scrDeskL) {
+@media screen and (max-width: $scrDeskL) { // Max
 
 	.wrapper {
 		width: 100%;
@@ -221,8 +208,21 @@ $progressHeight: 42px;
 
 }
 
+@media screen and (min-width: $scrTablL) { // Min
 
-@media screen and (max-width: $scrTablL) {
+	body:before {
+		content: "desktop";
+	}
+
+	.tablet-show,
+	.desktop-hide {
+		display: none !important;
+	}
+
+}
+
+
+@media screen and (max-width: $scrTablL) { // Max
 
 	body:before {
 		content: "tablet";
@@ -235,7 +235,7 @@ $progressHeight: 42px;
 }
 
 
-@media screen and (max-width: $scrTablS) {
+@media screen and (max-width: $scrTablS) { // Max
 
 	html {
 		background-color: $bodyBgColor;
@@ -244,7 +244,16 @@ $progressHeight: 42px;
 }
 
 
-@media screen and (max-width: $scrMoblL) {
+@media screen and (min-width: $scrMoblL) { // Min
+
+	.mobile-show {
+		display: none !important;
+	}
+
+}
+
+
+@media screen and (max-width: $scrMoblL) { // Max
 
 	body:before {
 		content: "mobile";
@@ -257,7 +266,7 @@ $progressHeight: 42px;
 }
 
 
-@media screen and (max-width: $scrMoblS) {
+@media screen and (max-width: $scrMoblS) { // Max
 
 	html {
 		background-color: $bodyBgColor;
