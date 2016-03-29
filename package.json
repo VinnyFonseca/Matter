@@ -26,7 +26,6 @@
     "grunt-postcss": "*",
     "grunt-sass": "*",
     "grunt-ssi": "*",
-    "grunt-styledocco": "*",
     "jshint-stylish": "*",
     "pixrem": "*",
     "rucksack-css": "*"

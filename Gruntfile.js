@@ -184,23 +184,6 @@ module.exports = function(grunt) {
 		},
 
 
-		// Config for styledocco (CSS style guides automatic generation)
-
-		styledocco: {
-			main: {
-				options: {
-					name: 'Matter',
-					cmd: './node_modules/.bin/styledocco',
-					preprocessor: 'sass'
-				},
-				files: {
-					'dist/styles/guide': 'app/styles'
-				}
-			}
-		},
-
-
-
 		// Config for grunt-contrib-uglify (javascript concatenation)
 
 		uglify: {
@@ -389,7 +372,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-ssi');
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-postcss');
-	grunt.loadNpmTasks('grunt-styledocco');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
@@ -411,8 +393,6 @@ module.exports = function(grunt) {
 		'notify:sass',
 		'postcss',
 		'notify:postcss',
-		'styledocco',
-		'notify:styledocco',
 		'uglify',
 		'notify:uglify',
 		'jshint',
