@@ -87,17 +87,19 @@ form {
 		font-weight: normal;
 	}
 
-	.row {
-		margin-top: 0;
-		margin-bottom: 0;
-	}
-
 	.column {
-		padding-top: 0;
-		padding-bottom: 0;
-
-		.field {
+		.row {
+			margin-top: 0;
 			margin-bottom: 0;
+		}
+
+		.column {
+			padding-top: 0;
+			padding-bottom: 0;
+
+			.field {
+				margin-bottom: 0;
+			}
 		}
 	}
 }

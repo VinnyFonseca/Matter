@@ -20,10 +20,16 @@
 	&:hover,
 	&.active {
 		.dropdown-arrow {
-			background-color: $color2;
-
 			.icon {
-				@include svgColor($cf);
+				@include svgColor($color2);
+			}
+		}
+	}
+
+	&:active {
+		.dropdown-arrow {
+			.icon {
+				@include svgColor($c3);
 			}
 		}
 	}
@@ -44,17 +50,6 @@
 					border-color: $focusColor !important;
 					box-shadow: 0 0 10px $focusColor !important;
 				}
-			}
-		}
-	}
-
-	&:active {
-		.dropdown-arrow {
-			background: $c3;
-			box-shadow: inset 0px 1px 1px 0 rgba($c0, .15) !important;
-
-			.icon {
-				@include svgColor($cf);
 			}
 		}
 	}
@@ -83,15 +78,12 @@
 		right: 0;
 		bottom: 0;
 		text-align: center;
-		border: 0 solid rgba($c0, 0.4);
-		border-radius: 0 $radius $radius 0 !important;
-		background: $color1;
 		z-index: 50;
 
 		.icon {
 			width: 14px;
 			height: 14px;
-			@include svgColor($cf);
+			@include svgColor($color1);
 		}
 	}
 

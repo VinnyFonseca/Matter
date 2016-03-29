@@ -58,6 +58,8 @@ body {
 	width: 0;
 	height: 3px;
 	top: 0;
+	left: 0;
+	right: 0;
 	font-size: 0;
 	background: $color3;
 	z-index: 150;
@@ -77,6 +79,7 @@ body {
 		display: inline-block;
 		position: relative;
 		margin: 5px !important;
+		padding: 0 !important;
 		width: 44px !important;
 		height: 44px !important;
 		@extend .button;
@@ -85,18 +88,18 @@ body {
 		@extend .valign-middle;
 
 		&.debug-trigger {
-			@extend .tertiary;
+			@extend .secondary;
 		}
 
 		> .icon {
 			display: block;
 			position: absolute;
-			margin-top: -20%;
-			margin-left: -20%;
-			width: 40%;
-			height: 40%;
-			top: 50%;
-			left: 50%;
+			margin-top: -20% !important;
+			margin-left: -20% !important;
+			width: 40% !important;
+			height: 40% !important;
+			top: 50% !important;
+			left: 50% !important;
 			font-size: 16px !important;
 			font-weight: bold;
 			line-height: 1;

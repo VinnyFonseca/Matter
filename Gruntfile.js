@@ -44,16 +44,16 @@ module.exports = function(grunt) {
 					message: 'Styleguide created'
 				}
 			},
-			jshint: {
-				options: {
-					title: 'JS Hint',
-					message: 'Hinting completed'
-				}
-			},
 			uglify: {
 				options: {
 					title: 'JS Uglify',
 					message: 'Uglification completed'
+				}
+			},
+			jshint: {
+				options: {
+					title: 'JS Hint',
+					message: 'Hinting completed'
 				}
 			},
 			imagemin: {
@@ -201,45 +201,6 @@ module.exports = function(grunt) {
 
 
 
-		// Config for grunt-contrib-jshint (javascript lint)
-
-		jshint: {
-			options: {
-				reporter: require('jshint-stylish'),
-				force: true,
-				ignores: [
-					'app/scripts/matter/base/**/*.js',
-					'app/scripts/matter/engine/**/*.js',
-					'app/scripts/matter/polyfills/**/*.js'
-				],
-				'-W001': false,
-
-				// Enforcing
-				notypeof: true,
-				nonbsp: true,
-				funcscope: true,
-				unused: false,
-				globals: {
-					browser: true,
-					devel: true,
-					jQuery: true,
-					console: true,
-					document: true,
-					module: true
-				},
-
-				// Relaxing
-				asi: true,
-				expr: true,
-				eqnull: true,
-				loopfunc: true,
-				multistr: true,
-				scripturl: true
-			},
-			files: ['app/scripts/**/*.js']
-		},
-
-
 		// Config for grunt-contrib-uglify (javascript concatenation)
 
 		uglify: {
@@ -279,6 +240,46 @@ module.exports = function(grunt) {
 					dest: 'dist/scripts'
 				}]
 			}
+		},
+
+
+		// Config for grunt-contrib-jshint (javascript lint)
+
+		jshint: {
+			options: {
+				reporter: require('jshint-stylish'),
+				force: true,
+				ignores: [
+					'app/scripts/matter/base/**/*.js',
+					'app/scripts/matter/engine/**/*.js',
+					'app/scripts/matter/polyfills/**/*.js',
+					'app/scripts/html5-printshiv.js'
+				],
+				'-W001': false,
+
+				// Enforcing
+				notypeof: true,
+				nonbsp: true,
+				funcscope: true,
+				unused: false,
+				globals: {
+					browser: true,
+					devel: true,
+					jQuery: true,
+					console: true,
+					document: true,
+					module: true
+				},
+
+				// Relaxing
+				asi: true,
+				expr: true,
+				eqnull: true,
+				loopfunc: true,
+				multistr: true,
+				scripturl: true
+			},
+			files: ['app/scripts/**/*.js']
 		},
 
 
@@ -329,6 +330,9 @@ module.exports = function(grunt) {
 		// Config for grunt-contrib-watch (overseer)
 
 		watch: {
+			options: {
+				event: ['changed', 'added', 'deleted']
+			},
 			grunt: {
 				options: { reload: true },
 				files: ['Gruntfile.js']
@@ -366,7 +370,7 @@ module.exports = function(grunt) {
 			js: {
 				options: { livereload: true },
 				files: ['app/scripts/**/*.js'],
-				tasks: ['jshint', 'notify:jshint', 'uglify', 'notify:uglify']
+				tasks: ['uglify', 'notify:uglify', 'jshint', 'notify:jshint']
 			},
 			img: {
 				options: { livereload: true },
@@ -386,8 +390,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-postcss');
 	grunt.loadNpmTasks('grunt-styledocco');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
 	grunt.loadNpmTasks('grunt-openport');
 	grunt.loadNpmTasks('grunt-contrib-watch');
@@ -409,10 +413,10 @@ module.exports = function(grunt) {
 		'notify:postcss',
 		'styledocco',
 		'notify:styledocco',
-		'jshint',
-		'notify:jshint',
 		'uglify',
 		'notify:uglify',
+		'jshint',
+		'notify:jshint',
 		'imagemin',
 		'notify:imagemin',
 		'browserSync',

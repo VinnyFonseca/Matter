@@ -20,14 +20,7 @@
 	}
 }
 
-[readonly],
-[disabled],
-[readonly]:focus,
-[disabled]:focus,
-.valid[readonly],
-.valid[disabled],
-.invalid[readonly],
-.invalid[disabled] {
+.disabled {
 	color: $ca !important;
 	border-color: $c9 !important;
 	border-style: dotted !important;
@@ -39,6 +32,17 @@
 	&::placeholder {
 		color: $ca !important;
 	}
+}
+
+[readonly],
+[disabled],
+[readonly]:focus,
+[disabled]:focus,
+.valid[readonly],
+.valid[disabled],
+.invalid[readonly],
+.invalid[disabled] {
+	@extend .disabled;
 }
 
 .controller {
