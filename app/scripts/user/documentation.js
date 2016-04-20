@@ -11,7 +11,7 @@ $(document).ready(function() {
 			var id = el.attr("id");
 			var target = el.next();
 			var name = target.html();
-			var type = target.prop('nodeName') == "H2" ? "core" : "sub";
+			var type = target.prop('tagName') == "H2" ? "core" : "sub";
 
 			if ( type == "core" ) {
 				container = id;
@@ -102,7 +102,7 @@ var sidebarUpdate = function() {
 					$(".sidebar .container[data-type=" + container + "]").addClass("selected");
 				}
 			}
-			if ( matter.viewport().top + matter.viewport().height >= matter.doc().height ) {
+			if ( matter.viewport().bottom >= matter.doc().height ) {
 				$(".sidebar a").removeClass("active").eq($(".sidebar a").length - 1).addClass("active");
 			}
 		});

@@ -39,9 +39,9 @@ var initSearch = function() {
 			$(loaderElement).insertBefore(results);
 			$(loadElement).insertAfter(container);
 
-			var tagcloud = $(".tagcloud"),
-				controls = $(".search-controls"),
-				load = $(".search-load");
+			var tagcloud = el.find(".tagcloud"),
+				controls = el.find(".search-controls"),
+				load = el.find(".search-load");
 
 			controls.append(resultsCountElement);
 			controls.append(resultsViewElement);
@@ -503,6 +503,12 @@ var initSearch = function() {
 								}
 
 
+
+								// Support widgets
+
+								matter.tooltip.init();
+
+
 								// Highlight
 
 								if ( input.length ) {
@@ -694,6 +700,6 @@ var initSearch = function() {
 			history.pushState(null, null, url);
 		}
 
-		debug.log("Search :: Unified Search");
+		debug.log(":: Search");
 	}
 }
