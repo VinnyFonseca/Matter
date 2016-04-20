@@ -4,10 +4,10 @@ var initAutocomplete = function() {
 	if ( $("[data-autocomplete]").length ) {
 		$("[data-autocomplete]").each(function() {
 			var el = $(this),
-				url = el.data("autocomplete-feed"),
+				url = el.data("feed"),
 				input = el.children("input"),
 				loader = el.children(".loader"),
-				parameter = input.data("autocomplete-parameter"),
+				parameter = input.data("lookup"),
 				listIndex = 0,
 				listMax = 10,
 				listShow = $(window).width() > 480 ? 7 : 5,
@@ -33,18 +33,14 @@ var initAutocomplete = function() {
 				var suggestions = list.children("ul.autocomplete-suggestions");
 				suggestions.prepend("<li class='divider'>Suggested Items</li>");
 
-				list.append("<ul class='autocomplete-key-contacts'></ul>");
-				var keyContacts = list.children("ul.autocomplete-key-contacts");
-				keyContacts.append("<li class='divider'>Key Contacts</li>");
-
 
 				// Populate list
 
-				var JSONobjects = data.Results;
+				var feed = data;
 				var tempArray = [];
 
-				for ( var i = 0; i < JSONobjects.length; i++ ) {
-					var object = JSONobjects[i];
+				for ( var i = 0; i < feed.length; i++ ) {
+					var object = feed[i];
 					var property = object[parameter];
 
 					if ( property instanceof Array ) {
@@ -60,8 +56,8 @@ var initAutocomplete = function() {
 
 				for ( var k = 0; k < itemsArray.length; k++ ) {
 					results.append(
-						"<li data-keywords='" + itemsArray[k].Keywords.join() + "'>\
-							<a href='" + itemsArray[k].Url + "'>" + itemsArray[k].Title + "</a>\
+						"<li data-keywords='" + itemsArray[k].keywords.join() + "'>\
+							<a href='" + itemsArray[k].url + "'>" + itemsArray[k].title + "</a>\
 						</li>"
 					);
 				}
@@ -80,7 +76,6 @@ var initAutocomplete = function() {
 
 						// If direct result, append to results list.
 						// If not, append to suggestions list.
-						// If in suggestions, and URL contains "key-person", append to keyContacts list.
 
 						item.each(function() {
 							if ( $(this).text().search(filter) >= 0 ) {
@@ -88,10 +83,6 @@ var initAutocomplete = function() {
 							} else {
 								if ( $(this).data("keywords").search(filter) >= 0 ) {
 									$(this).appendTo(suggestions);
-
-									if ( $(this).children("a").attr("href").indexOf("key-person") > -1 ) {
-										$(this).appendTo(keyContacts);
-									}
 								}
 							}
 						});
@@ -145,20 +136,6 @@ var initAutocomplete = function() {
 							}
 
 							if ( suggestions.children(".selected").length === 0 ) suggestions.hide();
-						});
-
-
-						var keyContact = keyContacts.children("li:not(.divider)");
-						keyContacts.show();
-
-						keyContact.each(function() {
-							if ( $(this).data("keywords").search(filter) < 0 ) {
-								$(this).removeClass("selected");
-							} else {
-								$(this).addClass("selected");
-							}
-
-							if ( keyContacts.children(".selected").length === 0 ) keyContacts.hide();
 						});
 
 
@@ -254,74 +231,11 @@ var initAutocomplete = function() {
 				}
 
 				init();
-
-
-				// var suggest = function(data) {
-				// 	var JSONobjects = data.Results;
-				// 	var tempArray = [];
-
-				// 	for ( var i = 0; i < JSONobjects.length; i++ ) {
-				// 		var object = JSONobjects[i];
-				// 		var property = object[parameter];
-
-				// 		if ( property instanceof Array ) {
-				// 			for ( var j = 0; j < property.length; j++ ) {
-				// 				if ( $.inArray(property[j], tempArray) < 0 && $.inArray(object, tempArray) < 0 ) tempArray.push(object);
-				// 			}
-				// 		} else {
-				// 			if ( $.inArray(property, tempArray) < 0 ) tempArray.push(object);
-				// 		}
-				// 	}
-
-
-				// 	var suggestedArray = tempArray.sort();
-				// 	var keyContactArray = [];
-
-
-				// 	if ( suggestedArray.length > 0) {
-				// 		list.append("<ul class='autocomplete-suggestions'></ul>");
-				// 		var suggestions = list.children("ul.autocomplete-suggestions");
-				// 		suggestions.prepend("<li class='divider'>Suggested Items</li>");
-				// 	}
-
-				// 	for ( var k = 0; k < suggestedArray.length; k++ ) {
-				// 		var suggestedURL = suggestedArray[k].Url;
-
-				// 		if ( suggestedURL.indexOf("key-person") > -1 ) {
-				// 			keyContactArray.push(suggestedArray[k]);
-				// 		} else {
-				// 			suggestions.append(
-				// 				"<li data-keywords='" + suggestedArray[k].Keywords.join() + "'>\
-				// 					<a href='" + suggestedArray[k].Url + "'>" + suggestedArray[k].Title + "</a>\
-				// 				</li>"
-				// 			);
-				// 		}
-				// 	}
-
-
-				// 	if ( keyContactArray.length > 0) {
-				// 		list.append("<ul class='autocomplete-key-contacts'></ul>");
-				// 		var keyContacts = list.children("ul.autocomplete-key-contacts");
-				// 		keyContacts.append("<li class='divider'>Key Contacts</li>");
-				// 	}
-
-				// 	for ( var l = 0; l < keyContactArray.length; l++ ) {
-				// 		keyContacts.append(
-				// 			"<li data-keywords='" + keyContactArray[l].Keywords.join() + "'>\
-				// 				<a href='" + keyContactArray[l].Url + "'>" + keyContactArray[l].Title + "</a>\
-				// 			</li>"
-				// 		);
-				// 	}
-				// }
-				// suggest();
-				// init();
-
-				// matter.data.get(urlSuggestions, suggest);
 			}
 
 			matter.data.get(url, build);
 		});
 
-		if ( matter.config.application.debug ) console.log(":: Autocomplete");
+		debug.log(":: Autocomplete");
 	}
 }

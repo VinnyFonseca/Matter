@@ -3,7 +3,8 @@
 .file-wrapper,
 .multifile-wrapper {
 	position: relative;
-	margin-bottom: $spacing / 2;
+	margin: 0;
+	margin-bottom: $spacing;
 	width: 100%;
 	border: 0;
 	white-space: nowrap;

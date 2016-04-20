@@ -53,12 +53,12 @@
 			height: ($closeSize - 10);
 			top: floor(-($closeSize - 10) / 2);
 			right: floor(-($closeSize - 10) / 2);
-			border-radius: 1000px;
 			background-color: $color1;
+			@extend .circle;
 			cursor: pointer;
 			z-index: 10;
 
-			.icon-close {
+			.icon {
 				position: absolute;
 				margin-top: -25%;
 				margin-left: -25%;

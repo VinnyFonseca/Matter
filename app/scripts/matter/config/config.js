@@ -4,7 +4,7 @@ matter.config = {
 	application: {
 		base: typeof basePath !== "undefined" ? basePath : "/", // str: path that should be appended to all img src attribute, ending in /
 		touch: Modernizr.touch && !device.desktop(), // bool: Modernizr check returns true or false.
-		debug: true // bool: use if (debug) console.log(); instead of console.log; for permanent debugging messages.
+		debug: true // bool: use debug instead of console for all types of logging operations.
 	},
 	typography: {
 		resize: {
@@ -38,8 +38,8 @@ matter.config = {
 	},
 	search: {
 		view: "grid", // str: "grid", "list".
-		display: "full", // str: "full", "mini".
-		count: 8, // int: Number of items to show per page.
+		mode: "full", // str: "full", "mini".
+		display: 9, // int: Number of items to show per page.
 		pagination: false // bool: Toggle pagination controls and loading of page elements only.
 	},
 	slider: {

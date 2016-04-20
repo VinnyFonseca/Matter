@@ -10,13 +10,13 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
 		<meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="format-detection" content="telephone=no">
+		<meta name="msapplication-tap-highlight" content="no">
+		<meta name="format-detection" content="telephone=no">
 
-	    <!--[if IE]>
-	    <meta http-equiv="Page-Enter" content="blendTrans(duration=0)" />
-	    <meta http-equiv="Page-Exit" content="blendTrans(duration=0)" />
-	    <![endif]-->
+		<!--[if IE]>
+		<meta http-equiv="Page-Enter" content="blendTrans(duration=0)">
+		<meta http-equiv="Page-Exit" content="blendTrans(duration=0)">
+		<![endif]-->
 
 		<!-- Favicons -->
 		<link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-touch-icon-57x57.png">
@@ -41,6 +41,8 @@
 
 		<title>Matter</title>
 		<meta name="description" content="Page description. No longer than 155 characters." />
+
+		<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'none'; child-src 'none'; object-src 'none'"> -->
 
 		<!-- Schema.org markup for Google+ -->
 		<meta itemprop="name" content="Matter">
@@ -67,8 +69,14 @@
 		<link rel="stylesheet" href="/styles/build.css" type="text/css" media="all">
 
 		<!--[if lt IE 9]>
-		<script type="text/javascript" src="/scripts/html5shiv-printshiv.js"></script>
+		<script type="text/javascript" src="/scripts/head/html5shiv-printshiv.js"></script>
 		<![endif]-->
+
+		<!--[if lt IE 10]>
+		<script type="text/javascript" src="/scripts/head/json.js"></script>
+		<![endif]-->
+
+		<script type="text/javascript" src="/scripts/head/jquery-1.12.1.js"></script>
 	</head>
 
 	<body class="preload">
@@ -2282,26 +2290,21 @@
 			<strong>Demo:</strong>
 		</p>
 
-		<div class="search-wrapper" data-search="data/search.json">
+		<div class="search-wrapper" data-search="/data/search.json" data-template="/templates/main.html">
 			<div class="row">
 				<div class="column">
-					<!-- <div class="autocomplete-wrapper" data-autocomplete="true" data-autocomplete-feed="data/search.json">
-						<img class="loader" src="/img/loader.gif" height="16" width="16" alt="">
-						<input type="text" placeholder="Type to search..." data-autocomplete-parameter="Title, Summary" data-search-parameter="Title, Summary">
-					</div> -->
-
-					<input type="text" placeholder="Search..." data-search-parameter="Title, Summary">
+					<input type="text" placeholder="Search..." data-search-parameter="title, summary">
 				</div>
 			</div>
 			<div class="row">
 				<div class="column" data-span="4">
-					<select class="keep" data-search-parameter="Type"></select>
+					<select class="keep" data-search-parameter="type"></select>
 				</div>
 				<div class="column" data-span="4">
-					<select class="keep" data-search-parameter="Categories"></select>
+					<select class="keep" data-search-parameter="categories"></select>
 				</div>
 				<div class="column" data-span="4">
-					<select class="keep" data-search-parameter="Tags"></select>
+					<select class="keep" data-search-parameter="tags"></select>
 				</div>
 			</div>
 

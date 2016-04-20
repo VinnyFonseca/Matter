@@ -13,14 +13,13 @@ matter.init = function() {
 
 	// Logs Legend
 
-	if ( matter.config.application.debug ) {
-		console.log(":: is DOM.ready");
-		console.log("~~ is Async");
-		console.log("•• is Complete");
-		console.log("== is User Action");
-		console.log("## is API");
-		console.log(" ");
-	}
+	debug.log(":: is DOM.ready");
+	debug.log("~~ is Async");
+	debug.log("•• is Complete");
+	debug.log("== is User Action");
+	debug.log("## is API");
+	debug.log(" ");
+
 
 	// Easter Eggs Init
 
@@ -28,6 +27,7 @@ matter.init = function() {
 
 	// System Init
 
+	matter.local.init();
 	matter.cookie.init();
 	matter.session.init();
 	matter.svg.init();
@@ -66,7 +66,7 @@ matter.defer = function() {
 	initMap();
 	initVideo();
 
-	if ( matter.config.application.debug ) console.log("•• Matter in " + (new Date().getTime() - ms) + " milliseconds");
+	debug.log("•• Matter in " + (new Date().getTime() - ms) + " milliseconds");
 }
 
 

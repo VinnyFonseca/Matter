@@ -1,58 +1,63 @@
 // Search
 
+.search-result-template {
+	display: none !important;
+}
+
 .search-wrapper {
 	display: block;
 	position: relative;
+	text-align: center;
 }
 
 .search-container {
 	display: block;
 	position: relative;
 	text-align: center;
+
+	.loader {
+		display: none;
+	}
+
+	&.loading {
+		.loader {
+			display: block;
+		}
+	}
 }
 
 .search-controls {
 	display: block;
 	position: relative;
-	text-align: left;
+	margin: floor($spacing / 2) 0;
+	text-align: right;
+	@extend .valign-middle;
 
 	.search-count {
-		display: none;
 		position: relative;
 		margin: 0;
-		margin-top: floor($spacing / 2);
-		padding: 5px 12px;
+		padding: 0;
 		font-size: $fontSize / 1.2 + rem;
 		color: #888;
-		border: 1px dotted $ce;
-		border-bottom: 0;
-		border-top-left-radius: 4px;
-		border-top-right-radius: 4px;
-		background: #f2f2f2;
 	}
 
 	.search-views {
-		display: block;
 		position: relative;
-		float: right;
 		margin: 0;
-		margin-top: floor($spacing / 2) + 3;
-		padding: 5px;
-		font-size: 0;
-		color: $c8;
-		border: 1px dotted $cd;
-		border-bottom: 0;
-		border-top-left-radius: 4px;
-		border-top-right-radius: 4px;
-		background: #f2f2f2;
+		margin-left: floor($spacing / 3);
+		padding: 0;
+		@extend .block-reset;
 
 		.search-view {
 			display: inline-block;
 			position: relative;
-			margin: 0 6px;
-			padding: 0;
-			width: 18px;
-			height: 18px;
+			margin: 0;
+			margin-left: floor($spacing / 3);
+			padding: 5px;
+			color: $c8;
+			border: $borderWidth $borderStyle $cd;
+			border-radius: $radius;
+			background: #f2f2f2;
 			cursor: pointer;
 
 			&:hover,
@@ -96,8 +101,6 @@
 	padding: floor($spacing / 2) 0;
 	font-size: 0;
 	text-align: left;
-	border-top: 1px dotted $cd;
-	border-bottom: 1px dotted $cd;
 	background-color: $cf;
 
 	> * {
@@ -110,14 +113,8 @@
 
 		&:before {
 			color: $color1;
-			content: "Your search returned no results. Tweak it and try again."
+			content: "Your search returned no results. Please tweak it and try again.";
 		}
-	}
-
-	&.loading {
-		height: 64px;
-		background: transparent url($base + "img/loader.gif") no-repeat center center;
-		background-size: 32px 32px;
 	}
 
 
@@ -364,76 +361,4 @@
 			}
 		}
 	}
-}
-
-
-
-// Responsive
-
-@media screen and (max-width: $scrDeskL) {
-
-	.search-results {
-		&[data-view="grid"] {
-			.search-item {
-				width: percentage(3 / 12) - 2;
-			}
-		}
-	}
-
-}
-
-
-@media screen and (max-width: $scrDeskS) {
-
-	.search-results {
-		&[data-view="grid"] {
-			.search-item {
-				width: percentage(4 / 12) - 2;
-			}
-		}
-	}
-
-}
-
-
-@media screen and (max-width: $scrTablL) {
-
-	.search-results {
-		&[data-view="grid"] {
-			.search-item {
-				width: percentage(6 / 12) - 2;
-			}
-		}
-	}
-
-}
-
-
-@media screen and (max-width: $scrMoblL) {
-
-	.search-results {
-		&[data-view="grid"] {
-			.search-item {
-				width: auto;
-			}
-		}
-	}
-
-}
-
-
-
-// Conditional
-
-.lt-ie9 {
-
-	.search-results {
-		.search-item {
-			.img {
-				background-size: 100% 100%;
-				-ms-behavior: url("scripts/core/vendor/backgroundsize.htc");
-			}
-		}
-	}
-
 }

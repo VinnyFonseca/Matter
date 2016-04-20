@@ -542,7 +542,7 @@ var buildMap = function() {
 			});
 		})
 
-		if ( matter.config.application.debug ) console.log("~~ Map");
+		debug.log("~~ Map");
 	}
 }
 

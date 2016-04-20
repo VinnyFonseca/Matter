@@ -13,17 +13,19 @@
 			&:after {
 				display: none;
 				position: absolute;
-				top: -5px;
+				top: -6px;
 				color: $color1;
-				font-size: $fontSize / 1.8 + rem;
+				font-size: $fontSize / 2 + rem;
 				opacity: 0.75;
 				z-index: 5;
 			}
 
-			&:before {
+			&:after {
 				display: block;
-				left: floor($spacing / 2) + 4;
+				left: 0;
+				right: 0;
 				color: $color1;
+				text-align: center;
 				content: "span " attr(data-span);
 			}
 
@@ -35,11 +37,15 @@
 
 		&.show-push {
 			.column {
-				&:after {
+				&:before {
 					display: block;
-					right: floor($spacing / 2) + 4;
+					left: floor($spacing / 2) + 4;
 					color: $color3;
 					content: "push " attr(data-push);
+				}
+				&:after {
+					left: auto;
+					right: floor($spacing / 2) + 4;
 				}
 			}
 		}

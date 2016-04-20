@@ -8,7 +8,7 @@
 <div class="hero">
 	<div class="parallax">
 		<div class="wrapper">
-			<div class="logo"><img src="img/logo.png"></div>
+			<div class="logo"><img src="/img/logo-white.png"></div>
 
 			<h1>Matter</h1>
 
@@ -18,14 +18,36 @@
 
 			<p>No more de-styling and restyling. Use HTML's default behaviour to leverage your web application and improve your workflow.</p>
 
-			<a href="documentation.html" class="button primary">View Documentation</a>
-			<a href="https://github.com/VinnyFonseca/matter.git" target="_blank" class="button secondary">Clone on Github</a>
+			<a href="/documentation/" class="button secondary">View Documentation</a>
+			<a href="https://github.com/VinnyFonseca/matter.git" target="_blank" class="button tertiary">Clone on Github</a>
 		</div>
 	</div>
 </div>
 
 <div class="main">
 	<div class="wrapper">
+		<div class="search-wrapper" data-search="true" data-feed="/data/search.json" data-template="/templates/main.html">
+			<div class="row">
+				<div class="column">
+					<input type="text" placeholder="Search..." data-lookup="title, summary">
+				</div>
+			</div>
+			<div class="row">
+				<div class="column" data-span="4">
+					<select class="keep" data-lookup="type"></select>
+				</div>
+				<div class="column" data-span="4">
+					<select class="keep" data-lookup="categories"></select>
+				</div>
+				<div class="column" data-span="4">
+					<select class="keep" data-lookup="tags"></select>
+				</div>
+			</div>
+
+			<div class="search-container"></div>
+		</div>
+
+
 		<h2>What's <sub><small class="light-gray">the</small></sub> Matter?</h2>
 
 		<p>

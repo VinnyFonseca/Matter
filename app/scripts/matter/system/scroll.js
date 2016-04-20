@@ -3,7 +3,7 @@
 matter.scroll = {
 	init: function() {
 		this.update();
-		if ( matter.config.application.debug ) console.log(":: Scroll");
+		debug.log(":: Scroll");
 	},
 	update: function() {
 		var scrollPercentage = (matter.viewport().top * 100) / (matter.doc().height - matter.viewport().height);

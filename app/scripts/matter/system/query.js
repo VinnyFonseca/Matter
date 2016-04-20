@@ -1,8 +1,10 @@
 // Query URLs
 
 matter.query = {
-	get: function(str) { // Gets URL query parameters
-		return (str || window.location.search).replace(/(^\?)/, '').split("&").map(function(n) {
+	get: function(url) { // Gets URL query parameters
+		var url = typeof url !== "undefined" ? url : window.location.search;
+
+		return (url).split("?")[1].split("&").map(function(n) {
 			return n = n.split("="), this[n[0]] = n[1], this;
 		}.bind({}))[0];
 	}

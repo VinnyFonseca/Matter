@@ -1,65 +1,60 @@
 // Unified Search
 
 var initSearch = function() {
-	if ( $("[data-search]").length ) {
+	if ($("[data-search]").length) {
+		 var rawQuery = "";
 		$("[data-search]").each(function(i) {
+			debug.log('Search Start');
+
 			var el = $(this),
-				url = el.data("search"),
+				container = $(".search-container"),
+				url = el.data("feed"),
 				index = i,
 				icon = el.find(".search-icon"),
-				input = el.find("input[data-search-parameter]"),
-				select = el.find("select[data-search-parameter]"),
+				field = el.find("[data-lookup]"),
+				input = el.find("input[data-lookup]"),
+				select = el.find("select[data-lookup]"),
 				outputArray = [],
-
+				addTag = null,
 				tagcloudElement = '<ul class="tagcloud"></ul>',
 				tagclose = '<img class="svg icon icon-close" src="' + matter.config.application.base + 'img/icons/icon-close.svg">',
-
-				searchView = !!el.data("search-view") ? el.data("search-view") : matter.config.search.view,
-				searchDisplay = !!el.data("search-display") ? el.data("search-display") : matter.config.search.display,
 				resultsControlsElement = '<div class="search-controls"></div>',
 				resultsCountElement = '<div class="search-count"></div>',
-				resultsViewsElement = '<div class="search-views">\
-											<div class="search-view" data-view="grid">\
-												<img class="svg icon icon-grid" src="' + matter.config.application.base + 'img/icons/icon-grid.svg">\
-											</div>\
-											<div class="search-view" data-view="list">\
-												<img class="svg icon icon-list" src="' + matter.config.application.base + 'img/icons/icon-list.svg">\
-											</div>\
-										</div>',
-
+				resultsViewElement = '<div class="search-views">\
+					<div class="search-view" data-view="grid"><img class="svg icon icon-grid" src="' + matter.config.application.base + 'img/icons/icon-grid.svg"></div>\
+					<div class="search-view" data-view="list"><img class="svg icon icon-list" src="' + matter.config.application.base + 'img/icons/icon-list.svg"></div>\
+				</div>',
 				resultsPaginationElement = '<div class="search-pagination"></div>',
-				resultsElement = '<div class="search-results loading ' + searchDisplay + '" data-view="' + searchView + '"></div>',
-				loadElement = '<button class="primary center search-load">Load More</button>';
+				resultsElement = '<div class="search-results ' + matter.config.search.mode + '" data-view="' + matter.config.search.view + '"></div>',
+				loaderElement = '<div class="loader"><div class="loader-inner">&nbsp;</div></div>';
+				loadElement = '<button class="primary search-load load-more">Load More</button>';
 
-			if ( !$(".search-results").length ) {
-				$(".search-container").append(resultsElement);
-			} else {
-				$(".search-results").addClass("loading").addClass(searchDisplay).attr("data-view", searchView);
-			}
-
+			if ( !$(".search-results").length ) container.append(resultsElement);
 			var results = $(".search-results");
+			var resultItems = [];
+			var resultTemplate = el.data("template");
 
 			$(tagcloudElement).insertBefore(results);
 			$(resultsControlsElement).insertBefore(results);
-			$(loadElement).insertAfter(results);
+			$(loaderElement).insertBefore(results);
+			$(loadElement).insertAfter(container);
 
 			var tagcloud = $(".tagcloud"),
 				controls = $(".search-controls"),
 				load = $(".search-load");
 
-			controls
-				.append(resultsViewsElement)
-				.append(resultsCountElement);
+			controls.append(resultsCountElement);
+			controls.append(resultsViewElement);
 
-			var views = controls.find(".search-views"),
-				count = controls.find(".search-count");
+			var count = controls.find(".search-count");
+			var views = controls.find(".search-views");
 
 			matter.svg.init();
 
 
 			// View change
 
-			views.children(".search-view[data-view='" + searchView + "']").addClass("active");
+			views.children(".search-view[data-view='" + matter.config.search.view + "']").addClass("active");
 			views.on("click", ".search-view", function() {
 				var el = $(this),
 					view = el.data("view");
@@ -72,43 +67,56 @@ var initSearch = function() {
 			// Init
 
 			var buildSystem = function(data) {
-				var JSONobjects = data.Results,
+				var feed = data,
 					parameterArray = [],
 					resultArray = [];
 
-
+				console.log(data);
 
 				// Populate Dropdowns
 
-				var populateSelects = function(parameter) {
-					var target = el.find("select[data-search-parameter='" + parameter + "']");
+				var populateSelects = function() {
+					select.each(function() {
+						var parameter = $(this).data("lookup");
+						$(this).empty();
 
-					var tempArray = [];
-					outputArray[parameter] = [];
-					resultArray[parameter] = [];
+						var tempArray = [];
+						outputArray[parameter] = [];
+						resultArray[parameter] = [];
 
-					for ( var i = 0; i < JSONobjects.length; i++ ) {
-						var object = JSONobjects[i];
-						var property = object[parameter];
+						for ( var i = 0; i < feed.length; i++ ) {
+							var object = feed[i];
+							var property = object[parameter];
 
-						if ( property instanceof Array ) {
-							for ( var k = 0; k < property.length; k++ ) {
-								if ( $.inArray(property[k], tempArray) < 0 ) tempArray.push(property[k]);
+							if ( property instanceof Array ) {
+								for ( var k = 0; k < property.length; k++ ) {
+									if ( $.inArray(property[k], tempArray) < 0 ) tempArray.push(property[k]);
+								}
+							} else {
+								if ( $.inArray(property, tempArray) < 0 ) tempArray.push(property);
 							}
-						} else {
-							if ( $.inArray(property, tempArray) < 0 ) tempArray.push(property);
 						}
-					}
 
-					var placeholder = '<option value="" default selected>Select ' + parameter + '...</option>';
-					target.append(placeholder);
+						var placeholder = '<option value="" default selected>' + parameter.capitalize() + '</option>';
+						$(this).append(placeholder);
 
-					tempArray.sort();
+						if (parameter !== "year") {
+							tempArray.sort();
+						} else {
+							tempArray.sort().reverse();
+						}
 
-					for ( var j = 0; j < tempArray.length; j++ ) {
-						var option = '<option value="' + tempArray[j] + '">' + tempArray[j] + '</option>';
-						target.append(option);
-					}
+						for (var j = 0; j < tempArray.length; j++) {
+							var text = tempArray[j];
+
+							if (text && text !== "") {
+								var value = text.friendly();
+								var option = '<option value="' + value + '">' + text + '</option>';
+
+								$(this).append(option);
+							}
+						}
+					});
 				}
 
 
@@ -116,97 +124,163 @@ var initSearch = function() {
 				// Interactive Elements
 
 				var inputInit = function() {
-					var parameter = input.data("search-parameter");
+					var parameter = field.data("lookup");
 
-					parameterArray.push(parameter);
+					if ( !parameterArray.has(parameter) ) parameterArray.push(parameter);
 					outputArray[parameter] = [];
-
-					if ( input.length ) {
-						input.each(function() {
-							$(this).on("keyup", function(event) {
-								var value = $(this).val().toLowerCase(),
-									parameter = $(this).data("search-parameter"),
-									criteria = parameter.replace(/\s/g, "").split(","),
-									keycode = event.keyCode;
-
-								var validKeys =
-									keycode == 32 || keycode === 13		||  // spacebar & return key(s)
-									keycode == 8						||  // backspace
-									(keycode > 47 && keycode < 58)		||  // number keys
-									(keycode > 64 && keycode < 91)		||  // letter keys
-									(keycode > 95 && keycode < 112)		||  // numpad keys
-									(keycode > 185 && keycode < 193)	||  // ;=,-./` (in order)
-									(keycode > 218 && keycode < 223);		// [\]' (in order)
-
-								if ( validKeys ) {
-									if ( value.length <= 1 ) matter.text.unhighlight(results);
-									outputArray[parameter] = value;
-									updateResults();
-									return false;
-								}
-							});
-						});
-					}
-
-
-					// Selects
-
-					if ( select.length ) {
-						select.each(function(i) {
-							var placeholder = $(this).val(),
-								parameter = $(this).data("search-parameter");
-
-							populateSelects(parameter);
-
-							parameterArray.push(parameter);
-							outputArray[parameter] = [];
-
-							$(this).on("change", function(event) {
-								event.preventDefault();
-
-								var value = $(this).val(),
-									tag = '<li class="tag" data-tag-group="' + i + '" data-tag-parameter="' + parameter + '" data-tag="' + value + '">' + value + tagclose + '</li>';
-
-								if ( value !== "" ) {
-									if ( $.inArray(value, outputArray[parameter]) < 0 ) {
-										tagcloud.addClass("active").append(tag);
-									} else {
-										notify("Failure", "This tag already exists.", matter.config.notification.delay, "failure");
-										return false;
-									}
-								}
-
-								updateTags(parameter);
-								matter.svg().load();
-							});
-						});
-					}
-
 
 					// Tags
 
-					tagcloud.on("click", ".tag", function() {
-						var parameter = $(this).data("tag-parameter");
+					addTag = function addTag(parameter, content, value) {
+						var tag = '<li class="tag" data-tag-parameter="' + parameter + '" data-tag-value="' + value + '" data-tag-content="' + content + '">' + content + tagclose + '</li>';
 
-						$(this).remove();
+						if ( value !== "" ) {
+							if ($.inArray(content, outputArray[parameter]) < 0) {
+								if (parameter === "Year") {
+									tagcloud.children(".tag[data-tag-parameter='" + parameter + "']").remove();
+								}
 
-						if ( tagcloud.children(".tag").length > 0 ) {
-							tagcloud.addClass("active");
-						} else {
-							tagcloud.removeClass("active");
+								tagcloud.addClass("active").append(tag);
+							} else {
+								notify("Filter already active", "You have already selected this filter. Please choose another one.");
+								return false;
+							}
 						}
+						matter.svg.init();
+
+						updateTags(parameter);
+					}
+
+					var clearTags = function(parameter) {
+						tagcloud.children(".tag[data-tag-parameter='" + parameter + "']").remove();
+						updateTags(parameter);
+					}
+
+					tagcloud.on("mouseup", ".tag", function() {
+						var parameter = $(this).data("tag-parameter");
+						$(this).remove();
 
 						updateTags(parameter);
 					});
+
+					// Fields
+
+					if ( field.length ) {
+						field.each(function() {
+							var type = $(this).prop("tagName");
+							var parameter = $(this).data("lookup");
+
+							if ( type == "INPUT" && $(this).attr("type") == "text" ) {
+								// $(this).on("keyup", function(event) {
+								// 	var value = $(this).val().toLowerCase();
+								// 	var criteria = parameter.replace(/\s/g, "").split(",");
+								// 	var keycode = event.keyCode;
+
+								// 	debug.log('Input selection: ' + value);
+
+								// 	var validKeys =
+								// 		keycode == 32 || keycode === 13     ||  // spacebar & return key(s)
+								// 		keycode == 8                        ||  // backspace
+								// 		(keycode > 47 && keycode < 58)      ||  // number keys
+								// 		(keycode > 64 && keycode < 91)      ||  // letter keys
+								// 		(keycode > 95 && keycode < 112)     ||  // numpad keys
+								// 		(keycode > 185 && keycode < 193)    ||  // ;=,-./` (in order)
+								// 		(keycode > 218 && keycode < 223);       // [\]' (in order)
+
+								// 	if ( validKeys ) {
+								// 		if ( value.length <= 1 ) matter.text.unhighlight(results);
+								// 		outputArray[parameter] = value;
+								// 		updateResults();
+								// 		return false;
+								// 	}
+								// });
+
+								// $(this).on("keydown", function(event) {
+								// 	if (event.keyCode == 13) {
+								// 		event.preventDefault();
+								// 		return false;
+								// 	}
+								// });
+
+								$(this).on("keyup", function(event) {
+									if (event.keyCode == 13) {
+										var value = $(this).val().toLowerCase();
+										var criteria = parameter.replace(/\s/g, "").split(",");
+										var keycode = event.keyCode;
+
+										debug.log('Input selection: ' + value);
+
+										if ( value.length <= 1 ) matter.text.unhighlight(results);
+										outputArray[parameter] = value;
+										updateResults();
+										return false;
+									}
+								});
+							} else if ( type == "INPUT" && $(this).attr("type") == "checkbox" ) {
+								if ( !parameterArray.has(parameter) ) parameterArray.push(parameter);
+								outputArray[parameter] = [];
+
+								$(this).on("change", function() {
+									var content = $(this).val().capitalize();
+									var value = $(this).val();
+
+									debug.log('Checkbox selection: ' + value);
+									debug.log(parameter, content, value);
+
+									addTag(parameter, content, value);
+								});
+							} else if ( type == "INPUT" && $(this).attr("type") == "radio" ) {
+								if ( !parameterArray.has(parameter) ) parameterArray.push(parameter);
+								outputArray[parameter] = [];
+
+								$(this).on("change", function() {
+									var content = $(this).val().capitalize();
+									var value = $(this).val();
+
+									if ( value == "all" ) {
+										clearTags(parameter);
+									} else {
+										clearTags(parameter);
+
+										debug.log('Radio selection: ' + value);
+										debug.log(parameter, content, value);
+
+										addTag(parameter, content, value);
+									}
+								});
+							} else if ( type == "SELECT" ) {
+								var placeholder = $(this).val();
+
+								populateSelects();
+
+								if ( !parameterArray.has(parameter) ) parameterArray.push(parameter);
+								outputArray[parameter] = [];
+
+								$(this).on("change", function(event) {
+									event.preventDefault();
+
+									var content = $(this).children("option:selected").text(),
+										value = $(this).children("option:selected").val();
+
+									debug.log('Select selection: ' + value);
+
+									debug.log(parameter, content, value);
+									addTag(parameter, content, value);
+								});
+							}
+						});
+					}
 				}
 
 				var updateTags = function(parameter) {
 					var target = tagcloud.children(".tag[data-tag-parameter='" + parameter + "']");
 
+					$("select[data-lookup='" + parameter + "']").parents(".dropdown-wrapper").find(".dropdown-item").removeClass("active");
+
 					var tempArray = [];
 
 					for ( var n = 0; n < target.length; n++ ) {
-						var value = target.eq(n).data("tag");
+						var value = target.eq(n).data("tag-content");
 						tempArray.push(value);
 					}
 
@@ -224,6 +298,7 @@ var initSearch = function() {
 				// Results Update functions
 
 				var updateResults = function() {
+					rawQuery = "";
 
 					// Create all arrays for analysis and populate allArray with all items for comparison.
 
@@ -233,9 +308,9 @@ var initSearch = function() {
 					var totalArray = [];
 					var finalArray = [];
 
-					for ( var i = 0; i < JSONobjects.length; i++ ) {
-						var object = JSONobjects[i],
-							id = object.Id;
+					for ( var i = 0; i < feed.length; i++ ) {
+						var object = feed[i],
+							id = object.id;
 
 						allArray.push(id);
 					}
@@ -246,6 +321,8 @@ var initSearch = function() {
 
 					// Pagination and Selective loading
 
+					container.addClass("loading");
+
 					var currentPage = 1;
 
 
@@ -254,14 +331,14 @@ var initSearch = function() {
 					// Input
 
 					var inputAnalysis = function() {
-						if ( input.length ) {
-							var parameter = input.data("search-parameter"),
+						if ( input.length && input.val() !== "" ) {
+							var parameter = input.data("lookup"),
 								criteria = parameter.replace(/\s/g, "").split(","),
 								tempArray = [];
 
-							for ( var i = 0; i < JSONobjects.length; i++ ) {
-								var object = JSONobjects[i],
-									id = object.Id,
+							for ( var i = 0; i < feed.length; i++ ) {
+								var object = feed[i],
+									id = object.id,
 									compare = outputArray[parameter];
 
 								for ( var j = 0; j < criteria.length; j++ ) {
@@ -271,14 +348,14 @@ var initSearch = function() {
 										for ( var k = 0; k < retrieved.length; k++ ) {
 											var analyseArray = retrieved[k].toLowerCase();
 
-											if ( analyseArray.indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
+											if ( analyseArray.has(compare) && input.val() !== "" && !tempArray.has(id) ) {
 												tempArray.push(id);
 											}
 										}
 									} else {
 										var analyseString = retrieved.toLowerCase();
 
-										if ( analyseString.indexOf(compare) > -1 && input.val() !== "" && $.inArray(id, tempArray) < 0 ) {
+										if ( analyseString.has(compare) && input.val() !== "" && !tempArray.has(id) ) {
 											tempArray.push(id);
 										}
 									}
@@ -286,36 +363,52 @@ var initSearch = function() {
 							}
 
 							resultArray[parameter] = tempArray;
+
+							rawQuery += "?q=" + input.val();
 						}
 					}
 
 					// Tags
 
 					var tagAnalysis = function() {
-						for ( var n = 0; n < tagcloud.children(".tag").length; n++ ) {
-							var parameter = tagcloud.children(".tag").eq(n).data("tag-parameter"),
-								criteria = parameter,
-								compare = outputArray[parameter],
-								tempArray = [];
+						if ( tagcloud.children(".tag").length > 0 ) {
+							tagcloud.addClass("active");
 
-							for ( var i = 0; i < JSONobjects.length; i++ ) {
-								var object = JSONobjects[i],
-									id = object.Id,
-									analyse = object[criteria];
+							for ( var n = 0; n < tagcloud.children(".tag").length; n++ ) {
+								var parameter = tagcloud.children(".tag").eq(n).data("tag-parameter"),
+									value = tagcloud.children(".tag").eq(n).data("tag-value"),
+									content = tagcloud.children(".tag").eq(n).data("tag-content"),
+									criteria = parameter,
+									compare = outputArray[parameter],
+									tempArray = [];
 
-								if ( analyse instanceof Array ) {
-									var joined = analyse.concat(compare);
-									if ( joined.duplicates().length > 0 && $.inArray(id, tempArray) < 0 ) {
-										tempArray.push(id);
-									}
-								} else {
-									if ( $.inArray(analyse, compare) > -1 && $.inArray(id, tempArray) < 0 ) {
-										tempArray.push(id);
+								for ( var i = 0; i < feed.length; i++ ) {
+									var object = feed[i],
+										id = object.id,
+										analyse = object[criteria];
+
+									if ( analyse instanceof Object ) {
+										var joined = analyse.concat(compare);
+										if ( joined.duplicates().length > 0 && !tempArray.has(id) ) {
+											tempArray.push(id);
+										}
+									} else {
+										if ( compare.has(analyse) && !tempArray.has(id) ) {
+											tempArray.push(id);
+										}
+										else if (!isNaN(analyse) && analyse === compare.toString() && !tempArray.has(id)) {
+											tempArray.push(id);
+										}
 									}
 								}
-							}
 
-							resultArray[parameter] = tempArray;
+								resultArray[parameter] = tempArray;
+
+								var queryStart = rawQuery !== "" ? "&" : "?";
+								rawQuery += queryStart + parameter + "=" + value;
+							}
+						} else {
+							tagcloud.removeClass("active");
 						}
 					}
 
@@ -353,8 +446,8 @@ var initSearch = function() {
 					var countRepeated = function(arr) {
 						var counts = {};
 						for ( var i = 0; i < arr.length; i++ ) {
-						    var num = arr[i];
-						    counts[num] = counts[num] ? counts[num] + 1 : 1;
+							var num = arr[i];
+							counts[num] = counts[num] ? counts[num] + 1 : 1;
 						}
 						return counts;
 					}
@@ -371,7 +464,7 @@ var initSearch = function() {
 						finalArray = allArray;
 					}
 
-					if ( matter.config.application.debug ) console.log("== " + finalArray.length + " items");
+					debug.log("Search == " + finalArray.length + " items");
 
 
 					// Rebuild results
@@ -380,155 +473,146 @@ var initSearch = function() {
 					var pagination;
 
 					var rebuildSystem = function() {
-						var loadItems = function() {
-							results.append(resultsPaginationElement);
+						var buildTemplate = function(template) {
+							var loadItems = function() {
+								for ( var i = 0; i < feed.length; i++ ) {
+									var object = feed[i];
+									var id = object.id;
 
-							for ( var i = 0; i < JSONobjects.length; i++ ) {
-								var object = JSONobjects[i],
-									id = object.Id,
-									image = object.Image,
-									title = object.Title,
+									if ( !finalArray.has(id) ) continue;
 
-									dateStr = object.Date,
-									z = dateStr.replace("Z", ""),
-									a = z.split("T"),
-									d = a[0].split("-"),
-									t = a[1].split(":"),
-									date = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]),
+									// result = resultTemplate.html(); // $(".search-result-template") with {{VARs}}
+									// wrapperClass = resultTemplate.data('wrapper-class');
 
-									hour = date.getHours(),
-									hours = hour < 10 ? "0" + hour : hour,
-									minute = date.getMinutes(),
-									minutes = minute < 10 ? "0" + minute : minute,
-									day = date.getDate(),
-									days = day < 10 ? "0" + day : day,
-									month = date.getMonth(),
-									months = (month + 1) < 10 ? "0" + (month + 1) : (month + 1),
-									year = date.getFullYear(),
-									years = year < 10 ? "0" + year : year,
-									fulldate = hours + ":" + minutes + " @ " + days + "/" + months + "/" + years,
+									var result = template;
 
-									url = object.Url,
-									summary = object.Summary,
-									type = object.Type,
-									categories = object.Categories.length > 0 ? object.Categories.toString().replace(/,/g , ", ") : "None",
-									tags = object.Tags.length > 0 ? object.Tags.toString().replace(/,/g , ", ") : "None",
-									result = '<div class="search-item loading">\
-												  <a class="img" href="' + url + '" style="background: url(' + image + ') no-repeat center center;"></a>\
-												  <a class="title" href="' + url + '">' + title + '</a>\
-												  <div class="date">' + fulldate + '</div>\
-												  <div class="type">' + type + '</div>\
-												  <div class="summary">' + summary + '</div>\
-												  <div class="info">\
-													  <div class="categories" data-tooltip="' + categories + '">Categories</div>\
-													  <div class="tags" data-tooltip="' + tags + '">Tags</div>\
-												  </div>\
-											  </div>';
+									// I can't believe someone has written this regex crap and can still sleep at night
+									var handleIfRegex = /{{#if (\w+)}}(((?!{{#if \w+}}[\s\S]*?{{\/if}})[\s\S])*?){{\/if}}/g;
+
+									while (result.search(handleIfRegex) !== -1) {
+										result = result.replace(handleIfRegex, function(str, key, value) {
+											return object[key] && object[key] ? value : '';
+										});
+									}
+
+									result = result.replace(/{{(\w+)}}/g, function(str, key) {
+										return object[key] ? object[key] : '';
+									});
+
+									if ( !resultItems.has(result) ) resultItems.push(result);
+								}
 
 
-								if ( $.inArray(id, finalArray) > -1 ) results.append(result);
+								// Highlight
+
+								if ( input.length ) {
+									input.each(function() {
+										var value = $(this).val().toLowerCase(),
+											parameter = $(this).data("lookup"),
+											criteria = parameter.replace(/\s/g, "").split(",");
+
+										if ( value.length > 1 ) {
+											for ( var i = 0; i < criteria.length; i++ ) {
+												var target = results.find("[class='" + criteria[i].toLowerCase() + "']");
+												matter.text.highlight(target, value);
+											}
+										}
+									});
+								}
+
+
+								// Pagination
+
+								if ( matter.config.search.pagination ) {
+									container.append(resultsPaginationElement).prepend(resultsPaginationElement);
+									firstLoad = false;
+								}
 							}
 
-							// Tooltips
-
-							matter.tooltip.init();
+							if ( firstLoad ) loadItems();
 
 
-							// Highlight
+							// Post build
 
-							input.each(function() {
-								var value = $(this).val().toLowerCase(),
-									parameter = $(this).data("search-parameter"),
-									criteria = parameter.replace(/\s/g, "").split(",");
+							var showItem = function(i) {
+								var item = $(resultItems[i]);
 
-								if ( value.length > 1 ) {
-									for ( var i = 0; i < criteria.length; i++ ) {
-										var target = results.find("[class='" + criteria[i].toLowerCase() + "']");
-										matter.text.highlight(target, value);
+								if ( i < (matter.config.search.display  * currentPage) ) {
+									if ( matter.config.search.pagination ) {
+										item.appendTo(results);
+										setTimeout(function() {
+											item.removeClass("loading");
+										}, 250);
+									} else {
+										item.appendTo(results);
+										setTimeout(function() {
+											item.removeClass("loading");
+										}, 250 + (100 * (i % matter.config.search.display)));
 									}
 								}
-							});
+							}
+
+							var items = results.children(".item");
+							var resultsCount = resultItems.length;
+
+							count
+								.css({"display": "inline-block"})
+								.html((resultsCount === 0 ? "No" : resultsCount) + " result" + (resultsCount === 1 ? " " : "s ") + "found");
+
+							container.removeClass("loading");
+							results.removeClass("no-results");
+
+							if (resultsCount) {
+								results.removeClass("no-results");
+
+								if ( matter.config.search.pagination ) items.addClass("loading");
+
+								for ( var i = (matter.config.search.display  * (currentPage - 1)), j = 0; i < resultsCount && j < matter.config.search.display; i++, j++ ) {
+									showItem(i);
+								}
+							} else {
+								results.addClass("no-results");
+							}
 
 
-							// Pagination
-
-							results.append(resultsPaginationElement);
-							firstLoad = false;
-						}
-
-						if ( firstLoad ) loadItems();
+							// Pagination and Selective loading
 
 
-						// Post build
+							if ( matter.config.search.pagination ) {
+								pagination = $(".search-pagination");
 
-						var showItem = function(el, i) {
-							if ( i < (matter.config.search.count * currentPage) ) {
-								if ( matter.config.search.pagination ) {
-									el.eq(i).removeClass("loading");
+								if ( resultsCount > matter.config.search.display ) {
+									pagination.show();
 								} else {
-									setTimeout(function() {
-										el.eq(i).removeClass("loading");
-									}, 100 * (i % matter.config.search.count));
+									pagination.hide();
+								}
+							} else {
+								if ( resultsCount > matter.config.search.display * currentPage ) {
+									load.show();
+								} else {
+									load.hide();
 								}
 							}
 						}
 
-						var items = results.children(".search-item");
-						var resultsCount = items.length;
-
-						count
-							.css({"display": "inline-block"})
-							.html((resultsCount === 0 ? "No" : resultsCount) + " result" + (resultsCount === 1 ? " " : "s ") + "found");
-
-						if ( resultsCount ) {
-							results.removeClass("loading").removeClass("no-results");
-
-							if ( matter.config.search.pagination ) items.addClass("loading");
-							for ( var i = (matter.config.search.count * (currentPage - 1)); i < resultsCount; i++ ) {
-								showItem(items, i);
-							}
-						} else {
-							if ( hasOutput ) {
-								results.removeClass("loading").addClass("no-results");
-							} else {
-								results.removeClass("no-results").addClass("loading");
-							}
-						}
-
-
-						// Pagination and Selective loading
-
-						pagination = $(".search-pagination");
-
-						if ( matter.config.search.pagination ) {
-							if ( resultsCount > matter.config.search.count ) {
-								pagination.show();
-							} else {
-								pagination.hide();
-							}
-						} else {
-							if ( resultsCount > matter.config.search.count * currentPage ) {
-								load.show();
-							} else {
-								load.hide();
-							}
-						}
+						matter.data.get(resultTemplate, buildTemplate);
 					}
 
 					results.html("");
+					resultItems.length = 0;
 					rebuildSystem();
 
 
 					// Pagination and Selective loading
 
-					var items = results.children(".search-item");
-					var resultsCount = items.length;
+					var items = results.children(".item");
+					var resultsCount = resultItems.length; // items.length;
 
 					if ( matter.config.search.pagination ) {
 						var pages = 0;
 
 						for ( var n = 0; n < resultsCount; n++ ) {
-							if ( n % matter.config.search.count === 0 ) {
+							if ( n % matter.config.search.display === 0 ) {
 								pages++;
 
 								var page = "<button data-page='" + pages + "'>" + pages + "</button>";
@@ -557,7 +641,8 @@ var initSearch = function() {
 							rebuildSystem();
 						});
 					} else {
-						load.on("click", function() {
+						load.off().on("click", function(e) {
+							e.preventDefault();
 							currentPage++;
 							rebuildSystem();
 						});
@@ -569,20 +654,34 @@ var initSearch = function() {
 				// Initialise
 
 				initDropdowns();
+				inputInit();
 				updateResults();
 
 
 
 				// Query String Auto selecting
 
-				var queryObj = matter.query.get();
+				var queryObj = matter.query.get(window.location.href);
 
 				for ( var prop in queryObj ) {
 					if( queryObj.hasOwnProperty(prop) ) {
 						var assignedDrop = prop;
 						var assignedVal = queryObj[prop];
+						var assignedContent;
 
-						$("select[data-search-parameter='" + assignedDrop + "']").val(assignedVal).trigger("change");
+						if ( assignedDrop == "q" ) {
+							input.val(decodeURIComponent(assignedVal));
+						} else {
+							if ( assignedVal instanceof Array ) {
+								for (var i = 0; i < assignedVal.length; i++) {
+									assignedContent = decodeURIComponent(assignedVal[i]).replace(/-/g, " ").toCamelCase();
+									addTag(assignedDrop, assignedContent, decodeURIComponent(assignedVal[i]));
+								}
+							} else {
+								assignedContent = decodeURIComponent(assignedVal).replace(/-/g, " ").toCamelCase();
+								addTag(assignedDrop, assignedContent,decodeURIComponent( assignedVal));
+							}
+						}
 					}
 				}
 			}
@@ -590,6 +689,11 @@ var initSearch = function() {
 			matter.data.get(url, buildSystem);
 		});
 
-		if ( matter.config.application.debug ) console.log(":: Unified Search");
+		window.onbeforeunload = function() {
+			var url = (window.location.href).split("?")[0] + rawQuery;
+			history.pushState(null, null, url);
+		}
+
+		debug.log("Search :: Unified Search");
 	}
 }

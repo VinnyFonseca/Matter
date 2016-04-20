@@ -1,0 +1,14 @@
+// Forms
+
+form {
+	.column {
+		.field {
+			margin-bottom: floor($spacing / 2);
+		}
+
+		.button {
+			margin-top: floor($spacing / 2);
+			margin-bottom: 0;
+		}
+	}
+}

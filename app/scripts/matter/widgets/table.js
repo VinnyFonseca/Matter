@@ -43,7 +43,7 @@ matter.table = {
 				}
 			});
 
-			if ( matter.config.application.debug ) console.log(":: Tables");
+			debug.log(":: Tables");
 		}
 	}
 }

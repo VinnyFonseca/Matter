@@ -319,7 +319,7 @@
 .highlight {
 	display: inline !important;
 	border-radius: $radius !important;
-	background: rgba($c0, 0.1) !important;
+	background: $highlightColor !important;
 }
 
 
@@ -460,26 +460,6 @@
 }
 .monospace {
 	font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace !important;
-}
-
-
-
-// Colours
-
-.white {
-	color: $cf !important;
-}
-.black {
-	color: $c0 !important;
-}
-.light-gray {
-	color: $cd !important;
-}
-.gray {
-	color: $c4 !important;
-}
-.dark-gray {
-	color: $c2 !important;
 }
 
 

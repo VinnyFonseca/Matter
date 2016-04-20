@@ -10,13 +10,13 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
 		<meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="format-detection" content="telephone=no">
+		<meta name="msapplication-tap-highlight" content="no">
+		<meta name="format-detection" content="telephone=no">
 
-	    <!--[if IE]>
-	    <meta http-equiv="Page-Enter" content="blendTrans(duration=0)" />
-	    <meta http-equiv="Page-Exit" content="blendTrans(duration=0)" />
-	    <![endif]-->
+		<!--[if IE]>
+		<meta http-equiv="Page-Enter" content="blendTrans(duration=0)">
+		<meta http-equiv="Page-Exit" content="blendTrans(duration=0)">
+		<![endif]-->
 
 		<!-- Favicons -->
 		<link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-touch-icon-57x57.png">
@@ -41,6 +41,8 @@
 
 		<title>Matter</title>
 		<meta name="description" content="Page description. No longer than 155 characters." />
+
+		<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'none'; child-src 'none'; object-src 'none'"> -->
 
 		<!-- Schema.org markup for Google+ -->
 		<meta itemprop="name" content="Matter">
@@ -67,8 +69,14 @@
 		<link rel="stylesheet" href="/styles/build.css" type="text/css" media="all">
 
 		<!--[if lt IE 9]>
-		<script type="text/javascript" src="/scripts/html5shiv-printshiv.js"></script>
+		<script type="text/javascript" src="/scripts/head/html5shiv-printshiv.js"></script>
 		<![endif]-->
+
+		<!--[if lt IE 10]>
+		<script type="text/javascript" src="/scripts/head/json.js"></script>
+		<![endif]-->
+
+		<script type="text/javascript" src="/scripts/head/jquery-1.12.1.js"></script>
 	</head>
 
 	<body class="preload">
@@ -83,7 +91,7 @@
 <div class="overlay" id="example">
 	<div class="modal">
 		<div class="close overlay-close">
-			<img class="svg icon icon-close" src="img/icons/icon-close.svg" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
+			<img class="svg icon icon-close" src="/img/icons/icon-close.svg" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
 		</div>
 
 		<h3>Overlay Title</h3>
@@ -99,7 +107,7 @@
 			<img class="svg icon icon-mobile" src="/img/icons/icon-mobile.svg" onerror="this.onerror=null;this.src='/img/icons/icon-mobile.png'">
 		</div>
 
-		<a href="/documentation.html">
+		<a class="doc-trigger" href="/documentation.html">
 			<img class="svg icon icon-book" src="/img/icons/icon-book.svg" onerror="this.onerror=null;this.src='/img/icons/icon-book.png'" alt="CTA icon">
 		</a>
 
@@ -116,7 +124,7 @@
 <div class="hero">
 	<div class="parallax">
 		<div class="wrapper">
-			<div class="logo"><img src="img/logo.png"></div>
+			<div class="logo"><img src="/img/logo-white.png"></div>
 
 			<h1>Matter</h1>
 
@@ -126,14 +134,36 @@
 
 			<p>No more de-styling and restyling. Use HTML's default behaviour to leverage your web application and improve your workflow.</p>
 
-			<a href="documentation.html" class="button primary">View Documentation</a>
-			<a href="https://github.com/VinnyFonseca/matter.git" target="_blank" class="button secondary">Clone on Github</a>
+			<a href="/documentation/" class="button secondary">View Documentation</a>
+			<a href="https://github.com/VinnyFonseca/matter.git" target="_blank" class="button tertiary">Clone on Github</a>
 		</div>
 	</div>
 </div>
 
 <div class="main">
 	<div class="wrapper">
+		<div class="search-wrapper" data-search="true" data-feed="/data/search.json" data-template="/templates/main.html">
+			<div class="row">
+				<div class="column">
+					<input type="text" placeholder="Search..." data-lookup="title, summary">
+				</div>
+			</div>
+			<div class="row">
+				<div class="column" data-span="4">
+					<select class="keep" data-lookup="type"></select>
+				</div>
+				<div class="column" data-span="4">
+					<select class="keep" data-lookup="categories"></select>
+				</div>
+				<div class="column" data-span="4">
+					<select class="keep" data-lookup="tags"></select>
+				</div>
+			</div>
+
+			<div class="search-container"></div>
+		</div>
+
+
 		<h2>What's <sub><small class="light-gray">the</small></sub> Matter?</h2>
 
 		<p>

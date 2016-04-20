@@ -45,19 +45,16 @@ $heroBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHht
 	a {
 		margin-top: $spacing;
 		@extend .font-medium;
-		@extend .secondary;
 	}
 
 	.logo {
 		display: inline-block;
 		position: relative;
 		margin: 0 auto $spacing;
-		padding: floor($spacing * 1.5);
+		padding: 0;
 		width: 168px;
 		height: 168px;
-		background-color: rgba($cf, 0.75);
 		overflow: visible;
-		@extend .circle;
 
 		img {
 			width: 100%;

@@ -5,7 +5,7 @@
 	position: relative;
 	color: $bodyTextColor;
 	margin: 0;
-	margin-bottom: floor($spacing / 1.5);
+	margin-bottom: $spacing;
 	padding: floor($spacing / 2.5) floor($spacing / 1.5);
 	width: 100%;
 	font-family: $bodyFont;
@@ -18,6 +18,7 @@
 	background-clip: padding-box;
 	outline: 0;
 	vertical-align: bottom;
+	appearance: none;
 
 	&::placeholder {
 		color: $ca;
@@ -39,22 +40,6 @@
 	&[type="hidden"],
 	&[type="search"]::-webkit-search-decoration { // UI Consistency
 		display: none;
-	}
-
-	&[type="date"],
-	&[type="datetime"],
-	&[type="datetime-local"],
-	&[type="email"],
-	&[type="month"],
-	&[type="number"],
-	&[type="password"],
-	&[type="search"],
-	&[type="tel"],
-	&[type="text"],
-	&[type="time"],
-	&[type="url"],
-	&[type="week"] {
-		appearance: none;
 	}
 }
 

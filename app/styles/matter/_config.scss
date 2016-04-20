@@ -63,11 +63,11 @@ $bodyTextColor: $c3; // Text colour
 
 // Typography
 
-$fontSize: 1.6; // REM measure. 1.0rem = 10px; Change the root value of pixrem's postcss module on GruntFile.js to this value multiplied by 10.
+$fontSize: 1.7; // REM measure. 1.0rem = 10px; Change the root value of pixrem's postcss module on GruntFile.js to this value multiplied by 10.
 $lineHeight: $fontSize; // Line Height
 
 
-@mixin font-face($family, $filename) {
+@mixin font-face($family, $filename, $weight, $style) { // Use same font family with different weights and styles when defining different fonts to use native CSS properties
 	@font-face {
 		font-family: $family;
 		src: url("/fonts/" + $filename + ".eot");
@@ -76,8 +76,8 @@ $lineHeight: $fontSize; // Line Height
 			 url("/fonts/" + $filename + ".ttf") format("truetype"),
 			 url("/fonts/" + $filename + ".svg#" + $filename) format("svg");
 		font: {
-			style: normal;
-			weight: normal;
+			style: $style;
+			weight: $weight;
 		};
 	}
 }
@@ -85,8 +85,11 @@ $lineHeight: $fontSize; // Line Height
 @import url("//fonts.googleapis.com/css?family=Maven Pro:400,700");
 $headingFont: "Maven Pro", serif;
 
-@import url("//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700");
+@import url("//fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,700italic,700");
 $bodyFont: "Open Sans", sans-serif;
+
+// @import url("//fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,600italic,700,700italic");
+// $bodyFont: "Source Sans Pro", sans-serif;
 
 @import url("//fonts.googleapis.com/css?family=Source+Code+Pro:400,500");
 $monoFont: "Source Code Pro", monospace;
@@ -120,10 +123,10 @@ $borderWidth: 1px;
 $borderColor: $cc;
 $borderStyle: solid;
 
-$dropdownItemHeight: 53;
+$dropdownItemHeight: 42px;
 $dropdownItemCount: 5;
 
-$controllerWidth: 28px;
+$controllerWidth: 24px;
 $toggleWidth: $controllerWidth * 2;
 $toggleHeight: $toggleWidth / 2;
 $switchSize: $toggleHeight + 2;

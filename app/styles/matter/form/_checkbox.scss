@@ -19,8 +19,13 @@ input[type="checkbox"] {
 .controller {
 	display: block;
 	position: relative;
-	margin: 4px 0;
+	margin: 0;
+	margin-bottom: floor($spacing / 3);
 	text-align: left;
+
+	&:last-of-type {
+		margin-bottom: 0;
+	}
 
 	&:active {
 		label {
@@ -38,7 +43,7 @@ input[type="checkbox"] {
 	label {
 		display: inline-block;
 		position: relative;
-		margin: 5px 0;
+		margin: 0;
 		padding: 0;
 		cursor: pointer;
 		user-select: none;
@@ -52,11 +57,11 @@ input[type="checkbox"] {
 			padding: 0;
 			width: $controllerWidth;
 			height: $controllerWidth;
-			top: -3px;
+			top: 0;
 			left: 0;
 			font-size: 0;
 			text-align: center;
-			border: $borderWidth solid $borderColor;
+			border: $borderWidth $borderStyle $borderColor;
 			border-radius: $radius;
 			background-color: $cf;
 			background-size: 14px !important;
@@ -75,11 +80,10 @@ input[type="checkbox"] {
 
 	&.checkbox {
 		label {
-			padding-left: $controllerWidth + floor($spacing / 3);
+			padding-left: $controllerWidth + floor($spacing / 2);
 
 			&:before {
-				border-radius: 1000px;
-				// border-radius: $radius;
+				border-radius: 3px;
 			}
 		}
 
@@ -87,7 +91,7 @@ input[type="checkbox"] {
 			&:checked {
 				+ label {
 					&:before {
-						background-image: url($base + "img/icons/icon-control-radio.png");
+						background-image: url($base + "img/icons/icon-control-checkbox.png");
 					}
 				}
 			}
@@ -152,7 +156,6 @@ input[type="checkbox"] {
 				margin-right: 8px;
 				width: $toggleWidth;
 				height: $toggleHeight;
-				top: -2px;
 				left: 0;
 				border-radius: 1000px;
 				background: $cf;
@@ -168,7 +171,7 @@ input[type="checkbox"] {
 				height: $switchSize;
 				top: -1px;
 				left: -1px;
-				border: 1px solid $ca;
+				border: $borderWidth $borderStyle $borderColor;
 				border-radius: 1000px;
 				background-color: $cf;
 				box-shadow: inset 0px 3px 3px 0 rgba($cf, 0.7), inset 0px -1px 1px 0 rgba($c0, 0.15);

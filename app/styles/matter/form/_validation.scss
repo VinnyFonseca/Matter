@@ -43,6 +43,10 @@
 .invalid[readonly],
 .invalid[disabled] {
 	@extend .disabled;
+
+	+ .dropdown-current {
+		@extend .disabled;
+	}
 }
 
 .controller {
@@ -99,4 +103,16 @@
 			}
 		}
 	}
+}
+
+.form-loader,
+.icon.form-done {
+	display: none;
+	position: relative;
+	margin: $spacing auto 2px;
+	padding: 0;
+	width: 42px;
+	height: 42px;
+	@include svgColor($color1);
+	vertical-align: middle;
 }

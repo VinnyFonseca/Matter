@@ -17,7 +17,6 @@
 		left: 0;
 
 		.notification {
-			position: relative;
 			margin: 0;
 			padding: $spacing;
 			top: 0;
@@ -62,9 +61,9 @@
 
 .notification {
 	display: block;
-	position: absolute;
+	position: relative;
 	margin: 0 0 5px 0;
-	padding: $spacing;
+	padding: floor($spacing / 1.5);
 	padding-left: floor($spacing * 1.25) + 16;
 	width: 100%;
 	top: 0;
@@ -81,16 +80,16 @@
 	transition: all $duration $easing;
 
 	&.active {
-		position: relative;
 		opacity: 1;
 		transform: translateX(0);
 		z-index: 900;
 	}
 
 	.notification-title {
-		color: $defaultTextColor;
 		@extend h5;
+		margin: 0;
 		padding-top: 0;
+		color: $defaultTextColor;
 		font-weight: bold;
 		line-height: 1;
 		padding-bottom: floor($spacing / 3);

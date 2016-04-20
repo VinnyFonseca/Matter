@@ -1,35 +1,17 @@
-// IE8 Fixes
-
-if ( !window.console ) console = { log: function() {} };
-
-window.hasOwnProperty = window.hasOwnProperty || Object.prototype.hasOwnProperty;
-
-if( typeof String.prototype.trim !== 'function' ) {
-	String.prototype.trim = function() {
-		return this.replace(/^\s+|\s+$/g, '');
-	}
-}
-
-Element.prototype.remove = function() {
-	this.parentElement.removeChild(this);
-}
-NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-	for(var i = 0, len = this.length; i < len; i++) {
-		if(this[i] && this[i].parentElement) {
-			this[i].parentElement.removeChild(this[i]);
-		}
-	}
-}
-
-
-
+// Helper
 
 // Arrays
 
 // ECMAScript5
 
+if ( typeof Array.isArray === "undefined" ) {
+	Array.isArray = function(obj) {
+		return Object.prototype.toString.call(obj) === "[object Array]";
+	}
+}
+
 if ( !Array.prototype.indexOf ) {
-	Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
+	Array.prototype.indexOf = function(searchElement) {
 		"use strict";
 		if (this == null) {
 			throw new TypeError();
@@ -113,9 +95,9 @@ Array.prototype.uniques = function() { // Gather unique values
 	}, []);
 }
 
-Array.prototype.contains = function(v) { // Contains specified value
+Array.prototype.contains = function(value) { // Contains specified value
 	for ( var i = 0; i < this.length; i++ ) {
-		if ( this[i] === v ) return true;
+		if ( this[i] === value ) return true;
 	}
 	return false;
 }
@@ -140,6 +122,10 @@ Array.prototype.reduce = function() { // Join all internal arrays
 		}
 	}
 	return a;
+}
+
+Array.prototype.has = function(value) {
+	return this.indexOf(value) > -1;
 }
 
 
@@ -170,6 +156,12 @@ if ( !String.prototype.trim ) {
 
 String.prototype.toCamelCase = function() {
 	return this.replace(/(\-[a-z])/g, function($1) { return $1.toUpperCase().replace('-',''); } );
+}
+
+String.prototype.capitalize = function() {
+	return this.toLowerCase().replace(/([^a-z])([a-z])(?=[a-z]{2})|^([a-z])/g, function(_, g1, g2, g3) {
+    return (typeof g1 === 'undefined') ? g3.toUpperCase() : g1 + g2.toUpperCase();
+  });
 }
 
 String.prototype.boolean = function() {

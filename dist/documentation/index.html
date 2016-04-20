@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]> <html class="lt-ie10 lt-ie9 lt-ie8 lt-ie7" itemscope itemtype="http://schema.org/Product"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie10 lt-ie9 lt-ie8 ie7" itemscope itemtype="http://schema.org/Product"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie10 lt-ie9 ie8" itemscope itemtype="http://schema.org/Product"> <![endif]-->
+<!--[if IE 9]>    <html class="lt-ie10 ie9" itemscope itemtype="http://schema.org/Product"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="modern" itemscope itemtype="http://schema.org/Product"> <!--<![endif]-->
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="msapplication-tap-highlight" content="no">
+		<meta name="format-detection" content="telephone=no">
+
+		<!--[if IE]>
+		<meta http-equiv="Page-Enter" content="blendTrans(duration=0)">
+		<meta http-equiv="Page-Exit" content="blendTrans(duration=0)">
+		<![endif]-->
+
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" href="/img/favicon/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="/img/favicon/favicon-194x194.png" sizes="194x194">
+		<link rel="icon" type="image/png" href="/img/favicon/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="/img/favicon/android-chrome-192x192.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="/img/favicon/favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="/img/favicon/manifest.json">
+		<link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#cc0000">
+		<meta name="msapplication-TileImage" content="/img/favicon/mstile-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+
+		<title>Matter</title>
+		<meta name="description" content="Page description. No longer than 155 characters." />
+
+		<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'none'; child-src 'none'; object-src 'none'"> -->
+
+		<!-- Schema.org markup for Google+ -->
+		<meta itemprop="name" content="Matter">
+		<meta itemprop="description" content="A SASS Front End Framework">
+		<meta itemprop="image" content="http://matterframework.net/img/header.jpg">
+
+		<!-- Twitter Card data -->
+		<meta name="twitter:card" content="product">
+		<meta name="twitter:site" content="@VinnyFonseca">
+		<meta name="twitter:title" content="Matter">
+		<meta name="twitter:description" content="A SASS Front End Framework">
+		<meta name="twitter:creator" content="@VinnyFonseca">
+		<meta name="twitter:image" content="http://matterframework.net/img/header.jpg">
+
+		<!-- Open Graph data -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Matter" />
+		<meta property="og:title" content="Matter" />
+		<meta property="og:description" content="A SASS Front End Framework" />
+		<meta property="og:url" content="http://matterframework.net/" />
+		<meta property="og:image" content="http://matterframework.net/img/header.jpg" />
+
+		<!-- Minified CSS - Includes all .scss from style folder -->
+		<link rel="stylesheet" href="/styles/build.css" type="text/css" media="all">
+
+		<!--[if lt IE 9]>
+		<script type="text/javascript" src="/scripts/head/html5shiv-printshiv.js"></script>
+		<![endif]-->
+
+		<!--[if lt IE 10]>
+		<script type="text/javascript" src="/scripts/head/json.js"></script>
+		<![endif]-->
+
+		<script type="text/javascript" src="/scripts/head/jquery-1.12.1.js"></script>
+	</head>
+
+	<body class="preload">
+		<!--[if lt IE 8]>
+		<p class="emphasis">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+
+<a href="#" class="anchor" id="top"></a>
+<div class="notification-wrapper"></div>
+
+
+<div class="overlay" id="example">
+	<div class="modal">
+		<div class="close overlay-close">
+			<img class="svg icon icon-close" src="/img/icons/icon-close.svg" onerror="this.onerror=null;this.src='img/icons/icon-close.png'">
+		</div>
+
+		<h3>Overlay Title</h3>
+	</div>
+</div>
+
+
+<header>
+	<div class="scroll-progress"></div>
+
+	<div class="controls">
+		<div class="debug-trigger hidden">
+			<img class="svg icon icon-mobile" src="/img/icons/icon-mobile.svg" onerror="this.onerror=null;this.src='/img/icons/icon-mobile.png'">
+		</div>
+
+		<a class="doc-trigger" href="/documentation.html">
+			<img class="svg icon icon-book" src="/img/icons/icon-book.svg" onerror="this.onerror=null;this.src='/img/icons/icon-book.png'" alt="CTA icon">
+		</a>
+
+		<a href="#top" class="top-trigger">
+			<img class="svg icon icon-arrow-up" src="/img/icons/icon-arrow-up.svg" onerror="this.onerror=null;this.src='/img/icons/icon-arrow-up.png'">
+		</a>
+	</div>
+</header>
+
+
+<div class="sidebar">
+	<div class="sidebar-trigger">
+		<img class="svg icon icon-caret-right" src="/img/icons/icon-caret-right.svg" alt="CTA icon">
+	</div>
+
+	<a href="/">
+		<div class="logo"><img src="/img/logo.png"></div>
+		<h2>Matter</h2>
+	</a>
+
+	<h4>Table of Contents</h4>
+</div>
+
+
+<div class="main docs">
+	<div class="wrapper">
+		<h1>Documentation</h1>
+
+
+
+
+
+
+		<div class="separator">&nbsp;</div>
+
+
+
+
+
+
+		<a href="#" class="anchor" id="directory"></a>
+
+		<h2>Directory Tree</h2>
+
+<pre class="structure">
+<span class="folder">app (source)</span>
+<i>----</i><span class="folder">markup</span>
+<i>----</i><i>----</i><span class="folder">include</span>
+<i>----</i><i>----</i><i>----</i><span class="file">head.html</span>
+<i>----</i><i>----</i><i>----</i><span class="file">header.html</span>
+<i>----</i><i>----</i><i>----</i><span class="file">footer.html</span>
+<i>----</i><i>----</i><i>----</i><span class="file">foot.html</span>
+<i>----</i><i>----</i><span class="file">index.html</span>
+
+<i>----</i><span class="folder">scripts</span>
+<i>----</i><i>----</i><span class="system" data-tooltip="Core folder">matter</span>
+<i>----</i><i>----</i><span class="folder">custom</span>
+<i>----</i><i>----</i><i>----</i><span class="file">config.js</span>
+<i>----</i><i>----</i><i>----</i><span class="file">global.js</span>
+
+<i>----</i><span class="folder">styles</span>
+<i>----</i><i>----</i><span class="system" data-tooltip="Core folder">matter</span>
+<i>----</i><i>----</i><span class="folder">custom</span>
+<i>----</i><i>----</i><i>----</i><span class="file">_config.scss</span>
+<i>----</i><i>----</i><i>----</i><span class="file">_global.scss</span>
+<i>----</i><i>----</i><i>----</i><span class="file">_responsive.scss</span>
+<i>----</i><i>----</i><i>----</i><span class="file">_conditional.scss</span>
+<i>----</i><i>----</i><span class="file">build.scss</span>
+
+<span class="folder">www (output)</span>
+<i>----</i><span class="folder">img</span>
+<i>----</i><i>----</i><span class="folder">favicon</span>
+<i>----</i><i>----</i><span class="folder">icons</span>
+<i>----</i><i>----</i><span class="folder">markers</span>
+<i>----</i><em class="system" data-tooltip="Output folder">scripts</em>
+<i>----</i><em class="system" data-tooltip="Output folder">styles</em>
+<i>----</i><em class="system">index.html</em>
+
+<span class="file">.gitignore</span>
+<span class="file">.gitattributes</span>
+<span class="file">LICENSE</span>
+<span class="file">README.md</span>
+<span class="file">package.json</span>
+<span class="file">Gruntfile.js</span>
+</pre>
+
+		<p>
+			Files changed in <code>app/markup</code> will be output to <code>www</code>'s root.
+			<br>
+			Files changed in <code>app/styles</code> and <code>app/scripts</code> will be compiled to their respetive folders in <code>www</code>.
+			<br>
+			Refer to Grunfile.js for system setup.
+		</p>
+
+		<p>
+			The folders <code>.git</code>, <code>node_modules</code> and <code>.tmp</code> are automatically generated by <strong>git</strong>, <strong>grunt</strong>, and <strong>grunt-ssi</strong> respectively. All are added to <code>.gitignore</code>.
+		</p>
+
+
+
+
+
+
+		<div class="separator">&nbsp;</div>
+
+
+
+
+
+
+		<a href="#" class="anchor" id="grid-system"></a>
+
+		<h2>Grid System</h2>
+
+		<p>
+			<strong>Usage:</strong>
+		</p>
+
+		<p>
+			Set the number of columns on <code>_config.scss</code>, then use <code>data-span</code> attribute to set the width of a column.
+		</p>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<div class="row debug">
+			<div class="column" data-span="4">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="8">
+				<div class="cell">Word</div>
+			</div>
+		</div>
+
+		<p>
+			<strong>Example:</strong>
+		</p>
+
+<pre>
+&lt;div class="row"&gt;
+<i>----</i>&lt;div class="column" <span class="emphasis">data-span="4"</span>&gt;
+<i>----</i><i>----</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
+<i>----</i>&lt;/div&gt;
+<i>----</i>&lt;div class="column" <span class="emphasis">data-span="8"</span>&gt;
+<i>----</i><i>----</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
+<i>----</i>&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+		<p class="emphasis">
+			Note: In order to keep cross-browser consistency, <code>.column</code> must be inside a <code>.row</code>. <code>.cell</code> is optional.
+			<br>
+			If a column has no <code>data-span</code> declared, it will automatically set to maximum width.
+		</p>
+
+
+		<hr>
+
+
+		<a href="#" class="anchor" id="complete"></a>
+
+		<h3>Complete Grid</h3>
+
+		<div class="row debug">
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+
+
+			<div class="column" data-span="2">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="2">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="2">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="2">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="2">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="2">
+				<div class="cell">Word</div>
+			</div>
+
+
+			<div class="column" data-span="3">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="3">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="3">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="3">
+				<div class="cell">Word</div>
+			</div>
+
+
+			<div class="column" data-span="4">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="4">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="4">
+				<div class="cell">Word</div>
+			</div>
+
+
+			<div class="column" data-span="5">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="5">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="2">
+				<div class="cell">Word</div>
+			</div>
+
+
+			<div class="column" data-span="6">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="6">
+				<div class="cell">Word</div>
+			</div>
+
+
+			<div class="column" data-span="7">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="5">
+				<div class="cell">Word</div>
+			</div>
+
+
+			<div class="column" data-span="8">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="4">
+				<div class="cell">Word</div>
+			</div>
+
+
+			<div class="column" data-span="9">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="3">
+				<div class="cell">Word</div>
+			</div>
+
+
+			<div class="column" data-span="10">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="2">
+				<div class="cell">Word</div>
+			</div>
+
+
+			<div class="column" data-span="11">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="1">
+				<div class="cell">Word</div>
+			</div>
+
+
+			<div class="column" data-span="12">
+				<div class="cell">Word</div>
+			</div>
+		</div>
+
+
+		<hr>
+
+
+		<a href="#" class="anchor" id="push"></a>
+
+		<h3>Push Grid</h3>
+
+		<p>
+			<strong>Example</strong>
+		</p>
+
+<pre>
+&lt;div class="row"&gt;
+<i>----</i>&lt;div class="column" <span class="emphasis">data-span="8" data-push="4"</span>&gt;
+<i>----</i><i>----</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
+<i>----</i>&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+		<p class="emphasis">
+			Use <code>data-push</code> to specify how many columns you want a certain column to move.
+		</p>
+
+		<div class="row debug show-push">
+			<div class="column" data-span="1" data-push="11">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="2" data-push="10">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="3" data-push="9">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="4" data-push="8">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="5" data-push="7">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="6" data-push="6">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="7" data-push="5">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="8" data-push="4">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="9" data-push="3">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="10" data-push="2">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="11" data-push="1">
+				<div class="cell">Word</div>
+			</div>
+			<div class="column" data-span="12" data-push="0">
+				<div class="cell">Word</div>
+			</div>
+		</div>
+
+
+
+
+
+
+		<div class="separator">&nbsp;</div>
+
+
+
+
+
+
+		<a href="#" class="anchor" id="block"></a>
+
+		<h2>Block Level Elements</h2>
+
+		<dl>
+			<dt>
+				<strong>a</strong>
+			</dt>
+			<dd>
+				<a href="#">Lorem ipsum Duis eu laboris veniam sed anim.</a>
+			</dd>
+
+			<dt>
+				<strong>a target="_blank"</strong>
+			</dt>
+			<dd>
+				<a href="#" target="_blank">Lorem ipsum Duis eu laboris veniam sed anim.</a>
+			</dd>
+
+			<dt>
+				<strong>a data-explicit="true"</strong>
+			</dt>
+			<dd>
+				<a href="http://matterframework.net" data-explicit="true">Lorem ipsum Duis eu laboris veniam sed anim.</a>
+			</dd>
+
+			<dt>
+				<strong>p</strong>
+			</dt>
+			<dd>
+				<p>
+					Lorem ipsum Magna dolore adipisicing consectetur Ut voluptate consequat minim sunt laborum in mollit nulla aute fugiat Excepteur nulla fugiat Duis ut officia velit aute sit in id nostrud pariatur exercitation ut quis nulla amet nostrud dolore in commodo culpa Excepteur Duis deserunt ea reprehenderit sit laborum enim irure dolore fugiat dolor dolore dolor Ut amet labore ullamco aute elit in tempor Ut in nulla aliqua officia consequat.
+				</p>
+			</dd>
+			</dd>
+
+			<dt>
+				<strong>p class="lead"</strong>
+			</dt>
+			<dd>
+				<p class="lead">
+					Lorem ipsum Magna dolore adipisicing consectetur Ut voluptate consequat minim sunt laborum in mollit nulla aute fugiat Excepteur nulla fugiat Duis ut officia velit aute sit in id nostrud pariatur exercitation ut quis nulla amet nostrud dolore in commodo culpa Excepteur Duis deserunt ea reprehenderit sit laborum enim irure dolore fugiat dolor dolore dolor Ut amet labore ullamco aute elit in tempor Ut in nulla aliqua officia consequat.
+				</p>
+			</dd>
+
+			<dt>
+				<strong>blockquote and cite</strong>
+			</dt>
+			<dd>
+				<blockquote>
+					<p>
+						Lorem ipsum Culpa sit dolor nostrud nulla minim elit consequat occaecat exercitation dolor et anim enim amet id veniam amet ea reprehenderit commodo in sunt tempor adipisicing velit minim irure ea ea nisi cillum ea pariatur in ad aliquip consectetur aliquip Duis.
+					</p>
+					<cite>
+						<a href="http://www.w3.org/html/wg/drafts/html/master/text-level-semantics.html#the-cite-element">4.51 the Cite element</a> , Berjon et al. 2013
+					</cite>
+				</blockquote>
+			</dd>
+
+			<dt>
+				<strong>address</strong>
+			</dt>
+			<dd>
+				<address>
+					<a href="#" lang="fi" hreflang="en">Company name</a>
+					<a href="mailto:test@test.com">test@test.com</a>
+					100, Street Name, City, Postcode
+				</address>
+			</dd>
+		</dl>
+
+
+		<hr>
+
+
+		<a href="#" class="anchor" id="iconography"></a>
+
+		<h3>Iconography</h3>
+
+		<p>
+			Matter has automatic svg injection from <code>img class="svg"</code> elements.
+		</p>
+
+		<div class="icon-wrapper">
+			<div class="icon-wrapper-item" data-icon="Arrow Up" data-tooltip="Arrow Up">
+				<img class="svg icon icon-arrow-up" src="/img/icons/icon-arrow-up.svg" alt="CTA icon">
+			</div>
+		</div>
+
+<pre>
+&lt;img class="svg icon icon-<span class="emphasis">name</span>" src="/img/icons/icon-<span class="emphasis">name</span>.svg"&gt;
+</pre>
+
+
+		<hr>
+
+
+		<a href="#" class="anchor" id="headings"></a>
+
+		<h3>Headings</h3>
+
+		<dl>
+			<dt>
+				<strong>h1</strong>
+			</dt>
+			<dd>
+				<h1>Sample Heading</h1>
+			</dd>
+			<dt>
+				<strong>h2</strong>
+			</dt>
+			<dd>
+				<h2>Sample Heading</h2>
+			</dd>
+			<dt>
+				<strong>h3</strong>
+			</dt>
+			<dd>
+				<h3>Sample Heading</h3>
+			</dd>
+			<dt>
+				<strong>h4</strong>
+			</dt>
+			<dd>
+				<h4>Sample Heading</h4>
+			</dd>
+			<dt>
+				<strong>h5</strong>
+			</dt>
+			<dd>
+				<h5>Sample Heading</h5>
+			</dd>
+			<dt>
+				<strong>h6</strong>
+			</dt>
+			<dd>
+				<h6>Sample Heading</h6>
+			</dd>
+		</dl>
+
+
+		<hr>
+
+
+		<a href="#" class="anchor" id="typography"></a>
+
+		<h3>Typography</h3>
+
+		<dl>
+			<dt>
+				<strong>abbr <small class="emphasis">(:hover)</small></strong>
+			</dt>
+			<dd>
+				<abbr title="Cascading Style Sheets">CSS</abbr>
+			</dd>
+
+			<dt>
+				<strong>acronym <small class="emphasis">(:hover)</small></strong>
+			</dt>
+			<dd>
+				<acronym title="Radio Detecting and Ranging">radar</acronym>
+			</dd>
+
+			<dt>
+				<strong>b</strong>
+			</dt>
+			<dd>
+				<b>Bold text</b>.
+			</dd>
+
+			<dt>
+				<strong>big</strong>
+			</dt>
+			<dd>
+				<big>Bigger text</big>.
+			</dd>
+
+			<dt>
+				<strong>cite</strong>
+			</dt>
+			<dd>
+				<cite>Citation used here</cite>
+			</dd>
+
+			<dt>
+				<strong>code</strong>
+			</dt>
+			<dd>
+				<code>a[i] = b[i] + c[i];</code>
+			</dd>
+
+			<dt>
+				<strong>del</strong>
+			</dt>
+			<dd>
+				<del>Deleted text</del>.
+			</dd>
+
+			<dt>
+				<strong>dfn</strong>
+			</dt>
+			<dd>
+				<dfn>Defintion content</dfn>.
+			</dd>
+
+			<dt>
+				<strong>em</strong>
+			</dt>
+			<dd>
+				<em>Italic text</em>.
+			</dd>
+
+			<dt>
+				<strong>i</strong>
+			</dt>
+			<dd>
+				<i lang="la">Homo sapiens</i> (supports <code>lang</code> attribute, <code>"la"</code> for Latin in this case).
+			</dd>
+
+			<dt>
+				<strong>ins</strong>
+			</dt>
+			<dd>
+				<ins>Inserted text</ins>.
+			</dd>
+
+			<dt>
+				<strong>kbd</strong>
+			</dt>
+			<dd>
+				<kbd>a[i] = b[i] + c[i];</kbd>
+			</dd>
+
+			<dt>
+				<strong>q</strong>
+			</dt>
+			<dd>
+				<q>Hello!</q>
+			</dd>
+
+			<dt>
+				<strong>q in q</strong>
+			</dt>
+			<dd>
+				<q>She said <q>Hello!</q></q>.
+			</dd>
+
+			<dt>
+				<strong>samp</strong>
+			</dt>
+			<dd>
+				<samp>a[i] = b[i] + c[i];</samp>
+			</dd>
+
+			<dt>
+				<strong>small</strong>
+			</dt>
+			<dd>
+				<small>Small text.</small>
+			</dd>
+
+			<dt>
+				<strong>strike or s</strong>
+			</dt>
+			<dd>
+				<strike>Strikethrough text</strike>.
+			</dd>
+
+			<dt>
+				<strong>strong</strong>
+			</dt>
+			<dd>
+				<strong>Strong text</strong>.
+			</dd>
+
+			<dt>
+				<strong>sub</strong>
+			</dt>
+			<dd>
+				X<sub>1</sub> and H<sub>2</sub>O
+			</dd>
+
+			<dt>
+				<strong>sup</strong>
+			</dt>
+			<dd>
+				M<sup>lle</sup>, 1<sup>st</sup>, e<sup>x</sup>, sin<sup>2</sup> <i>x</i>, e<sup>x<sup>2</sup></sup> and f(x)<sup>g(x)<sup>a+b+c</sup></sup>
+			</dd>
+
+			<dt>
+				<strong>tt</strong>
+			</dt>
+			<dd>
+				<tt>Monospace text</tt>.
+			</dd>
+
+			<dt>
+				<strong>u</strong>
+			</dt>
+			<dd>
+				<u>Underlined text</u>.
+			</dd>
+
+			<dt>
+				<strong>var</strong>
+			</dt>
+			<dd>
+				<var>variable</var> used.
+			</dd>
+
+		</dl>
+
+		<p>
+			Some of the elements tested above are typically displayed in a monospace font, often using the <strong>same</strong> presentation for all of them.
+		</p>
+
+		<ul>
+			<li><code>This is sample text inside code markup</code></li>
+			<li><kbd>This is sample text inside kbd markup</kbd></li>
+			<li><samp>This is sample text inside samp markup</samp></li>
+			<li><tt>This is sample text inside tt markup</tt></li>
+		</ul>
+
+		<p>
+			<code>pre</code> is the only element that preserves whitespace, space characters, tabs, and carriage returns.
+		</p>
+
+<pre>
+&lt;head&gt;
+<i>----</i>&lt;meta charset="UTF-8"&gt;
+<i>----</i>&lt;meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"&gt;
+&lt;/head&gt;
+</pre>
+
+
+		<hr>
+
+
+		<a href="#" class="anchor" id="hyphenation"></a>
+
+		<h3>Hyphenation</h3>
+
+		<p class="emphasis">Note: Resize to see the hyphenation in action.</p>
+
+		<h4>No hyphenation</h4>
+
+		<p class="limited hyphens">
+			Until recently the great majority of naturalists believed that species were immutable productions, and had been separately created. This view has been ably maintained by many authors.
+		</p>
+
+		<h4>Moderate hyphenation</h4>
+
+		<p class="limited hyphenate">
+			Until re­cently the great ma­jor­ity of nat­u­ral­ists be­lieved that species were im­mutable pro­duc­tions, and had been sep­a­rately cre­ated. This view has been ably main­tained by many au­thors.
+		</p>
+
+		<h4>Heavy hyphenation - explicit hyphenation hints (soft hyphens)</h4>
+
+		<p class="limited">
+			Un­til re­cent­ly the great ma­jor­i­ty of nat­u­ral­ists be­lieved that spe­cies were im­mu­ta­ble pro­duc­tions, and had been sep­a­rate­ly cre­at­ed. This view has been ably main­tain­ed by many au­thors.
+		</p>
+
+
+		<hr>
+
+
+		<a href="#" class="anchor" id="lists"></a>
+
+		<h3>Lists</h3>
+
+		<p>All lists are styled as <code>list-style-position: outside;</code> as it allows a better <strong>separation of content</strong> and <strong>visual hierarchy</strong> of elements.</p>
+
+		<p><code>menu</code> and <code>dir</code> have <code>list-style-position: inside;</code> and cannot be overridden.</p>
+
+		<dl>
+			<dt>
+				<strong>ul</strong> <small>(Unordered List)</small>
+			</dt>
+			<dd>
+				<ul>
+					<li>List item.</li>
+					<li>List item.</li>
+					<li>List item. Lorem ipsum Dolore sunt elit ad proident aliqua magna non labore sed quis irure cillum cillum enim ullamco tempor enim dolore Duis ea elit et et magna consequat ut cillum esse occaecat.</li>
+					<li>List item. Lorem ipsum Ad laborum nulla cillum non ullamco reprehenderit aute Duis eu tempor quis Excepteur sit mollit adipisicing irure in.</li>
+				</ul>
+			</dd>
+			<dt>
+				<strong>ol</strong> <small>(Unordered List)</small>
+			</dt>
+			<dd>
+				<ol>
+					<li>List item.</li>
+					<li>List item.</li>
+					<li>List item. Lorem ipsum Et consectetur adipisicing Duis eiusmod adipisicing incididunt cupidatat officia aute consectetur ut mollit pariatur voluptate incididunt sit in ad et officia veniam.</li>
+					<li>List item. Lorem ipsum Irure enim anim aliqua deserunt Excepteur sint exercitation commodo laborum proident id.</li>
+				</ol>
+			</dd>
+			<dt>
+				<strong>menu</strong>
+			</dt>
+			<dd>
+				<menu>
+					<li>List item.</li>
+					<li>List item.</li>
+					<li>List item. Lorem ipsum Incididunt fugiat ex ex aliquip Excepteur in sint aute dolor qui qui deserunt voluptate enim esse ad proident exercitation quis in non anim dolor Duis ad irure velit.</li>
+					<li>List item. Lorem ipsum Dolore cupidatat Ut veniam aliqua commodo cupidatat esse quis ut velit mollit id fugiat exercitation cillum.</li>
+				</menu>
+			</dd>
+			<dt>
+				<strong>dir</strong> <small>(Directory List)</small>
+			</dt>
+			<dd>
+				<dir>
+				 	<li>List item.</li>
+					<li>List item.</li>
+					<li>List item. Lorem ipsum Fugiat minim in in ullamco amet ut esse aliqua et culpa labore et consequat cupidatat eu ad in nulla irure ut eiusmod id nostrud proident.</li>
+					<li>List item. Lorem ipsum Anim magna sed et ad officia sunt et esse deserunt non consectetur in sunt ea aute labore qui.</li>
+				</dir>
+			</dd>
+		</dl>
+
+		<h4>Definition List</h4>
+
+		<p>
+			Such a list should consist of <strong>terms</strong> and associated <strong>definitions</strong>.
+		</p>
+
+		<dl>
+			<dt>Recursion</dt>
+			<dd>
+				See recursion.
+			</dd>
+
+			<dt>Recursion, indirect</dt>
+			<dd>
+				See indirect recursion.
+			</dd>
+
+			<dt>Indirect recursion</dt>
+			<dd>
+				See recursion, indirect.
+			</dd>
+
+			<dt>Term</dt>
+			<dd>
+				A word or other expression taken into specific use in a well-defined meaning.
+			</dd>
+		</dl>
+
+<pre>
+&lt;dl&gt;
+<i>----</i>&lt;dt&gt;Recursion&lt;/dt&gt;
+<i>----</i>&lt;dd&gt;
+<i>----</i><i>----</i>See recursion.
+<i>----</i>&lt;/dd&gt;
+
+<i>----</i>&lt;dt&gt;Recursion, indirect&lt;/dt&gt;
+<i>----</i>&lt;dd&gt;
+<i>----</i><i>----</i>See indirect recursion.
+<i>----</i>&lt;/dd&gt;
+
+<i>----</i>&lt;dt&gt;Indirect recursion&lt;/dt&gt;
+<i>----</i>&lt;dd&gt;
+<i>----</i><i>----</i>See recursion, indirect.
+<i>----</i>&lt;/dd&gt;
+
+<i>----</i>&lt;dt&gt;Term&lt;/dt&gt;
+<i>----</i>&lt;dd&gt;
+<i>----</i><i>----</i>A word or other expression taken into specific use in a well-defined meaning.
+<i>----</i>&lt;/dd&gt;
+&lt;/dl&gt;
+</pre>
+
+
+		<hr>
+
+
+		<a href="#" class="anchor" id="tables"></a>
+
+		<h3>Tables (Responsive)</h3>
+
+		<p>
+			The following table has a caption. The first row and the first column contain header cells (<code>th</code>) only. Other cells are data cells (<code>td</code>).
+		</p>
+
+		<table summary="Each row names a Nordic country and specifies its total area and land area, in square kilometers">
+			<caption>Sample table: Areas of the Nordic countries, in sq km</caption>
+
+			<tr>
+				<td>Country</td>
+				<td>Total area</td>
+				<td>Land area</td>
+			</tr>
+			<tr>
+				<td>Denmark</td>
+				<td>43,070</td>
+				<td>42,370</td>
+			</tr>
+			<tr>
+				<td>Finland</td>
+				<td>337,030</td>
+				<td>305,470</td>
+			</tr>
+			<tr>
+				<td>Iceland</td>
+				<td>103,000</td>
+				<td>100,250</td>
+			</tr>
+			<tr>
+				<td>Norway</td>
+				<td>324,220</td>
+				<td>307,860</td>
+			</tr>
+			<tr>
+				<td>Sweden</td>
+				<td>449,964</td>
+				<td>410,928</td>
+			</tr>
+		</table>
+
+		<h4>Character Test</h4>
+
+		<p>
+			The following table has no caption, and has some sample characters with annotations. If the browser's default font does notcontain all of them, they may get displayed using backup fonts. This may cause stylistic differences, but it should not prevent the characters from being displayed at all.
+		</p>
+
+		<table>
+			<tr>
+				<td>Char.</td>
+				<td>Explanation</td>
+				<td>HTML Entity</td>
+				<td>Unicode</td>
+				<td>Notes</td>
+			</tr>
+			<tr>
+				<td>ê</td>
+				<td>e with circumflex</td>
+				<td><code>&amp;ecirc;</code></td>
+				<td><code>&amp;#234;</code></td>
+				<td>Latin 1 character</td>
+			</tr>
+			<tr>
+				<td>—</td>
+				<td>em dash</td>
+				<td><code>&amp;mdash;</code></td>
+				<td><code>&amp;#8212;</code></td>
+				<td>Windows Latin 1 character</td>
+			</tr>
+			<tr>
+				<td>Ā</td>
+				<td>A with macron (line above)</td>
+				<td><code>&amp;Amacr;</code></td>
+				<td><code>&amp;#256;</code></td>
+				<td>Latin Extended-A character</td>
+			</tr>
+			<tr>
+				<td>Ω</td>
+				<td>capital omega</td>
+				<td><code>&amp;Omega;</code></td>
+				<td><code>&amp;#937;</code></td>
+				<td>Greek letter</td>
+			</tr>
+			<tr>
+				<td>−</td>
+				<td>minus sign</td>
+				<td><code>&amp;minus;</code></td>
+				<td><code>&amp;#8722;</code></td>
+				<td>Unicode minus</td>
+			</tr>
+			<tr>
+				<td>Ø</td>
+				<td>diameter sign</td>
+				<td><code>&amp;Oslash;</code></td>
+				<td><code>&amp;#216;</code></td>
+				<td>Relatively rare</td>
+			</tr>
+		</table>
+
+
+
+
+
+
+		<div class="separator">&nbsp;</div>
+
+
+
+
+
+
+		<a href="#" class="anchor" id="form"></a>
+
+		<h2>Forms</h2>
+
+		<form action="#" novalidate data-validation="true">
+			<input type="hidden" value="42">
+
+			<p class="emphasis">
+				Note: You can switch validation on or off at <code>config.js</code>.
+			</p>
+
+			<div class="form-info">
+				Fields marked with <span class="indicator-required"></span> are required.
+			</div>
+
+			<label>Text</label>
+			<input type="text" name="text" placeholder="First and Last Name" data-validation="text" required>
+
+			<label>Number</label>
+			<input type="number" name="number" placeholder="Numbers only" data-validation="number" required>
+
+			<div class="input-group block-reset">
+				<label>Email w/ Confirmation</label>
+				<input type="email" name="email" placeholder="Email" data-validation="email" required>
+				<div class="input-addon">repeat</div>
+				<input type="email" name="email-match" placeholder="Confirm Email" data-validation="match" required>
+			</div>
+
+			<label>Date</label>
+			<input type="text" name="date" placeholder="dd/mm/yyyy" data-calendar="true" data-validation="date" required>
+
+			<div class="input-group block-reset">
+				<label>Password w/ Confirmation</label>
+				<input type="password" name="password" placeholder="Minimum rating: 30%" data-validation="password" data-validate-key="true" required>
+				<div class="input-addon">repeat</div>
+				<input type="password" name="password-match" placeholder="Confirm Password" data-validation="match" required>
+			</div>
+
+			<label>Textarea</label>
+			<textarea name="textarea" rows="5" cols="50" placeholder="Default text" data-validation="text" required></textarea>
+
+			<label>Select</label>
+			<select name="country" data-validation="select" data-countries="/data/countries.json" required>
+				<option value="" default selected>Select country...</option>
+			</select>
+
+			<fieldset>
+				<legend>Select Group</legend>
+
+				<div class="row">
+					<div class="column" data-span="4">
+						<select data-validation="selectgroup" data-validation-group="select-group" required>
+							<option value="" default selected>Select</option>
+							<option value="one">one</option>
+							<option value="two">two</option>
+							<option value="three">three</option>
+							<option value="four">four</option>
+							<option value="five">five</option>
+							<option value="six">six</option>
+							<option value="seven">seven</option>
+							<option value="eight">eight</option>
+							<option value="nine">nine</option>
+							<option value="ten">ten</option>
+						</select>
+					</div>
+					<div class="column" data-span="4">
+						<select data-validation="selectgroup" data-validation-group="select-group" required>
+							<option value="" default selected>Select</option>
+							<option value="one">one</option>
+							<option value="two">two</option>
+							<option value="three">three</option>
+							<option value="four">four</option>
+							<option value="five">five</option>
+							<option value="six">six</option>
+							<option value="seven">seven</option>
+							<option value="eight">eight</option>
+							<option value="nine">nine</option>
+							<option value="ten">ten</option>
+						</select>
+					</div>
+					<div class="column" data-span="4">
+						<select data-validation="selectgroup" data-validation-group="select-group" required>
+							<option value="" default selected>Select</option>
+							<option value="one">one</option>
+							<option value="two">two</option>
+							<option value="three">three</option>
+							<option value="four">four</option>
+							<option value="five">five</option>
+							<option value="six">six</option>
+							<option value="seven">seven</option>
+							<option value="eight">eight</option>
+							<option value="nine">nine</option>
+							<option value="ten">ten</option>
+						</select>
+					</div>
+				</div>
+			</fieldset>
+
+			<!-- <label>Select List</label>
+			<select name="country" data-validation="select" data-countries="/data/countries.json" size="5" required>
+				<option value="" default selected>Select country...</option>
+			</select> -->
+
+			<p class="form-info emphasis">
+				Note: Checkboxes need all required options to be selected.
+			</p>
+
+			<fieldset>
+				<legend>Checkboxes</legend>
+
+				<input id="f5" type="checkbox" name="check-accept" value="1" data-validation="checkbox" required>
+				<label for="f5">I accept the following lipsum</label>
+
+				<input id="f6" type="checkbox" name="check-terms" value="2" data-validation="checkbox" required>
+				<label for="f6">Terms &amp; lipsum</label>
+
+				<input id="f7" type="checkbox" name="check-subscribe" value="3" data-validation="checkbox" required>
+				<label for="f7">Uncheck if you don't want to lipsum</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>Toggle Checkboxes</legend>
+
+				<input id="f8" type="checkbox" data-toggle="true" data-validation="checkbox" required>
+				<label for="f8">I accept the following lipsum</label>
+
+				<input id="f9" type="checkbox" data-toggle="true" data-validation="checkbox" required>
+				<label for="f9">Terms &amp; lipsum</label>
+
+				<input id="f10" type="checkbox" data-toggle="true" data-validation="checkbox" required>
+				<label for="f10">Check if you don't want to lipsum</label>
+			</fieldset>
+
+			<p class="form-info emphasis">
+				Note: Radio buttons need one required option to be selected.
+			</p>
+
+			<fieldset>
+				<legend>Radio Buttons</legend>
+
+				<input id="f1" type="radio" name="option-group" value="1" data-validation="radio" required>
+				<label for="f1">Select this to choose the following lipsum</label>
+
+				<input id="f2" type="radio" name="option-group" value="2" data-validation="radio" required>
+				<label for="f2">Select this to choose the Terms &amp; lipsum</label>
+
+				<input id="f3" type="radio" name="option-group" value="3" data-validation="radio" required>
+				<label for="f3">Select this to choose lipsum</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>Toggle Radio Buttons</legend>
+				<input id="f11" type="radio" data-toggle="true" name="toggle-group-1" data-validation="radio" required>
+				<label for="f11">Select this to choose the following lipsum</label>
+
+				<input id="f12" type="radio" data-toggle="true" name="toggle-group-1" data-validation="radio" required>
+				<label for="f12">Select this to choose the Terms &amp; lipsum</label>
+
+				<input id="f13" type="radio" data-toggle="true" name="toggle-group-1" data-validation="radio" required>
+				<label for="f13">Select this to choose lipsum</label>
+			</fieldset>
+
+			<label for="f23">File Upload</label>
+			<input id="f23" type="file" data-validation="file" required>
+
+			<label for="f23">Multiple File Uploads</label>
+			<input type="file" data-multi="true" data-upload="5" required />
+
+			<button class="primary" type="submit">Validate and Send</button>
+			<img class="form-loader" src="/img/loader.gif" height="32" width="32" alt="">
+			<img class="svg icon icon-tick form-done" src="/img/icons/icon-tick.svg" alt="CTA icon">
+		</form>
+
+		<hr>
+
+		<a href="#" class="anchor" id="states"></a>
+
+		<h3>Validation States</h3>
+
+		<table id="validation-table">
+			<thead>
+				<tr valign="middle">
+					<th valign="middle" scope="col">Valid</th>
+					<th valign="middle" scope="col">Invalid</th>
+					<th valign="middle" scope="col">Readonly/Disabled</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr valign="middle">
+					<td valign="middle">
+						<input type="text" name="text" placeholder="Input" class="valid" required>
+					</td>
+					<td valign="middle">
+						<input type="text" name="text" placeholder="Input" class="invalid" required>
+					</td>
+					<td valign="middle">
+						<input type="text" name="text" placeholder="Input" readonly>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<select class="valid" name="test" data-validation="select" required>
+							<option value="" default selected>Select</option>
+							<option value="one">one</option>
+							<option value="two">two</option>
+							<option value="three">three</option>
+							<option value="four">four</option>
+							<option value="five">five</option>
+							<option value="six">six</option>
+							<option value="seven">seven</option>
+							<option value="eight">eight</option>
+							<option value="nine">nine</option>
+							<option value="ten">ten</option>
+						</select>
+					</td>
+					<td valign="middle">
+						<select class="invalid" name="test" data-validation="select" required>
+							<option value="" default selected>Select</option>
+							<option value="one">one</option>
+							<option value="two">two</option>
+							<option value="three">three</option>
+							<option value="four">four</option>
+							<option value="five">five</option>
+							<option value="six">six</option>
+							<option value="seven">seven</option>
+							<option value="eight">eight</option>
+							<option value="nine">nine</option>
+							<option value="ten">ten</option>
+						</select>
+					</td>
+					<td valign="middle">
+						<select name="test" data-validation="select" readonly>
+							<option value="" default selected>Select</option>
+							<option value="one">one</option>
+							<option value="two">two</option>
+							<option value="three">three</option>
+							<option value="four">four</option>
+							<option value="five">five</option>
+							<option value="six">six</option>
+							<option value="seven">seven</option>
+							<option value="eight">eight</option>
+							<option value="nine">nine</option>
+							<option value="ten">ten</option>
+						</select>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<textarea class="valid" name="textarea" cols="30" rows="5" data-validation="text" required>Textarea</textarea>
+					</td>
+					<td valign="middle">
+						<textarea class="invalid" name="textarea" cols="30" rows="5" data-validation="text" required>Textarea</textarea>
+					</td>
+					<td valign="middle">
+						<textarea name="textarea" cols="30" rows="5" readonly>Textarea</textarea>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<input class="valid" id="f200" type="checkbox" name="checkbox" checked>
+						<label for="f200">Checkbox</label>
+					</td>
+					<td valign="middle">
+						<input class="invalid" id="f201" type="checkbox" name="checkbox">
+						<label for="f201">Checkbox</label>
+					</td>
+					<td valign="middle">
+						<input id="f202" type="checkbox" name="checkbox" readonly>
+						<label for="f202">Checkbox</label>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<input class="valid" id="f203" type="checkbox" data-toggle="true" name="toggle-demo" checked>
+						<label for="f203">Checkbox</label>
+					</td>
+					<td valign="middle">
+						<input class="invalid" id="f204" type="checkbox" data-toggle="true" name="toggle-demo">
+						<label for="f204">Checkbox</label>
+					</td>
+					<td valign="middle">
+						<input id="f205" type="checkbox" data-toggle="true" name="toggle-demo" readonly>
+						<label for="f205">Checkbox</label>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<input class="valid" id="f206" type="radio" name="radio-demo" checked>
+						<label for="f206">Radio</label>
+					</td>
+					<td valign="middle">
+						<input class="invalid" id="f207" type="radio" name="radio-demo">
+						<label for="f207">Radio</label>
+					</td>
+					<td valign="middle">
+						<input id="f208" type="radio" name="radio-demo" readonly>
+						<label for="f208">Radio</label>
+					</td>
+				</tr>
+				<tr valign="middle">
+					<td valign="middle">
+						<input class="valid" id="f209" type="radio" data-toggle="true" name="toggle-demo" checked>
+						<label for="f209">Radio</label>
+					</td>
+					<td valign="middle">
+						<input class="invalid" id="f210" type="radio" data-toggle="true" name="toggle-demo">
+						<label for="f210">Radio</label>
+					</td>
+					<td valign="middle">
+						<input id="f211" type="radio" data-toggle="true" name="toggle-demo" readonly>
+						<label for="f211">Radio</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<hr>
+
+		<a href="#" class="anchor" id="select"></a>
+
+		<h3>Select (Dropdown)</h3>
+
+		<select>
+			<option value="" default selected>Please select...</option>
+			<option value="one">one</option>
+			<option value="two">two</option>
+			<option value="three">three</option>
+			<option value="four">four</option>
+			<option value="five">five</option>
+			<option value="six">six</option>
+			<option value="seven">seven</option>
+			<option value="eight">eight</option>
+			<option value="nine">nine</option>
+			<option value="ten">ten</option>
+		</select>
+
+<pre>
+&lt;select>
+<i>----</i>&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
+<i>----</i>&lt;option value="one"&gt;one&lt;/option&gt;
+<i>----</i>&lt;option value="two"&gt;two&lt;/option&gt;
+<i>----</i>&lt;option value="three"&gt;three&lt;/option&gt;
+<i>----</i>&lt;option value="four"&gt;four&lt;/option&gt;
+<i>----</i>&lt;option value="five"&gt;five&lt;/option&gt;
+<i>----</i>&lt;option value="six"&gt;six&lt;/option&gt;
+<i>----</i>&lt;option value="seven"&gt;seven&lt;/option&gt;
+<i>----</i>&lt;option value="eight"&gt;eight&lt;/option&gt;
+<i>----</i>&lt;option value="nine"&gt;nine&lt;/option&gt;
+<i>----</i>&lt;option value="ten"&gt;ten&lt;/option&gt;
+&lt;/select&gt;
+</pre>
+
+		<br>
+
+		<select size="5">
+			<option value="" default selected>Please select...</option>
+			<option value="one">one</option>
+			<option value="two">two</option>
+			<option value="three" selected>three</option>
+			<option value="four">four</option>
+			<option value="five">five</option>
+			<option value="six">six</option>
+			<option value="seven">seven</option>
+			<option value="eight">eight</option>
+			<option value="nine">nine</option>
+			<option value="ten">ten</option>
+		</select>
+
+<pre>
+&lt;select <span class="emphasis">size="5"</span>&gt;
+<i>----</i>&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
+<i>----</i>&lt;option value="one"&gt;one&lt;/option&gt;
+<i>----</i>&lt;option value="two"&gt;two&lt;/option&gt;
+<i>----</i>&lt;option value="three"&gt;three&lt;/option&gt;
+<i>----</i>&lt;option value="four"&gt;four&lt;/option&gt;
+<i>----</i>&lt;option value="five"&gt;five&lt;/option&gt;
+<i>----</i>&lt;option value="six"&gt;six&lt;/option&gt;
+<i>----</i>&lt;option value="seven"&gt;seven&lt;/option&gt;
+<i>----</i>&lt;option value="eight"&gt;eight&lt;/option&gt;
+<i>----</i>&lt;option value="nine"&gt;nine&lt;/option&gt;
+<i>----</i>&lt;option value="ten"&gt;ten&lt;/option&gt;
+&lt;/select&gt;
+</pre>
+
+		<hr>
+
+		<a href="#" class="anchor" id="controllers"></a>
+
+		<h3>Checks, Radios &amp; Toggles</h3>
+
+		<p>
+			They are styled with CSS3 <code>:before</code> pseudo elements.
+		</p>
+
+		<p class="emphasis">
+			Note: <code>label</code> element <strong>after</strong> input and <code>for</code> attribute are obligatory.
+		</p>
+
+		<h4>Checkboxes</h4>
+
+		<fieldset>
+			<legend>Checkboxes Group</legend>
+
+			<input id="f301" type="checkbox" name="checkbox">
+			<label for="f301">Checkbox</label>
+
+			<input id="f302" type="checkbox" name="checkbox2" checked>
+			<label for="f302">Checkbox Checked</label>
+		</fieldset>
+
+<pre>
+&lt;fieldset&gt;
+<i>----</i>&lt;legend&gt;Checkboxes Group&lt;/legend&gt;
+
+<i>----</i>&lt;input <span class="emphasis">id="f101"</span> type="checkbox" name="checkbox"&gt;
+<i>----</i>&lt;label <span class="emphasis">for="f101"</span>&gt;Checkbox&lt;/label&gt;
+&lt;/fieldset&gt;
+</pre>
+
+		<h4>Radio Buttons</h4>
+
+		<fieldset>
+			<legend>Radio Buttons Group</legend>
+
+			<input id="f303" type="radio" name="radio" value="1">
+			<label for="f303">Radio</label>
+
+			<input id="f304" type="radio" name="radio" value="2" checked>
+			<label for="f304">Radio Checked</label>
+		</fieldset>
+
+<pre>
+&lt;fieldset&gt;
+<i>----</i>&lt;legend&gt;Radio Buttons Group&lt;/legend&gt;
+
+<i>----</i>&lt;input <span class="emphasis">id="f102"</span> type="radio" name="radio" value="1"&gt;
+<i>----</i>&lt;label <span class="emphasis">for="f102"</span>&gt;Radio&lt;/label&gt;
+&lt;/fieldset&gt;
+</pre>
+
+		<h4>Toggles</h4>
+
+		<p>
+			<strong>Credit:</strong> <a href="http://petelada.com/2015/01/31/css-only-toggle.html">Pete Lada</a>
+		</p>
+
+		<fieldset>
+			<legend>Toggles Group</legend>
+
+			<input id="f305" type="checkbox" data-toggle="true" />
+			<label for="f305">Toggle</label>
+
+			<input id="f306" type="checkbox" data-toggle="true" checked />
+			<label for="f306">Toggle Checked</label>
+		</fieldset>
+
+<pre>
+&lt;fieldset&gt;
+<i>----</i>&lt;legend&gt;Toggles Group&lt;/legend&gt;
+
+<i>----</i>&lt;input <span class="emphasis">id="f103"</span> type="checkbox" <span class="emphasis">data-toggle="true"</span> /&gt;
+<i>----</i>&lt;label <span class="emphasis">for="f103"</span>&gt;Toggle&lt;/label&gt;
+&lt;/fieldset&gt;
+</pre>
+
+		<hr>
+
+		<a href="#" class="anchor" id="file"></a>
+
+		<h3>File Upload</h3>
+
+		<h4>Single Upload</h4>
+
+		<p class="emphasis mobile-show">File uploads are not available on mobile devices.</p>
+
+		<input type="file" />
+
+		<h4>Multiple Upload</h4>
+
+		<input type="file" data-multi="true" />
+
+<pre>
+&lt;input type="file" <span class="emphasis">data-multi="true"</span> /&gt;
+</pre>
+
+		<hr>
+
+		<a href="#" class="anchor" id="progress"></a>
+
+		<h3>Progress Bar</h3>
+
+		<label>Progress Bar</label>
+
+		<div class="progress-bar"></div>
+
+		<button class="primary" data-progress="100">Trigger Progress</button>
+
+		<hr>
+
+		<a href="#" class="anchor" id="payment-form"></a>
+
+		<h3>Payment Form</h3>
+
+		<form action="#" novalidate data-validation="true">
+			<div class="card-wrapper framed">
+				<div class="row payment">
+					<div class="column" data-span="3">
+						<a href="#">
+							<img src="/img/icons/payment/button-paypal.png" alt="Checkout with PayPal">
+						</a>
+					</div>
+					<div class="column" data-span="3">
+						<a href="#">
+							<img src="/img/icons/payment/button-google.png" alt="Checkout with Google">
+						</a>
+					</div>
+					<div class="column" data-span="3">
+						<a href="#">
+							<img src="/img/icons/payment/button-amazon.png" alt="Checkout with Amazon">
+						</a>
+					</div>
+					<div class="column" data-span="3">
+						<a href="#">
+							<img src="/img/icons/payment/button-card.png" alt="Pay by Card">
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-wrapper">
+				<h4>Your payment details</h4>
+
+				<form action="#">
+					<div class="row">
+						<div class="column" data-span="12">
+							<label>Name</label>
+							<input type="text" name="card-name" placeholder="As shown on card" data-validation="text" required>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="column" data-span="8">
+							<label>Card number</label>
+							<input type="number" id="card" name="card" placeholder="16 digits long number" data-validation="card" data-validate-key="true" required>
+						</div>
+						<div class="column" data-span="1">
+							<div class="card-type">
+								<img src="/img/icons/payment/cards/generic.png">
+							</div>
+						</div>
+						<div class="column" data-span="3">
+							<label for="ccv">CCV</label>
+							<input type="number" id="ccv" name="ccv" placeholder="3 digit security code" data-tooltip="<img src='img/icons/payment/ccv.png'>" data-validation="number" required>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="column" data-span="3">
+							<label>Start Date</label>
+							<select name="card-expiry-month" data-validation="select">
+								<option value="" default selected>Month</option>
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</div>
+						<div class="column" data-span="3">
+							<select name="card-expiry-year" data-validation="select">
+								<option value="" default selected>Year</option>
+								<option value="2015">2015</option>
+								<option value="2016">2016</option>
+								<option value="2017">2017</option>
+								<option value="2018">2018</option>
+								<option value="2019">2019</option>
+								<option value="2020">2020</option>
+								<option value="2021">2021</option>
+								<option value="2022">2022</option>
+								<option value="2023">2023</option>
+								<option value="2024">2024</option>
+								<option value="2025">2025</option>
+							</select>
+						</div>
+						<div class="column" data-span="3">
+							<label>Expiry Date</label>
+							<select name="card-expiry-month" data-validation="select" required>
+								<option value="" default selected>Month</option>
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</div>
+						<div class="column" data-span="3">
+							<select name="card-expiry-year" data-validation="select" required>
+								<option value="" default selected>Year</option>
+								<option value="2015">2015</option>
+								<option value="2016">2016</option>
+								<option value="2017">2017</option>
+								<option value="2018">2018</option>
+								<option value="2019">2019</option>
+								<option value="2020">2020</option>
+								<option value="2021">2021</option>
+								<option value="2022">2022</option>
+								<option value="2023">2023</option>
+								<option value="2024">2024</option>
+								<option value="2025">2025</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="column" data-span="12">
+							<button class="primary fullwidth" type="submit">Pay now</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</form>
+
+
+
+
+
+
+		<div class="separator">&nbsp;</div>
+
+
+
+
+
+
+		<a href="#" class="anchor" id="ui-widgets"></a>
+
+		<h2>UI Widgets</h2>
+
+		<p>Test paragraph</p>
+
+		<hr>
+
+		<a href="#" class="anchor" id="notifications"></a>
+
+		<h3>Notifications</h3>
+
+		<code>notify(tone, delay);</code>
+
+		<p>
+			They are responsive and cross-browser compliant. They can be used for <strong>cookie messages</strong>, <strong>form validation</strong>, <strong>progress updates</strong>, <strong>user information</strong>, etc...
+		</p>
+
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<div class="button notify" data-notification="true" data-message="Undeclared delay (default 5000ms)">?</div>
+		<div class="button notify" data-notification="true" data-message="Delay 0 seconds (persistent)" data-delay="0">0</div>
+		<div class="button notify" data-notification="true" data-message="Delay 3 seconds (3000ms)" data-delay="3000">
+			<img class="svg icon icon-tick" src="/img/icons/icon-tick.svg" alt="CTA icon">
+		</div>
+		<div class="button notify success" data-notification="true" data-message="Success message." data-tone="success"></div>
+		<div class="button notify warning" data-notification="true" data-message="Warning message." data-tone="warning"></div>
+		<div class="button notify failure" data-notification="true" data-message="Failure message." data-tone="failure"></div>
+
+
+		<dl>
+			<dt>
+				<strong>Defaults:</strong>
+			</dt>
+			<dd>
+				<code>active: true</code>
+			</dt>
+			<dd>
+				<code>title: "System notification"</code>
+			</dt>
+			<dd>
+				<code>delay: 5000</code>
+			</dd>
+			<dd>
+				<code>tone: "default"</code> &nbsp;<small class="gray"><strong>default | success | warning | failure</strong></small>
+			</dd>
+		</dl>
+
+
+		<p>
+			<strong>Sample:</strong>
+		</p>
+
+<pre>
+&lt;div class="button primary" <span class="emphasis">data-notification="true" data-{{message|delay|tone}}="{{value}}"</span>&gt;
+<i>----</i>Delay 3000
+&lt;/div&gt;
+</pre>
+
+		<p class="emphasis">
+			Note: If any the data attributes are ommitted, they will fallback to their defaults. <code>data-notification</code> and <code>data-message</code> are obligatory.
+		</p>
+
+		<hr>
+
+		<a href="#" class="anchor" id="slider"></a>
+
+		<h3>Slider</h3>
+
+		<p>
+			Hand coded image slider with horizontal slide transitions. Supports multiple instances and infinite slides.
+		</p>
+
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<div class="slider" data-slider="true" data-slideshow="false" data-thumbnails="true">
+			<div class="slide" data-thumb="/img/pictures/slider/1.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/2.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/3.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/4.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/5.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/6.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/7.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/8.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/9.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/10.jpg"></div>
+		</div>
+
+		<div class="slider" data-slider="true" data-display="3" data-thumbnails="true">
+			<div class="slide" data-thumb="/img/pictures/slider/1.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/2.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/3.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/4.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/5.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/6.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/7.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/8.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/9.jpg"></div>
+			<div class="slide" data-thumb="/img/pictures/slider/10.jpg"></div>
+		</div>
+
+		<div class="slider" data-slider="true" data-display="5">
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 1</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 2</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 3</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 4</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 5</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 6</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 7</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 8</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="cell">
+					<h3 class="emphasis">Test 9</h2>
+					<p>This is a text slide</p>
+					<strong>Supports any type of data</strong>
+				</div>
+			</div>
+		</div>
+
+
+		<dl>
+			<dt>
+				<strong>Defaults:</strong>
+			</dt>
+
+			<dd>
+				<code>nav: true</code>
+			</dd>
+			<dd>
+				<code>arrows: true</code>
+			</dd>
+			<dd>
+				<code>thumbnails: false</code>
+			</dd>
+			<dd>
+				<code>animation: "slide"</code> &nbsp;<small class="gray"><strong>slide | fade</strong></small>
+			</dd>
+			<dd>
+				<code>slideshow: true</code>
+			</dd>
+			<dd>
+				<code>duration: 500</code>
+			</dd>
+			<dd>
+				<code>interval: 5000</code>
+			</dd>
+			<dd>
+				<code>threshold: 0</code>
+			</dd>
+		</dl>
+
+
+		<p>
+			<strong>Sample:</strong>
+		</p>
+
+<pre>
+&lt;div class="slider" <span class="emphasis">data-slider="true" data-{{nav|arrows|thumbnails|display|slideshow|animation}}="{{value}}"</span>&gt;
+<i>----</i>&lt;div class="slide"&gt;
+<i>----</i><i>----</i>&lt;img src="http://placehold.it/959x350" /&gt;
+<i>----</i>&lt;/div&gt;
+<i>----</i>&lt;div class="slide"&gt;
+<i>----</i><i>----</i>&lt;img src="http://placehold.it/960x350" /&gt;
+<i>----</i>&lt;/div&gt;
+<i>----</i>&lt;div class="slide"&gt;
+<i>----</i><i>----</i>&lt;img src="http://placehold.it/961x350" /&gt;
+<i>----</i>&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+		<p>
+			<strong>Image gallery example:</strong>
+		</p>
+
+<pre>
+&lt;div class="slider" <span class="emphasis">data-slider="true" data-thumbnails="true"</span>&gt;
+<i>----</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+<i>----</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+<i>----</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+		<hr>
+
+		<a href="#" class="anchor" id="overlays"></a>
+
+		<h3>Overlays</h3>
+
+		<p>
+			Overlay elements, centered vertically and horizontally, that support any type of content.
+		</p>
+
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<button class="primary" data-overlay="example">View Demo</button>
+
+
+		<p>
+			<strong>Sample:</strong>
+		</p>
+
+<pre>
+&lt;button class="primary" <span class="emphasis">data-overlay="example"</span>&gt;Call id="example" overlay&lt;/button&gt;
+
+
+// Add the block below right after the opening of the &lt;body&gt; tag.
+
+&lt;div class="overlay" <span class="emphasis">id="example"</span>&gt;
+<i>----</i>&lt;div class="modal"&gt;
+<i>----</i><i>----</i>&lt;img class="svg icon icon-close" src="/img/icons/icon-close.svg" /&gt;
+<i>----</i>&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+		<hr>
+
+		<a href="#" class="anchor" id="tooltips"></a>
+
+		<h3>Tooltips</h3>
+
+		<p>
+			Mouse-following tooltips on hover using attribute <code>data-tooltip</code>.
+		</p>
+
+		<p class="emphasis">
+			Note: Tooltips are disabled on touch devices as it depends on <code>:hover</code> pseudo-selector.
+		</p>
+
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<p>
+			<button data-tooltip="Lorem ipsum Laborum">Hover this button</button>
+		</p>
+
+		<img src="http://placehold.it/1280x350&text=Image,%20hover%20me" data-tooltip="Using data-tooltip 1" />
+
+
+		<dl>
+			<dt>
+				<strong>Defaults:</strong>
+			</dt>
+			<dd>
+				<code>position: "center"</code> &nbsp;<small class="gray"><strong>left | center | right</strong></small>
+			</dd>
+			<dd>
+				<code>bound: true</code>
+			</dd>
+		</dl>
+
+
+		<p>
+			<strong>Sample:</strong>
+		</p>
+
+<pre>
+&lt;img src="http://placehold.it/1280x400&amp;text=Image,%20hover%20me" <span class="emphasis">data-tooltip="Tooltip Text"</span> /&gt;
+</pre>
+
+		<hr>
+
+		<a href="#" class="anchor" id="map-wrapper"></a>
+
+		<h3>Map Wrapper</h3>
+
+		<p>
+			<strong>Credit:</strong> <a href="https://mapbuildr.com/" target="_blank">Google Mapbuildr</a>.
+		</p>
+
+		<p>
+			This map requires a data-feed attribute that calls a json config file.
+		</p>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<div class="map-wrapper framed">
+			<div id="map-canvas" class="map-canvas" data-feed="/data/map-config.json"></div>
+		</div>
+
+
+		<dl>
+			<dt>
+				<strong>Defaults:</strong>
+			</dt>
+			<dd>
+				<code>styles: theme.Mapbox</code> &nbsp;<small class="gray"><strong>gmaps.js</strong></small>
+			</dd>
+		</dl>
+
+
+		<p>
+			<strong>Sample:</strong>
+		</p>
+
+<pre>
+&lt;div class="map-wrapper"&gt;
+<i>----</i>&lt;div <span class="emphasis">id="map-canvas" class="map-canvas" data-feed="/data/map-config.json"</span>&gt;&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+		<hr>
+
+		<a href="#" class="anchor" id="tables"></a>
+
+		<h3>Video Embeds</h3>
+
+		<p>
+			Supports youtube and vimeo.
+		</p>
+
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<div class="row">
+			<div class="column" data-span="6">
+				<p class="emphasis">
+					Youtube iFrame
+				</p>
+
+				<iframe width="1280" height="600" src="https://www.youtube.com/embed/uxfuuvjT1OY" frameborder="0" allowfullscreen></iframe>
+			</div>
+			<div class="column" data-span="6">
+				<p class="emphasis">
+					Youtube Video
+				</p>
+
+				<div class="video-frame" data-video-id="lS5HyAFwLAU" data-video-service="youtube"></div>
+			</div>
+			<div class="column" data-span="6">
+				<p class="emphasis">
+					Vimeo iFrame
+				</p>
+
+				<iframe src="https://player.vimeo.com/video/47911018" frameborder="0" allowfullscreen></iframe>
+			</div>
+			<div class="column" data-span="6">
+				<p class="emphasis">
+					Vimeo Video
+				</p>
+
+				<div class="video-frame" data-video-id="122325664" data-video-service="vimeo"></div>
+			</div>
+		</div>
+
+
+		<p>
+			<strong>Sample:</strong>
+		</p>
+
+		<p class="emphasis">
+			Youtube Video
+		</p>
+
+<pre>
+&lt;div class="video-frame" <span class="emphasis">data-video-id="lS5HyAFwLAU" data-video-service="youtube"</span>&gt;&lt;/div&gt;
+</pre>
+
+		<p class="emphasis">
+			Youtube iFrame
+		</p>
+
+<pre>
+&lt;iframe width="1280" height="600" src="https://www.youtube.com/embed/<span class="emphasis">uxfuuvjT1OY</span>" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+</pre>
+
+		<p class="emphasis">
+			Vimeo Video
+		</p>
+
+<pre>
+&lt;div class="video-frame" <span class="emphasis">data-video-id="122325664" data-video-service="vimeo"</span>&gt;&lt;/div&gt;
+</pre>
+
+		<p class="emphasis">
+			Vimeo iFrame
+		</p>
+
+<pre>
+&lt;iframe src="//player.vimeo.com/video/<span class="emphasis">47911018</span>" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+</pre>
+
+
+
+
+
+
+		<div class="separator">&nbsp;</div>
+
+
+
+
+
+
+		<a href="#" class="anchor" id="search"></a>
+
+		<h2>Search</h2>
+
+		<a href="#" class="anchor" id="autocomplete"></a>
+
+		<h3>Autocompletion</h3>
+
+		<p>
+			<strong>Usage:</strong>
+		</p>
+
+		<p>
+			Insert the example code below anywhere in your page, then define the URL for each autocomplete input on <code>data-autocomplete</code>. You can instantiate multiple autocomplete fields with different target URLs.
+		</p>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<div class="autocomplete-wrapper" data-autocomplete="true" data-feed="/data/search.json">
+			<img class="loader" src="/img/loader.gif" height="16" width="16" alt="">
+			<input type="text" placeholder="Type to search..." data-lookup="title">
+		</div>
+
+		<p>
+			<strong>Example:</strong>
+		</p>
+
+<pre>
+&lt;div class="autocomplete-wrapper" <span class="emphasis">data-autocomplete="/data/autocomplete.json"</span>&gt;
+<i>----</i>&lt;input type="text" placeholder="Type to search..." <span class="emphasis">data-lookup="title"</span>&gt;
+&lt;/div&gt;
+</pre>
+
+		<hr>
+
+		<a href="#" class="anchor" id="tagcloud"></a>
+
+		<h3>Tag Cloud</h3>
+
+		<p>
+			<strong>Usage:</strong>
+		</p>
+
+		<p>
+			Apply <code>data-tagcloud="true"</code> to an <code>input</code> <!-- or <code>select</code> --> element.
+		</p>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<input type="text" placeholder="Type and press Tab or Enter to add to the tag cloud" data-tagcloud="true">
+
+		<!-- <select data-tagcloud="true">
+			<option default selected value="">Please select any option to add to the tag cloud</option>
+			<option>one</option>
+			<option>two</option>
+			<option>three</option>
+			<option>four</option>
+			<option>five</option>
+			<option>six</option>
+			<option>seven</option>
+			<option>eight</option>
+			<option>nine</option>
+			<option>ten</option>
+		</select> -->
+
+		<p>
+			<strong>Example:</strong>
+		</p>
+
+<pre>
+&lt;input type="text" placeholder="Type and press Enter to add to the tag cloud" <span class="emphasis">data-tagcloud="true"</span>&gt;
+<!-- &lt;select <span class="emphasis">data-tagcloud="true"</span>&gt;&lt;/select&gt; -->
+</pre>
+
+		<hr>
+
+		<a href="#" class="anchor" id="unified-search"></a>
+
+		<h3>Unified Search</h3>
+
+		<p>
+			<strong>Usage:</strong>
+		</p>
+
+		<p>
+			Apply <code>data-search="<var>PATH-TO-JSON.json</var>"</code> to a <strong>parent</strong> of a group of <code>input</code> or <code>select</code> elements. This will create a tag cloud after it, group all elements' outputs and build an array for analysis. You can then use the array to rebuild the search results.
+		</p>
+
+		<p>
+			<strong>Demo:</strong>
+		</p>
+
+		<div class="search-wrapper" data-search="true" data-feed="/data/search.json" data-template="/templates/main.html">
+			<div class="row">
+				<div class="column">
+					<input type="text" placeholder="Search..." data-lookup="title, summary">
+				</div>
+			</div>
+			<div class="row">
+				<div class="column" data-span="4">
+					<select class="keep" data-lookup="type"></select>
+				</div>
+				<div class="column" data-span="4">
+					<select class="keep" data-lookup="categories"></select>
+				</div>
+				<div class="column" data-span="4">
+					<select class="keep" data-lookup="tags"></select>
+				</div>
+			</div>
+
+			<div class="search-container"></div>
+		</div>
+
+		<p>
+			<strong>Example:</strong>
+		</p>
+
+<pre>
+
+</pre>
+
+
+
+
+
+
+		<div class="separator">&nbsp;</div>
+
+
+
+
+
+
+		<a href="#" class="anchor" id="tips"></a>
+
+		<h2>Tips</h2>
+
+		<p>
+			There are plenty of hidden gems in Matter. This section is entirely optional reading, and you can choose to skip it and be pleasantly surprised mid-development, or read through and enjoy the small snippets, classes, and logic that makes Matter unique.
+		</p>
+
+		<p class="emphasis">
+			Under development.
+		</p>
+
+		<!-- <h4>Links with Target Blank</h4> -->
+		<!-- <h4>Vertical Alignment</h4> -->
+		<!-- <h4>Tables</h4> -->
+		<!-- <h4>Map</h4> -->
+
+	</div>
+
+</div>
+
+
+<footer>
+	<div class="social valign-middle">
+		<a href="https://twitter.com/VinnyFonseca">
+			<img class="svg icon icon-twitter" src="/img/icons/icon-twitter.svg" onerror="this.onerror=null;this.src='/img/icons/icon-twitter.png'">
+		</a>
+		<a href="https://www.linkedin.com/in/vinnyfonseca">
+			<img class="svg icon icon-linkedin-full" src="/img/icons/icon-linkedin-full.svg" onerror="this.onerror=null;this.src='/img/icons/icon-linkedin-full.png'">
+		</a>
+	</div>
+
+	<div class="author">
+		by <a href="http://vinnyfonseca.com/" class="no-icon" target="_blank">Vinny Fonseca</a>
+	</div>
+
+	<div class="font-large font-custom">Matter</div>
+</footer>
+		<!-- Minified JS - Includes all .js from scripts folder -->
+		<script async type="text/javascript" src="/scripts/build.js"></script>
+
+		<!-- Google Analytics -->
+		<!--
+		<script type="text/javascript">
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','_gaTracker');
+
+			_gaTracker('create', 'UA-XXXXXXXX-X', 'auto');
+			_gaTracker('send', 'pageview');
+		</script>
+		 -->
+	</body>
+</html>

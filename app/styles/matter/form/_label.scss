@@ -37,3 +37,9 @@ label {
 	vertical-align: top;
 	content: "";
 }
+
+.form-info {
+	margin-bottom: floor($spacing / 2);
+	color: $c2;
+	font-size: $fontSize / 1.1 + rem;
+}

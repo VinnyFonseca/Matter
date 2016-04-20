@@ -215,6 +215,14 @@ module.exports = function(grunt) {
 					dest: 'dist/scripts/debug'
 				}]
 			},
+			head: {
+				files: [{
+					expand: true,
+					cwd: 'app/scripts/head',
+					src: '**/*.js',
+					dest: 'dist/scripts/head'
+				}]
+			},
 			standalone: {
 				files: [{
 					expand: true,
@@ -233,10 +241,10 @@ module.exports = function(grunt) {
 				reporter: require('jshint-stylish'),
 				force: true,
 				ignores: [
+					'app/scripts/head/**/*.js',
 					'app/scripts/matter/base/**/*.js',
 					'app/scripts/matter/engine/**/*.js',
-					'app/scripts/matter/polyfills/**/*.js',
-					'app/scripts/html5-printshiv.js'
+					'app/scripts/matter/polyfills/**/*.js'
 				],
 				'-W001': false,
 
@@ -314,6 +322,7 @@ module.exports = function(grunt) {
 
 		watch: {
 			options: {
+				livereload: true,
 				event: ['changed', 'added', 'deleted']
 			},
 			grunt: {
@@ -321,7 +330,6 @@ module.exports = function(grunt) {
 				files: ['Gruntfile.js']
 			},
 			files: {
-				options: { livereload: true },
 				files: [
 					'app/**',
 					'!app/**/_partials/**',
@@ -333,16 +341,13 @@ module.exports = function(grunt) {
 				tasks: ['copy', 'notify:copy']
 			},
 			html: {
-				options: { livereload: true },
 				files: ['app/**/*.html'],
 				tasks: ['ssi', 'notify:ssi']
 			},
 			php: {
-				options: { livereload: true },
 				files: ['app/**/*.php']
 			},
 			css: {
-				options: { livereload: true },
 				files: ['dist/styles/**/*.css']
 			},
 			sass: {
@@ -351,12 +356,10 @@ module.exports = function(grunt) {
 				tasks: ['sass', 'notify:sass', 'postcss', 'notify:postcss']
 			},
 			js: {
-				options: { livereload: true },
 				files: ['app/scripts/**/*.js'],
 				tasks: ['uglify', 'notify:uglify', 'jshint', 'notify:jshint']
 			},
 			img: {
-				options: { livereload: true },
 				files: ['app/img/**/*.*'],
 				tasks: ['imagemin', 'notify:imagemin']
 			}

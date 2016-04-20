@@ -3,17 +3,22 @@
 fieldset {
 	display: block;
 	position: relative;
-	margin: $spacing 0;
-	padding: floor($spacing / 1.5) $spacing;
-	border: 1px solid $cd;
+	margin: 0;
+	margin-bottom: $spacing;
+	padding: $spacing;
+	padding-top: floor($spacing / 2);
+	border: $borderWidth $borderStyle $borderColor;
 	border-radius: $radius;
-	box-shadow: 3px 3px 0px rgba($c0, 0.05);
 
 	legend {
 		@extend label;
-		margin-left: -3px;
-		padding: 0 7px;
+		margin-left: floor(-$spacing / 6);
+		padding: 0 floor($spacing / 3);
 		background: $cf;
+	}
+
+	.field {
+		margin: 0 !important;
 	}
 }
 

@@ -85,13 +85,21 @@ var initValidation = function() {
 
 		// Validation function called on keyup
 
+		var sanitize = function(value) {
+			var check = /[^!?,.'":\-\w\s]/gi;
+			return value.replace(check, '');
+		}
+
 		var validateField = function(el, type, value) {
-			if ( matter.config.application.debug ) console.log(":: " + type);
+			debug.log(":: " + type);
 
 			el.removeClass("invalid").removeClass("valid");
 
 			switch(type) {
 				case "text":
+					value = sanitize(value);
+					el.val(value);
+
 					if ( value !== "" ) {
 						el.addClass("valid");
 					} else {
@@ -124,10 +132,14 @@ var initValidation = function() {
 				break;
 
 				case "password":
-					if ( scorePassword(value) >= 30 ) {
+					// At least one uppercase letter, one lowercase letter and one number. Special characters are optional, some are blacklisted (!@#$%^&*()_|+~\=?;:'")
+					check = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[a-zA-Z\d!@#$%^&*()_|+~\=?;:'"<>]{8,}$/;
+
+					if ( value !== "" && check.test(value) ) {
 						el.addClass("valid");
 					} else {
 						el.addClass("invalid");
+						notify("Password requirements", "Minimum of 8 characters, at least one uppercase letter, one lowercase letter, AND one number.")
 					}
 
 				break;
@@ -262,8 +274,8 @@ var initValidation = function() {
 					if ( validArray.indexOf(false) < 0 ) {
 						el.addClass("submitted").addClass("valid");
 
-						el.find("input, select, textarea").prop("readonly", true);
-						el.find("button, input[type='submit']").prop("readonly", true);
+						el.find("input, select, textarea").attr("readonly", "readonly");
+						el.find("button, input[type='submit']").attr("readonly", "readonly");
 
 						initDropdowns();
 
@@ -280,13 +292,13 @@ var initValidation = function() {
 						el.find(".form-loader").hide();
 						el.find("button, input[type='submit']").show();
 
-						notify("Failure", "Form not submitted. Please review.", matter.config.notification.delay, "failure");
+						notify("Form not submitted", "Please review your details and try again.", matter.config.notification.delay, "failure");
 					}
 			}
 		}
 
 		var validateRealtime = function(el, type, value) {
-			if ( matter.config.application.debug ) console.log("Validating keypress for " + type);
+			debug.log("Validating keypress for " + type);
 
 			switch(type) {
 				case "password":
@@ -317,6 +329,7 @@ var initValidation = function() {
 				var el = $(this);
 
 				if ( el.attr("type") === "checkbox" || el.attr("type") === "radio" ) {
+					$("label[for='" + el.attr("id") + "']").addClass("required");
 
 					el.on("change", function() {
 						var type = el.attr("data-validation"),
@@ -324,9 +337,8 @@ var initValidation = function() {
 
 						validateField(el, type, value);
 					});
-					$("label[for='" + el.attr("id") + "']").addClass("required");
-
 				} else {
+					$("label[for='" + el.attr("id") + "']").addClass("required");
 
 					el.on("keyup", function() {
 						el.removeClass("valid").removeClass("invalid");
@@ -343,10 +355,8 @@ var initValidation = function() {
 								value = el.val();
 
 							validateField(el, type, value);
-						}, 200);
+						}, 100);
 					});
-					$("label[for='" + el.attr("id") + "']").addClass("required");
-
 				}
 			});
 
@@ -373,6 +383,6 @@ var initValidation = function() {
 			});
 		});
 
-		if ( matter.config.application.debug ) console.log(":: Validation");
+		debug.log(":: Validation");
 	}
 }

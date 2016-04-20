@@ -269,33 +269,6 @@ pre {
 
 // Form
 
-.button {
-	&.notify {
-		@extend .primary;
-		@extend .circle;
-
-		width: 42px;
-		height: 42px;
-		padding: floor($spacing / 2);
-		font-size: $fontSize + rem !important;
-		font-weight: bold;
-
-		.icon {
-			top: 2px;
-		}
-
-		&.success {
-			background-color: $successBgColor;
-		}
-		&.warning {
-			background-color: $warningBgColor;
-		}
-		&.failure {
-			background-color: $failureBgColor;
-		}
-	}
-}
-
 .card-wrapper {
 	@extend .framed;
 	margin: $spacing 0;

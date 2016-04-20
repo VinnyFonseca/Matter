@@ -8,7 +8,8 @@
 .button {
 	display: inline-block;
 	position: relative;
-	margin: $spacing auto 2px;
+	margin: 0 auto;
+	margin-bottom: $spacing;
 	padding: floor($spacing / 2.5) floor($spacing / 1.5);
 	min-width: 42px;
 	color: $bodyTextColor;
@@ -83,6 +84,32 @@
 		}
 		&:active {
 			background-color: $btnTertiaryColor !important;
+		}
+	}
+
+	&.notify {
+		@extend .primary;
+		@extend .circle;
+
+		width: 42px;
+		height: 42px;
+		padding: floor($spacing / 2);
+		font-size: $fontSize + rem !important;
+		font-weight: bold;
+		line-height: $fontSize - 0.3;
+
+		.icon {
+			top: 2px;
+		}
+
+		&.success {
+			background-color: $successBgColor;
+		}
+		&.warning {
+			background-color: $warningBgColor;
+		}
+		&.failure {
+			background-color: $failureBgColor;
 		}
 	}
 }

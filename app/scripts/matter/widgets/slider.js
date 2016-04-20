@@ -21,7 +21,7 @@ matter.sliders = {
 			}, 250 * i);
 
 			$(this).find('.slide').css({ 'visibility': 'visible' });
-			if ( matter.config.application.debug ) console.log(":: Slider Init: " + id);
+			debug.log(":: Slider Init: " + id);
 		});
 	}
 }
@@ -143,10 +143,15 @@ matter.slider.prototype.init = function(id) {
 }
 
 matter.slider.prototype.position = function() {
+	this.height.calculate();
 	this.element.movable.css({
-		'margin-left': 0,
+		'x': 0,
 		'left': 0
 	});
+	this.element.container.css({
+		'height': this.height.value
+	});
+	this.element.slider.children('.slider-arrow').height(this.height.value);
 
 	this.width.calculate();
 	this.step = this.width.value;
@@ -166,18 +171,23 @@ matter.slider.prototype.move = function(i) {
 	if ( this.direction == "prev" ) this.cloning();
 
 	this.height.calculate();
-	this.element.slider.children('.slider-arrow').height(this.height.value);
-	this.element.movable
-		.stop(true, false)
-		.animate({
-			'left': - this.step,
-			'height': this.height.value
-		}, {
-			duration: this.duration,
-			complete: function() {
-				self.end();
-			}
-		});
+
+	this.element.movable.transition({
+		'x': - this.step
+	}, {
+		duration: this.duration,
+		complete: function() {
+			self.end();
+		}
+	});
+
+	this.element.container.transition({
+		'height': this.height.value
+	}, this.duration);
+
+	this.element.slider.children('.slider-arrow').transition({
+		'height': this.height.value
+	}, this.duration);
 
 	this.element.bullet().removeClass('active');
 	this.element.bullet().eq(this.current).addClass('active');
@@ -245,7 +255,7 @@ matter.slider.prototype.kickback = function() {
 			self.direction = "prev";
 
 			self.element.slider.find('.slide:first-child').appendTo(self.element.movable);
-			self.element.movable.css({ 'margin-left': 0 });
+			self.element.movable.css({ 'left': 0 });
 
 			self.cloned = false;
 		}
@@ -267,7 +277,7 @@ matter.slider.prototype.cloning = function() {
 			}
 		}
 
-		this.element.movable.css({ 'margin-left': this.step });
+		this.element.movable.css({ 'left': this.step });
 		this.clone = false;
 	}
 }
@@ -503,7 +513,7 @@ matter.slider.prototype.drag = function() {
 		this.element.container.on("mousedown touchstart", function(event) {
 			// if ( !matter.config.application.touch ) event.preventDefault();
 
-			if ( matter.config.application.debug ) console.log(event, event.touches);
+			debug.log(event, event.touches);
 
 			if ( !self.animating && self.multi ) {
 				self.touch.first.x = event.pageX || event.originalEvent.touches[0].pageX;
@@ -526,7 +536,7 @@ matter.slider.prototype.drag = function() {
 						if ( !self.cloned ) {
 							self.direction = "prev";
 							self.element.slider.find('.slide:last-child').prependTo(self.element.movable);
-							self.element.movable.css({ 'margin-left': - self.width.value });
+							self.element.movable.css({ 'left': - self.width.value });
 							self.cloned = true;
 						}
 					}
@@ -536,14 +546,12 @@ matter.slider.prototype.drag = function() {
 						if ( self.cloned ) {
 							self.direction = "next";
 							self.element.slider.find('.slide:first-child').appendTo(self.element.movable);
-							self.element.movable.css({ 'margin-left': 0 });
+							self.element.movable.css({ 'left': 0 });
 							self.cloned = false;
 						}
 					}
 
-					self.element.movable.css({
-						'left': - self.touch.drag.distance().left
-					});
+					self.element.movable.css({ 'x': - self.touch.drag.distance().left });
 
 					if ( self.touch.drag.limit() ) {
 						self.duration = self.kick;

@@ -7,7 +7,6 @@
 	padding: 0;
 	user-select: none;
 	overflow: hidden;
-	transform: translate3d(0, 0, 0);
 
 	* {
 		user-select: none;
@@ -27,36 +26,13 @@
 		}
 	}
 
-	.slider-container {
-		display: block;
-		position: relative;
-		margin: 0;
-		padding: 0;
-		width: 100%;
-		overflow: hidden;
-		cursor: pointer;
-		cursor: grab;
-
-		&:after {
-			display: none;
-			position: absolute;
-			width: 20px;
-			height: 20px;
-			top: floor($spacing / 4);
-			left: floor($spacing / 4);
-			background: transparent url($base + "img/icons/icon-swipe.svg") center center no-repeat;
-			background-size: 100%;
-			opacity: 0.5;
-			content: "";
-		}
-	}
-
 
 
 	// Arrow Navigation
 
 	&.arrows {
-		padding: 0 $arrowDiameter;
+		// padding: 0 $arrowDiameter;
+		padding: 0;
 
 		.slider-arrow {
 			display: block;
@@ -184,6 +160,29 @@
 
 	// Moving Container
 
+	.slider-container {
+		display: block;
+		position: relative;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		overflow: hidden;
+		cursor: pointer;
+
+		&:after {
+			display: none;
+			position: absolute;
+			width: 24px;
+			height: 24px;
+			top: 0;
+			left: floor($spacing / 4);
+			background: transparent url($base + "img/icons/icon-swipe.svg") center center no-repeat;
+			background-size: 100%;
+			opacity: 1;
+			content: "";
+		}
+	}
+
 	.slider-movable {
 		display: block;
 		position: relative;
@@ -254,6 +253,13 @@
 				}
 			}
 
+			.slider-container {
+				&:after {
+					top: auto;
+					bottom: 0;
+				}
+			}
+
 			.slider-arrow {
 				&.slider-arrow-prev {
 					margin-left: -$arrowDiameter;
@@ -300,6 +306,8 @@
 
 	.slider {
 		.slider-container {
+			cursor: grab;
+
 			&:after {
 				display: block;
 			}

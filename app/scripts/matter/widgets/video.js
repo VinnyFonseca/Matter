@@ -63,7 +63,7 @@ var initVideo = function() {
 						},
 						widget = '<div class="video-frame ' + name + '">\
 									<div class="video-overlay"></div>\
-									<img class="video-loader" src="' + matter.config.application.base + 'img/loader.gif" alt="Video loader">\
+									<div class="loader video-loader"><div class="loader-inner">&nbsp;</div></div>\
 									<div class="video-thumb" style="background: url(' + videoThumb + ');">&nbsp;</div>\
 									<div class="video-button">\
 										<img class="svg icon icon-play" src="' + matter.config.application.base + 'img/icons/icon-play.svg">\
@@ -140,7 +140,7 @@ var initVideo = function() {
 					videoID = el.data("video-id"),
 					videoThumb = !!el.attr('data-video-thumb') && el.attr('data-video-thumb') !== "" ? el.data("video-thumb") : "//img.youtube.com/vi/" + videoID + "/hqdefault.jpg",
 					widget =   '<div class="video-overlay"></div>\
-								<img class="video-loader" src="' + matter.config.application.base + 'img/loader.gif" alt="Video loader">\
+								<div class="loader video-loader"><div class="loader-inner">&nbsp;</div></div>\
 								<div class="video-thumb" style="background: url(' + videoThumb + ');">&nbsp;</div>\
 								<div class="video-button">\
 									<img class="svg icon icon-play" src="' + matter.config.application.base + 'img/icons/icon-play.svg">\
@@ -232,7 +232,7 @@ var initVideo = function() {
 						},
 						widget =   '<div class="video-frame ' + name + '">\
 										<div class="video-overlay"></div>\
-										<img class="video-loader" src="' + matter.config.application.base + 'img/loader.gif" alt="Video loader">\
+										<div class="loader video-loader"><div class="loader-inner">&nbsp;</div></div>\
 										<div class="video-thumb">&nbsp;</div>\
 										<div class="video-button">\
 											<img class="svg icon icon-play" src="' + matter.config.application.base + 'img/icons/icon-play.svg">\
@@ -310,7 +310,7 @@ var initVideo = function() {
 						player_id: name
 					},
 					widget =   '<div class="video-overlay"></div>\
-								<img class="video-loader" src="' + matter.config.application.base + 'img/loader.gif" alt="Video loader">\
+								<div class="loader video-loader"><div class="loader-inner">&nbsp;</div></div>\
 								<div class="video-thumb">&nbsp;</div>\
 								<div class="video-button">\
 									<img class="svg icon icon-play" src="' + matter.config.application.base + 'img/icons/icon-play.svg">\
@@ -342,5 +342,5 @@ var initVideo = function() {
 	vimFramePlayers();
 	vimVideoPlayers();
 
-	if ( matter.config.application.debug ) console.log(":: Videos");
+	debug.log(":: Videos");
 }
