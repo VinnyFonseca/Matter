@@ -74,12 +74,12 @@ body {
 		@extend .circle;
 		@extend .valign-middle;
 
-		&.debug-trigger {
-			@extend .tertiary;
-		}
-
 		&.doc-trigger {
 			@extend .secondary;
+		}
+
+		&.debug-trigger {
+			@extend .tertiary;
 		}
 
 		> .icon {
@@ -101,10 +101,6 @@ body {
 
 
 // Widgets
-
-
-
-
 
 // Loader
 
@@ -154,6 +150,8 @@ $loader-size: 64px;
 	}
 }
 
+
+// Progress
 
 $progressHeight: 42px;
 

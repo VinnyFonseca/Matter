@@ -1,2 +1,198 @@
-function loadScript(a,b){var c=document.createElement("script");c.type="text/javascript",c.readyState?c.onreadystatechange=function(){"loaded"!=c.readyState&&"complete"!=c.readyState||(c.onreadystatechange=null,b())}:c.onload=function(){b()},c.src=a,document.getElementsByTagName("head")[0].appendChild(c)}loadScript("http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js",function(){function a(){var a;if(void 0===a){var b=$('<div style="width:50px;height:50px;overflow:hidden;position:absolute;top:-200px;left:-200px;"><div style="height:100px;"></div>');$("body").append(b);var c=$("div",b).innerWidth();b.css("overflow-y","scroll");var d=$("div",b).innerWidth();$(b).remove(),a=c-d}return a}!function(a){function b(a){return"object"==typeof a?a:{top:a,left:a}}var c=a.scrollTo=function(b,c,d){a(window).scrollTo(b,c,d)};c.defaults={axis:"xy",duration:parseFloat(a.fn.jquery)>=1.3?0:1,limit:!0},c.window=function(b){return a(window)._scrollable()},a.fn._scrollable=function(){return this.map(function(){var b=this,c=!b.nodeName||-1!=a.inArray(b.nodeName.toLowerCase(),["iframe","#document","html","body"]);if(!c)return b;var d=(b.contentWindow||b).document||b.ownerDocument||b;return/webkit/i.test(navigator.userAgent)||"BackCompat"==d.compatMode?d.body:d.documentElement})},a.fn.scrollTo=function(d,e,f){return"object"==typeof e&&(f=e,e=0),"function"==typeof f&&(f={onAfter:f}),"max"==d&&(d=9e9),f=a.extend({},c.defaults,f),e=e||f.duration,f.queue=f.queue&&f.axis.length>1,f.queue&&(e/=2),f.offset=b(f.offset),f.over=b(f.over),this._scrollable().each(function(){function g(a){j.animate(l,e,f.easing,a&&function(){a.call(this,k,f)})}if(null!=d){var h,i=this,j=a(i),k=d,l={},m=j.is("html,body");switch(typeof k){case"number":break;case"string":if(/^([+-]=?)?\d+(\.\d+)?(px|%)?$/.test(k)){k=b(k);break}if(k=a(k,this),!k.length)return;break;case"object":(k.is||k.style)&&(h=(k=a(k)).offset())}a.each(f.axis.split(""),function(a,b){var d="x"==b?"Left":"Top",e=d.toLowerCase(),n="scroll"+d,o=i[n],p=c.max(i,b);if(h)l[n]=h[e]+(m?0:o-j.offset()[e]),f.margin&&(l[n]-=parseInt(k.css("margin"+d))||0,l[n]-=parseInt(k.css("border"+d+"Width"))||0),l[n]+=f.offset[e]||0,f.over[e]&&(l[n]+=k["x"==b?"width":"height"]()*f.over[e]);else{var q=k[e];l[n]=q.slice&&"%"==q.slice(-1)?parseFloat(q)/100*p:q}f.limit&&/^\d+$/.test(l[n])&&(l[n]=l[n]<=0?0:Math.min(l[n],p)),!a&&f.queue&&(o!=l[n]&&g(f.onAfterFirst),delete l[n])}),g(f.onAfter)}}).end()},c.max=function(b,c){var d="x"==c?"Width":"Height",e="scroll"+d;if(!a(b).is("html,body"))return b[e]-a(b)[d.toLowerCase()]();var f="client"+d,g=b.ownerDocument.documentElement,h=b.ownerDocument.body;return Math.max(g[e],h[e])-Math.min(g[f],h[f])}}(jQuery),frameHeight=$(window).height()-162,$(window).resize(function(){$(".frameWrapper").height($(window).height()-162)}),$("#count").text(function(a,b){var c=parseInt($("#bpList li").length,10);return 10>c?"0"+c:c}),$("#bpList li").each(function(b){var c=$(this).attr("data-width"),d=$(this).attr("data-unit");"em"===d?(emToPx=16,emtoPxText='  <span class="emToPx">(1EM = 16PX)</span>'):(emToPx=1,emtoPxText="");var e=parseFloat($(this).attr("data-width")*emToPx)+a()+"px",f='<div class="breakpoint-item" id="breakpoint-'+c+d+'" data-width="'+c+'" data-unit="'+d+'" style="width: '+e+'"><header class="frameTitle">'+c+d+'</header><div class="frameWrapper" style="height:'+frameHeight+'px"><iframe frameborder="0" style="width: '+e+'"></iframe></div></div>';$("#qcWW").append(f)}),$("iframe").each(function(){$(this).attr("src",$("body").attr("data-url")),$(this).on("load",function(){$(this).fadeIn()})}),$(".reload").click(function(){var a=$(this).parent().parent().next("iframe");return a.fadeOut(),a.attr("src",a.attr("src")),!1}),$("#bpList li:first-child input").attr("checked","checked"),$("#bpList li a").each(function(){if($(this).find("input").is(":checked")){$(this).addClass("checked"),$(this).parent("li").addClass("active");var a=$("#qcWW").find("[data-width='"+$(this).parent("li").attr("data-width")+"']");a.addClass("visible")}}),$("#bpList li a").click(function(){$("*").removeClass("active"),$(this).parent("li").addClass("active");var a=$("#qcWW").find("[data-width='"+$(this).parent("li").attr("data-width")+"']");return $("#qcWWW").scrollTo(a,700,{offset:0}),window.history.pushState(data,"Title",a.prev("li a").attr("href")),!1})});
+/*
+   1] Breakpoint Tester(BETA) V 1.0
+      Copyright (c) 2013 Mandar Shirke.
+   2] ScrollTo Plugin | Copyright (c) 2007-2013 Ariel Flesler
+*/
+function loadScript(e, t) {
+    var n = document.createElement("script");
+    n.type = "text/javascript";
+    if (n.readyState) {
+        n.onreadystatechange = function() {
+            if (n.readyState == "loaded" || n.readyState == "complete") {
+                n.onreadystatechange = null;
+                t()
+            }
+        }
+    } else {
+        n.onload = function() {
+            t()
+        }
+    }
+    n.src = e;
+    document.getElementsByTagName("head")[0].appendChild(n)
+}
+loadScript("http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js", function() {
+    function e() {
+        var e;
+        if (e === undefined) {
+            var t = $('<div style="width:50px;height:50px;overflow:hidden;' + 'position:absolute;top:-200px;left:-200px;"><div style="height:100px;">' + "</div>");
+            $("body").append(t);
+            var n = $("div", t).innerWidth();
+            t.css("overflow-y", "scroll");
+            var r = $("div", t).innerWidth();
+            $(t).remove();
+            e = n - r;
+        }
+        return e;
+    }
+    (function(e) {
+        function n(e) {
+            return typeof e == "object" ? e : {
+                top: e,
+                left: e
+            }
+        }
+        var t = e.scrollTo = function(t, n, r) {
+            e(window).scrollTo(t, n, r)
+        };
+        t.defaults = {
+            axis: "xy",
+            duration: parseFloat(e.fn.jquery) >= 1.3 ? 0 : 1,
+            limit: true
+        };
+        t.window = function(t) {
+            return e(window)._scrollable()
+        };
+        e.fn._scrollable = function() {
+            return this.map(function() {
+                var t = this,
+                    n = !t.nodeName || e.inArray(t.nodeName.toLowerCase(), ["iframe", "#document", "html", "body"]) != -1;
+                if (!n) return t;
+                var r = (t.contentWindow || t).document || t.ownerDocument || t;
+                return /webkit/i.test(navigator.userAgent) || r.compatMode == "BackCompat" ? r.body : r.documentElement
+            })
+        };
+        e.fn.scrollTo = function(r, i, s) {
+            if (typeof i == "object") {
+                s = i;
+                i = 0
+            }
+            if (typeof s == "function") s = {
+                onAfter: s
+            };
+            if (r == "max") r = 9e9;
+            s = e.extend({}, t.defaults, s);
+            i = i || s.duration;
+            s.queue = s.queue && s.axis.length > 1;
+            if (s.queue) i /= 2;
+            s.offset = n(s.offset);
+            s.over = n(s.over);
+            return this._scrollable().each(function() {
+                function d(e) {
+                    u.animate(c, i, s.easing, e && function() {
+                        e.call(this, a, s)
+                    })
+                }
+                if (r == null) return;
+                var o = this,
+                    u = e(o),
+                    a = r,
+                    l, c = {},
+                    p = u.is("html,body");
+                switch (typeof a) {
+                    case "number":
+                    break;
+                    case "string":
+                        if (/^([+-]=?)?\d+(\.\d+)?(px|%)?$/.test(a)) {
+                            a = n(a);
+                            break
+                        }
+                        a = e(a, this);
+                        if (!a.length) return;
+                    break;
+                    case "object":
+                        if (a.is || a.style) l = (a = e(a)).offset()
+                    break;
+                }
+                e.each(s.axis.split(""), function(e, n) {
+                    var r = n == "x" ? "Left" : "Top",
+                        i = r.toLowerCase(),
+                        f = "scroll" + r,
+                        v = o[f],
+                        m = t.max(o, n);
+                    if (l) {
+                        c[f] = l[i] + (p ? 0 : v - u.offset()[i]);
+                        if (s.margin) {
+                            c[f] -= parseInt(a.css("margin" + r)) || 0;
+                            c[f] -= parseInt(a.css("border" + r + "Width")) || 0
+                        }
+                        c[f] += s.offset[i] || 0;
+                        if (s.over[i]) c[f] += a[n == "x" ? "width" : "height"]() * s.over[i]
+                    } else {
+                        var y = a[i];
+                        c[f] = y.slice && y.slice(-1) == "%" ? parseFloat(y) / 100 * m : y
+                    }
+                    if (s.limit && /^\d+$/.test(c[f])) c[f] = c[f] <= 0 ? 0 : Math.min(c[f], m);
+                    if (!e && s.queue) {
+                        if (v != c[f]) d(s.onAfterFirst);
+                        delete c[f]
+                    }
+                });
+                d(s.onAfter)
+            }).end()
+        };
+        t.max = function(t, n) {
+            var r = n == "x" ? "Width" : "Height",
+                i = "scroll" + r;
+            if (!e(t).is("html,body")) return t[i] - e(t)[r.toLowerCase()]();
+            var s = "client" + r,
+                o = t.ownerDocument.documentElement,
+                u = t.ownerDocument.body;
+            return Math.max(o[i], u[i]) - Math.min(o[s], u[s])
+        }
+    })(jQuery);
+    frameHeight = $(window).height() - 162;
+    $(window).resize(function() {
+        $(".frameWrapper").height($(window).height() - 162)
+    });
+    $("#count").text(function(e, t) {
+        var n = parseInt($("#bpList li").length, 10);
+        return n < 10 ? "0" + n : n
+    });
+    $("#bpList li").each(function(t) {
+        var n = $(this).attr("data-width");
+        var r = $(this).attr("data-unit");
+        if (r === "em") {
+            emToPx = 16;
+            emtoPxText = '  <span class="emToPx">(1EM = 16PX)</span>'
+        } else {
+            emToPx = 1;
+            emtoPxText = ""
+        }
+        var i = parseFloat($(this).attr("data-width") * emToPx) + e() + "px";
+        var s = '<div class="breakpoint-item" id="breakpoint-' + n + r + '" data-width="' + n + '" data-unit="' + r + '" style="width: ' + i + '"><header class="frameTitle">' + n + r + '</header><div class="frameWrapper" style="height:' + frameHeight + 'px"><iframe frameborder="0" style="width: ' + i + '"></iframe></div></div>';
+        $("#qcWW").append(s)
+    });
+    $("iframe").each(function() {
+        $(this).attr("src", $("body").attr("data-url"));
+        $(this).on("load", function() {
+            $(this).fadeIn()
+        })
+    });
+    $(".reload").click(function() {
+        var e = $(this).parent().parent().next("iframe");
+        e.fadeOut();
+        e.attr("src", e.attr("src"));
+        return false
+    });
+    $("#bpList li:first-child input").attr("checked", "checked");
+    $("#bpList li a").each(function() {
+        if ($(this).find("input").is(":checked")) {
+            $(this).addClass("checked");
+            $(this).parent("li").addClass("active");
+            var e = $("#qcWW").find("[data-width='" + $(this).parent("li").attr("data-width") + "']");
+            e.addClass("visible")
+        }
+    });
+    $("#bpList li a").click(function() {
+        $("*").removeClass("active");
+        $(this).parent("li").addClass("active");
+        var e = $("#qcWW").find("[data-width='" + $(this).parent("li").attr("data-width") + "']");
+        $("#qcWWW").scrollTo(e, 700, {
+            offset: 0
+        });
+        window.history.pushState(data, "Title", e.prev("li a").attr("href"));
+        return false
+    })
+});
 //# sourceMappingURL=bookmark.js.map

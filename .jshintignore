@@ -1,0 +1,4 @@
+./app/scripts/standalone/**/*.js
+./app/scripts/matter/base/**/*.js
+./app/scripts/matter/vendor/**/*.js
+./app/scripts/matter/polyfills/**/*.js

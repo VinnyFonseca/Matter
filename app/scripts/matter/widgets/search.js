@@ -36,11 +36,18 @@ var initSearch = function() {
 
 			$(tagcloudElement).insertBefore(results);
 			$(resultsControlsElement).insertBefore(results);
+
+			if ( matter.config.search.pagination ) {
+				$(resultsPaginationElement).insertBefore(results).clone().insertAfter(results);
+				firstLoad = false;
+			}
+
 			$(loaderElement).insertBefore(results);
 			$(loadElement).insertAfter(container);
 
 			var tagcloud = el.find(".tagcloud"),
 				controls = el.find(".search-controls"),
+				pagination = el.find(".search-pagination"),
 				load = el.find(".search-load");
 
 			controls.append(resultsCountElement);
@@ -71,7 +78,7 @@ var initSearch = function() {
 					parameterArray = [],
 					resultArray = [];
 
-				console.log(data);
+
 
 				// Populate Dropdowns
 
@@ -146,6 +153,7 @@ var initSearch = function() {
 								return false;
 							}
 						}
+
 						matter.svg.init();
 
 						updateTags(parameter);
@@ -171,51 +179,50 @@ var initSearch = function() {
 							var parameter = $(this).data("lookup");
 
 							if ( type == "INPUT" && $(this).attr("type") == "text" ) {
+								$(this).on("keyup", function(event) {
+									var value = $(this).val().toLowerCase();
+									var criteria = parameter.replace(/\s/g, "").split(",");
+									var keycode = event.keyCode;
+
+									debug.log('Input selection: ' + value);
+
+									var validKeys =
+										keycode == 32 || keycode === 13     ||  // spacebar & return key(s)
+										keycode == 8                        ||  // backspace
+										(keycode > 47 && keycode < 58)      ||  // number keys
+										(keycode > 64 && keycode < 91)      ||  // letter keys
+										(keycode > 95 && keycode < 112)     ||  // numpad keys
+										(keycode > 185 && keycode < 193)    ||  // ;=,-./` (in order)
+										(keycode > 218 && keycode < 223);       // [\]' (in order)
+
+									if ( validKeys ) {
+										outputArray[parameter] = value;
+										updateResults();
+										return false;
+									}
+								});
+
+								$(this).on("keydown", function(event) { // Prevents form submission for autocompletion
+									if ( event.keyCode == 13 ) {
+										event.preventDefault();
+										return false;
+									}
+								});
+
 								// $(this).on("keyup", function(event) {
-								// 	var value = $(this).val().toLowerCase();
-								// 	var criteria = parameter.replace(/\s/g, "").split(",");
-								// 	var keycode = event.keyCode;
+								// 	if (event.keyCode == 13) {
+								// 		var value = $(this).val().toLowerCase();
+								// 		var criteria = parameter.replace(/\s/g, "").split(",");
+								// 		var keycode = event.keyCode;
 
-								// 	debug.log('Input selection: ' + value);
+								// 		debug.log('Input selection: ' + value);
 
-								// 	var validKeys =
-								// 		keycode == 32 || keycode === 13     ||  // spacebar & return key(s)
-								// 		keycode == 8                        ||  // backspace
-								// 		(keycode > 47 && keycode < 58)      ||  // number keys
-								// 		(keycode > 64 && keycode < 91)      ||  // letter keys
-								// 		(keycode > 95 && keycode < 112)     ||  // numpad keys
-								// 		(keycode > 185 && keycode < 193)    ||  // ;=,-./` (in order)
-								// 		(keycode > 218 && keycode < 223);       // [\]' (in order)
-
-								// 	if ( validKeys ) {
 								// 		if ( value.length <= 1 ) matter.text.unhighlight(results);
 								// 		outputArray[parameter] = value;
 								// 		updateResults();
 								// 		return false;
 								// 	}
 								// });
-
-								// $(this).on("keydown", function(event) {
-								// 	if (event.keyCode == 13) {
-								// 		event.preventDefault();
-								// 		return false;
-								// 	}
-								// });
-
-								$(this).on("keyup", function(event) {
-									if (event.keyCode == 13) {
-										var value = $(this).val().toLowerCase();
-										var criteria = parameter.replace(/\s/g, "").split(",");
-										var keycode = event.keyCode;
-
-										debug.log('Input selection: ' + value);
-
-										if ( value.length <= 1 ) matter.text.unhighlight(results);
-										outputArray[parameter] = value;
-										updateResults();
-										return false;
-									}
-								});
 							} else if ( type == "INPUT" && $(this).attr("type") == "checkbox" ) {
 								if ( !parameterArray.has(parameter) ) parameterArray.push(parameter);
 								outputArray[parameter] = [];
@@ -395,8 +402,7 @@ var initSearch = function() {
 									} else {
 										if ( compare.has(analyse) && !tempArray.has(id) ) {
 											tempArray.push(id);
-										}
-										else if (!isNaN(analyse) && analyse === compare.toString() && !tempArray.has(id)) {
+										} else if (!isNaN(analyse) && analyse === compare.toString() && !tempArray.has(id)) {
 											tempArray.push(id);
 										}
 									}
@@ -464,50 +470,83 @@ var initSearch = function() {
 						finalArray = allArray;
 					}
 
-					debug.log("Search == " + finalArray.length + " items");
+					debug.log("== " + finalArray.length + " items");
 
 
 					// Rebuild results
 
-					var firstLoad = true;
-					var pagination;
+					firstLoad = true;
 
 					var rebuildSystem = function() {
 						var buildTemplate = function(template) {
+							resultItems = [];
+							results.empty();
+
 							var loadItems = function() {
 								for ( var i = 0; i < feed.length; i++ ) {
 									var object = feed[i];
 									var id = object.id;
-
-									if ( !finalArray.has(id) ) continue;
-
-									// result = resultTemplate.html(); // $(".search-result-template") with {{VARs}}
-									// wrapperClass = resultTemplate.data('wrapper-class');
-
 									var result = template;
 
-									// I can't believe someone has written this regex crap and can still sleep at night
-									var handleIfRegex = /{{#if (\w+)}}(((?!{{#if \w+}}[\s\S]*?{{\/if}})[\s\S])*?){{\/if}}/g;
+									if ( !finalArray.has(id) ) continue;
+									if ( !!object.date ) object.date = moment(object.date).format("DD.MM.YYYY");
 
-									while (result.search(handleIfRegex) !== -1) {
-										result = result.replace(handleIfRegex, function(str, key, value) {
+									// I can't believe someone has written this regex crap and can still sleep at night
+									var preRx = /{{#if (\w+)}}(((?!{{#if \w+}}[\s\S]*?{{\/if}})[\s\S])*?){{\/if}}/g;
+									var postRx = /{{(\w+)}}/g;
+
+									while ( result.search(preRx) !== -1 ) {
+										result = result.replace(preRx, function(str, key, value) {
 											return object[key] && object[key] ? value : '';
 										});
 									}
 
-									result = result.replace(/{{(\w+)}}/g, function(str, key) {
+									result = result.replace(postRx, function(str, key) {
 										return object[key] ? object[key] : '';
 									});
 
 									if ( !resultItems.has(result) ) resultItems.push(result);
 								}
 
+								console.log(resultItems.length, currentPage)
+							}
+
+							if ( firstLoad ) loadItems();
 
 
-								// Support widgets
+							// Post build
 
-								matter.tooltip.init();
+							var resultsCount = resultItems.length;
 
+							var showItem = function(i) {
+								var item = $(resultItems[i]);
+
+								if ( i < (matter.config.search.display * currentPage) ) {
+									item.appendTo(results);
+									setTimeout(function() {
+										item.removeClass("loading");
+									}, 250 + (100 * (i % matter.config.search.display)));
+								}
+							}
+
+							var items = results.children(".search-item");
+
+							count
+								.css({"display": "inline-block"})
+								.html((resultsCount === 0 ? "No" : resultsCount) + " result" + (resultsCount === 1 ? " " : "s ") + "found");
+
+							container.removeClass("loading");
+							results.removeClass("no-results");
+
+							if ( resultsCount ) {
+								results.removeClass("no-results");
+
+								if ( matter.config.search.pagination ) items.addClass("loading");
+
+								for ( var i = (matter.config.search.display * (currentPage - 1)), j = 0; i < resultsCount && j < matter.config.search.display; i++, j++ ) {
+									console.log(i, j);
+									showItem(i);
+								}
 
 								// Highlight
 
@@ -517,65 +556,16 @@ var initSearch = function() {
 											parameter = $(this).data("lookup"),
 											criteria = parameter.replace(/\s/g, "").split(",");
 
-										if ( value.length > 1 ) {
-											for ( var i = 0; i < criteria.length; i++ ) {
-												var target = results.find("[class='" + criteria[i].toLowerCase() + "']");
-												matter.text.highlight(target, value);
-											}
+										for ( var i = 0; i < criteria.length; i++ ) {
+											var target = results.find("[class='" + criteria[i].toLowerCase() + "']");
+											matter.text.highlight(target, value);
 										}
 									});
 								}
 
+								// Support widgets
 
-								// Pagination
-
-								if ( matter.config.search.pagination ) {
-									container.append(resultsPaginationElement).prepend(resultsPaginationElement);
-									firstLoad = false;
-								}
-							}
-
-							if ( firstLoad ) loadItems();
-
-
-							// Post build
-
-							var showItem = function(i) {
-								var item = $(resultItems[i]);
-
-								if ( i < (matter.config.search.display  * currentPage) ) {
-									if ( matter.config.search.pagination ) {
-										item.appendTo(results);
-										setTimeout(function() {
-											item.removeClass("loading");
-										}, 250);
-									} else {
-										item.appendTo(results);
-										setTimeout(function() {
-											item.removeClass("loading");
-										}, 250 + (100 * (i % matter.config.search.display)));
-									}
-								}
-							}
-
-							var items = results.children(".item");
-							var resultsCount = resultItems.length;
-
-							count
-								.css({"display": "inline-block"})
-								.html((resultsCount === 0 ? "No" : resultsCount) + " result" + (resultsCount === 1 ? " " : "s ") + "found");
-
-							container.removeClass("loading");
-							results.removeClass("no-results");
-
-							if (resultsCount) {
-								results.removeClass("no-results");
-
-								if ( matter.config.search.pagination ) items.addClass("loading");
-
-								for ( var i = (matter.config.search.display  * (currentPage - 1)), j = 0; i < resultsCount && j < matter.config.search.display; i++, j++ ) {
-									showItem(i);
-								}
+								matter.tooltip.init();
 							} else {
 								results.addClass("no-results");
 							}
@@ -583,15 +573,26 @@ var initSearch = function() {
 
 							// Pagination and Selective loading
 
-
 							if ( matter.config.search.pagination ) {
-								pagination = $(".search-pagination");
-
 								if ( resultsCount > matter.config.search.display ) {
 									pagination.show();
 								} else {
 									pagination.hide();
 								}
+
+								pagination.empty();
+
+								var pages = 0;
+
+								for ( var n = 0; n < resultsCount; n++ ) {
+									if ( n % matter.config.search.display === 0 ) {
+										pages++;
+										var page = "<button data-page='" + pages + "'>" + pages + "</button>";
+										pagination.append(page);
+									}
+								}
+
+								$("[data-page='" + currentPage + "']").addClass("primary");
 							} else {
 								if ( resultsCount > matter.config.search.display * currentPage ) {
 									load.show();
@@ -599,60 +600,27 @@ var initSearch = function() {
 									load.hide();
 								}
 							}
+
+							$("[data-page]").off().on("click", function() {
+								currentPage = $(this).data("page");
+
+								$("[data-page]").removeClass("primary");
+								$("[data-page='" + currentPage + "']").addClass("primary");
+
+								rebuildSystem();
+							});
+
+							load.off().on("click", function(event) {
+								event.preventDefault();
+								currentPage++;
+								rebuildSystem();
+							});
 						}
 
 						matter.data.get(resultTemplate, buildTemplate);
 					}
 
-					results.html("");
-					resultItems.length = 0;
 					rebuildSystem();
-
-
-					// Pagination and Selective loading
-
-					var items = results.children(".item");
-					var resultsCount = resultItems.length; // items.length;
-
-					if ( matter.config.search.pagination ) {
-						var pages = 0;
-
-						for ( var n = 0; n < resultsCount; n++ ) {
-							if ( n % matter.config.search.display === 0 ) {
-								pages++;
-
-								var page = "<button data-page='" + pages + "'>" + pages + "</button>";
-								pagination.append(page);
-							}
-						}
-
-						$("[data-page='" + currentPage + "']").addClass("primary");
-
-						$("[data-page]").off().on("click", function() {
-							currentPage = $(this).data("page");
-
-							$("[data-page]").removeClass("primary");
-							$("[data-page='" + currentPage + "']").addClass("primary");
-
-							$("html, body").animate({
-								scrollTop: $(".search-wrapper").offset().top - 90
-							}, {
-								duration: 1000,
-								queue: false,
-								complete: function() {
-									matter.anchor.clicked = false;
-								}
-							});
-
-							rebuildSystem();
-						});
-					} else {
-						load.off().on("click", function(e) {
-							e.preventDefault();
-							currentPage++;
-							rebuildSystem();
-						});
-					}
 				}
 
 

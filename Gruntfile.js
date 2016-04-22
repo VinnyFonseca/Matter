@@ -97,10 +97,9 @@ module.exports = function(grunt) {
 					src: [
 						'**',
 						'!**/markup/**',
-						'!**/scripts/**',
-						'!**/styles/**',
-						'!img/**/*.{jpg,png,gif}',
-						'!**/*.html'
+						'!**/scripts/**/*.js',
+						'!**/styles/**/*.{scss,sass}',
+						'!img/**/*.{jpg,png,gif}'
 					],
 					dest: 'dist'
 				}]
@@ -136,17 +135,14 @@ module.exports = function(grunt) {
 
 		sass: {
 			options: {
-				sourceMap: true,
+				sourceMap: false,
 				outputStyle: 'compressed'
 			},
 			main: {
 				files: [{
 					expand: true,
 					cwd: 'app/styles',
-					src: [
-						'**/*.{scss,sass}',
-						'!**/_*.{scss,sass}'
-					],
+					src: '**/*.{scss,sass}',
 					dest: 'dist/styles',
 					filter: 'isFile',
 					ext: '.css'
@@ -160,26 +156,25 @@ module.exports = function(grunt) {
 		postcss: {
 			options: {
 				safe: true,
-				map: true,
+				map: false,
 				processors: [
 					require('rucksack-css')({
 						fallbacks: true
 					}),
-					require('pixrem')(
-						16, { // Value is the same as on _config.scss $fontSize variable multiplied by 10.
-							html: true,
-							replace: false,
-							atrules: true,
-							browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']
-						}
-					),
+					require('pixrem')({
+						rootValue: 17, // Value is the same as on /app/styles/matter/_config.scss $fontSize variable multiplied by 10.
+						html: true,
+						replace: false,
+						atrules: true,
+						browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']
+					}),
 					require('autoprefixer')({
 						browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']
 					})
 				]
 			},
 			main: {
-				src: ['dist/styles/**/*.css']
+				src: 'dist/styles/**/*.css'
 			}
 		},
 
@@ -193,41 +188,30 @@ module.exports = function(grunt) {
 				sourceMap: true,
 				sourceMapIncludeSources: true
 			},
-			main: {
-				files: {
-					'dist/scripts/build.js': [
+			concat: {
+				files: [{
+					src: [
 						'app/scripts/matter/base/**/*.js',
-						'app/scripts/matter/engine/**/*.js',
+						'app/scripts/matter/vendor/**/*.js',
 						'app/scripts/matter/polyfills/**/*.js',
 						'app/scripts/matter/config/**/*.js',
 						'app/scripts/matter/widgets/**/*.js',
 						'app/scripts/matter/system/**/*.js',
 						'app/scripts/matter/core/**/*.js',
 						'app/scripts/user/**/*.js'
-					]
-				}
-			},
-			debug: {
-				files: [{
-					expand: true,
-					cwd: 'app/scripts/debug',
-					src: '**/*.js',
-					dest: 'dist/scripts/debug'
+					],
+					dest: 'dist/scripts/build.js'
 				}]
 			},
-			head: {
-				files: [{
-					expand: true,
-					cwd: 'app/scripts/head',
-					src: '**/*.js',
-					dest: 'dist/scripts/head'
-				}]
-			},
-			standalone: {
+			noconcat: {
 				files: [{
 					expand: true,
 					cwd: 'app/scripts',
-					src: '*.js',
+					src: [
+						'**/*.js',
+						'!matter/**/*.js',
+						'!user/**/*.js'
+					],
 					dest: 'dist/scripts'
 				}]
 			}
@@ -241,9 +225,10 @@ module.exports = function(grunt) {
 				reporter: require('jshint-stylish'),
 				force: true,
 				ignores: [
-					'app/scripts/head/**/*.js',
+					'app/scripts/debug/**/*.js',
+					'app/scripts/standalone/**/*.js',
 					'app/scripts/matter/base/**/*.js',
-					'app/scripts/matter/engine/**/*.js',
+					'app/scripts/matter/vendor/**/*.js',
 					'app/scripts/matter/polyfills/**/*.js'
 				],
 				'-W001': false,
@@ -270,7 +255,7 @@ module.exports = function(grunt) {
 				multistr: true,
 				scripturl: true
 			},
-			files: ['app/scripts/**/*.js']
+			files: 'app/scripts/**/*.js'
 		},
 
 
@@ -331,18 +316,17 @@ module.exports = function(grunt) {
 			},
 			files: {
 				files: [
-					'app/**',
-					'!app/**/_partials/**',
-					'!app/**/scripts/**',
-					'!app/**/styles/**',
-					'!app/img/**/*.{jpg,png,gif}',
-					'!app/**/*.html'
+					'**',
+					'!**/markup/**',
+					'!**/scripts/**/*.js',
+					'!**/styles/**/*.{scss,sass}',
+					'!img/**/*.{jpg,png,gif}'
 				],
-				tasks: ['copy', 'notify:copy']
+				tasks: ['newer:copy', 'notify:copy']
 			},
 			html: {
 				files: ['app/**/*.html'],
-				tasks: ['ssi', 'notify:ssi']
+				tasks: ['newer:ssi', 'notify:ssi']
 			},
 			php: {
 				files: ['app/**/*.php']
@@ -353,15 +337,15 @@ module.exports = function(grunt) {
 			sass: {
 				options: { livereload: false },
 				files: ['app/styles/**/*.{scss,sass}'],
-				tasks: ['sass', 'notify:sass', 'postcss', 'notify:postcss']
+				tasks: ['newer:sass', 'notify:sass', 'newer:postcss', 'notify:postcss']
 			},
 			js: {
 				files: ['app/scripts/**/*.js'],
-				tasks: ['uglify', 'notify:uglify', 'jshint', 'notify:jshint']
+				tasks: ['newer:uglify', 'notify:uglify', 'newer:jshint', 'notify:jshint']
 			},
 			img: {
 				files: ['app/img/**/*.*'],
-				tasks: ['imagemin', 'notify:imagemin']
+				tasks: ['newer:imagemin', 'notify:imagemin']
 			}
 		}
 	});
@@ -370,6 +354,7 @@ module.exports = function(grunt) {
 	// DEPENDENT PLUGINS =========================/
 
 	grunt.loadNpmTasks('grunt-notify');
+	grunt.loadNpmTasks('grunt-newer');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-ssi');

@@ -1,0 +1,34 @@
+{
+  "name": "Matter",
+  "title": "SASS and Compass Front End Framework",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/VinnyFonseca/matter.git"
+  },
+  "url": "http://matterframework.net",
+  "author": "Vinny Fonseca",
+  "copyright": "2016",
+  "license": "MIT",
+  "version": "1.0.0",
+  "devDependencies": {
+    "autoprefixer": "*",
+    "grunt": "*",
+    "grunt-browser-sync": "*",
+    "grunt-cli": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-imagemin": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-newer": "*",
+    "grunt-notify": "*",
+    "grunt-openport": "*",
+    "grunt-postcss": "*",
+    "grunt-sass": "*",
+    "grunt-ssi": "*",
+    "jshint-stylish": "*",
+    "pixrem": "*",
+    "rucksack-css": "*"
+  }
+}

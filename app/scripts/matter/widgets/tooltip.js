@@ -52,7 +52,6 @@ matter.tooltip = {
 	},
 	position: function(event) {
 		var element = matter.measure(".tooltip");
-		matter.tooltip.bind();
 
 		var cursorX = event.pageX || event.originalEvent.touches[0].pageX,
 		    cursorY = event.pageY || event.originalEvent.touches[0].pageY;
@@ -85,5 +84,7 @@ matter.tooltip = {
 					left: cursorX - (element.width / 2) - 5
 				});
 		}
+
+		matter.tooltip.bind();
 	}
 }
