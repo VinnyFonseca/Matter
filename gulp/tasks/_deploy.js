@@ -3,9 +3,9 @@
 var gulp         = require('gulp');
 var runSequence  = require('run-sequence');
 
-gulp.task('deploy', ['clean'], function() {
+gulp.task('deploy', function() {
 	global.isProd = true;
-	runSequence('copy', 'include', 'images', 'styles', 'scripts');
+	runSequence('clean', 'copy', 'include', 'images', 'styles', 'scripts');
 });
 
 // Assign a shortcut task to production

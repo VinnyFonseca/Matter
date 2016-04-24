@@ -3,9 +3,9 @@
 var gulp         = require('gulp');
 var runSequence  = require('run-sequence');
 
-gulp.task('development', ['clean'], function() {
+gulp.task('development', function() {
 	global.isProd = false;
-	runSequence('copy', 'include', 'images', 'styles', 'scripts', 'watch');
+	runSequence('clean', 'copy', 'include', 'images', 'styles', 'scripts', 'watch');
 });
 
 // Assign the default task to development

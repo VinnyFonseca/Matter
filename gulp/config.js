@@ -1,7 +1,7 @@
 'use strict';
 
-var src   = './app';
-var dest  = './dist';
+var src   = 'app';
+var dest  = 'dist';
 var sync  = require('browser-sync').create();
 
 
@@ -39,13 +39,7 @@ module.exports = {
 	// html injection
 
 	include: {
-		options: {
-			prefix: '@@',
-			basepath: src + '/markup',
-			nodir: true
-		},
 		src: src + '/markup/**/*.html',
-		ignore: src + '/markup/_partials',
 		dest: dest,
 		tasks: ['include']
 	},
@@ -169,7 +163,7 @@ module.exports = {
 			server: {
 				baseDir: dest,
 			},
-			open: false,
+			open: true,
 			watchTask: false, // < VERY important
 			reloadDelay: 50,
 			reloadOnRestart: true,

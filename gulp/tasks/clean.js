@@ -9,7 +9,3 @@ var del     = require('del');
 gulp.task('clean', function() {
 	del(config.build);
 });
-
-gulp.task('clean-partials', function() {
-	del(config.partials);
-});

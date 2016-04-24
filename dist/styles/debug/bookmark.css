@@ -748,6 +748,7 @@ body:before {
   position: relative;
   margin: 0;
   padding: 20px 0;
+  background-color: #ffffff;
 }
 
 .wrapper {

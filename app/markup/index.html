@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 	<!-- HTML data -->
-	@@include("./_partials/html.html")
+	<!--#include virtual="/partials/_html.html" -->
 
 	<head>
 		<!-- HEAD data -->
-		@@include("./_partials/head/data.html")
+		<!--#include virtual="/partials/head/_data.html" -->
 
 		<!-- HEAD meta -->
-		@@include("./_partials/head/meta.html")
+		<!--#include virtual="/partials/head/_meta.html" -->
 
 		<!-- HEAD assets -->
-		@@include("./_partials/head/assets.html")
+		<!--#include virtual="/partials/head/_assets.html" -->
 	</head>
 
 	<body class="preload">
 		<!-- SITE Header and Nav -->
-		@@include("./_partials/header.html")
+		<!--#include virtual="/partials/_header.html" -->
 
 		<!-- Overlays -->
-		@@include("./_partials/overlays.html")
+		<!--#include virtual="/partials/_overlays.html" -->
 
 
 		<!-- SITE Content Start -->
 
 		<div class="hero">
 			<div class="parallax">
+				<canvas id="canvas"></canvas>
+
 				<div class="wrapper">
 					<div class="logo"><img src="/img/logo-white.png"></div>
 
@@ -102,9 +104,9 @@
 
 
 		<!-- SITE Footer -->
-		@@include("./_partials/foot/footer.html")
+		<!--#include virtual="/partials/_footer.html" -->
 
 		<!-- FOOT Scripts -->
-		@@include("./_partials/foot/data.html")
+		<!--#include virtual="/partials/foot/_data.html" -->
 	</body>
 </html>
