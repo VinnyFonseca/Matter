@@ -3275,6 +3275,16 @@ textarea[data-validation="match"], .input-group .dropdown-wrapper select[data-va
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 }
 
+.overlay .bg {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+}
+
 .overlay .modal {
   position: relative;
   margin: 0 auto;
@@ -5523,7 +5533,7 @@ footer .social a:active .icon *,
   margin: 0;
   padding: 0;
   text-align: center;
-  background: #7C5EB3;
+  background: #08060c;
 }
 
 .hero canvas {
@@ -5533,6 +5543,7 @@ footer .social a:active .icon *,
   height: 100%;
   top: 0;
   left: 0;
+  background-color: #7C5EB3;
 }
 
 .hero .parallax {

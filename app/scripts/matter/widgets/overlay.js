@@ -13,10 +13,8 @@ matter.overlay = {
 					matter.overlay.open(target);
 				}
 
-				target.on('click', function(event) {
-					if ( !$(event.target).closest(target.find(".modal")).length ) {
-						matter.overlay.close(target);
-					}
+				target.find(".bg").on('click', function() {
+					matter.overlay.close(target);
 				});
 
 				target.find(".overlay-close").on('click', function() {
@@ -24,7 +22,7 @@ matter.overlay = {
 				});
 			});
 
-			debug.log(":: Overlays");
+			if ( matter.config.application.debug ) console.log("Widget :: Overlays");
 		}
 	},
 	open: function(element) {

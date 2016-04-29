@@ -15520,10 +15520,8 @@ matter.overlay = {
 					matter.overlay.open(target);
 				}
 
-				target.on('click', function(event) {
-					if ( !$(event.target).closest(target.find(".modal")).length ) {
-						matter.overlay.close(target);
-					}
+				target.find(".bg").on('click', function() {
+					matter.overlay.close(target);
 				});
 
 				target.find(".overlay-close").on('click', function() {
@@ -15531,7 +15529,7 @@ matter.overlay = {
 				});
 			});
 
-			debug.log(":: Overlays");
+			if ( matter.config.application.debug ) console.log("Widget :: Overlays");
 		}
 	},
 	open: function(element) {
@@ -16840,32 +16838,31 @@ matter.table = {
 
 matter.tagcloud = {
 	tags: [],
-	close: '<img class="svg icon icon-close" src="' + matter.config.application.base + 'img/icons/icon-close.svg">',
 	init: function() {
 		if ( $("[data-tagcloud]").length ) {
-			var self = this;
+			var $this = this;
 
 			$("[data-tagcloud]").each(function(i) {
 				var el = $(this);
 
-				self.element = {
+				$this.element = {
 					cloud: $(".tagcloud[data-tag='tagcloud-" + i + "']"),
 					hidden: $("input[data-tag='tagcloud-" + i + "']")
 				}
 
-				if ( !self.element.cloud.length ) {
+				if ( !$this.element.cloud.length ) {
 					$('<ul class="tagcloud" data-tag="tagcloud-' + i + '"></ul>').insertAfter(el);
-					self.element.cloud = $(".tagcloud[data-tag='tagcloud-" + i + "']");
+					$this.element.cloud = $(".tagcloud[data-tag='tagcloud-" + i + "']");
 				}
-				if ( !self.element.hidden.length ) {
+				if ( !$this.element.hidden.length ) {
 					$('<input type="hidden" class="tagcloud-result" data-tag="tagcloud-' + i + '">').insertAfter(el);
-					self.element.hidden = $("input[data-tag='tagcloud-" + i + "']");
+					$this.element.hidden = $("input[data-tag='tagcloud-" + i + "']");
 				}
 
-				self.controls(el);
+				$this.controls(el);
 			});
 
-			debug.log(":: Tag Cloud");
+			if ( matter.config.application.debug ) console.log("Search :: Tag Cloud");
 		}
 	},
 	update: function(el) {
@@ -16887,19 +16884,20 @@ matter.tagcloud = {
 		el.val("").focus();
 	},
 	controls: function(el) {
-		var self = this;
+		var $this = this;
 
 		var tag = function(value) {
-			var tagEl = '<li class="tag" data-tag="' + value + '">' + value + self.close + '</li>';
+			var tagClose = '<img class="svg icon icon-close" src="' + matter.config.application.base + 'img/icons/icon-close.svg">';
+			var tagEl = '<li class="tag" data-tag="' + value + '">' + value + tagClose + '</li>';
 
-			if ( value !== "" && $.inArray(value, self.tags) < 0 ) self.element.cloud.addClass("active").append(tagEl);
-			if ( $.inArray(value, self.tags) >= 0 ) notify("Failure", "This tag already exists.", "failure");
+			if ( value !== "" && $.inArray(value, $this.tags) < 0 ) $this.element.cloud.addClass("active").append(tagEl);
+			if ( $.inArray(value, $this.tags) >= 0 ) notify("Failure", "This tag already exists.", "failure");
 
 			matter.svg.init();
-			self.update(el);
+			$this.update(el);
 		}
 
-		el.on("keydown", function(event) {
+		el.on("keyup", function(event) {
 			if ( event.keyCode === 9 || event.keyCode === 13 ) { // Tab or Enter
 				var value = el.val();
 				new tag(value);
@@ -16911,9 +16909,9 @@ matter.tagcloud = {
 			new tag(value);
 		});
 
-		self.element.cloud.on("click", ".tag", function() {
+		$this.element.cloud.on("click", ".tag", function() {
 			$(this).remove();
-			self.update(el);
+			$this.update(el);
 		});
 	}
 }

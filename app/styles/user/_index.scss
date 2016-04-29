@@ -10,7 +10,7 @@ $heroBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHht
 	margin: 0;
 	padding: 0;
 	text-align: center;
-	background: $color1;
+	background: darken($color1, 50);
 
 	canvas {
 		display: block;
@@ -19,6 +19,7 @@ $heroBg: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI2OSIgaGVpZ2h0PSI5NTUiIHht
 		height: 100%;
 		top: 0;
 		left: 0;
+		background-color: $color1;
 	}
 
 	.parallax {
