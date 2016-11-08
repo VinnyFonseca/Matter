@@ -51,6 +51,8 @@
 **/.ssi/
 **/.sass-cache/
 
+**/dist/
+
 
 # Elastic Beanstalk Files #
 ###########################
