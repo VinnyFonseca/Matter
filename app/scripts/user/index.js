@@ -41,11 +41,11 @@ function Particles(){
 	this.minRadius = 10;
 	this.maxRadius = 35;
 	//particle opacity min/max
-	this.minOpacity = .005;
-	this.maxOpacity = .35;
+	this.minOpacity = 0.005;
+	this.maxOpacity = 0.35;
 	//particle speed min/max
-	this.minSpeed = .05;
-	this.maxSpeed = .75;
+	this.minSpeed = 0.05;
+	this.maxSpeed = 0.75;
 	//frames per second
 	this.fps = 60;
 	//number of particles
@@ -187,7 +187,7 @@ Particles.prototype.resetParticle = function(particle, i){
 
 	var random = self._rand(0, 1);
 
-	if (random > .5) {
+	if (random > 0.5) {
 		// 50% chance particle comes from left side of window...
 		particle[i].xPos = -particle[i].radius;
 		particle[i].yPos = self._rand(0, canvas.height);

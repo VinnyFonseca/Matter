@@ -19,6 +19,7 @@
     "gulp-autoprefixer": "*",
     "gulp-concat": "*",
     "gulp-html-ssi": "*",
+    "gulp-ssi": "*",
     "gulp-ignore": "*",
     "gulp-imagemin": "*",
     "gulp-jsdoc": "*",

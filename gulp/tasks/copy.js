@@ -3,12 +3,12 @@
 var config       = require('../config').copy;
 
 var gulp         = require('gulp');
+var gutil        = require('gulp-util');
+var notify       = require('gulp-notify');
 var plumber      = require('gulp-plumber');
-var handler      = require('../util/handleErrors');
 
 var newer        = require('gulp-newer');
 var eventStream  = require('event-stream');
-var notify       = require('gulp-notify');
 var sync         = require('browser-sync').create();
 
 var onlyDirs = function(stream) {
@@ -23,12 +23,11 @@ var onlyDirs = function(stream) {
 
 gulp.task('copy', function() {
     return gulp.src(config.src, config.options)
-    	.pipe(plumber())
-		.on('error', function() {
-			handler;
-			notify.onError().apply(this, arguments);
-			this.emit('end');
-		})
+        .pipe(plumber(function(error) {
+            gutil.log(error.message);
+            notify(error.message);
+            this.emit('end');
+        }))
 		.pipe(newer(config.dest))
         .pipe(onlyDirs(eventStream))
         .pipe(gulp.dest(config.dest))

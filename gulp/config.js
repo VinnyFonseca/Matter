@@ -1,19 +1,22 @@
 'use strict';
 
-var src   = 'app';
-var dest  = 'dist';
+var input   = 'app';
+var output  = 'dist';
 var sync  = require('browser-sync').create();
 
 
 module.exports = {
-	src: src,
-	dest: dest,
+	src: input,
+	dest: output,
 
 
 	// dist removal
 
 	clean: {
-		build: dest
+        options: {
+            force: true
+        },
+		dest: output
 	},
 
 
@@ -22,16 +25,16 @@ module.exports = {
 	copy: {
 		options: {
 			dot: true,
-			base: src
+			base: input
 		},
 		src: [
-			src + '/**',
-			'!' + src + '/markup/**',
-			'!' + src + '/scripts/**/*.js',
-			'!' + src + '/styles/**/*.{scss,sass}',
-			'!' + src + '/img/**/*.{jpg,png,gif}'
+			input + '/**',
+			'!' + input + '/markup/**',
+			'!' + input + '/scripts/**/*.js',
+			'!' + input + '/styles/**/*.{scss,sass}',
+			'!' + input + '/img/**/*.{jpg,png,gif}'
 		],
-		dest: dest,
+		dest: output,
 		tasks: ['copy']
 	},
 
@@ -39,8 +42,8 @@ module.exports = {
 	// html injection
 
 	include: {
-		src: src + '/markup/**/*.html',
-		dest: dest,
+		src: input + '/markup/**/*.html',
+		dest: output,
 		tasks: ['include']
 	},
 
@@ -48,8 +51,8 @@ module.exports = {
 	// image compression
 
 	images: {
-		src: src + '/img/**/*.{jpg,png,gif}',
-		dest: dest + '/img',
+		src: input + '/img/**/*.{jpg,png,gif}',
+		dest: output + '/img',
 		tasks: ['images']
 	},
 
@@ -85,8 +88,8 @@ module.exports = {
 				})
 			]
 		},
-		src: src + '/styles/**/*.{scss,sass}',
-		dest: dest + '/styles',
+		src: input + '/styles/**/*.{scss,sass}',
+		dest: output + '/styles',
 		tasks: ['styles']
 	},
 
@@ -102,26 +105,26 @@ module.exports = {
 		},
 		concat: {
 			src: [
-				src + '/scripts/matter/base/**/*.js',
-				src + '/scripts/matter/vendor/**/*.js',
-				src + '/scripts/matter/polyfills/**/*.js',
-				src + '/scripts/matter/config/**/*.js',
-				src + '/scripts/matter/widgets/**/*.js',
-				src + '/scripts/matter/system/**/*.js',
-				src + '/scripts/matter/core/**/*.js',
-				src + '/scripts/user/**/*.js'
+				input + '/scripts/matter/base/**/*.js',
+				input + '/scripts/matter/vendor/**/*.js',
+				input + '/scripts/matter/polyfills/**/*.js',
+				input + '/scripts/matter/config/**/*.js',
+				input + '/scripts/matter/widgets/**/*.js',
+				input + '/scripts/matter/system/**/*.js',
+				input + '/scripts/matter/core/**/*.js',
+				input + '/scripts/user/**/*.js'
 			],
 			filename: 'build.js',
-			dest: dest + '/scripts',
+			dest: output + '/scripts',
 			tasks: ['scripts-concat', 'scripts-hint']
 		},
 		noconcat: {
 			src: [
-				src + '/scripts/**/*.js',
-				'!' + src + '/scripts/matter/**/*.js',
-				'!' + src + '/scripts/user/**/*.js'
+				input + '/scripts/**/*.js',
+				'!' + input + '/scripts/matter/**/*.js',
+				'!' + input + '/scripts/user/**/*.js'
 			],
-			dest: dest + '/scripts',
+			dest: output + '/scripts',
 			tasks: ['scripts-noconcat', 'scripts-hint']
 		},
 		hint: {
@@ -150,7 +153,7 @@ module.exports = {
 				multistr: true,
 				scripturl: true
 			},
-			src: src + '/scripts/**/*.js'
+			src: input + '/scripts/**/*.js'
 		}
 	},
 
@@ -158,12 +161,12 @@ module.exports = {
 	// browser synchronisation
 
 	sync: {
-		src: dest + '/**',
+		src: output + '/**',
 		options: {
 			server: {
-				baseDir: dest,
+				baseDir: output,
 			},
-			open: true,
+			open: false,
 			watchTask: false, // < VERY important
 			reloadDelay: 50,
 			reloadOnRestart: true,

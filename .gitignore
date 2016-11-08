@@ -52,6 +52,7 @@
 **/.sass-cache/
 
 **/dist/
+**/app/assets/
 
 
 # Elastic Beanstalk Files #
