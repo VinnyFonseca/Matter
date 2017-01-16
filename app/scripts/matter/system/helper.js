@@ -114,6 +114,12 @@ Array.prototype.duplicates = function() { // Gather duplicate values
 	return result;
 }
 
+Array.prototype.deduplicate = function() {
+    return this.filter(function(item, pos) {
+        return this.indexOf(item) == pos;
+    });
+}
+
 Array.prototype.reduce = function() { // Join all internal arrays
 	var a = [];
 	for (var i=0; i < this.length; i++) {
