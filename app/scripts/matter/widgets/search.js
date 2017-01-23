@@ -627,7 +627,7 @@ var initSearch = function() {
 
 				// Initialise
 
-				initDropdowns();
+				matter.form.dropdowns();
 				inputInit();
 				updateResults();
 

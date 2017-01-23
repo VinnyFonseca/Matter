@@ -69,9 +69,7 @@ module.exports = {
 			}
 		},
 		post: {
-			options: {
-				map: false
-			},
+			options: {},
 			processors: [
 				require('rucksack-css')({
 					fallbacks: true
@@ -97,13 +95,22 @@ module.exports = {
 	// script compilation
 
 	scripts: {
-		options: {
+		uglify: {
 			mangle: global.isProd,
 			beautify: false,
 			sourceMap: true,
 			sourceMapIncludeSources: true
 		},
-		concat: {
+    single: {
+      src: [
+        input + '/scripts/**/*.js',
+        '!' + input + '/scripts/matter/**/*.js',
+        '!' + input + '/scripts/user/**/*.js'
+      ],
+      dest: output + '/scripts',
+      tasks: ['scripts-single', 'scripts-hint']
+    },
+		bundle: {
 			src: [
 				input + '/scripts/matter/base/**/*.js',
 				input + '/scripts/matter/vendor/**/*.js',
@@ -116,16 +123,7 @@ module.exports = {
 			],
 			filename: 'build.js',
 			dest: output + '/scripts',
-			tasks: ['scripts-concat', 'scripts-hint']
-		},
-		noconcat: {
-			src: [
-				input + '/scripts/**/*.js',
-				'!' + input + '/scripts/matter/**/*.js',
-				'!' + input + '/scripts/user/**/*.js'
-			],
-			dest: output + '/scripts',
-			tasks: ['scripts-noconcat', 'scripts-hint']
+			tasks: ['scripts-bundle', 'scripts-hint']
 		},
 		hint: {
 			options: {
@@ -154,7 +152,12 @@ module.exports = {
 				scripturl: true
 			},
 			src: input + '/scripts/**/*.js'
-		}
+		},
+    transpile: {
+      compact: false,
+      presets: ['es2015', 'es2017', 'react'],
+      plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties'],
+    }
 	},
 
 

@@ -13,12 +13,16 @@ matter.init = function() {
 
 	// Logs Legend
 
-	debug.log(":: is DOM.ready");
-	debug.log("~~ is Async");
-	debug.log("•• is Complete");
-	debug.log("== is User Action");
-	debug.log("## is API");
+  debug.log("LEGEND");
+  debug.log("------");
+	debug.log(":: Module");
+	debug.log("~~ Async");
+	debug.log("== User Action");
+	debug.log("## API Request");
+	debug.log("•• Complete");
 	debug.log(" ");
+	debug.log("APP");
+	debug.log("------");
 
 
 	// Easter Eggs Init
@@ -50,8 +54,9 @@ matter.init = function() {
 	// Forms Init
 
 	initValidation();
-	initForm();
-	initDropdowns();
+  matter.form.init();
+	// initForm();
+	// initDropdowns();
 }
 
 

@@ -40,7 +40,7 @@ matter.config = {
 		view: "grid", // str: "grid", "list".
 		mode: "full", // str: "full", "mini".
 		display: 9, // int: Number of items to show per page.
-		pagination: true // bool: Toggle pagination controls and loading of page elements only.
+		pagination: false // bool: Toggle pagination controls and loading of page elements only.
 	},
 	slider: {
 		nav: true, // bool: Show bullets.

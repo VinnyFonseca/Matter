@@ -9,7 +9,7 @@ matter.anchor = {
 			var el = $(this);
 			var link = $.attr(this, "href");
 
-			if ( link === "#" ) debug.log(":: Link blocked");
+			if ( link === "#" ) debug.log("== Link is blank (#), no action");
 
 			if ( !!link && $(link).length && !el.hasClass("step-trigger") ) {
 				matter.anchor.clicked = true;

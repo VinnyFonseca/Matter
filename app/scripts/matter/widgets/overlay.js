@@ -22,7 +22,7 @@ matter.overlay = {
 				});
 			});
 
-			if ( matter.config.application.debug ) console.log("Widget :: Overlays");
+			if ( matter.config.application.debug ) console.log(":: Overlays");
 		}
 	},
 	open: function(element) {

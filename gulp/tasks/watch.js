@@ -9,6 +9,6 @@ gulp.task('watch', ['sync'], function() {
 	gulp.watch(config.include.src, config.include.tasks);
 	gulp.watch(config.images.src, config.images.tasks);
 	gulp.watch(config.styles.src, config.styles.tasks);
-	gulp.watch(config.scripts.concat.src, config.scripts.concat.tasks);
-	gulp.watch(config.scripts.noconcat.src, config.scripts.noconcat.tasks);
+	gulp.watch(config.scripts.single.src, config.scripts.single.tasks);
+  gulp.watch(config.scripts.bundle.src, config.scripts.bundle.tasks);
 });

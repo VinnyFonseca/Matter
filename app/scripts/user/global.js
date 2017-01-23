@@ -25,31 +25,54 @@ $(document).ready(function() {
 
 	// Sharing
 
-	$(".share-twitter").on('click', function(event) {
-		var shareURL = "http://www.twitter.com/intent/tweet?"
-			text     = "text=Test tweet here",
-			hashtags = "&hashtags=Test",
-			mentions = "&via=VirginMoney",
-			finalURL = shareURL + text + hashtags + mentions;
+  var pageURL = window.location.href;
+  var popW = 640;
+  var popH = 480;
+  var sharers = document.querySelectorAll('[href*="share:"]');
 
-	    matter.popup(finalURL, "Virgin Money - One in a million", 640, 320);
-	});
+  for (var i = 0; i < sharers.length; i++) {
+    sharers[i].addEventListener('click', function(event) {
+      event.preventDefault();
 
-	$(".share-facebook").on('click', function(event) {
-	    var shareURL = "http://www.facebook.com/sharer/sharer.php?"
-	        finalURL = shareURL + "u=" + location.href;
+      var shareURL, title, text, summary, media, desc, hashtags, mentions, finalURL;
 
-	    matter.popup(finalURL, "Virgin Money - One in a million", 640, 320);
-	});
+      switch(this.href.replace('share:', '')) {
+        case 'facebook':
+          shareURL = 'http://www.facebook.com/sharer/sharer.php';
+          finalURL = encodeURI(shareURL + '?' + 'u=' + pageURL);
+        break;
 
-	$(".share-linkedin").on('click', function(event) {
-	    var shareURL = "http://www.linkedin.com/shareArticle?mini=true&"
-	        title    = "title=Test tweet here",
-	        summary  = "summary=Test tweet here",
-	        finalURL = shareURL + "url=" + location.href + "&" + title + "&" + summary;
+        case 'twitter':
+          shareURL = 'http://www.twitter.com/intent/tweet';
+          text     = 'text=Tweet here';
+          hashtags = 'hashtags=Hashtag';
+          mentions = 'via=UserName';
+          finalURL = encodeURI(shareURL + '?' + text + '&' + hashtags + '&' + mentions);
+        break;
 
-	    matter.popup(finalURL, "Virgin Money - One in a million", 640, 480);
-	});
+        case 'gplus':
+          shareURL = 'https://plus.google.com/share';
+          finalURL = encodeURI(shareURL + '?url=' + pageURL);
+        break;
+
+        case 'linkedin':
+          shareURL = 'http://www.linkedin.com/shareArticle';
+          title    = 'title=Title here';
+          summary  = 'summary=Summary here';
+          finalURL = encodeURI(shareURL + '?mini=true&' + 'url=' + pageURL + '&' + title + '&' + summary);
+        break;
+
+        case 'pinterest':
+          shareURL = 'http://pinterest.com/pin/create/button/';
+          media    = 'media=http://lorempixel.com/600/600/food';
+          desc     = 'description=Description here';
+          finalURL = encodeURI(shareURL + '?' + 'url=' + pageURL + '&' + media + '&' + desc);
+        break;
+      }
+
+      popup(finalURL, "Window Title Here", popW, popH);
+    });
+  }
 });
 
 

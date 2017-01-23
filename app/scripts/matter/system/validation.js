@@ -277,7 +277,7 @@ var initValidation = function() {
 						el.find("input, select, textarea").attr("readonly", "readonly");
 						el.find("button, input[type='submit']").attr("readonly", "readonly");
 
-						initDropdowns();
+						matter.form.dropdowns();
 
 						el.find(".form-loader").hide();
 						el.find(".form-done").show();

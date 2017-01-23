@@ -64,7 +64,7 @@ $bodyTextColor: $c3; // Text colour
 // Typography
 
 $fontSize: 1.7; // REM measure. 1.0rem = 10px; Change the root value of pixrem's postcss module on GruntFile.js to this value multiplied by 10.
-$lineHeight: $fontSize; // Line Height
+$lineHeight: $fontSize + 0.2; // Line Height
 
 
 @mixin font-face($family, $filename, $weight, $style) { // Use same font family with different weights and styles when defining different fonts to use native CSS properties
