@@ -11,7 +11,7 @@ $radius: 4px; // Radius value
 // Grid System
 
 $columns: 12; // Number of columns on the grid
-$gutter: $spacing; // Gutter pixel value
+$gutter: floor($spacing / 2); // Gutter pixel value
 
 
 
@@ -63,8 +63,8 @@ $bodyTextColor: $c3; // Text colour
 
 // Typography
 
-$fontSize: 1.7; // REM measure. 1.0rem = 10px; Change the root value of pixrem's postcss module on GruntFile.js to this value multiplied by 10.
-$lineHeight: $fontSize + 0.2; // Line Height
+$fontSize: 1.5; // REM measure. 1.0rem = 10px;
+$lineHeight: 1.9; // Line Height
 
 
 @mixin font-face($family, $filename, $weight, $style) { // Use same font family with different weights and styles when defining different fonts to use native CSS properties

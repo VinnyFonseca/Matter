@@ -32,8 +32,8 @@ body.sidebar-on {
 		transition: all $duration $easing;
 
 		.wrapper {
-			padding-left: floor($spacing * 4);
-			padding-right: floor($spacing * 4);
+			padding-left: floor($spacing * 2);
+			padding-right: floor($spacing * 2);
 			transition: opacity $duration $easing;
 		}
 
@@ -223,13 +223,19 @@ body.sidebar-on {
 
 pre {
 	color: $cd;
+  font-size: $fontSize / 1.2 + rem;
+	line-height: 1.7;
 
-	.folder { color: #CCAAEE; }
-	.file { font-style: italic; }
-	.system { color: #FF6666; }
+	* {
+		line-height: 1.7;
+	}
+
+	.folder { margin-left: 5px; color: #CCAAEE; }
+	.file { margin-left: 5px; font-style: italic; }
+	.system { margin-left: 5px; color: #FF6666; }
 	.emphasis { color: #CCAAEE; }
+
 	i {
-		margin-right: 3px;
 		color: $c5;
 		font-style: normal;
 		font-size: $fontSize / 1.35 + rem;
@@ -239,9 +245,9 @@ pre {
 			display: inline;
 			position: relative;
 			margin: 0;
-			margin-right: -2px;
+			margin-right: -4px;
 			padding: 0;
-			font-size: $fontSize * 1.1 + rem;
+			font-size: $fontSize / 1.1 + rem;
 			content: "|";
 		}
 	}
@@ -339,7 +345,7 @@ pre {
 
 // Responsive
 
-@media screen and (max-width: $scrDeskL + $sidebarWidth) {
+@media screen and (max-width: $scrTablL + $sidebarWidth) {
 
 	// Structural
 
@@ -357,10 +363,11 @@ pre {
 		}
 	}
 
-}
-
-
-@media screen and (max-width: $scrTablL) {
+  .structure {
+    .clean {
+      font-size: $fontSize / 1.1 + rem;
+    }
+  }
 
 	// Widgets
 
