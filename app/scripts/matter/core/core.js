@@ -68,7 +68,7 @@ matter.defer = function() {
 	// Deferred Init
 
 	matter.sliders.init();
-	initMap();
+	matter.map.init();
 	initVideo();
 
 	debug.log("•• Matter in " + (new Date().getTime() - ms) + " milliseconds");

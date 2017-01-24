@@ -33,7 +33,7 @@
 				<h2>Matter</h2>
 			</a>
 
-			<h4>Table of Contents</h4>
+			<h4>Table of contents</h4>
 		</div>
 
 
@@ -55,48 +55,59 @@
 
 				<a href="#" class="anchor" id="directory"></a>
 
-				<h2>Directory Tree</h2>
+				<h2>Directory tree</h2>
+
+        <p>
+          Folders in red are system folders and should not be changed. These are the folders you should update when a new version comes out.
+        </p>
 
 <pre class="structure">
-<span class="folder">app (source)</span>
-<i>----</i><span class="folder">markup</span>
-<i>----</i><i>----</i><span class="folder">include</span>
-<i>----</i><i>----</i><i>----</i><span class="file">head.html</span>
-<i>----</i><i>----</i><i>----</i><span class="file">header.html</span>
-<i>----</i><i>----</i><i>----</i><span class="file">footer.html</span>
-<i>----</i><i>----</i><i>----</i><span class="file">foot.html</span>
-<i>----</i><i>----</i><span class="file">index.html</span>
+<span class="folder">↓ app (input)</span>
+<i>---</i><span class="folder">↓ data</span>
+<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_assets.html</span>
 
-<i>----</i><span class="folder">scripts</span>
-<i>----</i><i>----</i><span class="system" data-tooltip="Core folder">matter</span>
-<i>----</i><i>----</i><span class="folder">custom</span>
-<i>----</i><i>----</i><i>----</i><span class="file">config.js</span>
-<i>----</i><i>----</i><i>----</i><span class="file">global.js</span>
+<i>---</i><span class="folder">↓ img</span>
 
-<i>----</i><span class="folder">styles</span>
-<i>----</i><i>----</i><span class="system" data-tooltip="Core folder">matter</span>
-<i>----</i><i>----</i><span class="folder">custom</span>
-<i>----</i><i>----</i><i>----</i><span class="file">_config.scss</span>
-<i>----</i><i>----</i><i>----</i><span class="file">_global.scss</span>
-<i>----</i><i>----</i><i>----</i><span class="file">_responsive.scss</span>
-<i>----</i><i>----</i><i>----</i><span class="file">_conditional.scss</span>
-<i>----</i><i>----</i><span class="file">build.scss</span>
+<i>---</i><span class="folder">↓ markup</span>
+<i>---</i><i>---</i><span class="folder">↓ partials</span>
+<i>---</i><i>---</i><i>---</i><span class="folder">↓ head</span>
+<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_assets.html</span>
+<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_data.html</span>
+<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_meta.html</span>
+<i>---</i><i>---</i><i>---</i><span class="folder">↓ foot</span>
+<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_data.html</span>
+<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_footer.html</span>
+<i>---</i><i>---</i><i>---</i><span class="file">_footer.html</span>
+<i>---</i><i>---</i><i>---</i><span class="file">_header.html</span>
+<i>---</i><i>---</i><i>---</i><span class="file">_html.html</span>
+<i>---</i><i>---</i><i>---</i><span class="file">_overlays.html</span>
 
-<span class="folder">www (output)</span>
-<i>----</i><span class="folder">img</span>
-<i>----</i><i>----</i><span class="folder">favicon</span>
-<i>----</i><i>----</i><span class="folder">icons</span>
-<i>----</i><i>----</i><span class="folder">markers</span>
-<i>----</i><em class="system" data-tooltip="Output folder">scripts</em>
-<i>----</i><em class="system" data-tooltip="Output folder">styles</em>
-<i>----</i><em class="system">index.html</em>
+<i>---</i><span class="folder">↓ scripts</span>
+<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> debug</span>
+<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> matter</span>
+<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> standalone</span>
+<i>---</i><i>---</i><span class="folder">↓ user</span>
+<i>---</i><i>---</i><i>---</i><span class="file">global.js</span>
 
-<span class="file">.gitignore</span>
+<i>---</i><span class="folder">↓ styles</span>
+<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> debug</span>
+<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> matter</span>
+<i>---</i><i>---</i><span class="folder">↓ user</span>
+<i>---</i><i>---</i><i>---</i><span class="file">_global.scss</span>
+<i>---</i><i>---</i><span class="file">build.scss</span>
+
+<span class="system" data-tooltip="Core folder">> dist (output)</span>
+<span class="system" data-tooltip="Core folder">> gulp</span>
+<span class="system" data-tooltip="Core folder">> node_modules</span>
+
+<span class="file">.editorconfig</span>
 <span class="file">.gitattributes</span>
+<span class="file">.gitignore</span>
+<span class="file">.jshintignore</span>
+<span class="file">gulpfile.js</span>
 <span class="file">LICENSE</span>
-<span class="file">README.md</span>
 <span class="file">package.json</span>
-<span class="file">Gruntfile.js</span>
+<span class="file">README.md</span>
 </pre>
 
 				<p>
@@ -125,18 +136,18 @@
 
 				<a href="#" class="anchor" id="grid-system"></a>
 
-				<h2>Grid System</h2>
+				<h2>Grid system</h2>
 
 				<p>
 					<strong>Usage:</strong>
 				</p>
 
 				<p>
-					Set the number of columns on <code>_config.scss</code>, then use <code>data-span</code> attribute to set the width of a column.
+					Uses flexbox. Set the number of columns on <code>_config.scss</code>, then use <code>data-span</code> attribute to set the width of a column.
 				</p>
 
 				<p>
-					<strong>Demo:</strong>
+					<strong>Example:</strong>
 				</p>
 
 				<div class="row debug">
@@ -148,18 +159,14 @@
 					</div>
 				</div>
 
-				<p>
-					<strong>Example:</strong>
-				</p>
-
 <pre>
 &lt;div class="row"&gt;
-<i>----</i>&lt;div class="column" <span class="emphasis">data-span="4"</span>&gt;
-<i>----</i><i>----</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
-<i>----</i>&lt;/div&gt;
-<i>----</i>&lt;div class="column" <span class="emphasis">data-span="8"</span>&gt;
-<i>----</i><i>----</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
-<i>----</i>&lt;/div&gt;
+<i>---</i>&lt;div class="column" <span class="emphasis">data-span="4"</span>&gt;
+<i>---</i><i>---</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
+<i>---</i>&lt;/div&gt;
+<i>---</i>&lt;div class="column" <span class="emphasis">data-span="8"</span>&gt;
+<i>---</i><i>---</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
+<i>---</i>&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -175,153 +182,153 @@
 
 				<a href="#" class="anchor" id="complete"></a>
 
-				<h3>Complete Grid</h3>
+				<h3>Full grid (12 columns instance)</h3>
 
 				<div class="row debug">
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="3">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="3">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="3">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="3">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="4">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="4">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="4">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="5">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="5">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="6">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="6">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="7">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="5">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="8">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="4">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="9">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="3">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="10">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="11">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="12">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 				</div>
 
@@ -331,62 +338,29 @@
 
 				<a href="#" class="anchor" id="push"></a>
 
-				<h3>Push Grid</h3>
+				<h3>Push grid</h3>
 
 				<p>
-					<strong>Example</strong>
+					<strong>Example:</strong>
 				</p>
+
+				<div class="row debug show-push">
+					<div class="column" data-span="8" data-push="3">
+						<div class="cell">col</div>
+					</div>
+				</div>
 
 <pre>
 &lt;div class="row"&gt;
-<i>----</i>&lt;div class="column" <span class="emphasis">data-span="8" data-push="4"</span>&gt;
-<i>----</i><i>----</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
-<i>----</i>&lt;/div&gt;
+<i>---</i>&lt;div class="column" <span class="emphasis">data-span="8" data-push="3"</span>&gt;
+<i>---</i><i>---</i>&lt;div class="cell"&gt;col&lt;/div&gt;
+<i>---</i>&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
 				<p class="emphasis">
 					Use <code>data-push</code> to specify how many columns you want a certain column to move.
 				</p>
-
-				<div class="row debug show-push">
-					<div class="column" data-span="1" data-push="11">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="2" data-push="10">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="3" data-push="9">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="4" data-push="8">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="5" data-push="7">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="6" data-push="6">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="7" data-push="5">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="8" data-push="4">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="9" data-push="3">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="10" data-push="2">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="11" data-push="1">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="12" data-push="0">
-						<div class="cell">Word</div>
-					</div>
-				</div>
 
 
 
@@ -402,9 +376,28 @@
 
 				<a href="#" class="anchor" id="block"></a>
 
-				<h2>Block Level Elements</h2>
+				<h2>Block level elements</h2>
 
 				<dl>
+          <dt>
+            <strong>p class="lead"</strong>
+          </dt>
+          <dd>
+            <p class="lead">
+              Lorem ipsum Magna dolore adipisicing consectetur Ut voluptate consequat minim sunt laborum in mollit nulla aute fugiat Excepteur nulla fugiat Duis ut officia velit aute sit in id nostrud pariatur exercitation ut quis nulla amet nostrud dolore in commodo culpa Excepteur Duis deserunt ea reprehenderit sit laborum enim irure dolore fugiat dolor dolore dolor Ut amet labore ullamco aute elit in tempor Ut in nulla aliqua officia consequat.
+            </p>
+          </dd>
+
+          <dt>
+            <strong>p</strong>
+          </dt>
+          <dd>
+            <p>
+              Lorem ipsum Magna dolore adipisicing consectetur Ut voluptate consequat minim sunt laborum in mollit nulla aute fugiat Excepteur nulla fugiat Duis ut officia velit aute sit in id nostrud pariatur exercitation ut quis nulla amet nostrud dolore in commodo culpa Excepteur Duis deserunt ea reprehenderit sit laborum enim irure dolore fugiat dolor dolore dolor Ut amet labore ullamco aute elit in tempor Ut in nulla aliqua officia consequat.
+            </p>
+          </dd>
+          </dd>
+
 					<dt>
 						<strong>a</strong>
 					</dt>
@@ -424,25 +417,6 @@
 					</dt>
 					<dd>
 						<a href="http://matterframework.net" data-explicit="true">Lorem ipsum Duis eu laboris veniam sed anim.</a>
-					</dd>
-
-					<dt>
-						<strong>p</strong>
-					</dt>
-					<dd>
-						<p>
-							Lorem ipsum Magna dolore adipisicing consectetur Ut voluptate consequat minim sunt laborum in mollit nulla aute fugiat Excepteur nulla fugiat Duis ut officia velit aute sit in id nostrud pariatur exercitation ut quis nulla amet nostrud dolore in commodo culpa Excepteur Duis deserunt ea reprehenderit sit laborum enim irure dolore fugiat dolor dolore dolor Ut amet labore ullamco aute elit in tempor Ut in nulla aliqua officia consequat.
-						</p>
-					</dd>
-					</dd>
-
-					<dt>
-						<strong>p class="lead"</strong>
-					</dt>
-					<dd>
-						<p class="lead">
-							Lorem ipsum Magna dolore adipisicing consectetur Ut voluptate consequat minim sunt laborum in mollit nulla aute fugiat Excepteur nulla fugiat Duis ut officia velit aute sit in id nostrud pariatur exercitation ut quis nulla amet nostrud dolore in commodo culpa Excepteur Duis deserunt ea reprehenderit sit laborum enim irure dolore fugiat dolor dolore dolor Ut amet labore ullamco aute elit in tempor Ut in nulla aliqua officia consequat.
-						</p>
 					</dd>
 
 					<dt>
@@ -483,6 +457,10 @@
 					Matter has automatic svg injection from <code>img class="svg"</code> elements.
 				</p>
 
+				<p>
+					<strong>Example:</strong>
+				</p>
+
 				<div class="icon-wrapper">
 					<div class="icon-wrapper-item" data-icon="arrow-up" data-tooltip="arrow-up">
 						<img class="svg icon icon-arrow-up" src="/img/icons/icon-arrow-up.svg" alt="CTA icon">
@@ -506,37 +484,37 @@
 						<strong>h1</strong>
 					</dt>
 					<dd>
-						<h1>Sample Heading</h1>
+						<h1>Sample heading</h1>
 					</dd>
 					<dt>
 						<strong>h2</strong>
 					</dt>
 					<dd>
-						<h2>Sample Heading</h2>
+						<h2>Sample heading</h2>
 					</dd>
 					<dt>
 						<strong>h3</strong>
 					</dt>
 					<dd>
-						<h3>Sample Heading</h3>
+						<h3>Sample heading</h3>
 					</dd>
 					<dt>
 						<strong>h4</strong>
 					</dt>
 					<dd>
-						<h4>Sample Heading</h4>
+						<h4>Sample heading</h4>
 					</dd>
 					<dt>
 						<strong>h5</strong>
 					</dt>
 					<dd>
-						<h5>Sample Heading</h5>
+						<h5>Sample heading</h5>
 					</dd>
 					<dt>
 						<strong>h6</strong>
 					</dt>
 					<dd>
-						<h6>Sample Heading</h6>
+						<h6>Sample heading</h6>
 					</dd>
 				</dl>
 
@@ -729,8 +707,8 @@
 
 <pre>
 &lt;head&gt;
-<i>----</i>&lt;meta charset="UTF-8"&gt;
-<i>----</i>&lt;meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"&gt;
+<i>---</i>&lt;meta charset="UTF-8"&gt;
+<i>---</i>&lt;meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"&gt;
 &lt;/head&gt;
 </pre>
 
@@ -851,25 +829,25 @@
 
 <pre>
 &lt;dl&gt;
-<i>----</i>&lt;dt&gt;Recursion&lt;/dt&gt;
-<i>----</i>&lt;dd&gt;
-<i>----</i><i>----</i>See recursion.
-<i>----</i>&lt;/dd&gt;
+<i>---</i>&lt;dt&gt;Recursion&lt;/dt&gt;
+<i>---</i>&lt;dd&gt;
+<i>---</i><i>---</i>See recursion.
+<i>---</i>&lt;/dd&gt;
 
-<i>----</i>&lt;dt&gt;Recursion, indirect&lt;/dt&gt;
-<i>----</i>&lt;dd&gt;
-<i>----</i><i>----</i>See indirect recursion.
-<i>----</i>&lt;/dd&gt;
+<i>---</i>&lt;dt&gt;Recursion, indirect&lt;/dt&gt;
+<i>---</i>&lt;dd&gt;
+<i>---</i><i>---</i>See indirect recursion.
+<i>---</i>&lt;/dd&gt;
 
-<i>----</i>&lt;dt&gt;Indirect recursion&lt;/dt&gt;
-<i>----</i>&lt;dd&gt;
-<i>----</i><i>----</i>See recursion, indirect.
-<i>----</i>&lt;/dd&gt;
+<i>---</i>&lt;dt&gt;Indirect recursion&lt;/dt&gt;
+<i>---</i>&lt;dd&gt;
+<i>---</i><i>---</i>See recursion, indirect.
+<i>---</i>&lt;/dd&gt;
 
-<i>----</i>&lt;dt&gt;Term&lt;/dt&gt;
-<i>----</i>&lt;dd&gt;
-<i>----</i><i>----</i>A word or other expression taken into specific use in a well-defined meaning.
-<i>----</i>&lt;/dd&gt;
+<i>---</i>&lt;dt&gt;Term&lt;/dt&gt;
+<i>---</i>&lt;dd&gt;
+<i>---</i><i>---</i>A word or other expression taken into specific use in a well-defined meaning.
+<i>---</i>&lt;/dd&gt;
 &lt;/dl&gt;
 </pre>
 
@@ -1328,17 +1306,17 @@
 
 <pre>
 &lt;select>
-<i>----</i>&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
-<i>----</i>&lt;option value="one"&gt;one&lt;/option&gt;
-<i>----</i>&lt;option value="two"&gt;two&lt;/option&gt;
-<i>----</i>&lt;option value="three"&gt;three&lt;/option&gt;
-<i>----</i>&lt;option value="four"&gt;four&lt;/option&gt;
-<i>----</i>&lt;option value="five"&gt;five&lt;/option&gt;
-<i>----</i>&lt;option value="six"&gt;six&lt;/option&gt;
-<i>----</i>&lt;option value="seven"&gt;seven&lt;/option&gt;
-<i>----</i>&lt;option value="eight"&gt;eight&lt;/option&gt;
-<i>----</i>&lt;option value="nine"&gt;nine&lt;/option&gt;
-<i>----</i>&lt;option value="ten"&gt;ten&lt;/option&gt;
+<i>---</i>&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
+<i>---</i>&lt;option value="one"&gt;one&lt;/option&gt;
+<i>---</i>&lt;option value="two"&gt;two&lt;/option&gt;
+<i>---</i>&lt;option value="three"&gt;three&lt;/option&gt;
+<i>---</i>&lt;option value="four"&gt;four&lt;/option&gt;
+<i>---</i>&lt;option value="five"&gt;five&lt;/option&gt;
+<i>---</i>&lt;option value="six"&gt;six&lt;/option&gt;
+<i>---</i>&lt;option value="seven"&gt;seven&lt;/option&gt;
+<i>---</i>&lt;option value="eight"&gt;eight&lt;/option&gt;
+<i>---</i>&lt;option value="nine"&gt;nine&lt;/option&gt;
+<i>---</i>&lt;option value="ten"&gt;ten&lt;/option&gt;
 &lt;/select&gt;
 </pre>
 
@@ -1360,17 +1338,17 @@
 
 <pre>
 &lt;select <span class="emphasis">size="5"</span>&gt;
-<i>----</i>&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
-<i>----</i>&lt;option value="one"&gt;one&lt;/option&gt;
-<i>----</i>&lt;option value="two"&gt;two&lt;/option&gt;
-<i>----</i>&lt;option value="three"&gt;three&lt;/option&gt;
-<i>----</i>&lt;option value="four"&gt;four&lt;/option&gt;
-<i>----</i>&lt;option value="five"&gt;five&lt;/option&gt;
-<i>----</i>&lt;option value="six"&gt;six&lt;/option&gt;
-<i>----</i>&lt;option value="seven"&gt;seven&lt;/option&gt;
-<i>----</i>&lt;option value="eight"&gt;eight&lt;/option&gt;
-<i>----</i>&lt;option value="nine"&gt;nine&lt;/option&gt;
-<i>----</i>&lt;option value="ten"&gt;ten&lt;/option&gt;
+<i>---</i>&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
+<i>---</i>&lt;option value="one"&gt;one&lt;/option&gt;
+<i>---</i>&lt;option value="two"&gt;two&lt;/option&gt;
+<i>---</i>&lt;option value="three"&gt;three&lt;/option&gt;
+<i>---</i>&lt;option value="four"&gt;four&lt;/option&gt;
+<i>---</i>&lt;option value="five"&gt;five&lt;/option&gt;
+<i>---</i>&lt;option value="six"&gt;six&lt;/option&gt;
+<i>---</i>&lt;option value="seven"&gt;seven&lt;/option&gt;
+<i>---</i>&lt;option value="eight"&gt;eight&lt;/option&gt;
+<i>---</i>&lt;option value="nine"&gt;nine&lt;/option&gt;
+<i>---</i>&lt;option value="ten"&gt;ten&lt;/option&gt;
 &lt;/select&gt;
 </pre>
 
@@ -1402,10 +1380,10 @@
 
 <pre>
 &lt;fieldset&gt;
-<i>----</i>&lt;legend&gt;Checkboxes Group&lt;/legend&gt;
+<i>---</i>&lt;legend&gt;Checkboxes Group&lt;/legend&gt;
 
-<i>----</i>&lt;input <span class="emphasis">id="f101"</span> type="checkbox" name="checkbox"&gt;
-<i>----</i>&lt;label <span class="emphasis">for="f101"</span>&gt;Checkbox&lt;/label&gt;
+<i>---</i>&lt;input <span class="emphasis">id="f101"</span> type="checkbox" name="checkbox"&gt;
+<i>---</i>&lt;label <span class="emphasis">for="f101"</span>&gt;Checkbox&lt;/label&gt;
 &lt;/fieldset&gt;
 </pre>
 
@@ -1423,10 +1401,10 @@
 
 <pre>
 &lt;fieldset&gt;
-<i>----</i>&lt;legend&gt;Radio Buttons Group&lt;/legend&gt;
+<i>---</i>&lt;legend&gt;Radio Buttons Group&lt;/legend&gt;
 
-<i>----</i>&lt;input <span class="emphasis">id="f102"</span> type="radio" name="radio" value="1"&gt;
-<i>----</i>&lt;label <span class="emphasis">for="f102"</span>&gt;Radio&lt;/label&gt;
+<i>---</i>&lt;input <span class="emphasis">id="f102"</span> type="radio" name="radio" value="1"&gt;
+<i>---</i>&lt;label <span class="emphasis">for="f102"</span>&gt;Radio&lt;/label&gt;
 &lt;/fieldset&gt;
 </pre>
 
@@ -1448,10 +1426,10 @@
 
 <pre>
 &lt;fieldset&gt;
-<i>----</i>&lt;legend&gt;Toggles Group&lt;/legend&gt;
+<i>---</i>&lt;legend&gt;Toggles Group&lt;/legend&gt;
 
-<i>----</i>&lt;input <span class="emphasis">id="f103"</span> type="checkbox" <span class="emphasis">data-toggle="true"</span> /&gt;
-<i>----</i>&lt;label <span class="emphasis">for="f103"</span>&gt;Toggle&lt;/label&gt;
+<i>---</i>&lt;input <span class="emphasis">id="f103"</span> type="checkbox" <span class="emphasis">data-toggle="true"</span> /&gt;
+<i>---</i>&lt;label <span class="emphasis">for="f103"</span>&gt;Toggle&lt;/label&gt;
 &lt;/fieldset&gt;
 </pre>
 
@@ -1696,7 +1674,7 @@
 
 <pre>
 &lt;div class="button primary" <span class="emphasis">data-notification="true" data-{{message|delay|tone}}="{{value}}"</span>&gt;
-<i>----</i>Delay 3000
+<i>---</i>Delay 3000
 &lt;/div&gt;
 </pre>
 
@@ -1850,15 +1828,15 @@
 
 <pre>
 &lt;div class="slider" <span class="emphasis">data-slider="true" data-{{nav|arrows|thumbnails|display|slideshow|animation}}="{{value}}"</span>&gt;
-<i>----</i>&lt;div class="slide"&gt;
-<i>----</i><i>----</i>&lt;img src="http://placehold.it/959x350" /&gt;
-<i>----</i>&lt;/div&gt;
-<i>----</i>&lt;div class="slide"&gt;
-<i>----</i><i>----</i>&lt;img src="http://placehold.it/960x350" /&gt;
-<i>----</i>&lt;/div&gt;
-<i>----</i>&lt;div class="slide"&gt;
-<i>----</i><i>----</i>&lt;img src="http://placehold.it/961x350" /&gt;
-<i>----</i>&lt;/div&gt;
+<i>---</i>&lt;div class="slide"&gt;
+<i>---</i><i>---</i>&lt;img src="http://placehold.it/959x350" /&gt;
+<i>---</i>&lt;/div&gt;
+<i>---</i>&lt;div class="slide"&gt;
+<i>---</i><i>---</i>&lt;img src="http://placehold.it/960x350" /&gt;
+<i>---</i>&lt;/div&gt;
+<i>---</i>&lt;div class="slide"&gt;
+<i>---</i><i>---</i>&lt;img src="http://placehold.it/961x350" /&gt;
+<i>---</i>&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -1868,9 +1846,9 @@
 
 <pre>
 &lt;div class="slider" <span class="emphasis">data-slider="true" data-thumbnails="true"</span>&gt;
-<i>----</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
-<i>----</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
-<i>----</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+<i>---</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+<i>---</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+<i>---</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -1903,10 +1881,10 @@
 // Add the block below right after the opening of the &lt;body&gt; tag.
 
 &lt;div class="overlay" <span class="emphasis">id="example"</span>&gt;
-<i>----</i>&lt;div class="bg"&gt;&nbsp;&lt;/div&gt;
-<i>----</i>&lt;div class="modal"&gt;
-<i>----</i><i>----</i>&lt;img class="svg icon icon-close" src="/img/icons/icon-close.svg" /&gt;
-<i>----</i>&lt;/div&gt;
+<i>---</i>&lt;div class="bg"&gt;&nbsp;&lt;/div&gt;
+<i>---</i>&lt;div class="modal"&gt;
+<i>---</i><i>---</i>&lt;img class="svg icon icon-close" src="/img/icons/icon-close.svg" /&gt;
+<i>---</i>&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -1996,7 +1974,7 @@
 
 <pre>
 &lt;div class="map-wrapper"&gt;
-<i>----</i>&lt;div <span class="emphasis">id="map-canvas" class="map-canvas" data-feed="/data/map-config.json"</span>&gt;&lt;/div&gt;
+<i>---</i>&lt;div <span class="emphasis">id="map-canvas" class="map-canvas" data-feed="/data/map-config.json"</span>&gt;&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -2126,7 +2104,7 @@
 
 <pre>
 &lt;div class="autocomplete-wrapper" <span class="emphasis">data-autocomplete="/data/autocomplete.json"</span>&gt;
-<i>----</i>&lt;input type="text" placeholder="Type to search..." <span class="emphasis">data-lookup="title"</span>&gt;
+<i>---</i>&lt;input type="text" placeholder="Type to search..." <span class="emphasis">data-lookup="title"</span>&gt;
 &lt;/div&gt;
 </pre>
 
