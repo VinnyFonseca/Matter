@@ -53,6 +53,12 @@
 		}
 	}
 
+	&[data-size] {
+		.dropdown {
+			margin-bottom: $spacing;
+		}
+	}
+
 
 	select {
 		@extend .field;

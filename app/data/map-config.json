@@ -1,51 +1,496 @@
 {
-	"Options" : [
-		{
-			"Zoom" : 10,
-			"CenterLat" : 51.5071911,
-			"CenterLng" : -0.1076299
-		}
-	],
+	"Options": {
+		"Zoom": 10,
+		"CenterLat": 51.508308,
+		"CenterLng": -0.1017765,
+    "Theme": "MapBox"
+	},
 	"Markers": [
 		{
-			"Title" : "Purestone TFM",
-			"Desc" : "Award winning digital communications agency.",
-			"Tel" : "0203735546dwadwdaw02222",
-			"Email" : "info@purestone.co.uk",
-			"Url" : "http://www.purestone.co.uk",
-			"Lat" : 51.5071911,
-			"Lng" : -0.1076299,
-			"Marker" : "img/markers/default.png"
+			"Title": "London",
+			"Desc": "Capital of England",
+			"Tel": "-",
+			"Email": "-",
+			"Url": "-",
+			"Lat": 51.508308,
+			"Lng": -0.1017765,
+			"Marker": "img/markers/default.png"
 		},
 		{
-			"Title" : "Purestone TFM",
-			"Desc" : "Award winning digital communications agency.",
-			"Tel" : "0203735dddddd54602222",
-			"Email" : "info@purestone.co.uk",
-			"Url" : "http://www.purestone.co.uk",
-			"Lat" : 53.5071922,
-			"Lng" : -0.1076299,
-			"Marker" : "img/markers/default.png"
+			"Title": "Rome",
+			"Desc": "Capital of Italy",
+			"Tel": "-",
+			"Email": "-",
+			"Url": "-",
+			"Lat": 41.9102415,
+			"Lng": 12.3959148,
+			"Marker": "img/markers/default.png"
 		},
 		{
-			"Title" : "Purestone TFM",
-			"Desc" : "Award winning digital communications agency.",
-			"Tel" : "0203735dddddd54602222",
-			"Email" : "info@purestone.co.uk",
-			"Url" : "http://www.purestone.co.uk",
-			"Lat" : 53.5071922,
-			"Lng" : -2.1076299,
-			"Marker" : "img/markers/default.png"
+			"Title": "Brasilia",
+			"Desc": "Capital of Brazil",
+			"Tel": "-",
+			"Email": "-",
+			"Url": "-",
+			"Lat": -15.7215857,
+			"Lng": -48.0082762,
+			"Marker": "img/markers/default.png"
 		},
 		{
-			"Title" : "Purestone TFM",
-			"Desc" : "Award winning digital communications agency.",
-			"Tel" : "0203735dddddd54602222",
-			"Email" : "info@purestone.co.uk",
-			"Url" : "http://www.purestone.co.uk",
-			"Lat" : 53.5071922,
-			"Lng" : -6.1076299,
-			"Marker" : "img/markers/default.png"
+			"Title": "Tokyo",
+			"Desc": "Capital of Japan",
+			"Tel": "-",
+			"Email": "-",
+			"Url": "-",
+			"Lat": 35.6735408,
+			"Lng": 139.5703043,
+			"Marker": "img/markers/default.png"
+		},
+		{
+			"Title": "Washington DC",
+			"Desc": "Capital of USA",
+			"Tel": "-",
+			"Email": "-",
+			"Url": "-",
+			"Lat": 47.2573787,
+			"Lng": -123.0933299,
+			"Marker": "img/markers/default.png"
 		}
-	]
+	],
+  "Themes": {
+    "Bentley": [
+      {
+        "featureType": "landscape",
+        "stylers": [
+          {
+            "hue": "#F1FF00"
+          },
+          {
+            "saturation": -27.4
+          },
+          {
+            "lightness": 9.4
+          },
+          {
+            "gamma": 1
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "stylers": [
+          {
+            "hue": "#0099FF"
+          },
+          {
+            "saturation": -20
+          },
+          {
+            "lightness": 36.4
+          },
+          {
+            "gamma": 1
+          }
+        ]
+      },
+      {
+        "featureType": "road.arterial",
+        "stylers": [
+          {
+            "hue": "#00FF4F"
+          },
+          {
+            "saturation": 0
+          },
+          {
+            "lightness": 0
+          },
+          {
+            "gamma": 1
+          }
+        ]
+      },
+      {
+        "featureType": "road.local",
+        "stylers": [
+          {
+            "hue": "#FFB300"
+          },
+          {
+            "saturation": -38
+          },
+          {
+            "lightness": 11.2
+          },
+          {
+            "gamma": 1
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "stylers": [
+          {
+            "hue": "#00B6FF"
+          },
+          {
+            "saturation": 4.2
+          },
+          {
+            "lightness": -63.4
+          },
+          {
+            "gamma": 1
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "stylers": [
+          {
+            "hue": "#9FFF00"
+          },
+          {
+            "saturation": 0
+          },
+          {
+            "lightness": 0
+          },
+          {
+            "gamma": 1
+          }
+        ]
+      }
+    ],
+    "MapBox": [
+      {
+        "featureType": "water",
+        "stylers": [
+          {
+            "saturation": 43
+          },
+          {
+            "lightness": -11
+          },
+          {
+            "hue": "#0088ff"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "hue": "#ff0000"
+          },
+          {
+            "saturation": -100
+          },
+          {
+            "lightness": 99
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#808080"
+          },
+          {
+            "lightness": 54
+          }
+        ]
+      },
+      {
+        "featureType": "landscape.man_made",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#ece2d9"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#ccdca1"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#767676"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#ffffff"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape.natural",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "visibility": "on"
+          },
+          {
+            "color": "#b8cb93"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "stylers": [
+          {
+            "visibility": "on"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.sports_complex",
+        "stylers": [
+          {
+            "visibility": "on"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.medical",
+        "stylers": [
+          {
+            "visibility": "on"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.business",
+        "stylers": [
+          {
+            "visibility": "simplified"
+          }
+        ]
+      }
+    ],
+    "PastelTones": [
+      {
+        "featureType": "landscape",
+        "stylers": [
+          { "saturation": -100 },
+          { "lightness": 60 }
+        ]
+      },{
+        "featureType": "road.local",
+        "stylers": [
+          { "saturation": -100 },
+          { "lightness": 40 },
+          { "visibility": "on" }
+        ]
+      },{
+        "featureType": "transit",
+        "stylers": [
+          { "saturation": -100 },
+          { "visibility": "simplified" }
+        ]
+      },{
+        "featureType": "administrative.province",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "water",
+        "stylers": [
+          { "visibility": "on" },
+          { "lightness": 30 }
+        ]
+      },{
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+          { "color": "#ef8c25" },
+          { "lightness": 40 }
+        ]
+      },{
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "poi.park",
+        "elementType": "geometry.fill",
+        "stylers": [
+          { "color": "#b6c54c" },
+          { "lightness": 40 },
+          { "saturation": -40 }
+        ]
+      }
+    ],
+    "LightOnDarkGray": [
+      {
+        "featureType": "administrative",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#444444"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+          {
+            "color": "#f2f2f2"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+          {
+            "saturation": -100
+          },
+          {
+            "lightness": 45
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "simplified"
+          }
+        ]
+      },
+      {
+        "featureType": "road.arterial",
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+          {
+            "color": "#4f595d"
+          },
+          {
+            "visibility": "on"
+          }
+        ]
+      }
+    ],
+    "Grayscale": [
+      {
+        "featureType": "administrative",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+          {
+            "color": "#EAEAEA"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+          {
+            "color": "#838383"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+          {
+            "color": "#838383"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "all",
+        "elementType": "labels",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }
+    ]
+  }
 }

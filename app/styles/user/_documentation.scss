@@ -32,8 +32,8 @@ body.sidebar-on {
 		transition: all $duration $easing;
 
 		.wrapper {
-			padding-left: floor($spacing * 4);
-			padding-right: floor($spacing * 4);
+			padding-left: floor($spacing * 2);
+			padding-right: floor($spacing * 2);
 			transition: opacity $duration $easing;
 		}
 
@@ -223,13 +223,19 @@ body.sidebar-on {
 
 pre {
 	color: $cd;
+  font-size: $fontSize / 1.2 + rem;
+	line-height: 1.7;
 
-	.folder { color: #CCAAEE; }
-	.file { font-style: italic; }
-	.system { color: #FF6666; }
+	* {
+		line-height: 1.7;
+	}
+
+	.folder { margin-left: 5px; color: #CCAAEE; }
+	.file { margin-left: 5px; font-style: italic; }
+	.system { margin-left: 5px; color: #FF6666; }
 	.emphasis { color: #CCAAEE; }
+
 	i {
-		margin-right: 3px;
 		color: $c5;
 		font-style: normal;
 		font-size: $fontSize / 1.35 + rem;
@@ -239,9 +245,9 @@ pre {
 			display: inline;
 			position: relative;
 			margin: 0;
-			margin-right: -2px;
+			margin-right: -4px;
 			padding: 0;
-			font-size: $fontSize * 1.1 + rem;
+			font-size: $fontSize / 1.1 + rem;
 			content: "|";
 		}
 	}
@@ -278,42 +284,27 @@ pre {
 // Form
 
 .card-wrapper {
+	display: block;
+	position: relative;
 	@extend .framed;
-	margin: $spacing 0;
-	border-radius: $radius;
+	margin: 0 auto;
+	margin-bottom: $spacing - 5px;
+	padding: 0;
+	vertical-align: bottom;
 
-	label {
-		white-space: nowrap;
-	}
-
-	.column {
-		vertical-align: bottom;
-	}
-
-	.card-type {
-		display: inline-block;
-		position: relative;
-		@extend .card;
+	> img {
+		position: absolute;
 		margin: 0 auto;
-		padding: floor($spacing / 4);
-		vertical-align: bottom;
-
-		> * {
-			margin: 0 auto;
-			height: 36px;
-			border-radius: $radius;
-		}
+		height: 26px;
+		width: auto;
+		top: 10px;
+		left: 10px;
+		border-radius: $radius;
+		z-index: 10;
 	}
 
-	.payment {
-		.column {
-			text-align: center;
-
-			img {
-				margin: 0 auto;
-				width: 100%;
-			}
-		}
+	> input {
+		padding-left: 60px;
 	}
 }
 
@@ -339,7 +330,7 @@ pre {
 
 // Responsive
 
-@media screen and (max-width: $scrDeskL + $sidebarWidth) {
+@media screen and (max-width: $scrTablL + $sidebarWidth) {
 
 	// Structural
 
@@ -357,10 +348,11 @@ pre {
 		}
 	}
 
-}
-
-
-@media screen and (max-width: $scrTablL) {
+  .structure {
+    .clean {
+      font-size: $fontSize / 1.1 + rem;
+    }
+  }
 
 	// Widgets
 

@@ -33,7 +33,7 @@
 				<h2>Matter</h2>
 			</a>
 
-			<h4>Table of Contents</h4>
+			<h4>Table of contents</h4>
 		</div>
 
 
@@ -55,48 +55,73 @@
 
 				<a href="#" class="anchor" id="directory"></a>
 
-				<h2>Directory Tree</h2>
+				<h2>Directory tree</h2>
+
+        <p>
+          Folders in red are system folders and should not be changed. These are the folders you should update when a new version comes out.
+        </p>
 
 <pre class="structure">
-<span class="folder">app (source)</span>
-<i>----</i><span class="folder">markup</span>
-<i>----</i><i>----</i><span class="folder">include</span>
-<i>----</i><i>----</i><i>----</i><span class="file">head.html</span>
-<i>----</i><i>----</i><i>----</i><span class="file">header.html</span>
-<i>----</i><i>----</i><i>----</i><span class="file">footer.html</span>
-<i>----</i><i>----</i><i>----</i><span class="file">foot.html</span>
-<i>----</i><i>----</i><span class="file">index.html</span>
+<span class="folder">↓ app (input)</span>
+<i>---</i><span class="folder">↓ data</span>
+<i>---</i><i>---</i><span class="file">countries.json</span>
+<i>---</i><i>---</i><span class="file">map-config.json</span>
+<i>---</i><i>---</i><span class="file">search.json</span>
+<i>---</i><i>---</i><span class="file">titles.json</span>
 
-<i>----</i><span class="folder">scripts</span>
-<i>----</i><i>----</i><span class="system" data-tooltip="Core folder">matter</span>
-<i>----</i><i>----</i><span class="folder">custom</span>
-<i>----</i><i>----</i><i>----</i><span class="file">config.js</span>
-<i>----</i><i>----</i><i>----</i><span class="file">global.js</span>
+<i>---</i><span class="folder">↓ img</span>
+<i>---</i><i>---</i><span class="folder">> favicon</span>
+<i>---</i><i>---</i><span class="folder">> icons</span>
+<i>---</i><i>---</i><span class="folder">↓ markers</span>
+<i>---</i><i>---</i><i>---</i><span class="file">default.png</span>
+<i>---</i><i>---</i><span class="folder">> pictures</span>
+<i>---</i><i>---</i><span class="file">loader.gif</span>
+<i>---</i><i>---</i><span class="file">logo-white.png</span>
+<i>---</i><i>---</i><span class="file">logo.png</span>
+<i>---</i><i>---</i><span class="file">pixel-black.png</span>
+<i>---</i><i>---</i><span class="file">pixel-white.png</span>
+<i>---</i><i>---</i><span class="file">share.jpg</span>
 
-<i>----</i><span class="folder">styles</span>
-<i>----</i><i>----</i><span class="system" data-tooltip="Core folder">matter</span>
-<i>----</i><i>----</i><span class="folder">custom</span>
-<i>----</i><i>----</i><i>----</i><span class="file">_config.scss</span>
-<i>----</i><i>----</i><i>----</i><span class="file">_global.scss</span>
-<i>----</i><i>----</i><i>----</i><span class="file">_responsive.scss</span>
-<i>----</i><i>----</i><i>----</i><span class="file">_conditional.scss</span>
-<i>----</i><i>----</i><span class="file">build.scss</span>
+<i>---</i><span class="folder">↓ markup</span>
+<i>---</i><i>---</i><span class="folder">↓ partials</span>
+<i>---</i><i>---</i><i>---</i><span class="folder">↓ head</span>
+<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_assets.html</span>
+<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_data.html</span>
+<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_meta.html</span>
+<i>---</i><i>---</i><i>---</i><span class="folder">↓ foot</span>
+<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_data.html</span>
+<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_footer.html</span>
+<i>---</i><i>---</i><i>---</i><span class="file">_footer.html</span>
+<i>---</i><i>---</i><i>---</i><span class="file">_header.html</span>
+<i>---</i><i>---</i><i>---</i><span class="file">_html.html</span>
+<i>---</i><i>---</i><i>---</i><span class="file">_overlays.html</span>
 
-<span class="folder">www (output)</span>
-<i>----</i><span class="folder">img</span>
-<i>----</i><i>----</i><span class="folder">favicon</span>
-<i>----</i><i>----</i><span class="folder">icons</span>
-<i>----</i><i>----</i><span class="folder">markers</span>
-<i>----</i><em class="system" data-tooltip="Output folder">scripts</em>
-<i>----</i><em class="system" data-tooltip="Output folder">styles</em>
-<i>----</i><em class="system">index.html</em>
+<i>---</i><span class="folder">↓ scripts</span>
+<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> debug</span>
+<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> matter</span>
+<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> standalone</span>
+<i>---</i><i>---</i><span class="folder">↓ user</span>
+<i>---</i><i>---</i><i>---</i><span class="file">global.js</span>
 
-<span class="file">.gitignore</span>
+<i>---</i><span class="folder">↓ styles</span>
+<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> debug</span>
+<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> matter</span>
+<i>---</i><i>---</i><span class="folder">↓ user</span>
+<i>---</i><i>---</i><i>---</i><span class="file">_global.scss</span>
+<i>---</i><i>---</i><span class="file">build.scss</span>
+
+<span class="system" data-tooltip="Core folder">> dist (output)</span>
+<span class="system" data-tooltip="Core folder">> gulp</span>
+<span class="system" data-tooltip="Core folder">> node_modules</span>
+
+<span class="file">.editorconfig</span>
 <span class="file">.gitattributes</span>
+<span class="file">.gitignore</span>
+<span class="file">.jshintignore</span>
+<span class="file">gulpfile.js</span>
 <span class="file">LICENSE</span>
-<span class="file">README.md</span>
 <span class="file">package.json</span>
-<span class="file">Gruntfile.js</span>
+<span class="file">README.md</span>
 </pre>
 
 				<p>
@@ -125,7 +150,7 @@
 
 				<a href="#" class="anchor" id="grid-system"></a>
 
-				<h2>Grid System</h2>
+				<h2>Grid system</h2>
 
 				<p>
 					<strong>Usage:</strong>
@@ -136,7 +161,7 @@
 				</p>
 
 				<p>
-					<strong>Demo:</strong>
+					<strong>Example:</strong>
 				</p>
 
 				<div class="row debug">
@@ -148,18 +173,14 @@
 					</div>
 				</div>
 
-				<p>
-					<strong>Example:</strong>
-				</p>
-
 <pre>
 &lt;div class="row"&gt;
-<i>----</i>&lt;div class="column" <span class="emphasis">data-span="4"</span>&gt;
-<i>----</i><i>----</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
-<i>----</i>&lt;/div&gt;
-<i>----</i>&lt;div class="column" <span class="emphasis">data-span="8"</span>&gt;
-<i>----</i><i>----</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
-<i>----</i>&lt;/div&gt;
+<i>---</i>&lt;div class="column" <span class="emphasis">data-span="4"</span>&gt;
+<i>---</i><i>---</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
+<i>---</i>&lt;/div&gt;
+<i>---</i>&lt;div class="column" <span class="emphasis">data-span="8"</span>&gt;
+<i>---</i><i>---</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
+<i>---</i>&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -175,153 +196,153 @@
 
 				<a href="#" class="anchor" id="complete"></a>
 
-				<h3>Complete Grid</h3>
+				<h3>Full grid (12 columns instance)</h3>
 
 				<div class="row debug">
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="3">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="3">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="3">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="3">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="4">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="4">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="4">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="5">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="5">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="6">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="6">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="7">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="5">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="8">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="4">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="9">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="3">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="10">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="2">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="11">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 					<div class="column" data-span="1">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 
 
 					<div class="column" data-span="12">
-						<div class="cell">Word</div>
+						<div class="cell">col</div>
 					</div>
 				</div>
 
@@ -331,62 +352,29 @@
 
 				<a href="#" class="anchor" id="push"></a>
 
-				<h3>Push Grid</h3>
+				<h3>Push grid</h3>
 
 				<p>
-					<strong>Example</strong>
+					<strong>Example:</strong>
 				</p>
+
+				<div class="row debug show-push">
+					<div class="column" data-span="8" data-push="3">
+						<div class="cell">col</div>
+					</div>
+				</div>
 
 <pre>
 &lt;div class="row"&gt;
-<i>----</i>&lt;div class="column" <span class="emphasis">data-span="8" data-push="4"</span>&gt;
-<i>----</i><i>----</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
-<i>----</i>&lt;/div&gt;
+<i>---</i>&lt;div class="column" <span class="emphasis">data-span="8" data-push="3"</span>&gt;
+<i>---</i><i>---</i>&lt;div class="cell"&gt;col&lt;/div&gt;
+<i>---</i>&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
 				<p class="emphasis">
 					Use <code>data-push</code> to specify how many columns you want a certain column to move.
 				</p>
-
-				<div class="row debug show-push">
-					<div class="column" data-span="1" data-push="11">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="2" data-push="10">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="3" data-push="9">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="4" data-push="8">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="5" data-push="7">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="6" data-push="6">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="7" data-push="5">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="8" data-push="4">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="9" data-push="3">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="10" data-push="2">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="11" data-push="1">
-						<div class="cell">Word</div>
-					</div>
-					<div class="column" data-span="12" data-push="0">
-						<div class="cell">Word</div>
-					</div>
-				</div>
 
 
 
@@ -402,9 +390,28 @@
 
 				<a href="#" class="anchor" id="block"></a>
 
-				<h2>Block Level Elements</h2>
+				<h2>Block level elements</h2>
 
 				<dl>
+          <dt>
+            <strong>p class="lead"</strong>
+          </dt>
+          <dd>
+            <p class="lead">
+              Lorem ipsum Magna dolore adipisicing consectetur Ut voluptate consequat minim sunt laborum in mollit nulla aute fugiat Excepteur nulla fugiat Duis ut officia velit aute sit in id nostrud pariatur exercitation ut quis nulla amet nostrud dolore in commodo culpa Excepteur Duis deserunt ea reprehenderit sit laborum enim irure dolore fugiat dolor dolore dolor Ut amet labore ullamco aute elit in tempor Ut in nulla aliqua officia consequat.
+            </p>
+          </dd>
+
+          <dt>
+            <strong>p</strong>
+          </dt>
+          <dd>
+            <p>
+              Lorem ipsum Magna dolore adipisicing consectetur Ut voluptate consequat minim sunt laborum in mollit nulla aute fugiat Excepteur nulla fugiat Duis ut officia velit aute sit in id nostrud pariatur exercitation ut quis nulla amet nostrud dolore in commodo culpa Excepteur Duis deserunt ea reprehenderit sit laborum enim irure dolore fugiat dolor dolore dolor Ut amet labore ullamco aute elit in tempor Ut in nulla aliqua officia consequat.
+            </p>
+          </dd>
+          </dd>
+
 					<dt>
 						<strong>a</strong>
 					</dt>
@@ -424,25 +431,6 @@
 					</dt>
 					<dd>
 						<a href="http://matterframework.net" data-explicit="true">Lorem ipsum Duis eu laboris veniam sed anim.</a>
-					</dd>
-
-					<dt>
-						<strong>p</strong>
-					</dt>
-					<dd>
-						<p>
-							Lorem ipsum Magna dolore adipisicing consectetur Ut voluptate consequat minim sunt laborum in mollit nulla aute fugiat Excepteur nulla fugiat Duis ut officia velit aute sit in id nostrud pariatur exercitation ut quis nulla amet nostrud dolore in commodo culpa Excepteur Duis deserunt ea reprehenderit sit laborum enim irure dolore fugiat dolor dolore dolor Ut amet labore ullamco aute elit in tempor Ut in nulla aliqua officia consequat.
-						</p>
-					</dd>
-					</dd>
-
-					<dt>
-						<strong>p class="lead"</strong>
-					</dt>
-					<dd>
-						<p class="lead">
-							Lorem ipsum Magna dolore adipisicing consectetur Ut voluptate consequat minim sunt laborum in mollit nulla aute fugiat Excepteur nulla fugiat Duis ut officia velit aute sit in id nostrud pariatur exercitation ut quis nulla amet nostrud dolore in commodo culpa Excepteur Duis deserunt ea reprehenderit sit laborum enim irure dolore fugiat dolor dolore dolor Ut amet labore ullamco aute elit in tempor Ut in nulla aliqua officia consequat.
-						</p>
 					</dd>
 
 					<dt>
@@ -483,6 +471,10 @@
 					Matter has automatic svg injection from <code>img class="svg"</code> elements.
 				</p>
 
+				<p>
+					<strong>Example:</strong>
+				</p>
+
 				<div class="icon-wrapper">
 					<div class="icon-wrapper-item" data-icon="arrow-up" data-tooltip="arrow-up">
 						<img class="svg icon icon-arrow-up" src="/img/icons/icon-arrow-up.svg" alt="CTA icon">
@@ -506,37 +498,37 @@
 						<strong>h1</strong>
 					</dt>
 					<dd>
-						<h1>Sample Heading</h1>
+						<h1>Sample heading</h1>
 					</dd>
 					<dt>
 						<strong>h2</strong>
 					</dt>
 					<dd>
-						<h2>Sample Heading</h2>
+						<h2>Sample heading</h2>
 					</dd>
 					<dt>
 						<strong>h3</strong>
 					</dt>
 					<dd>
-						<h3>Sample Heading</h3>
+						<h3>Sample heading</h3>
 					</dd>
 					<dt>
 						<strong>h4</strong>
 					</dt>
 					<dd>
-						<h4>Sample Heading</h4>
+						<h4>Sample heading</h4>
 					</dd>
 					<dt>
 						<strong>h5</strong>
 					</dt>
 					<dd>
-						<h5>Sample Heading</h5>
+						<h5>Sample heading</h5>
 					</dd>
 					<dt>
 						<strong>h6</strong>
 					</dt>
 					<dd>
-						<h6>Sample Heading</h6>
+						<h6>Sample heading</h6>
 					</dd>
 				</dl>
 
@@ -729,8 +721,8 @@
 
 <pre>
 &lt;head&gt;
-<i>----</i>&lt;meta charset="UTF-8"&gt;
-<i>----</i>&lt;meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"&gt;
+<i>---</i>&lt;meta charset="UTF-8"&gt;
+<i>---</i>&lt;meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"&gt;
 &lt;/head&gt;
 </pre>
 
@@ -741,6 +733,10 @@
 				<a href="#" class="anchor" id="hyphenation"></a>
 
 				<h3>Hyphenation</h3>
+
+        <p>
+          Use the <code>&amp;shy;</code> HTML entity for hyphens. this entity does not show up unless it's the last character on the line, thus providing hyphenation.
+        </p>
 
 				<p class="emphasis">Note: Resize to see the hyphenation in action.</p>
 
@@ -851,25 +847,25 @@
 
 <pre>
 &lt;dl&gt;
-<i>----</i>&lt;dt&gt;Recursion&lt;/dt&gt;
-<i>----</i>&lt;dd&gt;
-<i>----</i><i>----</i>See recursion.
-<i>----</i>&lt;/dd&gt;
+<i>---</i>&lt;dt&gt;Recursion&lt;/dt&gt;
+<i>---</i>&lt;dd&gt;
+<i>---</i><i>---</i>See recursion.
+<i>---</i>&lt;/dd&gt;
 
-<i>----</i>&lt;dt&gt;Recursion, indirect&lt;/dt&gt;
-<i>----</i>&lt;dd&gt;
-<i>----</i><i>----</i>See indirect recursion.
-<i>----</i>&lt;/dd&gt;
+<i>---</i>&lt;dt&gt;Recursion, indirect&lt;/dt&gt;
+<i>---</i>&lt;dd&gt;
+<i>---</i><i>---</i>See indirect recursion.
+<i>---</i>&lt;/dd&gt;
 
-<i>----</i>&lt;dt&gt;Indirect recursion&lt;/dt&gt;
-<i>----</i>&lt;dd&gt;
-<i>----</i><i>----</i>See recursion, indirect.
-<i>----</i>&lt;/dd&gt;
+<i>---</i>&lt;dt&gt;Indirect recursion&lt;/dt&gt;
+<i>---</i>&lt;dd&gt;
+<i>---</i><i>---</i>See recursion, indirect.
+<i>---</i>&lt;/dd&gt;
 
-<i>----</i>&lt;dt&gt;Term&lt;/dt&gt;
-<i>----</i>&lt;dd&gt;
-<i>----</i><i>----</i>A word or other expression taken into specific use in a well-defined meaning.
-<i>----</i>&lt;/dd&gt;
+<i>---</i>&lt;dt&gt;Term&lt;/dt&gt;
+<i>---</i>&lt;dd&gt;
+<i>---</i><i>---</i>A word or other expression taken into specific use in a well-defined meaning.
+<i>---</i>&lt;/dd&gt;
 &lt;/dl&gt;
 </pre>
 
@@ -882,16 +878,16 @@
 				<h3>Tables (Responsive)</h3>
 
 				<p>
-					The following table has a caption. The first row and the first column contain header cells (<code>th</code>) only. Other cells are data cells (<code>td</code>).
+					The following table has a caption. The first row contains header cells (<code>th</code>) only. Other cells are data cells (<code>td</code>).
 				</p>
 
 				<table summary="Each row names a Nordic country and specifies its total area and land area, in square kilometers">
 					<caption>Sample table: Areas of the Nordic countries, in sq km</caption>
 
 					<tr>
-						<td>Country</td>
-						<td>Total area</td>
-						<td>Land area</td>
+						<th>Country</th>
+						<th>Total area</th>
+						<th>Land area</th>
 					</tr>
 					<tr>
 						<td>Denmark</td>
@@ -928,11 +924,11 @@
 
 				<table>
 					<tr>
-						<td>Char.</td>
-						<td>Explanation</td>
-						<td>HTML Entity</td>
-						<td>Unicode</td>
-						<td>Notes</td>
+						<th>Char.</th>
+						<th>Explanation</th>
+						<th>HTML Entity</th>
+						<th>Unicode</th>
+						<th>Notes</th>
 					</tr>
 					<tr>
 						<td>ê</td>
@@ -1015,17 +1011,17 @@
 						<label>Email w/ Confirmation</label>
 						<input type="email" name="email" placeholder="Email" data-validation="email" required>
 						<div class="input-addon">repeat</div>
-						<input type="email" name="email-match" placeholder="Confirm Email" data-validation="match" required>
+						<input type="email" name="email" placeholder="Confirm Email" data-validation="match" required>
 					</div>
 
 					<label>Date</label>
-					<input type="text" name="date" placeholder="dd/mm/yyyy" data-calendar="true" data-validation="date" required>
+					<input type="date" name="date" placeholder="dd/mm/yyyy" data-calendar="true" data-validation="date" required>
 
 					<div class="input-group block-reset">
 						<label>Password w/ Confirmation</label>
-						<input type="password" name="password" placeholder="Minimum rating: 30%" data-validation="password" data-validate-key="true" required>
+						<input type="password" name="password" placeholder="Minimum rating: 30%" data-validation="password" data-validate-key="true" required data-tooltip="Rule:<br />&bull; Minimum of 8 characters<br />AND at least:<br />&bull; One uppercase letter<br />&bull; One lowercase letter<br />&bull; One number">
 						<div class="input-addon">repeat</div>
-						<input type="password" name="password-match" placeholder="Confirm Password" data-validation="match" required>
+						<input type="password" name="password" placeholder="Confirm Password" data-validation="match" required>
 					</div>
 
 					<label>Textarea</label>
@@ -1088,14 +1084,10 @@
 						</div>
 					</fieldset>
 
-					<!-- <label>Select List</label>
+					<label>Select List</label>
 					<select name="country" data-validation="select" data-countries="/data/countries.json" size="5" required>
 						<option value="" default selected>Select country...</option>
-					</select> -->
-
-					<p class="form-info emphasis">
-						Note: Checkboxes need all required options to be selected.
-					</p>
+					</select>
 
 					<fieldset>
 						<legend>Checkboxes</legend>
@@ -1238,69 +1230,70 @@
 						</tr>
 						<tr valign="middle">
 							<td valign="middle">
-								<textarea class="valid" name="textarea" cols="30" rows="5" data-validation="text" required>Textarea</textarea>
+								<textarea class="valid" name="textarea" cols="30" rows="5" data-validation="text" placeholder="Textarea" required></textarea>
 							</td>
 							<td valign="middle">
-								<textarea class="invalid" name="textarea" cols="30" rows="5" data-validation="text" required>Textarea</textarea>
+								<textarea class="invalid" name="textarea" cols="30" rows="5" data-validation="text" placeholder="Textarea" required></textarea>
 							</td>
 							<td valign="middle">
-								<textarea name="textarea" cols="30" rows="5" readonly>Textarea</textarea>
+								<textarea name="textarea" cols="30" rows="5" placeholder="Textarea" readonly></textarea>
 							</td>
 						</tr>
 						<tr valign="middle">
 							<td valign="middle">
-								<input class="valid" id="f200" type="checkbox" name="checkbox" checked>
+								<input class="valid" id="f200" type="checkbox" name="checkbox-demo" value="Checkbox" checked>
 								<label for="f200">Checkbox</label>
 							</td>
 							<td valign="middle">
-								<input class="invalid" id="f201" type="checkbox" name="checkbox">
+								<input class="invalid" id="f201" type="checkbox" name="checkbox-demo" value="Checkbox">
 								<label for="f201">Checkbox</label>
 							</td>
 							<td valign="middle">
-								<input id="f202" type="checkbox" name="checkbox" readonly>
+								<input id="f202" type="checkbox" name="checkbox-demo" value="Checkbox" readonly>
 								<label for="f202">Checkbox</label>
 							</td>
 						</tr>
 						<tr valign="middle">
 							<td valign="middle">
-								<input class="valid" id="f203" type="checkbox" data-toggle="true" name="toggle-demo" checked>
+								<input class="valid" id="f203" type="checkbox" name="toggle-checkbox-demo" value="Checkbox" data-toggle="true" checked>
 								<label for="f203">Checkbox</label>
 							</td>
 							<td valign="middle">
-								<input class="invalid" id="f204" type="checkbox" data-toggle="true" name="toggle-demo">
+								<input class="invalid" id="f204" type="checkbox" name="toggle-checkbox-demo" value="Checkbox" data-toggle="true">
 								<label for="f204">Checkbox</label>
 							</td>
 							<td valign="middle">
-								<input id="f205" type="checkbox" data-toggle="true" name="toggle-demo" readonly>
+								<input id="f205" type="checkbox" name="toggle-checkbox-demo" value="Checkbox" data-toggle="true" readonly>
 								<label for="f205">Checkbox</label>
 							</td>
 						</tr>
+						</tr>
 						<tr valign="middle">
 							<td valign="middle">
-								<input class="valid" id="f206" type="radio" name="radio-demo" checked>
-								<label for="f206">Radio</label>
+								<input class="valid" id="f200" type="radio" name="radio-demo" value="Radio" checked>
+								<label for="f200">Radio</label>
 							</td>
 							<td valign="middle">
-								<input class="invalid" id="f207" type="radio" name="radio-demo">
-								<label for="f207">Radio</label>
+								<input class="invalid" id="f201" type="radio" name="radio-demo" value="Radio">
+								<label for="f201">Radio</label>
 							</td>
 							<td valign="middle">
-								<input id="f208" type="radio" name="radio-demo" readonly>
-								<label for="f208">Radio</label>
+								<input id="f202" type="radio" name="radio-demo" value="Radio" readonly>
+								<label for="f202">Radio</label>
 							</td>
 						</tr>
 						<tr valign="middle">
 							<td valign="middle">
-								<input class="valid" id="f209" type="radio" data-toggle="true" name="toggle-demo" checked>
-								<label for="f209">Radio</label>
+								<input class="valid" id="f203" type="radio" name="toggle-radio-demo" value="Radio" data-toggle="true" checked>
+								<label for="f203">Radio</label>
 							</td>
 							<td valign="middle">
-								<input class="invalid" id="f210" type="radio" data-toggle="true" name="toggle-demo">
-								<label for="f210">Radio</label>
+								<input class="invalid" id="f204" type="radio" name="toggle-radio-demo" value="Radio" data-toggle="true">
+								<label for="f204">Radio</label>
 							</td>
 							<td valign="middle">
-								<input id="f211" type="radio" data-toggle="true" name="toggle-demo" readonly>
-								<label for="f211">Radio</label>
+								<input id="f205" type="radio" name="toggle-radio-demo" value="Radio" data-toggle="true" readonly>
+								<label for="f205">Radio</label>
 							</td>
 						</tr>
 					</tbody>
@@ -1328,17 +1321,17 @@
 
 <pre>
 &lt;select>
-<i>----</i>&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
-<i>----</i>&lt;option value="one"&gt;one&lt;/option&gt;
-<i>----</i>&lt;option value="two"&gt;two&lt;/option&gt;
-<i>----</i>&lt;option value="three"&gt;three&lt;/option&gt;
-<i>----</i>&lt;option value="four"&gt;four&lt;/option&gt;
-<i>----</i>&lt;option value="five"&gt;five&lt;/option&gt;
-<i>----</i>&lt;option value="six"&gt;six&lt;/option&gt;
-<i>----</i>&lt;option value="seven"&gt;seven&lt;/option&gt;
-<i>----</i>&lt;option value="eight"&gt;eight&lt;/option&gt;
-<i>----</i>&lt;option value="nine"&gt;nine&lt;/option&gt;
-<i>----</i>&lt;option value="ten"&gt;ten&lt;/option&gt;
+<i>---</i>&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
+<i>---</i>&lt;option value="one"&gt;one&lt;/option&gt;
+<i>---</i>&lt;option value="two"&gt;two&lt;/option&gt;
+<i>---</i>&lt;option value="three"&gt;three&lt;/option&gt;
+<i>---</i>&lt;option value="four"&gt;four&lt;/option&gt;
+<i>---</i>&lt;option value="five"&gt;five&lt;/option&gt;
+<i>---</i>&lt;option value="six"&gt;six&lt;/option&gt;
+<i>---</i>&lt;option value="seven"&gt;seven&lt;/option&gt;
+<i>---</i>&lt;option value="eight"&gt;eight&lt;/option&gt;
+<i>---</i>&lt;option value="nine"&gt;nine&lt;/option&gt;
+<i>---</i>&lt;option value="ten"&gt;ten&lt;/option&gt;
 &lt;/select&gt;
 </pre>
 
@@ -1360,17 +1353,17 @@
 
 <pre>
 &lt;select <span class="emphasis">size="5"</span>&gt;
-<i>----</i>&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
-<i>----</i>&lt;option value="one"&gt;one&lt;/option&gt;
-<i>----</i>&lt;option value="two"&gt;two&lt;/option&gt;
-<i>----</i>&lt;option value="three"&gt;three&lt;/option&gt;
-<i>----</i>&lt;option value="four"&gt;four&lt;/option&gt;
-<i>----</i>&lt;option value="five"&gt;five&lt;/option&gt;
-<i>----</i>&lt;option value="six"&gt;six&lt;/option&gt;
-<i>----</i>&lt;option value="seven"&gt;seven&lt;/option&gt;
-<i>----</i>&lt;option value="eight"&gt;eight&lt;/option&gt;
-<i>----</i>&lt;option value="nine"&gt;nine&lt;/option&gt;
-<i>----</i>&lt;option value="ten"&gt;ten&lt;/option&gt;
+<i>---</i>&lt;option <span class="emphasis">value="" default selected</span>&gt;Please select...&lt;/option&gt;
+<i>---</i>&lt;option value="one"&gt;one&lt;/option&gt;
+<i>---</i>&lt;option value="two"&gt;two&lt;/option&gt;
+<i>---</i>&lt;option value="three"&gt;three&lt;/option&gt;
+<i>---</i>&lt;option value="four"&gt;four&lt;/option&gt;
+<i>---</i>&lt;option value="five"&gt;five&lt;/option&gt;
+<i>---</i>&lt;option value="six"&gt;six&lt;/option&gt;
+<i>---</i>&lt;option value="seven"&gt;seven&lt;/option&gt;
+<i>---</i>&lt;option value="eight"&gt;eight&lt;/option&gt;
+<i>---</i>&lt;option value="nine"&gt;nine&lt;/option&gt;
+<i>---</i>&lt;option value="ten"&gt;ten&lt;/option&gt;
 &lt;/select&gt;
 </pre>
 
@@ -1402,10 +1395,10 @@
 
 <pre>
 &lt;fieldset&gt;
-<i>----</i>&lt;legend&gt;Checkboxes Group&lt;/legend&gt;
+<i>---</i>&lt;legend&gt;Checkboxes Group&lt;/legend&gt;
 
-<i>----</i>&lt;input <span class="emphasis">id="f101"</span> type="checkbox" name="checkbox"&gt;
-<i>----</i>&lt;label <span class="emphasis">for="f101"</span>&gt;Checkbox&lt;/label&gt;
+<i>---</i>&lt;input <span class="emphasis">id="f101"</span> type="checkbox" name="checkbox"&gt;
+<i>---</i>&lt;label <span class="emphasis">for="f101"</span>&gt;Checkbox&lt;/label&gt;
 &lt;/fieldset&gt;
 </pre>
 
@@ -1423,10 +1416,10 @@
 
 <pre>
 &lt;fieldset&gt;
-<i>----</i>&lt;legend&gt;Radio Buttons Group&lt;/legend&gt;
+<i>---</i>&lt;legend&gt;Radio Buttons Group&lt;/legend&gt;
 
-<i>----</i>&lt;input <span class="emphasis">id="f102"</span> type="radio" name="radio" value="1"&gt;
-<i>----</i>&lt;label <span class="emphasis">for="f102"</span>&gt;Radio&lt;/label&gt;
+<i>---</i>&lt;input <span class="emphasis">id="f102"</span> type="radio" name="radio" value="1"&gt;
+<i>---</i>&lt;label <span class="emphasis">for="f102"</span>&gt;Radio&lt;/label&gt;
 &lt;/fieldset&gt;
 </pre>
 
@@ -1448,10 +1441,10 @@
 
 <pre>
 &lt;fieldset&gt;
-<i>----</i>&lt;legend&gt;Toggles Group&lt;/legend&gt;
+<i>---</i>&lt;legend&gt;Toggles Group&lt;/legend&gt;
 
-<i>----</i>&lt;input <span class="emphasis">id="f103"</span> type="checkbox" <span class="emphasis">data-toggle="true"</span> /&gt;
-<i>----</i>&lt;label <span class="emphasis">for="f103"</span>&gt;Toggle&lt;/label&gt;
+<i>---</i>&lt;input <span class="emphasis">id="f103"</span> type="checkbox" <span class="emphasis">data-toggle="true"</span> /&gt;
+<i>---</i>&lt;label <span class="emphasis">for="f103"</span>&gt;Toggle&lt;/label&gt;
 &lt;/fieldset&gt;
 </pre>
 
@@ -1494,32 +1487,7 @@
 				<h3>Payment Form</h3>
 
 				<form action="#" novalidate data-validation="true">
-					<div class="card-wrapper framed">
-						<div class="row payment">
-							<div class="column" data-span="3">
-								<a href="#">
-									<img src="/img/icons/payment/button-paypal.png" alt="Checkout with PayPal">
-								</a>
-							</div>
-							<div class="column" data-span="3">
-								<a href="#">
-									<img src="/img/icons/payment/button-google.png" alt="Checkout with Google">
-								</a>
-							</div>
-							<div class="column" data-span="3">
-								<a href="#">
-									<img src="/img/icons/payment/button-amazon.png" alt="Checkout with Amazon">
-								</a>
-							</div>
-							<div class="column" data-span="3">
-								<a href="#">
-									<img src="/img/icons/payment/button-card.png" alt="Pay by Card">
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<div class="card-wrapper">
+					<div class="framed">
 						<h4>Your payment details</h4>
 
 						<form action="#">
@@ -1531,23 +1499,19 @@
 							</div>
 
 							<div class="row">
-								<div class="column" data-span="8">
+								<div class="column" data-span="9">
 									<label>Card number</label>
-									<input type="number" id="card" name="card" placeholder="16 digits long number" data-validation="card" data-validate-key="true" required>
-								</div>
-								<div class="column" data-span="1">
-									<div class="card-type">
-										<img src="/img/icons/payment/cards/generic.png">
-									</div>
+
+                  <input type="card" id="card" name="card" placeholder="16 digits long number" data-validation="card" data-validate-key="true" required>
 								</div>
 								<div class="column" data-span="3">
 									<label for="ccv">CCV</label>
-									<input type="number" id="ccv" name="ccv" placeholder="3 digit security code" data-tooltip="<img src='img/icons/payment/ccv.png'>" data-validation="number" required>
+									<input type="number" id="ccv" name="ccv" placeholder="3 digits security code" data-tooltip="<img src='img/icons/cards/ccv.png'>" data-validation="number" required>
 								</div>
 							</div>
 
 							<div class="row">
-								<div class="column" data-span="3">
+								<div class="column valign-bottom" data-span="3">
 									<label>Start Date</label>
 									<select name="card-expiry-month" data-validation="select">
 										<option value="" default selected>Month</option>
@@ -1565,7 +1529,7 @@
 										<option value="12">12</option>
 									</select>
 								</div>
-								<div class="column" data-span="3">
+								<div class="column valign-bottom" data-span="3">
 									<select name="card-expiry-year" data-validation="select">
 										<option value="" default selected>Year</option>
 										<option value="2015">2015</option>
@@ -1581,7 +1545,7 @@
 										<option value="2025">2025</option>
 									</select>
 								</div>
-								<div class="column" data-span="3">
+								<div class="column valign-bottom" data-span="3">
 									<label>Expiry Date</label>
 									<select name="card-expiry-month" data-validation="select" required>
 										<option value="" default selected>Month</option>
@@ -1599,7 +1563,7 @@
 										<option value="12">12</option>
 									</select>
 								</div>
-								<div class="column" data-span="3">
+								<div class="column valign-bottom" data-span="3">
 									<select name="card-expiry-year" data-validation="select" required>
 										<option value="" default selected>Year</option>
 										<option value="2015">2015</option>
@@ -1696,7 +1660,7 @@
 
 <pre>
 &lt;div class="button primary" <span class="emphasis">data-notification="true" data-{{message|delay|tone}}="{{value}}"</span>&gt;
-<i>----</i>Delay 3000
+<i>---</i>Delay 3000
 &lt;/div&gt;
 </pre>
 
@@ -1745,73 +1709,6 @@
 					<div class="slide" data-thumb="/img/pictures/slider/10.jpg"></div>
 				</div>
 
-				<div class="slider" data-slider="true" data-display="5">
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 1</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 2</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 3</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 4</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 5</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 6</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 7</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 8</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 9</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-				</div>
-
-
 				<dl>
 					<dt>
 						<strong>Defaults:</strong>
@@ -1850,15 +1747,15 @@
 
 <pre>
 &lt;div class="slider" <span class="emphasis">data-slider="true" data-{{nav|arrows|thumbnails|display|slideshow|animation}}="{{value}}"</span>&gt;
-<i>----</i>&lt;div class="slide"&gt;
-<i>----</i><i>----</i>&lt;img src="http://placehold.it/959x350" /&gt;
-<i>----</i>&lt;/div&gt;
-<i>----</i>&lt;div class="slide"&gt;
-<i>----</i><i>----</i>&lt;img src="http://placehold.it/960x350" /&gt;
-<i>----</i>&lt;/div&gt;
-<i>----</i>&lt;div class="slide"&gt;
-<i>----</i><i>----</i>&lt;img src="http://placehold.it/961x350" /&gt;
-<i>----</i>&lt;/div&gt;
+<i>---</i>&lt;div class="slide"&gt;
+<i>---</i><i>---</i>&lt;img src="http://placehold.it/959x350" /&gt;
+<i>---</i>&lt;/div&gt;
+<i>---</i>&lt;div class="slide"&gt;
+<i>---</i><i>---</i>&lt;img src="http://placehold.it/960x350" /&gt;
+<i>---</i>&lt;/div&gt;
+<i>---</i>&lt;div class="slide"&gt;
+<i>---</i><i>---</i>&lt;img src="http://placehold.it/961x350" /&gt;
+<i>---</i>&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -1868,9 +1765,9 @@
 
 <pre>
 &lt;div class="slider" <span class="emphasis">data-slider="true" data-thumbnails="true"</span>&gt;
-<i>----</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
-<i>----</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
-<i>----</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+<i>---</i>&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+<i>---</i>&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+<i>---</i>&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -1903,10 +1800,10 @@
 // Add the block below right after the opening of the &lt;body&gt; tag.
 
 &lt;div class="overlay" <span class="emphasis">id="example"</span>&gt;
-<i>----</i>&lt;div class="bg"&gt;&nbsp;&lt;/div&gt;
-<i>----</i>&lt;div class="modal"&gt;
-<i>----</i><i>----</i>&lt;img class="svg icon icon-close" src="/img/icons/icon-close.svg" /&gt;
-<i>----</i>&lt;/div&gt;
+<i>---</i>&lt;div class="bg"&gt;&nbsp;&lt;/div&gt;
+<i>---</i>&lt;div class="modal"&gt;
+<i>---</i><i>---</i>&lt;img class="svg icon icon-close" src="/img/icons/icon-close.svg" /&gt;
+<i>---</i>&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -1917,7 +1814,7 @@
 				<h3>Tooltips</h3>
 
 				<p>
-					Mouse-following tooltips on hover using attribute <code>data-tooltip</code>.
+					Mouse-following tooltips for any element, on hover using attribute <code>data-tooltip</code>.
 				</p>
 
 				<p class="emphasis">
@@ -1996,7 +1893,7 @@
 
 <pre>
 &lt;div class="map-wrapper"&gt;
-<i>----</i>&lt;div <span class="emphasis">id="map-canvas" class="map-canvas" data-feed="/data/map-config.json"</span>&gt;&lt;/div&gt;
+<i>---</i>&lt;div <span class="emphasis">id="map-canvas" class="map-canvas" data-feed="/data/map-config.json"</span>&gt;&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -2126,7 +2023,7 @@
 
 <pre>
 &lt;div class="autocomplete-wrapper" <span class="emphasis">data-autocomplete="/data/autocomplete.json"</span>&gt;
-<i>----</i>&lt;input type="text" placeholder="Type to search..." <span class="emphasis">data-lookup="title"</span>&gt;
+<i>---</i>&lt;input type="text" placeholder="Type to search..." <span class="emphasis">data-lookup="title"</span>&gt;
 &lt;/div&gt;
 </pre>
 

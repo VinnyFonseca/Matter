@@ -38,13 +38,15 @@ table {
 
 	tr {
 		&:first-child {
-			th,
-			td {
+      th {
 				font-weight: bold;
 				text-align: center;
 				background: $ce;
 				white-space: nowrap;
+      }
 
+			th,
+			td {
 				&:first-child {
 					border-top-left-radius: $radius;
 				}
@@ -74,12 +76,6 @@ table {
 
 		th,
 		td {
-			&:first-child {
-				font-weight: bold;
-				text-align: center;
-				background: $ce;
-				white-space: nowrap;
-			}
 		}
 	}
 
@@ -116,6 +112,13 @@ table {
 		tr {
 			th,
 			td {
+				&:first-child {
+					font-weight: bold;
+					text-align: center;
+					background: $ce;
+					white-space: nowrap;
+				}
+
 				&:last-child {
 					font-weight: normal;
 					text-align: left;

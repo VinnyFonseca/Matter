@@ -42,7 +42,7 @@ matter.init = function() {
 	// Widgets Init
 
 	matter.overlay.init();
-	initNotifications();
+	matter.notification.init();
 	matter.tooltip.init();
 
 	// Search Init
@@ -53,10 +53,8 @@ matter.init = function() {
 
 	// Forms Init
 
-	initValidation();
+	matter.validation.init();
   matter.form.init();
-	// initForm();
-	// initDropdowns();
 }
 
 
@@ -68,7 +66,7 @@ matter.defer = function() {
 	// Deferred Init
 
 	matter.sliders.init();
-	initMap();
+	matter.map.init();
 	initVideo();
 
 	debug.log("•• Matter in " + (new Date().getTime() - ms) + " milliseconds");
