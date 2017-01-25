@@ -53,7 +53,7 @@ matter.init = function() {
 
 	// Forms Init
 
-	initValidation();
+	matter.validation.init();
   matter.form.init();
 	// initForm();
 	// initDropdowns();

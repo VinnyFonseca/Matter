@@ -284,42 +284,27 @@ pre {
 // Form
 
 .card-wrapper {
+	display: block;
+	position: relative;
 	@extend .framed;
-	margin: $spacing 0;
-	border-radius: $radius;
+	margin: 0 auto;
+	margin-bottom: $spacing - 5px;
+	padding: 0;
+	vertical-align: bottom;
 
-	label {
-		white-space: nowrap;
-	}
-
-	.column {
-		vertical-align: bottom;
-	}
-
-	.card-type {
-		display: inline-block;
-		position: relative;
-		@extend .card;
+	> img {
+		position: absolute;
 		margin: 0 auto;
-		padding: floor($spacing / 4);
-		vertical-align: bottom;
-
-		> * {
-			margin: 0 auto;
-			height: 36px;
-			border-radius: $radius;
-		}
+		height: 26px;
+		width: auto;
+		top: 10px;
+		left: 10px;
+		border-radius: $radius;
+		z-index: 10;
 	}
 
-	.payment {
-		.column {
-			text-align: center;
-
-			img {
-				margin: 0 auto;
-				width: 100%;
-			}
-		}
+	> input {
+		padding-left: 60px;
 	}
 }
 

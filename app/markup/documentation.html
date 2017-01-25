@@ -997,7 +997,7 @@
 					</div>
 
 					<label>Date</label>
-					<input type="text" name="date" placeholder="dd/mm/yyyy" data-calendar="true" data-validation="date" required>
+					<input type="date" name="date" placeholder="dd/mm/yyyy" data-calendar="true" data-validation="date" required>
 
 					<div class="input-group block-reset">
 						<label>Password w/ Confirmation</label>
@@ -1472,32 +1472,7 @@
 				<h3>Payment Form</h3>
 
 				<form action="#" novalidate data-validation="true">
-					<div class="card-wrapper framed">
-						<div class="row payment">
-							<div class="column" data-span="3">
-								<a href="#">
-									<img src="/img/icons/payment/button-paypal.png" alt="Checkout with PayPal">
-								</a>
-							</div>
-							<div class="column" data-span="3">
-								<a href="#">
-									<img src="/img/icons/payment/button-google.png" alt="Checkout with Google">
-								</a>
-							</div>
-							<div class="column" data-span="3">
-								<a href="#">
-									<img src="/img/icons/payment/button-amazon.png" alt="Checkout with Amazon">
-								</a>
-							</div>
-							<div class="column" data-span="3">
-								<a href="#">
-									<img src="/img/icons/payment/button-card.png" alt="Pay by Card">
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<div class="card-wrapper">
+					<div class="framed">
 						<h4>Your payment details</h4>
 
 						<form action="#">
@@ -1509,23 +1484,19 @@
 							</div>
 
 							<div class="row">
-								<div class="column" data-span="8">
+								<div class="column" data-span="9">
 									<label>Card number</label>
-									<input type="number" id="card" name="card" placeholder="16 digits long number" data-validation="card" data-validate-key="true" required>
-								</div>
-								<div class="column" data-span="1">
-									<div class="card-type">
-										<img src="/img/icons/payment/cards/generic.png">
-									</div>
+
+                  <input type="card" id="card" name="card" placeholder="16 digits long number" data-validation="card" data-validate-key="true" required>
 								</div>
 								<div class="column" data-span="3">
 									<label for="ccv">CCV</label>
-									<input type="number" id="ccv" name="ccv" placeholder="3 digit security code" data-tooltip="<img src='img/icons/payment/ccv.png'>" data-validation="number" required>
+									<input type="number" id="ccv" name="ccv" placeholder="3 digits security code" data-tooltip="<img src='img/icons/cards/ccv.png'>" data-validation="number" required>
 								</div>
 							</div>
 
 							<div class="row">
-								<div class="column" data-span="3">
+								<div class="column valign-bottom" data-span="3">
 									<label>Start Date</label>
 									<select name="card-expiry-month" data-validation="select">
 										<option value="" default selected>Month</option>
@@ -1543,7 +1514,7 @@
 										<option value="12">12</option>
 									</select>
 								</div>
-								<div class="column" data-span="3">
+								<div class="column valign-bottom" data-span="3">
 									<select name="card-expiry-year" data-validation="select">
 										<option value="" default selected>Year</option>
 										<option value="2015">2015</option>
@@ -1559,7 +1530,7 @@
 										<option value="2025">2025</option>
 									</select>
 								</div>
-								<div class="column" data-span="3">
+								<div class="column valign-bottom" data-span="3">
 									<label>Expiry Date</label>
 									<select name="card-expiry-month" data-validation="select" required>
 										<option value="" default selected>Month</option>
@@ -1577,7 +1548,7 @@
 										<option value="12">12</option>
 									</select>
 								</div>
-								<div class="column" data-span="3">
+								<div class="column valign-bottom" data-span="3">
 									<select name="card-expiry-year" data-validation="select" required>
 										<option value="" default selected>Year</option>
 										<option value="2015">2015</option>

@@ -5,8 +5,8 @@ fieldset {
 	position: relative;
 	margin: 0;
 	margin-bottom: $spacing;
-	padding: $spacing;
-	padding-top: floor($spacing / 2);
+	padding: floor($spacing / 2);
+	padding-top: floor($spacing / 3);
 	border: $borderWidth $borderStyle $borderColor;
 	border-radius: $radius;
 

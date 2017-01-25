@@ -7,6 +7,7 @@ matter.form = {
     this.JSONDropdowns();
     this.password();
     this.files();
+    this.card();
   },
 
   toggles: function() {
@@ -46,8 +47,6 @@ matter.form = {
   },
 
   dropdowns: function() {
-    // Normal Dropdowns
-
   	if ( $("select").length ) {
   		$("select").off().each(function() {
   			var select = $(this),
@@ -162,8 +161,6 @@ matter.form = {
   },
 
   JSONDropdowns: function() {
-    // JSON Dropdowns
-
     if ( $("select[data-titles]").length ) {
       $("select[data-titles]").each(function() {
         var el = $(this),
@@ -317,7 +314,7 @@ matter.form = {
   password: function() {
   	if ( $("input[type='password']").length ) {
   		var wrapper = '<div class="password-wrapper"></div>',
-  			meter = '<div class="password-meter-mask"><div class="password-meter"></div></div>';
+  			  meter = '<div class="password-meter-mask"><div class="password-meter"></div></div>';
 
   		$("input[type='password']").each(function() {
   			var el = $(this);
@@ -330,5 +327,17 @@ matter.form = {
 
   		debug.log(":: Password Meters");
   	}
+  },
+
+  card: function() {
+    var wrapper = '<div class="card-wrapper"></div>',
+        icon = '<img src="' + matter.config.application.base + 'img/icons/cards/generic.png">';
+
+    $("input[type='card']").each(function() {
+      var el = $(this);
+
+      el.wrap(wrapper).attr('type', 'number');
+      $(icon).insertBefore(el);
+    });
   }
 }
