@@ -42,7 +42,7 @@ matter.init = function() {
 	// Widgets Init
 
 	matter.overlay.init();
-	initNotifications();
+	matter.notification.init();
 	matter.tooltip.init();
 
 	// Search Init
