@@ -80,7 +80,7 @@ matter.validation = {
 	},
 
 	validateField: function(el, type, value) {
-		debug.log("== " + type);
+		debug.log("== Validating on blur for " + type);
 
 		el.removeClass("invalid").removeClass("valid");
 
@@ -154,7 +154,9 @@ matter.validation = {
 
 
 			case "date":
-				check = /^\d{2}\/\d{2}\/\d{4}$/;
+				check = /^\d{4}\-\d{2}\-\d{2}$/;
+
+        console.log(value, check.test(value));
 
 				if (value !== "" && check.test(value) ) {
 					el.addClass("valid");
@@ -275,7 +277,7 @@ matter.validation = {
 	},
 
 	validateRealtime: function(el, type, value) {
-		debug.log("Validating keypress for " + type);
+		debug.log("== Validating keypress for " + type);
 
 		switch(type) {
 			case "password":

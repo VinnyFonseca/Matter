@@ -36,9 +36,10 @@
 		box-shadow: none;
 	}
 
-
 	&[type="hidden"],
-	&[type="search"]::-webkit-search-decoration { // UI Consistency
+	&[type="date"]::-webkit-calendar-picker-indicator,
+	&[type="date"]::-webkit-inner-spin-button,
+	&[type="search"]::-webkit-search-decoration {
 		display: none;
 	}
 }

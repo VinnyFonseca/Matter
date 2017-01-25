@@ -64,9 +64,23 @@
 <pre class="structure">
 <span class="folder">↓ app (input)</span>
 <i>---</i><span class="folder">↓ data</span>
-<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_assets.html</span>
+<i>---</i><i>---</i><span class="file">countries.json</span>
+<i>---</i><i>---</i><span class="file">map-config.json</span>
+<i>---</i><i>---</i><span class="file">search.json</span>
+<i>---</i><i>---</i><span class="file">titles.json</span>
 
 <i>---</i><span class="folder">↓ img</span>
+<i>---</i><i>---</i><span class="folder">> favicon</span>
+<i>---</i><i>---</i><span class="folder">> icons</span>
+<i>---</i><i>---</i><span class="folder">↓ markers</span>
+<i>---</i><i>---</i><i>---</i><span class="file">default.png</span>
+<i>---</i><i>---</i><span class="folder">> pictures</span>
+<i>---</i><i>---</i><span class="file">loader.gif</span>
+<i>---</i><i>---</i><span class="file">logo-white.png</span>
+<i>---</i><i>---</i><span class="file">logo.png</span>
+<i>---</i><i>---</i><span class="file">pixel-black.png</span>
+<i>---</i><i>---</i><span class="file">pixel-white.png</span>
+<i>---</i><i>---</i><span class="file">share.jpg</span>
 
 <i>---</i><span class="folder">↓ markup</span>
 <i>---</i><i>---</i><span class="folder">↓ partials</span>
@@ -143,7 +157,7 @@
 				</p>
 
 				<p>
-					Uses flexbox. Set the number of columns on <code>_config.scss</code>, then use <code>data-span</code> attribute to set the width of a column.
+					Set the number of columns on <code>_config.scss</code>, then use <code>data-span</code> attribute to set the width of a column.
 				</p>
 
 				<p>
@@ -720,6 +734,10 @@
 
 				<h3>Hyphenation</h3>
 
+        <p>
+          Use the <code>&amp;shy;</code> HTML entity for hyphens. this entity does not show up unless it's the last character on the line, thus providing hyphenation.
+        </p>
+
 				<p class="emphasis">Note: Resize to see the hyphenation in action.</p>
 
 				<h4>No hyphenation</h4>
@@ -860,7 +878,7 @@
 				<h3>Tables (Responsive)</h3>
 
 				<p>
-					The following table has a caption. The first row and the first column contain header cells (<code>th</code>) only. Other cells are data cells (<code>td</code>).
+					The following table has a caption. The first row contains header cells (<code>th</code>) only. Other cells are data cells (<code>td</code>).
 				</p>
 
 				<table summary="Each row names a Nordic country and specifies its total area and land area, in square kilometers">
@@ -993,7 +1011,7 @@
 						<label>Email w/ Confirmation</label>
 						<input type="email" name="email" placeholder="Email" data-validation="email" required>
 						<div class="input-addon">repeat</div>
-						<input type="email" name="email-match" placeholder="Confirm Email" data-validation="match" required>
+						<input type="email" name="email" placeholder="Confirm Email" data-validation="match" required>
 					</div>
 
 					<label>Date</label>
@@ -1001,9 +1019,9 @@
 
 					<div class="input-group block-reset">
 						<label>Password w/ Confirmation</label>
-						<input type="password" name="password" placeholder="Minimum rating: 30%" data-validation="password" data-validate-key="true" required>
+						<input type="password" name="password" placeholder="Minimum rating: 30%" data-validation="password" data-validate-key="true" required data-tooltip="Rule:<br />&bull; Minimum of 8 characters<br />AND at least:<br />&bull; One uppercase letter<br />&bull; One lowercase letter<br />&bull; One number">
 						<div class="input-addon">repeat</div>
-						<input type="password" name="password-match" placeholder="Confirm Password" data-validation="match" required>
+						<input type="password" name="password" placeholder="Confirm Password" data-validation="match" required>
 					</div>
 
 					<label>Textarea</label>
@@ -1066,14 +1084,10 @@
 						</div>
 					</fieldset>
 
-					<!-- <label>Select List</label>
+					<label>Select List</label>
 					<select name="country" data-validation="select" data-countries="/data/countries.json" size="5" required>
 						<option value="" default selected>Select country...</option>
-					</select> -->
-
-					<p class="form-info emphasis">
-						Note: Checkboxes need all required options to be selected.
-					</p>
+					</select>
 
 					<fieldset>
 						<legend>Checkboxes</legend>
@@ -1216,69 +1230,70 @@
 						</tr>
 						<tr valign="middle">
 							<td valign="middle">
-								<textarea class="valid" name="textarea" cols="30" rows="5" data-validation="text" required>Textarea</textarea>
+								<textarea class="valid" name="textarea" cols="30" rows="5" data-validation="text" placeholder="Textarea" required></textarea>
 							</td>
 							<td valign="middle">
-								<textarea class="invalid" name="textarea" cols="30" rows="5" data-validation="text" required>Textarea</textarea>
+								<textarea class="invalid" name="textarea" cols="30" rows="5" data-validation="text" placeholder="Textarea" required></textarea>
 							</td>
 							<td valign="middle">
-								<textarea name="textarea" cols="30" rows="5" readonly>Textarea</textarea>
+								<textarea name="textarea" cols="30" rows="5" placeholder="Textarea" readonly></textarea>
 							</td>
 						</tr>
 						<tr valign="middle">
 							<td valign="middle">
-								<input class="valid" id="f200" type="checkbox" name="checkbox" checked>
+								<input class="valid" id="f200" type="checkbox" name="checkbox-demo" value="Checkbox" checked>
 								<label for="f200">Checkbox</label>
 							</td>
 							<td valign="middle">
-								<input class="invalid" id="f201" type="checkbox" name="checkbox">
+								<input class="invalid" id="f201" type="checkbox" name="checkbox-demo" value="Checkbox">
 								<label for="f201">Checkbox</label>
 							</td>
 							<td valign="middle">
-								<input id="f202" type="checkbox" name="checkbox" readonly>
+								<input id="f202" type="checkbox" name="checkbox-demo" value="Checkbox" readonly>
 								<label for="f202">Checkbox</label>
 							</td>
 						</tr>
 						<tr valign="middle">
 							<td valign="middle">
-								<input class="valid" id="f203" type="checkbox" data-toggle="true" name="toggle-demo" checked>
+								<input class="valid" id="f203" type="checkbox" name="toggle-checkbox-demo" value="Checkbox" data-toggle="true" checked>
 								<label for="f203">Checkbox</label>
 							</td>
 							<td valign="middle">
-								<input class="invalid" id="f204" type="checkbox" data-toggle="true" name="toggle-demo">
+								<input class="invalid" id="f204" type="checkbox" name="toggle-checkbox-demo" value="Checkbox" data-toggle="true">
 								<label for="f204">Checkbox</label>
 							</td>
 							<td valign="middle">
-								<input id="f205" type="checkbox" data-toggle="true" name="toggle-demo" readonly>
+								<input id="f205" type="checkbox" name="toggle-checkbox-demo" value="Checkbox" data-toggle="true" readonly>
 								<label for="f205">Checkbox</label>
 							</td>
 						</tr>
+						</tr>
 						<tr valign="middle">
 							<td valign="middle">
-								<input class="valid" id="f206" type="radio" name="radio-demo" checked>
-								<label for="f206">Radio</label>
+								<input class="valid" id="f200" type="radio" name="radio-demo" value="Radio" checked>
+								<label for="f200">Radio</label>
 							</td>
 							<td valign="middle">
-								<input class="invalid" id="f207" type="radio" name="radio-demo">
-								<label for="f207">Radio</label>
+								<input class="invalid" id="f201" type="radio" name="radio-demo" value="Radio">
+								<label for="f201">Radio</label>
 							</td>
 							<td valign="middle">
-								<input id="f208" type="radio" name="radio-demo" readonly>
-								<label for="f208">Radio</label>
+								<input id="f202" type="radio" name="radio-demo" value="Radio" readonly>
+								<label for="f202">Radio</label>
 							</td>
 						</tr>
 						<tr valign="middle">
 							<td valign="middle">
-								<input class="valid" id="f209" type="radio" data-toggle="true" name="toggle-demo" checked>
-								<label for="f209">Radio</label>
+								<input class="valid" id="f203" type="radio" name="toggle-radio-demo" value="Radio" data-toggle="true" checked>
+								<label for="f203">Radio</label>
 							</td>
 							<td valign="middle">
-								<input class="invalid" id="f210" type="radio" data-toggle="true" name="toggle-demo">
-								<label for="f210">Radio</label>
+								<input class="invalid" id="f204" type="radio" name="toggle-radio-demo" value="Radio" data-toggle="true">
+								<label for="f204">Radio</label>
 							</td>
 							<td valign="middle">
-								<input id="f211" type="radio" data-toggle="true" name="toggle-demo" readonly>
-								<label for="f211">Radio</label>
+								<input id="f205" type="radio" name="toggle-radio-demo" value="Radio" data-toggle="true" readonly>
+								<label for="f205">Radio</label>
 							</td>
 						</tr>
 					</tbody>
@@ -1694,73 +1709,6 @@
 					<div class="slide" data-thumb="/img/pictures/slider/10.jpg"></div>
 				</div>
 
-				<div class="slider" data-slider="true" data-display="5">
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 1</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 2</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 3</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 4</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 5</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 6</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 7</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 8</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-					<div class="slide">
-						<div class="cell">
-							<h3 class="emphasis">Test 9</h2>
-							<p>This is a text slide</p>
-							<strong>Supports any type of data</strong>
-						</div>
-					</div>
-				</div>
-
-
 				<dl>
 					<dt>
 						<strong>Defaults:</strong>
@@ -1817,9 +1765,9 @@
 
 <pre>
 &lt;div class="slider" <span class="emphasis">data-slider="true" data-thumbnails="true"</span>&gt;
-<i>---</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
-<i>---</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
-<i>---</i>&lt;div class="slide <span class="emphasis">thumb</span>" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+<i>---</i>&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+<i>---</i>&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+<i>---</i>&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
 &lt;/div&gt;
 </pre>
 
@@ -1866,7 +1814,7 @@
 				<h3>Tooltips</h3>
 
 				<p>
-					Mouse-following tooltips on hover using attribute <code>data-tooltip</code>.
+					Mouse-following tooltips for any element, on hover using attribute <code>data-tooltip</code>.
 				</p>
 
 				<p class="emphasis">
