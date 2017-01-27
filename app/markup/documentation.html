@@ -63,52 +63,51 @@
 
 <pre class="structure">
 <span class="folder">↓ app (input)</span>
-<i>---</i><span class="folder">↓ data</span>
-<i>---</i><i>---</i><span class="file">countries.json</span>
-<i>---</i><i>---</i><span class="file">map-config.json</span>
-<i>---</i><i>---</i><span class="file">search.json</span>
-<i>---</i><i>---</i><span class="file">titles.json</span>
+	<span class="folder">↓ data</span>
+		<span class="file">countries.json</span>
+		<span class="file">map-config.json</span>
+		<span class="file">search.json</span>
+		<span class="file">titles.json</span>
 
-<i>---</i><span class="folder">↓ img</span>
-<i>---</i><i>---</i><span class="folder">> favicon</span>
-<i>---</i><i>---</i><span class="folder">> icons</span>
-<i>---</i><i>---</i><span class="folder">↓ markers</span>
-<i>---</i><i>---</i><i>---</i><span class="file">default.png</span>
-<i>---</i><i>---</i><span class="folder">> pictures</span>
-<i>---</i><i>---</i><span class="file">loader.gif</span>
-<i>---</i><i>---</i><span class="file">logo-white.png</span>
-<i>---</i><i>---</i><span class="file">logo.png</span>
-<i>---</i><i>---</i><span class="file">pixel-black.png</span>
-<i>---</i><i>---</i><span class="file">pixel-white.png</span>
-<i>---</i><i>---</i><span class="file">share.jpg</span>
+	<span class="folder">↓ img</span>
+		<span class="folder">> favicon</span>
+		<span class="folder">> icons</span>
+		<span class="folder">↓ markers</span>
+			<span class="file">default.png</span>
+		<span class="folder">> pictures</span>
+		<span class="file">loader.gif</span>
+		<span class="file">logo-white.png</span>
+		<span class="file">logo.png</span>
+		<span class="file">pixel-black.png</span>
+		<span class="file">pixel-white.png</span>
+		<span class="file">share.jpg</span>
 
-<i>---</i><span class="folder">↓ markup</span>
-<i>---</i><i>---</i><span class="folder">↓ partials</span>
-<i>---</i><i>---</i><i>---</i><span class="folder">↓ head</span>
-<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_assets.html</span>
-<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_data.html</span>
-<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_meta.html</span>
-<i>---</i><i>---</i><i>---</i><span class="folder">↓ foot</span>
-<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_data.html</span>
-<i>---</i><i>---</i><i>---</i><i>---</i><span class="file">_footer.html</span>
-<i>---</i><i>---</i><i>---</i><span class="file">_footer.html</span>
-<i>---</i><i>---</i><i>---</i><span class="file">_header.html</span>
-<i>---</i><i>---</i><i>---</i><span class="file">_html.html</span>
-<i>---</i><i>---</i><i>---</i><span class="file">_overlays.html</span>
+	<span class="folder">↓ markup</span>
+		<span class="folder">↓ partials</span>
+			<span class="folder">↓ head</span>
+				<span class="file">_assets.html</span>
+				<span class="file">_data.html</span>
+				<span class="file">_html.html</span>
+				<span class="file">_meta.html</span>
+			<span class="folder">↓ foot</span>
+				<span class="file">_data.html</span>
+			<span class="file">_footer.html</span>
+			<span class="file">_header.html</span>
+			<span class="file">_overlays.html</span>
 
-<i>---</i><span class="folder">↓ scripts</span>
-<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> debug</span>
-<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> matter</span>
-<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> standalone</span>
-<i>---</i><i>---</i><span class="folder">↓ user</span>
-<i>---</i><i>---</i><i>---</i><span class="file">global.js</span>
+	<span class="folder">↓ scripts</span>
+		<span class="system" data-tooltip="Core folder">> debug</span>
+		<span class="system" data-tooltip="Core folder">> matter</span>
+		<span class="system" data-tooltip="Core folder">> standalone</span>
+		<span class="folder">↓ user</span>
+			<span class="file">global.js</span>
 
-<i>---</i><span class="folder">↓ styles</span>
-<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> debug</span>
-<i>---</i><i>---</i><span class="system" data-tooltip="Core folder">> matter</span>
-<i>---</i><i>---</i><span class="folder">↓ user</span>
-<i>---</i><i>---</i><i>---</i><span class="file">_global.scss</span>
-<i>---</i><i>---</i><span class="file">build.scss</span>
+	<span class="folder">↓ styles</span>
+		<span class="system" data-tooltip="Core folder">> debug</span>
+		<span class="system" data-tooltip="Core folder">> matter</span>
+		<span class="folder">↓ user</span>
+			<span class="file">_global.scss</span>
+		<span class="file">build.scss</span>
 
 <span class="system" data-tooltip="Core folder">> dist (output)</span>
 <span class="system" data-tooltip="Core folder">> gulp</span>
@@ -160,8 +159,9 @@
 					Set the number of columns on <code>_config.scss</code>, then use <code>data-span</code> attribute to set the width of a column.
 				</p>
 
+
 				<p>
-					<strong>Example:</strong>
+					<strong>Demo:</strong>
 				</p>
 
 				<div class="row debug">
@@ -173,16 +173,19 @@
 					</div>
 				</div>
 
-<pre>
-&lt;div class="row"&gt;
-<i>---</i>&lt;div class="column" <span class="emphasis">data-span="4"</span>&gt;
-<i>---</i><i>---</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
-<i>---</i>&lt;/div&gt;
-<i>---</i>&lt;div class="column" <span class="emphasis">data-span="8"</span>&gt;
-<i>---</i><i>---</i>&lt;div class="cell"&gt;Word&lt;/div&gt;
-<i>---</i>&lt;/div&gt;
-&lt;/div&gt;
-</pre>
+
+				<p>
+					<strong>Example:</strong>
+				</p>
+
+<pre><code class="language-markup">&lt;div class="row"&gt;
+	&lt;div class="column" <span class="emphasis">data-span="4"</span>&gt;
+		&lt;div class="cell"&gt;Word&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="column" <span class="emphasis">data-span="8"</span>&gt;
+		&lt;div class="cell"&gt;Word&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
 
 				<p class="emphasis">
 					Note: In order to keep cross-browser consistency, <code>.column</code> must be inside a <code>.row</code>. <code>.cell</code> is optional.
@@ -196,7 +199,7 @@
 
 				<a href="#" class="anchor" id="complete"></a>
 
-				<h3>Full grid (12 columns instance)</h3>
+				<h3>Full grid</h3>
 
 				<div class="row debug">
 					<div class="column" data-span="1">
@@ -354,8 +357,9 @@
 
 				<h3>Push grid</h3>
 
+
 				<p>
-					<strong>Example:</strong>
+					<strong>Demo:</strong>
 				</p>
 
 				<div class="row debug show-push">
@@ -364,13 +368,16 @@
 					</div>
 				</div>
 
-<pre>
-&lt;div class="row"&gt;
-<i>---</i>&lt;div class="column" <span class="emphasis">data-span="8" data-push="3"</span>&gt;
-<i>---</i><i>---</i>&lt;div class="cell"&gt;col&lt;/div&gt;
-<i>---</i>&lt;/div&gt;
-&lt;/div&gt;
-</pre>
+
+				<p>
+					<strong>Example:</strong>
+				</p>
+
+<pre><code class="language-markup">&lt;div class="row"&gt;
+	&lt;div class="column" <span class="emphasis">data-span="8" data-push="3"</span>&gt;
+		&lt;div class="cell"&gt;col&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
 
 				<p class="emphasis">
 					Use <code>data-push</code> to specify how many columns you want a certain column to move.
@@ -468,11 +475,12 @@
 				<h3>Iconography</h3>
 
 				<p>
-					Matter has automatic svg injection from <code>img class="svg"</code> elements.
+					Matter has automatic svg injection from <code>img class="svg"</code> elements. You can find the icon names at /app/img/icons.
 				</p>
 
+
 				<p>
-					<strong>Example:</strong>
+					<strong>Demo:</strong>
 				</p>
 
 				<div class="icon-wrapper">
@@ -481,9 +489,12 @@
 					</div>
 				</div>
 
-<pre>
-&lt;img class="svg icon icon-<span class="emphasis">name</span>" src="/img/icons/icon-<span class="emphasis">name</span>.svg"&gt;
-</pre>
+
+				<p>
+					<strong>Example:</strong>
+				</p>
+
+<pre><code class="language-markup">&lt;img class="svg icon icon-<span class="emphasis">{{name}}</span>" src="/img/icons/icon-<span class="emphasis">{{name}}</span>.svg"&gt;</code></pre>
 
 
 				<hr>
@@ -719,12 +730,14 @@
 					<code>pre</code> is the only element that preserves whitespace, space characters, tabs, and carriage returns.
 				</p>
 
-<pre>
-&lt;head&gt;
-<i>---</i>&lt;meta charset="UTF-8"&gt;
-<i>---</i>&lt;meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"&gt;
-&lt;/head&gt;
-</pre>
+				<p>
+					<strong>Example:</strong>
+				</p>
+
+<pre><code class="language-markup">&lt;head&gt;
+	&lt;meta charset="UTF-8"&gt;
+	&lt;meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"&gt;
+&lt;/head&gt;</code></pre>
 
 
 				<hr>
@@ -845,29 +858,32 @@
 					</dd>
 				</dl>
 
-<pre>
-&lt;dl&gt;
-<i>---</i>&lt;dt&gt;Recursion&lt;/dt&gt;
-<i>---</i>&lt;dd&gt;
-<i>---</i><i>---</i>See recursion.
-<i>---</i>&lt;/dd&gt;
 
-<i>---</i>&lt;dt&gt;Recursion, indirect&lt;/dt&gt;
-<i>---</i>&lt;dd&gt;
-<i>---</i><i>---</i>See indirect recursion.
-<i>---</i>&lt;/dd&gt;
+				<p>
+					<strong>Example:</strong>
+				</p>
 
-<i>---</i>&lt;dt&gt;Indirect recursion&lt;/dt&gt;
-<i>---</i>&lt;dd&gt;
-<i>---</i><i>---</i>See recursion, indirect.
-<i>---</i>&lt;/dd&gt;
+<pre><code class="language-markup">&lt;dl&gt;
+	&lt;dt&gt;Recursion&lt;/dt&gt;
+	&lt;dd&gt;
+		See recursion.
+	&lt;/dd&gt;
 
-<i>---</i>&lt;dt&gt;Term&lt;/dt&gt;
-<i>---</i>&lt;dd&gt;
-<i>---</i><i>---</i>A word or other expression taken into specific use in a well-defined meaning.
-<i>---</i>&lt;/dd&gt;
-&lt;/dl&gt;
-</pre>
+	&lt;dt&gt;Recursion, indirect&lt;/dt&gt;
+	&lt;dd&gt;
+		See indirect recursion.
+	&lt;/dd&gt;
+
+	&lt;dt&gt;Indirect recursion&lt;/dt&gt;
+	&lt;dd&gt;
+		See recursion, indirect.
+	&lt;/dd&gt;
+
+	&lt;dt&gt;Term&lt;/dt&gt;
+	&lt;dd&gt;
+		A word or other expression taken into specific use in a well-defined meaning.
+	&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
 
 
 				<hr>
@@ -988,7 +1004,7 @@
 
 				<a href="#" class="anchor" id="form"></a>
 
-				<h2>Forms</h2>
+				<h2>Form elements</h2>
 
 				<form action="#" novalidate data-validation="true">
 					<input type="hidden" value="42">
@@ -1008,7 +1024,7 @@
 					<input type="number" name="number" placeholder="Numbers only" data-validation="number" required>
 
 					<div class="input-group block-reset">
-						<label>Email w/ Confirmation</label>
+						<label>Email w/ confirmation</label>
 						<input type="email" name="email" placeholder="Email" data-validation="email" required>
 						<div class="input-addon">repeat</div>
 						<input type="email" name="email" placeholder="Confirm Email" data-validation="match" required>
@@ -1021,7 +1037,7 @@
           <input type="card" name="card" placeholder="16 digits long number" data-validation="card" data-validate-key="true" required>
 
 					<div class="input-group block-reset">
-						<label>Password w/ Confirmation</label>
+						<label>Password w/ confirmation</label>
 						<input type="password" name="password" placeholder="Minimum rating: 30%" data-validation="password" data-validate-key="true" required data-tooltip="Rule:<br />&bull; Minimum of 8 characters<br />AND at least:<br />&bull; One uppercase letter<br />&bull; One lowercase letter<br />&bull; One number">
 						<div class="input-addon">repeat</div>
 						<input type="password" name="password" placeholder="Confirm Password" data-validation="match" required>
@@ -1036,7 +1052,7 @@
 					</select>
 
 					<fieldset>
-						<legend>Dropdown Group</legend>
+						<legend>Dropdown group</legend>
 
 						<div class="row">
 							<div class="column" data-span="4">
@@ -1087,7 +1103,7 @@
 						</div>
 					</fieldset>
 
-					<label>Dropdown List</label>
+					<label>Dropdown list</label>
 					<select name="country" data-validation="select" data-countries="/data/countries.json" size="5" required>
 						<option value="" default selected>Select country...</option>
 					</select>
@@ -1106,7 +1122,7 @@
 					</fieldset>
 
 					<fieldset>
-						<legend>Toggle Checkboxes</legend>
+						<legend>Toggle checkboxes</legend>
 
 						<input id="f8" type="checkbox" data-toggle="true" data-validation="checkbox" required>
 						<label for="f8">I accept the following lipsum</label>
@@ -1123,7 +1139,7 @@
 					</p>
 
 					<fieldset>
-						<legend>Radio Buttons</legend>
+						<legend>Radio buttons</legend>
 
 						<input id="f1" type="radio" name="option-group" value="1" data-validation="radio" required>
 						<label for="f1">Select this to choose the following lipsum</label>
@@ -1136,7 +1152,7 @@
 					</fieldset>
 
 					<fieldset>
-						<legend>Toggle Radio Buttons</legend>
+						<legend>Toggle radio buttons</legend>
 						<input id="f11" type="radio" data-toggle="true" name="toggle-group-1" data-validation="radio" required>
 						<label for="f11">Select this to choose the following lipsum</label>
 
@@ -1147,10 +1163,10 @@
 						<label for="f13">Select this to choose lipsum</label>
 					</fieldset>
 
-					<label for="f23">File Upload</label>
+					<label for="f23">File upload</label>
 					<input id="f23" type="file" data-validation="file" required>
 
-					<label for="f23">Multiple File Uploads</label>
+					<label for="f23">Multiple file uploads</label>
 					<input type="file" data-multi="true" data-upload="5" required />
 					<p class="emphasis">
 						Note: Change the number of possible uploads on config.js
@@ -1161,7 +1177,7 @@
 
 				<a href="#" class="anchor" id="states"></a>
 
-				<h3>Validation States</h3>
+				<h3>Validation states</h3>
 
 				<table id="validation-table">
 					<thead>
@@ -1305,13 +1321,13 @@
 
 				<a href="#" class="anchor" id="progress"></a>
 
-				<h3>Progress Bar</h3>
+				<h3>Progress bar</h3>
 
-				<label>Progress Bar</label>
+				<label>Progress bar</label>
 
 				<div class="progress-bar"></div>
 
-				<button class="primary" data-progress="100">Trigger Progress</button>
+				<button class="primary" data-progress="100">Trigger progress</button>
 
 
 
@@ -1327,7 +1343,7 @@
 
 				<a href="#" class="anchor" id="ui-widgets"></a>
 
-				<h2>UI Widgets</h2>
+				<h2>UI widgets</h2>
 
 				<p>Test paragraph</p>
 
@@ -1337,7 +1353,7 @@
 
 				<h3>Notifications</h3>
 
-				<code>notify(tone, delay);</code>
+				<code>matter.notification.call(title, message, delay, tone);</code>
 
 				<p>
 					They are responsive and cross-browser compliant. They can be used for <strong>cookie messages</strong>, <strong>form validation</strong>, <strong>progress updates</strong>, <strong>user information</strong>, etc...
@@ -1350,12 +1366,16 @@
 
 				<div class="button notify" data-notification="true" data-message="Undeclared delay (default 5000ms)">?</div>
 				<div class="button notify" data-notification="true" data-message="Delay 0 seconds (persistent)" data-delay="0">0</div>
-				<div class="button notify" data-notification="true" data-message="Delay 3 seconds (3000ms)" data-delay="3000">
-					<img class="svg icon icon-tick" src="/img/icons/icon-tick.svg" alt="CTA icon">
+				<div class="button notify" data-notification="true" data-message="Delay 3 seconds (3000ms)" data-delay="3000">&bull;</div>
+				<div class="button notify success" data-notification="true" data-message="Success message." data-tone="success">
+					<img class="svg icon icon-success" src="/img/icons/icon-success.svg" alt="CTA icon">
 				</div>
-				<div class="button notify success" data-notification="true" data-message="Success message." data-tone="success"></div>
-				<div class="button notify warning" data-notification="true" data-message="Warning message." data-tone="warning"></div>
-				<div class="button notify failure" data-notification="true" data-message="Failure message." data-tone="failure"></div>
+				<div class="button notify warning" data-notification="true" data-message="Warning message." data-tone="warning">
+					<img class="svg icon icon-warning" src="/img/icons/icon-warning.svg" alt="CTA icon">
+				</div>
+				<div class="button notify failure" data-notification="true" data-message="Failure message." data-tone="failure">
+					<img class="svg icon icon-failure" src="/img/icons/icon-failure.svg" alt="CTA icon">
+				</div>
 
 
 				<dl>
@@ -1378,14 +1398,12 @@
 
 
 				<p>
-					<strong>Sample:</strong>
+					<strong>Example:</strong>
 				</p>
 
-<pre>
-&lt;div class="button primary" <span class="emphasis">data-notification="true" data-{{message|delay|tone}}="{{value}}"</span>&gt;
-<i>---</i>Delay 3000
-&lt;/div&gt;
-</pre>
+<pre><code class="language-markup">&lt;div class="button primary" <span class="emphasis">data-notification="true" data-{{message|delay|tone}}="{{value}}"</span>&gt;
+	Delay 3000
+&lt;/div&gt;</code></pre>
 
 				<p class="emphasis">
 					Note: If any the data attributes are ommitted, they will fallback to their defaults. <code>data-notification</code> and <code>data-message</code> are obligatory.
@@ -1407,29 +1425,25 @@
 				</p>
 
 				<div class="slider" data-slider="true" data-slideshow="false" data-thumbnails="true">
-					<div class="slide" data-thumb="/img/pictures/slider/1.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/2.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/3.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/4.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/5.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/6.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/7.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/8.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/9.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/10.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/mercury.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/venus.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/earth.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/mars.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/jupiter.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/saturn.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/uranus.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/neptune.jpg"></div>
 				</div>
 
 				<div class="slider" data-slider="true" data-display="3" data-thumbnails="true">
-					<div class="slide" data-thumb="/img/pictures/slider/1.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/2.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/3.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/4.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/5.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/6.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/7.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/8.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/9.jpg"></div>
-					<div class="slide" data-thumb="/img/pictures/slider/10.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/mercury.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/venus.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/earth.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/mars.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/jupiter.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/saturn.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/uranus.jpg"></div>
+					<div class="slide" data-thumb="/img/pictures/slider/neptune.jpg"></div>
 				</div>
 
 				<dl>
@@ -1465,34 +1479,26 @@
 
 
 				<p>
-					<strong>Sample:</strong>
+					<strong>Exmaples:</strong>
 				</p>
 
-<pre>
-&lt;div class="slider" <span class="emphasis">data-slider="true" data-{{nav|arrows|thumbnails|display|slideshow|animation}}="{{value}}"</span>&gt;
-<i>---</i>&lt;div class="slide"&gt;
-<i>---</i><i>---</i>&lt;img src="http://placehold.it/959x350" /&gt;
-<i>---</i>&lt;/div&gt;
-<i>---</i>&lt;div class="slide"&gt;
-<i>---</i><i>---</i>&lt;img src="http://placehold.it/960x350" /&gt;
-<i>---</i>&lt;/div&gt;
-<i>---</i>&lt;div class="slide"&gt;
-<i>---</i><i>---</i>&lt;img src="http://placehold.it/961x350" /&gt;
-<i>---</i>&lt;/div&gt;
-&lt;/div&gt;
-</pre>
+<pre><code class="language-markup">&lt;div class="slider" <span class="emphasis">data-slider="true" data-{{nav|arrows|thumbnails|display|slideshow|animation}}="{{value}}"</span>&gt;
+	&lt;div class="slide"&gt;
+		&lt;img src="http://placehold.it/959x350" /&gt;
+	&lt;/div&gt;
+	&lt;div class="slide"&gt;
+		&lt;img src="http://placehold.it/960x350" /&gt;
+	&lt;/div&gt;
+	&lt;div class="slide"&gt;
+		&lt;img src="http://placehold.it/961x350" /&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
 
-				<p>
-					<strong>Image gallery example:</strong>
-				</p>
-
-<pre>
-&lt;div class="slider" <span class="emphasis">data-slider="true" data-thumbnails="true"</span>&gt;
-<i>---</i>&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
-<i>---</i>&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
-<i>---</i>&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
-&lt;/div&gt;
-</pre>
+<pre><code class="language-markup">&lt;div class="slider" <span class="emphasis">data-slider="true" data-thumbnails="true"</span>&gt;
+	&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+	&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+	&lt;div class="slide" <span class="emphasis">data-thumb="image/path/here.jpg"</span>&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
 
 				<hr>
 
@@ -1509,26 +1515,25 @@
 					<strong>Demo:</strong>
 				</p>
 
-				<button class="primary" data-overlay="example">View Demo</button>
+				<button class="primary" data-overlay="example">Call overlay</button>
 
 
 				<p>
-					<strong>Sample:</strong>
+					<strong>Example:</strong>
 				</p>
 
-<pre>
-&lt;button class="primary" <span class="emphasis">data-overlay="example"</span>&gt;Call id="example" overlay&lt;/button&gt;
-
-
-// Add the block below right after the opening of the &lt;body&gt; tag.
+<pre><code class="language-markup">&lt;button class="primary" <span class="emphasis">data-overlay="example"</span>&gt;Call id="example" overlay&lt;/button&gt;
 
 &lt;div class="overlay" <span class="emphasis">id="example"</span>&gt;
-<i>---</i>&lt;div class="bg"&gt;&nbsp;&lt;/div&gt;
-<i>---</i>&lt;div class="modal"&gt;
-<i>---</i><i>---</i>&lt;img class="svg icon icon-close" src="/img/icons/icon-close.svg" /&gt;
-<i>---</i>&lt;/div&gt;
-&lt;/div&gt;
-</pre>
+	&lt;div class="bg"&gt;&nbsp;&lt;/div&gt;
+	&lt;div class="modal"&gt;
+		&lt;img class="svg icon icon-close" src="/img/icons/icon-close.svg" /&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+				<p class="emphasis">
+					Note: The button can go anywhere on the page. The overlay element must go right after the opening of the body tag. See /app/markup/partials/_overlays.html
+				</p>
 
 				<hr>
 
@@ -1570,18 +1575,16 @@
 
 
 				<p>
-					<strong>Sample:</strong>
+					<strong>Example:</strong>
 				</p>
 
-<pre>
-&lt;img src="http://placehold.it/1280x400&amp;text=Image,%20hover%20me" <span class="emphasis">data-tooltip="Tooltip Text"</span> /&gt;
-</pre>
+<pre><code class="language-markup">&lt;img src="http://placehold.it/1280x400&amp;text=Image,%20hover%20me" <span class="emphasis">data-tooltip="Tooltip Text"</span> /&gt;</code></pre>
 
 				<hr>
 
 				<a href="#" class="anchor" id="map-wrapper"></a>
 
-				<h3>Map Wrapper</h3>
+				<h3>Map wrapper</h3>
 
 				<p>
 					<strong>Credit:</strong> <a href="https://mapbuildr.com/" target="_blank">Google Mapbuildr</a>.
@@ -1611,20 +1614,18 @@
 
 
 				<p>
-					<strong>Sample:</strong>
+					<strong>Example:</strong>
 				</p>
 
-<pre>
-&lt;div class="map-wrapper"&gt;
-<i>---</i>&lt;div <span class="emphasis">id="map-canvas" class="map-canvas" data-feed="/data/map-config.json"</span>&gt;&lt;/div&gt;
-&lt;/div&gt;
-</pre>
+<pre><code class="language-markup">&lt;div class="map-wrapper"&gt;
+	&lt;div <span class="emphasis">id="map-canvas" class="map-canvas" data-feed="/data/map-config.json"</span>&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
 
 				<hr>
 
 				<a href="#" class="anchor" id="tables"></a>
 
-				<h3>Video Embeds</h3>
+				<h3>Video embeds</h3>
 
 				<p>
 					Supports youtube and vimeo.
@@ -1638,28 +1639,28 @@
 				<div class="row">
 					<div class="column" data-span="6">
 						<p class="emphasis">
-							Youtube iFrame
+							Youtube iframe
 						</p>
 
 						<iframe width="1280" height="600" src="https://www.youtube.com/embed/uxfuuvjT1OY" frameborder="0" allowfullscreen></iframe>
 					</div>
 					<div class="column" data-span="6">
 						<p class="emphasis">
-							Youtube Video
+							Youtube video
 						</p>
 
 						<div class="video-frame" data-video-id="lS5HyAFwLAU" data-video-service="youtube"></div>
 					</div>
 					<div class="column" data-span="6">
 						<p class="emphasis">
-							Vimeo iFrame
+							Vimeo iframe
 						</p>
 
 						<iframe src="https://player.vimeo.com/video/47911018" frameborder="0" allowfullscreen></iframe>
 					</div>
 					<div class="column" data-span="6">
 						<p class="emphasis">
-							Vimeo Video
+							Vimeo video
 						</p>
 
 						<div class="video-frame" data-video-id="122325664" data-video-service="vimeo"></div>
@@ -1668,40 +1669,32 @@
 
 
 				<p>
-					<strong>Sample:</strong>
+					<strong>Example:</strong>
 				</p>
 
 				<p class="emphasis">
-					Youtube Video
+					Youtube video
 				</p>
 
-<pre>
-&lt;div class="video-frame" <span class="emphasis">data-video-id="lS5HyAFwLAU" data-video-service="youtube"</span>&gt;&lt;/div&gt;
-</pre>
+<pre><code class="language-markup">&lt;div class="video-frame" <span class="emphasis">data-video-id="lS5HyAFwLAU" data-video-service="youtube"</span>&gt;&lt;/div&gt;</code></pre>
 
 				<p class="emphasis">
-					Youtube iFrame
+					Youtube iframe
 				</p>
 
-<pre>
-&lt;iframe width="1280" height="600" src="https://www.youtube.com/embed/<span class="emphasis">uxfuuvjT1OY</span>" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
-</pre>
+<pre><code class="language-markup">&lt;iframe width="1280" height="600" src="https://www.youtube.com/embed/<span class="emphasis">uxfuuvjT1OY</span>" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</code></pre>
 
 				<p class="emphasis">
-					Vimeo Video
+					Vimeo video
 				</p>
 
-<pre>
-&lt;div class="video-frame" <span class="emphasis">data-video-id="122325664" data-video-service="vimeo"</span>&gt;&lt;/div&gt;
-</pre>
+<pre><code class="language-markup">&lt;div class="video-frame" <span class="emphasis">data-video-id="122325664" data-video-service="vimeo"</span>&gt;&lt;/div&gt;</code></pre>
 
 				<p class="emphasis">
-					Vimeo iFrame
+					Vimeo iframe
 				</p>
 
-<pre>
-&lt;iframe src="//player.vimeo.com/video/<span class="emphasis">47911018</span>" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
-</pre>
+<pre><code class="language-markup">&lt;iframe src="//player.vimeo.com/video/<span class="emphasis">47911018</span>" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</code></pre>
 
 
 
@@ -1717,7 +1710,7 @@
 
 				<a href="#" class="anchor" id="search"></a>
 
-				<h2>Interactive Fields</h2>
+				<h2>Interactive fields</h2>
 
 				<a href="#" class="anchor" id="autocomplete"></a>
 
@@ -1744,17 +1737,15 @@
 					<strong>Example:</strong>
 				</p>
 
-<pre>
-&lt;div class="autocomplete-wrapper" <span class="emphasis">data-autocomplete="/data/autocomplete.json"</span>&gt;
-<i>---</i>&lt;input type="text" placeholder="Type to search..." <span class="emphasis">data-lookup="title"</span>&gt;
-&lt;/div&gt;
-</pre>
+<pre><code class="language-markup">&lt;div class="autocomplete-wrapper" <span class="emphasis">data-autocomplete="/data/autocomplete.json"</span>&gt;
+	&lt;input type="text" placeholder="Type to search..." <span class="emphasis">data-lookup="title"</span>&gt;
+&lt;/div&gt;</code></pre>
 
 				<hr>
 
 				<a href="#" class="anchor" id="tagcloud"></a>
 
-				<h3>Tag Cloud</h3>
+				<h3>Tag cloud</h3>
 
 				<p>
 					<strong>Usage:</strong>
@@ -1788,29 +1779,49 @@
 					<strong>Example:</strong>
 				</p>
 
-<pre>
-&lt;input type="text" placeholder="Type and press Enter to add to the tag cloud" <span class="emphasis">data-tagcloud="true"</span>&gt;
-<!-- &lt;select <span class="emphasis">data-tagcloud="true"</span>&gt;&lt;/select&gt; -->
-</pre>
+<pre><code class="language-markup">&lt;input type="text" placeholder="Type and press Enter to add to the tag cloud" <span class="emphasis">data-tagcloud="true"</span>&gt;
+&lt;select <span class="emphasis">data-tagcloud="true"</span>&gt;&lt;/select&gt;</code></pre>
 
 
         <hr>
 
 				<a href="#" class="anchor" id="unified-search"></a>
 
-				<h3>Unified Search</h3>
+				<h3>Unified search</h3>
 
 				<p>
 					<strong>Usage:</strong>
 				</p>
 
 				<p>
-					Apply <code>data-search="<var>PATH-TO-JSON.json</var>"</code> to a <strong>parent</strong> of a group of <code>input</code> or <code>select</code> elements. This will create a tag cloud after it, group all elements' outputs and build an array for analysis. You can then use the array to rebuild the search results.
+					Apply <code>data-search="true"</code> and <code>data-feed="<var>PATH-TO-JSON.json</var>"</code> to a <strong>parent</strong> of a group of <code>input</code> or <code>select</code> elements. This will automatically create a tag cloud after it.
 				</p>
 
 				<p>
-					<strong>Demo:</strong>
+					<strong>Example:</strong>
 				</p>
+
+<pre><code class="language-markup">&lt;div class="search-wrapper" <span class="emphasis">data-search="true" data-feed="/data/search.json" data-template="/templates/search.html"</span>&gt;
+	&lt;div class="row"&gt;
+		&lt;div class="column"&gt;
+			&lt;input type="text" placeholder="Search..." <span class="emphasis">data-lookup="title, summary"</span>&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+
+	&lt;div class="row"&gt;
+		&lt;div class="column" data-span="4"&gt;
+			&lt;select class="keep" <span class="emphasis">data-lookup="type"</span>&gt;&lt;/select&gt;
+		&lt;/div&gt;
+		&lt;div class="column" data-span="4"&gt;
+			&lt;select class="keep" <span class="emphasis">data-lookup="categories"</span>&gt;&lt;/select&gt;
+		&lt;/div&gt;
+		&lt;div class="column" data-span="4"&gt;
+			&lt;select class="keep" <span class="emphasis">data-lookup="tags"</span>&gt;&lt;/select&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+
+	&lt;div class="search-container"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
 
 				<div class="search-wrapper" data-search="true" data-feed="/data/search.json" data-template="/templates/search.html">
 					<div class="row">
@@ -1818,6 +1829,7 @@
 							<input type="text" placeholder="Search..." data-lookup="title, summary">
 						</div>
 					</div>
+
 					<div class="row">
 						<div class="column" data-span="4">
 							<select class="keep" data-lookup="type"></select>
@@ -1832,15 +1844,6 @@
 
 					<div class="search-container"></div>
 				</div>
-
-				<p>
-					<strong>Example:</strong>
-				</p>
-
-
-<pre>
-
-</pre>
 
 
 
