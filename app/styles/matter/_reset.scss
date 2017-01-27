@@ -118,6 +118,12 @@ verbatim {
   border: 1px solid $cd;
   border-radius: $radius;
   background: $ce;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+  tab-size: 2;
+  hyphens: none;
 
   * {
     font-weight: normal;
@@ -128,7 +134,7 @@ pre {
   display: block;
   position: relative;
   margin: floor($spacing / 2) 0 $spacing;
-  padding: floor($spacing / 2) $spacing;
+  padding: floor($spacing / 2);
   color: $cc;
   font-family: $monoFont;
   font-weight: normal;
@@ -136,7 +142,12 @@ pre {
   border-radius: $radius;
   background: $c3;
   overflow: auto;
-  white-space: pre-wrap;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+  tab-size: 2;
+  hyphens: none;
 
   * {
     font-weight: normal;

@@ -1,0 +1,120 @@
+// Syntax Highlighting
+
+.namespace {
+	opacity: .7;
+}
+
+.token {
+	&.comment,
+	&.prolog,
+	&.doctype,
+	&.cdata {
+		color: #666666;
+	}
+
+	&.punctuation {
+		color: #CCCCCC;
+	}
+
+	&.property,
+	&.tag,
+	&.constant,
+	&.symbol,
+	&.deleted {
+		color: #FF6666;
+	}
+
+	&.selector,
+	&.attr-name,
+	&.string,
+	&.char,
+	&.builtin,
+	&.inserted {
+    color: lighten($color2, 20%);
+	}
+
+	&.atrule,
+	&.attr-value,
+	&.function {
+    color: #CCAAEE;
+	}
+
+	&.boolean,
+	&.number {
+		color: #a6e22e;
+	}
+
+	&.operator,
+	&.entity,
+	&.url,
+	&.variable {
+		color: #F8F8F2;
+	}
+
+	&.keyword {
+		color: #66D9EF;
+	}
+
+	&.regex,
+	&.important {
+		color: #FD971F;
+	}
+
+	&.important,
+	&.bold {
+		font-weight: bold;
+	}
+	&.italic {
+		font-style: italic;
+	}
+
+	&.entity {
+		cursor: help;
+	}
+}
+
+.language-css .token.string,
+.style .token.string {
+	color: #f8f8f2;
+}
+
+pre {
+	&.code-toolbar {
+		position: relative;
+
+		> .toolbar {
+			position: absolute;
+			top: floor($spacing / 3);
+			right: floor($spacing / 3);
+
+			.toolbar-item {
+				display: inline-block;
+			}
+
+			a {
+				cursor: pointer;
+			}
+
+			a,
+			button,
+			span {
+        display: inline-block;
+				color: $cf;
+				padding: 4px 8px;
+				border: none;
+				border-radius: $radius;
+				background: $color1;
+
+				&:hover,
+				&:focus {
+					text-decoration: none;
+					background-color: darken($color1, 7.5%);
+				}
+			}
+		}
+
+		.emphasis {
+			color: #fd971f !important;
+		}
+	}
+}
