@@ -1,60 +1,72 @@
 {
 	"Options": {
-		"Zoom": 10,
-		"CenterLat": 51.508308,
-		"CenterLng": -0.1017765,
-    "Theme": "MapBox"
+    "centerLat": 51.508308,
+    "centerLng": -0.1017765,
+		"zoom": 10,
+    "zoomControl": true,
+    "disableDoubleClickZoom": false,
+    "mapTypeControl": false,
+    "scaleControl": false,
+    "scrollwheel": false,
+    "panControl": false,
+    "streetViewControl": false,
+    "draggable": true,
+    "overviewMapControl": false,
+    "overviewMapControlOptions": {
+      "opened": false
+    },
+    "theme": "MapBox"
 	},
 	"Markers": [
 		{
-			"Title": "London",
-			"Desc": "Capital of England",
-			"Tel": "-",
-			"Email": "-",
-			"Url": "-",
-			"Lat": 51.508308,
-			"Lng": -0.1017765,
-			"Marker": "img/markers/default.png"
+			"title": "London",
+			"desc": "Capital of England",
+			"tel": "-",
+			"email": "-",
+			"url": "-",
+			"lat": 51.508308,
+			"lng": -0.1017765,
+			"icon": "img/markers/default.png"
 		},
 		{
-			"Title": "Rome",
-			"Desc": "Capital of Italy",
-			"Tel": "-",
-			"Email": "-",
-			"Url": "-",
-			"Lat": 41.9102415,
-			"Lng": 12.3959148,
-			"Marker": "img/markers/default.png"
+			"title": "Rome",
+			"desc": "Capital of Italy",
+			"tel": "-",
+			"email": "-",
+			"url": "-",
+			"lat": 41.9102415,
+			"lng": 12.3959148,
+			"icon": "img/markers/default.png"
 		},
 		{
-			"Title": "Brasilia",
-			"Desc": "Capital of Brazil",
-			"Tel": "-",
-			"Email": "-",
-			"Url": "-",
-			"Lat": -15.7215857,
-			"Lng": -48.0082762,
-			"Marker": "img/markers/default.png"
+			"title": "Brasilia",
+			"desc": "Capital of Brazil",
+			"tel": "-",
+			"email": "-",
+			"url": "-",
+			"lat": -15.7215857,
+			"lng": -48.0082762,
+			"icon": "img/markers/default.png"
 		},
 		{
-			"Title": "Tokyo",
-			"Desc": "Capital of Japan",
-			"Tel": "-",
-			"Email": "-",
-			"Url": "-",
-			"Lat": 35.6735408,
-			"Lng": 139.5703043,
-			"Marker": "img/markers/default.png"
+			"title": "Tokyo",
+			"desc": "Capital of Japan",
+			"tel": "-",
+			"email": "-",
+			"url": "-",
+			"lat": 35.6735408,
+			"lng": 139.5703043,
+			"icon": "img/markers/default.png"
 		},
 		{
-			"Title": "Washington DC",
-			"Desc": "Capital of USA",
-			"Tel": "-",
-			"Email": "-",
-			"Url": "-",
-			"Lat": 47.2573787,
-			"Lng": -123.0933299,
-			"Marker": "img/markers/default.png"
+			"title": "Washington DC",
+			"desc": "Capital of USA",
+			"tel": "-",
+			"email": "-",
+			"url": "-",
+			"lat": 47.2573787,
+			"lng": -123.0933299,
+			"icon": "img/markers/default.png"
 		}
 	],
   "Themes": {

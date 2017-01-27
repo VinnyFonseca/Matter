@@ -5,8 +5,8 @@ $sidebarWidth: 250px;
 body.sidebar-on {
 	overflow-x: hidden;
 
-	.main {
-		&.docs {
+  &.docs {
+	  .main {
 			transform: translate3d(0, 0, 0) translateX($sidebarWidth / 2);
 
 			.wrapper {
@@ -25,8 +25,14 @@ body.sidebar-on {
 	}
 }
 
-.main {
-	&.docs {
+.docs {
+	.column-grid {
+    left: $sidebarWidth;
+		padding-left: floor($spacing * 2);
+    padding-right: floor($spacing * 2);
+	}
+
+  .main {
 		margin-left: $sidebarWidth;
 		transform: translate3d(0, 0, 0) translateX(0);
 		transition: all $duration $easing;
@@ -334,8 +340,12 @@ pre {
 
 	// Structural
 
-	.main {
-		&.docs {
+  .docs {
+		.column-grid {
+			left: 0;
+		}
+
+	  .main {
 			margin-left: 0;
 		}
 	}
@@ -369,8 +379,13 @@ pre {
 
 	// Structural
 
-	.main {
-		&.docs {
+  .docs {
+		.column-grid {
+			padding-left: $spacing;
+			padding-right: $spacing;
+		}
+
+	  .main {
 			.wrapper {
 				padding-left: $spacing;
 				padding-right: $spacing;

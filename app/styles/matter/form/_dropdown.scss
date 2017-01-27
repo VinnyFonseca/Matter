@@ -114,16 +114,16 @@
 
 			&:hover {
 				color: $cf;
-				background: $btnPrimaryColor !important;
+				background: $color1 !important;
 			}
 
 			&:active{
 				color: $cf;
-				background: $btnPrimaryColorHover !important;
+				background: darken($color1, 7.5%) !important;
 			}
 			&.active {
 				color: $cf;
-				background: $btnPrimaryColor !important;
+				background: $color1 !important;
 			}
 		}
 	}

@@ -12,11 +12,11 @@ var sync      = require('browser-sync').create();
 
 gulp.task('include', function() {
 	return gulp.src(config.src)
-        .pipe(plumber(function(error) {
-            gutil.log(error.message);
-            notify(error.message);
-            this.emit('end');
-        }))
+    .pipe(plumber(function(error) {
+      gutil.log(error.message);
+      notify(error.message);
+      this.emit('end');
+    }))
 		.pipe(includer())
 		.pipe(gulp.dest(config.dest))
 		.pipe(sync.stream({once: true}));

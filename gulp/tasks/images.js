@@ -15,9 +15,9 @@ var sync      = require('browser-sync').create();
 gulp.task('images', function() {
 	return gulp.src(config.src)
     .pipe(plumber(function(error) {
-        gutil.log(error.message);
-        notify(error.message);
-        this.emit('end');
+      gutil.log(error.message);
+      notify(error.message);
+      this.emit('end');
     }))
 		.pipe(newer(config.dest))
 		.pipe(imagemin({

@@ -5,14 +5,12 @@ matter.notification = {
   cookie: false,
 
   call: function(title, message, delay, tone) {
-  	title = title ? title : matter.config.notification.title;
-  	delay = delay || delay === 0 ? delay : matter.config.notification.delay;
-  	tone = tone ? tone : matter.config.notification.tone;
-
-    console.log(title, delay, tone)
-
   	if ( matter.config.notification.active || matter.config.cookie.active ) {
-  		var notification = '<div class="notification notification-' + matter.notification.count + '" data-type="' + tone + '">\
+    	title = title ? title : matter.config.notification.title;
+    	delay = delay || delay === 0 ? delay : matter.config.notification.delay;
+    	tone = tone ? tone : matter.config.notification.tone;
+
+  		var notification = '<div class="notification notification-' + this.count + '" data-type="' + tone + '">\
   								<img class="svg icon icon-' + tone + '" src="' + matter.config.application.base + 'img/icons/icon-' + tone + '.svg" width="24" height="24">\
   								<span class="notification-title">' + title + '</span>\
   								<span class="notification-message">\
@@ -22,7 +20,7 @@ matter.notification = {
 
   		$(".notification-wrapper").append(notification);
   		matter.svg.init();
-  		var el = $(".notification-" + matter.notification.count);
+      var el = $(".notification-" + this.count);
 
   		var clear = function() {
   			el.removeClass("active");
@@ -46,16 +44,16 @@ matter.notification = {
   			})
   			.on("click", clear);
 
-  		if ( matter.notification.cookie ) {
+  		if ( this.cookie ) {
   			$(".notification-wrapper").addClass("cookie");
-  			matter.notification.cookie = false;
+  			this.cookie = false;
   		}
 
   		setTimeout(function() {
   			el.addClass("active");
   		}, 10);
 
-  		matter.notification.count++;
+  		this.count++;
 
   		debug.log("== Notification | Delay: " + delay);
   	}
@@ -63,13 +61,15 @@ matter.notification = {
 
   init: function() {
   	if ( $("[data-notification]").length ) {
+      var self = this;
+
   		$("[data-notification]").on("click", function() {
   			var title = $(this).data("title"),
   				message = $(this).data("message"),
   				delay = parseInt($(this).data("delay")),
   				tone = $(this).data("tone");
 
-  			matter.notification.call(title, message, delay, tone);
+  			self.call(title, message, delay, tone);
   		});
 
   		debug.log(":: Notifications");

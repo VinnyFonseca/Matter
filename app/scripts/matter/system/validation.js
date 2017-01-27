@@ -125,7 +125,7 @@ matter.validation = {
 					el.addClass("valid");
 				} else {
 					el.addClass("invalid");
-					notify("Password requirements", "Minimum of 8 characters, at least one uppercase letter, one lowercase letter, AND one number.")
+					matter.notification.call("Password requirements", "Minimum of 8 characters, at least one uppercase letter, one lowercase letter, AND one number.")
 				}
 			break;
 
@@ -262,7 +262,7 @@ matter.validation = {
 					el.find(".form-done").show();
 
 					el.submit();
-					notify("Success", "Form submitted successfully.", matter.config.notification.delay, "success");
+					matter.notification.call("Success", "Form submitted successfully.", matter.config.notification.delay, "success");
 				} else {
 					el.removeClass("valid");
 
@@ -271,7 +271,7 @@ matter.validation = {
 					el.find(".form-loader").hide();
 					el.find("button, input[type='submit']").show();
 
-					notify("Form not submitted", "Please review your details and try again.", matter.config.notification.delay, "failure");
+					matter.notification.call("Form not submitted", "Please review your details and try again.", matter.config.notification.delay, "failure");
 				}
 		}
 	},

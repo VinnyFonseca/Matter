@@ -46,12 +46,12 @@ var initSearch = function() {
 			$(loadElement).insertAfter(container);
 
 			var tagcloud = el.find(".tagcloud"),
-				controls = el.find(".search-controls"),
-				pagination = el.find(".search-pagination"),
-				load = el.find(".search-load");
+				  controls = el.find(".search-controls"),
+				  pagination = el.find(".search-pagination"),
+				  load = el.find(".search-load");
 
+      controls.append(resultsViewElement);
 			controls.append(resultsCountElement);
-			controls.append(resultsViewElement);
 
 			var count = controls.find(".search-count");
 			var views = controls.find(".search-views");
@@ -149,7 +149,7 @@ var initSearch = function() {
 
 								tagcloud.addClass("active").append(tag);
 							} else {
-								notify("Filter already active", "You have already selected this filter. Please choose another one.");
+								matter.notification.call("Filter already active", "You have already selected this filter. Please choose another one.");
 								return false;
 							}
 						}
@@ -321,8 +321,8 @@ var initSearch = function() {
 
 						allArray.push(id);
 					}
-					for ( var j = 0; j < parameterArray.length; j++ ) {
-						resultArray[parameterArray[j]] = [];
+					for ( i = 0; i < parameterArray.length; i++ ) {
+						resultArray[parameterArray[i]] = [];
 					}
 
 
@@ -337,98 +337,101 @@ var initSearch = function() {
 
 					// Input
 
-					var inputAnalysis = function() {
-						if ( input.length && input.val() !== "" ) {
-							var parameter = input.data("lookup"),
-								criteria = parameter.replace(/\s/g, "").split(","),
-								tempArray = [];
+					var parameter,
+							value,
+							content,
+					    criteria,
+							compare,
+							retrieved,
+							analyse,
+							analyseArray,
+							analyseString,
+							n;
 
-							for ( var i = 0; i < feed.length; i++ ) {
-								var object = feed[i],
-									id = object.id,
-									compare = outputArray[parameter];
+					if ( input.length && input.val() !== "" ) {
+						parameter = input.data("lookup");
+						criteria = parameter.replace(/\s/g, "").split(",");
+						tempArray = [];
 
-								for ( var j = 0; j < criteria.length; j++ ) {
-									var retrieved = object[criteria[j]];
+						for ( i = 0; i < feed.length; i++ ) {
+							object = feed[i];
+							id = object.id;
+							compare = outputArray[parameter];
 
-									if ( retrieved instanceof Array ) {
-										for ( var k = 0; k < retrieved.length; k++ ) {
-											var analyseArray = retrieved[k].toLowerCase();
+							for ( j = 0; j < criteria.length; j++ ) {
+								retrieved = object[criteria[j]];
 
-											if ( analyseArray.has(compare) && input.val() !== "" && !tempArray.has(id) ) {
-												tempArray.push(id);
-											}
-										}
-									} else {
-										var analyseString = retrieved.toLowerCase();
+								if ( retrieved instanceof Array ) {
+									for ( k = 0; k < retrieved.length; k++ ) {
+										analyseArray = retrieved[k].toLowerCase();
 
-										if ( analyseString.has(compare) && input.val() !== "" && !tempArray.has(id) ) {
+										if ( analyseArray.has(compare) && input.val() !== "" && !tempArray.has(id) ) {
 											tempArray.push(id);
 										}
+									}
+								} else {
+									analyseString = retrieved.toLowerCase();
+
+									if ( analyseString.has(compare) && input.val() !== "" && !tempArray.has(id) ) {
+										tempArray.push(id);
+									}
+								}
+							}
+						}
+
+						resultArray[parameter] = tempArray;
+
+						rawQuery += "?q=" + input.val();
+					}
+
+					// Tags
+
+					if ( tagcloud.children(".tag").length > 0 ) {
+						tagcloud.addClass("active");
+
+						for ( i = 0; i < tagcloud.children(".tag").length; i++ ) {
+							parameter = tagcloud.children(".tag").eq(i).data("tag-parameter");
+							value = tagcloud.children(".tag").eq(i).data("tag-value");
+							content = tagcloud.children(".tag").eq(i).data("tag-content");
+							criteria = parameter;
+							compare = outputArray[parameter];
+							tempArray = [];
+
+							for ( j = 0; j < feed.length; j++ ) {
+								object = feed[j];
+								id = object.id;
+								analyse = object[criteria];
+
+								if ( analyse instanceof Object ) {
+									joined = analyse.concat(compare);
+
+									if ( joined.duplicates().length > 0 && !tempArray.has(id) ) {
+										tempArray.push(id);
+									}
+								} else {
+									if ( compare.has(analyse) && !tempArray.has(id) ) {
+										tempArray.push(id);
+									} else if (!isNaN(analyse) && analyse === compare.toString() && !tempArray.has(id)) {
+										tempArray.push(id);
 									}
 								}
 							}
 
 							resultArray[parameter] = tempArray;
 
-							rawQuery += "?q=" + input.val();
+							var queryStart = rawQuery !== "" ? "&" : "?";
+							rawQuery += queryStart + parameter + "=" + value;
 						}
+					} else {
+						tagcloud.removeClass("active");
 					}
-
-					// Tags
-
-					var tagAnalysis = function() {
-						if ( tagcloud.children(".tag").length > 0 ) {
-							tagcloud.addClass("active");
-
-							for ( var n = 0; n < tagcloud.children(".tag").length; n++ ) {
-								var parameter = tagcloud.children(".tag").eq(n).data("tag-parameter"),
-									value = tagcloud.children(".tag").eq(n).data("tag-value"),
-									content = tagcloud.children(".tag").eq(n).data("tag-content"),
-									criteria = parameter,
-									compare = outputArray[parameter],
-									tempArray = [];
-
-								for ( var i = 0; i < feed.length; i++ ) {
-									var object = feed[i],
-										id = object.id,
-										analyse = object[criteria];
-
-									if ( analyse instanceof Object ) {
-										var joined = analyse.concat(compare);
-										if ( joined.duplicates().length > 0 && !tempArray.has(id) ) {
-											tempArray.push(id);
-										}
-									} else {
-										if ( compare.has(analyse) && !tempArray.has(id) ) {
-											tempArray.push(id);
-										} else if (!isNaN(analyse) && analyse === compare.toString() && !tempArray.has(id)) {
-											tempArray.push(id);
-										}
-									}
-								}
-
-								resultArray[parameter] = tempArray;
-
-								var queryStart = rawQuery !== "" ? "&" : "?";
-								rawQuery += queryStart + parameter + "=" + value;
-							}
-						} else {
-							tagcloud.removeClass("active");
-						}
-					}
-
-					// Run
-
-					inputAnalysis();
-					tagAnalysis();
 
 
 					// Analyse rebuilt arrays and build final array
 
-					for ( var k = 0; k < parameterArray.length; k++ ) {
-						var outputSet = outputArray[parameterArray[k]],
-							resultSet = resultArray[parameterArray[k]];
+					for ( i = 0; i < parameterArray.length; i++ ) {
+						var outputSet = outputArray[parameterArray[i]],
+							resultSet = resultArray[parameterArray[i]];
 
 						existsArray.push(outputSet.length > 0);
 
@@ -439,9 +442,11 @@ var initSearch = function() {
 					}
 
 					var outputCount = 0;
-					for ( var l = 0; l < existsArray.length; l++ ) {
-						if ( existsArray[l] === true ) outputCount++;
+
+					for ( i = 0; i < existsArray.length; i++ ) {
+						if ( existsArray[i] === true ) outputCount++;
 					}
+
 					var hasOutput = outputCount >= 1;
 
 					var cleanArray = totalArray.reduce().sort();
@@ -451,7 +456,7 @@ var initSearch = function() {
 
 					var countRepeated = function(arr) {
 						var counts = {};
-						for ( var i = 0; i < arr.length; i++ ) {
+						for ( i = 0; i < arr.length; i++ ) {
 							var num = arr[i];
 							counts[num] = counts[num] ? counts[num] + 1 : 1;
 						}
@@ -461,9 +466,9 @@ var initSearch = function() {
 					var analysis = countRepeated(cleanArray);
 
 					if ( hasOutput ) {
-						for ( var m = 0; m < cleanArray.length; m++ ) {
-							if ( analysis[cleanArray[m]] === outputCount && $.inArray(cleanArray[m], finalArray) < 0 ) {
-								finalArray.push(cleanArray[m]);
+						for ( i = 0; i < cleanArray.length; i++ ) {
+							if ( analysis[cleanArray[i]] === outputCount && $.inArray(cleanArray[i], finalArray) < 0 ) {
+								finalArray.push(cleanArray[i]);
 							}
 						}
 					} else {
@@ -480,7 +485,7 @@ var initSearch = function() {
 					var rebuildSystem = function() {
 						var buildTemplate = function(template) {
 							resultItems = [];
-							results.empty();
+              results.empty();
 
 							var loadItems = function() {
 								for ( var i = 0; i < feed.length; i++ ) {
@@ -507,8 +512,6 @@ var initSearch = function() {
 
 									if ( !resultItems.has(result) ) resultItems.push(result);
 								}
-
-								console.log(resultItems.length, currentPage)
 							}
 
 							if ( firstLoad ) loadItems();
@@ -544,7 +547,6 @@ var initSearch = function() {
 								if ( matter.config.search.pagination ) items.addClass("loading");
 
 								for ( var i = (matter.config.search.display * (currentPage - 1)), j = 0; i < resultsCount && j < matter.config.search.display; i++, j++ ) {
-									console.log(i, j);
 									showItem(i);
 								}
 

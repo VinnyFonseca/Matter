@@ -62,7 +62,7 @@
 	@for $i from 1 through $columns {
 		@if $i != $columns {
   		&[data-span="#{$i}"] {
-  			width: percentage($i / $columns) - 0.01%;
+  			width: percentage($i / $columns);
   		}
   		&[data-push="#{$i}"] {
 				margin-left: percentage($i / $columns);
@@ -76,6 +76,43 @@
 		margin: 0;
 		padding: $gutter;
 		font-size: $fontSize / 1.3 + rem;
+	}
+}
+
+
+// Debug
+
+.column-grid {
+  display: block;
+  position: fixed;
+  padding-top: 0;
+  padding-bottom: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: auto;
+  max-height: 0;
+  background-color: rgba($color3, 0.15);
+  z-index: 8000;
+	overflow: hidden;
+  transition: max-height $duration $easing;
+
+	.row {
+		margin-top: 0;
+		margin-bottom: 0;
+		height: 100%;
+	}
+
+	.column {
+		padding-top: 0;
+		padding-bottom: 0;
+		height: 100%;
+
+		.cell {
+			height: 100%;
+			background-color: rgba($color3, 0.075);
+		}
 	}
 }
 
