@@ -33,7 +33,7 @@ body {
 	position: relative;
 	margin: 0 auto;
 	padding: $spacing;
-	width: $scrDeskL;
+	max-width: $contentWidth;
 }
 
 
@@ -60,10 +60,10 @@ body {
 	right: 0;
 	top: 0;
 	text-align: right;
-	z-index: 90;
+	z-index: 9000;
 	@extend .block-reset;
 
-	> * {
+	.control-trigger {
 		display: inline-block;
 		position: relative;
 		margin: 5px !important;
@@ -79,6 +79,7 @@ body {
 			@extend .secondary;
 		}
 
+		&.grid-trigger,
 		&.debug-trigger {
 			@extend .tertiary;
 		}
@@ -92,7 +93,6 @@ body {
 			height: 40% !important;
 			top: 50% !important;
 			left: 50% !important;
-			font-size: 16px !important;
 			font-weight: bold;
 			line-height: 1;
 		}
@@ -105,32 +105,85 @@ body {
 
 // Loader
 
-$loader-size: 64px;
-
 .loader {
 	display: block;
 	position: relative;
 	margin: floor($spacing / 2) auto;
 	padding: 0;
 	overflow: visible;
-	width: $loader-size;
-	height: $loader-size;
+	width: $loaderSize;
+	height: $loaderSize;
 	z-index: 5;
+
+	&:before,
+	&:after,
+	.loader-inner {
+		position: absolute;
+		content: '';
+		width: 0;
+		height: 0;
+		top: 50%;
+		left: 50%;
+	  // background-color: $color1;
+		border: 0 solid $color1;
+		border-radius: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	&:before {
+		animation: loader-ring-inner ($duration * 4) infinite $easing;
+	}
+	&:after {
+		animation: loader-ring-middle ($duration * 4) infinite $easing;
+	}
+	.loader-inner {
+		animation: loader-ring-outer ($duration * 4) infinite $easing;
+	}
 }
 
-.loader-inner {
-	position: absolute;
-	width: 0;
-	height: 0;
-	top: 50%;
-	left: 50%;
-	border: 0 solid $color1;
-	border-radius: 50%;
-	transform: translate(-50%, -50%);
-	animation: loader-figure ($duration * 3) infinite $easing;
+@keyframes loader-ring-inner {
+	0% {
+		width: 0;
+		height: 0;
+	}
+
+	70% {
+		width: 30%;
+		height: 30%;
+		border-width: 1px;
+		opacity: 1;
+	}
+
+	100% {
+		width: 30%;
+		height: 30%;
+		border-width: 0;
+		opacity: 0;
+	}
 }
 
-@keyframes loader-figure {
+@keyframes loader-ring-middle {
+	0% {
+		width: 0;
+		height: 0;
+	}
+
+	50% {
+		width: 65%;
+		height: 65%;
+		border-width: 3px;
+		opacity: 1;
+	}
+
+	100% {
+		width: 65%;
+		height: 65%;
+		border-width: 0;
+		opacity: 0;
+	}
+}
+
+@keyframes loader-ring-outer {
 	0% {
 		width: 0;
 		height: 0;
@@ -139,7 +192,7 @@ $loader-size: 64px;
 	30% {
 		width: 100%;
 		height: 100%;
-		border-width: $loader-size / 2;
+		border-width: 5px;
 		opacity: 1;
 	}
 
@@ -248,14 +301,6 @@ $progressHeight: 42px;
 
 // Responsive
 
-@media screen and (max-width: $scrDeskL) { // Max
-
-	.wrapper {
-		width: 100%;
-	}
-
-}
-
 @media screen and (min-width: $scrTablL) { // Min
 
 	body:before {
@@ -318,21 +363,6 @@ $progressHeight: 42px;
 
 	html {
 		background-color: $bodyBgColor;
-	}
-
-}
-
-
-
-// Conditional
-
-.lt-ie9 {
-
-	.tablet-show {
-		display: none !important;
-	}
-	.mobile-show {
-		display: none !important;
 	}
 
 }

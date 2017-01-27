@@ -20,21 +20,21 @@ matter.map = {
     }());
 
     google.maps.event.addListener(marker, 'click', function() {
-        infoWindow.close();
-        infoWindowVisible(false);
+      infoWindow.close();
+      infoWindowVisible(false);
 
-        var link = web.substring(0, 7) != "http://" ? "http://" + web : web;
-        var html = "<div class='gm-info'>\
-                      <h4>" + title + "</h4>\
-                      <p>" + desc + "<p>\
-                      <p>" + telephone + "<p>\
-                      <a href='mailto:" + email + "' >" + email + "<a>\
-                      <a href='" + link + "'' >" + web + "<a>\
-                    </div>";
-        infoWindow = new google.maps.InfoWindow({ content: html });
+      var link = web.substring(0, 7) != "http://" ? "http://" + web : web;
+      var html = "<div class='gm-info'>\
+                    <h4>" + title + "</h4>\
+                    <p>" + desc + "<p>\
+                    <p>" + telephone + "<p>\
+                    <a href='mailto:" + email + "' >" + email + "<a>\
+                    <a href='" + link + "'' >" + web + "<a>\
+                  </div>";
+      infoWindow = new google.maps.InfoWindow({content: html});
 
-        infoWindow.open(map, marker);
-        infoWindowVisible(true);
+      infoWindow.open(map, marker);
+      infoWindowVisible(true);
     });
 
     google.maps.event.addListener(infoWindow, 'closeclick', function() {
@@ -44,61 +44,61 @@ matter.map = {
 
   build: function(data) {
   	var options = {
-      center: new google.maps.LatLng(data.Options.CenterLat, data.Options.CenterLng),
-      zoom: data.Options.Zoom,
-      zoomControl: true,
+      center: new google.maps.LatLng(data.Options.centerLat, data.Options.centerLng),
+      zoom: data.Options.zoom,
+      zoomControl: data.Options.zoomControl,
       zoomControlOptions: {
         style: google.maps.ZoomControlStyle.LARGE
       },
-      disableDoubleClickZoom: false,
-      mapTypeControl: false,
+      disableDoubleClickZoom: data.Options.disableDoubleClickZoom,
+      mapTypeControl: data.Options.mapTypeControl,
       mapTypeControlOptions: {
         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR
       },
       scale: matter.map.testHiRes() ? 2 : 1,
-      scaleControl: false,
-      scrollwheel: false,
-      panControl: false,
-      streetViewControl: false,
-      draggable: true,
-      overviewMapControl: false,
-      overviewMapControlOptions: {
-        opened: false
-      },
+      scaleControl: data.Options.scaleControl,
+      scrollwheel: data.Options.scrollwheel,
+      panControl: data.Options.panControl,
+      streetViewControl: data.Options.streetViewControl,
+      draggable: data.Options.draggable,
+      overviewMapControl: data.Options.overviewMapControl,
+      overviewMapControlOptions: data.Options.overviewMapControlOptions,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      styles: data.Themes[data.Options.Theme]
+      styles: data.Themes[data.Options.theme]
     };
 
   	var element = document.getElementById('map-canvas');
   	var map = new google.maps.Map(element, options);
 
-  	for (i = 0; i < data.Markers.length; i++) {
-  		marker = new google.maps.Marker({
-  			icon: data.Markers[i].Marker,
-  			position: new google.maps.LatLng(data.Markers[i].Lat, data.Markers[i].Lng),
+  	for ( var i = 0; i < data.Markers.length; i++ ) {
+      var marker = data.Markers[i];
+  		var pin = new google.maps.Marker({
+  			icon: marker.icon,
+  			position: new google.maps.LatLng(marker.lat, marker.lng),
   			map: map,
-  			title: data.Markers[i].Title,
-  			desc: data.Markers[i].Desc,
-  			tel: data.Markers[i].Tel,
-  			email: data.Markers[i].Email,
-  			web: data.Markers[i].Url
+  			title: marker.title,
+  			desc: marker.desc,
+  			tel: marker.tel,
+  			email: marker.email,
+  			web: marker.url
   		});
 
-  		matter.map.bindInfoWindow(marker, map, data.Markers[i].Title, data.Markers[i].Desc, data.Markers[i].Tel, data.Markers[i].Email, data.Markers[i].Url);
+  		matter.map.bindInfoWindow(pin, map, marker.title, marker.desc, marker.tel, marker.email, marker.url);
   	}
+
+    google.maps.event.addDomListener(window, "resize", function() {
+      var center = map.getCenter();
+      google.maps.event.trigger(map, "resize");
+      map.setCenter(center);
+    });
   },
 
   call: function() {
   	if ( window.google && google.maps ) {
-  		for (var i = 0; i < document.querySelectorAll('.map-canvas').length; i++) {
-        var feed = document.querySelectorAll('.map-canvas')[i].getAttribute('data-feed');
-  			matter.data.get(feed, matter.map.build);
+      var map = document.querySelectorAll('.map-canvas');
 
-  			google.maps.event.addDomListener(window, "resize", function() {
-  				var center = map.getCenter();
-  				google.maps.event.trigger(map, "resize");
-  				map.setCenter(center);
-  			});
+  		for (var i = 0; i < map.length; i++) {
+  			matter.data.get(map[i].getAttribute('data-feed'), this.build);
   		}
 
   		debug.log("~~ Google Maps API Request");
@@ -107,7 +107,11 @@ matter.map = {
 
   init: function() {
   	if ( document.querySelector('.map-wrapper') ) {
-  		matter.script.load("//maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js&callback=matter.map.call");
+  		matter.script.load("//maps.googleapis.com/maps/api/js?key=&extension=.js&callback=matter.map.call");
+
+    	if ( matter.config.application.touch ) {
+    		$(".map-canvas").addClass("map-mobile"); // Fixes image distortion on Google Maps - See styles/core/widgets/_map.scss.
+    	}
   	}
   }
 }

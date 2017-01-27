@@ -1,4 +1,4 @@
-// General
+// Structural
 
 $base: "/"; // Base path for images, ending in /
 
@@ -8,10 +8,31 @@ $radius: 4px; // Radius value
 
 
 
-// Grid System
+// Responsive Breakpoints
+
+$scrDeskL: 1280px;
+$scrDeskS: 960px;
+$scrTablL: 768px;
+$scrTablS: 600px;
+$scrMoblL: 480px;
+$scrMoblS: 320px;
+
+$contentWidth: $scrDeskL;
+
+
+
+
+// Grid
 
 $columns: 12; // Number of columns on the grid
 $gutter: floor($spacing / 2); // Gutter pixel value
+
+
+
+
+// Elements
+
+$loaderSize: 64px;
 
 
 
@@ -41,15 +62,8 @@ $highlightColor: #ffff9e;
 // Branding
 
 $color1: #7C5EB3; // Primary colour
-$color2: #0299BF; // Secondary colour
-$color3: #E03A36; // Tertiary colour
-
-$btnPrimaryColor: $color1;
-$btnPrimaryColorHover: darken($color1, 15);
-$btnSecondaryColor: $color2;
-$btnSecondaryColorHover: darken($color1, 15);
-$btnTertiaryColor: $color3;
-$btnTertiaryColorHover: darken($color1, 15);
+$color2: #3299BF; // Secondary colour
+$color3: #C44A56; // Tertiary colour
 
 
 // Global
@@ -149,18 +163,6 @@ $warningBgColor: orange; // Warning background
 $failureTextColor: lighten(red, 70); // Failure text
 $failureBorderColor: red; // Failure border
 $failureBgColor: red; // Failure background
-
-
-
-
-// Responsive Breakpoints
-
-$scrDeskL: 1280px;
-$scrDeskS: 960px;
-$scrTablL: 768px;
-$scrTablS: 600px;
-$scrMoblL: 480px;
-$scrMoblS: 320px;
 
 
 

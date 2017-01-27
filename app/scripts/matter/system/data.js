@@ -11,7 +11,12 @@ matter.data = {
 			success: function(data) {
 				// debug.log("~~ GET Success (" + url + ")", data);
 				debug.log("~~ GET Success (" + url + ")");
-				if ( typeof callback !== "undefined" ) callback(data);
+
+				if ( callback ) {
+					callback(data);
+				} else {
+					return true;
+				}
 			},
 			error: function(request, status, error) {
 				debug.log("~~ GET Error (" + url + ")", request, status, error, request.statusText);
@@ -29,7 +34,7 @@ matter.data = {
 				// debug.log("~~ POST Success (" + url + ")", data);
 				debug.log("~~ POST Success (" + url + ")");
 
-				if ( typeof callback !== "undefined" ) {
+				if ( callback ) {
 					callback(data);
 				} else {
 					return true;

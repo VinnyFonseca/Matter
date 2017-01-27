@@ -2,9 +2,9 @@ $(document).ready(function() {
 	// First Visit Cookie
 
 	if ( matter.cookie.get("firstVisit") === null ) {
-		cookieNotify = true;
 		matter.cookie.set("firstVisit", "yes", 365);
-		notify("Cookie Disclaimer", matter.config.cookie.message, 0);
+    matter.notification.cookie = true;
+		matter.notification.call("Cookie Disclaimer", matter.config.cookie.message, 0);
 	}
 
 

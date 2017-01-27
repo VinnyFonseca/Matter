@@ -54,37 +54,37 @@
 
 	&.primary {
 		color: $cf;
-		background-color: $btnPrimaryColor;
+		background-color: $color1;
 
 		&:hover {
-			background-color: $btnPrimaryColorHover !important;
+			background-color: darken($color1, 7.5%) !important;
 		}
 		&:active {
-			background-color: $btnPrimaryColor !important;
+			background-color: $color1 !important;
 		}
 	}
 
 	&.secondary {
 		color: $cf;
-		background-color: $btnSecondaryColor;
+		background-color: $color2;
 
 		&:hover {
-			background-color: $btnSecondaryColorHover !important;
+			background-color: darken($color2, 7.5%) !important;
 		}
 		&:active {
-			background-color: $btnSecondaryColor !important;
+			background-color: $color2 !important;
 		}
 	}
 
 	&.tertiary {
 		color: $cf;
-		background-color: $btnTertiaryColor;
+		background-color: $color3;
 
 		&:hover {
-			background-color: $btnTertiaryColorHover !important;
+			background-color: darken($color3, 7.5%) !important;
 		}
 		&:active {
-			background-color: $btnTertiaryColor !important;
+			background-color: $color3 !important;
 		}
 	}
 

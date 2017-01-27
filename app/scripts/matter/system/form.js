@@ -253,7 +253,7 @@ matter.form = {
   			});
   		});
 
-  		debug.log(":: File Upload");
+  		debug.log(":: File Uploads");
   	}
 
   	// Multiple Upload
@@ -307,7 +307,7 @@ matter.form = {
   		}
   		initFileInputs();
 
-  		debug.log(":: Multiple File Upload");
+  		debug.log(":: Multiple File Uploads");
   	}
   },
 
@@ -330,14 +330,18 @@ matter.form = {
   },
 
   card: function() {
-    var wrapper = '<div class="card-wrapper"></div>',
-        icon = '<img src="' + matter.config.application.base + 'img/icons/cards/generic.png">';
+    if ( $("input[type='card']").length ) {
+      var wrapper = '<div class="card-wrapper"></div>',
+          icon = '<img src="' + matter.config.application.base + 'img/icons/cards/generic.png">';
 
-    $("input[type='card']").each(function() {
-      var el = $(this);
+      $("input[type='card']").each(function() {
+        var el = $(this);
 
-      el.wrap(wrapper).attr('type', 'number');
-      $(icon).insertBefore(el);
-    });
+        el.wrap(wrapper).attr('type', 'number');
+        $(icon).insertBefore(el);
+      });
+
+      debug.log(":: Card Inputs");
+    }
   }
 }

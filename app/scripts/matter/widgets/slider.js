@@ -181,11 +181,11 @@ matter.slider.prototype.move = function(i) {
 		}
 	});
 
-	this.element.container.transition({
+	this.element.container.css({
 		'height': this.height.value
 	}, this.duration);
 
-	this.element.slider.children('.slider-arrow').transition({
+	this.element.slider.children('.slider-arrow').css({
 		'height': this.height.value
 	}, this.duration);
 

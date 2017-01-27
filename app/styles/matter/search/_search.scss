@@ -30,7 +30,7 @@
 	display: block;
 	position: relative;
 	margin: floor($spacing / 2) 0;
-	text-align: right;
+	text-align: left;
 	@extend .valign-middle;
 
 	.search-count {
@@ -44,7 +44,7 @@
 	.search-views {
 		position: relative;
 		margin: 0;
-		margin-left: floor($spacing / 3);
+		margin-right: floor($spacing / 3);
 		padding: 0;
 		@extend .block-reset;
 
@@ -52,12 +52,11 @@
 			display: inline-block;
 			position: relative;
 			margin: 0;
-			margin-left: floor($spacing / 3);
-			padding: 5px;
+			margin-right: floor($spacing / 3);
+			padding: 10px;
 			color: $c8;
-			border: $borderWidth $borderStyle $cd;
+			border: $borderWidth $borderStyle $borderColor;
 			border-radius: $radius;
-			background: #f2f2f2;
 			cursor: pointer;
 
 			&:hover,

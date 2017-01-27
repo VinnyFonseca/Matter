@@ -62,7 +62,7 @@ module.exports = {
 	styles: {
 		pre: {
 			options: {
-				precision: 2,
+				precision: 5,
 				sourceMap: false,
 				sourceComments: false,
 				outputStyle: global.isProd ? 'compressed' : 'expanded'

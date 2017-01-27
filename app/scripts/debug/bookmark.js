@@ -160,13 +160,14 @@ loadScript("http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js", fu
             emtoPxText = ""
         }
         var i = parseFloat($(this).attr("data-width") * emToPx) + e() + "px";
-        var s = '<div class="breakpoint-item" id="breakpoint-' + n + r + '" data-width="' + n + '" data-unit="' + r + '" style="width: ' + i + '"><header class="frameTitle">' + n + r + '</header><div class="frameWrapper" style="height:' + frameHeight + 'px"><iframe frameborder="0" style="width: ' + i + '"></iframe></div></div>';
+        var s = '<div class="breakpoint-item" id="breakpoint-' + n + r + '" data-width="' + n + '" data-unit="' + r + '" style="width: ' + i + '"><header class="frameTitle">' + n + r + '</header><div class="frameWrapper" style="height:' + frameHeight + 'px"><div class="loader"><div class="loader-inner">&nbsp;</div></div><iframe frameborder="0" style="width: ' + i + '"></iframe></div></div>';
         $("#qcWW").append(s)
     });
     $("iframe").each(function() {
         $(this).attr("src", $("body").attr("data-url"));
         $(this).on("load", function() {
-            $(this).fadeIn()
+            $(this).fadeIn();
+            $('.frameWrapper .loader').remove();
         })
     });
     $(".reload").click(function() {

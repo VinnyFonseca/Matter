@@ -4,12 +4,9 @@ var ms = new Date().getTime();
 var viewport;
 
 matter.init = function() {
-	viewport = matter.viewport().type(); // Detect viewport type
+	viewport = matter.viewport().type(); // Detect and set viewport type
 
-	if ( matter.config.application.touch ) {
-		FastClick.attach(document.body); // Removes 300ms delay from taps on mobile devices. Requires fastclick.js.
-		$(".map-canvas").addClass("map-mobile"); // Fixes image distortion on Google Maps - See styles/core/widgets/_map.scss.
-	}
+	if ( matter.config.application.touch ) FastClick.attach(document.body);
 
 	// Logs Legend
 
@@ -65,6 +62,8 @@ matter.defer = function() {
 
 	// Deferred Init
 
+  matter.grid.init();
+  matter.debug.init();
 	matter.sliders.init();
 	matter.map.init();
 	initVideo();
