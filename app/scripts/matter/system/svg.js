@@ -25,12 +25,13 @@ matter.svg = {
 						svg = svg.removeAttr("xmlns:a");
 						img.after(svg).remove();
 					}, "xml").fail(function() {
-		                img.removeClass("svg");
-		            });
+            img.removeClass("svg");
+          });
 				}
 			});
 
-			debug.log(":: SVG Injection @ " + svgCount + " images");
+			var plural = svgCount == 1 ? "" : "s";
+			debug.log(":: SVG Injection @ " + svgCount + " image" + plural);
 		}
 	}
 }
