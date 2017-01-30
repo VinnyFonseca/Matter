@@ -2,7 +2,8 @@
 
 var input   = 'app';
 var output  = 'dist';
-var sync  = require('browser-sync').create();
+
+var sync    = require('browser-sync').create();
 
 
 module.exports = {
@@ -13,9 +14,9 @@ module.exports = {
 	// dist removal
 
 	clean: {
-        options: {
-            force: true
-        },
+    options: {
+      force: true
+    },
 		dest: output
 	},
 
@@ -74,13 +75,6 @@ module.exports = {
 				require('rucksack-css')({
 					fallbacks: true
 				}),
-				require('pixrem')({
-					rootValue: 17, // Value is the same as on _config.scss $fontSize variable multiplied by 10.
-					html: true,
-					replace: false,
-					atrules: true,
-					browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']
-				}),
 				require('autoprefixer')({
 					browsers: ['last 3 versions', '> 2%', 'ie 8', 'ie 7']
 				})
@@ -97,7 +91,7 @@ module.exports = {
 	scripts: {
 		uglify: {
 			mangle: global.isProd,
-			beautify: false,
+			beautify: !global.isProd,
 			sourceMap: true,
 			sourceMapIncludeSources: true
 		},
@@ -161,20 +155,23 @@ module.exports = {
 	},
 
 
-	// browser synchronisation
+	// browser browserSynchronisation
 
 	sync: {
-		src: output + '/**',
-		options: {
-			server: {
-				baseDir: output,
-			},
-			open: false,
-			watchTask: false, // < VERY important
-			reloadDelay: 50,
-			reloadOnRestart: true,
-			logLevel: 'info',
-			logPrefix: 'Matter'
-		}
+    options: {
+      server: {
+        baseDir: output,
+      },
+      open: false,
+      watchTask: true, // < VERY important
+      reloadDelay: 50,
+      reloadOnRestart: true,
+      logLevel: 'info',
+      logPrefix: 'Matter'
+    },
+		src: [
+      output + '/**',
+      '!' + output + '/sourcemaps'
+    ]
 	}
 };

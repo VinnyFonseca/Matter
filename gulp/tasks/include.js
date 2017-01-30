@@ -7,6 +7,7 @@ var gutil     = require('gulp-util');
 var notify    = require('gulp-notify');
 var plumber   = require('gulp-plumber');
 
+// var includer  = require('gulp-html-ssi');
 var includer  = require('gulp-ssi');
 var sync      = require('browser-sync').create();
 
@@ -17,7 +18,7 @@ gulp.task('include', function() {
       notify(error.message);
       this.emit('end');
     }))
-		.pipe(includer())
-		.pipe(gulp.dest(config.dest))
-		.pipe(sync.stream({once: true}));
+  	.pipe(includer())
+  	.pipe(gulp.dest(config.dest))
+  	.pipe(sync.stream({once: true}));
 });

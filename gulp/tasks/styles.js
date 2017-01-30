@@ -35,7 +35,7 @@ gulp.task('styles', function () {
     .pipe(maps.init())
       .pipe(sass(config.pre.options))
       .pipe(postcss(config.post.processors, config.post.options))
-    .pipe(maps.write('.'))
+    .pipe(maps.write('../sourcemaps'))
     .pipe(gulp.dest(config.dest))
-    .pipe(sync.stream({match: config.dest + '/**/*.css'}));
+    .pipe(sync.stream({ match: config.dest + '/**/*.css' }));
 });
