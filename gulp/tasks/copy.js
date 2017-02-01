@@ -22,14 +22,14 @@ var onlyDirs = function(stream) {
 };
 
 gulp.task('copy', function() {
-    return gulp.src(config.src, config.options)
-	    .pipe(plumber(function(error) {
-	      gutil.log(error.message);
-	      notify(error.message);
-	      this.emit('end');
-	    }))
-			.pipe(newer(config.dest))
-        .pipe(onlyDirs(eventStream))
-        .pipe(gulp.dest(config.dest))
-			.pipe(sync.stream({once: true}));
+  return gulp.src(config.src, config.options)
+    .pipe(plumber(function(error) {
+      gutil.log(error.message);
+      notify(error.message);
+      this.emit('end');
+    }))
+		.pipe(newer(config.dest))
+      .pipe(onlyDirs(eventStream))
+      .pipe(gulp.dest(config.dest))
+		.pipe(sync.stream({once: true}));
 });

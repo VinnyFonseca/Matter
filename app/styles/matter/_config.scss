@@ -78,7 +78,7 @@ $bodyTextColor: $c3; // Text colour
 // Typography
 
 $fontSize: 1.5; // REM measure. 1.0rem = 10px;
-$lineHeight: 1.9; // Line Height
+$lineHeight: $fontSize + 0.3; // Line Height
 
 
 @mixin font-face($family, $filename, $weight, $style) { // Use same font family with different weights and styles when defining different fonts to use native CSS properties

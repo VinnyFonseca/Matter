@@ -2,6 +2,7 @@
 
 var gulp    = require('gulp');
 var config  = require('../config');
+
 var sync    = require('browser-sync');
 
 gulp.task('watch', ['sync'], function() {
